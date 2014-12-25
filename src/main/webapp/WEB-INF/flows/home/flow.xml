@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+    start-state="home">
+    
+    <view-state id="home" view="home.xhtml">
+        <on-entry>
+            <evaluate expression="mainController.newFragmentListBean()" result="viewScope.fragmentListBean"/>
+            <evaluate expression="mainController.newTagListBean()" result="viewScope.tagListBean"/>
+            <evaluate expression="mainController.newFragmentBean()" result="viewScope.fragmentBean"/>
+        </on-entry>
+        
+        <transition on="show" to="show">
+            <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
+        </transition>
+        
+        <transition on="test-action" to="test">
+            <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
+            <set name="requestScope.tagId" value="requestParameters.tagId" type="long" />
+        </transition>
+
+        <transition on="save" to="new-fragment-saved">
+            <evaluate expression="mainController.saveFragment(flowRequestContext)" />
+            <evaluate expression="fragmentBean.clear()" />
+        </transition>
+
+        <transition on="preview" >
+            <evaluate expression="mainController.test2(flowRequestContext)" />
+            <evaluate expression="fragmentBean.clear()" />
+        </transition>
+    </view-state>
+    
+    <view-state id="show" view="show.xhtml">
+        <on-entry>
+            <evaluate expression="mainController.showFragment(flowRequestContext)"
+                result="viewScope.fragment"/>
+        </on-entry>
+        <transition on ="back" to="home"/>
+    </view-state>
+
+    <view-state id="test" view="test.xhtml">
+        <on-entry>
+            <evaluate expression="mainController.test(flowRequestContext)" />
+        </on-entry>
+        <transition on ="back" to="home"/>
+    </view-state>
+
+    <end-state id="new-fragment-saved" />
+             
+    <global-transitions>
+        <transition on="exit" to="home"/>
+    </global-transitions>
+
+</flow>

@@ -1,0 +1,39 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:p="http://primefaces.org/ui"
+	  			template="/WEB-INF/layouts/standard.xhtml">
+
+<ui:define name="content">
+
+<h1>New Fragment</h1>
+
+<h:form >
+    <h:panelGrid columns="2">
+        <h:outputLabel for="title">#{msg['label_fragment_title']}</h:outputLabel>
+        <p:inputText id="title" value="#{fragmentBean.fragment.title}"/>
+        <h:outputLabel for="content">#{msg['label_fragment_content']}</h:outputLabel>
+        <p:inputText id="content" value="#{fragmentBean.fragment.content}"/>
+        <h:outputLabel for="creationDatetime">#{msg['label_fragment_creation_datetime']}</h:outputLabel>
+        <p:calendar id="creationDatetime" value="#{fragmentBean.fragment.creationDatetime}" pattern="yyyy-MM-dd">
+            <f:converter converterId="jodaDateTimeConverter" />
+        </p:calendar>
+        <h:outputLabel for="updateDatetime">#{msg['label_fragment_update_datetime']}</h:outputLabel>
+        <p:calendar id="updateDatetime" value="#{fragmentBean.fragment.updateDatetime}" pattern="yyyy-MM-dd">
+            <f:converter converterId="jodaDateTimeConverter" />
+        </p:calendar>
+    </h:panelGrid>
+    
+    <p:toolbar>  
+        <p:toolbarGroup align="left">
+            <p:commandButton value="Save" action="save"/>
+            <p:commandButton value="Back" action="back"/>       
+        </p:toolbarGroup>
+    </p:toolbar> 
+</h:form>  
+
+</ui:define>
+
+</ui:composition>

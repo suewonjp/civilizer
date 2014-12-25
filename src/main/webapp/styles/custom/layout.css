@@ -1,0 +1,83 @@
+#container {
+	width: 100%;
+	margin: 0 auto;
+	border-width: 1;
+}
+
+#header, #footer {
+	width: 100%;
+	margin: 0 auto;
+	border-style: inherit;
+}
+
+#header {
+	top: 0;
+	height: 40px;
+	background: url(images/coffee-bean-background-sml.jpg) repeat-x;
+}
+
+#footer {
+	border-style: groove;
+	clear: both;
+}
+
+#content {
+	width: 70%;
+	margin-left: 0;
+	border-style: inherit;
+	float: left;
+}
+
+#sidebar {
+	width: 28%;
+/* 	padding-top: 40px; */
+/* 	position: absolute; */
+/* 	top: 0; */
+/* 	right: 10px; */
+	border-style: groove; /* test */
+	float: right;
+}
+
+#test-area {
+/* 	display: none; */
+	margin-top: 20px;
+}
+
+#app-title {
+	color: #0ff;
+	font-size: 250%;
+	font-style: italic;
+	text-decoration: underline;
+}
+
+#new-fragment-button {
+	margin-left: 30px;
+}
+
+#editor-frame input {
+	margin-left: 10px;
+	width: 96%;
+}
+
+#tagbar-title {
+	color: #00f;
+	font-size: 120%;
+	font-style: italic;
+}
+
+#tagbar-icon {
+	margin-right: 10px;
+	width: 24px;	
+	height: 24px;
+}
+
+#tag-icon {
+	margin-right: 10px;
+	width: 16px;	
+	height: 16px;
+}
+
+.each-tag-name {
+	text-align: left;
+	color: #555;
+}

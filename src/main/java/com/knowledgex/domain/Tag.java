@@ -1,0 +1,173 @@
+package com.knowledgex.domain;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+@SuppressWarnings("serial")
+@Entity
+@Table(name = "TAG")
+@NamedQueries({
+    @NamedQuery(name = "Tag.findById",
+            query = "select distinct t from Tag t where t.id = :id"),
+    @NamedQuery(name = "Tag.findByIdWithChildren",
+            query = "select distinct t from Tag t left join fetch t.children where t.id = :id"),
+    @NamedQuery(name = "Tag.findByIdWithFragments",
+            query = "select distinct t from Tag t left join fetch t.fragments where t.id = :id"),
+    @NamedQuery(name = "Tag.findFragments",
+            query = "select t.fragments from Tag t where t.id = :id"),
+    @NamedQuery(name = "Tag.findParentTags",
+            query = "select distinct t from Tag t inner join t.children child where child.id = :id"),
+})
+public class Tag implements Serializable {
+
+    private Long id;
+    private String tagName;
+    private DateTime creationDatetime;
+    private DateTime updateDatetime;
+    private String creator;
+    private String updater;
+    private Long fragmentId;
+    private Set<Fragment> fragments = new HashSet<Fragment>();
+    private Set<Tag> children = new HashSet<Tag>();
+
+    public Tag() {
+    }
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "tag_id")
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Column(name = "tag_name", unique = true)
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    @Column(name = "creation_datetime")
+    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    @DateTimeFormat(iso=ISO.DATE)
+    public DateTime getCreationDatetime() {
+        return creationDatetime;
+    }
+
+    public void setCreationDatetime(DateTime creationDatetime) {
+        this.creationDatetime = creationDatetime;
+    }
+
+    @Column(name = "update_datetime")
+    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    @DateTimeFormat(iso=ISO.DATE)
+    public DateTime getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(DateTime updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
+
+    @Column(name = "creator")
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    @Column(name = "updater")
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    @Column(name = "fragment_id")
+    public Long getFragmentId() {
+        return fragmentId;
+    }
+
+    public void setFragmentId(Long fragmentId) {
+        this.fragmentId = fragmentId;
+    }
+    
+    @ManyToMany(fetch=FetchType.LAZY)
+    @Cascade({CascadeType.MERGE
+        , CascadeType.REFRESH
+        , CascadeType.SAVE_UPDATE
+        , CascadeType.DETACH
+    })
+    @JoinTable(name = "TAG2FRAGMENT",
+        joinColumns = @JoinColumn(name = "tag_id"),
+        inverseJoinColumns = @JoinColumn(name = "fragment_id"))
+    public Set<Fragment> getFragments() {
+        return this.fragments;
+    }
+
+    public void setFragments(Set<Fragment> fragments) {
+        this.fragments = fragments;
+    }
+
+    @ManyToMany(fetch=FetchType.LAZY)
+    @Cascade({CascadeType.MERGE
+        , CascadeType.REFRESH
+        , CascadeType.SAVE_UPDATE
+        , CascadeType.DETACH
+    })
+    @JoinTable(name = "TAG2TAG",
+        joinColumns = @JoinColumn(name = "parent_id"),
+        inverseJoinColumns = @JoinColumn(name = "child_id"))
+    public Set<Tag> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Tag> children) {
+        this.children = children;
+    }
+    
+    public void addChild(Tag c) {
+        this.children.add(c);
+    }
+
+    public String toString() {
+        return  "Tag - id: " + id
+                + ", name: " + tagName
+                + ", created at: "+ creationDatetime
+                + ", updated at: "+ updateDatetime
+                ;
+    }
+
+}
