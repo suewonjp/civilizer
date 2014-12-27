@@ -51,7 +51,7 @@
     </h:panelGrid>
     
     <c:forEach var="fragment" items="#{fragmentListBean.fragments}">
-        <div id="fragment-container">
+        <div class="each-fragment-container">
 	        <h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
 		        <f:facet name="header">
 		            <p:commandLink value="#{fragment.id} " actionListener="#{mainController.testActionListener}" action="show">
