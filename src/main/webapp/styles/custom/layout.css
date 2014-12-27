@@ -77,6 +77,11 @@
 	height: 16px;
 }
 
+.fragment-menu {
+	float: right;
+	display: none;
+}
+
 .each-tag-name {
 	text-align: left;
 	color: #555;

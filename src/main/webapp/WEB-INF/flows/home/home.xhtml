@@ -39,7 +39,16 @@
             previewParser: parseMarkdown
         };
         
-        $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);        
+        $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);
+        
+        $("#fragment-group").on("mouseenter", ".each-fragment-container", function() {
+       		//console.log($(this).attr("fragmentId"));
+       		$(this).find(".fragment-menu").show();
+       	});
+        
+        $("#fragment-group").on("mouseleave", ".each-fragment-container", function() {
+       		$(this).find(".fragment-menu").hide();
+       	});
     }); // end of $(document).ready()
 </script>
 </ui:define>
@@ -50,25 +59,28 @@
     <h:panelGrid columns="1">
     </h:panelGrid>
     
-    <c:forEach var="fragment" items="#{fragmentListBean.fragments}">
-        <div class="each-fragment-container">
-	        <h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
-		        <f:facet name="header">
-		            <p:commandLink value="#{fragment.id} " actionListener="#{mainController.testActionListener}" action="show">
-		                <f:attribute name="fragmentId" value="#{fragment.id}"/>
-		                <f:param name="fragmentId" value="#{fragment.id}"/>
-		            </p:commandLink>
-		            &nbsp;&nbsp;
-		            <h:outputText value="#{fragment.title} " />
-		            &nbsp;&nbsp;&nbsp;&nbsp;
-					<h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
-						<f:converter converterId="jodaDateTimeConverter" />
-					</h:outputText>
-				</f:facet>
-		        <h:outputText value="#{fragment.content}" />
-	        </h:panelGrid>
-        </div>
-    </c:forEach>
+    <div id="fragment-group">    
+	    <c:forEach var="fragment" items="#{fragmentListBean.fragments}">
+	        <div class="each-fragment-container" fragmentId="#{fragment.id}">
+		        <h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
+			        <f:facet name="header">
+			            <p:commandLink value="#{fragment.id} " actionListener="#{mainController.testActionListener}" action="show">
+			                <f:attribute name="fragmentId" value="#{fragment.id}"/>
+			                <f:param name="fragmentId" value="#{fragment.id}"/>
+			            </p:commandLink>
+			            &nbsp;&nbsp;
+			            <h:outputText value="#{fragment.title} " />
+			            &nbsp;&nbsp;&nbsp;&nbsp;
+						<h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
+							<f:converter converterId="jodaDateTimeConverter" />
+						</h:outputText>
+				        <span class="fragment-menu">Test...^^</span>
+					</f:facet>
+			        <h:outputText value="#{fragment.content}" />
+		        </h:panelGrid>
+	        </div>
+	    </c:forEach>
+    </div>
 </h:form>
 
 </ui:define> <!-- end of content -->
