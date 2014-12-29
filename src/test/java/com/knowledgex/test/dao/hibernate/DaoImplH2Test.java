@@ -112,7 +112,7 @@ abstract class DaoImplH2Test {
             assertTrue(id >= 0);
             Fragment frg = fragmentDao.findById(id);
             assertEquals(frg.getTitle(), f.getTitle());
-            assertFalse(Hibernate.isInitialized(frg.getTags()));
+            assertTrue(Hibernate.isInitialized(frg.getTags()));
             assertFalse(Hibernate.isInitialized(frg.getRelatedOnes()));
         }
     }

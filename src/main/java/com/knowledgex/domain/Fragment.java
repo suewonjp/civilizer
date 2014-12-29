@@ -207,7 +207,7 @@ public class Fragment implements Serializable {
         this.relatedOnes = relatedOnes;
     }
 
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.EAGER)
     @Cascade({CascadeType.PERSIST
         , CascadeType.MERGE
         , CascadeType.REFRESH
