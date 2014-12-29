@@ -18,6 +18,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<dependency>
 		    <groupId>aspectj</groupId>
 		    <artifactId>aspectjrt</artifactId>
 		    <version>1.5.4</version>
