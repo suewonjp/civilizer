@@ -33,8 +33,6 @@ public class MainController {
 	@Autowired
 	private TagDao tagDao;
 	
-//	private HtmlInputText inputTxt = new HtmlInputText();
-	
 	public FragmentListBean newFragmentListBean() {
         FragmentListBean fragmentListBean = new FragmentListBean();
         fragmentListBean.setFragments(fragmentDao.findAll());
@@ -67,8 +65,6 @@ public class MainController {
 
 	public void test(RequestContext context) {
 	    Long value;
-//	    ParameterMap params = context.getExternalContext().getRequestParameterMap();
-//	    value = params.getLong("fragmentId");
 	    value = context.getRequestScope().getLong("fragmentId");
 	    if (value != null) {
 	        logger.info("test() called with parameter: {}", value);
@@ -83,7 +79,6 @@ public class MainController {
 	    FragmentBean fb = (FragmentBean) context.getViewScope().get("fragmentBean");
 	    logger.info("test2() called");
 	    logger.info(fb.toString());
-//	    logger.info(inputTxt.getValue().toString());
 	}
 
 	public void testActionListener(ActionEvent event) {
@@ -98,14 +93,6 @@ public class MainController {
 	        logger.info("testActionListener() called with value: {}", value.toString());
 	    }
 	}
-
-//    public HtmlInputText getInputTxt() {
-//        return inputTxt;
-//    }
-//
-//    public void setInputTxt(HtmlInputText inputTxt) {
-//        this.inputTxt = inputTxt;
-//    }
 	
 	public TagListBean newTagListBean() {
 	    TagListBean tagListBean = new TagListBean();
