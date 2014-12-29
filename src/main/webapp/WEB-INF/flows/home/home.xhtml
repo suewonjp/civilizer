@@ -12,7 +12,7 @@
     $(document).ready(function() {
         //console.log("testing console logging...");
         
-        $(".editor-box-trigger").colorbox({
+        $("#new-fragment-editor-trigger").colorbox({
             inline:true
             , overlayClose:false
             , onOpen:function() {
@@ -26,6 +26,11 @@
                 
                 $("#fragment-content-editor").val(null);
             }
+        });
+        
+        $(".edit-fragment-editor-trigger").colorbox({
+            inline:true
+            , overlayClose:false
         });
         
         $("#colorbox").tinyDraggable({handle:'#cboxTitle', exclude:'input, textarea'});
@@ -49,6 +54,11 @@
        		$(this).find(".fragment-menu").hide();
        	});
     }); // end of $(document).ready()
+    
+    function openFragmentEditorForEdit(title, content) {
+    	$("#fragment-editor-form\\:title-input").val(title);
+        $("#fragment-content-editor").val(content);
+    }
 </script>
 </ui:define>
 
@@ -75,7 +85,8 @@
 							<f:converter converterId="jodaDateTimeConverter" />
 						</h:outputText>
 				        <span class="fragment-menu">
-				        	<a href="#editor-frame" class='editor-box-trigger' title="Edit Fragment" >
+				        	<a href="#editor-frame" class='edit-fragment-editor-trigger' title="Edit Fragment" 
+				        		onclick='openFragmentEditorForEdit("#{fragment.title}", "#{fragment.content}")'>
 					        	<img id="edit-fragment-button" src="resources/styles/custom/images/edit.png" />
 					        </a>
 					        <img id="delete-fragment-button" src="resources/styles/custom/images/trash.png" />
