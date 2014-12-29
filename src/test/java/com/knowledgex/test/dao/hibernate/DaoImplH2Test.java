@@ -136,6 +136,18 @@ abstract class DaoImplH2Test {
         }
     }
     
+    protected void tesMethod_Tag_getTagNamesFrom() {
+    	List<Tag> tags = tagDao.findAll();
+        assertFalse(tags.isEmpty());
+        String actual = Tag.getTagNamesFrom(tags);
+        List<String> nameList = buildTagNameList(tags);
+        String expected = new String();
+        for (String s : nameList) {
+        	expected += s + ", ";
+        }
+        assertEquals(expected, actual);
+    }
+    
     protected void testFragmentToTagRelationship() {
         List<Tag> tags = tagDao.findAll();
         assertFalse(tags.isEmpty());

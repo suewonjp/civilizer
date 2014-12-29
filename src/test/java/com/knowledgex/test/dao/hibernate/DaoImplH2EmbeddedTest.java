@@ -79,5 +79,10 @@ public class DaoImplH2EmbeddedTest extends DaoImplH2Test {
     public void testUpdateFragment() {
         super.testUpdateFragment();
     }
+    
+    @Test
+    public void tesMethod_Tag_getTagNamesFrom() {
+    	super.tesMethod_Tag_getTagNamesFrom();
+    }
 
 }

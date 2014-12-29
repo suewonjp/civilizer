@@ -3,8 +3,7 @@ package com.knowledgex.domain;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -160,6 +159,14 @@ public class Tag implements Serializable {
     
     public void addChild(Tag c) {
         this.children.add(c);
+    }
+    
+    public static String getTagNamesFrom(Collection<Tag> tags) {
+    	String result = new String();
+    	for (Tag t : tags) {
+    		result += t.tagName + ", ";
+    	}
+    	return result;
     }
 
     public String toString() {
