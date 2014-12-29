@@ -10,8 +10,6 @@
 <ui:define name="script-test">
 <script>
     $(document).ready(function() {
-        //console.log("testing console logging...");
-        
         $("#new-fragment-editor-trigger").colorbox({
             inline:true
             , overlayClose:false
@@ -55,19 +53,19 @@
        	});
     }); // end of $(document).ready()
     
-    function openFragmentEditorForEdit(title, tagNames, content) {
-    	console.log(content);
-    	console.log(title);
-    	$("#fragment-editor-form\\:title-input").val(title);
+    function openFragmentEditorForEdit(fragmentId, tagNames) {
+        var el = $("#fragment-group-form\\:fragment-title-placeholder-"+fragmentId);
+    	$("#fragment-editor-form\\:title-input").val(el.val());
     	$("#fragment-editor-form\\:tags-input").val(tagNames);
-        $("#fragment-content-editor").val(content);
+    	el = $("#fragment-group-form\\:fragment-content-placeholder-"+fragmentId);
+        $("#fragment-content-editor").val(el.val());
     }
 </script>
 </ui:define>
 
 <ui:define name="content">
 
-<h:form>
+<h:form id="fragment-group-form">
     <h:panelGrid columns="1">
     </h:panelGrid>
     
@@ -91,10 +89,12 @@
 						</h:outputText>
 				        <span class="fragment-menu">
 				        	<a href="#editor-frame" class='edit-fragment-editor-trigger' title="Edit Fragment" 
-				        		onclick="openFragmentEditorForEdit( '#{fragmentBean.fragment.title}', '#{fragmentBean.tagNames}', '#{fragmentBean.fragment.content}' )" >
+				        		onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.tagNames}')" >
 					        	<img id="edit-fragment-button" src="resources/styles/custom/images/edit.png" />
 					        </a>
 					        <img id="delete-fragment-button" src="resources/styles/custom/images/trash.png" />
+							<h:inputHidden id="fragment-title-placeholder-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.title}" />
+							<h:inputHidden id="fragment-content-placeholder-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.content}" />
 						</span>
 			        </div>
 					</f:facet>
