@@ -63,6 +63,7 @@
 	        <div class="each-fragment-container" fragmentId="#{fragment.id}">
 		        <h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
 			        <f:facet name="header">
+			        <div class="fragment-header">
 			            <p:commandLink value="#{fragment.id} " actionListener="#{mainController.testActionListener}" action="show">
 			                <f:attribute name="fragmentId" value="#{fragment.id}"/>
 			                <f:param name="fragmentId" value="#{fragment.id}"/>
@@ -73,7 +74,13 @@
 						<h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
 							<f:converter converterId="jodaDateTimeConverter" />
 						</h:outputText>
-				        <span class="fragment-menu">Test...^^</span>
+				        <span class="fragment-menu">
+				        	<a href="#editor-frame" class='editor-box-trigger' title="Edit Fragment" >
+					        	<img id="edit-fragment-button" src="resources/styles/custom/images/edit.png" />
+					        </a>
+					        <img id="delete-fragment-button" src="resources/styles/custom/images/trash.png" />
+						</span>
+			        </div>
 					</f:facet>
 			        <h:outputText value="#{fragment.content}" />
 		        </h:panelGrid>

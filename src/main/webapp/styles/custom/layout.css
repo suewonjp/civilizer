@@ -73,6 +73,15 @@
 	height: 16px;
 }
 
+#edit-fragment-button, #delete-fragment-button {
+	width: 16px;	
+	height: 16px;
+}
+
+.fragment-header {
+	min-height: 22px;
+}
+
 .fragment-menu {
 	float: right;
 	display: none;
