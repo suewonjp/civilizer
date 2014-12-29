@@ -14,7 +14,7 @@ public class FragmentBean implements Serializable {
     
     private Fragment fragment;
     
-    private String tags;
+    private String tagNames;
 
     public Fragment getFragment() {
         return fragment;
@@ -24,18 +24,18 @@ public class FragmentBean implements Serializable {
         this.fragment = fragment;
     }
 
-    public String getTags() {
-        return tags;
+    public String getTagNames() {
+        return tagNames;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setTagNames(String tags) {
+        this.tagNames = tags;
     }
     
     public void clear() {
         logger.info("clear() called");
         
-        tags = "";
+        tagNames = "";
         if (fragment != null) {
             fragment.setId(null);
             fragment.setTitle("");
@@ -44,7 +44,7 @@ public class FragmentBean implements Serializable {
     }
     
     public String toString() {
-        return "{tags:" + tags
+        return "{tags:" + tagNames
                 + "}, {" + fragment.toString()
                 + "}"
                 ;

@@ -17,7 +17,7 @@
     <div id='editor-frame' >
         <h:form id="fragment-editor-form"  >
 	        <p:inputText id="title-input" value="#{fragmentBean.fragment.title}" autocomplete="false" />
-	        <p:inputText id="tags-input" value="#{fragmentBean.tags}" autocomplete="false" />
+	        <p:inputText id="tags-input" value="#{fragmentBean.tagNames}" autocomplete="false" />
 	        <textarea id="fragment-content-editor" cols="80" rows="20"></textarea>
 	        <h:inputHidden id="content-placeholder" value="#{fragmentBean.fragment.content}" />
 		    <p:commandButton onclick="prepareFragmentContent();" value="Preview" action="preview" />

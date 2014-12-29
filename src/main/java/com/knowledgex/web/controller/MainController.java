@@ -1,6 +1,6 @@
 package com.knowledgex.web.controller;
 
-import java.util.Map;
+import java.util.*;
 
 //import javax.faces.component.html.HtmlInputText;
 import javax.faces.event.ActionEvent;
@@ -17,6 +17,7 @@ import org.springframework.webflow.execution.RequestContext;
 import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
 import com.knowledgex.domain.Fragment;
+import com.knowledgex.domain.Tag;
 import com.knowledgex.web.view.FragmentBean;
 import com.knowledgex.web.view.FragmentListBean;
 import com.knowledgex.web.view.TagListBean;
@@ -35,7 +36,17 @@ public class MainController {
 	
 	public FragmentListBean newFragmentListBean() {
         FragmentListBean fragmentListBean = new FragmentListBean();
-        fragmentListBean.setFragments(fragmentDao.findAll());
+        List<Fragment> fragments = fragmentDao.findAll();
+        fragmentListBean.setFragments(fragments);
+        List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
+        for (Fragment f : fragments) {
+        	FragmentBean fb = new FragmentBean();
+        	fb.setFragment(f);
+        	String tagNames = Tag.getTagNamesFrom(f.getTags());
+        	fb.setTagNames(tagNames);
+        	fragmentBeans.add(fb);
+        }
+        fragmentListBean.setFragmentBeans(fragmentBeans);
         return fragmentListBean;
     }
 
