@@ -87,7 +87,6 @@ public class Fragment implements Serializable {
         this.content = content;
     }
 
-//    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_datetime")
     @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     @DateTimeFormat(iso=ISO.DATE)
@@ -99,7 +98,6 @@ public class Fragment implements Serializable {
         this.creationDatetime = creationDatetime;
     }
 
-//    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_datetime")
     @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     @DateTimeFormat(iso=ISO.DATE)
