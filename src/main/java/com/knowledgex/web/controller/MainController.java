@@ -66,11 +66,41 @@ public class MainController {
 	
 	public void saveFragment(RequestContext context) {
 	    FragmentBean fb = (FragmentBean) context.getViewScope().get("fragmentBean");
+	    
+	    String tagNames = fb.getTagNames();
+	    List<Tag> tags = saveTags(context, tagNames);
+	    
 	    Fragment frg = fb.getFragment();
-	    frg.setCreationDatetime(new DateTime());
-	    frg.setUpdateDatetime(new DateTime());
+	    frg.setTags(tags);
+	    DateTime dt = new DateTime();
+	    if (frg.getCreationDatetime() == null) {
+	    	frg.setCreationDatetime(dt);
+	    }
+	    frg.setUpdateDatetime(dt);
         fragmentDao.save(frg);
         logger.info(fb.toString());
+	}
+	
+	private List<Tag> saveTags(RequestContext context, String tagNames) {
+		TagListBean tagListBean = (TagListBean) context.getViewScope().get("tagListBean");
+		List<Tag> existingTags = tagListBean.getTags();
+		String[] names = tagNames.split("\\s*[,]\\s*");
+		List<Tag> output = new ArrayList<Tag>();
+		for (String name : names) {
+			Tag t = Tag.getTagFromName(name, existingTags);
+			if (t == null) {
+				t = new Tag(name);
+			}
+			DateTime dt = new DateTime();
+		    if (t.getCreationDatetime() == null) {
+		    	t.setCreationDatetime(dt);
+		    }
+		    t.setUpdateDatetime(dt);
+			tagDao.save(t);
+			logger.info(t.toString());
+			output.add(t);
+		}
+		return output;
 	}
 
 	public void test(RequestContext context) {
