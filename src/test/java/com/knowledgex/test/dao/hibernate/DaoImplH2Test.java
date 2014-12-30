@@ -229,14 +229,9 @@ abstract class DaoImplH2Test {
     }
     
     protected Tag newTag(String name) {
-        Tag tag = new Tag();
         if (name == null)
-            tag.setTagName("new tag " + temporalTags.size());
-        else
-            tag.setTagName(name);
-        tag.setCreationDatetime(new DateTime());
-        tag.setUpdateDatetime(new DateTime());
-        return tag;
+            name = "new tag " + temporalTags.size();
+        return new Tag(name);
     }
     
     protected void testPersistNewTag() {

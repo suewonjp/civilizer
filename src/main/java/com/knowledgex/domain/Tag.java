@@ -54,6 +54,13 @@ public class Tag implements Serializable {
     public Tag() {
     }
 
+    public Tag(String name) {
+    	tagName = name;
+    	DateTime dt = new DateTime();
+    	setCreationDatetime(dt);
+        setUpdateDatetime(dt);
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "tag_id")
