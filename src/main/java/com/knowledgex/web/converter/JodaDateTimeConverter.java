@@ -18,7 +18,7 @@ import org.joda.time.format.DateTimeFormat;
 @FacesConverter("jodaDateTimeConverter")
 public class JodaDateTimeConverter implements Converter {
 
-	private static final String PATTERN = "yyyy-MM-dd";
+	private static final String PATTERN = "yyyy-MM-dd HH-mm";
 	
 	@Override
 	public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
