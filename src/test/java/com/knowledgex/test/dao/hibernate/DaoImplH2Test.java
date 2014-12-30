@@ -128,7 +128,7 @@ abstract class DaoImplH2Test {
         for (Tag t : tags) {
             Long id = t.getId();
             Tag tag = tagDao.findByIdWithFragments(id);
-            Set<Fragment> frgs = tag.getFragments();
+            Collection<Fragment> frgs = tag.getFragments();
             assertTrue(Hibernate.isInitialized(frgs));
             if (frgs.isEmpty() == false) {
                 for (Fragment f : frgs) {
@@ -181,7 +181,7 @@ abstract class DaoImplH2Test {
             assertTrue(id >= 0);
 
             Fragment frgm = fragmentDao.findByIdWithTags(id);
-            Set<Tag> relatedTags = frgm.getTags();
+            Collection<Tag> relatedTags = frgm.getTags();
             assertTrue(Hibernate.isInitialized(relatedTags));
             if (relatedTags.isEmpty() == false) {
                 for (Tag t : relatedTags) {
@@ -199,7 +199,7 @@ abstract class DaoImplH2Test {
         for (Tag t : tags) {
             Long id = t.getId();
             Tag tag = tagDao.findByIdWithChildren(id);
-            Set<Tag> children = tag.getChildren();
+            Collection<Tag> children = tag.getChildren();
             assertTrue(Hibernate.isInitialized(children));
             if (children.isEmpty() == false) {
                 for (Tag c : children) {
@@ -217,7 +217,7 @@ abstract class DaoImplH2Test {
         for (Fragment f : fragments) {
             Long id = f.getId();
             Fragment frgm = fragmentDao.findByIdWithRelatedOnes(id);
-            Set<Fragment> relatedOnes = frgm.getRelatedOnes();
+            Collection<Fragment> relatedOnes = frgm.getRelatedOnes();
             assertTrue(Hibernate.isInitialized(relatedOnes));
             if (relatedOnes.isEmpty() == false) {
                 for (Fragment r : relatedOnes) {
@@ -286,7 +286,7 @@ abstract class DaoImplH2Test {
         for (int i=1; i<temporalTags.size(); ++i) {
             Tag parent = tagDao.findByIdWithChildren(temporalTags.get(i - 1).getId());
             Tag child = temporalTags.get(i);
-            Set<Tag> children = parent.getChildren();
+            Collection<Tag> children = parent.getChildren();
             assertTrue(Hibernate.isInitialized(children));
             assertEquals(children.size(), 1);
             for (Tag c : children) {
@@ -306,7 +306,7 @@ abstract class DaoImplH2Test {
         for (int i=1; i<temporalFragments.size(); ++i) {
             Fragment from = temporalFragments.get(i - 1);
             Fragment to = temporalFragments.get(i);
-            Set<Fragment> s = new HashSet<Fragment>();
+            Collection<Fragment> s = new HashSet<Fragment>();
             s.add(to);
             from.setRelatedOnes(s);
         }
@@ -317,7 +317,7 @@ abstract class DaoImplH2Test {
         for (int i=1; i<temporalFragments.size(); ++i) {
             Fragment from = fragmentDao.findByIdWithRelatedOnes(temporalFragments.get(i - 1).getId());
             Fragment to = temporalFragments.get(i);
-            Set<Fragment> relatedOnes = from.getRelatedOnes();
+            Collection<Fragment> relatedOnes = from.getRelatedOnes();
             assertTrue(Hibernate.isInitialized(relatedOnes));
             assertEquals(relatedOnes.size(), 1);
             for (Fragment f : relatedOnes) {

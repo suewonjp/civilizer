@@ -3,8 +3,7 @@ package com.knowledgex.domain;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,8 +52,8 @@ public class Fragment implements Serializable {
     private String creator;
     private String updater;
     private Long tagId;
-    private Set<Fragment> relatedOnes = new HashSet<Fragment>();
-    private Set<Tag> tags = new HashSet<Tag>();
+    private Collection<Fragment> relatedOnes = new ArrayList<Fragment>();
+    private Collection<Tag> tags = new ArrayList<Tag>();
 
     public Fragment() {
     }
@@ -200,11 +199,11 @@ public class Fragment implements Serializable {
     @JoinTable(name = "FRAGMENT2FRAGMENT",
         joinColumns = @JoinColumn(name = "from_id"),
         inverseJoinColumns = @JoinColumn(name = "to_id"))
-    public Set<Fragment> getRelatedOnes() {
+    public Collection<Fragment> getRelatedOnes() {
         return relatedOnes;
     }
 
-    public void setRelatedOnes(Set<Fragment> relatedOnes) {
+    public void setRelatedOnes(Collection<Fragment> relatedOnes) {
         this.relatedOnes = relatedOnes;
     }
 
@@ -218,11 +217,11 @@ public class Fragment implements Serializable {
     @JoinTable(name = "TAG2FRAGMENT",
         joinColumns = @JoinColumn(name = "fragment_id"),
         inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    public Set<Tag> getTags() {
+    public Collection<Tag> getTags() {
         return this.tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(Collection<Tag> tags) {
         this.tags = tags;
     }
     
