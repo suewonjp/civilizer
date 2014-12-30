@@ -21,7 +21,7 @@
             <set name="requestScope.tagId" value="requestParameters.tagId" type="long" />
         </transition>
 
-        <transition on="save" to="new-fragment-saved">
+        <transition on="save" to="fragment-saved">
             <evaluate expression="mainController.saveFragment(flowRequestContext)" />
             <evaluate expression="fragmentBean.clear()" />
         </transition>
@@ -47,7 +47,7 @@
         <transition on ="back" to="home"/>
     </view-state>
 
-    <end-state id="new-fragment-saved" />
+    <end-state id="fragment-saved" />
              
     <global-transitions>
         <transition on="exit" to="home"/>
