@@ -37,7 +37,6 @@ public class MainController {
 	public FragmentListBean newFragmentListBean() {
         FragmentListBean fragmentListBean = new FragmentListBean();
         List<Fragment> fragments = fragmentDao.findAll();
-        fragmentListBean.setFragments(fragments);
         List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
         for (Fragment f : fragments) {
         	FragmentBean fb = new FragmentBean();
