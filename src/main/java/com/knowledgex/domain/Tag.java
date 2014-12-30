@@ -168,6 +168,17 @@ public class Tag implements Serializable {
     	}
     	return result;
     }
+    
+    public static Tag getTagFromName(String tagName, Collection<Tag> tags) {
+    	Tag tag = null;
+    	for (Tag t : tags) {
+    		if (t.getTagName().equals(tagName)) {
+    			tag = t;
+    			break;
+    		}
+    	}
+    	return tag;
+    }
 
     public String toString() {
         return  "Tag - id: " + id

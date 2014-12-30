@@ -13,6 +13,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.knowledgex.dao.*;
 import com.knowledgex.domain.*;
+import com.knowledgex.test.util.TestUtil;
 
 abstract class DaoImplH2Test {
     
@@ -53,6 +54,8 @@ abstract class DaoImplH2Test {
             , @SuppressWarnings("rawtypes") Class clazz) 
                     throws Exception {
         PropertyConfigurator.configure("src/test/resources/log4j-test.properties");
+        
+        TestUtil.getRandom();
         
         log = LogFactory.getLog(clazz);
         assertNotNull(log);
@@ -136,7 +139,7 @@ abstract class DaoImplH2Test {
         }
     }
     
-    protected void tesMethod_Tag_getTagNamesFrom() {
+    protected void testMethod_Tag_getTagNamesFrom() {
     	List<Tag> tags = tagDao.findAll();
         assertFalse(tags.isEmpty());
         String actual = Tag.getTagNamesFrom(tags);
@@ -146,6 +149,25 @@ abstract class DaoImplH2Test {
         	expected += s + ", ";
         }
         assertEquals(expected, actual);
+    }
+    
+    protected void testMethod_Tag_getTagFromName() {
+    	List<Tag> tags = tagDao.findAll();
+        assertFalse(tags.isEmpty());
+        Random r = TestUtil.getRandom();
+        
+        // The method should return the existing Tag if it accepts the name of an existing one.
+        int idx = r.nextInt(tags.size());
+        assertTrue(0 <= idx && idx < tags.size());
+        Tag expected = tags.get(idx);
+        String name = expected.getTagName();
+        Tag actual = Tag.getTagFromName(name, tags);
+        assertSame(expected, actual);
+        
+        // The method should return NULL if it accepts a non-existing name.
+        String nonExistingName = "#$%#%#%#%$#%$#%$#%$#%#$%***&%!%";
+        actual = Tag.getTagFromName(nonExistingName, tags);
+        assertNull(actual);
     }
     
     protected void testFragmentToTagRelationship() {
