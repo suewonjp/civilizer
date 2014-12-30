@@ -20,6 +20,7 @@
 	        <p:inputText id="tags-input" value="#{fragmentBean.tagNames}" autocomplete="false" />
 	        <textarea id="fragment-content-editor" cols="80" rows="20"></textarea>
 	        <h:inputHidden id="content-placeholder" value="#{fragmentBean.fragment.content}" />
+	        <h:inputHidden id="id-placeholder" value="#{fragmentBean.fragment.id}" />
 		    <p:commandButton onclick="prepareFragmentContent();" value="Preview" action="preview" />
 		    <p:commandButton onclick="prepareFragmentContent();" value="Save" action="save" />
         </h:form>
