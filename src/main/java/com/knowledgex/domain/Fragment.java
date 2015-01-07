@@ -56,6 +56,16 @@ public class Fragment implements Serializable {
 
     public Fragment() {
     }
+    
+    public Fragment(String title, String content, DateTime dt) {
+    	setTitle(title);
+    	setContent(content);
+    	if (null == dt) {
+    		dt = new DateTime();
+    	}
+    	setCreationDatetime(dt);
+    	setUpdateDatetime(dt);
+    }
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

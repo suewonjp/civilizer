@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.log4j.PropertyConfigurator;
-import org.joda.time.DateTime;
 import org.hibernate.Hibernate;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -240,12 +239,13 @@ abstract class DaoImplH2Test {
     }
 
     protected void testPersistNewFragment() {
-        Fragment frg = new Fragment();
+        Fragment frg = new Fragment(
+        		"new fragment " + temporalFragments.size()
+        		, "Some content..."
+        		, null
+        		);
+        assertNotNull(frg);
         temporalFragments.add(frg);
-        frg.setTitle("new fragment " + temporalFragments.size());
-        frg.setContent("Some content...");
-        frg.setCreationDatetime(new DateTime());
-        frg.setUpdateDatetime(new DateTime());
         
         // Add new tag to this fragment
         Tag tag = newTag("added tag " + counter++);
