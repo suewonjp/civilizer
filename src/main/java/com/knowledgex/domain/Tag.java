@@ -171,9 +171,22 @@ public class Tag implements Serializable {
     public static String getTagNamesFrom(Collection<Tag> tags) {
     	String result = new String();
     	for (Tag t : tags) {
-    		result += t.tagName + ", ";
+    		result += t.tagName + ",";
     	}
     	return result;
+    }
+    
+    public static Collection<String> getTagNameListFrom(String names) {
+    	String[] arr = names.split("\\s*[,]\\s*");
+    	return Arrays.asList(arr);
+    }
+    
+    public static Collection<String> getTagNameListFrom(Collection<Tag> tags) {
+    	List<String> output = new ArrayList<String>(tags.size());
+    	for (Tag t : tags) {
+    		output.add(t.getTagName());
+    	}
+    	return output;
     }
     
     public static Tag getTagFromName(String tagName, Collection<Tag> tags) {

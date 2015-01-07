@@ -18,11 +18,9 @@ public class DomainTagTest {
 	
 	private List<Tag> tags = new ArrayList<Tag>();
 	
-	private static List<String> buildTagNameList(List<Tag> tags) {
+	private static Collection<String> buildTagNameList(Collection<Tag> tags) {
         List<String> tagNames = new ArrayList<String>();
         for (Tag t : tags) {
-            Long id = t.getId();
-            assertTrue(id >= 0);
             tagNames.add(t.getTagName());
         }
         assertEquals(tagNames.size(), tags.size());
@@ -53,15 +51,32 @@ public class DomainTagTest {
 	@Test
 	public void testMethod_getTagNamesFrom() {
         assertFalse(tags.isEmpty());
+        
         String actual = Tag.getTagNamesFrom(tags);
-        List<String> nameList = buildTagNameList(tags);
+        Collection<String> nameList = buildTagNameList(tags);
         String expected = new String();
         for (String s : nameList) {
-        	expected += s + ", ";
+        	expected += s + ",";
         }
         assertEquals(expected, actual);
     }
 	
+	@Test
+	public void testMethod_getTagNameListFrom() {
+		assertFalse(tags.isEmpty());
+		
+		Collection<String> actualC = Tag.getTagNameListFrom(tags);
+		Object[] actual = actualC.toArray();
+		Collection<String> expectedC = buildTagNameList(tags);
+		Object[] expected = expectedC.toArray();
+		assertArrayEquals(expected, actual);
+		
+		String actualS = Tag.getTagNamesFrom(tags);
+		actualC = Tag.getTagNameListFrom(actualS);
+		actual = actualC.toArray();
+		assertArrayEquals(expected, actual);
+	}
+		
 	@Test
 	public void testMethod_getTagFromName() {
         assertFalse(tags.isEmpty());
