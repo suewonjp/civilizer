@@ -237,6 +237,14 @@ public class Fragment implements Serializable {
     public void addTag(Tag tag) {
         this.tags.add(tag);
     }
+    
+    public static Collection<String> getFragmentTitleListFrom(Collection<Fragment> fragments) {
+    	List<String> fragmentNames = new ArrayList<String>();
+        for (Fragment f : fragments) {
+            fragmentNames.add(f.getTitle());
+        }
+        return fragmentNames;
+    }
 
     public String toString() {
         return "Fragment - id: " + id

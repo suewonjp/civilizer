@@ -24,17 +24,6 @@ abstract class DaoImplH2Test {
     private List<Tag> temporalTags = new ArrayList<Tag>();
     private List<Fragment> temporalFragments = new ArrayList<Fragment>();
     
-    protected static Collection<String> buildFragmentNameList(Collection<Fragment> fragments) {
-        List<String> fragmentNames = new ArrayList<String>();
-        for (Fragment f : fragments) {
-            Long id = f.getId();
-            assertTrue(id >= 0);
-            fragmentNames.add(f.getTitle());
-        }
-        assertEquals(fragmentNames.size(), fragments.size());
-        return fragmentNames;
-    }
-    
     protected static void setUpBeforeClass(
             String appContextPath
             , Class<?> clazz
@@ -104,7 +93,7 @@ abstract class DaoImplH2Test {
     protected void testTagToFragmentRelationship() {
     	Collection<Tag> tags = tagDao.findAll();        
     	Collection<Fragment> fragments = fragmentDao.findAll();
-    	Collection<String> fragmentNames = buildFragmentNameList(fragments);
+    	Collection<String> fragmentNames = Fragment.getFragmentTitleListFrom(fragments);
         
         for (Tag t : tags) {
             Long id = t.getId();
@@ -162,7 +151,7 @@ abstract class DaoImplH2Test {
         
     protected void testRelatedFragments() {
     	Collection<Fragment> fragments = fragmentDao.findAll();
-    	Collection<String> fragmentNames = buildFragmentNameList(fragments);
+    	Collection<String> fragmentNames = Fragment.getFragmentTitleListFrom(fragments);
         
         for (Fragment f : fragments) {
             Long id = f.getId();

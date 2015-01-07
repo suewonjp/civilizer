@@ -17,6 +17,15 @@ public class DomainFragmentTest {
 	private static Log log = TestUtil.newLogger(DomainFragmentTest.class);
 
 	private List<Fragment> fragments = new ArrayList<Fragment>();
+	
+	private static Collection<String> buildFragmentTitleList(Collection<Fragment> fragments) {
+        List<String> fragmentNames = new ArrayList<String>();
+        for (Fragment f : fragments) {
+            fragmentNames.add(f.getTitle());
+        }
+        assertEquals(fragmentNames.size(), fragments.size());
+        return fragmentNames;
+    }
 
 	@Before
 	public void setUp() throws Exception {
@@ -41,6 +50,17 @@ public class DomainFragmentTest {
 		for (Fragment f : fragments) {
 			assertNotNull(f.getId());
 		}
+	}
+	
+	@Test
+	public void testMethod_getFragmentTitleListFrom() {
+		assertFalse(fragments.isEmpty());
+		
+		Collection<String> actualC = Fragment.getFragmentTitleListFrom(fragments);;
+		Object[] actual = actualC.toArray();
+		Collection<String> expectedC = buildFragmentTitleList(fragments);
+		Object[] expected = expectedC.toArray();
+		assertArrayEquals(expected, actual);
 	}
 
 }
