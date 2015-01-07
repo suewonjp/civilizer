@@ -25,17 +25,6 @@ abstract class DaoImplH2Test {
     private List<Tag> temporalTags = new ArrayList<Tag>();
     private List<Fragment> temporalFragments = new ArrayList<Fragment>();
     
-    protected static List<String> buildTagNameList(List<Tag> tags) {
-        List<String> tagNames = new ArrayList<String>();
-        for (Tag t : tags) {
-            Long id = t.getId();
-            assertTrue(id >= 0);
-            tagNames.add(t.getTagName());
-        }
-        assertEquals(tagNames.size(), tags.size());
-        return tagNames;
-    }
-    
     protected static List<String> buildFragmentNameList(List<Fragment> fragments) {
         List<String> fragmentNames = new ArrayList<String>();
         for (Fragment f : fragments) {
@@ -139,7 +128,7 @@ abstract class DaoImplH2Test {
     protected void testFragmentToTagRelationship() {
         List<Tag> tags = tagDao.findAll();
         assertFalse(tags.isEmpty());
-        List<String> tagNames = buildTagNameList(tags);
+        Collection<String> tagNames = Tag.getTagNameListFrom(tags);
         List<Fragment> fragments = fragmentDao.findAll();
         
         for (Fragment f : fragments) {
@@ -160,7 +149,7 @@ abstract class DaoImplH2Test {
     
     protected void testTagsHierarchy() {
         List<Tag> tags = tagDao.findAll();        
-        List<String> tagNames = buildTagNameList(tags);
+        Collection<String> tagNames = Tag.getTagNameListFrom(tags);
  
         for (Tag t : tags) {
             Long id = t.getId();
