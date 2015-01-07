@@ -1,6 +1,6 @@
 package com.knowledgex.dao.hibernate;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -32,7 +32,7 @@ public class FragmentDaoImpl implements FragmentDao {
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public List<Fragment> findAll() {
+    public Collection<Fragment> findAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Fragment f").list();
     }

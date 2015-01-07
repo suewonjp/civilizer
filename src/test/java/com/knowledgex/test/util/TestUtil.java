@@ -6,11 +6,18 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.PropertyConfigurator;
 
 public final class TestUtil {
 
-    private static Log log = newLogger(TestUtil.class);
+    private static Log log = newLogger();
     private static Random random = newRandomGenerator();
+    
+    private static Log newLogger() {
+    	PropertyConfigurator.configure("src/test/resources/log4j-test.properties");
+
+    	return newLogger(TestUtil.class);
+    }
     
     private static Random newRandomGenerator() {
 		Calendar cal = Calendar.getInstance();
@@ -18,8 +25,7 @@ public final class TestUtil {
 
 //        final long seed = 1404463439000L;
         final long seed = cal.getTimeInMillis();
-
-        assertNotNull(log);
+        
         log.info("random seed = " + seed);
 
         random = new Random(seed);

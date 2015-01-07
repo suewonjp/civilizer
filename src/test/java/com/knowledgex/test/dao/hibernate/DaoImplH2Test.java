@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 import org.apache.commons.logging.Log;
-import org.apache.log4j.PropertyConfigurator;
 import org.hibernate.Hibernate;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -25,7 +24,7 @@ abstract class DaoImplH2Test {
     private List<Tag> temporalTags = new ArrayList<Tag>();
     private List<Fragment> temporalFragments = new ArrayList<Fragment>();
     
-    protected static List<String> buildFragmentNameList(List<Fragment> fragments) {
+    protected static Collection<String> buildFragmentNameList(Collection<Fragment> fragments) {
         List<String> fragmentNames = new ArrayList<String>();
         for (Fragment f : fragments) {
             Long id = f.getId();
@@ -40,10 +39,6 @@ abstract class DaoImplH2Test {
             String appContextPath
             , Class<?> clazz
             ) throws Exception {
-        PropertyConfigurator.configure("src/test/resources/log4j-test.properties");
-        
-        TestUtil.getRandom();
-        
         log = TestUtil.newLogger(clazz);
         
         ctx = new GenericXmlApplicationContext();
@@ -79,7 +74,7 @@ abstract class DaoImplH2Test {
     } 
     
     protected void testFindAllTags() {
-        List<Tag> tags = tagDao.findAll();
+    	Collection<Tag> tags = tagDao.findAll();
         
         for (Tag t : tags) {
             log.info(t);
@@ -93,7 +88,7 @@ abstract class DaoImplH2Test {
     }
     
     protected void testFindAllFragments() {
-        List<Fragment> fragments = fragmentDao.findAll();
+    	Collection<Fragment> fragments = fragmentDao.findAll();
         
         for (Fragment f : fragments) {
             log.info(f);
@@ -107,9 +102,9 @@ abstract class DaoImplH2Test {
     }
     
     protected void testTagToFragmentRelationship() {
-        List<Tag> tags = tagDao.findAll();        
-        List<Fragment> fragments = fragmentDao.findAll();
-        List<String> fragmentNames = buildFragmentNameList(fragments);
+    	Collection<Tag> tags = tagDao.findAll();        
+    	Collection<Fragment> fragments = fragmentDao.findAll();
+    	Collection<String> fragmentNames = buildFragmentNameList(fragments);
         
         for (Tag t : tags) {
             Long id = t.getId();
@@ -126,10 +121,10 @@ abstract class DaoImplH2Test {
     }
     
     protected void testFragmentToTagRelationship() {
-        List<Tag> tags = tagDao.findAll();
+    	Collection<Tag> tags = tagDao.findAll();
         assertFalse(tags.isEmpty());
         Collection<String> tagNames = Tag.getTagNameListFrom(tags);
-        List<Fragment> fragments = fragmentDao.findAll();
+        Collection<Fragment> fragments = fragmentDao.findAll();
         
         for (Fragment f : fragments) {
             Long id = f.getId();
@@ -148,7 +143,7 @@ abstract class DaoImplH2Test {
     }
     
     protected void testTagsHierarchy() {
-        List<Tag> tags = tagDao.findAll();        
+    	Collection<Tag> tags = tagDao.findAll();        
         Collection<String> tagNames = Tag.getTagNameListFrom(tags);
  
         for (Tag t : tags) {
@@ -166,8 +161,8 @@ abstract class DaoImplH2Test {
     }    
         
     protected void testRelatedFragments() {
-        List<Fragment> fragments = fragmentDao.findAll();
-        List<String> fragmentNames = buildFragmentNameList(fragments);
+    	Collection<Fragment> fragments = fragmentDao.findAll();
+    	Collection<String> fragmentNames = buildFragmentNameList(fragments);
         
         for (Fragment f : fragments) {
             Long id = f.getId();
@@ -217,10 +212,12 @@ abstract class DaoImplH2Test {
         assertNotNull(tagDao.findById(tag.getId()));
         log.info("new tag " + tag.getId() + " has been added to fragment " + frg.getId());
         
-        List<Fragment> fs = tagDao.findFragments(tag.getId());
+        Collection<Fragment> fs = tagDao.findFragments(tag.getId());
         assertNotNull(fs);
         assertEquals(fs.size(), 1);
-        assertEquals(fs.get(0).getId(), frg.getId());
+        for (Fragment f : fs) {
+        	assertEquals(f.getId(), frg.getId());
+		}
          
         log.info(frg);
     }
@@ -248,9 +245,11 @@ abstract class DaoImplH2Test {
             for (Tag c : children) {
                 assertEquals(c.getId(), child.getId());
                 assertEquals(c.getTagName(), child.getTagName());
-                List<Tag> parents = tagDao.findParentTags(c.getId());
+                Collection<Tag> parents = tagDao.findParentTags(c.getId());
                 assertEquals(parents.size(), 1);
-                assertEquals(parents.get(0).getId(), parent.getId());
+                for (Tag p: parents) {
+                	assertEquals(p.getId(), parent.getId());
+                }
             }
         }
     }

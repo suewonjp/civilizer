@@ -1,20 +1,20 @@
 package com.knowledgex.web.view;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 import com.knowledgex.domain.Tag;
 
 @SuppressWarnings("serial")
 public class TagListBean implements Serializable {
 
-    private List<Tag> tags;
+    private Collection<Tag> tags;
 
-    public List<Tag> getTags() {
+    public Collection<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(Collection<Tag> tags) {
         this.tags = tags;
     }
     

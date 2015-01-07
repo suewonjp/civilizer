@@ -1,11 +1,11 @@
 package com.knowledgex.dao;
 
-import java.util.List;
+import java.util.*;
 
 import com.knowledgex.domain.Fragment;
 
 public interface FragmentDao {
-    public List<Fragment> findAll();
+    public Collection<Fragment> findAll();
 
     public Fragment findById(Long id);
 

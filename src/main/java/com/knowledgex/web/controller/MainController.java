@@ -36,7 +36,7 @@ public class MainController {
 	
 	public FragmentListBean newFragmentListBean() {
         FragmentListBean fragmentListBean = new FragmentListBean();
-        List<Fragment> fragments = fragmentDao.findAll();
+        Collection<Fragment> fragments = fragmentDao.findAll();
         List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
         for (Fragment f : fragments) {
         	FragmentBean fb = new FragmentBean();
@@ -83,7 +83,7 @@ public class MainController {
 	
 	private List<Tag> saveTags(RequestContext context, String tagNames) {
 		TagListBean tagListBean = (TagListBean) context.getViewScope().get("tagListBean");
-		List<Tag> existingTags = tagListBean.getTags();
+		Collection<Tag> existingTags = tagListBean.getTags();
 		String[] names = tagNames.split("\\s*[,]\\s*");
 		List<Tag> output = new ArrayList<Tag>();
 		for (String name : names) {

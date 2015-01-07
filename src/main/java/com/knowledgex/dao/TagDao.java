@@ -1,12 +1,12 @@
 package com.knowledgex.dao;
 
-import java.util.List;
+import java.util.*;
 
 import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.Tag;
 
 public interface TagDao {
-    public List<Tag> findAll();
+    public Collection<Tag> findAll();
 
     public Tag findById(Long id);
 
@@ -14,9 +14,9 @@ public interface TagDao {
 
     public Tag findByIdWithFragments(Long id);
 
-    public List<Fragment> findFragments(Long id);
+    public Collection<Fragment> findFragments(Long id);
     
-    public List<Tag> findParentTags(Long id);
+    public Collection<Tag> findParentTags(Long id);
 
     public Tag save(Tag tag);
 

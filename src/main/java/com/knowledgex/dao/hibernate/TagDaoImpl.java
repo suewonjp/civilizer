@@ -1,6 +1,6 @@
 package com.knowledgex.dao.hibernate;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -33,7 +33,7 @@ public class TagDaoImpl implements TagDao {
     
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public List<Tag> findAll() {
+    public Collection<Tag> findAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Tag t").list();
     }
@@ -60,7 +60,7 @@ public class TagDaoImpl implements TagDao {
     }
     
     @SuppressWarnings("unchecked")
-    public List<Fragment> findFragments(Long id) {
+    public Collection<Fragment> findFragments(Long id) {
         return sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragments")
                 .setParameter("id", id)
@@ -68,7 +68,7 @@ public class TagDaoImpl implements TagDao {
     }
     
     @SuppressWarnings("unchecked")
-    public List<Tag> findParentTags(Long id) {
+    public Collection<Tag> findParentTags(Long id) {
         return sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findParentTags")
                 .setParameter("id", id)
