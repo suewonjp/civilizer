@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.PropertyConfigurator;
 import org.joda.time.DateTime;
 import org.hibernate.Hibernate;
@@ -51,14 +50,13 @@ abstract class DaoImplH2Test {
     
     protected static void setUpBeforeClass(
             String appContextPath
-            , @SuppressWarnings("rawtypes") Class clazz) 
-                    throws Exception {
+            , Class<?> clazz
+            ) throws Exception {
         PropertyConfigurator.configure("src/test/resources/log4j-test.properties");
         
         TestUtil.getRandom();
         
-        log = LogFactory.getLog(clazz);
-        assertNotNull(log);
+        log = TestUtil.newLogger(clazz);
         
         ctx = new GenericXmlApplicationContext();
         ctx.load(appContextPath);

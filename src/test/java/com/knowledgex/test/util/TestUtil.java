@@ -9,11 +9,17 @@ import org.apache.commons.logging.LogFactory;
 
 public final class TestUtil {
 
-    private static Log log;
-    private static Random random;
+    private static Log log = newLogger(TestUtil.class);
+    private static Random random = null;
+    
+    public static Log newLogger(Class<?> clazz) {
+    	Log output = LogFactory.getLog(clazz);
+        assertNotNull(output);    	
+    	return output;
+    }
 
     public static Random getRandom() {
-        if (random != null) {
+        if (null != random) {
             return random;
         }
 
@@ -23,7 +29,6 @@ public final class TestUtil {
 //        final long seed = 1404463439000L;
         final long seed = cal.getTimeInMillis();
 
-        log = LogFactory.getLog(TestUtil.class);
         assertNotNull(log);
         log.info("random seed = " + seed);
 
