@@ -10,20 +10,10 @@ import org.apache.commons.logging.LogFactory;
 public final class TestUtil {
 
     private static Log log = newLogger(TestUtil.class);
-    private static Random random = null;
+    private static Random random = newRandomGenerator();
     
-    public static Log newLogger(Class<?> clazz) {
-    	Log output = LogFactory.getLog(clazz);
-        assertNotNull(output);    	
-    	return output;
-    }
-
-    public static Random getRandom() {
-        if (null != random) {
-            return random;
-        }
-
-        Calendar cal = Calendar.getInstance();
+    private static Random newRandomGenerator() {
+		Calendar cal = Calendar.getInstance();
         assertNotNull(cal);
 
 //        final long seed = 1404463439000L;
@@ -35,6 +25,17 @@ public final class TestUtil {
         random = new Random(seed);
         assertNotNull(random);
 
+        return random;
+	}
+    
+    public static Log newLogger(Class<?> clazz) {
+    	Log output = LogFactory.getLog(clazz);
+        assertNotNull(output);    	
+    	return output;
+    }
+
+    public static Random getRandom() {
+        assertNotNull(random);
         return random;
     }
 
