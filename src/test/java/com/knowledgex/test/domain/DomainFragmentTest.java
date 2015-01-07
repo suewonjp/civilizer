@@ -36,7 +36,7 @@ public class DomainFragmentTest {
 	
 	@Test
 	public void testIDsAreValid() {
-		assertTrue(fragments.size() > 0);
+		assertFalse(fragments.isEmpty());
 		
 		for (Fragment f : fragments) {
 			assertNotNull(f.getId());

@@ -55,7 +55,7 @@ public class Tag implements Serializable {
     }
 
     public Tag(String name) {
-    	tagName = name;
+    	setTagName(name);
     	DateTime dt = new DateTime();
     	setCreationDatetime(dt);
         setUpdateDatetime(dt);

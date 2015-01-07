@@ -136,37 +136,6 @@ abstract class DaoImplH2Test {
         }
     }
     
-    protected void testMethod_Tag_getTagNamesFrom() {
-    	List<Tag> tags = tagDao.findAll();
-        assertFalse(tags.isEmpty());
-        String actual = Tag.getTagNamesFrom(tags);
-        List<String> nameList = buildTagNameList(tags);
-        String expected = new String();
-        for (String s : nameList) {
-        	expected += s + ", ";
-        }
-        assertEquals(expected, actual);
-    }
-    
-    protected void testMethod_Tag_getTagFromName() {
-    	List<Tag> tags = tagDao.findAll();
-        assertFalse(tags.isEmpty());
-        Random r = TestUtil.getRandom();
-        
-        // The method should return the existing Tag if it accepts the name of an existing one.
-        int idx = r.nextInt(tags.size());
-        assertTrue(0 <= idx && idx < tags.size());
-        Tag expected = tags.get(idx);
-        String name = expected.getTagName();
-        Tag actual = Tag.getTagFromName(name, tags);
-        assertSame(expected, actual);
-        
-        // The method should return NULL if it accepts a non-existing name.
-        String nonExistingName = "#$%#%#%#%$#%$#%$#%$#%#$%***&%!%";
-        actual = Tag.getTagFromName(nonExistingName, tags);
-        assertNull(actual);
-    }
-    
     protected void testFragmentToTagRelationship() {
         List<Tag> tags = tagDao.findAll();
         assertFalse(tags.isEmpty());
