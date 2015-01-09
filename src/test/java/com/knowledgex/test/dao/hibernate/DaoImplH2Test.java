@@ -206,6 +206,11 @@ abstract class DaoImplH2Test {
         assertEquals(fs.size(), 1);
         for (Fragment f : fs) {
         	assertEquals(f.getId(), frg.getId());
+        	Collection<Tag> tags = f.getTags();
+        	assertEquals(tags.size(), 1);
+        	for (Tag t : tags) {
+        		assertEquals(t.getId(), tag.getId());
+        	}
 		}
          
         log.info(frg);
