@@ -66,7 +66,7 @@ public class MainController {
 	    FragmentBean fb = (FragmentBean) context.getViewScope().get("fragmentBean");
 	    
 	    String tagNames = fb.getTagNames();
-	    List<Tag> tags = saveTags(context, tagNames);
+	    Collection<Tag> tags = saveTags(context, tagNames);
 	    
 	    Fragment frg = fb.getFragment();
 	    frg.setTags(tags);
@@ -79,10 +79,10 @@ public class MainController {
         logger.info(fb.toString());
 	}
 	
-	private List<Tag> saveTags(RequestContext context, String tagNames) {
+	private Collection<Tag> saveTags(RequestContext context, String tagNames) {
 		TagListBean tagListBean = (TagListBean) context.getViewScope().get("tagListBean");
 		Collection<Tag> existingTags = tagListBean.getTags();
-		String[] names = tagNames.split("\\s*[,]\\s*");
+		Collection<String> names = Tag.getTagNameCollectionFrom(tagNames);
 		List<Tag> output = new ArrayList<Tag>();
 		for (String name : names) {
 			Tag t = Tag.getTagFromName(name, existingTags);
