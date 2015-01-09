@@ -40,6 +40,8 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
             query = "select distinct t from Tag t inner join t.children child where child.id = :id"),
 })
 public class Tag implements Serializable {
+	
+	public static final String TAG_NAME_DELIMITER = ",";
 
     private Long id;
     private String tagName;
@@ -171,7 +173,7 @@ public class Tag implements Serializable {
     public static String getTagNamesFrom(Collection<Tag> tags) {
     	String result = new String();
     	for (Tag t : tags) {
-    		result += t.tagName + ",";
+    		result += t.tagName + TAG_NAME_DELIMITER;
     	}
     	return result;
     }
@@ -180,7 +182,7 @@ public class Tag implements Serializable {
     	if (null == names || names.isEmpty()) {
     		return new ArrayList<String>();
     	}
-    	String[] arr = names.split("\\s*[,]+\\s*");
+    	String[] arr = names.split("\\s*[" + TAG_NAME_DELIMITER + "]+\\s*");
     	List<String> output = new ArrayList<String>();
     	for (String s : arr) {
     		if (!s.isEmpty()) {

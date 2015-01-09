@@ -77,25 +77,29 @@ public class DomainTagTest {
 		assertArrayEquals(expected, actual);
 		
 		//--- test against edge conditions
+		final String delim = Tag.TAG_NAME_DELIMITER;
 		actualC = Tag.getTagNameCollectionFrom((String)null);
 		assertTrue(actualC != null && actualC.isEmpty());
 		actualC = Tag.getTagNameCollectionFrom("");
 		assertTrue(actualC != null && actualC.isEmpty());
-		actualC = Tag.getTagNameCollectionFrom(",");
+		actualC = Tag.getTagNameCollectionFrom(delim);
 		assertTrue(actualC != null && actualC.isEmpty());
-		actualC = Tag.getTagNameCollectionFrom(",,,");
+		actualC = Tag.getTagNameCollectionFrom(delim+delim+delim);
 		assertTrue(actualC != null && actualC.isEmpty());
-		actualC = Tag.getTagNameCollectionFrom(",tag0,,");
+//		actualC = Tag.getTagNameCollectionFrom(",tag0,,");
+		actualC = Tag.getTagNameCollectionFrom(delim+"tag0"+delim+delim);
 		assertTrue(actualC != null && actualC.size() == 1);
 		for (String s : actualC) {
 			assertEquals(s, "tag0");
 		}
-		actualC = Tag.getTagNameCollectionFrom(",,,tag0,");
+//		actualC = Tag.getTagNameCollectionFrom(",,,tag0,");
+		actualC = Tag.getTagNameCollectionFrom(delim+delim+delim+"tag0"+delim);
 		assertTrue(actualC != null && actualC.size() == 1);
 		for (String s : actualC) {
 			assertEquals(s, "tag0");
 		}
-		actualC = Tag.getTagNameCollectionFrom("tag0,,tag1");
+//		actualC = Tag.getTagNameCollectionFrom("tag0,,tag1");
+		actualC = Tag.getTagNameCollectionFrom("tag0"+delim+delim+"tag1");
 		assertTrue(actualC != null && actualC.size() == 2);
 		List<String> list = new ArrayList<String>(actualC);
 		assertEquals(list.get(0), "tag0");
