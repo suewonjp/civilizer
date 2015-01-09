@@ -62,7 +62,7 @@ public class DomainTagTest {
     }
 	
 	@Test
-	public void testMethod_getTagNameListFrom() {
+	public void testMethod_getTagNameCollectionFrom() {
 		assertFalse(tags.isEmpty());
 		
 		Collection<String> actualC = Tag.getTagNameCollectionFrom(tags);

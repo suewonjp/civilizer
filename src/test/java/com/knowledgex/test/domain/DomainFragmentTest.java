@@ -53,7 +53,7 @@ public class DomainFragmentTest {
 	}
 	
 	@Test
-	public void testMethod_getFragmentTitleListFrom() {
+	public void testMethod_getFragmentTitleCollectionFrom() {
 		assertFalse(fragments.isEmpty());
 		
 		Collection<String> actualC = Fragment.getFragmentTitleCollectionFrom(fragments);;
