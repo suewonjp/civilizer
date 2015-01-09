@@ -75,6 +75,31 @@ public class DomainTagTest {
 		actualC = Tag.getTagNameCollectionFrom(actualS);
 		actual = actualC.toArray();
 		assertArrayEquals(expected, actual);
+		
+		//--- test against edge conditions
+		actualC = Tag.getTagNameCollectionFrom((String)null);
+		assertTrue(actualC != null && actualC.isEmpty());
+		actualC = Tag.getTagNameCollectionFrom("");
+		assertTrue(actualC != null && actualC.isEmpty());
+		actualC = Tag.getTagNameCollectionFrom(",");
+		assertTrue(actualC != null && actualC.isEmpty());
+		actualC = Tag.getTagNameCollectionFrom(",,,");
+		assertTrue(actualC != null && actualC.isEmpty());
+		actualC = Tag.getTagNameCollectionFrom(",tag0,,");
+		assertTrue(actualC != null && actualC.size() == 1);
+		for (String s : actualC) {
+			assertEquals(s, "tag0");
+		}
+		actualC = Tag.getTagNameCollectionFrom(",,,tag0,");
+		assertTrue(actualC != null && actualC.size() == 1);
+		for (String s : actualC) {
+			assertEquals(s, "tag0");
+		}
+		actualC = Tag.getTagNameCollectionFrom("tag0,,tag1");
+		assertTrue(actualC != null && actualC.size() == 2);
+		List<String> list = new ArrayList<String>(actualC);
+		assertEquals(list.get(0), "tag0");
+		assertEquals(list.get(1), "tag1");
 	}
 		
 	@Test

@@ -177,8 +177,17 @@ public class Tag implements Serializable {
     }
     
     public static Collection<String> getTagNameCollectionFrom(String names) {
-    	String[] arr = names.split("\\s*[,]\\s*");
-    	return Arrays.asList(arr);
+    	if (null == names || names.isEmpty()) {
+    		return new ArrayList<String>();
+    	}
+    	String[] arr = names.split("\\s*[,]+\\s*");
+    	List<String> output = new ArrayList<String>();
+    	for (String s : arr) {
+    		if (!s.isEmpty()) {
+    			output.add(s);
+    		}
+    	}
+    	return output;
     }
     
     public static Collection<String> getTagNameCollectionFrom(Collection<Tag> tags) {
