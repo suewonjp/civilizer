@@ -83,6 +83,9 @@ public class DomainTagTest {
 		
 		actualC = Tag.getTagNameCollectionFrom("");
 		assertTrue(actualC != null && actualC.isEmpty());
+
+		actualC = Tag.getTagNameCollectionFrom("  ");
+		assertTrue(actualC != null && actualC.isEmpty());
 		
 		actualC = Tag.getTagNameCollectionFrom(delim);
 		assertTrue(actualC != null && actualC.isEmpty());

@@ -179,7 +179,7 @@ public class Tag implements Serializable {
     }
     
     public static Collection<String> getTagNameCollectionFrom(String names) {
-    	if (null == names || names.isEmpty()) {
+    	if (null == names || names.trim().isEmpty()) {
     		return new ArrayList<String>();
     	}
     	String[] arr = names.split("\\s*[" + TAG_NAME_DELIMITER + "]+\\s*");
