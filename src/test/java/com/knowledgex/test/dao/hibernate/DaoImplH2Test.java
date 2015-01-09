@@ -93,7 +93,7 @@ abstract class DaoImplH2Test {
     protected void testTagToFragmentRelationship() {
     	Collection<Tag> tags = tagDao.findAll();        
     	Collection<Fragment> fragments = fragmentDao.findAll();
-    	Collection<String> fragmentNames = Fragment.getFragmentTitleListFrom(fragments);
+    	Collection<String> fragmentNames = Fragment.getFragmentTitleCollectionFrom(fragments);
         
         for (Tag t : tags) {
             Long id = t.getId();
@@ -112,7 +112,7 @@ abstract class DaoImplH2Test {
     protected void testFragmentToTagRelationship() {
     	Collection<Tag> tags = tagDao.findAll();
         assertFalse(tags.isEmpty());
-        Collection<String> tagNames = Tag.getTagNameListFrom(tags);
+        Collection<String> tagNames = Tag.getTagNameCollectionFrom(tags);
         Collection<Fragment> fragments = fragmentDao.findAll();
         
         for (Fragment f : fragments) {
@@ -133,7 +133,7 @@ abstract class DaoImplH2Test {
     
     protected void testTagsHierarchy() {
     	Collection<Tag> tags = tagDao.findAll();        
-        Collection<String> tagNames = Tag.getTagNameListFrom(tags);
+        Collection<String> tagNames = Tag.getTagNameCollectionFrom(tags);
  
         for (Tag t : tags) {
             Long id = t.getId();
@@ -151,7 +151,7 @@ abstract class DaoImplH2Test {
         
     protected void testRelatedFragments() {
     	Collection<Fragment> fragments = fragmentDao.findAll();
-    	Collection<String> fragmentNames = Fragment.getFragmentTitleListFrom(fragments);
+    	Collection<String> fragmentNames = Fragment.getFragmentTitleCollectionFrom(fragments);
         
         for (Fragment f : fragments) {
             Long id = f.getId();

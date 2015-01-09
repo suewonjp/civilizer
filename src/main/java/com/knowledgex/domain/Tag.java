@@ -176,12 +176,12 @@ public class Tag implements Serializable {
     	return result;
     }
     
-    public static Collection<String> getTagNameListFrom(String names) {
+    public static Collection<String> getTagNameCollectionFrom(String names) {
     	String[] arr = names.split("\\s*[,]\\s*");
     	return Arrays.asList(arr);
     }
     
-    public static Collection<String> getTagNameListFrom(Collection<Tag> tags) {
+    public static Collection<String> getTagNameCollectionFrom(Collection<Tag> tags) {
     	List<String> output = new ArrayList<String>(tags.size());
     	for (Tag t : tags) {
     		output.add(t.getTagName());

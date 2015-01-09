@@ -65,14 +65,14 @@ public class DomainTagTest {
 	public void testMethod_getTagNameListFrom() {
 		assertFalse(tags.isEmpty());
 		
-		Collection<String> actualC = Tag.getTagNameListFrom(tags);
+		Collection<String> actualC = Tag.getTagNameCollectionFrom(tags);
 		Object[] actual = actualC.toArray();
 		Collection<String> expectedC = buildTagNameList(tags);
 		Object[] expected = expectedC.toArray();
 		assertArrayEquals(expected, actual);
 		
 		String actualS = Tag.getTagNamesFrom(tags);
-		actualC = Tag.getTagNameListFrom(actualS);
+		actualC = Tag.getTagNameCollectionFrom(actualS);
 		actual = actualC.toArray();
 		assertArrayEquals(expected, actual);
 	}

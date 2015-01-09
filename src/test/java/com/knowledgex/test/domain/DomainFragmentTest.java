@@ -56,7 +56,7 @@ public class DomainFragmentTest {
 	public void testMethod_getFragmentTitleListFrom() {
 		assertFalse(fragments.isEmpty());
 		
-		Collection<String> actualC = Fragment.getFragmentTitleListFrom(fragments);;
+		Collection<String> actualC = Fragment.getFragmentTitleCollectionFrom(fragments);;
 		Object[] actual = actualC.toArray();
 		Collection<String> expectedC = buildFragmentTitleList(fragments);
 		Object[] expected = expectedC.toArray();
