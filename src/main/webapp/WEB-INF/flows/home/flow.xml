@@ -7,7 +7,7 @@
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
-            <evaluate expression="mainController.newFragmentListBean()" result="viewScope.fragmentListBean"/>
+            <evaluate expression="mainController.newFragmentListBean(flowRequestContext)" result="viewScope.fragmentListBean"/>
             <evaluate expression="mainController.newTagListBean()" result="viewScope.tagListBean"/>
             <evaluate expression="mainController.newFragmentBean()" result="viewScope.fragmentBean"/>
         </on-entry>
@@ -16,8 +16,8 @@
             <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
         </transition>
         
-        <transition on="filter-by-tag" to="exit">
-            <set name="requestScope.tagId" value="requestParameters.tagId" type="long" />
+        <transition on="filter-by-tag" to="home">
+            <set name="flowScope.tagId" value="requestParameters.tagId" type="long" />
         </transition>
 
         <transition on="save" to="exit">

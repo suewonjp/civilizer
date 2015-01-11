@@ -31,10 +31,18 @@ public class MainController {
 
 	@Autowired
 	private TagDao tagDao;
-	
-	public FragmentListBean newFragmentListBean() {
+
+	public FragmentListBean newFragmentListBean(RequestContext context) {
+		Long tagId = context.getFlowScope().getLong("tagId");
+		
         FragmentListBean fragmentListBean = new FragmentListBean();
-        Collection<Fragment> fragments = fragmentDao.findAll();
+        Collection<Fragment> fragments = null;
+        if (null == tagId) {
+        	fragments = fragmentDao.findAll();
+        }
+        else {
+        	fragments = tagDao.findFragments(tagId);
+        }
         List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
         for (Fragment f : fragments) {
         	FragmentBean fb = new FragmentBean();
@@ -54,7 +62,7 @@ public class MainController {
 	    fragmentBean.setFragment(frg);
 	    return fragmentBean;
 	}
-	
+
 	public Fragment showFragment(RequestContext context) {
 		Long id = context.getRequestScope().getLong("fragmentId");
 		logger.info("Selected fragment id: {}", id);
