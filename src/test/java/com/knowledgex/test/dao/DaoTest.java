@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import javax.validation.constraints.AssertTrue;
+
 import org.apache.commons.logging.Log;
 import org.hibernate.Hibernate;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -68,6 +70,18 @@ abstract class DaoTest {
         return frg;
     }
     
+    protected Long getAndValidateId(Fragment f) {
+        Long id = f.getId();
+        assertTrue(id != null && id >= 0);
+        return id;
+    }
+
+    protected Long getAndValidateId(Tag f) {
+        Long id = f.getId();
+        assertTrue(id != null && id >= 0);
+        return id;
+    }
+    
     protected void setUp() throws Exception {          
         fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
         assertNotNull(fragmentDao);
@@ -86,8 +100,7 @@ abstract class DaoTest {
     	Collection<Tag> tags = tagDao.findAll();
         
         for (Tag t : tags) {
-            Long id = t.getId();
-            assertTrue(id != null && id >= 0);
+            Long id = getAndValidateId(t);
             Tag tag = tagDao.findById(id);
             assertEquals(tag, t);
             assertEquals(tag.getTagName(), t.getTagName());
@@ -100,8 +113,7 @@ abstract class DaoTest {
     	Collection<Fragment> fragments = fragmentDao.findAll();
         
         for (Fragment f : fragments) {
-            Long id = f.getId();
-            assertTrue(id != null && id >= 0);
+            Long id = getAndValidateId(f);
             Fragment frg = fragmentDao.findById(id);
             assertEquals(frg, f);
             assertEquals(frg.getTitle(), f.getTitle());
@@ -136,8 +148,7 @@ abstract class DaoTest {
         Collection<Fragment> fragments = fragmentDao.findAll();
         
         for (Fragment f : fragments) {
-            Long id = f.getId();
-            assertTrue(id != null && id >= 0);
+            Long id = getAndValidateId(f);
 
             Fragment frgm = fragmentDao.findByIdWithTags(id);
             Collection<Tag> relatedTags = frgm.getTags();
@@ -156,8 +167,7 @@ abstract class DaoTest {
         Collection<String> tagNames = Tag.getTagNameCollectionFrom(tags);
  
         for (Tag t : tags) {
-            Long id = t.getId();
-            assertTrue(id != null && id >= 0);
+            Long id = getAndValidateId(t);
             Tag tag = tagDao.findByIdWithChildren(id);
             Collection<Tag> children = tag.getChildren();
             assertTrue(Hibernate.isInitialized(children));
@@ -175,8 +185,7 @@ abstract class DaoTest {
     	Collection<String> fragmentNames = Fragment.getFragmentTitleCollectionFrom(fragments);
         
         for (Fragment f : fragments) {
-            Long id = f.getId();
-            assertTrue(id != null && id >= 0);
+            Long id = getAndValidateId(f);
             Fragment frgm = fragmentDao.findByIdWithRelatedOnes(id);
             Collection<Fragment> relatedOnes = frgm.getRelatedOnes();
             assertTrue(Hibernate.isInitialized(relatedOnes));
