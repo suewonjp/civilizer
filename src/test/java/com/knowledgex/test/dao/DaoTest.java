@@ -25,13 +25,13 @@ abstract class DaoTest {
     private List<Fragment> temporalFragments = new ArrayList<Fragment>();
     
     protected static void setUpBeforeClass(
-            String appContextPath
+            String dataSourceContextPath
             , Class<?> clazz
             ) throws Exception {
         log = TestUtil.newLogger(clazz);
         
         ctx = new GenericXmlApplicationContext();
-        ctx.load(appContextPath);
+        ctx.load(dataSourceContextPath);
         ctx.refresh();
         log.info("GenericXmlApplicationContext initialized OK");
     }
@@ -46,6 +46,12 @@ abstract class DaoTest {
             assertNotNull(fragmentDao.findById(frg.getId()));
             fragmentDao.delete(frg);
         }
+    }
+    
+    protected Tag newTag(String name) {
+        if (name == null)
+            name = "new tag " + temporalTags.size();
+        return new Tag(name);
     }
     
     protected void setUp() throws Exception {          
@@ -165,13 +171,7 @@ abstract class DaoTest {
                 }
             }
         }
-    }
-    
-    protected Tag newTag(String name) {
-        if (name == null)
-            name = "new tag " + temporalTags.size();
-        return new Tag(name);
-    }
+    }    
     
     protected void testPersistNewTag() {
         Tag tag = newTag(null);
