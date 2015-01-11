@@ -2,6 +2,7 @@ package com.knowledgex.test.util;
 
 import static org.junit.Assert.*;
 
+import java.net.URL;
 import java.util.*;
 
 import org.apache.commons.logging.Log;
@@ -14,7 +15,12 @@ public final class TestUtil {
     private static Random random = newRandomGenerator();
     
     private static Log newLogger() {
-    	PropertyConfigurator.configure("src/test/resources/log4j-test.properties");
+    	String log4jPropName = "log4j-test.properties";
+    	URL url = ClassLoader.getSystemClassLoader().getResource(log4jPropName);
+    	assertNotNull(url);
+    	String log4jPropPath = url.getPath();
+    	assertTrue(log4jPropPath != null && log4jPropPath.isEmpty() == false);
+    	PropertyConfigurator.configure(log4jPropPath);
 
     	return newLogger(TestUtil.class);
     }
