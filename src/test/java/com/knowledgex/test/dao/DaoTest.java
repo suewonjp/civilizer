@@ -51,7 +51,21 @@ abstract class DaoTest {
     protected Tag newTag(String name) {
         if (name == null)
             name = "new tag " + temporalTags.size();
-        return new Tag(name);
+        Tag result = new Tag(name);
+        assertNotNull(result);
+        temporalTags.add(result);
+        return result;
+    }
+    
+    protected Fragment newFragment() {
+        Fragment frg = new Fragment(
+                "new fragment " + temporalFragments.size()
+                , "Some content..."
+                , null
+                );
+        assertNotNull(frg);
+        temporalFragments.add(frg);
+        return frg;
     }
     
     protected void setUp() throws Exception {          
@@ -175,26 +189,21 @@ abstract class DaoTest {
     
     protected void testPersistNewTag() {
         Tag tag = newTag(null);
-        temporalTags.add(tag);
+        assertNull(tag.getId());
         tagDao.save(tag);
-        log.info(tag);        
+        assertNotNull(tag.getId());
     }
 
     protected void testPersistNewFragment() {
-        Fragment frg = new Fragment(
-        		"new fragment " + temporalFragments.size()
-        		, "Some content..."
-        		, null
-        		);
-        assertNotNull(frg);
-        temporalFragments.add(frg);
+        Fragment frg = newFragment();
         
         // Add new tag to this fragment
         Tag tag = newTag("added tag " + counter++);
         frg.addTag(tag);
-        temporalTags.add(tag);
         
+        assertNull(frg.getId());
         fragmentDao.save(frg);
+        assertNotNull(frg.getId());
         
         // Check if the added tag has been persisted
         assertNotNull(tag.getId());
