@@ -245,7 +245,7 @@ public class Fragment implements Serializable {
         }
         return fragmentNames;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 43;
@@ -272,6 +272,7 @@ public class Fragment implements Serializable {
         return true;
     }
 
+    @Override
     public String toString() {
         return "Fragment - id: " + id
                 + ", title: "+ title

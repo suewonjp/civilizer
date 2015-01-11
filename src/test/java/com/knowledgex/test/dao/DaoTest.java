@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import javax.validation.constraints.AssertTrue;
-
 import org.apache.commons.logging.Log;
 import org.hibernate.Hibernate;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -294,6 +292,21 @@ abstract class DaoTest {
                 assertEquals(f.getTitle(), to.getTitle());
             }
         }
+    }
+    
+    protected void testFindFragmentsByTagIds() {
+      Collection<Tag> tags = tagDao.findAll();
+      
+      // --- Collection<Fragment> findFragments(Long id);
+      for (Tag t : tags) {
+          Collection<Fragment> fs = tagDao.findFragments(t.getId());
+          for (Fragment f : fs) {
+              Collection<Tag> tf = f.getTags();
+              assertTrue(tf != null && tf.isEmpty() == false);
+              Collection<String> tagNames = Tag.getTagNameCollectionFrom(tf);
+              assertTrue(tagNames.contains(t.getTagName()));
+          }
+      }
     }
 
 }

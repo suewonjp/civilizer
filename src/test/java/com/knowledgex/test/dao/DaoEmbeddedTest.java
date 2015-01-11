@@ -79,5 +79,10 @@ public class DaoEmbeddedTest extends DaoTest {
     public void testUpdateFragment() {
         super.testUpdateFragment();
     }
+    
+    @Test
+    public void testFindFragmentsByTagIds() {
+        super.testFindFragmentsByTagIds();
+    }
 
 }
