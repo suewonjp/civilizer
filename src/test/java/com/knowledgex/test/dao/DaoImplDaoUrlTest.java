@@ -1,34 +1,29 @@
-package com.knowledgex.test.dao.hibernate;
+package com.knowledgex.test.dao;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class DaoImplH2EmbeddedTest extends DaoImplH2Test {
-     
+public class DaoImplDaoUrlTest extends DaoImplDaoTest {
+    
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        DaoImplH2Test.setUpBeforeClass(
-                "classpath:datasource-context-h2-embedded.xml"
-                , DaoImplH2EmbeddedTest.class
+        DaoImplDaoTest.setUpBeforeClass(
+                "classpath:datasource-context-h2-url.xml"
+                , DaoImplDaoUrlTest.class
                 );
-    }
-    
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
     }
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
     }
-    
+
     @After
     public void tearDown() throws Exception {
         super.tearDown();
-    }
+    }        
 
     @Test
     public void testFindAllTags() {

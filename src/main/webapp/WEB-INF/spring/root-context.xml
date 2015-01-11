@@ -9,6 +9,6 @@
 
     <import resource="classpath:datasource-context.xml" />
     
-    <context:component-scan base-package="com.knowledgex.test.dao.hibernate" />
+    <context:component-scan base-package="com.knowledgex.test.dao" />
 
 </beans>

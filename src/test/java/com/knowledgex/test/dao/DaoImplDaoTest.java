@@ -1,4 +1,4 @@
-package com.knowledgex.test.dao.hibernate;
+package com.knowledgex.test.dao;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +12,7 @@ import com.knowledgex.dao.*;
 import com.knowledgex.domain.*;
 import com.knowledgex.test.util.TestUtil;
 
-abstract class DaoImplH2Test {
+abstract class DaoImplDaoTest {
     
     private static Log log;
     private static GenericXmlApplicationContext ctx;
