@@ -12,7 +12,7 @@ import com.knowledgex.dao.*;
 import com.knowledgex.domain.*;
 import com.knowledgex.test.util.TestUtil;
 
-abstract class DaoImplDaoTest {
+abstract class DaoTest {
     
     private static Log log;
     private static GenericXmlApplicationContext ctx;
