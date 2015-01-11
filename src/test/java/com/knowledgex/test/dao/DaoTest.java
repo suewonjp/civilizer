@@ -86,10 +86,10 @@ abstract class DaoTest {
     	Collection<Tag> tags = tagDao.findAll();
         
         for (Tag t : tags) {
-            log.info(t);
             Long id = t.getId();
-            assertTrue(id >= 0);
+            assertTrue(id != null && id >= 0);
             Tag tag = tagDao.findById(id);
+            assertEquals(tag, t);
             assertEquals(tag.getTagName(), t.getTagName());
             assertFalse(Hibernate.isInitialized(tag.getChildren()));
             assertFalse(Hibernate.isInitialized(tag.getFragments()));
@@ -100,10 +100,10 @@ abstract class DaoTest {
     	Collection<Fragment> fragments = fragmentDao.findAll();
         
         for (Fragment f : fragments) {
-            log.info(f);
             Long id = f.getId();
-            assertTrue(id >= 0);
+            assertTrue(id != null && id >= 0);
             Fragment frg = fragmentDao.findById(id);
+            assertEquals(frg, f);
             assertEquals(frg.getTitle(), f.getTitle());
             assertTrue(Hibernate.isInitialized(frg.getTags()));
             assertFalse(Hibernate.isInitialized(frg.getRelatedOnes()));
@@ -137,7 +137,7 @@ abstract class DaoTest {
         
         for (Fragment f : fragments) {
             Long id = f.getId();
-            assertTrue(id >= 0);
+            assertTrue(id != null && id >= 0);
 
             Fragment frgm = fragmentDao.findByIdWithTags(id);
             Collection<Tag> relatedTags = frgm.getTags();
@@ -157,6 +157,7 @@ abstract class DaoTest {
  
         for (Tag t : tags) {
             Long id = t.getId();
+            assertTrue(id != null && id >= 0);
             Tag tag = tagDao.findByIdWithChildren(id);
             Collection<Tag> children = tag.getChildren();
             assertTrue(Hibernate.isInitialized(children));
@@ -175,6 +176,7 @@ abstract class DaoTest {
         
         for (Fragment f : fragments) {
             Long id = f.getId();
+            assertTrue(id != null && id >= 0);
             Fragment frgm = fragmentDao.findByIdWithRelatedOnes(id);
             Collection<Fragment> relatedOnes = frgm.getRelatedOnes();
             assertTrue(Hibernate.isInitialized(relatedOnes));
@@ -214,7 +216,7 @@ abstract class DaoTest {
         assertNotNull(fs);
         assertEquals(fs.size(), 1);
         for (Fragment f : fs) {
-        	assertEquals(f.getId(), frg.getId());
+        	assertEquals(f, frg);
         	Collection<Tag> tags = f.getTags();
         	assertEquals(tags.size(), 1);
         	for (Tag t : tags) {
@@ -246,7 +248,7 @@ abstract class DaoTest {
             assertTrue(Hibernate.isInitialized(children));
             assertEquals(children.size(), 1);
             for (Tag c : children) {
-                assertEquals(c.getId(), child.getId());
+                assertEquals(c, child);
                 assertEquals(c.getTagName(), child.getTagName());
                 Collection<Tag> parents = tagDao.findParentTags(c.getId());
                 assertEquals(parents.size(), 1);
@@ -279,7 +281,7 @@ abstract class DaoTest {
             assertTrue(Hibernate.isInitialized(relatedOnes));
             assertEquals(relatedOnes.size(), 1);
             for (Fragment f : relatedOnes) {
-                assertEquals(f.getId(), to.getId());
+                assertEquals(f, to);
                 assertEquals(f.getTitle(), to.getTitle());
             }
         }
