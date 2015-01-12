@@ -84,22 +84,26 @@ public class TagDaoImpl implements TagDao {
     		return null;
     	}
     	Set<Long> setIn = new HashSet<Long>(idsIn); // needed for removing duplications
+    	Collection<Fragment> output =
+    	        sessionFactory.getCurrentSession()
+                .getNamedQuery("Tag.findFragmentsWithIdFilter")
+                .setParameterList("ids", setIn)
+                .list();
     	if (null == idsEx || idsEx.isEmpty()) {
-    		// We an have inclusion filter only
-    		return sessionFactory.getCurrentSession()
-		            .getNamedQuery("Tag.findFragmentsWithIdFilterIn")
-		            .setParameterList("idsIn", setIn)
-		            .list();
+    		// We have an inclusive filter only
+    		return output;
     	}
-    	else {    
-    		// We have an exclusion filter.
-    		Set<Long> setEx = new HashSet<Long>(idsEx);
-    		return sessionFactory.getCurrentSession()
-    				.getNamedQuery("Tag.findFragmentsWithIdFilterInEx")
-    				.setParameterList("idsIn", setIn)
-    				.setParameterList("idsEx", setEx)
-    				.list();
+    	// We have an exclusive filter
+    	Set<Long> setEx = new HashSet<Long>(idsEx);
+    	Iterator<Fragment> itr = output.iterator();
+    	while (itr.hasNext()) {
+    	    Fragment f = itr.next();
+    	    Collection<Long> tagIds = Tag.getTagIdCollectionFrom(f.getTags());
+    	    if (!Collections.disjoint(tagIds, setEx)) {
+    	        itr.remove();
+    	    }
     	}
+    	return output;
 	}
     
     @Override

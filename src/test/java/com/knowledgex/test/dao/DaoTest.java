@@ -350,12 +350,12 @@ abstract class DaoTest {
 		idsIn.add(ids.get(ids.size()-1));
 		idsIn.add(ids.get(ids.size()-2));
 		
-		// The inclusion filter and exclusion filter should not have duplicate IDs!
+		// The inclusive and exclusive filter should not have duplicate IDs!
 		for (Long idIn : idsIn) {
 			assertFalse(idsEx.contains(idIn));
 		}
 		
-		// test with an inclusion filter only
+		// test with an inclusive filter only
 		fragments = tagDao.findFragments(idsIn, null);
 		for (Fragment f : fragments) {
 			boolean contains = false;
@@ -368,28 +368,28 @@ abstract class DaoTest {
 			assertTrue(contains);
 		}
 		
-		// test with a duplicate inclusion filter
+		// test with a duplicate inclusive filter
 		idsIn.add(idsIn.get(0));
 		Collection<Fragment> fragments2 = tagDao.findFragments(idsIn, null);
 		assertEquals(fragments, fragments2);
 		
-//		// test with an exclusion filter
-//		fragments = tagDao.findFragments(idsIn, idsEx);
-//		for (Fragment f : fragments) {
-//			boolean contains = false;
-//			for (Long tid : idsEx) {
-//				if (f.containsTagId(tid)) {
-//					contains = true;
-//					break;
-//				}
-//			}
-//			assertFalse(contains);
-//		}
-//		
-//		// test with a duplicate exclusion filter
-//		idsEx.add(idsEx.get(0));
-//		fragments2 = tagDao.findFragments(idsIn, idsEx);
-//		assertEquals(fragments, fragments2);
+		// test with an exclusive filter
+		fragments = tagDao.findFragments(idsIn, idsEx);
+		for (Fragment f : fragments) {
+			boolean contains = false;
+			for (Long tid : idsEx) {
+				if (f.containsTagId(tid)) {
+					contains = true;
+					break;
+				}
+			}
+			assertFalse(contains);
+		}
+		
+		// test with a duplicate exclusive filter
+		idsEx.add(idsEx.get(0));
+		fragments2 = tagDao.findFragments(idsIn, idsEx);
+		assertEquals(fragments, fragments2);
 	}
 
 }
