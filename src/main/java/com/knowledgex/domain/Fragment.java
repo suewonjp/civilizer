@@ -238,6 +238,10 @@ public class Fragment implements Serializable {
         this.tags.add(tag);
     }
     
+    public boolean containsTagName(String tagName) {
+    	return Tag.containsName(getTags(), tagName);
+    }
+    
     public static Collection<String> getFragmentTitleCollectionFrom(Collection<Fragment> fragments) {
     	List<String> fragmentNames = new ArrayList<String>();
         for (Fragment f : fragments) {
