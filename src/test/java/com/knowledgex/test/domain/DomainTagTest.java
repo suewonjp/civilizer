@@ -130,5 +130,35 @@ public class DomainTagTest {
         actual = Tag.getTagFromName(nonExistingName, tags);
         assertNull(actual);
     }
+	
+	@Test
+	public void testMethod_containsName() {
+		assertFalse(tags.isEmpty());
+		boolean result = false;
+		Collection<Tag> emptyTagCollection = new ArrayList<Tag>();
+		
+		result = Tag.containsName(null, null);
+		assertTrue(result);
+		assertTrue(emptyTagCollection.isEmpty());
+		result = Tag.containsName(emptyTagCollection, "");
+		assertTrue(result);
+		result = Tag.containsName(null, "");
+		assertTrue(result);
+		assertTrue(emptyTagCollection.isEmpty());
+		result = Tag.containsName(emptyTagCollection, null);
+		assertTrue(result);
+		
+		result = Tag.containsName(tags, "");
+		assertFalse(result);
+		result = Tag.containsName(null, tags.get(0).getTagName());
+		assertFalse(result);
+		result = Tag.containsName(emptyTagCollection, tags.get(0).getTagName());
+		assertFalse(result);
+		
+		for (Tag t : tags) {
+			result = Tag.containsName(tags, t.getTagName());
+			assertTrue(result);
+		}
+	}
 
 }

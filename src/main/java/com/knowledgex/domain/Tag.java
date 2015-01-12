@@ -211,6 +211,33 @@ public class Tag implements Serializable {
     	return tag;
     }
     
+    public static boolean containsName(Collection<Tag> tags, String name) {
+    	if (null != name && name.isEmpty()) {
+    		name = null;
+    	}
+    	if (null != tags && tags.isEmpty()) {
+    		tags = null;
+    	}
+    	
+    	boolean nameNull = (null == name);
+    	if (nameNull ^ (null == tags)) {
+    		return false;
+    	}
+    	else {
+    		if (nameNull) {
+    			return true;
+    		}    		
+    	}
+    	
+    	for (Tag t : tags) {
+    		if (t.getTagName().equals(name)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;
