@@ -132,6 +132,25 @@ public class DomainTagTest {
     }
 	
 	@Test
+	public void testMethod_containsId() {
+		assertFalse(tags.isEmpty());
+		boolean result = false;
+		Collection<Tag> emptyTagCollection = new ArrayList<Tag>();
+		long id = tags.get(0).getId();
+		
+		result = Tag.containsId(null, id);
+		assertFalse(result);
+		assertTrue(emptyTagCollection.isEmpty());
+		result = Tag.containsId(emptyTagCollection, id);
+		assertFalse(result);
+		
+		for (Tag t : tags) {
+			result = Tag.containsId(tags, t.getId());
+			assertTrue(result);
+		}
+	}
+	
+	@Test
 	public void testMethod_containsName() {
 		assertFalse(tags.isEmpty());
 		boolean result = false;

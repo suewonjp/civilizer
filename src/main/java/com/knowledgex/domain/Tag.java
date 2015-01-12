@@ -211,6 +211,20 @@ public class Tag implements Serializable {
     	return tag;
     }
     
+    public static boolean containsId(Collection<Tag> tags, long id) {
+    	if (null == tags || tags.isEmpty()) {
+    		return false;
+    	}
+    	
+    	for (Tag t : tags) {
+    		if (t.getId().equals(id)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
     public static boolean containsName(Collection<Tag> tags, String name) {
     	if (null != name && name.isEmpty()) {
     		name = null;
