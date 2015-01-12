@@ -246,17 +246,6 @@ public class Fragment implements Serializable {
     	return Tag.containsName(getTags(), tagName);
     }
     
-    public boolean hasTagNameOf(String name) {
-    	if (null == name || name.isEmpty()) {
-    		if (tags.isEmpty()) {
-    			return true;
-    		}
-    	}
-    	else {
-    	}
-    	return false;
-    }
-    
     public static Collection<String> getFragmentTitleCollectionFrom(Collection<Fragment> fragments) {
     	List<String> fragmentNames = new ArrayList<String>();
         for (Fragment f : fragments) {
