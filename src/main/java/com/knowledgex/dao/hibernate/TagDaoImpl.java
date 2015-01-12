@@ -31,6 +31,7 @@ public class TagDaoImpl implements TagDao {
         this.sessionFactory = sessionFactory;
     }
     
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public Collection<Tag> findAll() {
@@ -38,6 +39,7 @@ public class TagDaoImpl implements TagDao {
                 .createQuery("from Tag t").list();
     }
 
+    @Override
     public Tag findById(Long id) {
         return (Tag) sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findById")
@@ -45,6 +47,7 @@ public class TagDaoImpl implements TagDao {
                 .uniqueResult();
     }
 
+    @Override
     public Tag findByIdWithChildren(Long id) {
         return (Tag) sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findByIdWithChildren")
@@ -52,6 +55,7 @@ public class TagDaoImpl implements TagDao {
                 .uniqueResult();
     }
 
+    @Override
     public Tag findByIdWithFragments(Long id) {
         return (Tag) sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findByIdWithFragments")
@@ -59,6 +63,7 @@ public class TagDaoImpl implements TagDao {
                 .uniqueResult();
     }
     
+    @Override
     @SuppressWarnings("unchecked")
     public Collection<Fragment> findFragments(Long id) {
         return sessionFactory.getCurrentSession()
@@ -67,6 +72,7 @@ public class TagDaoImpl implements TagDao {
                 .list();
     }
     
+    @Override
     @SuppressWarnings("unchecked")
     public Collection<Tag> findParentTags(Long id) {
         return sessionFactory.getCurrentSession()
@@ -75,12 +81,14 @@ public class TagDaoImpl implements TagDao {
                 .list();
     }
 
+    @Override
     public Tag save(Tag tag) {
         sessionFactory.getCurrentSession().saveOrUpdate(tag);
         log.info("Tag saved with id: " + tag.getId());
         return tag;
     }
 
+    @Override
     public void delete(Tag tag) {
         sessionFactory.getCurrentSession().delete(tag);
         log.info("Tag deleted with id: " + tag.getId());

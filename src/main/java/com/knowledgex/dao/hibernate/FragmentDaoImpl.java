@@ -30,6 +30,7 @@ public class FragmentDaoImpl implements FragmentDao {
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public Collection<Fragment> findAll() {
@@ -37,6 +38,7 @@ public class FragmentDaoImpl implements FragmentDao {
                 .createQuery("from Fragment f").list();
     }
 
+    @Override
     public Fragment findById(Long id) {
         return (Fragment) sessionFactory.getCurrentSession()
                 .getNamedQuery("Fragment.findById")
@@ -44,6 +46,7 @@ public class FragmentDaoImpl implements FragmentDao {
                 .uniqueResult();
     }
     
+    @Override
     public Fragment findByIdWithRelatedOnes(Long id) {
         return (Fragment) sessionFactory.getCurrentSession()
                 .getNamedQuery("Fragment.findByIdWithRelatedOnes")
@@ -51,6 +54,7 @@ public class FragmentDaoImpl implements FragmentDao {
                 .uniqueResult();
     }
 
+    @Override
     public Fragment findByIdWithTags(Long id) {
         return (Fragment) sessionFactory.getCurrentSession()
                 .getNamedQuery("Fragment.findByIdWithTags")
@@ -58,12 +62,14 @@ public class FragmentDaoImpl implements FragmentDao {
                 .uniqueResult();
     }
 
+    @Override
     public Fragment save(Fragment fragment) {
         sessionFactory.getCurrentSession().saveOrUpdate(fragment);
         log.info("Fragment saved with id: " + fragment.getId());
         return fragment;
     }
 
+    @Override
     public void delete(Fragment fragment) {
         sessionFactory.getCurrentSession().delete(fragment);
         log.info("Fragment deleted with id: " + fragment.getId());
