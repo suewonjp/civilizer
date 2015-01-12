@@ -15,6 +15,11 @@ public interface TagDao {
     public Tag findByIdWithFragments(Long id);
 
     public Collection<Fragment> findFragments(Long id);
+
+    public Collection<Fragment> findFragments(
+    		Collection<Long> idsIn
+    		, Collection<Long> idsEx
+    		);
     
     public Collection<Tag> findParentTags(Long id);
 

@@ -1,12 +1,13 @@
 package com.knowledgex.dao.hibernate;
 
-import java.util.Collection;
+import java.util.*;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,7 +62,7 @@ public class TagDaoImpl implements TagDao {
                 .getNamedQuery("Tag.findByIdWithFragments")
                 .setParameter("id", id)
                 .uniqueResult();
-    }
+    }    
     
     @Override
     @SuppressWarnings("unchecked")
@@ -71,6 +72,35 @@ public class TagDaoImpl implements TagDao {
                 .setParameter("id", id)
                 .list();
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+	public Collection<Fragment> findFragments(
+			Collection<Long> idsIn
+			, Collection<Long> idsEx
+			) {
+    	if (null == idsIn || idsIn.isEmpty()) {
+    		// Empty inclusion filter, empty results
+    		return null;
+    	}
+    	Set<Long> setIn = new HashSet<Long>(idsIn); // needed for removing duplications
+    	if (null == idsEx || idsEx.isEmpty()) {
+    		// We an have inclusion filter only
+    		return sessionFactory.getCurrentSession()
+		            .getNamedQuery("Tag.findFragmentsWithIdFilterIn")
+		            .setParameterList("idsIn", setIn)
+		            .list();
+    	}
+    	else {    
+    		// We have an exclusion filter.
+    		Set<Long> setEx = new HashSet<Long>(idsEx);
+    		return sessionFactory.getCurrentSession()
+    				.getNamedQuery("Tag.findFragmentsWithIdFilterInEx")
+    				.setParameterList("idsIn", setIn)
+    				.setParameterList("idsEx", setEx)
+    				.list();
+    	}
+	}
     
     @Override
     @SuppressWarnings("unchecked")

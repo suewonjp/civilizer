@@ -36,6 +36,10 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
             query = "select distinct t from Tag t left join fetch t.fragments where t.id = :id"),
     @NamedQuery(name = "Tag.findFragments",
             query = "select t.fragments from Tag t where t.id = :id"),
+    @NamedQuery(name = "Tag.findFragmentsWithIdFilterIn",
+            query = "select t.fragments from Tag t where t.id in (:idsIn)"),
+    @NamedQuery(name = "Tag.findFragmentsWithIdFilterInEx",
+            query = "select t.fragments from Tag t where t.id in (:idsIn) and t.id not in (:idsEx)"),
     @NamedQuery(name = "Tag.findParentTags",
             query = "select distinct t from Tag t inner join t.children child where child.id = :id"),
 })
