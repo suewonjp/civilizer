@@ -20,12 +20,12 @@
             <set name="flowScope.tagId" value="requestParameters.tagId" type="long" />
         </transition>
 
-        <transition on="save" to="exit">
+        <transition on="save-fragment" to="exit">
             <evaluate expression="mainController.saveFragment(flowRequestContext)" />
             <evaluate expression="fragmentBean.clear()" />
         </transition>
 
-        <transition on="preview" >
+        <transition on="preview-fragment" >
             <evaluate expression="mainController.test2(flowRequestContext)" />
             <evaluate expression="fragmentBean.clear()" />
         </transition>
