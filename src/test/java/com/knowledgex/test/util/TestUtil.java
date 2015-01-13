@@ -29,8 +29,8 @@ public final class TestUtil {
 		Calendar cal = Calendar.getInstance();
         assertNotNull(cal);
 
-        final long seed = 1421048938148L;
-//        final long seed = cal.getTimeInMillis();
+//        final long seed = 1421048938148L;
+        final long seed = cal.getTimeInMillis();
         
         log.info("random seed = " + seed);
 
