@@ -80,6 +80,13 @@ public class MainController {
 		return ret;
 	}
 	
+	public void trashFragment(RequestContext context) {
+		Long fragmentId = context.getFlowScope().getLong("fragmentId");
+		if (fragmentId != null) {
+			logger.info("Selected fragment id: {}", fragmentId);
+		}
+	}
+	
 	public void saveFragment(RequestContext context) {
 	    FragmentBean fb = (FragmentBean) context.getViewScope().get("fragmentBean");
 	    

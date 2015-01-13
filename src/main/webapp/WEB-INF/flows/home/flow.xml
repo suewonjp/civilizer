@@ -19,6 +19,11 @@
         <transition on="filter-by-tag" to="home">
             <set name="flowScope.tagId" value="requestParameters.tagId" type="long" />
         </transition>
+        
+        <transition on="trash-fragment" to="exit">
+            <set name="flowScope.fragmentId" value="requestParameters.fragmentId" type="long" />
+            <evaluate expression="mainController.trashFragment(flowRequestContext)" />
+        </transition>
 
         <transition on="save-fragment" to="exit">
             <evaluate expression="mainController.saveFragment(flowRequestContext)" />
