@@ -94,16 +94,7 @@ public class TagDaoImpl implements TagDao {
     		return output;
     	}
     	// We have an exclusive filter
-    	Set<Long> setEx = new HashSet<Long>(idsEx);
-    	Iterator<Fragment> itr = output.iterator();
-    	while (itr.hasNext()) {
-    	    Fragment f = itr.next();
-    	    Collection<Long> tagIds = Tag.getTagIdCollectionFrom(f.getTags());
-    	    if (!Collections.disjoint(tagIds, setEx)) {
-    	        itr.remove();
-    	    }
-    	}
-    	return output;
+    	return Fragment.applyExclusiveTagFilter(output, idsEx);
 	}
     
     @Override

@@ -253,6 +253,25 @@ public class Fragment implements Serializable {
         }
         return fragmentNames;
     }
+    
+    public static Collection<Fragment> applyExclusiveTagFilter(
+    		Collection<Fragment> fragments
+    		, Collection<Long> tags
+    		) {
+    	if (null == fragments || null == tags || tags.isEmpty()) {
+    		return fragments;
+    	}
+    	Set<Long> setEx = new HashSet<Long>(tags);
+    	Iterator<Fragment> itr = fragments.iterator();
+    	while (itr.hasNext()) {
+    	    Fragment f = itr.next();
+    	    Collection<Long> tagIds = Tag.getTagIdCollectionFrom(f.getTags());
+    	    if (!Collections.disjoint(tagIds, setEx)) {
+    	        itr.remove();
+    	    }
+    	}
+    	return fragments;
+    }
 
     @Override
     public int hashCode() {
