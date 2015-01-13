@@ -44,6 +44,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 public class Tag implements Serializable {
 	
 	public static final String TAG_NAME_DELIMITER = ",";
+	private static final long TRASH_TAG_ID = 0L;
 
     private Long id;
     private String tagName;
@@ -260,6 +261,10 @@ public class Tag implements Serializable {
     	}
     	
     	return false;
+    }
+    
+    public static boolean isTrashTag(Long id) {
+    	return  (null != id) && (id == TRASH_TAG_ID);
     }
     
     @Override

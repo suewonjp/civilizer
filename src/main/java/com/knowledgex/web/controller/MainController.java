@@ -38,11 +38,21 @@ public class MainController {
         FragmentListBean fragmentListBean = new FragmentListBean();
         Collection<Fragment> fragments = null;
         if (null == tagId) {
+        	// Fetch all the fragments
         	fragments = fragmentDao.findAll();
         }
         else {
+        	// Fetch the fragments with the specified tag
         	fragments = tagDao.findFragments(tagId);
         }
+        
+        if (Tag.isTrashTag(tagId) == false) {
+        	// Exclude fragments that have '#trash' tag
+        	List<Long> trashTagId = new ArrayList<Long>();
+        	trashTagId.add(0L);
+        	fragments = Fragment.applyExclusiveTagFilter(fragments, trashTagId);
+        }
+        
         List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
         for (Fragment f : fragments) {
         	FragmentBean fb = new FragmentBean();
