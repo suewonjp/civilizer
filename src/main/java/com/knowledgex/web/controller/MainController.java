@@ -25,12 +25,22 @@ import com.knowledgex.web.view.TagListBean;
 public class MainController {
     
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+    
+    private static Tag trashTag = null;
 
 	@Autowired
 	private FragmentDao fragmentDao;
 
 	@Autowired
 	private TagDao tagDao;
+	
+	private Tag getTrashTag() {
+		if (null != trashTag) {
+			return trashTag;
+		}
+		trashTag = tagDao.findById(Tag.TRASH_TAG_ID);
+		return trashTag;
+	}
 
 	public FragmentListBean newFragmentListBean(RequestContext context) {
 		Long tagId = context.getFlowScope().getLong("tagId");
@@ -83,7 +93,9 @@ public class MainController {
 	public void trashFragment(RequestContext context) {
 		Long fragmentId = context.getFlowScope().getLong("fragmentId");
 		if (fragmentId != null) {
-			logger.info("Selected fragment id: {}", fragmentId);
+			Fragment frg = fragmentDao.findById(fragmentId);
+			frg.addTag(getTrashTag());
+			fragmentDao.save(frg);
 		}
 	}
 	
