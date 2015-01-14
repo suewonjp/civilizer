@@ -31,7 +31,7 @@
             , overlayClose:false
         });
         
-        $("#colorbox").tinyDraggable({handle:'#cboxTitle', exclude:'input, textarea'});
+        $("#colorbox").draggable({handle:'#cboxTitle', cursor:'move'});
         
         function parseMarkdown(inputText) {
             return markdown.toHTML(inputText);
