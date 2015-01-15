@@ -100,7 +100,7 @@ abstract class DaoTest {
 	}
 
 	protected void testFindAllTags() {
-		Collection<Tag> tags = tagDao.findAll();
+		Collection<Tag> tags = tagDao.findAllWithChildren();
 
 		for (Tag t : tags) {
 			Long id = getAndValidateId(t);

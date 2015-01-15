@@ -8,6 +8,8 @@ import com.knowledgex.domain.Tag;
 public interface TagDao {
     public Collection<Tag> findAll();
 
+    public Collection<Tag> findAllWithChildren();
+
     public Tag findById(Long id);
 
     public Tag findByIdWithChildren(Long id);

@@ -169,7 +169,7 @@ public class MainController {
 	
 	public TagListBean newTagListBean() {
 	    TagListBean tagListBean = new TagListBean();
-	    tagListBean.setTags(tagDao.findAll());
+	    tagListBean.setTags(tagDao.findAllWithChildren());
 	    TagTree tagTree = newTagTree();
 	    tagListBean.setTagTree(tagTree);
         return tagListBean;

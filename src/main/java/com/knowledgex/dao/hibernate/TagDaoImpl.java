@@ -39,6 +39,15 @@ public class TagDaoImpl implements TagDao {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Tag t").list();
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    public Collection<Tag> findAllWithChildren() {
+        return sessionFactory.getCurrentSession()
+                .getNamedQuery("Tag.findAllWithChildren")
+                .list();
+    }
 
     @Override
     public Tag findById(Long id) {

@@ -28,6 +28,8 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Entity
 @Table(name = "TAG")
 @NamedQueries({
+    @NamedQuery(name = "Tag.findAllWithChildren",
+            query = "from Tag t left join fetch t.children"),
     @NamedQuery(name = "Tag.findById",
             query = "select distinct t from Tag t where t.id = :id"),
     @NamedQuery(name = "Tag.findByIdWithChildren",
