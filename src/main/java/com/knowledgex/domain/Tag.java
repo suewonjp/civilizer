@@ -1,6 +1,7 @@
 package com.knowledgex.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static org.junit.Assert.assertFalse;
 
 import java.io.Serializable;
 import java.util.*;
@@ -222,6 +223,22 @@ public class Tag implements Serializable {
     		}
     	}
     	return tag;
+    }
+    
+    public static Collection<Tag> getTopParentTags(Collection<Tag> tags) {
+        if (null == tags || tags.isEmpty()) {
+            return null;
+        }
+        Collection<Tag> output = new ArrayList<Tag>(tags);
+        for (Tag t : tags) {
+            Collection<Tag> children = t.getChildren();
+            for (Tag c : children) {
+                if (output.contains(c)) {
+                    output.remove(c);
+                }
+            }
+        }
+        return output;
     }
     
     public static boolean containsId(Collection<Tag> tags, long id) {

@@ -26,6 +26,53 @@ public class DomainTagTest {
         assertEquals(tagNames.size(), tags.size());
         return tagNames;
     }
+	
+	@SuppressWarnings("unchecked")
+    private static void buildTagHierarchy(Collection<Tag> tags) {
+	    assertNotNull(tags);
+	    assertFalse(tags.isEmpty());
+	    
+	    Random r = TestUtil.getRandom();
+	    final int depthCount = 3;
+
+	    Object[] tagsPerDepth = new Object[depthCount];
+	    for (int i=0; i<depthCount; ++i) {
+	        tagsPerDepth[i] = new ArrayList<Tag>();
+	    }
+	    
+	    for (Tag t : tags) {
+	        int d = r.nextInt(depthCount);
+	        assertTrue(0 <= d && d < depthCount);
+	        ((List<Tag>) tagsPerDepth[d]).add(t);
+	    }
+	    
+	    for (int i=1; i<depthCount; ++i) {
+	        List<Tag> parentTags = (List<Tag>) tagsPerDepth[i - 1];
+	        List<Tag> childTags = new ArrayList<Tag>((List<Tag>) tagsPerDepth[i]);
+	        int pi = 0;
+	        while (childTags.isEmpty() == false) {
+	            Tag child = childTags.get(childTags.size() - 1);
+	            Tag parent = parentTags.get(pi);
+	            if (r.nextBoolean()) {
+	                parent.addChild(child);
+	                boolean removed = childTags.remove(child);
+	                assertTrue(removed);
+	            }
+	            pi = (pi + 1) % parentTags.size();
+	        }
+	    }
+	    
+	    for (int i=1; i<depthCount; ++i) {
+            List<Tag> parentTags = (List<Tag>) tagsPerDepth[i - 1];
+            List<Tag> childTags = (List<Tag>) tagsPerDepth[i];
+            for (Tag p : parentTags) {
+                Collection<Tag> children = p.getChildren();
+                for (Tag c : children) {
+                    assertTrue(childTags.contains(c));                    
+                }
+            }
+	    }
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -37,6 +84,8 @@ public class DomainTagTest {
 			t.setId(new Long(i));
 	        tags.add(t);
 		}
+		
+		buildTagHierarchy(tags);
 	}
 
 	@Test
@@ -178,6 +227,27 @@ public class DomainTagTest {
 			result = Tag.containsName(tags, t.getTagName());
 			assertTrue(result);
 		}
+	}
+	
+	@Test
+	public void testMethod_getTopParentTags() {
+	    assertFalse(tags.isEmpty());
+	    
+	    // Edge cases
+	    Collection<Tag> topParents = null;
+	    topParents = Tag.getTopParentTags(null);
+	    assertNull(topParents);
+	    topParents = Tag.getTopParentTags(new ArrayList<Tag>());
+	    assertNull(topParents);
+	    
+	    topParents = Tag.getTopParentTags(tags);
+	    assertFalse(topParents.isEmpty());
+	    for (Tag t : tags) {
+	        Collection<Tag> children = t.getChildren();
+	        for (Tag c : children) {
+	            assertFalse(topParents.contains(c));
+	        }
+	    }
 	}
 
 }
