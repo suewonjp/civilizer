@@ -170,10 +170,12 @@ public class MainController {
 	public TagListBean newTagListBean() {
 	    TagListBean tagListBean = new TagListBean();
 	    tagListBean.setTags(tagDao.findAll());
+	    TagTree tagTree = newTagTree();
+	    tagListBean.setTagTree(tagTree);
         return tagListBean;
     }
 	
-	public TagTree newTagTree() {
+	private TagTree newTagTree() {
 	    TagTree tagTree = new TagTree();
 	    return tagTree;
 	}

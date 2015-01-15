@@ -9,7 +9,6 @@
         <on-entry>
             <evaluate expression="mainController.newFragmentListBean(flowRequestContext)" result="viewScope.fragmentListBean"/>
             <evaluate expression="mainController.newTagListBean()" result="viewScope.tagListBean"/>
-            <evaluate expression="mainController.newTagTree()" result="viewScope.tagTree"/>
             <evaluate expression="mainController.newFragmentBean()" result="viewScope.fragmentBean"/>
         </on-entry>
         
