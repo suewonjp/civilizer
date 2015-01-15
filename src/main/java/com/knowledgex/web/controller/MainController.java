@@ -16,9 +16,7 @@ import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
 import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.Tag;
-import com.knowledgex.web.view.FragmentBean;
-import com.knowledgex.web.view.FragmentListBean;
-import com.knowledgex.web.view.TagListBean;
+import com.knowledgex.web.view.*;
 
 @Controller
 @Component("mainController")
@@ -174,5 +172,10 @@ public class MainController {
 	    tagListBean.setTags(tagDao.findAll());
         return tagListBean;
     }
+	
+	public TagTree newTagTree() {
+	    TagTree tagTree = new TagTree();
+	    return tagTree;
+	}
 
 }

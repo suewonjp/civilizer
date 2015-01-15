@@ -13,25 +13,31 @@
 	</span>
 </div>
 
-<div id="tab-view-style">
-    <ul>
-        <li><a href="#tag-group">Linear</a></li>
-        <li><a href="#tag-group">Tree</a></li>
-    </ul>
-</div>
-
 <h:form>
-	<div id="tag-group">
-		<c:forEach var="tag" items="#{tagListBean.tags}">
-			<div class="each-tag" >
-				<p:commandLink action="filter-by-tag" >
-    			    <img id="tag-icon" src="resources/styles/custom/images/tag-32.png" />
-				    <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
-				    <f:param name="tagId" value="#{tag.id}"/>
-				</p:commandLink>
-				<br/>
-			</div>
-		</c:forEach>
+	<div id="tab-view-style">
+	    <ul>
+	        <li><a href="#tag-group-linear">Linear</a></li>
+	        <li><a href="#tag-group-tree">Tree</a></li>
+	    </ul>
+		<div id="tag-group-linear">
+			<c:forEach var="tag" items="#{tagListBean.tags}">
+				<div class="each-tag" >
+					<p:commandLink action="filter-by-tag" >
+	    			    <img id="tag-icon" src="resources/styles/custom/images/tag-32.png" />
+					    <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
+					    <f:param name="tagId" value="#{tag.id}"/>
+					</p:commandLink>
+					<br/>
+				</div>
+			</c:forEach>
+		</div>
+		<div id="tag-group-tree">
+		    <p:tree value="#{tagTree.root}" var="node" >
+				<p:treeNode>
+				    <h:outputText value="#{node}" />
+				</p:treeNode>
+			</p:tree>
+		</div>
 	</div>
 </h:form>
 
