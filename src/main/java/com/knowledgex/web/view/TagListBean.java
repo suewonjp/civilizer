@@ -10,7 +10,7 @@ public class TagListBean implements Serializable {
 
     private Collection<Tag> tags;
     
-    private TagTree tagTree;
+    private TagTree tagTree = null;
 
     public Collection<Tag> getTags() {
         return tags;
@@ -25,6 +25,13 @@ public class TagListBean implements Serializable {
     }
 
     public void setTagTree(TagTree tagTree) {
+        try {
+            tagTree.populateNodes(tags);
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        
         this.tagTree = tagTree;
     }
     

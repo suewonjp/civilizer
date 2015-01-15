@@ -295,11 +295,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return  "Tag - id: " + id
-                + ", name: " + tagName
-                + ", created at: "+ creationDatetime
-                + ", updated at: "+ updateDatetime
-                ;
+        return  getTagName();
     }
 
 }
