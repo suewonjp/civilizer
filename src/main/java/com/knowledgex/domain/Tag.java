@@ -1,7 +1,6 @@
 package com.knowledgex.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static org.junit.Assert.assertFalse;
 
 import java.io.Serializable;
 import java.util.*;
