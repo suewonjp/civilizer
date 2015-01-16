@@ -15,6 +15,16 @@ public class FragmentBean implements Serializable {
     private Fragment fragment;
     
     private String tagNames;
+    
+    private boolean checked = false;
+    
+    public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
 
     public Fragment getFragment() {
         return fragment;
