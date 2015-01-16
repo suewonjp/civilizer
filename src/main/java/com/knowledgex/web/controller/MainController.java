@@ -25,6 +25,8 @@ public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     
     private static Tag trashTag = null;
+    
+    private boolean showTagPaletteLabel = true; 
 
 	@Autowired
 	private FragmentDao fragmentDao;
@@ -179,5 +181,13 @@ public class MainController {
 	    TagTree tagTree = new TagTree();
 	    return tagTree;
 	}
+
+    public boolean isShowTagPaletteLabel() {
+        return showTagPaletteLabel;
+    }
+
+    public void setShowTagPaletteLabel(boolean testBoolean) {
+        this.showTagPaletteLabel = testBoolean;
+    }
 
 }
