@@ -26,12 +26,22 @@ public class MainController {
     
     private static Tag trashTag = null;
     
+    private boolean displayingTrash = false;
+    
 	@Autowired
 	private FragmentDao fragmentDao;
 
 	@Autowired
 	private TagDao tagDao;
 	
+	public boolean isDisplayingTrash() {
+		return displayingTrash;
+	}
+
+	public void setDisplayingTrash(boolean displayingTrash) {
+		this.displayingTrash = displayingTrash;
+	}
+
 	private Tag getTrashTag() {
 		if (null != trashTag) {
 			return trashTag;
@@ -54,7 +64,9 @@ public class MainController {
         	fragments = tagDao.findFragments(tagId);
         }
         
-        if (Tag.isTrashTag(tagId) == false) {
+        boolean trashTag = Tag.isTrashTag(tagId);
+        displayingTrash = trashTag;
+        if (false == trashTag) {
         	// Exclude fragments that have '#trash' tag
         	List<Long> trashTagId = new ArrayList<Long>();
         	trashTagId.add(0L);
@@ -90,10 +102,18 @@ public class MainController {
 	
 	public void trashFragment(RequestContext context) {
 		Long fragmentId = context.getFlowScope().getLong("fragmentId");
-		if (fragmentId != null) {
+		if (null != fragmentId) {
 			Fragment frg = fragmentDao.findById(fragmentId);
 			frg.addTag(getTrashTag());
 			fragmentDao.save(frg);
+		}
+	}
+
+	public void deleteFragment(RequestContext context) {
+		Long fragmentId = context.getFlowScope().getLong("fragmentId");
+		if (null != fragmentId) {
+			Fragment frg = fragmentDao.findById(fragmentId);
+			fragmentDao.delete(frg);
 		}
 	}
 	

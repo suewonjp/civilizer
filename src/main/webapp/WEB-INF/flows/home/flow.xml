@@ -25,6 +25,11 @@
             <evaluate expression="mainController.trashFragment(flowRequestContext)" />
         </transition>
 
+        <transition on="delete-fragment" to="exit">
+            <set name="flowScope.fragmentId" value="requestParameters.fragmentId" type="long" />
+            <evaluate expression="mainController.deleteFragment(flowRequestContext)" />
+        </transition>
+
         <transition on="save-fragment" to="exit">
             <evaluate expression="mainController.saveFragment(flowRequestContext)" />
             <evaluate expression="fragmentBean.clear()" />

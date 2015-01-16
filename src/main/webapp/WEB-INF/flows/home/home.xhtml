@@ -95,10 +95,20 @@
 				        		onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.tagNames}')" >
 					        	<img id="edit-fragment-button" src="resources/styles/custom/images/edit.png" />
 					        </a>
-					        <p:commandLink action="trash-fragment">
-                                <f:param name="fragmentId" value="#{fragmentBean.fragment.id}"/>
-                                <img id="delete-fragment-button" src="resources/styles/custom/images/trash.png" />
-                            </p:commandLink>
+					    <c:choose>
+						    <c:when test="#{mainController.displayingTrash}">
+						        <p:commandLink action="trash-fragment">
+	                                <f:param name="fragmentId" value="#{fragmentBean.fragment.id}"/>
+	                                <img id="delete-fragment-button" src="resources/styles/custom/images/trash.png" />
+	                            </p:commandLink>
+						    </c:when>
+						    <c:otherwise>
+						        <p:commandLink action="trash-fragment">
+	                                <f:param name="fragmentId" value="#{fragmentBean.fragment.id}"/>
+	                                <img id="delete-fragment-button" src="resources/styles/custom/images/trash.png" />
+	                            </p:commandLink>
+						    </c:otherwise>
+					    </c:choose>
 							<h:inputHidden id="fragment-title-placeholder-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.title}" />
 							<h:inputHidden id="fragment-content-placeholder-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.content}" />
 						</span>
