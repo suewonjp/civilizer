@@ -78,17 +78,16 @@
 		        <h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
 			        <f:facet name="header">
 			        <div class="fragment-header">
-			            <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="..." >
+			            <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;#{fragmentBean.fragment.id}" >
 			            </p:selectBooleanCheckbox>
-			            <p:commandLink value="#{fragmentBean.fragment.id} " actionListener="#{mainController.testActionListener}" action="show">
+			            &nbsp;&nbsp;
+			            <p:commandLink value="#{fragmentBean.fragment.title} " actionListener="#{mainController.testActionListener}" action="show">
 			                <f:attribute name="fragmentId" value="#{fragmentBean.fragment.id}"/>
 			                <f:param name="fragmentId" value="#{fragmentBean.fragment.id}"/>
 			            </p:commandLink>
 			            &nbsp;&nbsp;
-			            <h:outputText value="#{fragmentBean.fragment.title} " />
-			            &nbsp;&nbsp;
 			            <h:outputText value="[ #{fragmentBean.tagNames} ]" />
-			            &nbsp;&nbsp;&nbsp;&nbsp;
+			            &nbsp;&nbsp;
 						<h:outputText style="font-weight:lighter;" value="#{fragmentBean.fragment.updateDatetime}">
 							<f:converter converterId="jodaDateTimeConverter" />
 						</h:outputText>
