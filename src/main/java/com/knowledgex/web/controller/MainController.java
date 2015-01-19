@@ -81,12 +81,12 @@ public class MainController {
 	    return fragmentBean;
 	}
 
-	public Fragment showFragment(RequestContext context) {
-		Long id = context.getRequestScope().getLong("fragmentId");
-		logger.info("Selected fragment id: {}", id);
-		Fragment ret = fragmentDao.findById(id);
-		return ret;
-	}
+//	public Fragment showFragment(RequestContext context) {
+//		Long id = context.getRequestScope().getLong("fragmentId");
+//		logger.info("Selected fragment id: {}", id);
+//		Fragment ret = fragmentDao.findById(id);
+//		return ret;
+//	}
 	
 	public void trashFragment(RequestContext context) {
 		Long fragmentId = context.getFlowScope().getLong("fragmentId");
@@ -156,10 +156,12 @@ public class MainController {
 	    }
 	}
 	
-	public void test2(RequestContext context) {
-	    FragmentBean fb = (FragmentBean) context.getViewScope().get("fragmentBean");
-	    logger.info("test2() called");
-	    logger.info(fb.toString());
+	public FragmentBean inspectFragment(RequestContext context) {
+		Integer index = context.getRequestScope().getInteger("fragmentLoopIndex");
+		FragmentListBean flb = (FragmentListBean) context.getFlowScope().get("fragmentListBean");
+		FragmentBean fb = flb.getFragmentBeanAt(index);
+	    logger.info("inspectFragment() called");
+	    return fb;
 	}
 
 	public TagListBean newTagListBean() {

@@ -6,7 +6,7 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class FragmentListBean implements Serializable {
     
-    private Collection<FragmentBean> fragmentBeans;
+    private List<FragmentBean> fragmentBeans;
     
     private boolean displayingTrash = false;
     
@@ -22,8 +22,12 @@ public class FragmentListBean implements Serializable {
     	return fragmentBeans;
     }
     
-    public void setFragmentBeans(Collection<FragmentBean> fragmentBeans) {
+    public void setFragmentBeans(List<FragmentBean> fragmentBeans) {
     	this.fragmentBeans = fragmentBeans;
+    }
+    
+    public FragmentBean getFragmentBeanAt(int index) {
+    	return fragmentBeans.get(index);
     }
 
 }

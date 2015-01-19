@@ -12,8 +12,13 @@
             <evaluate expression="mainController.newFragmentBean()" result="viewScope.fragmentBean"/>
         </on-entry>
         
-        <transition on="show" to="show">
-            <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
+<!--         <transition on="show" to="show"> -->
+<!--             <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" /> -->
+<!--         </transition> -->
+        
+        <transition on="inspect-fragment" to="inspect-fragment">
+            <set name="requestScope.fragmentLoopIndex" value="requestParameters.fragmentLoopIndex" type="integer" />
+            <set name="flowScope.fragmentListBean" value="viewScope.fragmentListBean" />
         </transition>
         
         <transition on="filter-by-tag" to="home">
@@ -41,10 +46,18 @@
         </transition>
     </view-state>
     
-    <view-state id="show" view="show.xhtml">
+<!--     <view-state id="show" view="show.xhtml"> -->
+<!--         <on-entry> -->
+<!--             <evaluate expression="mainController.showFragment(flowRequestContext)" -->
+<!--                 result="viewScope.fragment"/> -->
+<!--         </on-entry> -->
+<!--         <transition on ="back" to="home"/> -->
+<!--     </view-state> -->
+
+    <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
         <on-entry>
-            <evaluate expression="mainController.showFragment(flowRequestContext)"
-                result="viewScope.fragment"/>
+            <evaluate expression="mainController.inspectFragment(flowRequestContext)"
+                result="viewScope.fragmentBean"/>
         </on-entry>
         <transition on ="back" to="home"/>
     </view-state>
