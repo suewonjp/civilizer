@@ -101,10 +101,6 @@
 			            <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;#{fragmentBean.fragment.id}" >
 			            </p:selectBooleanCheckbox>
 			            &nbsp;&nbsp;
-<!-- 			            <p:commandLink value="#{fragmentBean.fragment.title} " actionListener="#{mainController.testActionListener}" action="show"> -->
-<!-- 			                <f:attribute name="fragmentId" value="#{fragmentBean.fragment.id}"/> -->
-<!-- 			                <f:param name="fragmentId" value="#{fragmentBean.fragment.id}"/> -->
-<!-- 			            </p:commandLink> -->
 			            <p:commandLink value="#{fragmentBean.fragment.title} " action="show">
 			                <f:param name="fragmentId" value="#{fragmentBean.fragment.id}"/>
 			            </p:commandLink>
