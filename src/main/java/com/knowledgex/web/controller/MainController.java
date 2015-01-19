@@ -80,13 +80,6 @@ public class MainController {
 	    fragmentBean.setFragment(frg);
 	    return fragmentBean;
 	}
-
-//	public Fragment showFragment(RequestContext context) {
-//		Long id = context.getRequestScope().getLong("fragmentId");
-//		logger.info("Selected fragment id: {}", id);
-//		Fragment ret = fragmentDao.findById(id);
-//		return ret;
-//	}
 	
 	public void trashFragment(RequestContext context) {
 		Long fragmentId = context.getFlowScope().getLong("fragmentId");

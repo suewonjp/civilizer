@@ -70,7 +70,6 @@
 
 <h:form id="fragment-group-form">
     <h:panelGrid columns="2" cellpadding="5">
-		<h:outputText value="Simple" />
 		<p:toolbar style="width:600px">
 	        <p:toolbarGroup align="left">
 	            <p:commandButton type="push" value="New" icon="ui-icon-document" />
@@ -104,9 +103,6 @@
 			            <p:commandLink value="#{fragmentBean.fragment.title} " action="inspect-fragment">
 			                <f:param name="fragmentLoopIndex" value="${loop.index}"/>
 			            </p:commandLink>
-<!-- 			            <p:commandLink value="#{fragmentBean.fragment.title} " action="show"> -->
-<!-- 			                <f:param name="fragmentId" value="#{fragmentBean.fragment.id}"/> -->
-<!-- 			            </p:commandLink> -->
 			            &nbsp;&nbsp;
 			            <h:outputText value="[ #{fragmentBean.tagNames} ]" />
 			            &nbsp;&nbsp;
