@@ -2,7 +2,7 @@ package com.knowledgex.web.controller;
 
 import java.util.*;
 
-import javax.faces.event.ActionEvent;
+//import javax.faces.event.ActionEvent;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -174,18 +174,18 @@ public class MainController {
 	    logger.info(fb.toString());
 	}
 
-	public void testActionListener(ActionEvent event) {
-	    Map<String, Object> attributes = event.getComponent().getAttributes();
-	    Object value;
-	    value = attributes.get("fragmentId");
-	    if (value != null) {
-	        logger.info("testActionListener() called with value: {}", value.toString());
-	    }
-	    value = attributes.get("tagId");
-	    if (value != null) {
-	        logger.info("testActionListener() called with value: {}", value.toString());
-	    }
-	}
+//	public void testActionListener(ActionEvent event) {
+//	    Map<String, Object> attributes = event.getComponent().getAttributes();
+//	    Object value;
+//	    value = attributes.get("fragmentId");
+//	    if (value != null) {
+//	        logger.info("testActionListener() called with value: {}", value.toString());
+//	    }
+//	    value = attributes.get("tagId");
+//	    if (value != null) {
+//	        logger.info("testActionListener() called with value: {}", value.toString());
+//	    }
+//	}
 	
 	public TagListBean newTagListBean() {
 	    TagListBean tagListBean = new TagListBean();
