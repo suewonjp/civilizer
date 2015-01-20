@@ -37,7 +37,7 @@
         </transition>
 
         <transition on="preview-fragment" >
-            <evaluate expression="mainController.test2(flowRequestContext)" />
+            <evaluate expression="mainController.test(flowRequestContext, fragmentListBean, tagListBean, fragmentBean)" />
             <evaluate expression="fragmentBean.clear()" />
         </transition>
     </view-state>
@@ -52,7 +52,7 @@
 
     <view-state id="test" view="test.xhtml">
         <on-entry>
-            <evaluate expression="mainController.test(flowRequestContext)" />
+            <evaluate expression="mainController.test(flowRequestContext, null, null, null)" />
         </on-entry>
         <transition on ="back" to="home"/>
     </view-state>

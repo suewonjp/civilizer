@@ -69,36 +69,13 @@
 <ui:define name="content">
 
 <h:form id="fragment-group-form">
-    <h:panelGrid columns="2" cellpadding="5">
-		<p:toolbar style="width:600px">
-	        <p:toolbarGroup align="left">
-	            <p:commandButton type="push" value="New" icon="ui-icon-document" />
-	            <p:commandButton type="push" value="Open" icon="ui-icon-folder-open"/>
-	
-	            <p:separator />
-	
-	            <p:commandButton type="push" title="Save" icon="ui-icon-disk"/>
-	            <p:commandButton type="push" title="Delete" icon="ui-icon-trash"/>
-	            <p:commandButton type="push" title="Print" icon="ui-icon-print"/>
-	        </p:toolbarGroup>
-	
-	        <p:toolbarGroup align="right">
-	            <p:menuButton value="Navigate">
-	                <p:menuitem value="Home" url="#" />
-	                <p:menuitem value="Logout" url="#" />
-	            </p:menuButton>
-	        </p:toolbarGroup>
-	    </p:toolbar>
-    </h:panelGrid>
-    
     <div id="fragment-group">    
 	    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
 	        <div class="each-fragment-container" fragmentId="#{fragmentBean.fragment.id}">
 		        <h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
 			        <f:facet name="header">
 			        <div class="fragment-header">
-			            <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;#{fragmentBean.fragment.id}" >
-			            </p:selectBooleanCheckbox>
+			            <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;#{fragmentBean.fragment.id}" />
 			            &nbsp;&nbsp;
 			            <p:commandLink value="#{fragmentBean.fragment.title} " action="inspect-fragment">
 			                <f:param name="fragmentLoopIndex" value="${loop.index}"/>

@@ -137,7 +137,12 @@ public class MainController {
 		return output;
 	}
 
-	public void test(RequestContext context) {
+	public void test(
+			RequestContext context
+			, FragmentListBean flb
+			, TagListBean tlb
+			, FragmentBean fb
+			) {
 	    Long value;
 	    value = context.getRequestScope().getLong("fragmentId");
 	    if (value != null) {
@@ -146,6 +151,15 @@ public class MainController {
 	    value = context.getRequestScope().getLong("tagId");
 	    if (value != null) {
 	        logger.info("test() called with parameter: {}", value);
+	    }
+	    if (null != flb) {
+	    	logger.info("test() called with FragmentListBean");
+	    }
+	    if (null != tlb) {
+	    	logger.info("test() called with TagListBean");
+	    }
+	    if (null != fb) {
+	    	logger.info("test() called with FragmentBean");
 	    }
 	}
 	
