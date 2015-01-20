@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.webflow.execution.RequestContext;
+//import org.springframework.webflow.execution.RequestContext;
 
 import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
@@ -38,9 +38,7 @@ public class MainController {
 		return trashTag;
 	}
 
-	public FragmentListBean newFragmentListBean(RequestContext context) {
-		Long tagId = context.getRequestScope().getLong("tagId");
-		
+	public FragmentListBean newFragmentListBean(Long tagId) {
         FragmentListBean fragmentListBean = new FragmentListBean();
         Collection<Fragment> fragments = null;
         if (null == tagId) {
@@ -81,28 +79,20 @@ public class MainController {
 	    return fragmentBean;
 	}
 	
-	public void trashFragment(RequestContext context) {
-		Long fragmentId = context.getRequestScope().getLong("fragmentId");
-		if (null != fragmentId) {
-			Fragment frg = fragmentDao.findById(fragmentId);
-			frg.addTag(getTrashTag());
-			fragmentDao.save(frg);
-		}
+	public void trashFragment(Long fragmentId) {
+		Fragment frg = fragmentDao.findById(fragmentId);
+		frg.addTag(getTrashTag());
+		fragmentDao.save(frg);
 	}
 
-	public void deleteFragment(RequestContext context) {
-		Long fragmentId = context.getRequestScope().getLong("fragmentId");
-		if (null != fragmentId) {
-			Fragment frg = fragmentDao.findById(fragmentId);
-			fragmentDao.delete(frg);
-		}
+	public void deleteFragment(Long fragmentId) {
+		Fragment frg = fragmentDao.findById(fragmentId);
+		fragmentDao.delete(frg);
 	}
 	
-	public void saveFragment(RequestContext context) {
-	    FragmentBean fb = (FragmentBean) context.getFlowScope().get("userEditedFragmentBean");
-	    
+	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
 	    String tagNames = fb.getTagNames();
-	    Collection<Tag> tags = saveTags(context, tagNames);
+	    Collection<Tag> tags = saveTags(tagListBean, tagNames);
 	    
 	    Fragment frg = fb.getFragment();
 	    frg.setTags(tags);
@@ -115,8 +105,7 @@ public class MainController {
         logger.info(fb.toString());
 	}
 	
-	private Collection<Tag> saveTags(RequestContext context, String tagNames) {
-		TagListBean tagListBean = (TagListBean) context.getFlowScope().get("tagListBean");
+	private Collection<Tag> saveTags(TagListBean tagListBean, String tagNames) {
 		Collection<Tag> existingTags = tagListBean.getTags();
 		Collection<String> names = Tag.getTagNameCollectionFrom(tagNames);
 		List<Tag> output = new ArrayList<Tag>();
@@ -138,20 +127,10 @@ public class MainController {
 	}
 
 	public void test(
-			RequestContext context
-			, FragmentListBean flb
+			FragmentListBean flb
 			, TagListBean tlb
 			, FragmentBean fb
 			) {
-	    Long value;
-	    value = context.getRequestScope().getLong("fragmentId");
-	    if (value != null) {
-	        logger.info("test() called with parameter: {}", value);
-	    }
-	    value = context.getRequestScope().getLong("tagId");
-	    if (value != null) {
-	        logger.info("test() called with parameter: {}", value);
-	    }
 	    if (null != flb) {
 	    	logger.info("test() called with FragmentListBean");
 	    }
@@ -163,9 +142,9 @@ public class MainController {
 	    }
 	}
 	
-	public FragmentBean inspectFragment(RequestContext context) {
-		Integer index = context.getRequestScope().getInteger("fragmentLoopIndex");
-		FragmentListBean flb = (FragmentListBean) context.getFlowScope().get("fragmentListBean");
+	public FragmentBean inspectFragment(/*RequestContext context, */Integer index, FragmentListBean flb) {
+//		Integer index = context.getRequestScope().getInteger("fragmentLoopIndex");
+//		FragmentListBean flb = (FragmentListBean) context.getFlowScope().get("fragmentListBean");
 		FragmentBean fb = flb.getFragmentBeanAt(index);
 	    logger.info("inspectFragment() called");
 	    return fb;

@@ -7,7 +7,7 @@
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
-            <evaluate expression="mainController.newFragmentListBean(flowRequestContext)" result="flowScope.fragmentListBean"/>
+            <evaluate expression="mainController.newFragmentListBean(requestScope.tagId)" result="flowScope.fragmentListBean"/>
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
         </on-entry>
@@ -22,28 +22,28 @@
         
         <transition on="trash-fragment" to="exit">
             <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
-            <evaluate expression="mainController.trashFragment(flowRequestContext)" />
+            <evaluate expression="mainController.trashFragment(requestScope.fragmentId)" />
         </transition>
 
         <transition on="delete-fragment" to="exit">
             <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
-            <evaluate expression="mainController.deleteFragment(flowRequestContext)" />
+            <evaluate expression="mainController.deleteFragment(requestScope.fragmentId)" />
         </transition>
 
         <transition on="save-fragment" to="exit">
-            <evaluate expression="mainController.saveFragment(flowRequestContext)" />
+            <evaluate expression="mainController.saveFragment(userEditedFragmentBean, tagListBean)" />
             <evaluate expression="userEditedFragmentBean.clear()" />
         </transition>
 
         <transition on="preview-fragment" >
-            <evaluate expression="mainController.test(flowRequestContext, fragmentListBean, tagListBean, userEditedFragmentBean)" />
+            <evaluate expression="mainController.test(fragmentListBean, tagListBean, userEditedFragmentBean)" />
             <evaluate expression="userEditedFragmentBean.clear()" />
         </transition>
     </view-state>
     
     <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
         <on-entry>
-            <evaluate expression="mainController.inspectFragment(flowRequestContext)"
+            <evaluate expression="mainController.inspectFragment(requestScope.fragmentLoopIndex, fragmentListBean)"
                 result="viewScope.fragmentBean"/>
         </on-entry>
         <transition on ="back" to="home"/>
@@ -51,7 +51,7 @@
 
     <view-state id="test" view="test.xhtml">
         <on-entry>
-            <evaluate expression="mainController.test(flowRequestContext, null, null, null)" />
+            <evaluate expression="mainController.test(null, null, null)" />
         </on-entry>
         <transition on ="back" to="home"/>
     </view-state>
