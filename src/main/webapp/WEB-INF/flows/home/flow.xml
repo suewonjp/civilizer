@@ -7,27 +7,26 @@
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
-            <evaluate expression="mainController.newFragmentListBean(flowRequestContext)" result="viewScope.fragmentListBean"/>
-            <evaluate expression="mainController.newTagListBean()" result="viewScope.tagListBean"/>
-            <evaluate expression="mainController.newFragmentBean()" result="viewScope.userEditedFragmentBean"/>
+            <evaluate expression="mainController.newFragmentListBean(flowRequestContext)" result="flowScope.fragmentListBean"/>
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+            <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
         </on-entry>
         
         <transition on="inspect-fragment" to="inspect-fragment">
             <set name="requestScope.fragmentLoopIndex" value="requestParameters.fragmentLoopIndex" type="integer" />
-            <set name="flowScope.fragmentListBean" value="viewScope.fragmentListBean" />
         </transition>
         
         <transition on="filter-by-tag" to="home">
-            <set name="flowScope.tagId" value="requestParameters.tagId" type="long" />
+            <set name="requestScope.tagId" value="requestParameters.tagId" type="long" />
         </transition>
         
         <transition on="trash-fragment" to="exit">
-            <set name="flowScope.fragmentId" value="requestParameters.fragmentId" type="long" />
+            <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
             <evaluate expression="mainController.trashFragment(flowRequestContext)" />
         </transition>
 
         <transition on="delete-fragment" to="exit">
-            <set name="flowScope.fragmentId" value="requestParameters.fragmentId" type="long" />
+            <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
             <evaluate expression="mainController.deleteFragment(flowRequestContext)" />
         </transition>
 

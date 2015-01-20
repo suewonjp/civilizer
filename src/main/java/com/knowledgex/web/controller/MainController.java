@@ -39,7 +39,7 @@ public class MainController {
 	}
 
 	public FragmentListBean newFragmentListBean(RequestContext context) {
-		Long tagId = context.getFlowScope().getLong("tagId");
+		Long tagId = context.getRequestScope().getLong("tagId");
 		
         FragmentListBean fragmentListBean = new FragmentListBean();
         Collection<Fragment> fragments = null;
@@ -82,7 +82,7 @@ public class MainController {
 	}
 	
 	public void trashFragment(RequestContext context) {
-		Long fragmentId = context.getFlowScope().getLong("fragmentId");
+		Long fragmentId = context.getRequestScope().getLong("fragmentId");
 		if (null != fragmentId) {
 			Fragment frg = fragmentDao.findById(fragmentId);
 			frg.addTag(getTrashTag());
@@ -91,7 +91,7 @@ public class MainController {
 	}
 
 	public void deleteFragment(RequestContext context) {
-		Long fragmentId = context.getFlowScope().getLong("fragmentId");
+		Long fragmentId = context.getRequestScope().getLong("fragmentId");
 		if (null != fragmentId) {
 			Fragment frg = fragmentDao.findById(fragmentId);
 			fragmentDao.delete(frg);
@@ -99,7 +99,7 @@ public class MainController {
 	}
 	
 	public void saveFragment(RequestContext context) {
-	    FragmentBean fb = (FragmentBean) context.getViewScope().get("userEditedFragmentBean");
+	    FragmentBean fb = (FragmentBean) context.getFlowScope().get("userEditedFragmentBean");
 	    
 	    String tagNames = fb.getTagNames();
 	    Collection<Tag> tags = saveTags(context, tagNames);
@@ -116,7 +116,7 @@ public class MainController {
 	}
 	
 	private Collection<Tag> saveTags(RequestContext context, String tagNames) {
-		TagListBean tagListBean = (TagListBean) context.getViewScope().get("tagListBean");
+		TagListBean tagListBean = (TagListBean) context.getFlowScope().get("tagListBean");
 		Collection<Tag> existingTags = tagListBean.getTags();
 		Collection<String> names = Tag.getTagNameCollectionFrom(tagNames);
 		List<Tag> output = new ArrayList<Tag>();
