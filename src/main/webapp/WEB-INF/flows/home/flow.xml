@@ -9,7 +9,7 @@
         <on-entry>
             <evaluate expression="mainController.newFragmentListBean(flowRequestContext)" result="viewScope.fragmentListBean"/>
             <evaluate expression="mainController.newTagListBean()" result="viewScope.tagListBean"/>
-            <evaluate expression="mainController.newFragmentBean()" result="viewScope.fragmentBean"/>
+            <evaluate expression="mainController.newFragmentBean()" result="viewScope.userEditedFragmentBean"/>
         </on-entry>
         
         <transition on="inspect-fragment" to="inspect-fragment">
@@ -33,12 +33,12 @@
 
         <transition on="save-fragment" to="exit">
             <evaluate expression="mainController.saveFragment(flowRequestContext)" />
-            <evaluate expression="fragmentBean.clear()" />
+            <evaluate expression="userEditedFragmentBean.clear()" />
         </transition>
 
         <transition on="preview-fragment" >
-            <evaluate expression="mainController.test(flowRequestContext, fragmentListBean, tagListBean, fragmentBean)" />
-            <evaluate expression="fragmentBean.clear()" />
+            <evaluate expression="mainController.test(flowRequestContext, fragmentListBean, tagListBean, userEditedFragmentBean)" />
+            <evaluate expression="userEditedFragmentBean.clear()" />
         </transition>
     </view-state>
     

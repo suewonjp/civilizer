@@ -99,7 +99,7 @@ public class MainController {
 	}
 	
 	public void saveFragment(RequestContext context) {
-	    FragmentBean fb = (FragmentBean) context.getViewScope().get("fragmentBean");
+	    FragmentBean fb = (FragmentBean) context.getViewScope().get("userEditedFragmentBean");
 	    
 	    String tagNames = fb.getTagNames();
 	    Collection<Tag> tags = saveTags(context, tagNames);
