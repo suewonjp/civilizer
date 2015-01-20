@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-//import org.springframework.webflow.execution.RequestContext;
 
 import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
@@ -142,9 +141,7 @@ public class MainController {
 	    }
 	}
 	
-	public FragmentBean inspectFragment(/*RequestContext context, */Integer index, FragmentListBean flb) {
-//		Integer index = context.getRequestScope().getInteger("fragmentLoopIndex");
-//		FragmentListBean flb = (FragmentListBean) context.getFlowScope().get("fragmentListBean");
+	public FragmentBean inspectFragment(Integer index, FragmentListBean flb) {
 		FragmentBean fb = flb.getFragmentBeanAt(index);
 	    logger.info("inspectFragment() called");
 	    return fb;
