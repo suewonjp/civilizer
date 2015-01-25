@@ -5,6 +5,24 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	
+<script>
+$(document).ready(function() {
+	var currentTagGroupTabIndex = "0";
+
+    $tab = $( "#tag-group-tab-view" ).tabs({
+         activate : function (e, ui) {
+            currentTagGroupTabIndex = ui.newTab.index().toString();
+            sessionStorage.setItem('tag-group-tab-index', currentTagGroupTabIndex);
+         }
+    });
+
+    if (sessionStorage.getItem('tag-group-tab-index')) {
+        currentTagGroupTabIndex = sessionStorage.getItem('tag-group-tab-index');
+        $tab.tabs('option', 'active', currentTagGroupTabIndex);
+    }
+}); // end of $(document).ready()
+</script> 
 
 <div>
 	<img id="tagbar-icon" src="resources/styles/custom/images/tag-32.png" />
