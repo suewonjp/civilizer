@@ -55,13 +55,13 @@
 	width: 96%;
 }
 
-#tagbar-title {
+#tag-palette-title {
 	color: #00f;
 	font-size: 120%;
 	font-style: italic;
 }
 
-#tagbar-icon {
+#tag-palette-icon {
 	margin-right: 10px;
 	width: 24px;	
 	height: 24px;
