@@ -44,7 +44,6 @@
         $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);
         
         $("#fragment-group").on("mouseenter", ".each-fragment-container", function() {
-       		//console.log($(this).attr("fragmentId"));
        		$(this).find(".fragment-menu").show();
        	});
         
@@ -71,7 +70,7 @@
 <h:form id="fragment-group-form">
     <div id="fragment-group">    
 	    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
-	        <div class="each-fragment-container" fragmentId="#{fragmentBean.fragment.id}">
+	        <div class="each-fragment-container" >
 		        <h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
 			        <f:facet name="header">
 			        <div class="fragment-header">
