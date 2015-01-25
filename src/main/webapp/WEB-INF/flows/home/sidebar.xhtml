@@ -32,9 +32,16 @@
 			</c:forEach>
 		</div>
 		<div id="tag-group-tree">
-		    <p:tree value="#{tagListBean.tagTree.root}" var="node" >
+		    <p:tree value="#{tagListBean.tagTree.root}" var="tag" >
 				<p:treeNode>
-				    <h:outputText value="#{node}" />
+				    <div class="each-tag" >
+	                    <p:commandLink action="filter-by-tag" >
+	                        <img id="tag-icon" src="resources/styles/custom/images/tag-32.png" />
+	                        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
+	                        <f:param name="tagId" value="#{tag.id}"/>
+	                    </p:commandLink>
+                    <br/>
+                </div>
 				</p:treeNode>
 			</p:tree>
 		</div>
