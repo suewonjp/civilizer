@@ -6,31 +6,31 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<div>
-		<img id="tagbar-icon" src="resources/styles/custom/images/tag-32.png" />
-		<span id="tagbar-title"> #{msg['label_tag_palette']} </span>
-	</div>
+<div>
+	<img id="tagbar-icon" src="resources/styles/custom/images/tag-32.png" />
+	<span id="tagbar-title"> #{msg['label_tag_palette']} </span>
+</div>
 
-	<h:form>
-		<div id="tag-group-tab-view">
-			<ul>
-				<li><a href="#tag-group-linear">#{msg['label_tag_group_view_linear']}</a></li>
-				<li><a href="#tag-group-tree">#{msg['label_tag_group_view_tree']}</a></li>
-			</ul>
-			
-			<div id="tag-group-linear">
-				<c:forEach var="tag" items="#{tagListBean.tags}">
-					<ui:include src="each-tag.xhtml" />
-				</c:forEach>
-			</div>
-			<div id="tag-group-tree">
-				<p:tree value="#{tagListBean.tagTree.root}" var="tag">
-					<p:treeNode>
-						<ui:include src="each-tag.xhtml" />
-					</p:treeNode>
-				</p:tree>
-			</div>
+<h:form>
+	<div id="tag-group-tab-view">
+		<ul>
+			<li><a href="#tag-group-linear">#{msg['label_tag_group_view_linear']}</a></li>
+			<li><a href="#tag-group-tree">#{msg['label_tag_group_view_tree']}</a></li>
+		</ul>
+		
+		<div id="tag-group-linear">
+			<c:forEach var="tag" items="#{tagListBean.tags}">
+				<ui:include src="each-tag.xhtml" />
+			</c:forEach>
 		</div>
-	</h:form>
+		<div id="tag-group-tree">
+			<p:tree value="#{tagListBean.tagTree.root}" var="tag">
+				<p:treeNode>
+					<ui:include src="each-tag.xhtml" />
+				</p:treeNode>
+			</p:tree>
+		</div>
+	</div>
+</h:form>
 
 </ui:composition>
