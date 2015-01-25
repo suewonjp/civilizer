@@ -15,26 +15,6 @@
 	<img id="new-fragment-button" src="resources/styles/custom/images/add-fragment.png" />
 </a>
 
-<div style='display:none' >
-    <div id='editor-frame' >
-        <h:form id="fragment-editor-form"  >
-	        <p:inputText id="title-input" value="#{userEditedFragmentBean.fragment.title}" autocomplete="false" />
-	        <p:inputText id="tags-input" value="#{userEditedFragmentBean.tagNames}" autocomplete="false" />
-	        <textarea id="fragment-content-editor" cols="80" rows="20"></textarea>
-	        <h:inputHidden id="content-placeholder" value="#{userEditedFragmentBean.fragment.content}" />
-	        <h:inputHidden id="id-placeholder" value="#{userEditedFragmentBean.fragment.id}" />
-		    <p:commandButton onclick="prepareFragmentContent();" value="Preview" action="preview-fragment" />
-		    <p:commandButton onclick="prepareFragmentContent();" value="Save" action="save-fragment" />
-        </h:form>
-    </div>
-</div>
-
-<script type="text/javascript">
-	function prepareFragmentContent() {
-		var editor = $("#fragment-content-editor");
-	    var srcContent = editor.val();
-	    $("#fragment-editor-form\\:content-placeholder").val(srcContent);
-	}
-</script>
+<ui:include src="/WEB-INF/flows/home/fragment-editor.xhtml" />
 
 </ui:composition>
