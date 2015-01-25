@@ -6,6 +6,59 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+<script>
+$(document).ready(function() {
+	$("#new-fragment-editor-trigger").colorbox({
+        inline:true
+        , overlayClose:false
+        , onOpen:function() {
+            var el = $("#fragment-editor-form\\:title-input");
+            el.val(null);
+            el.watermark("Title");
+            
+            el = $("#fragment-editor-form\\:tags-input");
+            el.val(null);
+            el.watermark("Tags");
+            
+            $("#fragment-content-editor").val(null);
+        }
+    });
+    
+    $(".edit-fragment-editor-trigger").colorbox({
+        inline:true
+        , overlayClose:false
+    });
+    
+    $("#colorbox").draggable({handle:'#cboxTitle', cursor:'move'});
+    
+    function parseMarkdown(inputText) {
+        return markdown.toHTML(inputText);
+    }
+
+    extraMarkItUpSettings = {
+        previewParser: parseMarkdown
+    };
+    
+    $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);    
+}); // end of $(document).ready()
+
+function prepareFragmentContent() {
+    var editor = $("#fragment-content-editor");
+    var srcContent = editor.val();
+    $("#fragment-editor-form\\:content-placeholder").val(srcContent);
+}
+
+function openFragmentEditorForEdit(fragmentId, tagNames) {
+    var el = $("#fragment-group-form\\:fragment-title-placeholder-"+fragmentId);
+    $("#fragment-editor-form\\:title-input").val(el.val());
+    $("#fragment-editor-form\\:tags-input").val(tagNames);
+    $("#fragment-editor-form\\:id-placeholder").val(fragmentId);
+    el = $("#fragment-group-form\\:fragment-content-placeholder-"+fragmentId);
+    $("#fragment-content-editor").val(el.val());
+}
+
+</script>
+
 <div style='display:none' >
     <div id='editor-frame' >
         <h:form id="fragment-editor-form"  >
@@ -19,13 +72,5 @@
         </h:form>
     </div>
 </div>
-
-<script type="text/javascript">
-    function prepareFragmentContent() {
-        var editor = $("#fragment-content-editor");
-        var srcContent = editor.val();
-        $("#fragment-editor-form\\:content-placeholder").val(srcContent);
-    }
-</script>
 
 </ui:composition>

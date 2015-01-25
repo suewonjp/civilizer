@@ -9,57 +9,15 @@
                 
 <ui:define name="entry-point-scripts">
 <script>
-    $(document).ready(function() {
-        $("#new-fragment-editor-trigger").colorbox({
-            inline:true
-            , overlayClose:false
-            , onOpen:function() {
-            	var el = $("#fragment-editor-form\\:title-input");
-            	el.val(null);
-            	el.watermark("Title");
-            	
-                el = $("#fragment-editor-form\\:tags-input");
-            	el.val(null);
-                el.watermark("Tags");
-                
-                $("#fragment-content-editor").val(null);
-            }
-        });
-        
-        $(".edit-fragment-editor-trigger").colorbox({
-            inline:true
-            , overlayClose:false
-        });
-        
-        $("#colorbox").draggable({handle:'#cboxTitle', cursor:'move'});
-        
-        function parseMarkdown(inputText) {
-            return markdown.toHTML(inputText);
-        }
-
-        extraMarkItUpSettings = {
-            previewParser: parseMarkdown
-        };
-        
-        $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);
-        
-        $("#fragment-group").on("mouseenter", ".each-fragment-container", function() {
-       		$(this).find(".fragment-menu").show();
-       	});
-        
-        $("#fragment-group").on("mouseleave", ".each-fragment-container", function() {
-       		$(this).find(".fragment-menu").hide();
-       	});        
-    }); // end of $(document).ready()
+$(document).ready(function() {
+    $("#fragment-group").on("mouseenter", ".each-fragment-container", function() {
+   		$(this).find(".fragment-menu").show();
+   	});
     
-    function openFragmentEditorForEdit(fragmentId, tagNames) {
-        var el = $("#fragment-group-form\\:fragment-title-placeholder-"+fragmentId);
-    	$("#fragment-editor-form\\:title-input").val(el.val());
-    	$("#fragment-editor-form\\:tags-input").val(tagNames);
-    	$("#fragment-editor-form\\:id-placeholder").val(fragmentId);
-    	el = $("#fragment-group-form\\:fragment-content-placeholder-"+fragmentId);
-        $("#fragment-content-editor").val(el.val());
-    }
+    $("#fragment-group").on("mouseleave", ".each-fragment-container", function() {
+   		$(this).find(".fragment-menu").hide();
+   	});        
+}); // end of $(document).ready()
 </script>
 </ui:define>
 
