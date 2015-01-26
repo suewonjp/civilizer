@@ -67,7 +67,7 @@ function openFragmentEditorForEdit(fragmentId, tagNames) {
             <textarea id="fragment-content-editor" cols="80" rows="20"></textarea>
             <h:inputHidden id="content-placeholder" value="#{userEditedFragmentBean.fragment.content}" />
             <h:inputHidden id="id-placeholder" value="#{userEditedFragmentBean.fragment.id}" />
-            <p:commandButton onclick="prepareFragmentContent();" value="Preview" action="preview-fragment" />
+            <p:commandButton onclick="prepareFragmentContent();" value="Preview" />
             <p:commandButton onclick="prepareFragmentContent();" value="Save" action="save-fragment" />
         </h:form>
     </div>

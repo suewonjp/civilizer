@@ -35,11 +35,6 @@
             <evaluate expression="mainController.saveFragment(userEditedFragmentBean, tagListBean)" />
             <evaluate expression="userEditedFragmentBean.clear()" />
         </transition>
-
-        <transition on="preview-fragment" >
-            <evaluate expression="mainController.test(fragmentListBean, tagListBean, userEditedFragmentBean)" />
-            <evaluate expression="userEditedFragmentBean.clear()" />
-        </transition>
     </view-state>
     
     <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
