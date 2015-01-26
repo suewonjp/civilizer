@@ -19,7 +19,7 @@ $(document).ready(function() {
    	});
     
     $(".fragment-content").each(function(){
-    	$this = $(this);
+    	var $this = $(this);
         var content = $this.text();
    	    $this.html(parseMarkdown(content));
    	 });
