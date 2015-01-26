@@ -11,7 +11,9 @@ $(document).ready(function() {
 	$("#new-fragment-editor-trigger").colorbox({
         inline:true
         , overlayClose:false
-        , maxWidth:2048
+        , maxWidth:"100%"
+        , maxHeight:"100%"
+        , scrolling:false
         , onOpen:function() {
             var el = $("#fragment-editor-form\\:title-input");
             el.val(null);
@@ -28,11 +30,34 @@ $(document).ready(function() {
     
     $(".edit-fragment-editor-trigger").colorbox({
         inline:true
+        , maxWidth:"100%"
+        , maxHeight:"100%"
+        , scrolling:false
         , overlayClose:false
 	    , onClosed:removeColorboxPreviewFrame
     });
     
-    $("#colorbox").draggable({handle:'#cboxTitle', cursor:'move'});
+    var $colorbox = $("#colorbox");
+    
+    $colorbox.draggable({handle:'#cboxTitle', cursor:'move'});
+    
+    $colorbox.resizable({
+    	alsoResize: "#fragment-content-editor"
+    	, animate: true
+    	, animateDuration: "fast"
+    	, ghost: true
+    	, start:function(event, ui) {
+    		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
+    	}
+    	, resize:function(event, ui) {
+    		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
+    	}
+    	, stop:function(event, ui) {
+    		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
+    	}
+    });
+    
+    $(".ui-resizable-handle").css("z-index", 10000);
 
     extraMarkItUpSettings = {
         previewParser: parseMarkdown
