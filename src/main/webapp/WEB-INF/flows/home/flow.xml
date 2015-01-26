@@ -5,19 +5,20 @@
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
     start-state="home">
     
+    <on-start>
+        <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
+        <evaluate expression="mainController.newFragmentListBean(null)" result="flowScope.fragmentListBean"/>
+        <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+    </on-start>
+    
     <view-state id="home" view="home.xhtml">
-        <on-entry>
-            <evaluate expression="mainController.newFragmentListBean(requestScope.tagId)" result="flowScope.fragmentListBean"/>
-            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
-            <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
-        </on-entry>
-        
         <transition on="inspect-fragment" to="inspect-fragment">
             <set name="requestScope.fragmentLoopIndex" value="requestParameters.fragmentLoopIndex" type="integer" />
         </transition>
         
         <transition on="filter-by-tag" to="home">
             <set name="requestScope.tagId" value="requestParameters.tagId" type="long" />
+            <evaluate expression="mainController.newFragmentListBean(requestScope.tagId)" result="flowScope.fragmentListBean"/>
         </transition>
         
         <transition on="trash-fragment" to="exit">
