@@ -16,7 +16,13 @@ $(document).ready(function() {
     
     $("#fragment-group").on("mouseleave", ".each-fragment-container", function() {
    		$(this).find(".fragment-menu").hide();
-   	});        
+   	});
+    
+    $(".fragment-content").each(function(){
+    	$this = $(this);
+        var content = $this.text();
+   	    $this.html(parseMarkdown(content));
+   	 });
 }); // end of $(document).ready()
 </script>
 </ui:define>

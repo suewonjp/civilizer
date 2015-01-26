@@ -30,10 +30,6 @@ $(document).ready(function() {
     });
     
     $("#colorbox").draggable({handle:'#cboxTitle', cursor:'move'});
-    
-    function parseMarkdown(inputText) {
-        return markdown.toHTML(inputText);
-    }
 
     extraMarkItUpSettings = {
         previewParser: parseMarkdown
@@ -41,6 +37,10 @@ $(document).ready(function() {
     
     $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);    
 }); // end of $(document).ready()
+
+function parseMarkdown(inputText) {
+    return markdown.toHTML(inputText);
+}
 
 function prepareFragmentContent() {
     var editor = $("#fragment-content-editor");
