@@ -21,12 +21,18 @@ $(document).ready(function() {
             el.watermark("Tags");
             
             $("#fragment-content-editor").val(null);
+            
+            $("#fragment-content-editor ~ .markItUpPreviewFrame").remove();
         }
     });
     
     $(".edit-fragment-editor-trigger").colorbox({
         inline:true
         , overlayClose:false
+        , onOpen:function() {
+        	// Without this code, the preview text area will keep being generated...
+        	$("#fragment-content-editor ~ .markItUpPreviewFrame").remove();
+        }
     });
     
     $("#colorbox").draggable({handle:'#cboxTitle', cursor:'move'});
@@ -35,7 +41,7 @@ $(document).ready(function() {
         previewParser: parseMarkdown
     };
     
-    $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);    
+    $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);
 }); // end of $(document).ready()
 
 function parseMarkdown(inputText) {
