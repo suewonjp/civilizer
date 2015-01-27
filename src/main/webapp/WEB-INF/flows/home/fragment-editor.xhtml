@@ -8,6 +8,19 @@
 
 <script>
 $(document).ready(function() {
+// 	$("#new-fragment-editor-trigger").click(function (e) {
+//         $("#editor-frame").lightbox_me({
+//             centered:true
+//             , showOverlay:false
+//         });
+//         e.preventDefault();
+//     });
+    
+//     $("#editor-frame").resizable({
+//         alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
+//     });
+//     $("#editor-frame").draggable({cursor:"move"});
+    
 	$("#new-fragment-editor-trigger").colorbox({
         inline:true
         , overlayClose:false
@@ -27,7 +40,7 @@ $(document).ready(function() {
         }
 	   , onClosed:removeColorboxPreviewFrame
     });
-    
+
     $(".edit-fragment-editor-trigger").colorbox({
         inline:true
         , maxWidth:"100%"
@@ -39,23 +52,16 @@ $(document).ready(function() {
     
     var $colorbox = $("#colorbox");
     
-    $colorbox.draggable({handle:'#cboxTitle', cursor:'move'});
-    
     $colorbox.resizable({
-    	alsoResize: "#fragment-content-editor"
+    	alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
     	, animate: true
     	, animateDuration: "fast"
-    	, ghost: true
-    	, start:function(event, ui) {
-    		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
-    	}
     	, resize:function(event, ui) {
     		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
     	}
-    	, stop:function(event, ui) {
-    		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
-    	}
     });
+    
+    $colorbox.draggable({handle:'#cboxTitle', cursor:'move'});
     
     $(".ui-resizable-handle").css("z-index", 10000);
 

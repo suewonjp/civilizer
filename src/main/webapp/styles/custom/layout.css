@@ -50,6 +50,10 @@
 	margin-left: 30px;
 }
 
+#editor-frame {
+	background-color: #888888;
+}
+
 #editor-frame input {
 	margin-left: 10px;
 	width: 96%;
