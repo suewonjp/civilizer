@@ -35,7 +35,7 @@ mySettings = {
 		{name:'Quotes', openWith:'> ', closeWith:'  ', multiline:true},
         {name:'Code Block / Code', multiline:true, openWith:'(!(\t|!|`)!)', closeWith:'(!(`)!)'},
 		{separator:'---------------'},
-		{name:'Preview', call:'preview', className:"preview"}
+//		{name:'Preview', call:'preview', className:"preview"}
 	]
 }
 
