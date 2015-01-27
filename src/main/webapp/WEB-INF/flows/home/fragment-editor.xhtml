@@ -8,62 +8,84 @@
 
 <script>
 $(document).ready(function() {
-// 	$("#new-fragment-editor-trigger").click(function (e) {
-//         $("#editor-frame").lightbox_me({
-//             centered:true
-//             , showOverlay:false
-//         });
-//         e.preventDefault();
-//     });
-    
-//     $("#editor-frame").resizable({
-//         alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
-//     });
-//     $("#editor-frame").draggable({cursor:"move"});
-    
-	$("#new-fragment-editor-trigger").colorbox({
-        inline:true
-        , overlayClose:false
-        , maxWidth:"100%"
-        , maxHeight:"100%"
-        , scrolling:false
-        , onOpen:function() {
-            var el = $("#fragment-editor-form\\:title-input");
-            el.val(null);
-            el.watermark("Title");
-            
-            el = $("#fragment-editor-form\\:tags-input");
-            el.val(null);
-            el.watermark("Tags");
-            
-            $("#fragment-content-editor").val(null);
-        }
-	   , onClosed:removeColorboxPreviewFrame
+	$("#new-fragment-editor-trigger").click(function (e) {
+        $("#editor-frame").lightbox_me({
+            centered:true
+            , showOverlay:false
+            , onOpen:function() {
+	            var el = $("#fragment-editor-form\\:title-input");
+	            el.val(null);
+	            el.watermark("Title");
+	            
+	            el = $("#fragment-editor-form\\:tags-input");
+	            el.val(null);
+	            el.watermark("Tags");
+	            
+	            $("#fragment-content-editor").val(null);
+	        }
+            , onClose:removeColorboxPreviewFrame
+        });
+        e.preventDefault();
     });
+	
+	$(".edit-fragment-editor-trigger").click(function (e) {
+		$("#editor-frame").lightbox_me({
+            centered:true
+            , showOverlay:false
+            , onClose:removeColorboxPreviewFrame
+        });
+        e.preventDefault();
+	})
+    
+    $("#editor-frame").resizable({
+        alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
+    });
+	
+    $("#editor-frame").draggable({cursor:"move"});
+    
+// 	$("#new-fragment-editor-trigger").colorbox({
+//         inline:true
+//         , overlayClose:false
+//         , maxWidth:"100%"
+//         , maxHeight:"100%"
+//         , scrolling:false
+//         , onOpen:function() {
+//             var el = $("#fragment-editor-form\\:title-input");
+//             el.val(null);
+//             el.watermark("Title");
+            
+//             el = $("#fragment-editor-form\\:tags-input");
+//             el.val(null);
+//             el.watermark("Tags");
+            
+//             $("#fragment-content-editor").val(null);
+//         }
+// 	   , onClosed:removeColorboxPreviewFrame
+//     });
 
-    $(".edit-fragment-editor-trigger").colorbox({
-        inline:true
-        , maxWidth:"100%"
-        , maxHeight:"100%"
-        , scrolling:false
-        , overlayClose:false
-	    , onClosed:removeColorboxPreviewFrame
-    });
+//     $(".edit-fragment-editor-trigger").colorbox({
+//         inline:true
+//         , maxWidth:"100%"
+//         , maxHeight:"100%"
+//         , scrolling:false
+//         , overlayClose:false
+// 	    , onClosed:removeColorboxPreviewFrame
+//     });
     
-    var $colorbox = $("#colorbox");
+//     var $colorbox = $("#colorbox");
     
-    $colorbox.resizable({
-    	alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
-    	, animate: true
-    	, animateDuration: "fast"
-    	, resize:function(event, ui) {
-    		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
-    	}
-    });
+//     $colorbox.resizable({
+//     	alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
+//     	, animate: true
+//     	, animateDuration: "fast"
+//     	, resize:function(event, ui) {
+//     		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
+//     	}
+//     });
     
-    $colorbox.draggable({handle:'#cboxTitle', cursor:'move'});
+//     $colorbox.draggable({handle:'#cboxTitle', cursor:'move'});
     
-    $(".ui-resizable-handle").css("z-index", 10000);
+//     $(".ui-resizable-handle").css("z-index", 10000);
 
     extraMarkItUpSettings = {
         previewParser: parseMarkdown
