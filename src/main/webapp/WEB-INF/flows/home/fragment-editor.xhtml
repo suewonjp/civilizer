@@ -86,6 +86,8 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e) {
         centered:false
         , showOverlay:false
         , lightboxSpeed:"slow"
+        , closeSelector:"#editor-frame-close-button"
+        , closeEsc:false
         , modalCSS:{ position:"absolute", top:top }
         , onClose:onCloseFragmentEditor
     });
@@ -108,6 +110,8 @@ function onCloseFragmentEditor() {
     el.watermark("Tags");
     
     $("#fragment-content-editor").val(null);
+    
+    $("#fragment-editor-form\\:id-placeholder").val(null);
 }
 
 function parseMarkdown(inputText) {
@@ -142,7 +146,9 @@ function openFragmentEditorForEdit(fragmentId, tagNames) {
             <p:commandButton onclick="prepareFragmentContent();" value="Preview" />
             <p:commandButton onclick="prepareFragmentContent();" value="Save" action="save-fragment" />
             <div id="editor-title-bar" >
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <a id="editor-frame-close-button" href="#" title="#{msg['label_fragment_close_editor']}">
+                    <img src="resources/styles/custom/images/close.png" />
+                </a>
             </div>
         </h:form>
     </div>

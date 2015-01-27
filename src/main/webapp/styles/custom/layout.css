@@ -68,6 +68,12 @@
 	width: 96%;
 }
 
+#editor-frame-close-button {
+	margin-right: 10px;
+	position: relative;
+	left: 93%;
+}
+
 #tag-palette-title {
 	color: #00f;
 	font-size: 120%;
