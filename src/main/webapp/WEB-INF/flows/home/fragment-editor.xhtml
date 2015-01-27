@@ -8,41 +8,26 @@
 
 <script>
 $(document).ready(function() {
+	$window = $(window);
+	$editorFrame = $("#editor-frame");
+	
 	$("#new-fragment-editor-trigger").click(function (e) {
-        $("#editor-frame").lightbox_me({
-            centered:true
-            , showOverlay:false
-            , onOpen:function() {
-	            var el = $("#fragment-editor-form\\:title-input");
-	            el.val(null);
-	            el.watermark("Title");
-	            
-	            el = $("#fragment-editor-form\\:tags-input");
-	            el.val(null);
-	            el.watermark("Tags");
-	            
-	            $("#fragment-content-editor").val(null);
-	        }
-            , onClose:removeColorboxPreviewFrame
-        });
-        e.preventDefault();
+		onClickFragmentEditorTrigger($editorFrame, $window, e);
     });
 	
 	$(".edit-fragment-editor-trigger").click(function (e) {
-		$("#editor-frame").lightbox_me({
-            centered:true
-            , showOverlay:false
-            , onClose:removeColorboxPreviewFrame
-        });
-        e.preventDefault();
+		onClickFragmentEditorTrigger($editorFrame, $window, e);
 	})
     
-    $("#editor-frame").resizable({
+    $editorFrame.resizable({
         alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
     });
 	
-    $("#editor-frame").draggable({cursor:"move"});
-    
+	$editorFrame.draggable({
+    	handle:"#editor-title-bar"
+    	, cursor:"move"
+    });
+	
 // 	$("#new-fragment-editor-trigger").colorbox({
 //         inline:true
 //         , overlayClose:false
@@ -60,7 +45,7 @@ $(document).ready(function() {
             
 //             $("#fragment-content-editor").val(null);
 //         }
-// 	   , onClosed:removeColorboxPreviewFrame
+// 	   , onClosed:onCloseFragmentEditor
 //     });
 
 //     $(".edit-fragment-editor-trigger").colorbox({
@@ -69,7 +54,7 @@ $(document).ready(function() {
 //         , maxHeight:"100%"
 //         , scrolling:false
 //         , overlayClose:false
-// 	    , onClosed:removeColorboxPreviewFrame
+// 	    , onClosed:onCloseFragmentEditor
 //     });
     
 //     var $colorbox = $("#colorbox");
@@ -94,11 +79,35 @@ $(document).ready(function() {
     $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);
 }); // end of $(document).ready()
 
-function removeColorboxPreviewFrame() {
+function onClickFragmentEditorTrigger($editorFrame, $window, e) {
+    var top = ($window.height() - $editorFrame.height()) / 2 + $window.scrollTop() + "px";
+    
+    $editorFrame.lightbox_me({
+        centered:false
+        , showOverlay:false
+        , lightboxSpeed:"slow"
+        , modalCSS:{ position:"absolute", top:top }
+        , onClose:onCloseFragmentEditor
+    });
+    
+    e.preventDefault();
+}
+
+function onCloseFragmentEditor() {
     var previewFrame = $("#fragment-content-editor ~ .markItUpPreviewFrame");
     if (previewFrame) {
         previewFrame.remove();
     }
+    
+    var el = $("#fragment-editor-form\\:title-input");
+    el.val(null);
+    el.watermark("Title");
+    
+    el = $("#fragment-editor-form\\:tags-input");
+    el.val(null);
+    el.watermark("Tags");
+    
+    $("#fragment-content-editor").val(null);
 }
 
 function parseMarkdown(inputText) {
@@ -132,6 +141,9 @@ function openFragmentEditorForEdit(fragmentId, tagNames) {
             <h:inputHidden id="id-placeholder" value="#{userEditedFragmentBean.fragment.id}" />
             <p:commandButton onclick="prepareFragmentContent();" value="Preview" />
             <p:commandButton onclick="prepareFragmentContent();" value="Save" action="save-fragment" />
+            <div id="editor-title-bar" >
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </div>
         </h:form>
     </div>
 </div>

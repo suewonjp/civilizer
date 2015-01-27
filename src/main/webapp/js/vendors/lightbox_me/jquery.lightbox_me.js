@@ -187,7 +187,8 @@
                     if (opts.centered) {
                         $self.css({ position: 'fixed', top: '50%', marginTop: ($self.outerHeight() / 2) * -1})
                     } else {
-                        $self.css({ position: 'fixed'}).css(opts.modalCSS);
+//                        $self.css({ position: 'fixed'}).css(opts.modalCSS);
+                        $self.css(opts.modalCSS);
                     }
                     if (opts.preventScroll) {
                         $('body').css('overflow', 'hidden');

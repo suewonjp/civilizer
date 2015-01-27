@@ -50,8 +50,17 @@
 	margin-left: 30px;
 }
 
+#editor-title-bar {
+	clear: both;
+	display: block;
+	background-color: #7d7171;
+	height: 100%;
+	overflow: hidden;
+}
+
 #editor-frame {
-	background-color: #888888;
+	background-color: #b9b2b2;
+	border-style: groove;
 }
 
 #editor-frame input {
