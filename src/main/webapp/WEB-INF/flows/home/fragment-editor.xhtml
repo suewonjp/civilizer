@@ -28,50 +28,6 @@ $(document).ready(function() {
     	, cursor:"move"
     });
 	
-// 	$("#new-fragment-editor-trigger").colorbox({
-//         inline:true
-//         , overlayClose:false
-//         , maxWidth:"100%"
-//         , maxHeight:"100%"
-//         , scrolling:false
-//         , onOpen:function() {
-//             var el = $("#fragment-editor-form\\:title-input");
-//             el.val(null);
-//             el.watermark("Title");
-            
-//             el = $("#fragment-editor-form\\:tags-input");
-//             el.val(null);
-//             el.watermark("Tags");
-            
-//             $("#fragment-content-editor").val(null);
-//         }
-// 	   , onClosed:onCloseFragmentEditor
-//     });
-
-//     $(".edit-fragment-editor-trigger").colorbox({
-//         inline:true
-//         , maxWidth:"100%"
-//         , maxHeight:"100%"
-//         , scrolling:false
-//         , overlayClose:false
-// 	    , onClosed:onCloseFragmentEditor
-//     });
-    
-//     var $colorbox = $("#colorbox");
-    
-//     $colorbox.resizable({
-//     	alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
-//     	, animate: true
-//     	, animateDuration: "fast"
-//     	, resize:function(event, ui) {
-//     		$.colorbox.resize({ width:ui.size.width, height:ui.size.height });
-//     	}
-//     });
-    
-//     $colorbox.draggable({handle:'#cboxTitle', cursor:'move'});
-    
-//     $(".ui-resizable-handle").css("z-index", 10000);
-
     extraMarkItUpSettings = {
         previewParser: parseMarkdown
     };
