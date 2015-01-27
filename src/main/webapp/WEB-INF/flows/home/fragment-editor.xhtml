@@ -69,16 +69,12 @@ function onCloseFragmentEditor() {
     $("#fragment-content-editor").val(null);
     
     $("#fragment-editor-form\\:id-placeholder").val(null);
+    
+    $("#fragment-content-editor").next().remove();
 }
 
 function parseMarkdown(inputText) {
     return markdown.toHTML(inputText);
-}
-
-function prepareFragmentContent() {
-    var editor = $("#fragment-content-editor");
-    var srcContent = editor.val();
-    $("#fragment-editor-form\\:content-placeholder").val(srcContent);
 }
 
 function openFragmentEditorForEdit(fragmentId, tagNames) {
@@ -88,6 +84,24 @@ function openFragmentEditorForEdit(fragmentId, tagNames) {
     $("#fragment-editor-form\\:id-placeholder").val(fragmentId);
     el = $("#fragment-group-form\\:fragment-content-placeholder-"+fragmentId);
     $("#fragment-content-editor").val(el.val());
+}
+
+function prepareFragmentContent() {
+    var $editor = $("#fragment-content-editor");
+    var srcContent = $editor.val();
+    $("#fragment-editor-form\\:content-placeholder").val(srcContent);
+    return { editor:$editor, src:srcContent };
+}
+
+function previewFragment() {
+	var data = prepareFragmentContent();
+	$editor = $("#fragment-content-editor");
+	if ($editor.next().attr("id") == "fragment-preview-frame") {
+		return;
+	}
+	var div = $("&lt;div id='fragment-preview-frame' &gt;");
+	div.append(parseMarkdown(data.src));
+	$editor.after(div);
 }
 
 </script>
@@ -100,7 +114,7 @@ function openFragmentEditorForEdit(fragmentId, tagNames) {
             <textarea id="fragment-content-editor" ></textarea>
             <h:inputHidden id="content-placeholder" value="#{userEditedFragmentBean.fragment.content}" />
             <h:inputHidden id="id-placeholder" value="#{userEditedFragmentBean.fragment.id}" />
-            <p:commandButton onclick="prepareFragmentContent();" value="Preview" />
+            <p:commandButton onclick="previewFragment();" value="Preview" />
             <p:commandButton onclick="prepareFragmentContent();" value="Save" action="save-fragment" />
             <div id="editor-title-bar" >
                 <a id="editor-frame-close-button" href="#" title="#{msg['label_fragment_close_editor']}">
