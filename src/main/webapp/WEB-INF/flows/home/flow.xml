@@ -34,16 +34,16 @@
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
-        <transition on="save-fragment" to="exit">
+        <transition on="save-fragment" to="home">
             <evaluate expression="mainController.saveFragment(userEditedFragmentBean, tagListBean)" />
             <evaluate expression="userEditedFragmentBean.clear()" />
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
     </view-state>
     
     <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
         <on-entry>
-            <evaluate expression="mainController.inspectFragment(fragmentLoopIndex, fragmentListBean)"
-                result="viewScope.fragmentBean"/>
+            <evaluate expression="mainController.inspectFragment(fragmentLoopIndex, fragmentListBean)" result="viewScope.fragmentBean"/>
         </on-entry>
         <transition on ="back" to="home"/>
     </view-state>
