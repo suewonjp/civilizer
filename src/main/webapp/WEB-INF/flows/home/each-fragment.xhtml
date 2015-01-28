@@ -26,19 +26,19 @@
 				<div class="fragment-menu">
 					<a href="#editor-frame" class='edit-fragment-editor-trigger'
 					   onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.tagNames}')">
-							<img id="edit-fragment-button" title="#{msg['label_fragment_edit']}" src="resources/styles/custom/images/edit.png" />
+							<img title="#{msg['label_fragment_edit']}" src="resources/styles/custom/images/edit.png" />
 					</a>
 					<c:choose>
 						<c:when test="#{contextBean.fragmentDeletable}">
 							<p:commandLink action="delete-fragment">
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
-								<img id="delete-fragment-button" title="#{msg['label_fragment_delete']}" src="resources/styles/custom/images/trash.png" />
+								<img title="#{msg['label_fragment_delete']}" src="resources/styles/custom/images/trash.png" />
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
 							<p:commandLink action="trash-fragment">
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
-								<img id="delete-fragment-button" title="#{msg['label_fragment_trash']}" src="resources/styles/custom/images/trash.png" />
+								<img title="#{msg['label_fragment_trash']}" src="resources/styles/custom/images/trash.png" />
 							</p:commandLink>
 						</c:otherwise>
 					</c:choose>
