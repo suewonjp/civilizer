@@ -95,13 +95,20 @@ function prepareFragmentContent() {
 
 function previewFragment() {
 	var data = prepareFragmentContent();
+	var renderedHtml = $(parseMarkdown(data.src));
 	$editor = $("#fragment-content-editor");
-	if ($editor.next().attr("id") == "fragment-preview-frame") {
-		return;
+	var $next = $editor.next();
+	if ($next.attr("id") == "fragment-preview-frame") {
+		// div for preview already exists
+		$next.empty();
+		$next.append(renderedHtml);
 	}
-	var div = $("&lt;div id='fragment-preview-frame' &gt;");
-	div.append($(parseMarkdown(data.src)));
-	$editor.after(div);
+	else {
+		// create a new div for preview
+		$next = $("&lt;div id='fragment-preview-frame' &gt;");
+		$next.append(renderedHtml);
+		$editor.after($next);
+	}
 }
 
 </script>
