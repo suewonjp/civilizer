@@ -70,10 +70,16 @@
 	width: 96%;
 }
 
+#editor-title {
+	color: #ff0;
+	font-size: 140%;
+    font-style: bold;
+    position: relative;
+    left: 40%;
+}
+
 #editor-frame-close-button {
 	margin-right: 10px;
-	position: relative;
-	left: 93%;
 }
 
 #fragment-preview-frame {
