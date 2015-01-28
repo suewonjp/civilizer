@@ -100,7 +100,7 @@ function previewFragment() {
 		return;
 	}
 	var div = $("&lt;div id='fragment-preview-frame' &gt;");
-	div.append(parseMarkdown(data.src));
+	div.append($(parseMarkdown(data.src)));
 	$editor.after(div);
 }
 
