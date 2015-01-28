@@ -7,12 +7,12 @@
     
     <on-start>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
+        <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
             <evaluate expression="mainController.newFragmentListBean(requestScope.tagId)" result="flowScope.fragmentListBean"/>
-            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </on-entry>
         
         <transition on="inspect-fragment" to="inspect-fragment">
