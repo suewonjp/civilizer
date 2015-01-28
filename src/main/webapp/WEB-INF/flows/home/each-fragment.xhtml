@@ -23,8 +23,8 @@
 				<h:outputText style="font-weight:lighter;" value="#{fragmentBean.fragment.updateDatetime}">
 					<f:converter converterId="jodaDateTimeConverter" />
 				</h:outputText>
-				<span class="fragment-menu">
-					<a href="#editor-frame" class='edit-fragment-editor-trigger' title="Edit Fragment"
+				<div class="fragment-menu">
+					<a href="#editor-frame" class='edit-fragment-editor-trigger' title="#{msg['label_fragment_edit']}"
 						onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.tagNames}')">
 							<img id="edit-fragment-button" src="resources/styles/custom/images/edit.png" />
 					</a>
@@ -44,7 +44,7 @@
 					</c:choose>
 					<h:inputHidden id="fragment-title-placeholder-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.title}" />
 					<h:inputHidden id="fragment-content-placeholder-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.content}" />
-				</span>
+				</div>
 			</div>
 		</f:facet>
 		<h:outputText value="#{fragmentBean.fragment.content}" styleClass="fragment-content" />

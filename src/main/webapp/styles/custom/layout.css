@@ -106,17 +106,23 @@
 }
 
 #edit-fragment-button, #delete-fragment-button {
-	width: 16px;	
-	height: 16px;
+/* 	width: 24px;	 */
+/* 	height: 24px; */
 }
 
 .fragment-header {
-	min-height: 22px;
+	max-height: 22px;
+	height: 22px;
+	width: 100%;
+    display: inline-block;
 }
 
 .fragment-menu {
-	float: right;
 	display: none;
+	float: right;
+	overflow: visible;
+	position: relative;
+	top: -15px;
 }
 
 .each-tag-name {
