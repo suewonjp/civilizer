@@ -105,6 +105,11 @@
 	height: 16px;
 }
 
+#fragment-group-toolbar {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 .fragment-header {
 	max-height: 22px;
 	height: 22px;
