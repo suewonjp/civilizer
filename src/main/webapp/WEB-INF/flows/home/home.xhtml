@@ -22,7 +22,13 @@ $(document).ready(function() {
     	var $this = $(this);
         var content = $this.text();
    	    $this.html(parseMarkdown(content));
-   	 });
+   	});
+    
+    var cbForAllFrg = PF("cbForAllFrg");
+    
+    cbForAllFrg.getJQ().click(function (e) {
+    	console.log(cbForAllFrg.isChecked());
+    });
 }); // end of $(document).ready()
 </script>
 </ui:define>
@@ -30,7 +36,9 @@ $(document).ready(function() {
 <ui:define name="content">
 
 <h:form id="fragment-group-form">
-    <div id="fragment-group">  
+    <div id="fragment-group">
+        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" itemLabel="&nbsp;" widgetVar="cbForAllFrg" />
+        <p:tooltip for="checkbox-for-all-fragments" value="Selects/unselects all fragments" />
 	    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
 	        <ui:include src="each-fragment.xhtml" />
 	    </c:forEach>
