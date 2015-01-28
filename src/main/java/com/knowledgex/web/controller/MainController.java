@@ -37,7 +37,7 @@ public class MainController {
 		return trashTag;
 	}
 
-	public FragmentListBean newFragmentListBean(Long tagId) {
+	public FragmentListBean newFragmentListBean(Long tagId, ContextBean ctxt) {
         FragmentListBean fragmentListBean = new FragmentListBean();
         Collection<Fragment> fragments = null;
         if (null == tagId) {
@@ -66,7 +66,7 @@ public class MainController {
         	fragmentBeans.add(fb);
         }
         fragmentListBean.setFragmentBeans(fragmentBeans);
-        fragmentListBean.setDisplayingTrash(trashTag);
+        ctxt.setFragmentDeletable(trashTag);
         logger.info("newFragmentListBean() called");
         return fragmentListBean;
     }
@@ -76,6 +76,10 @@ public class MainController {
 	    Fragment frg = new Fragment();
 	    fragmentBean.setFragment(frg);
 	    return fragmentBean;
+	}
+	
+	public ContextBean newContextBean() {
+	    return new ContextBean();
 	}
 	
 	public void trashFragment(Long fragmentId) {

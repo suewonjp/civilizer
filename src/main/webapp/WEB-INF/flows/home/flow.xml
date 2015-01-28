@@ -8,11 +8,12 @@
     <on-start>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+        <evaluate expression="mainController.newContextBean()" result="flowScope.contextBean"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
-            <evaluate expression="mainController.newFragmentListBean(requestScope.tagId)" result="flowScope.fragmentListBean"/>
+            <evaluate expression="mainController.newFragmentListBean(requestScope.tagId, contextBean)" result="flowScope.fragmentListBean"/>
         </on-entry>
         
         <transition on="inspect-fragment" to="inspect-fragment">
@@ -23,14 +24,14 @@
             <set name="requestScope.tagId" value="requestParameters.tagId" type="long" />
         </transition>
         
-        <transition on="trash-fragment" to="exit">
-            <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
-            <evaluate expression="mainController.trashFragment(requestScope.fragmentId)" />
+        <transition on="trash-fragment" to="home">
+            <evaluate expression="mainController.trashFragment(requestParameters.fragmentId)" />
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
-        <transition on="delete-fragment" to="exit">
-            <set name="requestScope.fragmentId" value="requestParameters.fragmentId" type="long" />
-            <evaluate expression="mainController.deleteFragment(requestScope.fragmentId)" />
+        <transition on="delete-fragment" to="home">
+            <evaluate expression="mainController.deleteFragment(requestParameters.fragmentId)" />
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
         <transition on="save-fragment" to="exit">
@@ -41,7 +42,7 @@
     
     <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
         <on-entry>
-            <evaluate expression="mainController.inspectFragment(requestScope.fragmentLoopIndex, fragmentListBean)"
+            <evaluate expression="mainController.inspectFragment(fragmentLoopIndex, fragmentListBean)"
                 result="viewScope.fragmentBean"/>
         </on-entry>
         <transition on ="back" to="home"/>

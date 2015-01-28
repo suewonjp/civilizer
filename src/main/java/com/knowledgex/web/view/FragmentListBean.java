@@ -8,16 +8,6 @@ public class FragmentListBean implements Serializable {
     
     private List<FragmentBean> fragmentBeans;
     
-    private boolean displayingTrash = false;
-    
-    public boolean isDisplayingTrash() {
-		return displayingTrash;
-	}
-
-	public void setDisplayingTrash(boolean displayingTrash) {
-		this.displayingTrash = displayingTrash;
-	}
-	
     public Collection<FragmentBean> getFragmentBeans() {
     	return fragmentBeans;
     }

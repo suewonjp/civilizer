@@ -28,7 +28,7 @@
 							<img id="edit-fragment-button" src="resources/styles/custom/images/edit.png" />
 					</a>
 					<c:choose>
-						<c:when test="#{fragmentListBean.displayingTrash}">
+						<c:when test="#{contextBean.fragmentDeletable}">
 							<p:commandLink action="delete-fragment">
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
 								<img id="delete-fragment-button" src="resources/styles/custom/images/trash.png" />
