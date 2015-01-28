@@ -125,6 +125,10 @@
 	top: -15px;
 }
 
+.fragment-menu a {
+	text-decoration: none;
+}
+
 .each-tag-name {
 	text-align: left;
 	color: #ffffff;
