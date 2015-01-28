@@ -25,29 +25,37 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
-    var fragmentCheckboxMaster = PF("fragmentCheckboxMaster");
-    var fragmentCheckboxSlaves = [];    
-    var cbSlaveCount = $("#fragment-group .each-fragment-container").length;
-    
-    for (var i=0; i<cbSlaveCount; ++i) {
-        var cb = PrimeFaces.widgets["fragmentCheckboxSlave" + i];
-        fragmentCheckboxSlaves.push(cb);
-    }
-
-    var fragmentCheckboxMaster = PF("fragmentCheckboxMaster");
-    
-    fragmentCheckboxMaster.getJQ().click(function (e) {
-        if (fragmentCheckboxMaster.isChecked()) {
-	        for (var i=0; i<cbSlaveCount; ++i) {
-	            fragmentCheckboxSlaves[i].check();
+    var fragmentCount = $("#fragment-group .each-fragment-container").length;
+    if (fragmentCount > 0) {
+	    var fragmentCheckboxMaster = PF("fragmentCheckboxMaster");
+	    var fragmentCheckboxSlaves = [];    
+	    
+	    for (var i=0; i<fragmentCount; ++i) {
+	        var cb = PrimeFaces.widgets["fragmentCheckboxSlave" + i];
+	        fragmentCheckboxSlaves.push(cb);
+	    }
+	
+	    var fragmentCheckboxMaster = PF("fragmentCheckboxMaster");
+	    
+	    // Align the master checkbox with its slaves in horizontal position
+	    fragmentCheckboxMaster.jq.offset({ left:fragmentCheckboxSlaves[0].jq.offset().left });
+	    
+	    fragmentCheckboxMaster.jq.click(function (e) {
+	        if (fragmentCheckboxMaster.isChecked()) {
+		        for (var i=0; i<fragmentCount; ++i) {
+		            fragmentCheckboxSlaves[i].check();
+		        }
 	        }
-        }
-        else {
-	        for (var i=0; i<cbSlaveCount; ++i) {
-                fragmentCheckboxSlaves[i].uncheck();
-            }
-        }
-    });
+	        else {
+		        for (var i=0; i<fragmentCount; ++i) {
+	                fragmentCheckboxSlaves[i].uncheck();
+	            }
+	        }
+	    });
+    }
+    else {
+    	$("#fragment-group-toolbar").hide();
+    }
 }); // end of $(document).ready()
 //]]>
 </script>
@@ -57,8 +65,10 @@ $(document).ready(function() {
 
 <h:form id="fragment-group-form">
     <div id="fragment-group">
-        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
-        <p:tooltip for="checkbox-for-all-fragments" value="Selects/unselects all fragments" />
+        <div id="fragment-group-toolbar">
+	        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
+	        <p:tooltip for="checkbox-for-all-fragments" value="Selects/unselects all fragments" />
+        </div>
 	    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
 	        <ui:include src="each-fragment.xhtml" />
 	    </c:forEach>
