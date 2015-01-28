@@ -9,6 +9,7 @@
                 
 <ui:define name="entry-point-scripts">
 <script>
+//<![CDATA[
 $(document).ready(function() {
     $("#fragment-group").on("mouseenter", ".each-fragment-container", function() {
    		$(this).find(".fragment-menu").show();
@@ -24,12 +25,31 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
-    var cbForAllFrg = PF("cbForAllFrg");
+    var fragmentCheckboxMaster = PF("fragmentCheckboxMaster");
+    var fragmentCheckboxSlaves = [];    
+    var cbSlaveCount = $("#fragment-group .each-fragment-container").length;
     
-    cbForAllFrg.getJQ().click(function (e) {
-    	console.log(cbForAllFrg.isChecked());
+    for (var i=0; i<cbSlaveCount; ++i) {
+        var cb = PrimeFaces.widgets["fragmentCheckboxSlave" + i];
+        fragmentCheckboxSlaves.push(cb);
+    }
+
+    var fragmentCheckboxMaster = PF("fragmentCheckboxMaster");
+    
+    fragmentCheckboxMaster.getJQ().click(function (e) {
+        if (fragmentCheckboxMaster.isChecked()) {
+	        for (var i=0; i<cbSlaveCount; ++i) {
+	            fragmentCheckboxSlaves[i].check();
+	        }
+        }
+        else {
+	        for (var i=0; i<cbSlaveCount; ++i) {
+                fragmentCheckboxSlaves[i].uncheck();
+            }
+        }
     });
 }); // end of $(document).ready()
+//]]>
 </script>
 </ui:define>
 
@@ -37,7 +57,7 @@ $(document).ready(function() {
 
 <h:form id="fragment-group-form">
     <div id="fragment-group">
-        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" itemLabel="&nbsp;" widgetVar="cbForAllFrg" />
+        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
         <p:tooltip for="checkbox-for-all-fragments" value="Selects/unselects all fragments" />
 	    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
 	        <ui:include src="each-fragment.xhtml" />

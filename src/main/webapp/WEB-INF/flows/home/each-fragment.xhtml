@@ -11,7 +11,8 @@
 	<h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
 		<f:facet name="header">
 			<div class="fragment-header">
-				<p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;#{fragmentBean.fragment.id}" />
+				<p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;#{fragmentBean.fragment.id}"
+				    widgetVar="fragmentCheckboxSlave${loop.index}" />
 				&nbsp;&nbsp;
 				<p:commandLink value="#{fragmentBean.fragment.title} " action="inspect-fragment">
 					<f:param name="fragmentLoopIndex" value="${loop.index}" />
