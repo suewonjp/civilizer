@@ -60,7 +60,9 @@
 
 #editor-frame {
 	background-color: #b9b2b2;
-	border-style: groove;
+	border-style: ridge;
+	border-width: 10px;
+	border-color: #888822;
 }
 
 #editor-frame input {
@@ -72,6 +74,11 @@
 	margin-right: 10px;
 	position: relative;
 	left: 93%;
+}
+
+#fragment-preview-frame {
+	margin-top: 10px;
+	border-style: double;
 }
 
 #tag-palette-title {
