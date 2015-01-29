@@ -30,7 +30,6 @@
 
 #sidebar {
 	width: 28%;
-	border-style: groove; /* test */
 	float: right;
 }
 
@@ -44,10 +43,6 @@
 	font-size: 250%;
 	font-style: italic;
 	text-decoration: underline;
-}
-
-#new-fragment-button {
-	margin-left: 30px;
 }
 
 #new-fragment-editor-trigger {
@@ -93,21 +88,11 @@
 }
 
 #tag-palette-title {
-	color: #00f;
-	font-size: 120%;
-	font-style: italic;
-}
-
-#tag-palette-icon {
-	margin-right: 10px;
-	width: 24px;	
-	height: 24px;
-}
-
-#tag-icon {
-	margin-right: 10px;
-	width: 16px;	
-	height: 16px;
+	color: #0a0;
+	font-size: 150%;
+	font-style: bold;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #fragment-group-toolbar {

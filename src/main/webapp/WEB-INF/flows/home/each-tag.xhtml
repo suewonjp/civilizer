@@ -9,7 +9,7 @@
     
 <div class="each-tag">
 	<p:commandLink action="filter-by-tag">
-		<img id="tag-icon" src="resources/styles/custom/images/tag-32.png" />
+		<span class="fa fa-tag " title="#{msg['label_fragment_edit']}">&nbsp;&nbsp;</span>
 		<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 		<f:param name="tagId" value="#{tag.id}" />
 	</p:commandLink>
