@@ -134,6 +134,10 @@
 	text-decoration: none;
 }
 
+.warning-color {
+	color: #f00;
+}
+
 .each-tag-name {
 	text-align: left;
 	color: #ffffff;

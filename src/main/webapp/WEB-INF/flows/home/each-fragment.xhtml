@@ -26,19 +26,19 @@
 				<div class="fragment-menu">
 					<a href="#editor-frame" class='edit-fragment-editor-trigger no-underline-for-link'
 					   onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.tagNames}')">
-							<img title="#{msg['label_fragment_edit']}" src="resources/styles/custom/images/edit.png" />
+                        <span class="fa fa-pencil fa-4x" title="#{msg['label_fragment_edit']}"></span>
 					</a>
 					<c:choose>
 						<c:when test="#{contextBean.fragmentDeletable}">
 							<p:commandLink action="delete-fragment">
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
-								<img title="#{msg['label_fragment_delete']}" src="resources/styles/custom/images/trash.png" />
+								<span class="fa fa-trash fa-4x warning-color" title="#{msg['label_fragment_delete']}"></span>
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
 							<p:commandLink action="trash-fragment">
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
-								<img title="#{msg['label_fragment_trash']}" src="resources/styles/custom/images/trash.png" />
+								<span class="fa fa-trash fa-4x" title="#{msg['label_fragment_trash']}"></span>
 							</p:commandLink>
 						</c:otherwise>
 					</c:choose>
