@@ -7,12 +7,12 @@
 	xmlns:p="http://primefaces.org/ui"
 	>
 
-<a href="home">
+<a href="home" class="no-underline-for-link">
     <span id="app-title"> #{msg['application_name']} </span>
 </a>
 
-<a href="#editor-frame" id='new-fragment-editor-trigger' title="New Fragment" >
-	<img id="new-fragment-button" src="resources/styles/custom/images/add-fragment.png" />
+<a href="#editor-frame" id='new-fragment-editor-trigger' class="no-underline-for-link" title="#{msg['label_fragment_new']}" >
+    <i class="fa fa-file-text fa-2x"></i>
 </a>
 
 <ui:include src="/WEB-INF/flows/home/fragment-editor.xhtml" />

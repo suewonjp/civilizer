@@ -50,6 +50,11 @@
 	margin-left: 30px;
 }
 
+#new-fragment-editor-trigger {
+	margin-left: 30px;
+	color: #ff0;
+}
+
 #editor-title-bar {
 	clear: both;
 	display: block;
@@ -125,7 +130,7 @@
 	top: -15px;
 }
 
-.fragment-menu a {
+.no-underline-for-link {
 	text-decoration: none;
 }
 
