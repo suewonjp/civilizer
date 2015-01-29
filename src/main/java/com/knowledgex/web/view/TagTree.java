@@ -33,6 +33,7 @@ public class TagTree implements Serializable {
             for (Tag c : children) {
                 TreeNode parentTreeNode = mapTagId2TreeNode.get(t.getId());
                 mapTagId2TreeNode.put(c.getId(), new DefaultTreeNode(c, parentTreeNode));
+                parentTreeNode.setExpanded(true);
             }
         }
     }

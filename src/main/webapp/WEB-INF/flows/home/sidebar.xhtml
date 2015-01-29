@@ -31,8 +31,16 @@ $(document).ready(function() {
 <h:form>
 	<div id="tag-group-tab-view">
 		<ul>
-			<li><a href="#tag-group-linear">#{msg['label_tag_group_view_linear']}</a></li>
-			<li><a href="#tag-group-tree">#{msg['label_tag_group_view_tree']}</a></li>
+			<li>
+				<a href="#tag-group-linear" title="#{msg['label_tag_group_view_linear']}" >
+				    <span class="fa fa-list fa-2x" ></span>
+				</a>
+			</li>
+			<li>
+				<a href="#tag-group-tree" title="#{msg['label_tag_group_view_tree']}" >
+				    <span class="fa fa-tree fa-2x" ></span>
+				</a>
+			</li>
 		</ul>
 		
 		<div id="tag-group-linear">
