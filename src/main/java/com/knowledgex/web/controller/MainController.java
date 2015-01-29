@@ -2,6 +2,9 @@ package com.knowledgex.web.controller;
 
 import java.util.*;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +31,12 @@ public class MainController {
 
 	@Autowired
 	private TagDao tagDao;
+	
+	
+	private static void addMessage(String title, String content) {
+		FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(title, content));
+	}
 
 	private Tag getTrashTag() {
 		if (null != trashTag) {
@@ -86,6 +95,7 @@ public class MainController {
 		Fragment frg = fragmentDao.findById(fragmentId);
 		frg.addTag(getTrashTag());
 		fragmentDao.save(frg);
+		addMessage("Successful", "Fragment #" + frg.getId() + " has been trashed");
 	}
 
 	public void deleteFragment(Long fragmentId) {

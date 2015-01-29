@@ -64,6 +64,8 @@ $(document).ready(function() {
 <ui:define name="content">
 
 <h:form id="fragment-group-form">
+    <p:growl id="growl" showDetail="true" sticky="false" life="10000" />
+    
     <div id="fragment-group">
         <div id="fragment-group-toolbar">
 	        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
