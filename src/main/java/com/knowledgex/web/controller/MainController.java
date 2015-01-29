@@ -101,6 +101,7 @@ public class MainController {
 	public void deleteFragment(Long fragmentId) {
 		Fragment frg = fragmentDao.findById(fragmentId);
 		fragmentDao.delete(frg);
+		addMessage("Successful", "Fragment #" + frg.getId() + " has been deleted");
 	}
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
@@ -115,7 +116,7 @@ public class MainController {
 	    }
 	    frg.setUpdateDatetime(dt);
         fragmentDao.save(frg);
-        logger.info(fb.toString());
+        addMessage("Successful", "Fragment #" + frg.getId() + " has been saved");
 	}
 	
 	private Collection<Tag> saveTags(TagListBean tagListBean, String tagNames) {
@@ -124,8 +125,10 @@ public class MainController {
 		List<Tag> output = new ArrayList<Tag>();
 		for (String name : names) {
 			Tag t = Tag.getTagFromName(name, existingTags);
-			if (t == null) {
+			boolean newTag = false;
+			if (null == t) {
 				t = new Tag(name);
+				newTag = true;
 			}
 			DateTime dt = new DateTime();
 		    if (t.getCreationDatetime() == null) {
@@ -133,7 +136,9 @@ public class MainController {
 		    }
 		    t.setUpdateDatetime(dt);
 			tagDao.save(t);
-			logger.info(t.toString());
+			if (newTag) {
+				addMessage("Successful", "Tag \"" + t.getTagName() + "\" has been saved");
+			}
 			output.add(t);
 		}
 		return output;
