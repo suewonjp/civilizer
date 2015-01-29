@@ -391,5 +391,19 @@ abstract class DaoTest {
 		fragments2 = tagDao.findFragments(idsIn, idsEx);
 		assertEquals(fragments, fragments2);
 	}
+	
+	protected void testPagingFragments() {
+		Collection<Fragment> allFragments = fragmentDao.findAll();
+		int allCount = allFragments.size();
+		int count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
+		assertTrue(1 <= count && count < allCount);
+		int first = Math.max(0, TestUtil.getRandom().nextInt(count));
+		assertTrue(0 <= first && first < count);
+		Collection<Fragment> someFragments = fragmentDao.findSome(first, count);
+		assertTrue(someFragments.size() == count);
+		for (Fragment f : someFragments) {
+			assertTrue(allFragments.contains(f));
+		}
+	}
 
 }

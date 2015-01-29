@@ -38,6 +38,17 @@ public class FragmentDaoImpl implements FragmentDao {
                 .createQuery("from Fragment f").list();
     }
 
+	@Override
+	@SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+	public Collection<Fragment> findSome(int first, int count) {
+		return sessionFactory.getCurrentSession()
+                .createQuery("from Fragment f")
+                .setFirstResult(first)
+                .setMaxResults(count)
+                .list();
+	}
+
     @Override
     public Fragment findById(Long id) {
         return (Fragment) sessionFactory.getCurrentSession()

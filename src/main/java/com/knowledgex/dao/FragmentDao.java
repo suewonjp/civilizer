@@ -6,6 +6,8 @@ import com.knowledgex.domain.Fragment;
 
 public interface FragmentDao {
     public Collection<Fragment> findAll();
+    
+    public Collection<Fragment> findSome(int first, int count);
 
     public Fragment findById(Long id);
 
