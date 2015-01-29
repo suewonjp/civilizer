@@ -108,7 +108,7 @@ function previewFragment() {
 	}
 	else {
 		// create a new div for preview
-		$next = $("&lt;div id='fragment-preview-frame' &gt;");
+		$next = $("<div id='fragment-preview-frame' >");
 		$next.append(renderedHtml);
 		$editor.after($next);
 	}
