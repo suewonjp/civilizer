@@ -54,7 +54,7 @@ $(document).ready(function() {
 	    });
     }
     else {
-    	$("#fragment-panel-toolbar").hide();
+    	$("#fragment-group-form\\:fragment-panel-toolbar").hide();
     }
 }); // end of $(document).ready()
 //]]>
@@ -70,10 +70,10 @@ $(document).ready(function() {
 	    <div id="fragment-panel-0">
 	        <c:set var="fragmentListBean" value="#{fragmentListBean0}"/>
 	        
-	        <div id="fragment-panel-toolbar">
+	        <p:panel id="fragment-panel-toolbar" toggleable="true">
 		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
 		        <p:tooltip for="checkbox-for-all-fragments" value="Selects/unselects all fragments" />
-	        </div>
+	        </p:panel>
 		    
 		    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
 		        <ui:include src="each-fragment.xhtml" />
