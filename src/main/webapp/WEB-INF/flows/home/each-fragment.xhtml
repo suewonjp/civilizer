@@ -30,15 +30,15 @@
 					</a>
 					<c:choose>
 						<c:when test="#{contextBean.fragmentDeletable}">
-							<p:commandLink action="delete-fragment" styleClass="button-link">
+							<p:commandLink action="delete-fragment" >
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
-								<span class="fa fa-trash fa-3x warning-color" title="#{msg['label_fragment_delete']}"></span>
+								<span class="fa fa-trash fa-3x button-link warning-color" title="#{msg['label_fragment_delete']}"></span>
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
-							<p:commandLink action="trash-fragment" styleClass="button-link">
+							<p:commandLink action="trash-fragment" >
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
-								<span class="fa fa-trash fa-3x" title="#{msg['label_fragment_trash']}"></span>
+								<span class="fa fa-trash fa-3x button-link" title="#{msg['label_fragment_trash']}"></span>
 							</p:commandLink>
 						</c:otherwise>
 					</c:choose>
