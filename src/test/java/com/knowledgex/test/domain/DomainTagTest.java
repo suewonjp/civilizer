@@ -48,6 +48,9 @@ public class DomainTagTest {
 	    
 	    for (int i=1; i<depthCount; ++i) {
 	        List<Tag> parentTags = (List<Tag>) tagsPerDepth[i - 1];
+	        if (parentTags.isEmpty()) {
+	            continue;
+	        }
 	        List<Tag> childTags = new ArrayList<Tag>((List<Tag>) tagsPerDepth[i]);
 	        int pi = 0;
 	        while (childTags.isEmpty() == false) {
