@@ -6,20 +6,18 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class PaginatorBean implements Serializable {
 	
-	private static final int MAX_VISIBLE_PAGE_COUNT = 5;
-	
 	private Integer curPage = new Integer(0);
-	private Integer pageSize = new Integer(10);
+	private Integer itemsPerPage = new Integer(10);
 	private Integer maxPages = new Integer(1);
-	private List<Integer> visiblePages = new ArrayList<Integer>(MAX_VISIBLE_PAGE_COUNT);
+	private List<Integer> accessiblePages = new ArrayList<Integer>();
 	
 	public PaginatorBean() {}
 
-	public PaginatorBean(int curPage, int pageSize, int maxPages) {
-		this.curPage = curPage;
-		this.pageSize = pageSize;
-		this.maxPages = maxPages;
-		setVisiblePages();
+	public void paginate(int curPage, int itemsPerPage, int maxItems, int pagesPerChunk) {
+	    setItemsPerPage(itemsPerPage);
+	    maxPages = (maxItems + itemsPerPage - 1) / itemsPerPage;
+		setCurPage(curPage);
+		populateAccessiblePages(pagesPerChunk);
 	}
 	
 	public Integer getCurPage() {
@@ -27,42 +25,48 @@ public class PaginatorBean implements Serializable {
 	}
 	
 	public void setCurPage(Integer curPage) {
-		this.curPage = curPage;
+	    curPage = Math.max(0, curPage);
+	    curPage = Math.min(curPage, maxPages-1);
+	    this.curPage = curPage;
 	}
 	
-	public Integer getPageSize() {
-		return pageSize;
-	}
-	
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
+	public void forwardPage() {
+	    curPage = Math.min(curPage+1, maxPages-1);
 	}
 
-	public Integer getMaxPages() {
-		return maxPages;
+	public void backwardPage() {
+	    curPage = Math.max(0, curPage-1);
 	}
 	
-	public void setMaxPages(Integer maxPages) {
-		this.maxPages = maxPages;
-	}
-	
-	public void computeMaxPages(int maxItems) {
-		maxPages = (maxItems + pageSize - 1) / pageSize;
-	}
+	public Integer getItemsPerPage() {
+        return itemsPerPage;
+    }
 
-	public List<Integer> getVisiblePages() {
-		return visiblePages;
-	}
+    public void setItemsPerPage(Integer itemsPerPage) {
+        if (itemsPerPage <= 0) {
+            throw new IllegalArgumentException();
+        }
+        this.itemsPerPage = itemsPerPage;
+    }
+
+    public List<Integer> getAccessiblePages() {
+        return accessiblePages;
+    }
+
+//    public void setAccessiblePages(List<Integer> accessiblePages) {
+//        this.accessiblePages = accessiblePages;
+//    }
 	
-	private void setVisiblePages() {
-		int maxChunks = (maxPages + MAX_VISIBLE_PAGE_COUNT - 1) / MAX_VISIBLE_PAGE_COUNT;
-		int curChunk = curPage/MAX_VISIBLE_PAGE_COUNT;
-		int c = MAX_VISIBLE_PAGE_COUNT;
+	private void populateAccessiblePages(int pagesPerChunk) {
+		int maxChunks = (maxPages + pagesPerChunk - 1) / pagesPerChunk;
+		int curChunk = curPage / pagesPerChunk;
+		int c = pagesPerChunk;
 		if (curChunk >= maxChunks-1) {
-			c = maxChunks % MAX_VISIBLE_PAGE_COUNT;
+			c = maxPages % pagesPerChunk;
 		}
+		accessiblePages.clear();
 		for (int i=0; i<c; ++i) {
-			visiblePages.add(i + MAX_VISIBLE_PAGE_COUNT*curChunk);
+			accessiblePages.add(i + pagesPerChunk*curChunk);
 		}
 	}
 
