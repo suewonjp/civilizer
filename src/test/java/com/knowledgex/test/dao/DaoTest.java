@@ -395,7 +395,7 @@ abstract class DaoTest {
 	protected void testPagingFragments() {
 		Collection<Fragment> allFragments = fragmentDao.findAll();
 		int allCount = allFragments.size();
-		int first, count;
+		int first = 0, count = 0;
 		Collection<Fragment> someFragments = null;
 		
 		// test edge cases
@@ -425,11 +425,11 @@ abstract class DaoTest {
 		assertTrue(0 <= first && first < count);
 		someFragments = fragmentDao.findSome(first, count);
 		assertEquals(someFragments.size(), count);
-		int count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
+		count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
 		assertTrue(1 <= count && count < allCount);
-		int first = Math.max(0, TestUtil.getRandom().nextInt(count));
+		first = Math.max(0, TestUtil.getRandom().nextInt(count));
 		assertTrue(0 <= first && first < count);
-		Collection<Fragment> someFragments = fragmentDao.findSome(first, count);
+		someFragments = fragmentDao.findSome(first, count);
 		assertTrue(someFragments.size() == count);
 		for (Fragment f : someFragments) {
 			assertTrue(allFragments.contains(f));
