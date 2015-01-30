@@ -430,7 +430,7 @@ abstract class DaoTest {
 		first = Math.max(0, TestUtil.getRandom().nextInt(count));
 		assertTrue(0 <= first && first < count);
 		someFragments = fragmentDao.findSome(first, count);
-		assertTrue(someFragments.size() == count);
+		assertEquals(someFragments.size(), Math.min(count, allCount-first));
 		for (Fragment f : someFragments) {
 			assertTrue(allFragments.contains(f));
 		}
