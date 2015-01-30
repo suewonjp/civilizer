@@ -336,7 +336,7 @@ abstract class DaoTest {
 		idsEx.add(ids.get(0));
 		idsEx.add(ids.get(1));
 		
-		// test with edge cases
+		// test edge cases
 		fragments = tagDao.findFragments(null, null);
 		assertNull(fragments);
 
@@ -395,12 +395,35 @@ abstract class DaoTest {
 	protected void testPagingFragments() {
 		Collection<Fragment> allFragments = fragmentDao.findAll();
 		int allCount = allFragments.size();
-		int count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
+		int first, count;
+		Collection<Fragment> someFragments = null;
+		
+		// test edge cases
+		first = 0; count = 0; // zero range
+		someFragments = fragmentDao.findSome(first, count);
+		assertTrue(someFragments.isEmpty());
+		first = -1; count = 1; // first index is negative
+		someFragments = fragmentDao.findSome(first, count);
+		assertEquals(someFragments.size(), count);
+		first = -1; count = -1; // first index and count are negative
+		someFragments = fragmentDao.findSome(first, count);
+		assertTrue(someFragments.isEmpty());
+		first = 1; count = -1; // count is negative
+		someFragments = fragmentDao.findSome(first, count);
+		assertTrue(someFragments.isEmpty());
+		first = 0; count = allCount + 100; // count exceeds the max. available count
+		someFragments = fragmentDao.findSome(first, count);
+		assertEquals(someFragments.size(), allCount);
+		first = allCount + 10; count = 1; // first index exceeds the max. available count
+		someFragments = fragmentDao.findSome(first, count);
+		assertTrue(someFragments.isEmpty());
+				
+		count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
 		assertTrue(1 <= count && count < allCount);
-		int first = Math.max(0, TestUtil.getRandom().nextInt(count));
+		first = Math.max(0, TestUtil.getRandom().nextInt(count));
 		assertTrue(0 <= first && first < count);
-		Collection<Fragment> someFragments = fragmentDao.findSome(first, count);
-		assertTrue(someFragments.size() == count);
+		someFragments = fragmentDao.findSome(first, count);
+		assertEquals(someFragments.size(), count);
 		for (Fragment f : someFragments) {
 			assertTrue(allFragments.contains(f));
 		}

@@ -42,6 +42,8 @@ public class FragmentDaoImpl implements FragmentDao {
 	@SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
 	public Collection<Fragment> findSome(int first, int count) {
+	    first = Math.max(0, first);
+	    count = Math.max(0, count);
 		return sessionFactory.getCurrentSession()
                 .createQuery("from Fragment f")
                 .setFirstResult(first)
