@@ -12,7 +12,7 @@ $(document).ready(function() {
 	$window = $(window);
 	$editorFrame = $("#editor-frame");
 	
-	$("#new-fragment-editor-trigger").click(function (e) {
+	$("#new-fragment-editor-trigger, #new-fragment-editor-trigger-on-toolbar").click(function (e) {
 		onClickFragmentEditorTrigger($editorFrame, $window, e, "#{msg['label_fragment_new']}");
     });
 	

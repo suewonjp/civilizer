@@ -2,18 +2,18 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:h="http://java.sun.com/jsf/html" 
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	>
 
-<a href="home" class="no-underline-for-link">
+<a href="home" class="button-link">
     <span id="app-title"> #{msg['application_name']} </span>
 </a>
 
-<a href="#editor-frame" id='new-fragment-editor-trigger' class="no-underline-for-link" title="#{msg['label_fragment_new']}" >
+<a href="#editor-frame" id="new-fragment-editor-trigger" class="button-link new-resource-color" title="#{msg['label_fragment_new']}" >
     <span class="fa fa-file-text fa-2x"></span>
-    <span class="fa fa-plus-circle fa-lg"></span>
+    <span class="fa fa-plus-square fa-lg" style="font-size: 80%; "></span>
 </a>
 
 <ui:include src="/WEB-INF/flows/home/fragment-editor.xhtml" />

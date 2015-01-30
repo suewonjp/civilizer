@@ -42,7 +42,6 @@
 
 #new-fragment-editor-trigger {
 	margin-left: 30px;
-	color: #ff0;
 }
 
 #editor-title-bar {
@@ -91,8 +90,8 @@
 }
 
 #fragment-group-form\:fragment-panel-toolbar {
-	margin-top: 10px;
-	margin-bottom: 10px;
+    position: fixed;
+    top: 94%;
 }
 
 .fragment-header {
@@ -110,12 +109,20 @@
 	top: -15px;
 }
 
-.no-underline-for-link {
-	text-decoration: none;
-}
-
 .warning-color {
 	color: #f00;
+}
+
+.new-resource-color {
+	color: #ff0;
+}
+
+.button-link {
+    text-decoration: none;
+}
+
+.button-link:hover {
+    color: #ff830e;
 }
 
 .each-tag-name {

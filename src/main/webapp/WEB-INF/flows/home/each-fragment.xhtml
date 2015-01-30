@@ -24,19 +24,19 @@
 					<f:converter converterId="jodaDateTimeConverter" />
 				</h:outputText>
 				<div class="fragment-menu">
-					<a href="#editor-frame" class='edit-fragment-editor-trigger no-underline-for-link'
+					<a href="#editor-frame" class="edit-fragment-editor-trigger button-link"
 					   onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.tagNames}')">
                         <span class="fa fa-pencil fa-3x" title="#{msg['label_fragment_edit']}"></span>
 					</a>
 					<c:choose>
 						<c:when test="#{contextBean.fragmentDeletable}">
-							<p:commandLink action="delete-fragment">
+							<p:commandLink action="delete-fragment" styleClass="button-link">
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
 								<span class="fa fa-trash fa-3x warning-color" title="#{msg['label_fragment_delete']}"></span>
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
-							<p:commandLink action="trash-fragment">
+							<p:commandLink action="trash-fragment" styleClass="button-link">
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
 								<span class="fa fa-trash fa-3x" title="#{msg['label_fragment_trash']}"></span>
 							</p:commandLink>
