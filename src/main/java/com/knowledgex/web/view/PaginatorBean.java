@@ -1,73 +1,56 @@
 package com.knowledgex.web.view;
 
-import java.util.*;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class PaginatorBean implements Serializable {
 	
-	private Integer curPage = new Integer(0);
-	private Integer itemsPerPage = new Integer(10);
-	private Integer maxPages = new Integer(1);
-	private List<Integer> accessiblePages = new ArrayList<Integer>();
+	private int curPage = 0;
+	private int itemsPerPage = 10;
+	private boolean isLast = false;
 	
 	public PaginatorBean() {}
 
-	public void paginate(int curPage, int itemsPerPage, int maxItems, int pagesPerChunk) {
-	    setItemsPerPage(itemsPerPage);
-	    maxPages = (maxItems + itemsPerPage - 1) / itemsPerPage;
-		setCurPage(curPage);
-		populateAccessiblePages(pagesPerChunk);
+	// called by the controller
+	public void setCurPageAsLast(boolean isLast) {
+	    this.isLast = isLast;
 	}
 	
-	public Integer getCurPage() {
+	// called by the controller
+	public int getCurPage() {
 		return curPage;
 	}
-	
-	public void setCurPage(Integer curPage) {
-	    curPage = Math.max(0, curPage);
-	    curPage = Math.min(curPage, maxPages-1);
-	    this.curPage = curPage;
+
+	// called by the controller
+	public int getItemsPerPage() {
+	    return itemsPerPage;
 	}
-	
+
+    // called by the views
+    public void setItemsPerPage(int items) {
+        itemsPerPage = items;
+    }
+
+	// called by the views
 	public void forwardPage() {
-	    curPage = Math.min(curPage+1, maxPages-1);
+	    if (!isLast) {
+	        ++curPage;
+	    }
 	}
 
+	// called by the views
 	public void backwardPage() {
-	    curPage = Math.max(0, curPage-1);
+	    curPage = Math.max(0, --curPage);
 	}
 	
-	public Integer getItemsPerPage() {
-        return itemsPerPage;
+	// called by the views
+    public boolean isFirstPage() {
+        return curPage == 0;
     }
 
-    public void setItemsPerPage(Integer itemsPerPage) {
-        if (itemsPerPage <= 0) {
-            throw new IllegalArgumentException();
-        }
-        this.itemsPerPage = itemsPerPage;
+    // called by the views
+    public boolean isLastPage() {
+        return isLast;
     }
-
-    public List<Integer> getAccessiblePages() {
-        return accessiblePages;
-    }
-
-//    public void setAccessiblePages(List<Integer> accessiblePages) {
-//        this.accessiblePages = accessiblePages;
-//    }
-	
-	private void populateAccessiblePages(int pagesPerChunk) {
-		int maxChunks = (maxPages + pagesPerChunk - 1) / pagesPerChunk;
-		int curChunk = curPage / pagesPerChunk;
-		int c = pagesPerChunk;
-		if (curChunk >= maxChunks-1) {
-			c = maxPages % pagesPerChunk;
-		}
-		accessiblePages.clear();
-		for (int i=0; i<c; ++i) {
-			accessiblePages.add(i + pagesPerChunk*curChunk);
-		}
-	}
-
+    
 }
