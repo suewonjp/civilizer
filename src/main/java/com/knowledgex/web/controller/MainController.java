@@ -33,9 +33,12 @@ public class MainController {
 	private TagDao tagDao;
 	
 	
-	private static void addMessage(String title, String content) {
+	private static void addMessage(String title, String content, FacesMessage.Severity severity) {
+		if (null == severity) {
+			severity = FacesMessage.SEVERITY_INFO;
+		}
 		FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(title, content));
+        context.addMessage(null, new FacesMessage(severity, title, content));
 	}
 
 	private Tag getTrashTag() {
@@ -98,13 +101,13 @@ public class MainController {
 		Fragment frg = fragmentDao.findById(fragmentId);
 		frg.addTag(getTrashTag());
 		fragmentDao.save(frg);
-		addMessage("Successful", "Fragment #" + frg.getId() + " has been trashed");
+		addMessage("Successful", "Fragment #" + frg.getId() + " has been trashed", null);
 	}
 
 	public void deleteFragment(Long fragmentId) {
 		Fragment frg = fragmentDao.findById(fragmentId);
 		fragmentDao.delete(frg);
-		addMessage("Successful", "Fragment #" + frg.getId() + " has been deleted");
+		addMessage("Successful", "Fragment #" + frg.getId() + " has been deleted", null);
 	}
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
@@ -119,7 +122,7 @@ public class MainController {
 	    }
 	    frg.setUpdateDatetime(dt);
         fragmentDao.save(frg);
-        addMessage("Successful", "Fragment #" + frg.getId() + " has been saved");
+        addMessage("Successful", "Fragment #" + frg.getId() + " has been saved", null);
 	}
 	
 	private Collection<Tag> saveTags(TagListBean tagListBean, String tagNames) {
@@ -140,7 +143,7 @@ public class MainController {
 		    t.setUpdateDatetime(dt);
 			tagDao.save(t);
 			if (newTag) {
-				addMessage("Successful", "Tag \"" + t.getTagName() + "\" has been saved");
+				addMessage("Successful", "Tag \"" + t.getTagName() + "\" has been saved", null);
 			}
 			output.add(t);
 		}
