@@ -281,8 +281,12 @@ public class Tag implements Serializable {
     	return false;
     }
     
-    public static boolean isTrashTag(Long id) {
-    	return  (null != id) && (id == TRASH_TAG_ID);
+//    public static boolean isTrashTag(Long id) {
+//    	return  (null != id) && (id == TRASH_TAG_ID);
+//    }
+
+    public static boolean isTrashTag(long id) {
+    	return  (id == TRASH_TAG_ID);
     }
     
     @Override

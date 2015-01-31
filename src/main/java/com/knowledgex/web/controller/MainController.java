@@ -59,35 +59,29 @@ public class MainController {
 		return output;
 	}
 
-	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, Long tagId, ContextBean ctxt) {
+	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, Long _tagId, ContextBean ctxt) {
         FragmentListBean flb = existingFlb;
         if (null == flb) {
 			flb = new FragmentListBean();
 			flb.setPaginatorBean(new PaginatorBean());
 		}
         
+        long tagId = flb.getCurTagId();
+        
         PaginatorBean pb = flb.getPaginatorBean();
-//        {
-//			long tid = (null == tagId) ? -1 : tagId;
-//			if (tid != flb.getCurTagId()) {
-//				pb.reset();
-//			}
-//		}
         int count = pb.getItemsPerPage();
         int first = pb.getCurPage() * count;
-//        addMessage("info", "count = "+count+", first = "+first, null);
+        addMessage("info", "count = "+count+", first = "+first+", tagId = "+tagId, null);
         
         Collection<Fragment> fragments = null;
-        if (null == tagId) {
+        if (tagId == -1) {
         	// Fetch all the fragments
         	fragments = fragmentDao.findSome(first, count + 1);
-        	flb.setCurTagId(-1);
         }
         else {
         	// Fetch the fragments with the specified tag
-        	fragments = tagDao.findFragments(tagId);
-//        	fragments = tagDao.findFragments(tagId, first, count + 1);
-        	flb.setCurTagId(tagId);
+//        	fragments = tagDao.findFragments(tagId);
+        	fragments = tagDao.findFragments(tagId, first, count + 1);
         }
         
         pb.setCurPageAsLast(fragments.size() <= count);
