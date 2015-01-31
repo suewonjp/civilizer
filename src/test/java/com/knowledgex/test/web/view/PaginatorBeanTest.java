@@ -32,7 +32,7 @@ public class PaginatorBeanTest {
         assertEquals(pb.getCurPage(), curPage);
         assertEquals(pb.isLastPage(), isLastPage);
 
-        pb.backwardPage();
+        pb.backwardPage(curPage);
         assertEquals(pb.getCurPage(), curPage);
         assertEquals(pb.isLastPage(), isLastPage);
     }
@@ -41,11 +41,12 @@ public class PaginatorBeanTest {
     public void testForwardEdgeCases() {
         int curPage = 0;
         boolean isLastPage = true;
+        
         pb.setCurPageAsLast(isLastPage);
         assertEquals(pb.isLastPage(), isLastPage);
         assertEquals(pb.getCurPage(), curPage);
         
-        pb.forwardPage();
+        pb.forwardPage(curPage);
         assertEquals(pb.getCurPage(), curPage);
         assertEquals(pb.isLastPage(), isLastPage);
         
@@ -56,18 +57,20 @@ public class PaginatorBeanTest {
         int additionalPages = 5;
         
         for (int i = 1; i < additionalPages; i++) {
-            pb.forwardPage();
-            assertEquals(pb.getCurPage(), curPage + i);
+            curPage = pb.getCurPage();
+            pb.forwardPage(curPage);
+            assertEquals(pb.getCurPage(), curPage + 1);
             assertEquals(pb.isLastPage(), isLastPage);
         }
         
-        curPage = pb.getCurPage();
         isLastPage = true;
         pb.setCurPageAsLast(isLastPage);
         assertEquals(pb.isLastPage(), isLastPage);
-        pb.forwardPage();
+        curPage = pb.getCurPage();
+        pb.forwardPage(curPage);
         assertEquals(pb.getCurPage(), curPage);
-        pb.forwardPage();
+        curPage = pb.getCurPage();
+        pb.forwardPage(curPage);
         assertEquals(pb.getCurPage(), curPage);
     }
 

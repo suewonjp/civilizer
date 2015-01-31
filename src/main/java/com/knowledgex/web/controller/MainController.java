@@ -59,7 +59,7 @@ public class MainController {
 		return output;
 	}
 
-	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, Long _tagId, ContextBean ctxt) {
+	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, ContextBean ctxt) {
         FragmentListBean flb = existingFlb;
         if (null == flb) {
 			flb = new FragmentListBean();
@@ -71,7 +71,7 @@ public class MainController {
         PaginatorBean pb = flb.getPaginatorBean();
         int count = pb.getItemsPerPage();
         int first = pb.getCurPage() * count;
-        addMessage("info", "count = "+count+", first = "+first+", tagId = "+tagId, null);
+//        addMessage("info", "count = "+count+", first = "+first+", tagId = "+tagId, null);
         
         Collection<Fragment> fragments = null;
         if (tagId == -1) {
