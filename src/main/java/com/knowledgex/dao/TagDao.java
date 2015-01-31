@@ -18,6 +18,8 @@ public interface TagDao {
 
     public Collection<Fragment> findFragments(Long id);
 
+    public Collection<Fragment> findFragments(Long id, int first, int count);
+    
     public Collection<Fragment> findFragments(
     		Collection<Long> idsIn
     		, Collection<Long> idsEx

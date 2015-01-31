@@ -70,12 +70,20 @@ $(document).ready(function() {
 	    <div id="fragment-panel-0">
 	        <c:set var="fragmentListBean" value="#{fragmentListBean0}"/>
 	        
-	        <p:panel id="fragment-panel-toolbar">
+	        <p:panel id="fragment-panel-toolbar" >
 		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
 		        <p:tooltip for="checkbox-for-all-fragments" value="Selects/unselects all fragments" />
 		        <a href="#editor-frame" id="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_fragment_new']}">
 			        <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>
 		        </a>
+		        <p:spacer width="20" />
+		        <p:commandLink action="prev-fragment-page" actionListener="#{fragmentListBean.paginatorBean.backwardPage()}">
+			        <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_fragment_go_to_prev_page']}"></span>
+		        </p:commandLink>
+		        <p:spacer width="20" />
+		        <p:commandLink action="next-fragment-page" actionListener="#{fragmentListBean.paginatorBean.forwardPage()}">
+			        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_fragment_go_to_next_page']}"></span>
+		        </p:commandLink>
 	        </p:panel>
 		    
 		    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">

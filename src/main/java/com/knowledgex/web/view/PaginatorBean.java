@@ -12,6 +12,11 @@ public class PaginatorBean implements Serializable {
 	public PaginatorBean() {}
 
 	// called by the controller
+	public void reset() {
+		curPage = 0;
+	}
+	
+	// called by the controller
 	public void setCurPageAsLast(boolean isLast) {
 	    this.isLast = isLast;
 	}

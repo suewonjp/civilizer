@@ -117,7 +117,7 @@
 	color: #ff0;
 }
 
-.button-link {
+.button-link, #fragment-group-form\:fragment-panel-toolbar a  {
     text-decoration: none;
 }
 

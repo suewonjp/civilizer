@@ -53,24 +53,43 @@ public class MainController {
         FragmentListBean flb = existingFlb;
         if (null == flb) {
 			flb = new FragmentListBean();
+			flb.setPaginatorBean(new PaginatorBean());
 		}
+        
+        PaginatorBean pb = flb.getPaginatorBean();
+//        {
+//			long tid = (null == tagId) ? -1 : tagId;
+//			if (tid != flb.getCurTagId()) {
+//				pb.reset();
+//			}
+//		}
+        int count = pb.getItemsPerPage();
+        int first = pb.getCurPage() * count;
+//        addMessage("info", "count = "+count+", first = "+first, null);
+        
         Collection<Fragment> fragments = null;
         if (null == tagId) {
         	// Fetch all the fragments
-        	fragments = fragmentDao.findAll();
+        	fragments = fragmentDao.findSome(first, count + 1);
+        	flb.setCurTagId(-1);
         }
         else {
         	// Fetch the fragments with the specified tag
         	fragments = tagDao.findFragments(tagId);
+//        	fragments = tagDao.findFragments(tagId, first, count + 1);
+        	flb.setCurTagId(tagId);
         }
         
+        pb.setCurPageAsLast(fragments.size() <= count);
+        
         boolean trashTag = Tag.isTrashTag(tagId);
-        if (false == trashTag) {
+        if (!trashTag) {
         	// Exclude fragments that have '#trash' tag
         	List<Long> trashTagId = new ArrayList<Long>();
         	trashTagId.add(0L);
         	fragments = Fragment.applyExclusiveTagFilter(fragments, trashTagId);
         }
+        ctxt.setFragmentDeletable(trashTag);
         
         List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
         for (Fragment f : fragments) {
@@ -81,8 +100,7 @@ public class MainController {
         	fragmentBeans.add(fb);
         }
         flb.setFragmentBeans(fragmentBeans);
-        ctxt.setFragmentDeletable(trashTag);
-        logger.info("newFragmentListBean() called");
+        
         return flb;
     }
 

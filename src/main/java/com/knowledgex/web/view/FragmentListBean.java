@@ -8,6 +8,10 @@ public class FragmentListBean implements Serializable {
     
     private List<FragmentBean> fragmentBeans;
     
+    private PaginatorBean paginatorBean;
+    
+    private long curTagId = -1;
+    
     public Collection<FragmentBean> getFragmentBeans() {
     	return fragmentBeans;
     }
@@ -19,5 +23,21 @@ public class FragmentListBean implements Serializable {
     public FragmentBean getFragmentBeanAt(int index) {
     	return fragmentBeans.get(index);
     }
+
+	public PaginatorBean getPaginatorBean() {
+		return paginatorBean;
+	}
+
+	public void setPaginatorBean(PaginatorBean paginatorBean) {
+		this.paginatorBean = paginatorBean;
+	}
+
+	public long getCurTagId() {
+		return curTagId;
+	}
+
+	public void setCurTagId(long curTagId) {
+		this.curTagId = curTagId;
+	}
 
 }

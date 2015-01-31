@@ -82,6 +82,17 @@ public class TagDaoImpl implements TagDao {
                 .setParameter("id", id)
                 .list();
     }
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<Fragment> findFragments(Long id, int first, int count) {
+		return sessionFactory.getCurrentSession()
+                .getNamedQuery("Tag.findFragments")
+                .setParameter("id", id)
+                .setFirstResult(first)
+                .setMaxResults(count)
+                .list();
+	}
     
     @Override
     @SuppressWarnings("unchecked")

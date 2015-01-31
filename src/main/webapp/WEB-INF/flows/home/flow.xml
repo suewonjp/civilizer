@@ -39,6 +39,12 @@
             <evaluate expression="userEditedFragmentBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
+
+        <transition on="prev-fragment-page" to="home">
+        </transition>
+
+        <transition on="next-fragment-page" to="home">
+        </transition>
     </view-state>
     
     <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
