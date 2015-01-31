@@ -21,6 +21,8 @@ import com.knowledgex.web.view.*;
 @Controller
 @Component("mainController")
 public class MainController {
+	
+	private static final int MAX_FRAGMENT_PANELS = 3;
     
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     
@@ -47,6 +49,14 @@ public class MainController {
 		}
 		trashTag = tagDao.findById(Tag.TRASH_TAG_ID);
 		return trashTag;
+	}
+	
+	public List<FragmentListBean> newFragmentListBeans() {
+		List<FragmentListBean> output =  new ArrayList<FragmentListBean>(MAX_FRAGMENT_PANELS);
+		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
+			output.add(null);
+		}
+		return output;
 	}
 
 	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, Long tagId, ContextBean ctxt) {

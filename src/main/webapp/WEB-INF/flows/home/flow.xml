@@ -6,6 +6,7 @@
     start-state="home">
     
     <on-start>
+        <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         <evaluate expression="mainController.newContextBean()" result="flowScope.contextBean"/>
@@ -13,7 +14,7 @@
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
-            <evaluate expression="mainController.newFragmentListBean(flowScope.fragmentListBean0, requestScope.tagId, contextBean)" result="flowScope.fragmentListBean0"/>
+            <evaluate expression="mainController.newFragmentListBean(fragmentListBeans[0], requestScope.tagId, contextBean)" result="flowScope.fragmentListBeans[0]"/>
         </on-entry>
         
         <transition on="inspect-fragment" to="inspect-fragment">
@@ -49,7 +50,7 @@
     
     <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
         <on-entry>
-            <evaluate expression="mainController.inspectFragment(fragmentLoopIndex, fragmentListBean0)" result="viewScope.fragmentBean"/>
+            <evaluate expression="mainController.inspectFragment(fragmentLoopIndex, fragmentListBeans[0])" result="viewScope.fragmentBean"/>
         </on-entry>
         <transition on ="back" to="home"/>
     </view-state>
