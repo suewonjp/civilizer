@@ -2,9 +2,6 @@ package com.knowledgex.web.controller;
 
 import java.util.*;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,14 +31,6 @@ public class MainController {
 	
 	private Tag trashTag = null;
 	
-	private static void addMessage(String title, String content, FacesMessage.Severity severity) {
-		if (null == severity) {
-			severity = FacesMessage.SEVERITY_INFO;
-		}
-		FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(severity, title, content));
-	}
-
 	private Tag getTrashTag() {
 		if (null != trashTag) {
 			return trashTag;
@@ -70,7 +59,7 @@ public class MainController {
         PaginatorBean pb = flb.getPaginatorBean();
         int count = pb.getItemsPerPage();
         int first = pb.getCurPage() * count;
-//        addMessage("info", "count = "+count+", first = "+first+", tagId = "+tagId, null);
+//        ViewUtil.addMessage("info", "count = "+count+", first = "+first+", tagId = "+tagId, null);
         
         Collection<Fragment> fragments = null;
         if (tagId == -1) {
@@ -122,13 +111,13 @@ public class MainController {
 		Fragment frg = fragmentDao.findById(fragmentId);
 		frg.addTag(getTrashTag());
 		fragmentDao.save(frg);
-		addMessage("Successful", "Fragment #" + frg.getId() + " has been trashed", null);
+		ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been trashed", null);
 	}
 
 	public void deleteFragment(Long fragmentId) {
 		Fragment frg = fragmentDao.findById(fragmentId);
 		fragmentDao.delete(frg);
-		addMessage("Successful", "Fragment #" + frg.getId() + " has been deleted", null);
+		ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been deleted", null);
 	}
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
@@ -143,7 +132,7 @@ public class MainController {
 	    }
 	    frg.setUpdateDatetime(dt);
         fragmentDao.save(frg);
-        addMessage("Successful", "Fragment #" + frg.getId() + " has been saved", null);
+        ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been saved", null);
 	}
 	
 	private Collection<Tag> saveTags(TagListBean tagListBean, String tagNames) {
@@ -164,7 +153,7 @@ public class MainController {
 		    t.setUpdateDatetime(dt);
 			tagDao.save(t);
 			if (newTag) {
-				addMessage("Successful", "Tag \"" + t.getTagName() + "\" has been saved", null);
+				ViewUtil.addMessage("Successful", "Tag \"" + t.getTagName() + "\" has been saved", null);
 			}
 			output.add(t);
 		}
