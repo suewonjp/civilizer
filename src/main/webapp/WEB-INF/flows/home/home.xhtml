@@ -95,6 +95,12 @@ $(document).ready(function() {
 		            <f:param name="curTagId" value="#{fragmentListBean.curTagId}"/>
 			        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_fragment_go_to_next_page']}"></span>
 		        </p:commandLink>
+		        
+		        <p:spacer width="20" />
+		        
+		        <p:commandLink action="go-home">
+			        <span class="fa fa-home fa-2x button-link" title="#{msg['label_fragment_go_home']}"></span>
+		        </p:commandLink>
 	        </p:panel>
 		    
 		    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">

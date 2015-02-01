@@ -51,6 +51,11 @@
             <evaluate expression="fragmentListBeans[0].paginatorBean.forwardPage(requestParameters.curPage)" />
             <evaluate expression="fragmentListBeans[0].setCurTagId(requestParameters.curTagId)" />
         </transition>
+
+        <transition on="go-home" to="home">
+            <evaluate expression="fragmentListBeans[0].setCurTagId(-1)" />
+            <evaluate expression="fragmentListBeans[0].paginatorBean.reset()" />
+        </transition>
     </view-state>
     
     <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
