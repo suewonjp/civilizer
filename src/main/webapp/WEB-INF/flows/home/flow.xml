@@ -65,12 +65,12 @@
         <transition on ="back" to="home"/>
     </view-state>
 
-    <view-state id="test" view="test.xhtml">
-        <on-entry>
-            <evaluate expression="mainController.test(null, null, null)" />
-        </on-entry>
-        <transition on ="back" to="home"/>
-    </view-state>
+<!--     <view-state id="test" view="test.xhtml"> -->
+<!--         <on-entry> -->
+<!--             <evaluate expression="mainController.test(null, null, null)" /> -->
+<!--         </on-entry> -->
+<!--         <transition on ="back" to="home"/> -->
+<!--     </view-state> -->
 
     <end-state id="exit" />
              

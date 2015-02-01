@@ -49,4 +49,13 @@ public class PaginatorBean implements Serializable {
         return isLast;
     }
     
+    @Override
+    public String toString() {
+    	return "{curPage: " + curPage
+                + "}, {itermsPerPage: " + itemsPerPage
+                + "}, {isLast: " + isLast
+                + "},"
+                ;
+    }
+    
 }

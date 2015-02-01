@@ -59,7 +59,8 @@ public class MainController {
         PaginatorBean pb = flb.getPaginatorBean();
         int count = pb.getItemsPerPage();
         int first = pb.getCurPage() * count;
-//        ViewUtil.addMessage("info", "count = "+count+", first = "+first+", tagId = "+tagId, null);
+//        ViewUtil.addMessage("pb", pb);
+//        ViewUtil.addMessage("tagId", tagId);
         
         Collection<Fragment> fragments = null;
         if (tagId == -1) {
@@ -160,21 +161,21 @@ public class MainController {
 		return output;
 	}
 
-	public void test(
-			FragmentListBean flb
-			, TagListBean tlb
-			, FragmentBean fb
-			) {
-	    if (null != flb) {
-	    	logger.info("test() called with FragmentListBean");
-	    }
-	    if (null != tlb) {
-	    	logger.info("test() called with TagListBean");
-	    }
-	    if (null != fb) {
-	    	logger.info("test() called with FragmentBean");
-	    }
-	}
+//	public void test(
+//			FragmentListBean flb
+//			, TagListBean tlb
+//			, FragmentBean fb
+//			) {
+//	    if (null != flb) {
+//	    	logger.info("test() called with FragmentListBean");
+//	    }
+//	    if (null != tlb) {
+//	    	logger.info("test() called with TagListBean");
+//	    }
+//	    if (null != fb) {
+//	    	logger.info("test() called with FragmentBean");
+//	    }
+//	}
 	
 	public FragmentBean inspectFragment(Integer index, FragmentListBean flb) {
 		FragmentBean fb = flb.getFragmentBeanAt(index);
