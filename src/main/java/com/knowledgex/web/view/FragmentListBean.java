@@ -39,5 +39,9 @@ public class FragmentListBean implements Serializable {
 	public void setCurTagId(long curTagId) {
 		this.curTagId = curTagId;
 	}
+	
+	public boolean hasFragments() {
+		return !fragmentBeans.isEmpty();
+	}
 
 }
