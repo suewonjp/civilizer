@@ -66,19 +66,32 @@ public class DomainFragmentTest {
 	}
 	
 	@Test
-	public void testSortByDate() {
+	public void testSort() {
 	    for (Fragment f : fragments) {
-            assertNotNull(f.getCreationDatetime());
+	        assertNotNull(f.getCreationDatetime());
             assertNotNull(f.getUpdateDatetime());
+            assertNotNull(f.getTitle());
+            assertNotNull(f.getId());
         }
 	    
 	    Comparator<Fragment> cmptrForCreationTime =
 	            FragmentComparator.newComparatorForCreationDatetime();
 	    assertNotNull(cmptrForCreationTime);
+	    
 	    Comparator<Fragment> cmptrForUpdateTime =
 	            FragmentComparator.newComparatorForUpdateDatetime();
 	    assertNotNull(cmptrForUpdateTime);
+	    
+	    Comparator<Fragment> cmptrForTitle =
+	            FragmentComparator.newComparatorForTitle();
+	    assertNotNull(cmptrForTitle);
+	    
+	    Comparator<Fragment> cmptrForId =
+	            FragmentComparator.newComparatorForId();
+	    assertNotNull(cmptrForId);
+	    
 	    DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
+	    assertNotNull(dtCmptr);
 	    
 	    Collections.shuffle(fragments);
 	    Collections.sort(fragments, cmptrForCreationTime);
@@ -100,6 +113,27 @@ public class DomainFragmentTest {
 	        DateTime dt1 = f1.getUpdateDatetime();
 	        int r = dtCmptr.compare(dt0, dt1);
 	        assertTrue(r <= 0);
+	    }
+
+	    Collections.shuffle(fragments);
+	    Collections.sort(fragments, cmptrForTitle);
+	    for (int i=1; i<fragments.size(); ++i) {
+	        Fragment f0 = fragments.get(i - 1);
+	        Fragment f1 = fragments.get(i);
+	        String s0 = f0.getTitle();
+	        String s1 = f1.getTitle();
+	        int r = s0.compareToIgnoreCase(s1);
+	        assertTrue(r <= 0);
+	    }
+
+	    Collections.shuffle(fragments);
+	    Collections.sort(fragments, cmptrForId);
+	    for (int i=1; i<fragments.size(); ++i) {
+	        Fragment f0 = fragments.get(i - 1);
+	        Fragment f1 = fragments.get(i);
+	        long id0 = f0.getId();
+	        long id1 = f1.getId();
+	        assertTrue(id0 < id1);
 	    }
 	}
 
