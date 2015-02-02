@@ -35,7 +35,7 @@ public class FragmentDaoImpl implements FragmentDao {
     @Transactional(readOnly = true)
     public Collection<Fragment> findAll() {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Fragment f").list();
+                .createQuery("from Fragment f order by f.updateDatetime desc").list();
     }
 
 	@Override
@@ -45,7 +45,7 @@ public class FragmentDaoImpl implements FragmentDao {
 	    first = Math.max(0, first);
 	    count = Math.max(0, count);
 		return sessionFactory.getCurrentSession()
-                .createQuery("from Fragment f")
+                .createQuery("from Fragment f order by f.updateDatetime desc")
                 .setFirstResult(first)
                 .setMaxResults(count)
                 .list();
