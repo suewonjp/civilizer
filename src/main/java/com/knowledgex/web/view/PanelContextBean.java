@@ -3,14 +3,30 @@ package com.knowledgex.web.view;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class PanelContextBean implements Serializable {
+public final class PanelContextBean implements Serializable {
+	
+	public static final long TAG_ID_FOR_ALL_VALID_TAGS = -1;
 	
 	private final long tagId;
 	private final int curPage;
 	private final int itemsPerPage;
 	private final boolean isLast;
 	
-	public PanelContextBean(int tagId, int curPage, int itemsPerPage, boolean isLast) {
+	public PanelContextBean() {
+		this.tagId = TAG_ID_FOR_ALL_VALID_TAGS;
+		this.curPage = 0;
+		this.itemsPerPage = 10;
+		this.isLast = false;
+	}
+
+	public PanelContextBean(long tagId, int curPage) {
+		this.tagId = tagId;
+		this.curPage = curPage;
+		this.itemsPerPage = 10;
+		this.isLast = false;
+	}
+	
+	public PanelContextBean(long tagId, int curPage, int itemsPerPage, boolean isLast) {
 		this.tagId = tagId;
 		this.curPage = curPage;
 		this.itemsPerPage = itemsPerPage;
@@ -36,6 +52,17 @@ public class PanelContextBean implements Serializable {
     public boolean isLastPage() {
         return isLast;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if (null != obj) {
+    		if (obj instanceof PanelContextBean) {
+    			PanelContextBean rhs = (PanelContextBean) obj;
+    			return this.tagId == rhs.tagId && this.curPage == rhs.curPage;
+    		}
+    	}
+    	return false;
+    };
     
     @Override
     public String toString() {

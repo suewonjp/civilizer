@@ -47,23 +47,32 @@ public class MainController {
 		return output;
 	}
 
-	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, ContextBean ctxt) {
+	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, ContextBean ctxt, PanelContextBean pcb) {
         FragmentListBean flb = existingFlb;
         if (null == flb) {
 			flb = new FragmentListBean();
-			flb.setPaginatorBean(new PaginatorBean());
+//			flb.setPaginatorBean(new PaginatorBean());
 		}
         
-        long tagId = flb.getCurTagId();
+//        final long tagId = flb.getCurTagId();
         
-        PaginatorBean pb = flb.getPaginatorBean();
-        int count = pb.getItemsPerPage();
-        int first = pb.getCurPage() * count;
+//        PaginatorBean pb = flb.getPaginatorBean();
+//        int count = pb.getItemsPerPage();
+//        int first = pb.getCurPage() * count;
 //        ViewUtil.addMessage("pb", pb);
 //        ViewUtil.addMessage("tagId", tagId);
         
+        if (null == pcb) {
+        	pcb = new PanelContextBean();
+        }
+        
+        final long tagId = pcb.getTagId();
+        final int curPage = pcb.isLastPage() ? (pcb.getCurPage() - 1) : Math.max(0, pcb.getCurPage());
+        final int count = pcb.getItemsPerPage();
+        final int first = curPage * count;
+        
         Collection<Fragment> fragments = null;
-        if (tagId == -1) {
+        if (tagId == PanelContextBean.TAG_ID_FOR_ALL_VALID_TAGS) {
         	// Fetch all the fragments
         	fragments = fragmentDao.findSome(first, count + 1);
         }
@@ -73,9 +82,12 @@ public class MainController {
         	fragments = tagDao.findFragments(tagId, first, count + 1);
         }
         
-        pb.setCurPageAsLast(fragments.size() <= count);
+//      pb.setCurPageAsLast(fragments.size() <= count);
+        final boolean isLastPage = fragments.size() <= count;
+        flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage));
+        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         
-        boolean trashTag = Tag.isTrashTag(tagId);
+        final boolean trashTag = Tag.isTrashTag(tagId);
         if (!trashTag) {
         	// Exclude fragments that have '#trash' tag
         	List<Long> trashTagId = new ArrayList<Long>();
@@ -83,6 +95,8 @@ public class MainController {
         	fragments = Fragment.applyExclusiveTagFilter(fragments, trashTagId);
         }
         ctxt.setFragmentDeletable(trashTag);
+        
+        // [NOTE] The content of fragments should be immutable form here!
         
         List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
         for (Fragment f : fragments) {
@@ -104,6 +118,23 @@ public class MainController {
 	    return fragmentBean;
 	}
 	
+	public TagListBean newTagListBean() {
+	    TagListBean tagListBean = new TagListBean();
+	    tagListBean.setTags(tagDao.findAllWithChildren());
+	    TagTree tagTree = newTagTree();
+	    tagListBean.setTagTree(tagTree);
+        return tagListBean;
+    }
+	
+	private TagTree newTagTree() {
+	    TagTree tagTree = new TagTree();
+	    return tagTree;
+	}
+
+	public PanelContextBean newPanelContextBean(long tagId, int curPage) {
+		return new PanelContextBean(tagId, curPage);
+	}
+
 	public ContextBean newContextBean() {
 	    return new ContextBean();
 	}
@@ -183,17 +214,5 @@ public class MainController {
 	    return fb;
 	}
 
-	public TagListBean newTagListBean() {
-	    TagListBean tagListBean = new TagListBean();
-	    tagListBean.setTags(tagDao.findAllWithChildren());
-	    TagTree tagTree = newTagTree();
-	    tagListBean.setTagTree(tagTree);
-        return tagListBean;
-    }
-	
-	private TagTree newTagTree() {
-	    TagTree tagTree = new TagTree();
-	    return tagTree;
-	}
 
 }

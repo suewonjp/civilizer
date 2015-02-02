@@ -77,19 +77,19 @@ $(document).ready(function() {
 		        
 		        <p:spacer width="20" />
 		        
-		        <c:set var="paginator" value="#{fragmentListBean.paginatorBean}" />
+		        <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
 		        
-		        <p:commandLink rendered="#{!paginator.isFirstPage()}" action="prev-fragment-page">
-		            <f:param name="curPage" value="#{paginator.curPage}"/>
-		            <f:param name="curTagId" value="#{fragmentListBean.curTagId}"/>
+		        <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page">
+		            <f:param name="curTagId" value="#{panelContext.tagId}"/>
+		            <f:param name="curPage" value="#{panelContext.curPage}"/>
 			        <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_fragment_go_to_prev_page']}"></span>
 		        </p:commandLink>
 		        
 		        <p:spacer width="20" />
 		        
-		        <p:commandLink rendered="#{!paginator.isLastPage()}" action="next-fragment-page">
-		            <f:param name="curPage" value="#{paginator.curPage}"/>
-		            <f:param name="curTagId" value="#{fragmentListBean.curTagId}"/>
+		        <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page">
+		            <f:param name="curTagId" value="#{panelContext.tagId}"/>
+		            <f:param name="curPage" value="#{panelContext.curPage}"/>
 			        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_fragment_go_to_next_page']}"></span>
 		        </p:commandLink>
 		        

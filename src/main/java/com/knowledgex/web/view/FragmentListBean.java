@@ -8,9 +8,11 @@ public class FragmentListBean implements Serializable {
     
     private List<FragmentBean> fragmentBeans;
     
-    private PaginatorBean paginatorBean;
+    private PanelContextBean panelContextBean;
     
-    private long curTagId = -1;
+//    private PaginatorBean paginatorBean;
+//    
+//    private long curTagId = -1;
     
     public Collection<FragmentBean> getFragmentBeans() {
     	return fragmentBeans;
@@ -20,25 +22,33 @@ public class FragmentListBean implements Serializable {
     	this.fragmentBeans = fragmentBeans;
     }
     
-    public FragmentBean getFragmentBeanAt(int index) {
+    public PanelContextBean getPanelContextBean() {
+		return panelContextBean;
+	}
+
+	public void setPanelContextBean(PanelContextBean panelContextBean) {
+		this.panelContextBean = panelContextBean;
+	}
+
+	public FragmentBean getFragmentBeanAt(int index) {
     	return fragmentBeans.get(index);
     }
 
-	public PaginatorBean getPaginatorBean() {
-		return paginatorBean;
-	}
-
-	public void setPaginatorBean(PaginatorBean paginatorBean) {
-		this.paginatorBean = paginatorBean;
-	}
-
-	public long getCurTagId() {
-		return curTagId;
-	}
-
-	public void setCurTagId(long curTagId) {
-		this.curTagId = curTagId;
-	}
+//	public PaginatorBean getPaginatorBean() {
+//		return paginatorBean;
+//	}
+//
+//	public void setPaginatorBean(PaginatorBean paginatorBean) {
+//		this.paginatorBean = paginatorBean;
+//	}
+//
+//	public long getCurTagId() {
+//		return curTagId;
+//	}
+//
+//	public void setCurTagId(long curTagId) {
+//		this.curTagId = curTagId;
+//	}
 	
 	public boolean hasFragments() {
 		return !fragmentBeans.isEmpty();
