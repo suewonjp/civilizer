@@ -23,8 +23,6 @@
         
         <transition on="filter-by-tag" to="home">
             <evaluate expression="mainController.newPanelContextBean(requestParameters.tagId, 0)" result="requestScope.panelContextBean"/>
-<!--             <evaluate expression="fragmentListBeans[0].setCurTagId(requestParameters.tagId)" /> -->
-<!--             <evaluate expression="fragmentListBeans[0].paginatorBean.reset()" /> -->
         </transition>
         
         <transition on="trash-fragment" to="home">
@@ -45,19 +43,13 @@
 
         <transition on="prev-fragment-page" to="home">
             <evaluate expression="mainController.newPanelContextBean(requestParameters.curTagId, requestParameters.curPage-1)" result="requestScope.panelContextBean"/>
-<!--             <evaluate expression="fragmentListBeans[0].paginatorBean.backwardPage(requestParameters.curPage)" /> -->
-<!--             <evaluate expression="fragmentListBeans[0].setCurTagId(requestParameters.curTagId)" /> -->
         </transition>
 
         <transition on="next-fragment-page" to="home">
             <evaluate expression="mainController.newPanelContextBean(requestParameters.curTagId, requestParameters.curPage+1)" result="requestScope.panelContextBean"/>
-<!--             <evaluate expression="fragmentListBeans[0].paginatorBean.forwardPage(requestParameters.curPage)" /> -->
-<!--             <evaluate expression="fragmentListBeans[0].setCurTagId(requestParameters.curTagId)" /> -->
         </transition>
 
         <transition on="go-home" to="home">
-<!--             <evaluate expression="fragmentListBeans[0].setCurTagId(-1)" /> -->
-<!--             <evaluate expression="fragmentListBeans[0].paginatorBean.reset()" /> -->
         </transition>
     </view-state>
     

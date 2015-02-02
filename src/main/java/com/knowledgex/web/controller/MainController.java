@@ -51,16 +51,7 @@ public class MainController {
         FragmentListBean flb = existingFlb;
         if (null == flb) {
 			flb = new FragmentListBean();
-//			flb.setPaginatorBean(new PaginatorBean());
 		}
-        
-//        final long tagId = flb.getCurTagId();
-        
-//        PaginatorBean pb = flb.getPaginatorBean();
-//        int count = pb.getItemsPerPage();
-//        int first = pb.getCurPage() * count;
-//        ViewUtil.addMessage("pb", pb);
-//        ViewUtil.addMessage("tagId", tagId);
         
         if (null == pcb) {
         	pcb = new PanelContextBean();
@@ -78,11 +69,9 @@ public class MainController {
         }
         else {
         	// Fetch the fragments with the specified tag
-//        	fragments = tagDao.findFragments(tagId);
         	fragments = tagDao.findFragments(tagId, first, count + 1);
         }
         
-//      pb.setCurPageAsLast(fragments.size() <= count);
         final boolean isLastPage = fragments.size() <= count;
         flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage));
         ViewUtil.addMessage("pcb", flb.getPanelContextBean());
