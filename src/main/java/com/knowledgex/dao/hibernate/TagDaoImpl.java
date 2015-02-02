@@ -1,8 +1,6 @@
 package com.knowledgex.dao.hibernate;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Resource;
 
@@ -14,15 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowledgex.dao.TagDao;
 import com.knowledgex.domain.Fragment;
+import com.knowledgex.domain.FragmentComparator;
 import com.knowledgex.domain.Tag;
 
 @Repository("tagDao")
 @Transactional
 public class TagDaoImpl implements TagDao {
 
-    private Log log = LogFactory.getLog(TagDaoImpl.class);
+    final private Log log = LogFactory.getLog(TagDaoImpl.class);
 
     private SessionFactory sessionFactory;
+    
+    final private Comparator<Fragment> frgCmptrForUpdateTime =
+            Collections.reverseOrder(FragmentComparator.newComparatorForUpdateDatetime());
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -38,7 +40,8 @@ public class TagDaoImpl implements TagDao {
     @Transactional(readOnly = true)
     public Collection<Tag> findAll() {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Tag t").list();
+                .createQuery("from Tag t")
+                .list();
     }
     
     @Override
@@ -77,21 +80,27 @@ public class TagDaoImpl implements TagDao {
     @Override
     @SuppressWarnings("unchecked")
     public Collection<Fragment> findFragments(Long id) {
-        return sessionFactory.getCurrentSession()
+        List<Fragment> output = (List<Fragment>)
+                sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragments")
                 .setParameter("id", id)
                 .list();
+        Collections.sort(output, frgCmptrForUpdateTime);
+        return output;
     }
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public Collection<Fragment> findFragments(Long id, int first, int count) {
-		return sessionFactory.getCurrentSession()
+	    List<Fragment> output = (List<Fragment>)
+	            sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragments")
                 .setParameter("id", id)
                 .setFirstResult(first)
                 .setMaxResults(count)
                 .list();
+	    Collections.sort(output, frgCmptrForUpdateTime);
+	    return output;
 	}
     
     @Override
