@@ -181,22 +181,6 @@ public class MainController {
 		return output;
 	}
 
-//	public void test(
-//			FragmentListBean flb
-//			, TagListBean tlb
-//			, FragmentBean fb
-//			) {
-//	    if (null != flb) {
-//	    	logger.info("test() called with FragmentListBean");
-//	    }
-//	    if (null != tlb) {
-//	    	logger.info("test() called with TagListBean");
-//	    }
-//	    if (null != fb) {
-//	    	logger.info("test() called with FragmentBean");
-//	    }
-//	}
-	
 	public FragmentBean inspectFragment(Integer index, FragmentListBean flb) {
 		FragmentBean fb = flb.getFragmentBeanAt(index);
 	    logger.info("inspectFragment() called");
