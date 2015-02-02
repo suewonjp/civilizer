@@ -47,7 +47,7 @@ public class MainController {
 		return output;
 	}
 
-	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, ContextBean ctxt, PanelContextBean pcb) {
+	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb) {
         FragmentListBean flb = existingFlb;
         if (null == flb) {
 			flb = new FragmentListBean();
@@ -73,8 +73,6 @@ public class MainController {
         }
         
         final boolean isLastPage = fragments.size() <= count;
-        flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage));
-        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         
         final boolean trashTag = Tag.isTrashTag(tagId);
         if (!trashTag) {
@@ -83,7 +81,9 @@ public class MainController {
         	trashTagId.add(0L);
         	fragments = Fragment.applyExclusiveTagFilter(fragments, trashTagId);
         }
-        ctxt.setFragmentDeletable(trashTag);
+
+        flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage, trashTag));
+//        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         
         // [NOTE] The content of fragments should be immutable form here!
         

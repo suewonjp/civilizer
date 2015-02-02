@@ -11,12 +11,14 @@ public final class PanelContextBean implements Serializable {
 	private final int curPage;
 	private final int itemsPerPage;
 	private final boolean isLast;
+	private final boolean fragmentDeletable;
 	
 	public PanelContextBean() {
 		this.tagId = TAG_ID_FOR_ALL_VALID_TAGS;
 		this.curPage = 0;
 		this.itemsPerPage = 10;
 		this.isLast = false;
+		fragmentDeletable = false;
 	}
 
 	public PanelContextBean(long tagId, int curPage) {
@@ -24,13 +26,15 @@ public final class PanelContextBean implements Serializable {
 		this.curPage = curPage;
 		this.itemsPerPage = 10;
 		this.isLast = false;
+		fragmentDeletable = false;
 	}
 	
-	public PanelContextBean(long tagId, int curPage, int itemsPerPage, boolean isLast) {
+	public PanelContextBean(long tagId, int curPage, int itemsPerPage, boolean isLast, boolean fragmentDeletable) {
 		this.tagId = tagId;
 		this.curPage = curPage;
 		this.itemsPerPage = itemsPerPage;
 		this.isLast = isLast;
+		this.fragmentDeletable = fragmentDeletable;
 	}
 	
 	public long getTagId() {
@@ -51,6 +55,10 @@ public final class PanelContextBean implements Serializable {
 
     public boolean isLastPage() {
         return isLast;
+    }
+    
+    public boolean isFragmentDeletable() {
+        return fragmentDeletable;
     }
     
     @Override

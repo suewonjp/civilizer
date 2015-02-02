@@ -29,7 +29,7 @@
                         <span class="fa fa-pencil fa-3x" title="#{msg['label_fragment_edit']}"></span>
 					</a>
 					<c:choose>
-						<c:when test="#{contextBean.fragmentDeletable}">
+						<c:when test="#{panelContext.fragmentDeletable}">
 							<p:commandLink action="delete-fragment" >
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
 								<span class="fa fa-trash fa-3x button-link warning-color" title="#{msg['label_fragment_delete']}"></span>

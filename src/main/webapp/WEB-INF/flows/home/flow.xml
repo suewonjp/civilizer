@@ -9,12 +9,11 @@
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
-        <evaluate expression="mainController.newContextBean()" result="flowScope.contextBean"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
-            <evaluate expression="mainController.newFragmentListBean(fragmentListBeans[0], contextBean, requestScope.panelContextBean)" result="flowScope.fragmentListBeans[0]"/>
+            <evaluate expression="mainController.newFragmentListBean(fragmentListBeans[0], requestScope.panelContextBean)" result="flowScope.fragmentListBeans[0]"/>
         </on-entry>
         
         <transition on="inspect-fragment" to="inspect-fragment">
