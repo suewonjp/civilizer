@@ -123,10 +123,6 @@ public class MainController {
 	public PanelContextBean newPanelContextBean(long tagId, int curPage) {
 		return new PanelContextBean(tagId, curPage);
 	}
-
-	public ContextBean newContextBean() {
-	    return new ContextBean();
-	}
 	
 	public void trashFragment(Long fragmentId) {
 		Fragment frg = fragmentDao.findById(fragmentId);
