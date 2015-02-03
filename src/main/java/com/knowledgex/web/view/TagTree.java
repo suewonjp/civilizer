@@ -9,7 +9,7 @@ import org.primefaces.model.DefaultTreeNode;
 import com.knowledgex.domain.Tag;
 
 @SuppressWarnings("serial")
-public class TagTree implements Serializable {
+public final class TagTree implements Serializable {
     
     private TreeNode root = null;
     

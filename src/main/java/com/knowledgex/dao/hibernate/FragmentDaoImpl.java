@@ -15,7 +15,7 @@ import com.knowledgex.domain.Fragment;
 
 @Repository("fragmentDao")
 @Transactional
-public class FragmentDaoImpl implements FragmentDao {
+public final class FragmentDaoImpl implements FragmentDao {
 
     private Log log = LogFactory.getLog(FragmentDaoImpl.class);
 

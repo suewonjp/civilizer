@@ -44,7 +44,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
     @NamedQuery(name = "Tag.findParentTags",
             query = "select distinct t from Tag t inner join t.children child where child.id = :id"),
 })
-public class Tag implements Serializable {
+public final class Tag implements Serializable {
 	
 	public static final String TAG_NAME_DELIMITER = ",";
 	public static final long TRASH_TAG_ID = 0L;

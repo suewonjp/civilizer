@@ -21,8 +21,8 @@ abstract class DaoTest {
 	private FragmentDao fragmentDao;
 	private TagDao tagDao;
 
-	private List<Tag> temporalTags = new ArrayList<Tag>();
-	private List<Fragment> temporalFragments = new ArrayList<Fragment>();
+	private final List<Tag> temporalTags = new ArrayList<Tag>();
+	private final List<Fragment> temporalFragments = new ArrayList<Fragment>();
 
 	protected static void setUpBeforeClass(String dataSourceContextPath,
 			Class<?> clazz) throws Exception {

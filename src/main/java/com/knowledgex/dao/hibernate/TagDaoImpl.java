@@ -16,7 +16,7 @@ import com.knowledgex.domain.Tag;
 
 @Repository("tagDao")
 @Transactional
-public class TagDaoImpl implements TagDao {
+public final class TagDaoImpl implements TagDao {
 
     final private Log log = LogFactory.getLog(TagDaoImpl.class);
 

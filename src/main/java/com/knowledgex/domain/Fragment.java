@@ -36,7 +36,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
     @NamedQuery(name = "Fragment.findByIdWithTags",
             query = "select distinct f from Fragment f left join fetch f.tags where f.id = :id"),
 })
-public class Fragment implements Serializable {
+public final class Fragment implements Serializable {
     private Long id;
     private String title;
     private String content;

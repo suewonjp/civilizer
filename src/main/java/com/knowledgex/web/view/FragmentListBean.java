@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @SuppressWarnings("serial")
-public class FragmentListBean implements Serializable {
+public final class FragmentListBean implements Serializable {
     
     private List<FragmentBean> fragmentBeans;
     

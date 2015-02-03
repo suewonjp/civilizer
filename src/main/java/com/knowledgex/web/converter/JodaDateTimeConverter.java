@@ -11,12 +11,8 @@ import javax.faces.convert.FacesConverter;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-/**
- * @author Clarence
- *
- */
 @FacesConverter("jodaDateTimeConverter")
-public class JodaDateTimeConverter implements Converter {
+public final class JodaDateTimeConverter implements Converter {
 
 	private static final String PATTERN = "yyyy-MM-dd HH-mm";
 	

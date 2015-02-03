@@ -6,7 +6,7 @@ import java.util.*;
 import com.knowledgex.domain.Tag;
 
 @SuppressWarnings("serial")
-public class TagListBean implements Serializable {
+public final class TagListBean implements Serializable {
 
     private Collection<Tag> tags;
     

@@ -3,7 +3,7 @@ package com.knowledgex.web.view;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-public class ViewUtil {
+public final class ViewUtil {
 	
 	public static void addMessage(String title, String content, FacesMessage.Severity severity) {
 		if (null == severity) {

@@ -11,8 +11,8 @@ import org.apache.log4j.PropertyConfigurator;
 
 public final class TestUtil {
 
-    private static Log log = newLogger();
-    private static Random random = newRandomGenerator();
+    private static final Log log = newLogger();
+    private static final Random random = newRandomGenerator();
     
     private static Log newLogger() {
     	String log4jPropName = "log4j-test.properties";
@@ -34,7 +34,7 @@ public final class TestUtil {
         
         log.info("random seed = " + seed);
 
-        random = new Random(seed);
+        Random random = new Random(seed);
         assertNotNull(random);
 
         return random;

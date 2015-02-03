@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.knowledgex.domain.Fragment;
 
 @SuppressWarnings("serial")
-public class FragmentBean implements Serializable {
+public final class FragmentBean implements Serializable {
     
     private static final Logger logger = LoggerFactory.getLogger(FragmentBean.class);
     

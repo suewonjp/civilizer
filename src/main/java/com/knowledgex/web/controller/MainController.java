@@ -18,7 +18,7 @@ import com.knowledgex.web.view.*;
 
 @Controller
 @Component("mainController")
-public class MainController {
+public final class MainController {
 	
 	private static final int MAX_FRAGMENT_PANELS = 3;
     
