@@ -88,8 +88,8 @@ public class DomainFragmentTest {
         for (int i=1; i<fragments.size(); ++i) {
             Fragment f0 = fragments.get(i - 1);
             Fragment f1 = fragments.get(i);
-            DateTime dt0 = f0.getCreationDatetime();
-            DateTime dt1 = f1.getCreationDatetime();
+            DateTime dt0 = f0.getUpdateDatetime();
+            DateTime dt1 = f1.getUpdateDatetime();
             int r = dtCmptr.compare(dt0, dt1);
             assertTrue(r >= 0);
         }
