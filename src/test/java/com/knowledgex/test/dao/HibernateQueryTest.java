@@ -9,7 +9,6 @@ import java.util.*;
 import org.apache.commons.logging.Log;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
-import org.springframework.transaction.annotation.Transactional;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.joda.time.DateTime;
@@ -19,19 +18,21 @@ import com.knowledgex.dao.*;
 import com.knowledgex.domain.*;
 import com.knowledgex.test.util.TestUtil;
 
-@Transactional
 public class HibernateQueryTest {
 	
 	private static Log log;
 	private static GenericXmlApplicationContext ctx;
+	private static final DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
 	
 	private FragmentDao fragmentDao;
 	private TagDao tagDao;
 	
-	private SessionFactory sessionFactory;
-
+	private Session session;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		assertNotNull(dtCmptr);
+		
 		log = TestUtil.newLogger(HibernateQueryTest.class);
 
 		ctx = new GenericXmlApplicationContext();
@@ -50,19 +51,16 @@ public class HibernateQueryTest {
 		assertNotNull(tagDao);
 		log.info("tagDao initialized OK");
 		
-		sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);
+		SessionFactory sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);
 		assertNotNull(sessionFactory);
+		
+		session = SessionFactoryUtils.getSession(sessionFactory, true);
+		assertNotNull(session);
 	}
 
 	@Test
 	@SuppressWarnings("unchecked")
-	@Transactional(readOnly = true)
-	public void testOrderBy() {
-		DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
-        assertNotNull(dtCmptr);
-        
-		Session session = SessionFactoryUtils.getSession(sessionFactory, true);
-		assertNotNull(session);
+	public void testHqlOrderBy() {
 		List<Fragment> fragments = (List<Fragment>)
 				session
 				.createQuery("from Fragment f order by updateDatetime desc")
