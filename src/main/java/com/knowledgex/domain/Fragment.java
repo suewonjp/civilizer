@@ -200,10 +200,11 @@ public class Fragment implements Serializable {
     }
 
     @ManyToMany(fetch=FetchType.LAZY)
-    @Cascade({CascadeType.MERGE
-        , CascadeType.REFRESH
-        , CascadeType.SAVE_UPDATE
-        , CascadeType.DETACH
+    @Cascade({
+        CascadeType.MERGE
+      , CascadeType.REFRESH
+      , CascadeType.SAVE_UPDATE
+      , CascadeType.DETACH
     })
     @JoinTable(name = "FRAGMENT2FRAGMENT",
         joinColumns = @JoinColumn(name = "from_id"),
@@ -217,11 +218,12 @@ public class Fragment implements Serializable {
     }
 
     @ManyToMany(fetch=FetchType.EAGER)
-    @Cascade({CascadeType.PERSIST
-        , CascadeType.MERGE
-        , CascadeType.REFRESH
-        , CascadeType.SAVE_UPDATE
-        , CascadeType.DETACH
+    @Cascade({
+        CascadeType.PERSIST
+      , CascadeType.MERGE
+      , CascadeType.REFRESH
+      , CascadeType.SAVE_UPDATE
+      , CascadeType.DETACH
     })
     @JoinTable(name = "TAG2FRAGMENT",
         joinColumns = @JoinColumn(name = "fragment_id"),
@@ -254,12 +256,12 @@ public class Fragment implements Serializable {
         return fragmentNames;
     }
     
-    public static Collection<Fragment> applyExclusiveTagFilter(
+    public static void applyExclusiveTagFilter(
     		Collection<Fragment> fragments
-    		, Collection<Long> tags
-    		) {
+          , Collection<Long> tags
+    ) {
     	if (null == fragments || null == tags || tags.isEmpty()) {
-    		return fragments;
+    		return;
     	}
     	Set<Long> setEx = new HashSet<Long>(tags);
     	Iterator<Fragment> itr = fragments.iterator();
@@ -270,7 +272,15 @@ public class Fragment implements Serializable {
     	        itr.remove();
     	    }
     	}
-    	return fragments;
+    }
+    
+    public static void sort(
+            List<Fragment> fragments
+          , FragmentOrder order
+          , boolean ascending
+    ) {
+        final Comparator<Fragment> cmptr = FragmentOrder.getComparator(order, ascending);
+        Collections.sort(fragments, cmptr);
     }
 
     @Override
