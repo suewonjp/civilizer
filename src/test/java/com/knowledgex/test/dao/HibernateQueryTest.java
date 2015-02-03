@@ -11,7 +11,9 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -83,7 +85,7 @@ public class HibernateQueryTest {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testCriteriaOrderBy() {
+	public void testCriteriaOrder() {
 		List<Fragment> fragments0 = (List<Fragment>)
 				session
 				.createQuery("from Fragment f order by updateDatetime desc")
@@ -94,7 +96,11 @@ public class HibernateQueryTest {
 		
 		Criteria crit = session.createCriteria(Fragment.class);
 		crit.addOrder(Order.desc("updateDatetime"));
-		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		// [NOTE] to get distinct results, use either of the following method
+		crit.setFetchMode("tags", FetchMode.SELECT); // lazy fetching of all child selections
+//		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); // distinct transformer
+		
 		List<Fragment> fragments1 = (List<Fragment>) crit.list();
 		
 		assertEquals(fragments0.size(), fragments1.size());
@@ -114,6 +120,31 @@ public class HibernateQueryTest {
             int r = dtCmptr.compare(dt0, dt1);
             assertTrue(r >= 0);
         }
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testCriteriaProjection() {
+		List<Fragment> fragments = (List<Fragment>)
+				session.createCriteria(Fragment.class)
+				.addOrder(Order.asc("id"))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.list();
+		
+		List<Object[]> results = (List<Object[]>)
+				session.createCriteria(Fragment.class)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+			    .setProjection( Projections.projectionList()
+			        .add( Projections.rowCount() )
+			        .add( Projections.min("id") )
+			        .add( Projections.max("id") )
+			    )
+			    .list();
+		assertTrue(results.size() == 1);
+		Object[] prjList = results.get(0);
+		assertTrue((Long) prjList[0]== fragments.size());
+		assertTrue((Long) prjList[1]== fragments.get(0).getId());
+		assertTrue((Long) prjList[2]== fragments.get(fragments.size()-1).getId());
 	}
 
 }
