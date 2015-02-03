@@ -3,13 +3,23 @@ package com.knowledgex.test.dao;
 import static org.junit.Assert.*;
 
 import org.junit.*;
+
+import java.util.*;
+
 import org.apache.commons.logging.Log;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.orm.hibernate3.SessionFactoryUtils;
+import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 
-import com.knowledgex.dao.FragmentDao;
-import com.knowledgex.dao.TagDao;
+import com.knowledgex.dao.*;
+import com.knowledgex.domain.*;
 import com.knowledgex.test.util.TestUtil;
 
+@Transactional
 public class HqlTest {
 	
 	private static Log log;
@@ -17,6 +27,8 @@ public class HqlTest {
 	
 	private FragmentDao fragmentDao;
 	private TagDao tagDao;
+	
+	private SessionFactory sessionFactory;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -37,15 +49,39 @@ public class HqlTest {
 		tagDao = ctx.getBean("tagDao", TagDao.class);
 		assertNotNull(tagDao);
 		log.info("tagDao initialized OK");
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		
+		sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);
+		assertNotNull(sessionFactory);
 	}
 
 	@Test
-	public void test() {
-		//fail("Not yet implemented");
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly = true)
+	public void testOrderBy() {
+		DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
+        assertNotNull(dtCmptr);
+        
+		Session session = SessionFactoryUtils.getSession(sessionFactory, true);
+		assertNotNull(session);
+		List<Fragment> fragments = (List<Fragment>)
+				session
+				.createQuery("from Fragment f order by updateDatetime desc")
+				.list();
+		
+		// [NOTE] 'order by' can't be parameterized...
+		// you can't use parameters for columns, only values
+		
+		assertNotNull(fragments);
+		assertFalse(fragments.isEmpty());
+		
+		for (int i=1; i<fragments.size(); ++i) {
+            Fragment f0 = fragments.get(i - 1);
+            Fragment f1 = fragments.get(i);
+            DateTime dt0 = f0.getUpdateDatetime();
+            DateTime dt1 = f1.getUpdateDatetime();
+            int r = dtCmptr.compare(dt0, dt1);
+            assertTrue(r >= 0);
+        }
 	}
 
 }

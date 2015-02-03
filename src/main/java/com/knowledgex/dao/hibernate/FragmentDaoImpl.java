@@ -35,7 +35,8 @@ public final class FragmentDaoImpl implements FragmentDao {
     @Transactional(readOnly = true)
     public List<Fragment> findAll() {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Fragment f order by f.updateDatetime desc").list();
+                .createQuery("from Fragment f order by f.updateDatetime desc")
+                .list();
     }
 
 	@Override
