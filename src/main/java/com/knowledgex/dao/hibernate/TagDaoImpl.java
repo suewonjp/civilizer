@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowledgex.dao.TagDao;
 import com.knowledgex.domain.Fragment;
-import com.knowledgex.domain.FragmentComparator;
 import com.knowledgex.domain.Tag;
 
 @Repository("tagDao")
@@ -23,9 +22,6 @@ public class TagDaoImpl implements TagDao {
 
     private SessionFactory sessionFactory;
     
-    final private Comparator<Fragment> frgCmptrForUpdateTime =
-            Collections.reverseOrder(FragmentComparator.newComparatorForUpdateDatetime());
-
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -85,7 +81,6 @@ public class TagDaoImpl implements TagDao {
                 .getNamedQuery("Tag.findFragments")
                 .setParameter("id", id)
                 .list();
-        Collections.sort(output, frgCmptrForUpdateTime);
         return output;
     }
 
@@ -99,7 +94,6 @@ public class TagDaoImpl implements TagDao {
                 .setFirstResult(first)
                 .setMaxResults(count)
                 .list();
-	    Collections.sort(output, frgCmptrForUpdateTime);
 	    return output;
 	}
     

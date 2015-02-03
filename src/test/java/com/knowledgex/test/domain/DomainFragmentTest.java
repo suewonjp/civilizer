@@ -69,72 +69,62 @@ public class DomainFragmentTest {
 	public void testSort() {
 	    for (Fragment f : fragments) {
 	        assertNotNull(f.getCreationDatetime());
-            assertNotNull(f.getUpdateDatetime());
-            assertNotNull(f.getTitle());
-            assertNotNull(f.getId());
-        }
+	        assertNotNull(f.getUpdateDatetime());
+	        assertNotNull(f.getTitle());
+	        assertNotNull(f.getId());
+	    }
 	    
-	    Comparator<Fragment> cmptrForCreationTime =
-	            FragmentComparator.newComparatorForCreationDatetime();
-	    assertNotNull(cmptrForCreationTime);
-	    
-	    Comparator<Fragment> cmptrForUpdateTime =
-	            FragmentComparator.newComparatorForUpdateDatetime();
-	    assertNotNull(cmptrForUpdateTime);
-	    
-	    Comparator<Fragment> cmptrForTitle =
-	            FragmentComparator.newComparatorForTitle();
-	    assertNotNull(cmptrForTitle);
-	    
-	    Comparator<Fragment> cmptrForId =
-	            FragmentComparator.newComparatorForId();
-	    assertNotNull(cmptrForId);
+	    assertEquals(FragmentOrder.UPDATE_DATETIME.ordinal(), 0);
+	    assertEquals(FragmentOrder.CREATION_DATETIME.ordinal(), 1);
+	    assertEquals(FragmentOrder.TITLE.ordinal(), 2);
+	    assertEquals(FragmentOrder.ID.ordinal(), 3);
+	    assertEquals(FragmentOrder.COUNT.ordinal(), 4);
 	    
 	    DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
-	    assertNotNull(dtCmptr);
-	    
-	    Collections.shuffle(fragments);
-	    Collections.sort(fragments, cmptrForCreationTime);
-	    for (int i=1; i<fragments.size(); ++i) {
-	        Fragment f0 = fragments.get(i - 1);
-	        Fragment f1 = fragments.get(i);
-	        DateTime dt0 = f0.getCreationDatetime();
-	        DateTime dt1 = f1.getCreationDatetime();
-	        int r = dtCmptr.compare(dt0, dt1);
-	        assertTrue(r <= 0);
-	    }
+        assertNotNull(dtCmptr);
+        
+        Collections.shuffle(fragments);
+        Fragment.sort(fragments, FragmentOrder.UPDATE_DATETIME, false);
+        for (int i=1; i<fragments.size(); ++i) {
+            Fragment f0 = fragments.get(i - 1);
+            Fragment f1 = fragments.get(i);
+            DateTime dt0 = f0.getCreationDatetime();
+            DateTime dt1 = f1.getCreationDatetime();
+            int r = dtCmptr.compare(dt0, dt1);
+            assertTrue(r >= 0);
+        }
 
-	    Collections.shuffle(fragments);
-	    Collections.sort(fragments, cmptrForUpdateTime);
-	    for (int i=1; i<fragments.size(); ++i) {
-	        Fragment f0 = fragments.get(i - 1);
-	        Fragment f1 = fragments.get(i);
-	        DateTime dt0 = f0.getUpdateDatetime();
-	        DateTime dt1 = f1.getUpdateDatetime();
-	        int r = dtCmptr.compare(dt0, dt1);
-	        assertTrue(r <= 0);
-	    }
+        Collections.shuffle(fragments);
+        Fragment.sort(fragments, FragmentOrder.CREATION_DATETIME, false);
+        for (int i=1; i<fragments.size(); ++i) {
+            Fragment f0 = fragments.get(i - 1);
+            Fragment f1 = fragments.get(i);
+            DateTime dt0 = f0.getCreationDatetime();
+            DateTime dt1 = f1.getCreationDatetime();
+            int r = dtCmptr.compare(dt0, dt1);
+            assertTrue(r >= 0);
+        }
 
-	    Collections.shuffle(fragments);
-	    Collections.sort(fragments, cmptrForTitle);
-	    for (int i=1; i<fragments.size(); ++i) {
-	        Fragment f0 = fragments.get(i - 1);
-	        Fragment f1 = fragments.get(i);
-	        String s0 = f0.getTitle();
-	        String s1 = f1.getTitle();
-	        int r = s0.compareToIgnoreCase(s1);
-	        assertTrue(r <= 0);
-	    }
-
-	    Collections.shuffle(fragments);
-	    Collections.sort(fragments, cmptrForId);
-	    for (int i=1; i<fragments.size(); ++i) {
-	        Fragment f0 = fragments.get(i - 1);
-	        Fragment f1 = fragments.get(i);
-	        long id0 = f0.getId();
-	        long id1 = f1.getId();
-	        assertTrue(id0 < id1);
-	    }
+        Collections.shuffle(fragments);
+        Fragment.sort(fragments, FragmentOrder.TITLE, true);
+        for (int i=1; i<fragments.size(); ++i) {
+            Fragment f0 = fragments.get(i - 1);
+            Fragment f1 = fragments.get(i);
+            String s0 = f0.getTitle();
+            String s1 = f1.getTitle();
+            int r = s0.compareToIgnoreCase(s1);
+            assertTrue(r <= 0);
+        }
+        
+        Collections.shuffle(fragments);
+        Fragment.sort(fragments, FragmentOrder.ID, true);
+        for (int i=1; i<fragments.size(); ++i) {
+            Fragment f0 = fragments.get(i - 1);
+            Fragment f1 = fragments.get(i);
+            long id0 = f0.getId();
+            long id1 = f1.getId();
+            assertTrue(id0 < id1);
+        }
 	}
-
+	
 }
