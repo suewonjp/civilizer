@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
 import com.knowledgex.domain.Fragment;
+import com.knowledgex.domain.FragmentOrder;
 import com.knowledgex.domain.Tag;
 import com.knowledgex.web.view.*;
 
@@ -62,7 +63,7 @@ public class MainController {
         final int count = pcb.getItemsPerPage();
         final int first = curPage * count;
         
-        Collection<Fragment> fragments = null;
+        List<Fragment> fragments = null;
         if (tagId == PanelContextBean.TAG_ID_FOR_ALL_VALID_TAGS) {
         	// Fetch all the fragments
         	fragments = fragmentDao.findSome(first, count + 1);
@@ -70,6 +71,7 @@ public class MainController {
         else {
         	// Fetch the fragments with the specified tag
         	fragments = tagDao.findFragments(tagId, first, count + 1);
+        	Fragment.sort(fragments, FragmentOrder.UPDATE_DATETIME, false);
         }
         
         final boolean isLastPage = fragments.size() <= count;
@@ -79,7 +81,7 @@ public class MainController {
         	// Exclude fragments that have '#trash' tag
         	List<Long> trashTagId = new ArrayList<Long>();
         	trashTagId.add(0L);
-        	fragments = Fragment.applyExclusiveTagFilter(fragments, trashTagId);
+        	Fragment.applyExclusiveTagFilter(fragments, trashTagId);
         }
 
         flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage, trashTag));
