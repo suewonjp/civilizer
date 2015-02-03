@@ -16,16 +16,16 @@ public interface TagDao {
 
     public Tag findByIdWithFragments(Long id);
 
-    public Collection<Fragment> findFragments(Long id);
+    public List<Fragment> findFragments(Long id);
 
-    public Collection<Fragment> findFragments(Long id, int first, int count);
+    public List<Fragment> findFragments(Long id, int first, int count);
     
-    public Collection<Fragment> findFragments(
+    public List<Fragment> findFragments(
     		Collection<Long> idsIn
     		, Collection<Long> idsEx
     		);
     
-    public Collection<Tag> findParentTags(Long id);
+    public List<Tag> findParentTags(Long id);
 
     public Tag save(Tag tag);
 

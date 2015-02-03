@@ -79,7 +79,7 @@ public class TagDaoImpl implements TagDao {
     
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<Fragment> findFragments(Long id) {
+    public List<Fragment> findFragments(Long id) {
         List<Fragment> output = (List<Fragment>)
                 sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragments")
@@ -91,7 +91,7 @@ public class TagDaoImpl implements TagDao {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<Fragment> findFragments(Long id, int first, int count) {
+	public List<Fragment> findFragments(Long id, int first, int count) {
 	    List<Fragment> output = (List<Fragment>)
 	            sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragments")
@@ -105,7 +105,7 @@ public class TagDaoImpl implements TagDao {
     
     @Override
     @SuppressWarnings("unchecked")
-	public Collection<Fragment> findFragments(
+	public List<Fragment> findFragments(
 			Collection<Long> idsIn
 			, Collection<Long> idsEx
 			) {
@@ -114,7 +114,7 @@ public class TagDaoImpl implements TagDao {
     		return null;
     	}
     	Set<Long> setIn = new HashSet<Long>(idsIn); // needed for removing duplications
-    	Collection<Fragment> output =
+    	List<Fragment> output =
     	        sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragmentsWithIdFilter")
                 .setParameterList("ids", setIn)
@@ -124,12 +124,13 @@ public class TagDaoImpl implements TagDao {
     		return output;
     	}
     	// We have an exclusive filter
-    	return Fragment.applyExclusiveTagFilter(output, idsEx);
+    	Fragment.applyExclusiveTagFilter(output, idsEx);
+    	return output;
 	}
     
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<Tag> findParentTags(Long id) {
+    public List<Tag> findParentTags(Long id) {
         return sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findParentTags")
                 .setParameter("id", id)
