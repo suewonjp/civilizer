@@ -6,9 +6,9 @@ import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.Tag;
 
 public interface TagDao {
-    public Collection<Tag> findAll();
+    public List<Tag> findAll();
 
-    public Collection<Tag> findAllWithChildren();
+    public List<Tag> findAllWithChildren();
 
     public Tag findById(Long id);
 

@@ -5,9 +5,9 @@ import java.util.*;
 import com.knowledgex.domain.Fragment;
 
 public interface FragmentDao {
-    public Collection<Fragment> findAll();
+    public List<Fragment> findAll();
     
-    public Collection<Fragment> findSome(int first, int count);
+    public List<Fragment> findSome(int first, int count);
 
     public Fragment findById(Long id);
 

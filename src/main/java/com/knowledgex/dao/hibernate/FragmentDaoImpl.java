@@ -1,6 +1,6 @@
 package com.knowledgex.dao.hibernate;
 
-import java.util.Collection;
+import java.util.*;
 
 import javax.annotation.Resource;
 
@@ -33,7 +33,7 @@ public class FragmentDaoImpl implements FragmentDao {
     @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public Collection<Fragment> findAll() {
+    public List<Fragment> findAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Fragment f order by f.updateDatetime desc").list();
     }
@@ -41,7 +41,7 @@ public class FragmentDaoImpl implements FragmentDao {
 	@Override
 	@SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-	public Collection<Fragment> findSome(int first, int count) {
+	public List<Fragment> findSome(int first, int count) {
 	    first = Math.max(0, first);
 	    count = Math.max(0, count);
 		return sessionFactory.getCurrentSession()
