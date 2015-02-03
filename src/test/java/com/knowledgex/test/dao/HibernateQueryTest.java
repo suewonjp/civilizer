@@ -20,7 +20,7 @@ import com.knowledgex.domain.*;
 import com.knowledgex.test.util.TestUtil;
 
 @Transactional
-public class HqlTest {
+public class HibernateQueryTest {
 	
 	private static Log log;
 	private static GenericXmlApplicationContext ctx;
@@ -32,7 +32,7 @@ public class HqlTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		log = TestUtil.newLogger(HqlTest.class);
+		log = TestUtil.newLogger(HibernateQueryTest.class);
 
 		ctx = new GenericXmlApplicationContext();
 		ctx.load("classpath:datasource-context-h2-embedded.xml");
