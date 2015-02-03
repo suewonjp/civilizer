@@ -95,6 +95,7 @@ public class HibernateQueryTest {
 		assertFalse(fragments0.isEmpty());
 		
 		Criteria crit = session.createCriteria(Fragment.class);
+		assertNotNull(crit);
 		crit.addOrder(Order.desc("updateDatetime"));
 
 		// [NOTE] to get distinct results, use either of the following method
@@ -145,6 +146,34 @@ public class HibernateQueryTest {
 		assertTrue((Long) prjList[0]== fragments.size());
 		assertTrue((Long) prjList[1]== fragments.get(0).getId());
 		assertTrue((Long) prjList[2]== fragments.get(fragments.size()-1).getId());
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testCriteriaAssociation() {
+		final String tgtTagName = "#trash";
+		
+		Criteria crit = session.createCriteria(Fragment.class);
+		
+		// [NOTE] even if tags are in lazy fetch mode, it will work...
+		crit.setFetchMode("tags", FetchMode.SELECT);
+		
+		Criteria tagCrit = crit.createCriteria("tags");
+		assertNotNull(tagCrit);
+		tagCrit.add(Restrictions.eq("tagName", tgtTagName));
+		
+		List<Fragment> fragments = (List<Fragment>) crit.list();
+		assertNotNull(fragments);
+		assertFalse(fragments.isEmpty());
+		
+		Fragment f0 = fragments.get(0);
+		assertTrue(f0 != null && f0.getId() != null);
+		
+		Collection<Tag> tags = f0.getTags();
+		assertNotNull(tags);
+		assertFalse(tags.isEmpty());
+		
+		assertTrue(f0.containsTagName(tgtTagName));
 	}
 
 }
