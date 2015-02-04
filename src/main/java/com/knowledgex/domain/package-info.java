@@ -27,7 +27,7 @@
 //            query = "select f from Tag t join t.fragments as f where t.id = :id order by f.updateDatetime desc"),
     @NamedQuery(
             name = "Tag.findFragmentsWithIdFilter",
-            query = "select t.fragments from Tag t where t.id in (:ids)"),
+            query = "select distinct t.fragments from Tag t where t.id in (:ids)"),
     @NamedQuery(
             name = "Tag.findParentTags",
             query = "select distinct t from Tag t inner join t.children child where child.id = :id"),
