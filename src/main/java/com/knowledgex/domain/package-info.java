@@ -8,6 +8,9 @@
     @NamedQuery(
             name = "Fragment.findByIdWithTags",
             query = "select distinct f from Fragment f left join fetch f.tags where f.id = :id"),
+    @NamedQuery(
+            name = "Fragment.findIdsOrderByUpdateDatetime",
+            query = "select f.id from Fragment f order by f.updateDatetime desc"),
     
     @NamedQuery(
             name = "Tag.findAllWithChildren",

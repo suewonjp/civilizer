@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +37,7 @@ public final class FragmentDaoImpl implements FragmentDao {
     @Transactional(readOnly = true)
     public List<Fragment> findAll() {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Fragment f order by f.updateDatetime desc")
+                .createQuery("from Fragment f")
                 .list();
     }
 
@@ -45,11 +47,23 @@ public final class FragmentDaoImpl implements FragmentDao {
 	public List<Fragment> findSome(int first, int count) {
 	    first = Math.max(0, first);
 	    count = Math.max(0, count);
-		return sessionFactory.getCurrentSession()
-                .createQuery("from Fragment f order by f.updateDatetime desc")
-                .setFirstResult(first)
+	    Session s = sessionFactory.getCurrentSession();
+	    List<Long> ids = s.getNamedQuery("Fragment.findIdsOrderByUpdateDatetime")
+	            .setFirstResult(first)
                 .setMaxResults(count)
                 .list();
+	    List<Fragment> output = new ArrayList<Fragment>(count);
+	    count = Math.min(count, ids.size());
+	    Query q = s.getNamedQuery("Fragment.findByIdWithTags");
+	    for (int i = 0; i < count; ++i) {
+            output.add((Fragment) q.setParameter("id", ids.get(i)).uniqueResult());
+        }
+	    return output;
+//		return sessionFactory.getCurrentSession()
+//                .createQuery("from Fragment f order by f.updateDatetime desc")
+//                .setFirstResult(first)
+//                .setMaxResults(count)
+//                .list();
 	}
 
     @Override
