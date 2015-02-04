@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -119,7 +119,7 @@ public final class Tag implements Serializable {
         this.fragmentId = fragmentId;
     }
     
-    @ManyToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.LAZY)
     @Cascade({CascadeType.MERGE
         , CascadeType.REFRESH
         , CascadeType.SAVE_UPDATE
@@ -136,7 +136,7 @@ public final class Tag implements Serializable {
         this.fragments = fragments;
     }
 
-    @ManyToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.LAZY)
     @Cascade({CascadeType.MERGE
         , CascadeType.REFRESH
         , CascadeType.SAVE_UPDATE
