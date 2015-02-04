@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.hibernate.Hibernate;
@@ -28,14 +26,6 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "FRAGMENT")
-@NamedQueries({
-    @NamedQuery(name = "Fragment.findById",
-            query = "select distinct f from Fragment f where f.id = :id"),
-    @NamedQuery(name = "Fragment.findByIdWithRelatedOnes",
-            query = "select distinct f from Fragment f left join fetch f.relatedOnes where f.id = :id"),
-    @NamedQuery(name = "Fragment.findByIdWithTags",
-            query = "select distinct f from Fragment f left join fetch f.tags where f.id = :id"),
-})
 public final class Fragment implements Serializable {
     private Long id;
     private String title;

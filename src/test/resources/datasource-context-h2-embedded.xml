@@ -34,6 +34,11 @@
 				<prop key="hibernate.jdbc.batch_size">10</prop>
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
+        </property>
+        <property name="annotatedPackages">
+            <list>
+                <value>com.knowledgex.domain</value>
+            </list>
 		</property>
 	</bean>
 

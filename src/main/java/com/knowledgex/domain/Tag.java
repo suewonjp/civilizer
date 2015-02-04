@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -27,23 +25,6 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "TAG")
-@NamedQueries({
-    @NamedQuery(name = "Tag.findAllWithChildren",
-            query = "select distinct t from Tag t left join fetch t.children"),
-    @NamedQuery(name = "Tag.findById",
-            query = "select distinct t from Tag t where t.id = :id"),
-    @NamedQuery(name = "Tag.findByIdWithChildren",
-            query = "select distinct t from Tag t left join fetch t.children where t.id = :id"),
-    @NamedQuery(name = "Tag.findByIdWithFragments",
-            query = "select distinct t from Tag t left join fetch t.fragments where t.id = :id"),
-    @NamedQuery(name = "Tag.findFragments",
-            query = "select t.fragments from Tag t where t.id = :id"),
-//            query = "select f from Tag t join t.fragments as f where t.id = :id order by f.updateDatetime desc"),
-    @NamedQuery(name = "Tag.findFragmentsWithIdFilter",
-            query = "select t.fragments from Tag t where t.id in (:ids)"),
-    @NamedQuery(name = "Tag.findParentTags",
-            query = "select distinct t from Tag t inner join t.children child where child.id = :id"),
-})
 public final class Tag implements Serializable {
 	
 	public static final String TAG_NAME_DELIMITER = ",";
@@ -282,10 +263,6 @@ public final class Tag implements Serializable {
     	return false;
     }
     
-//    public static boolean isTrashTag(Long id) {
-//    	return  (null != id) && (id == TRASH_TAG_ID);
-//    }
-
     public static boolean isTrashTag(long id) {
     	return  (id == TRASH_TAG_ID);
     }
