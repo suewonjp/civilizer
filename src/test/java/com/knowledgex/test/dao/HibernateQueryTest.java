@@ -13,8 +13,6 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.joda.time.DateTime;
@@ -73,7 +71,6 @@ public class HibernateQueryTest {
 		assertFalse(fragments.isEmpty());
 		for (Fragment f : fragments) {
 			assertNotNull(f.getId());
-			assertTrue(Hibernate.isInitialized(f.getTags()));
 		}
 		
 		final long id = 1;
@@ -99,7 +96,7 @@ public class HibernateQueryTest {
 		crit.addOrder(Order.desc("updateDatetime"));
 
 		// [NOTE] to get distinct results, use either of the following method
-		crit.setFetchMode("tags", FetchMode.SELECT); // lazy fetching of all child selections
+//		crit.setFetchMode("tags", FetchMode.SELECT); // lazy fetching of all child selections
 //		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); // distinct transformer
 		
 		List<Fragment> fragments1 = (List<Fragment>) crit.list();
@@ -154,9 +151,6 @@ public class HibernateQueryTest {
 		final String tgtTagName = "#trash";
 		
 		Criteria crit = session.createCriteria(Fragment.class);
-		
-		// [NOTE] even if tags are in lazy fetch mode, it will work...
-		crit.setFetchMode("tags", FetchMode.SELECT);
 		
 		Criteria tagCrit = crit.createCriteria("tags");
 		assertNotNull(tagCrit);

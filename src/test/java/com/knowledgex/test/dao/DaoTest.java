@@ -118,7 +118,7 @@ abstract class DaoTest {
 			Long id = getAndValidateId(f);
 			Fragment frg = fragmentDao.findById(id);
 			assertEquality(frg, f);
-			assertTrue(Hibernate.isInitialized(frg.getTags()));
+			assertFalse(Hibernate.isInitialized(frg.getTags()));
 			assertFalse(Hibernate.isInitialized(frg.getRelatedOnes()));
 		}
 	}

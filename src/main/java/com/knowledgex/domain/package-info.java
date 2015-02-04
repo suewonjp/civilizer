@@ -26,11 +26,11 @@
             query = "select distinct t from Tag t left join fetch t.fragments where t.id = :id"),
     @NamedQuery(
             name = "Tag.findFragments",
-            query = "select t.fragments from Tag t where t.id = :id"),
-//            query = "select f from Tag t join t.fragments as f where t.id = :id order by f.updateDatetime desc"),
+//            query = "select t.fragments from Tag t where t.id = :id"),
+            query = "select f from Tag t join t.fragments as f left join fetch f.tags where t.id = :id"),
     @NamedQuery(
             name = "Tag.findFragmentsWithIdFilter",
-            query = "select distinct t.fragments from Tag t where t.id in (:ids)"),
+            query = "select distinct f from Tag t join t.fragments as f left join fetch f.tags where t.id in (:ids)"),
     @NamedQuery(
             name = "Tag.findParentTags",
             query = "select distinct t from Tag t inner join t.children child where child.id = :id"),
