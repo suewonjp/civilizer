@@ -41,7 +41,7 @@ public final class MainController {
 	}
 	
 	public List<FragmentListBean> newFragmentListBeans() {
-		List<FragmentListBean> output =  new ArrayList<FragmentListBean>(MAX_FRAGMENT_PANELS);
+		final List<FragmentListBean> output =  new ArrayList<FragmentListBean>(MAX_FRAGMENT_PANELS);
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
 			output.add(null);
 		}
@@ -49,10 +49,8 @@ public final class MainController {
 	}
 
 	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb) {
-        FragmentListBean flb = existingFlb;
-        if (null == flb) {
-			flb = new FragmentListBean();
-		}
+        final FragmentListBean flb =
+        		(null == existingFlb) ? new FragmentListBean() : existingFlb;
         
         if (null == pcb) {
         	pcb = new PanelContextBean();
@@ -65,7 +63,7 @@ public final class MainController {
         
         List<Fragment> fragments = null;
         if (tagId == PanelContextBean.TAG_ID_FOR_ALL_VALID_TAGS) {
-        	// Fetch all the fragments
+        	// Fetch the fragments regardless of tags
         	fragments = fragmentDao.findSome(first, count + 1);
         }
         else {
@@ -76,24 +74,24 @@ public final class MainController {
         
         final boolean isLastPage = fragments.size() <= count;
         
-        final boolean trashTag = Tag.isTrashTag(tagId);
-        if (!trashTag) {
+        final boolean givenTagIsTrashTag = Tag.isTrashTag(tagId);
+        if (!givenTagIsTrashTag) {
         	// Exclude fragments that have '#trash' tag
-        	List<Long> trashTagId = new ArrayList<Long>();
+        	final List<Long> trashTagId = new ArrayList<Long>();
         	trashTagId.add(0L);
         	Fragment.applyExclusiveTagFilter(fragments, trashTagId);
         }
 
-        flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage, trashTag));
+        flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage, givenTagIsTrashTag));
 //        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         
-        // [NOTE] The content of fragments should be immutable form here!
+        // [NOTE] The content of fragments should be IMMUTABLE form here!
         
-        List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
+        final List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
         for (Fragment f : fragments) {
         	FragmentBean fb = new FragmentBean();
         	fb.setFragment(f);
-        	String tagNames = Tag.getTagNamesFrom(f.getTags());
+        	final String tagNames = Tag.getTagNamesFrom(f.getTags());
         	fb.setTagNames(tagNames);
         	fragmentBeans.add(fb);
         }
@@ -103,22 +101,22 @@ public final class MainController {
     }
 
 	public FragmentBean newFragmentBean() {
-	    FragmentBean fragmentBean = new FragmentBean();
-	    Fragment frg = new Fragment();
+	    final FragmentBean fragmentBean = new FragmentBean();
+	    final Fragment frg = new Fragment();
 	    fragmentBean.setFragment(frg);
 	    return fragmentBean;
 	}
 	
 	public TagListBean newTagListBean() {
-	    TagListBean tagListBean = new TagListBean();
+		final TagListBean tagListBean = new TagListBean();
 	    tagListBean.setTags(tagDao.findAllWithChildren());
-	    TagTree tagTree = newTagTree();
+	    final TagTree tagTree = newTagTree();
 	    tagListBean.setTagTree(tagTree);
         return tagListBean;
     }
 	
 	private TagTree newTagTree() {
-	    TagTree tagTree = new TagTree();
+		final TagTree tagTree = new TagTree();
 	    return tagTree;
 	}
 
@@ -127,51 +125,55 @@ public final class MainController {
 	}
 	
 	public void trashFragment(Long fragmentId) {
-		Fragment frg = fragmentDao.findById(fragmentId);
+		final Fragment frg = fragmentDao.findById(fragmentId);
 		frg.addTag(getTrashTag());
 		fragmentDao.save(frg);
 		ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been trashed", null);
 	}
 
 	public void deleteFragment(Long fragmentId) {
-		Fragment frg = fragmentDao.findById(fragmentId);
+		final Fragment frg = fragmentDao.findById(fragmentId);
 		fragmentDao.delete(frg);
 		ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been deleted", null);
 	}
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
-	    String tagNames = fb.getTagNames();
-	    Collection<Tag> tags = saveTags(tagListBean, tagNames);
+		final String tagNames = fb.getTagNames();
+		final Collection<Tag> tags = saveTags(tagListBean, tagNames);
 	    
-	    Fragment frg = fb.getFragment();
+	    final Fragment frg = fb.getFragment();
 	    frg.setTags(tags);
-	    DateTime dt = new DateTime();
+	    final DateTime dt = new DateTime();
 	    if (frg.getCreationDatetime() == null) {
+	    	// It is a new fragment...
 	    	frg.setCreationDatetime(dt);
 	    }
 	    frg.setUpdateDatetime(dt);
+	    
         fragmentDao.save(frg);
         ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been saved", null);
 	}
 	
 	private Collection<Tag> saveTags(TagListBean tagListBean, String tagNames) {
-		Collection<Tag> existingTags = tagListBean.getTags();
-		Collection<String> names = Tag.getTagNameCollectionFrom(tagNames);
-		List<Tag> output = new ArrayList<Tag>();
+		final Collection<Tag> existingTags = tagListBean.getTags();
+		final Collection<String> names = Tag.getTagNameCollectionFrom(tagNames);
+		final List<Tag> output = new ArrayList<Tag>();
 		for (String name : names) {
 			Tag t = Tag.getTagFromName(name, existingTags);
-			boolean newTag = false;
+			boolean weHaveNewTag = false;
 			if (null == t) {
 				t = new Tag(name);
-				newTag = true;
+				weHaveNewTag = true;
 			}
-			DateTime dt = new DateTime();
+			
+			final DateTime dt = new DateTime();
 		    if (t.getCreationDatetime() == null) {
 		    	t.setCreationDatetime(dt);
 		    }
 		    t.setUpdateDatetime(dt);
+		    
 			tagDao.save(t);
-			if (newTag) {
+			if (weHaveNewTag) {
 				ViewUtil.addMessage("Successful", "Tag \"" + t.getTagName() + "\" has been saved", null);
 			}
 			output.add(t);
@@ -180,7 +182,7 @@ public final class MainController {
 	}
 
 	public FragmentBean inspectFragment(Integer index, FragmentListBean flb) {
-		FragmentBean fb = flb.getFragmentBeanAt(index);
+		final FragmentBean fb = flb.getFragmentBeanAt(index);
 	    logger.info("inspectFragment() called");
 	    return fb;
 	}
