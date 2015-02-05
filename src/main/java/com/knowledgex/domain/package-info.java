@@ -30,8 +30,6 @@
 
     @NamedQuery(name = "Tag2Fragment.findTrashedFragmentIds",
     	query = "select distinct t2f.fragmentId from Tag2Fragment t2f where t2f.tagId = 0"),
-//	@NamedQuery(name = "Tag2Fragment.findNonTrashedFragmentIds",
-//		query = "select distinct t2f.fragmentId from Tag2Fragment t2f where t2f.tagId != 0"),
 }) 
 
 package com.knowledgex.domain;
