@@ -13,6 +13,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -66,41 +67,43 @@ public class HibernateQueryTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void testSimpleCriteriaQuery() {
-		Criteria crit = session.createCriteria(Fragment.class);
-		List<Fragment> fragments = (List<Fragment>) crit.list();
+		final Criteria crit = session.createCriteria(Fragment.class);
+		
+		final List<Fragment> fragments = crit.list();
 		assertNotNull(fragments);
 		assertFalse(fragments.isEmpty());
 		for (Fragment f : fragments) {
 			assertNotNull(f.getId());
 		}
 		
-		final long id = 1;
+		final long id = fragments.get(TestUtil.getRandom().nextInt(fragments.size())).getId();
 		crit.add(Restrictions.eq("id", id));
-		Fragment f0 = (Fragment) crit.uniqueResult();
-		Fragment f1 = fragmentDao.findById(id);
+		final Fragment f0 = (Fragment) crit.uniqueResult();
+		final Fragment f1 = fragmentDao.findById(id);
 		assertEquals(f0, f1);
 	}
 
 	@Test
 	@SuppressWarnings("unchecked")
 	public void testCriteriaOrder() {
-		List<Fragment> fragments0 = (List<Fragment>)
-				session
+		final List<Fragment> fragments0 = session
 				.createQuery("from Fragment f order by updateDatetime desc")
 				.list();
 		
 		assertNotNull(fragments0);
 		assertFalse(fragments0.isEmpty());
 		
-		Criteria crit = session.createCriteria(Fragment.class);
+		final Criteria crit = session.createCriteria(Fragment.class);
 		assertNotNull(crit);
 		crit.addOrder(Order.desc("updateDatetime"));
 
 		// [NOTE] to get distinct results, use either of the following method
-//		crit.setFetchMode("tags", FetchMode.SELECT); // lazy fetching of all child selections
+		// --- 1. lazy fetching of the specified child selections unless it is in lazy fetching mode
+//		crit.setFetchMode("tags", FetchMode.SELECT);
+		// --- 2. using distinct transformer
 //		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); // distinct transformer
 		
-		List<Fragment> fragments1 = (List<Fragment>) crit.list();
+		final List<Fragment> fragments1 = crit.list();
 		
 		assertEquals(fragments0.size(), fragments1.size());
 		
@@ -124,13 +127,12 @@ public class HibernateQueryTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void testCriteriaProjection() {
-		List<Fragment> fragments = (List<Fragment>)
-				session.createCriteria(Fragment.class)
+		final List<Fragment> fragments = session.createCriteria(Fragment.class)
 				.addOrder(Order.asc("id"))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.list();
 		
-		List<Object[]> results = (List<Object[]>)
+		final List<Object[]> results = (List<Object[]>)
 				session.createCriteria(Fragment.class)
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 			    .setProjection( Projections.projectionList()
@@ -151,20 +153,20 @@ public class HibernateQueryTest {
 	public void testCriteriaAssociation() {
 		final String tgtTagName = "#trash";
 		
-		Criteria crit = session.createCriteria(Fragment.class);
+		final Criteria crit = session.createCriteria(Fragment.class);
 		
-		Criteria tagCrit = crit.createCriteria("tags");
+		final Criteria tagCrit = crit.createCriteria("tags");
 		assertNotNull(tagCrit);
 		tagCrit.add(Restrictions.eq("tagName", tgtTagName));
 		
-		List<Fragment> fragments = (List<Fragment>) crit.list();
+		final List<Fragment> fragments = crit.list();
 		assertNotNull(fragments);
 		assertFalse(fragments.isEmpty());
 		
-		Fragment f0 = fragments.get(0);
+		final Fragment f0 = fragments.get(0);
 		assertTrue(f0 != null && f0.getId() != null);
 		
-		Collection<Tag> tags = f0.getTags();
+		final Collection<Tag> tags = f0.getTags();
 		assertNotNull(tags);
 		assertFalse(tags.isEmpty());
 		
@@ -172,22 +174,23 @@ public class HibernateQueryTest {
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
+//	@SuppressWarnings("unchecked")
 	public void testDetachedCriteria() {
-		DetachedCriteria query = DetachedCriteria.forClass(Fragment.class);
-		Criteria crit = query.getExecutableCriteria(session);
-		List<Fragment> fragments = (List<Fragment>) crit.list();
-
+		final List<Fragment> fragments = fragmentDao.findAll();
 		assertNotNull(fragments);
 		assertFalse(fragments.isEmpty());
 		for (Fragment f : fragments) {
 			assertNotNull(f.getId());
 		}
 		
-		final long id = 1;
-		crit.add(Restrictions.eq("id", id));
-		Fragment f0 = (Fragment) crit.uniqueResult();
-		Fragment f1 = fragmentDao.findById(id);
+		final DetachedCriteria query = DetachedCriteria.forClass(Fragment.class);
+		final long id = fragments.get(TestUtil.getRandom().nextInt(fragments.size())).getId();
+		query.add(Property.forName("id").eq(id));
+		
+		final Criteria crit = query.getExecutableCriteria(session);
+		
+		final Fragment f0 = (Fragment) crit.uniqueResult();
+		final Fragment f1 = fragmentDao.findById(id);
 		assertEquals(f0, f1);
 	}
 	
