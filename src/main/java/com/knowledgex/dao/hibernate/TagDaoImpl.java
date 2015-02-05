@@ -18,7 +18,7 @@ import com.knowledgex.domain.Tag;
 @Transactional
 public final class TagDaoImpl implements TagDao {
 
-    final private Log log = LogFactory.getLog(TagDaoImpl.class);
+    private final Log log = LogFactory.getLog(TagDaoImpl.class);
 
     private SessionFactory sessionFactory;
     
@@ -103,16 +103,19 @@ public final class TagDaoImpl implements TagDao {
     		// Empty inclusion filter, empty results
     		return null;
     	}
-    	Set<Long> setIn = new HashSet<Long>(idsIn); // needed for removing duplications
-    	List<Fragment> output =
+    	
+    	final Set<Long> setIn = new HashSet<Long>(idsIn); // needed for removing duplications
+    	final List<Fragment> output =
     	        sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragmentsWithIdFilter")
                 .setParameterList("ids", setIn)
                 .list();
+    	
     	if (null == idsEx || idsEx.isEmpty()) {
     		// We have an inclusive filter only
     		return output;
     	}
+    	
     	// We have an exclusive filter
     	Fragment.applyExclusiveTagFilter(output, idsEx);
     	return output;

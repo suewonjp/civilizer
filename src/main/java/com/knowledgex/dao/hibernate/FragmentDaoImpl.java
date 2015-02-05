@@ -19,7 +19,7 @@ import com.knowledgex.domain.Fragment;
 @Transactional
 public final class FragmentDaoImpl implements FragmentDao {
 
-    private Log log = LogFactory.getLog(FragmentDaoImpl.class);
+    private final Log log = LogFactory.getLog(FragmentDaoImpl.class);
 
     private SessionFactory sessionFactory;
 
@@ -43,14 +43,14 @@ public final class FragmentDaoImpl implements FragmentDao {
 	public List<Fragment> findSome(int first, int count) {
 	    first = Math.max(0, first);
 	    count = Math.max(0, count);
-	    Session s = sessionFactory.getCurrentSession();
-	    List<Long> ids = s.getNamedQuery("Fragment.findIdsOrderByUpdateDatetime")
+	    final Session s = sessionFactory.getCurrentSession();
+	    final List<Long> ids = s.getNamedQuery("Fragment.findIdsOrderByUpdateDatetime")
 	            .setFirstResult(first)
                 .setMaxResults(count)
                 .list();
-	    List<Fragment> output = new ArrayList<Fragment>(count);
+	    final List<Fragment> output = new ArrayList<Fragment>(count);
 	    count = Math.min(count, ids.size());
-	    Query q = s.getNamedQuery("Fragment.findByIdWithTags");
+	    final Query q = s.getNamedQuery("Fragment.findByIdWithTags");
 	    for (int i = 0; i < count; ++i) {
             output.add((Fragment) q.setParameter("id", ids.get(i)).uniqueResult());
         }
