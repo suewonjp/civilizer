@@ -194,4 +194,28 @@ public class HibernateQueryTest {
 		assertEquals(f0, f1);
 	}
 	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testJoinTable() {
+		final List<Fragment> fragments = fragmentDao.findAll();
+		final List<Tag> tags = tagDao.findAll();		
+		final List<Tag2Fragment> t2fs = session
+				.createQuery("from Tag2Fragment t2f")
+				.list();
+		
+		assertNotNull(t2fs);
+		assertFalse(t2fs.isEmpty());
+		for (Tag2Fragment row : t2fs) {
+			assertNotNull(row.getId());
+			assertNotNull(row.getTagId());
+			assertNotNull(row.getFragmentId());
+			
+			final Long tagId = row.getTagId();
+			assertTrue(Tag.containsId(tags, tagId));
+			
+			final Long fragmentId = row.getFragmentId();
+			assertTrue(Fragment.containsId(fragments, fragmentId));
+		}
+	}
+	
 }
