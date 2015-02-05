@@ -233,21 +233,21 @@ public class HibernateQueryTest {
 			assertTrue(hasTrashTag);
 		}
 
-		final List<Long> trashedNotFragmentIds = session
-				.getNamedQuery("Tag2Fragment.findNonTrashedFragmentIds")
-				.list();
-		for (Long id : trashedNotFragmentIds) {
-			Fragment f = fragmentDao.findByIdWithTags(id);
-			assertNotNull(f);
-			assertNotNull(f.getTags());
-			boolean hasTrashTag = false;
-			for (Tag t : f.getTags()) {
-				if (t.getId() == Tag.TRASH_TAG_ID) {
-					hasTrashTag = true;
-				}
-			}
-			assertFalse(hasTrashTag);
-		}
+//		final List<Long> nonTrashedFragmentIds = session
+//				.getNamedQuery("Tag2Fragment.findNonTrashedFragmentIds")
+//				.list();
+//		for (Long id : nonTrashedFragmentIds) {
+//			Fragment f = fragmentDao.findByIdWithTags(id);
+//			assertNotNull(f);
+//			assertNotNull(f.getTags());
+//			boolean hasTrashTag = false;
+//			for (Tag t : f.getTags()) {
+//				if (t.getId() == Tag.TRASH_TAG_ID) {
+//					hasTrashTag = true;
+//				}
+//			}
+//			assertFalse(hasTrashTag);
+//		}
 	}
 	
 }

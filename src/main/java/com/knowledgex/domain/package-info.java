@@ -21,6 +21,8 @@
     @NamedQuery(name = "Tag.findFragments",
 //        query = "select t.fragments from Tag t where t.id = :id"),
         query = "select f from Tag t join t.fragments as f left join fetch f.tags where t.id = :id"),
+    @NamedQuery(name = "Tag.findNonTrashedFragments",
+        query = "select f from Tag t join t.fragments as f left join fetch f.tags as t2 where t.id = :id and t2.id != 0"),
     @NamedQuery(name = "Tag.findFragmentsWithIdFilter",
         query = "select distinct f from Tag t join t.fragments as f left join fetch f.tags where t.id in (:ids)"),
     @NamedQuery(name = "Tag.findParentTags",
@@ -28,8 +30,8 @@
 
     @NamedQuery(name = "Tag2Fragment.findTrashedFragmentIds",
     	query = "select distinct t2f.fragmentId from Tag2Fragment t2f where t2f.tagId = 0"),
-	@NamedQuery(name = "Tag2Fragment.findNonTrashedFragmentIds",
-		query = "select distinct t2f.fragmentId from Tag2Fragment t2f where t2f.tagId != 0"),
+//	@NamedQuery(name = "Tag2Fragment.findNonTrashedFragmentIds",
+//		query = "select distinct t2f.fragmentId from Tag2Fragment t2f where t2f.tagId != 0"),
 }) 
 
 package com.knowledgex.domain;
