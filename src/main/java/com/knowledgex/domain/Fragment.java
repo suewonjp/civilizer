@@ -238,6 +238,20 @@ public final class Fragment implements Serializable {
     	return Tag.containsName(getTags(), tagName);
     }
     
+    public static boolean containsId(Collection<Fragment> fragments, long id) {
+    	if (fragments == null || fragments.isEmpty()) {
+    		return false;
+    	}
+    	
+    	for (Fragment f : fragments) {
+    		if (f.getId().equals(id)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
     public static Collection<String> getFragmentTitleCollectionFrom(Collection<Fragment> fragments) {
     	List<String> fragmentNames = new ArrayList<String>();
         for (Fragment f : fragments) {
