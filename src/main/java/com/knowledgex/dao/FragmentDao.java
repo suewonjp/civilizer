@@ -9,6 +9,8 @@ public interface FragmentDao {
     
     public List<Fragment> findSome(int first, int count);
 
+    public List<Fragment> findSomeNonTrashed(int first, int count);
+
     public Fragment findById(Long id);
 
     public Fragment findByIdWithRelatedOnes(Long id);

@@ -56,6 +56,19 @@ public final class FragmentDaoImpl implements FragmentDao {
         }
 	    return output;
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+	public List<Fragment> findSomeNonTrashed(int first, int count) {
+		first = Math.max(0, first);
+	    count = Math.max(0, count);
+	    return sessionFactory.getCurrentSession()
+	    		.getNamedQuery("Fragment.findNonTrashedWithTagsOrderByUpdateDatetime")
+	    		.setFirstResult(first)
+                .setMaxResults(count)
+                .list();
+	}
 
     @Override
     public Fragment findById(Long id) {
