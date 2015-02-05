@@ -64,23 +64,29 @@ public final class MainController {
         List<Fragment> fragments = null;
         if (tagId == PanelContextBean.TAG_ID_FOR_ALL_VALID_TAGS) {
         	// Fetch the fragments regardless of tags
-        	fragments = fragmentDao.findSome(first, count + 1);
+//        	fragments = fragmentDao.findSome(first, count + 1);
+        	fragments = fragmentDao.findSomeNonTrashed(first, count + 1);
+        }
+        else if (tagId == Tag.TRASH_TAG_ID) {
+        	// Fetch the trashed fragments
+        	fragments = tagDao.findFragments(tagId, first, count + 1);
+        	Fragment.sort(fragments, FragmentOrder.UPDATE_DATETIME, false);
         }
         else {
-        	// Fetch the fragments with the specified tag
-        	fragments = tagDao.findFragments(tagId, first, count + 1);
+        	// Fetch the fragments with the specified tag (non-trashed)
+//        	fragments = tagDao.findFragments(tagId, first, count + 1);
+        	fragments = tagDao.findNonTrashedFragments(tagId, first, count + 1);
         	Fragment.sort(fragments, FragmentOrder.UPDATE_DATETIME, false);
         }
         
         final boolean isLastPage = fragments.size() <= count;
-        
         final boolean givenTagIsTrashTag = Tag.isTrashTag(tagId);
-        if (!givenTagIsTrashTag) {
-        	// Exclude fragments that have '#trash' tag
-        	final List<Long> trashTagId = new ArrayList<Long>();
-        	trashTagId.add(0L);
-        	Fragment.applyExclusiveTagFilter(fragments, trashTagId);
-        }
+//        if (!givenTagIsTrashTag) {
+//        	// Exclude fragments that have '#trash' tag
+//        	final List<Long> trashTagId = new ArrayList<Long>();
+//        	trashTagId.add(0L);
+//        	Fragment.applyExclusiveTagFilter(fragments, trashTagId);
+//        }
 
         flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage, givenTagIsTrashTag));
 //        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
@@ -88,7 +94,10 @@ public final class MainController {
         // [NOTE] The content of fragments should be IMMUTABLE form here!
         
         final List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
-        for (Fragment f : fragments) {
+        final int c = Math.min(count, fragments.size());
+//        for (Fragment f : fragments) {
+       	for (int i=0; i<c; ++i) {
+       		Fragment f = fragments.get(i);
         	FragmentBean fb = new FragmentBean();
         	fb.setFragment(f);
         	final String tagNames = Tag.getTagNamesFrom(f.getTags());

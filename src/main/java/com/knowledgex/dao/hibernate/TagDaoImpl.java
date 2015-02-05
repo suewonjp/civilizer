@@ -92,6 +92,19 @@ public final class TagDaoImpl implements TagDao {
                 .list();
 	    return output;
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Fragment> findNonTrashedFragments(Long id, int first, int count) {
+		List<Fragment> output = (List<Fragment>)
+				sessionFactory.getCurrentSession()
+				.getNamedQuery("Tag.findNonTrashedFragments")
+				.setParameter("id", id)
+				.setFirstResult(first)
+				.setMaxResults(count)
+				.list();
+		return output;
+	}
     
     @Override
     @SuppressWarnings("unchecked")

@@ -250,4 +250,21 @@ public class HibernateQueryTest {
 //		}
 	}
 	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testQueryNonTrashedFragmentsByTag() {
+		final Long tgtTagId = 13L;
+		
+		final List<Fragment> fragments = session
+				.createQuery("select distinct f from Fragment f left join fetch f.tags t where t.id = :id and f.id not in ( select f2.id from Tag t2 join t2.fragments f2 where t2.id = 0 )")
+				.setParameter("id", tgtTagId)
+				.list();
+		for (Fragment f : fragments) {
+			Collection<Tag> tags = f.getTags();
+			assertNotNull(tags);
+		    assertTrue(Tag.containsId(tags, tgtTagId));
+		    assertFalse(Tag.containsId(tags, Tag.TRASH_TAG_ID));
+		}
+	}
+	
 }

@@ -8,7 +8,7 @@
     @NamedQuery(name = "Fragment.findIdsOrderByUpdateDatetime",
         query = "select f.id from Fragment f order by f.updateDatetime desc"),
     @NamedQuery(name = "Fragment.findNonTrashedWithTagsOrderByUpdateDatetime",
-        query = "select distinct f from Fragment f join f.tags t left join fetch f.tags where t.id != 0 order by f.updateDatetime desc"),
+        query = "from Fragment f left join fetch f.tags where f.id not in ( select distinct f.id from Fragment f join f.tags t where t.id = 0 ) order by f.updateDatetime desc"),
     
     @NamedQuery(name = "Tag.findAllWithChildren",
         query = "select distinct t from Tag t left join fetch t.children"),
@@ -22,7 +22,7 @@
 //        query = "select t.fragments from Tag t where t.id = :id"),
         query = "select f from Tag t join t.fragments as f left join fetch f.tags where t.id = :id"),
     @NamedQuery(name = "Tag.findNonTrashedFragments",
-        query = "select f from Tag t join t.fragments as f left join fetch f.tags as t2 where t.id = :id and t2.id != 0"),
+        query = "select distinct f from Fragment f left join fetch f.tags t where t.id = :id and f.id not in ( select f2.id from Tag t2 join t2.fragments f2 where t2.id = 0 )"),
     @NamedQuery(name = "Tag.findFragmentsWithIdFilter",
         query = "select distinct f from Tag t join t.fragments as f left join fetch f.tags where t.id in (:ids)"),
     @NamedQuery(name = "Tag.findParentTags",
