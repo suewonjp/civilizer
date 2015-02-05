@@ -63,7 +63,7 @@ public final class PanelContextBean implements Serializable {
     
     @Override
     public boolean equals(Object obj) {
-    	if (null != obj) {
+    	if (obj != null) {
     		if (obj instanceof PanelContextBean) {
     			PanelContextBean rhs = (PanelContextBean) obj;
     			return this.tagId == rhs.tagId && this.curPage == rhs.curPage;

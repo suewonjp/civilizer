@@ -50,7 +50,7 @@ public final class Fragment implements Serializable {
     public Fragment(String title, String content, DateTime dt) {
     	setTitle(title);
     	setContent(content);
-    	if (null == dt) {
+    	if (dt == null) {
     		dt = new DateTime();
     	}
     	setCreationDatetime(dt);
@@ -250,7 +250,7 @@ public final class Fragment implements Serializable {
     		Collection<Fragment> fragments
           , Collection<Long> tags
     ) {
-    	if (null == fragments || null == tags || tags.isEmpty()) {
+    	if (fragments == null || tags == null || tags.isEmpty()) {
     		return;
     	}
     	Set<Long> setEx = new HashSet<Long>(tags);

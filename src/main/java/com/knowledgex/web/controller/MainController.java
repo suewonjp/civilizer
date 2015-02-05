@@ -33,7 +33,7 @@ public final class MainController {
 	private Tag trashTag = null;
 	
 	private Tag getTrashTag() {
-		if (null != trashTag) {
+		if (trashTag != null) {
 			return trashTag;
 		}
 		trashTag = tagDao.findById(Tag.TRASH_TAG_ID);
@@ -50,9 +50,9 @@ public final class MainController {
 
 	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb) {
         final FragmentListBean flb =
-        		(null == existingFlb) ? new FragmentListBean() : existingFlb;
+        		(existingFlb == null) ? new FragmentListBean() : existingFlb;
         
-        if (null == pcb) {
+        if (pcb == null) {
         	pcb = new PanelContextBean();
         }
         
@@ -161,7 +161,7 @@ public final class MainController {
 		for (String name : names) {
 			Tag t = Tag.getTagFromName(name, existingTags);
 			boolean weHaveNewTag = false;
-			if (null == t) {
+			if (t == null) {
 				t = new Tag(name);
 				weHaveNewTag = true;
 			}

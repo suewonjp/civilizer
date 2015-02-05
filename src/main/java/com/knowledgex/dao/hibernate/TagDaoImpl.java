@@ -99,7 +99,7 @@ public final class TagDaoImpl implements TagDao {
 			Collection<Long> idsIn
 			, Collection<Long> idsEx
 			) {
-    	if (null == idsIn || idsIn.isEmpty()) {
+    	if (idsIn == null || idsIn.isEmpty()) {
     		// Empty inclusion filter, empty results
     		return null;
     	}
@@ -111,7 +111,7 @@ public final class TagDaoImpl implements TagDao {
                 .setParameterList("ids", setIn)
                 .list();
     	
-    	if (null == idsEx || idsEx.isEmpty()) {
+    	if (idsEx == null || idsEx.isEmpty()) {
     		// We have an inclusive filter only
     		return output;
     	}

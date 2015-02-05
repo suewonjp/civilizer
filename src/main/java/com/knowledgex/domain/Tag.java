@@ -166,7 +166,7 @@ public final class Tag implements Serializable {
     }
     
     public static Collection<String> getTagNameCollectionFrom(String names) {
-    	if (null == names || names.trim().isEmpty()) {
+    	if (names == null || names.trim().isEmpty()) {
     		return new ArrayList<String>();
     	}
     	String[] arr = names.split("\\s*[" + TAG_NAME_DELIMITER + "]+\\s*");
@@ -207,7 +207,7 @@ public final class Tag implements Serializable {
     }
     
     public static Collection<Tag> getTopParentTags(Collection<Tag> tags) {
-        if (null == tags || tags.isEmpty()) {
+        if (tags  == null|| tags.isEmpty()) {
             return null;
         }
         Collection<Tag> output = new ArrayList<Tag>(tags);
@@ -223,7 +223,7 @@ public final class Tag implements Serializable {
     }
     
     public static boolean containsId(Collection<Tag> tags, long id) {
-    	if (null == tags || tags.isEmpty()) {
+    	if (tags == null || tags.isEmpty()) {
     		return false;
     	}
     	
@@ -237,15 +237,15 @@ public final class Tag implements Serializable {
     }
     
     public static boolean containsName(Collection<Tag> tags, String name) {
-    	if (null != name && name.isEmpty()) {
+    	if (name != null && name.isEmpty()) {
     		name = null;
     	}
-    	if (null != tags && tags.isEmpty()) {
+    	if (tags != null && tags.isEmpty()) {
     		tags = null;
     	}
     	
-    	boolean nameNull = (null == name);
-    	if (nameNull ^ (null == tags)) {
+    	boolean nameNull = (name == null);
+    	if (nameNull ^ (tags == null)) {
     		return false;
     	}
     	else {
