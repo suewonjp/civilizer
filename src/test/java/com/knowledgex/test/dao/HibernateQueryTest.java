@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -169,5 +170,25 @@ public class HibernateQueryTest {
 		
 		assertTrue(f0.containsTagName(tgtTagName));
 	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testDetachedCriteria() {
+		DetachedCriteria query = DetachedCriteria.forClass(Fragment.class);
+		Criteria crit = query.getExecutableCriteria(session);
+		List<Fragment> fragments = (List<Fragment>) crit.list();
 
+		assertNotNull(fragments);
+		assertFalse(fragments.isEmpty());
+		for (Fragment f : fragments) {
+			assertNotNull(f.getId());
+		}
+		
+		final long id = 1;
+		crit.add(Restrictions.eq("id", id));
+		Fragment f0 = (Fragment) crit.uniqueResult();
+		Fragment f1 = fragmentDao.findById(id);
+		assertEquals(f0, f1);
+	}
+	
 }
