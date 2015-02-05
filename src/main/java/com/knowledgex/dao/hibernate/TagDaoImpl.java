@@ -22,10 +22,6 @@ public final class TagDaoImpl implements TagDao {
 
     private SessionFactory sessionFactory;
     
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
     @Resource(name = "sessionFactory")
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

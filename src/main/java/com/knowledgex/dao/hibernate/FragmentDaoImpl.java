@@ -23,10 +23,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 
     private SessionFactory sessionFactory;
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
     @Resource(name = "sessionFactory")
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -59,11 +55,6 @@ public final class FragmentDaoImpl implements FragmentDao {
             output.add((Fragment) q.setParameter("id", ids.get(i)).uniqueResult());
         }
 	    return output;
-//		return sessionFactory.getCurrentSession()
-//                .createQuery("from Fragment f order by f.updateDatetime desc")
-//                .setFirstResult(first)
-//                .setMaxResults(count)
-//                .list();
 	}
 
     @Override
