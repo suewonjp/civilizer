@@ -6,6 +6,8 @@ import com.knowledgex.domain.Fragment;
 
 public interface FragmentDao {
     public List<Fragment> findAll();
+
+    public List<Fragment> findNonTrashed();
     
     public List<Fragment> findSome(int first, int count);
 

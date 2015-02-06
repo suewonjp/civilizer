@@ -24,8 +24,10 @@ abstract class DaoTest {
 	private final List<Tag> temporalTags = new ArrayList<Tag>();
 	private final List<Fragment> temporalFragments = new ArrayList<Fragment>();
 
-	protected static void setUpBeforeClass(String dataSourceContextPath,
-			Class<?> clazz) throws Exception {
+	protected static void setUpBeforeClass(
+	    String dataSourceContextPath
+	  , Class<?> clazz
+	) throws Exception {
 		log = TestUtil.newLogger(clazz);
 
 		ctx = new GenericXmlApplicationContext();
@@ -33,7 +35,7 @@ abstract class DaoTest {
 		ctx.refresh();
 		log.info("GenericXmlApplicationContext initialized OK");
 	}
-
+	
 	protected void deleteAllTemporalObjects() {
 		for (Tag t : temporalTags) {
 			assertNotNull(tagDao.findById(t.getId()));
@@ -56,7 +58,8 @@ abstract class DaoTest {
 	}
 
 	protected Fragment newFragment() {
-		Fragment frg = new Fragment("new fragment " + temporalFragments.size(),
+		Fragment frg = new Fragment(
+		        "new fragment " + temporalFragments.size(),
 				"Some content...", null);
 		assertNotNull(frg);
 		temporalFragments.add(frg);
@@ -126,18 +129,16 @@ abstract class DaoTest {
 	protected void testTagToFragmentRelationship() {
 		Collection<Tag> tags = tagDao.findAll();
 		Collection<Fragment> fragments = fragmentDao.findAll();
-		Collection<String> fragmentNames = Fragment
-				.getFragmentTitleCollectionFrom(fragments);
+		Collection<String> fragmentNames = Fragment.getFragmentTitleCollectionFrom(fragments);
 
 		for (Tag t : tags) {
-			Long id = t.getId();
+		    Long id = getAndValidateId(t);
 			Tag tag = tagDao.findByIdWithFragments(id);
 			Collection<Fragment> frgs = tag.getFragments();
 			assertTrue(Hibernate.isInitialized(frgs));
 			if (frgs.isEmpty() == false) {
 				for (Fragment f : frgs) {
 					assertTrue(fragmentNames.contains(f.getTitle()));
-					log.info("Tag " + id + " has a fragment " + f.getId());
 				}
 			}
 		}
@@ -158,7 +159,6 @@ abstract class DaoTest {
 			if (relatedTags.isEmpty() == false) {
 				for (Tag t : relatedTags) {
 					assertTrue(tagNames.contains(t.getTagName()));
-					log.info("Fragment " + id + " belongs to tag " + t.getId());
 				}
 			}
 		}
@@ -254,8 +254,7 @@ abstract class DaoTest {
 			t.setChildren(null);
 		}
 		for (int i = 1; i < temporalTags.size(); ++i) {
-			Tag parent = tagDao.findByIdWithChildren(temporalTags.get(i - 1)
-					.getId());
+			Tag parent = tagDao.findByIdWithChildren(temporalTags.get(i - 1).getId());
 			Tag child = temporalTags.get(i);
 			Collection<Tag> children = parent.getChildren();
 			assertTrue(Hibernate.isInitialized(children));
@@ -392,48 +391,92 @@ abstract class DaoTest {
 		assertEquals(fragments, fragments2);
 	}
 	
+//	protected void testPagingFragments() {
+//		Collection<Fragment> allFragments = fragmentDao.findAll();
+//		int allCount = allFragments.size();
+//		int first = 0, count = 0;
+//		Collection<Fragment> someFragments = null;
+//		
+//		// test edge cases
+//		first = 0; count = 0; // zero range
+//		someFragments = fragmentDao.findSome(first, count);
+//		assertTrue(someFragments.isEmpty());
+//		first = -1; count = 1; // first index is negative
+//		someFragments = fragmentDao.findSome(first, count);
+//		assertEquals(someFragments.size(), count);
+//		first = -1; count = -1; // first index and count are negative
+//		someFragments = fragmentDao.findSome(first, count);
+//		assertTrue(someFragments.isEmpty());
+//		first = 1; count = -1; // count is negative
+//		someFragments = fragmentDao.findSome(first, count);
+//		assertTrue(someFragments.isEmpty());
+//		first = 0; count = allCount + 100; // count exceeds the max. available count
+//		someFragments = fragmentDao.findSome(first, count);
+//		assertEquals(someFragments.size(), allCount);
+//		first = allCount + 10; count = 1; // first index exceeds the max. available count
+//		someFragments = fragmentDao.findSome(first, count);
+//		assertTrue(someFragments.isEmpty());
+//				
+//        // test normal cases
+//		count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
+//		assertTrue(1 <= count && count < allCount);
+//		first = Math.max(0, TestUtil.getRandom().nextInt(count));
+//		assertTrue(0 <= first && first < count);
+//		someFragments = fragmentDao.findSome(first, count);
+//		assertEquals(someFragments.size(), Math.min(count, allCount-first));
+//		count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
+//		assertTrue(1 <= count && count < allCount);
+//		first = Math.max(0, TestUtil.getRandom().nextInt(count));
+//		assertTrue(0 <= first && first < count);
+//		someFragments = fragmentDao.findSome(first, count);
+//		assertEquals(someFragments.size(), Math.min(count, allCount-first));
+//		for (Fragment f : someFragments) {
+//			assertTrue(allFragments.contains(f));
+//		}
+//	}
+
 	protected void testPagingFragments() {
-		Collection<Fragment> allFragments = fragmentDao.findAll();
-		int allCount = allFragments.size();
-		int first = 0, count = 0;
-		Collection<Fragment> someFragments = null;
-		
-		// test edge cases
-		first = 0; count = 0; // zero range
-		someFragments = fragmentDao.findSome(first, count);
-		assertTrue(someFragments.isEmpty());
-		first = -1; count = 1; // first index is negative
-		someFragments = fragmentDao.findSome(first, count);
-		assertEquals(someFragments.size(), count);
-		first = -1; count = -1; // first index and count are negative
-		someFragments = fragmentDao.findSome(first, count);
-		assertTrue(someFragments.isEmpty());
-		first = 1; count = -1; // count is negative
-		someFragments = fragmentDao.findSome(first, count);
-		assertTrue(someFragments.isEmpty());
-		first = 0; count = allCount + 100; // count exceeds the max. available count
-		someFragments = fragmentDao.findSome(first, count);
-		assertEquals(someFragments.size(), allCount);
-		first = allCount + 10; count = 1; // first index exceeds the max. available count
-		someFragments = fragmentDao.findSome(first, count);
-		assertTrue(someFragments.isEmpty());
-				
-        // test normal cases
-		count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
-		assertTrue(1 <= count && count < allCount);
-		first = Math.max(0, TestUtil.getRandom().nextInt(count));
-		assertTrue(0 <= first && first < count);
-		someFragments = fragmentDao.findSome(first, count);
-		assertEquals(someFragments.size(), Math.min(count, allCount-first));
-		count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
-		assertTrue(1 <= count && count < allCount);
-		first = Math.max(0, TestUtil.getRandom().nextInt(count));
-		assertTrue(0 <= first && first < count);
-		someFragments = fragmentDao.findSome(first, count);
-		assertEquals(someFragments.size(), Math.min(count, allCount-first));
-		for (Fragment f : someFragments) {
-			assertTrue(allFragments.contains(f));
-		}
+	    Collection<Fragment> allFragments = fragmentDao.findNonTrashed();
+	    int allCount = allFragments.size();
+	    int first = 0, count = 0;
+	    Collection<Fragment> someFragments = null;
+	    
+	    // test edge cases
+	    first = 0; count = 0; // zero range
+	    someFragments = fragmentDao.findSomeNonTrashed(first, count);
+	    assertTrue(someFragments.isEmpty());
+	    first = -1; count = 1; // first index is negative
+	    someFragments = fragmentDao.findSomeNonTrashed(first, count);
+	    assertEquals(someFragments.size(), count);
+	    first = -1; count = -1; // first index and count are negative
+	    someFragments = fragmentDao.findSomeNonTrashed(first, count);
+	    assertTrue(someFragments.isEmpty());
+	    first = 1; count = -1; // count is negative
+	    someFragments = fragmentDao.findSomeNonTrashed(first, count);
+	    assertTrue(someFragments.isEmpty());
+	    first = 0; count = allCount + 100; // count exceeds the max. available count
+	    someFragments = fragmentDao.findSomeNonTrashed(first, count);
+	    assertEquals(someFragments.size(), allCount);
+	    first = allCount + 10; count = 1; // first index exceeds the max. available count
+	    someFragments = fragmentDao.findSomeNonTrashed(first, count);
+	    assertTrue(someFragments.isEmpty());
+	    
+	    // test normal cases
+	    count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
+	    assertTrue(1 <= count && count < allCount);
+	    first = Math.max(0, TestUtil.getRandom().nextInt(count));
+	    assertTrue(0 <= first && first < count);
+	    someFragments = fragmentDao.findSomeNonTrashed(first, count);
+	    assertEquals(someFragments.size(), Math.min(count, allCount-first));
+	    count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
+	    assertTrue(1 <= count && count < allCount);
+	    first = Math.max(0, TestUtil.getRandom().nextInt(count));
+	    assertTrue(0 <= first && first < count);
+	    someFragments = fragmentDao.findSomeNonTrashed(first, count);
+	    assertEquals(someFragments.size(), Math.min(count, allCount-first));
+	    for (Fragment f : someFragments) {
+	        assertTrue(allFragments.contains(f));
+	    }
 	}
 
 }
