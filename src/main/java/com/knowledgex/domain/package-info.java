@@ -21,17 +21,28 @@
         		+ "from Fragment f "
         		+ "order by f.updateDatetime desc "
         		),
-    @NamedQuery(name = "Fragment.findNonTrashedWithTagsOrderByUpdateDatetime",
-        query = "from Fragment f "
-        		+ "  left join fetch f.tags "
-        		+ "where f.id not in ( "
-        		+ "  select distinct f.id "
-        		+ "  from Fragment f "
-        		+ "    join f.tags t "
-        		+ "  where t.id = 0 "
-        		+ ") "
-        		+ "order by f.updateDatetime desc "
-        		),
+//    @NamedQuery(name = "Fragment.findNonTrashedWithTagsOrderByUpdateDatetime",
+//        query = "from Fragment f "
+//        		+ "  left join fetch f.tags "
+//        		+ "where f.id not in ( "
+//        		+ "  select distinct f.id "
+//        		+ "  from Fragment f "
+//        		+ "    join f.tags t "
+//        		+ "  where t.id = 0 "
+//        		+ ") "
+//        		+ "order by f.updateDatetime desc "
+//        		),
+
+	@NamedQuery(name = "Fragment.findNonTrashedWithTagsOrderByUpdateDatetime",
+	query = "from Fragment f "
+	        + "  left join fetch f.tags "
+	        + "where f.id not in ( "
+	        + "  select t2f.fragmentId "
+            + "  from Tag2Fragment t2f "
+            + "  where t2f.tagId = 0 "
+	        + ") "
+	        + "order by f.updateDatetime desc "
+	        ),
     
     @NamedQuery(name = "Tag.findAllWithChildren",
         query = "select distinct t "
@@ -68,10 +79,9 @@
         		+ "  join f.tags t "
         		+ "  left join fetch f.tags "
         		+ "where t.id = :id and f.id not in ( "
-        		+ "  select f2.id "
-        		+ "  from Tag t2 "
-        		+ "    join t2.fragments f2 "
-        		+ "  where t2.id = 0 "
+        		+ "  select t2f.fragmentId "
+                + "  from Tag2Fragment t2f "
+                + "  where t2f.tagId = 0 "
         		+ ") "
         		),
     @NamedQuery(name = "Tag.findFragmentsWithIdFilter",
@@ -89,7 +99,7 @@
         		),
 
     @NamedQuery(name = "Tag2Fragment.findTrashedFragmentIds",
-    	query = "select distinct t2f.fragmentId "
+    	query = "select t2f.fragmentId "
     			+ "from Tag2Fragment t2f "
     			+ "where t2f.tagId = 0 "
     			),
