@@ -1,3 +1,4 @@
+//@formatter:off
 @NamedQueries({
     @NamedQuery(name = "Fragment.findById",
         query = "select distinct f "
@@ -31,17 +32,46 @@
               + ") "
               + "order by f.updateDatetime desc "
               ),
-
+    @NamedQuery(name = "Fragment.findIdsNonTrashedOrderByCreationDatetime",
+        query = "from Fragment f.id "
+              + "  left join fetch f.tags "
+              + "where f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              + "order by f.creationDatetime desc "
+              ),
+    @NamedQuery(name = "Fragment.findIdsNonTrashedOrderByTitle",
+        query = "from Fragment f.id "
+              + "  left join fetch f.tags "
+              + "where f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              + "order by f.title asc "
+              ),
+    @NamedQuery(name = "Fragment.findIdsNonTrashedOrderById",
+        query = "from Fragment f.id "
+              + "  left join fetch f.tags "
+              + "where f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              + "order by f.id desc "
+              ),
     @NamedQuery(name = "Fragment.findNonTrashedWithTagsOrderByUpdateDatetime",
-    query = "from Fragment f "
-            + "  left join fetch f.tags "
-            + "where f.id not in ( "
-            + "  select t2f.fragmentId "
-            + "  from Tag2Fragment t2f "
-            + "  where t2f.tagId = 0 "
-            + ") "
-            + "order by f.updateDatetime desc "
-            ),
+        query = "from Fragment f "
+              + "  left join fetch f.tags "
+              + "where f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              + "order by f.updateDatetime desc "
+              ), 
     
     @NamedQuery(name = "Tag.findAllWithChildren",
         query = "select distinct t "
