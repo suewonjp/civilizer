@@ -15,6 +15,8 @@ public interface FragmentDao {
 
     public Fragment findById(Long id);
 
+    public Fragment findByIdWithAll(Long id);
+
     public Fragment findByIdWithRelatedOnes(Long id);
     
     public Fragment findByIdWithTags(Long id);

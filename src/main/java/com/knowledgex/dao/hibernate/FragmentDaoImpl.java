@@ -99,6 +99,14 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .setParameter("id", id)
                 .uniqueResult();
     }
+
+    @Override
+    public Fragment findByIdWithAll(Long id) {
+        return (Fragment) sessionFactory.getCurrentSession()
+                .getNamedQuery("Fragment.findByIdWithAll")
+                .setParameter("id", id)
+                .uniqueResult();
+    }
     
     @Override
     public Fragment findByIdWithRelatedOnes(Long id) {
