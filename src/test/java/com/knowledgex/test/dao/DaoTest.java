@@ -12,7 +12,7 @@ import com.knowledgex.dao.*;
 import com.knowledgex.domain.*;
 import com.knowledgex.test.util.TestUtil;
 
-abstract class DaoTest {
+class DaoTest {
 
 	private static Log log;
 	private static GenericXmlApplicationContext ctx;
@@ -74,7 +74,8 @@ abstract class DaoTest {
 
 	protected Long getAndValidateId(Tag f) {
 		Long id = f.getId();
-		assertTrue(id != null && id >= 0);
+		assertTrue(id != null);
+//		assertTrue(id >= 0);
 		return id;
 	}
 
