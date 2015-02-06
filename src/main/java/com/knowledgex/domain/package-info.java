@@ -31,17 +31,6 @@
               + ") "
               + "order by f.updateDatetime desc "
               ),
-//    @NamedQuery(name = "Fragment.findNonTrashedWithTagsOrderByUpdateDatetime",
-//        query = "from Fragment f "
-//              + "  left join fetch f.tags "
-//              + "where f.id not in ( "
-//              + "  select distinct f.id "
-//              + "  from Fragment f "
-//              + "    join f.tags t "
-//              + "  where t.id = 0 "
-//              + ") "
-//              + "order by f.updateDatetime desc "
-//              ),
 
     @NamedQuery(name = "Fragment.findNonTrashedWithTagsOrderByUpdateDatetime",
     query = "from Fragment f "
