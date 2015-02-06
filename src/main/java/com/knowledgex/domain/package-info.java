@@ -102,7 +102,7 @@
     	query = "select t2f.fragmentId "
     			+ "from Tag2Fragment t2f "
     			+ "where t2f.tagId = 0 "
-    			),
+    			),    			
 }) 
 
 package com.knowledgex.domain;
