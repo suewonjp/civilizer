@@ -41,7 +41,7 @@ public final class Fragment implements Serializable {
     private String creator;
     private String updater;
     private Long tagId;
-    private Collection<Fragment> relatedOnes = new ArrayList<Fragment>();
+    private Set<Fragment> relatedOnes = new HashSet<Fragment>();
     private Collection<Tag> tags = new ArrayList<Tag>();
 
     public Fragment() {
@@ -199,11 +199,11 @@ public final class Fragment implements Serializable {
     @JoinTable(name = "FRAGMENT2FRAGMENT",
         joinColumns = @JoinColumn(name = "from_id"),
         inverseJoinColumns = @JoinColumn(name = "to_id"))
-    public Collection<Fragment> getRelatedOnes() {
+    public Set<Fragment> getRelatedOnes() {
         return relatedOnes;
     }
 
-    public void setRelatedOnes(Collection<Fragment> relatedOnes) {
+    public void setRelatedOnes(Set<Fragment> relatedOnes) {
         this.relatedOnes = relatedOnes;
     }
 

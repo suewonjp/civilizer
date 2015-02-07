@@ -273,7 +273,7 @@ class DaoTest {
 		for (int i = 1; i < temporalFragments.size(); ++i) {
 			Fragment from = temporalFragments.get(i - 1);
 			Fragment to = temporalFragments.get(i);
-			Collection<Fragment> s = new HashSet<Fragment>();
+			Set<Fragment> s = new HashSet<Fragment>();
 			s.add(to);
 			from.setRelatedOnes(s);
 		}
