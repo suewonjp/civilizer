@@ -89,7 +89,10 @@
 	margin-bottom: 10px;
 }
 
-#fragment-group-form\:fragment-panel-toolbar {
+#fragment-group-form\:fragment-panel-toolbar-0
+, #fragment-group-form\:fragment-panel-toolbar-1
+, #fragment-group-form\:fragment-panel-toolbar-2
+{
     position: fixed;
     top: 94%;
 }
@@ -117,7 +120,11 @@
 	color: #ff0;
 }
 
-.button-link, #fragment-group-form\:fragment-panel-toolbar a  {
+.button-link
+, #fragment-group-form\:fragment-panel-toolbar-0 a 
+, #fragment-group-form\:fragment-panel-toolbar-1 a
+, #fragment-group-form\:fragment-panel-toolbar-2 a
+{
     text-decoration: none;
 }
 

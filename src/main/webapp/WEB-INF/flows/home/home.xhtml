@@ -65,13 +65,14 @@ $(document).ready(function() {
     
     <div id="fragment-group">
 	    <div id="fragment-panel-0">
+	        <c:set var="panelId" value="0" />
 	        <c:set var="fragmentListBean" value="#{fragmentListBeans[0]}"/>
 	        
-	        <p:panel id="fragment-panel-toolbar" >
-		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
+	        <p:panel id="fragment-panel-toolbar-${panelId}" >
+		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
 		        <p:tooltip for="checkbox-for-all-fragments" value="Selects/unselects all fragments" />
 		        
-		        <a href="#editor-frame" id="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_fragment_new']}">
+		        <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_fragment_new']}">
 			        <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>
 		        </a>
 		        
