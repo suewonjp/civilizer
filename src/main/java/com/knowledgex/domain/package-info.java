@@ -5,13 +5,13 @@
               + "from Fragment f "
               + "where f.id = :id "
               ),
-//    @NamedQuery(name = "Fragment.findByIdWithAll",
-//        query = "select distinct f "
-//              + "from Fragment f "
-//              + "  left join fetch f.tags "
-//              + "  left join fetch f.relatedOnes "
-//              + "where f.id = :id "
-//              ),
+    @NamedQuery(name = "Fragment.findByIdWithAll",
+        query = "select distinct f "
+              + "from Fragment f "
+              + "  left join fetch f.tags "
+              + "  left join fetch f.relatedOnes "
+              + "where f.id = :id "
+              ),
     @NamedQuery(name = "Fragment.findByIdWithRelatedOnes",
         query = "select distinct f "
               + "from Fragment f "

@@ -112,7 +112,7 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .list();
 	    final List<Fragment> output = new ArrayList<Fragment>(count);
 	    count = Math.min(count, ids.size());
-	    Query q = s.getNamedQuery("Fragment.findByIdWithTags");
+	    Query q = s.getNamedQuery("Fragment.findByIdWithAll");
 	    for (int i = 0; i < count; ++i) {
             output.add((Fragment) q.setParameter("id", ids.get(i)).uniqueResult());
         }

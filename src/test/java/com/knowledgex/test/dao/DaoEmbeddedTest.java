@@ -90,4 +90,9 @@ public class DaoEmbeddedTest extends DaoTest {
     	super.testPagingFragments();
     }
 
+    @Test
+    public void testPagingFragmentsWithOrder() {
+    	super.testPagingFragmentsWithOrder();
+    }
+
 }

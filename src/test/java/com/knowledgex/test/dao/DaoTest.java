@@ -430,5 +430,49 @@ class DaoTest {
 	        assertTrue(allFragments.contains(f));
 	    }
 	}
+	
+	@SuppressWarnings("unchecked")
+	protected void testPagingFragmentsWithOrder() {
+		final Collection<Fragment> allFragments = fragmentDao.findNonTrashed();
+		final int allCount = allFragments.size();
+	    int first = 0, count = 0;
+	    List<Fragment> someFragments = null;
+	    
+	    FragmentOrder orders[] = {
+	    		FragmentOrder.UPDATE_DATETIME,
+	    		FragmentOrder.CREATION_DATETIME,
+	    		FragmentOrder.TITLE,
+	    		FragmentOrder.ID,
+	    };
+	    
+	    boolean asc[] = {
+	    		false,
+	    		false,
+	    		true,
+	    		false,
+	    };
+	    
+	    Object comparators[] = new Object[orders.length];
+	    for (int i=0; i<orders.length; ++i) {
+	    	comparators[i] = FragmentOrder.getComparator(orders[i], asc[i]);
+	    }
+	    
+	    for (int i=0; i<orders.length; ++i) {
+	    	FragmentOrder order = orders[i];
+			count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
+		    assertTrue(1 <= count && count < allCount);
+		    first = Math.max(0, TestUtil.getRandom().nextInt(count));
+		    assertTrue(0 <= first && first < count);
+		    someFragments = fragmentDao.findSomeNonTrashed(first, count, order);
+		    assertEquals(someFragments.size(), Math.min(count, allCount-first));
+		    Comparator<Fragment> cmptr = (Comparator<Fragment>) comparators[i];
+		    for (int j=1; j<someFragments.size(); ++j) {
+		    	Fragment f0 = someFragments.get(j - 1);
+	            Fragment f1 = someFragments.get(j);
+	            final int r = cmptr.compare(f0, f1);
+	            assertTrue(r <= 0);
+		    }
+		}
+	}
 
 }
