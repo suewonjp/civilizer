@@ -3,6 +3,7 @@ package com.knowledgex.dao;
 import java.util.*;
 
 import com.knowledgex.domain.Fragment;
+import com.knowledgex.domain.FragmentOrder;
 
 public interface FragmentDao {
     public List<Fragment> findAll();
@@ -12,6 +13,8 @@ public interface FragmentDao {
     public List<Fragment> findSome(int first, int count);
 
     public List<Fragment> findSomeNonTrashed(int first, int count);
+
+    public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order);
 
     public Fragment findById(Long id);
 

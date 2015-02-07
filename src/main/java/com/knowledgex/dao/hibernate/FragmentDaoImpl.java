@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.domain.Fragment;
+import com.knowledgex.domain.FragmentOrder;
 
 @Repository("fragmentDao")
 @Transactional
@@ -89,6 +90,32 @@ public final class FragmentDaoImpl implements FragmentDao {
 	        // So truncate the output list if those cases happen
 	        output = output.subList(0, count);
 	    }
+	    return output;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+	public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order) {
+		first = Math.max(0, first);
+	    count = Math.max(0, count);
+	    final Session s = sessionFactory.getCurrentSession();
+	    final String[] namedQueries = {
+	    		"Fragment.findIdsNonTrashedOrderByUpdateDatetime"
+	    		, "Fragment.findIdsNonTrashedOrderByCreationDatetime"
+	    		, "Fragment.findIdsNonTrashedOrderByTitle"
+	    		, "Fragment.findIdsNonTrashedOrderById"
+	    };
+	    final List<Long> ids = s.getNamedQuery(namedQueries[order.ordinal()])
+	            .setFirstResult(first)
+                .setMaxResults(count)
+                .list();
+	    final List<Fragment> output = new ArrayList<Fragment>(count);
+	    count = Math.min(count, ids.size());
+	    Query q = s.getNamedQuery("Fragment.findByIdWithTags");
+	    for (int i = 0; i < count; ++i) {
+            output.add((Fragment) q.setParameter("id", ids.get(i)).uniqueResult());
+        }
 	    return output;
 	}
 
