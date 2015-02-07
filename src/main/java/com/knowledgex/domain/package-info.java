@@ -5,13 +5,13 @@
               + "from Fragment f "
               + "where f.id = :id "
               ),
-    @NamedQuery(name = "Fragment.findByIdWithAll",
-        query = "select distinct f "
-              + "from Fragment f "
-              + "  left join fetch f.tags "
-              + "  left join fetch f.relatedOnes "
-              + "where f.id = :id "
-              ),
+//    @NamedQuery(name = "Fragment.findByIdWithAll",
+//        query = "select distinct f "
+//              + "from Fragment f "
+//              + "  left join fetch f.tags "
+//              + "  left join fetch f.relatedOnes "
+//              + "where f.id = :id "
+//              ),
     @NamedQuery(name = "Fragment.findByIdWithRelatedOnes",
         query = "select distinct f "
               + "from Fragment f "
@@ -40,8 +40,8 @@
               + "order by f.updateDatetime desc "
               ),
     @NamedQuery(name = "Fragment.findIdsNonTrashedOrderByCreationDatetime",
-        query = "from Fragment f.id "
-              + "  left join fetch f.tags "
+        query = "select f.id "
+              + "from Fragment f "
               + "where f.id not in ( "
               + "  select t2f.fragmentId "
               + "  from Tag2Fragment t2f "
@@ -50,8 +50,8 @@
               + "order by f.creationDatetime desc "
               ),
     @NamedQuery(name = "Fragment.findIdsNonTrashedOrderByTitle",
-        query = "from Fragment f.id "
-              + "  left join fetch f.tags "
+        query = "select f.id "
+              + "from Fragment f "
               + "where f.id not in ( "
               + "  select t2f.fragmentId "
               + "  from Tag2Fragment t2f "
@@ -60,8 +60,8 @@
               + "order by f.title asc "
               ),
     @NamedQuery(name = "Fragment.findIdsNonTrashedOrderById",
-        query = "from Fragment f.id "
-              + "  left join fetch f.tags "
+        query = "select f.id "
+              + "from Fragment f "
               + "where f.id not in ( "
               + "  select t2f.fragmentId "
               + "  from Tag2Fragment t2f "
