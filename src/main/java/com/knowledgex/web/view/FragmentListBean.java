@@ -10,6 +10,8 @@ public final class FragmentListBean implements Serializable {
     
     private PanelContextBean panelContextBean;
     
+    private String orderOption;
+    
     public Collection<FragmentBean> getFragmentBeans() {
     	return fragmentBeans;
     }
@@ -32,6 +34,14 @@ public final class FragmentListBean implements Serializable {
 
 	public boolean hasFragments() {
 		return !fragmentBeans.isEmpty();
+	}
+
+	public String getOrderOption() {
+		return orderOption;
+	}
+
+	public void setOrderOption(String orderOption) {
+		this.orderOption = orderOption;
 	}
 
 }

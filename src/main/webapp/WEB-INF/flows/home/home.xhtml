@@ -54,6 +54,15 @@ $(document).ready(function() {
 	    });
     }
 }); // end of $(document).ready()
+
+function showSortOptionDialog(panelId, curTagId, curPage) {
+	console.log(panelId);
+	console.log(curTagId);
+	console.log(curPage);
+	
+	var dlg = PF('sortOptionDlg' + panelId);
+	dlg.show();
+}
 //]]>
 </script>
 </ui:define>
@@ -61,15 +70,30 @@ $(document).ready(function() {
 <ui:define name="content">
 
 <h:form id="fragment-group-form">
+<!--     <p:log id="log" /> -->
     <p:growl id="growl" showDetail="true" sticky="false" life="10000" />
     
     <div id="fragment-group">
-	    <div id="fragment-panel-0">
-	        <c:set var="panelId" value="0" />
-	        <c:set var="fragmentListBean" value="#{fragmentListBeans[0]}"/>
+        <c:set var="panelId" value="0" />
+	    <div id="fragment-panel-#{panelId}">
+	        <c:set var="fragmentListBean" value="#{fragmentListBeans[panelId]}"/>
+	        <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
+            <c:set var="curTagId" value="#{panelContext.tagId}" />
+            <c:set var="curPage" value="#{panelContext.curPage}" />
+            
+            <p:dialog header="Sort Option" modal="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false">
+                <p:panelGrid columns="2" >
+                    <p:selectOneListbox id="basic" value="1">
+                        <f:selectItem itemLabel="Updated Time" itemValue="0" />
+                        <f:selectItem itemLabel="Created Time" itemValue="1" />
+                        <f:selectItem itemLabel="Title" itemValue="2" />
+                        <f:selectItem itemLabel="ID" itemValue="3" />
+                    </p:selectOneListbox>
+                </p:panelGrid>
+            </p:dialog>
 	        
-	        <p:panel id="fragment-panel-toolbar-${panelId}" >
-		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
+	        <p:panel id="fragment-panel-toolbar-#{panelId}" >
+		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
 		        <p:tooltip for="checkbox-for-all-fragments" value="Selects/unselects all fragments" />
 		        
 		        <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_fragment_new']}">
@@ -78,19 +102,17 @@ $(document).ready(function() {
 		        
 		        <p:spacer width="20" />
 		        
-		        <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
-		        
 		        <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page">
-		            <f:param name="curTagId" value="#{panelContext.tagId}"/>
-		            <f:param name="curPage" value="#{panelContext.curPage}"/>
+		            <f:param name="curTagId" value="#{curTagId}"/>
+		            <f:param name="curPage" value="#{curPage}"/>
 			        <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_fragment_go_to_prev_page']}"></span>
 		        </p:commandLink>
 		        
 		        <p:spacer width="20" />
 		        
 		        <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page">
-		            <f:param name="curTagId" value="#{panelContext.tagId}"/>
-		            <f:param name="curPage" value="#{panelContext.curPage}"/>
+		            <f:param name="curTagId" value="#{curTagId}"/>
+                    <f:param name="curPage" value="#{curPage}"/>
 			        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_fragment_go_to_next_page']}"></span>
 		        </p:commandLink>
 		        
@@ -99,7 +121,14 @@ $(document).ready(function() {
 		        <p:commandLink action="go-home">
 			        <span class="fa fa-home fa-2x button-link" title="#{msg['label_fragment_go_home']}"></span>
 		        </p:commandLink>
-	        </p:panel>
+		        
+		        <p:spacer width="20" />
+
+		        <p:commandLink oncomplete="showSortOptionDialog(#{panelId}, #{curTagId},#{curPage})" >
+			        <span class="fa fa-sort fa-2x button-link" title="#{msg['label_fragment_sort_fragments']}"></span>
+		        </p:commandLink>
+		        
+	        </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 		    
 		    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
 		        <ui:include src="each-fragment.xhtml" />
