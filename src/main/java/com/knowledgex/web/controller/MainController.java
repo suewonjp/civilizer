@@ -140,7 +140,7 @@ public final class MainController {
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
 		final String tagNames = fb.getConcatenatedTagNames();
-		final Collection<Tag> tags = saveTags(tagListBean, tagNames);
+		final Set<Tag> tags = saveTags(tagListBean, tagNames);
 	    
 	    final Fragment frg = fb.getFragment();
 	    frg.setTags(tags);
@@ -155,10 +155,10 @@ public final class MainController {
         ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been saved", null);
 	}
 	
-	private Collection<Tag> saveTags(TagListBean tagListBean, String tagNames) {
+	private Set<Tag> saveTags(TagListBean tagListBean, String tagNames) {
 		final Collection<Tag> existingTags = tagListBean.getTags();
 		final Collection<String> names = Tag.getTagNameCollectionFrom(tagNames);
-		final List<Tag> output = new ArrayList<Tag>();
+		final Set<Tag> output = new HashSet<Tag>();
 		for (String name : names) {
 			Tag t = Tag.getTagFromName(name, existingTags);
 			boolean weHaveNewTag = false;
