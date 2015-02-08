@@ -96,7 +96,7 @@ public final class FragmentDaoImpl implements FragmentDao {
 	@Override
 	@SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-	public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order) {
+	public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order, boolean asc) {
 		first = Math.max(0, first);
 	    count = Math.max(0, count);
 	    final Session s = sessionFactory.getCurrentSession();
@@ -110,6 +110,12 @@ public final class FragmentDaoImpl implements FragmentDao {
 	            .setFirstResult(first)
                 .setMaxResults(count)
                 .list();
+	    if (asc) {
+	    	// default sort direction is descending
+	    	// [TODO] current implementation is not correct.
+	    	// make sure sort direction applies to the entire results before paging
+	    	Collections.reverse(ids);
+	    }
 	    final List<Fragment> output = new ArrayList<Fragment>(count);
 	    count = Math.min(count, ids.size());
 	    Query q = s.getNamedQuery("Fragment.findByIdWithAll");

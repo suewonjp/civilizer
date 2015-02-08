@@ -463,7 +463,7 @@ class DaoTest {
 		    assertTrue(1 <= count && count < allCount);
 		    first = Math.max(0, TestUtil.getRandom().nextInt(count));
 		    assertTrue(0 <= first && first < count);
-		    someFragments = fragmentDao.findSomeNonTrashed(first, count, order);
+		    someFragments = fragmentDao.findSomeNonTrashed(first, count, order, asc[i]);
 		    assertEquals(someFragments.size(), Math.min(count, allCount-first));
 		    Comparator<Fragment> cmptr = (Comparator<Fragment>) comparators[i];
 		    for (int j=1; j<someFragments.size(); ++j) {

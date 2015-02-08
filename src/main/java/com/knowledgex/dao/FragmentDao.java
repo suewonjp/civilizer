@@ -14,7 +14,7 @@ public interface FragmentDao {
 
     public List<Fragment> findSomeNonTrashed(int first, int count);
 
-    public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order);
+    public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order, boolean asc);
 
     public Fragment findById(Long id);
 

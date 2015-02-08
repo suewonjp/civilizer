@@ -57,7 +57,7 @@
               + "  from Tag2Fragment t2f "
               + "  where t2f.tagId = 0 "
               + ") "
-              + "order by f.title asc "
+              + "order by f.title desc "
               ),
     @NamedQuery(name = "Fragment.findIdsNonTrashedOrderById",
         query = "select f.id "

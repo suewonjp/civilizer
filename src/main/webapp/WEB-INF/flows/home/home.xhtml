@@ -90,8 +90,10 @@ function showSortOptionDialog(panelId, curTagId, curPage) {
                         <f:selectItem itemLabel="ID" itemValue="3" />
                     </p:selectOneListbox>
                 </div>
-                <br /><br />
-	            <p:commandButton action="sort-fragments" value="Sort!" icon="ui-icon-check" style="width:40%; margin-left:30%; margin-right:30%;">
+                <br />
+                <p:inputSwitch value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" />
+                <br />
+	            <p:commandButton action="sort-fragments" value="Sort!" icon="ui-icon-check">
 	                <f:param name="curTagId" value="#{curTagId}"/>
                     <f:param name="curPage" value="#{curPage}"/>
 	            </p:commandButton>

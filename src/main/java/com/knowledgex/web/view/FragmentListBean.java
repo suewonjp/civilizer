@@ -12,6 +12,8 @@ public final class FragmentListBean implements Serializable {
     
     private int orderOption = 0;
     
+    private boolean orderAsc = false;
+    
     public Collection<FragmentBean> getFragmentBeans() {
     	return fragmentBeans;
     }
@@ -42,6 +44,14 @@ public final class FragmentListBean implements Serializable {
 
 	public void setOrderOption(int orderOption) {
 		this.orderOption = orderOption;
+	}
+
+	public boolean isOrderAsc() {
+		return orderAsc;
+	}
+
+	public void setOrderAsc(boolean orderAsc) {
+		this.orderAsc = orderAsc;
 	}
 
 }
