@@ -46,6 +46,7 @@ $(document).ready(function() {
 		<div id="tag-group-linear">
 			<c:forEach var="tag" items="#{tagListBean.tags}">
 				<ui:include src="each-tag.xhtml" />
+				<br />
 			</c:forEach>
 		</div>
 		<div id="tag-group-tree">

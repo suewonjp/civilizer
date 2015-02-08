@@ -7,13 +7,12 @@
     xmlns:p="http://primefaces.org/ui"
     >
     
-<div class="each-tag">
-	<p:commandLink action="filter-by-tag">
-		<span class="fa fa-tag " title="#{msg['label_fragment_edit']}">&nbsp;&nbsp;</span>
+<span class="each-tag">
+	<p:commandLink action="filter-by-tag" styleClass="tag_button">
+		<span class="fa fa-tag " title="#{msg['label_fragment_edit']}">&nbsp;</span>
 		<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 		<f:param name="tagId" value="#{tag.id}" />
 	</p:commandLink>
-	<br />
-</div>
+</span>
 
 </ui:composition>

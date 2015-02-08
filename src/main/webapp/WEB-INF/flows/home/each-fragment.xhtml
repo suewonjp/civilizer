@@ -18,7 +18,11 @@
 					<f:param name="fragmentLoopIndex" value="${loop.index}" />
 				</p:commandLink>
 				&nbsp;&nbsp;
-				<h:outputText value="[ #{fragmentBean.concatenatedTagNames} ]" />
+<!-- 				<h:outputText value="[ #{fragmentBean.concatenatedTagNames} ]" /> -->
+                <c:forEach var="tag" items="#{fragmentBean.fragment.tags}">
+<!--                     <h:outputText value="#{tag.tagName}, " /> -->
+                    <ui:include src="each-tag.xhtml" />
+                </c:forEach>
 				&nbsp;&nbsp;
 				<h:outputText style="font-weight:lighter;" value="#{fragmentBean.fragment.updateDatetime}">
 					<f:converter converterId="jodaDateTimeConverter" />
