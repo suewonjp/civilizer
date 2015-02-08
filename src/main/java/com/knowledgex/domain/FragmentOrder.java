@@ -48,8 +48,8 @@ public enum FragmentOrder {
         public int compare(Fragment arg0, Fragment arg1) {
             String s0 = arg0.getTitle();
             String s1 = arg1.getTitle();
-//            return s0.compareToIgnoreCase(s1);
-            return s0.compareTo(s1);
+            return s0.compareToIgnoreCase(s1);
+//            return s0.compareTo(s1);
         }
     }
 
