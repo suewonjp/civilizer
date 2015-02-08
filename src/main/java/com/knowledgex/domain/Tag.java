@@ -37,8 +37,8 @@ public final class Tag implements Serializable {
     private String creator;
     private String updater;
     private Long fragmentId;
-    private Collection<Fragment> fragments = new ArrayList<Fragment>();
-    private Collection<Tag> children = new ArrayList<Tag>();
+    private Set<Fragment> fragments = new HashSet<Fragment>();
+    private Set<Tag> children = new HashSet<Tag>();
 
     public Tag() {
     }
@@ -128,11 +128,11 @@ public final class Tag implements Serializable {
     @JoinTable(name = "TAG2FRAGMENT",
         joinColumns = @JoinColumn(name = "tag_id"),
         inverseJoinColumns = @JoinColumn(name = "fragment_id"))
-    public Collection<Fragment> getFragments() {
+    public Set<Fragment> getFragments() {
         return this.fragments;
     }
 
-    public void setFragments(Collection<Fragment> fragments) {
+    public void setFragments(Set<Fragment> fragments) {
         this.fragments = fragments;
     }
 
@@ -145,11 +145,11 @@ public final class Tag implements Serializable {
     @JoinTable(name = "TAG2TAG",
         joinColumns = @JoinColumn(name = "parent_id"),
         inverseJoinColumns = @JoinColumn(name = "child_id"))
-    public Collection<Tag> getChildren() {
+    public Set<Tag> getChildren() {
         return children;
     }
 
-    public void setChildren(Collection<Tag> children) {
+    public void setChildren(Set<Tag> children) {
         this.children = children;
     }
     
