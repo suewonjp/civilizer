@@ -107,20 +107,16 @@ public final class FragmentDaoImpl implements FragmentDao {
 	    		, "Fragment.findIdsNonTrashedOrderById"
 	    };
 	    final List<Long> ids = s.getNamedQuery(namedQueries[order.ordinal()])
-	            .setFirstResult(first)
-                .setMaxResults(count)
                 .list();
 	    if (asc) {
 	    	// default sort direction is descending
-	    	// [TODO] current implementation is not correct.
-	    	// make sure sort direction applies to the entire results before paging
 	    	Collections.reverse(ids);
 	    }
 	    final List<Fragment> output = new ArrayList<Fragment>(count);
-	    count = Math.min(count, ids.size());
+	    count = Math.min(count, ids.size()-first);
 	    Query q = s.getNamedQuery("Fragment.findByIdWithAll");
 	    for (int i = 0; i < count; ++i) {
-            output.add((Fragment) q.setParameter("id", ids.get(i)).uniqueResult());
+            output.add((Fragment) q.setParameter("id", ids.get(i + first)).uniqueResult());
         }
 	    return output;
 	}
