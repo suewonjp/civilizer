@@ -50,9 +50,6 @@ public final class TagDaoImpl implements TagDao {
     		output.add((Tag) q.setParameter("id", id).uniqueResult());
 		}
     	return output;
-//        return sessionFactory.getCurrentSession()
-//                .getNamedQuery("Tag.findAllWithChildren")
-//                .list();
     }
 
     @Override
