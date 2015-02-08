@@ -41,6 +41,16 @@ $(document).ready(function() {
 				    <span class="fa fa-tree fa-2x" ></span>
 				</a>
 			</li>
+			<li>
+				<a href="#tag-group-edit" title="#{msg['label_tag_group_view_edit']}" >
+				    <span class="fa fa-pencil fa-2x" ></span>
+				</a>
+			</li>
+			<li>
+				<a href="#tag-group-trash" title="#{msg['label_tag_group_view_trash']}" >
+				    <span class="fa fa-trash fa-2x" ></span>
+				</a>
+			</li>
 		</ul>
 		
 		<div id="tag-group-linear">
@@ -56,6 +66,18 @@ $(document).ready(function() {
 				</p:treeNode>
 			</p:tree>
 		</div>
+		<div id="tag-group-edit">
+            <c:forEach var="tag" items="#{tagListBean.tags}">
+                <ui:include src="each-tag-edit.xhtml" />
+                <br />
+            </c:forEach>
+        </div>
+		<div id="tag-group-trash">
+            <c:forEach var="tag" items="#{tagListBean.tags}">
+                <ui:include src="each-tag-trash.xhtml" />
+                <br />
+            </c:forEach>
+        </div>
 	</div>
 </h:form>
 
