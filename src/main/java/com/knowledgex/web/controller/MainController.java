@@ -60,21 +60,25 @@ public final class MainController {
         final int curPage = pcb.isLastPage() ? (pcb.getCurPage() - 1) : Math.max(0, pcb.getCurPage());
         final int count = pcb.getItemsPerPage();
         final int first = curPage * count;
+        final FragmentOrder frgOrder = FragmentOrder.values()[flb.getOrderOption()];
         
         List<Fragment> fragments = null;
         if (tagId == PanelContextBean.TAG_ID_FOR_ALL_VALID_TAGS) {
         	// Fetch the fragments regardless of tags
-        	fragments = fragmentDao.findSomeNonTrashed(first, count + 1);
+        	fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder);
+//        	fragments = fragmentDao.findSomeNonTrashed(first, count + 1);
         }
         else if (tagId == Tag.TRASH_TAG_ID) {
         	// Fetch the trashed fragments
         	fragments = tagDao.findFragments(tagId, first, count + 1);
-        	Fragment.sort(fragments, FragmentOrder.UPDATE_DATETIME, false);
+//        	Fragment.sort(fragments, FragmentOrder.UPDATE_DATETIME, false);
+        	Fragment.sort(fragments, frgOrder, false);
         }
         else {
         	// Fetch the fragments with the specified tag (non-trashed)
         	fragments = tagDao.findNonTrashedFragments(tagId, first, count + 1);
-        	Fragment.sort(fragments, FragmentOrder.UPDATE_DATETIME, false);
+        	Fragment.sort(fragments, frgOrder, false);
+//        	Fragment.sort(fragments, FragmentOrder.UPDATE_DATETIME, false);
         }
         
         final boolean isLastPage = fragments.size() <= count;

@@ -91,7 +91,10 @@ function showSortOptionDialog(panelId, curTagId, curPage) {
                     </p:selectOneListbox>
                 </div>
                 <br /><br />
-	            <p:commandButton value="Sort!" icon="ui-icon-check" style="width:40%; margin-left:30%; margin-right:30%;"/>
+	            <p:commandButton action="sort-fragments" value="Sort!" icon="ui-icon-check" style="width:40%; margin-left:30%; margin-right:30%;">
+	                <f:param name="curTagId" value="#{curTagId}"/>
+                    <f:param name="curPage" value="#{curPage}"/>
+	            </p:commandButton>
             </p:dialog>
 	        
 	        <p:panel id="fragment-panel-toolbar-#{panelId}" >
