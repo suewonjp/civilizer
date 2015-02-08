@@ -81,19 +81,19 @@ function showSortOptionDialog(panelId, curTagId, curPage) {
             <c:set var="curTagId" value="#{panelContext.tagId}" />
             <c:set var="curPage" value="#{panelContext.curPage}" />
             
-            <p:dialog header="Choose Sort Option" modal="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
+            <p:dialog header="#{msg['label_fragment_sort_option_dlg_header']}" modal="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
                 <div id="fragment-sort-option-container" >
                     <p:selectOneListbox value="#{fragmentListBean.orderOption}">
-                        <f:selectItem itemLabel="Updated Time" itemValue="0" />
-                        <f:selectItem itemLabel="Created Time" itemValue="1" />
-                        <f:selectItem itemLabel="Title" itemValue="2" />
-                        <f:selectItem itemLabel="ID" itemValue="3" />
+                        <f:selectItem itemLabel="#{msg['label_fragment_sort_option_updated_time']}" itemValue="0" />
+                        <f:selectItem itemLabel="#{msg['label_fragment_sort_option_created_time']}" itemValue="1" />
+                        <f:selectItem itemLabel="#{msg['label_fragment_sort_option_title']}" itemValue="2" />
+                        <f:selectItem itemLabel="#{msg['label_fragment_sort_option_id']}" itemValue="3" />
                     </p:selectOneListbox>
                 </div>
                 <br />
                 <p:inputSwitch value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" />
                 <br />
-	            <p:commandButton action="sort-fragments" value="Sort!" icon="ui-icon-check">
+	            <p:commandButton action="sort-fragments" value="#{msg['label_fragment_sort_option_dlg_submit_button']}" icon="ui-icon-check">
 	                <f:param name="curTagId" value="#{curTagId}"/>
                     <f:param name="curPage" value="#{curPage}"/>
 	            </p:commandButton>
