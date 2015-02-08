@@ -1,0 +1,19 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    >
+    
+<span class="each-tag">
+    <p:commandLink action="filter-by-tag" styleClass="tag_button">
+        <span class="fa fa-trash " >&nbsp;</span>
+        <span class="fa fa-tag " title="#{msg['label_tag_trash']}">&nbsp;</span>
+        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
+        <f:param name="tagId" value="#{tag.id}" />
+    </p:commandLink>
+</span>
+
+</ui:composition>
