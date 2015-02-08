@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,9 +42,17 @@ public final class TagDaoImpl implements TagDao {
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public List<Tag> findAllWithChildren() {
-        return sessionFactory.getCurrentSession()
-                .getNamedQuery("Tag.findAllWithChildren")
-                .list();
+    	final Session s = sessionFactory.getCurrentSession();
+    	final List<Long> ids = s.getNamedQuery("Tag.findIdsOrderByTagName").list();
+    	final List<Tag> output = new ArrayList<Tag>();
+    	final Query q = s.getNamedQuery("Tag.findByIdWithChildren");
+    	for (long id : ids) {
+    		output.add((Tag) q.setParameter("id", id).uniqueResult());
+		}
+    	return output;
+//        return sessionFactory.getCurrentSession()
+//                .getNamedQuery("Tag.findAllWithChildren")
+//                .list();
     }
 
     @Override

@@ -80,11 +80,16 @@
               + "order by f.updateDatetime desc "
               ), 
     
-    @NamedQuery(name = "Tag.findAllWithChildren",
-        query = "select distinct t "
-              + "from Tag t "
-              + "  left join fetch t.children "
-              ),
+    @NamedQuery(name = "Tag.findIdsOrderByTagName",
+		query = "select t.id "
+		      + "from Tag t "
+		      + "order by lower(t.tagName) asc "
+		      ),
+//    @NamedQuery(name = "Tag.findAllWithChildren",
+//        query = "select distinct t "
+//              + "from Tag t "
+//              + "  left join fetch t.children "
+//              ),
     @NamedQuery(name = "Tag.findById",
         query = "select distinct t "
               + "from Tag t "

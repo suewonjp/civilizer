@@ -70,4 +70,11 @@ public final class TestUtil {
         assertSame(obj.getClass().getName(), type.getName());
         return (T) obj;
     }
+
+    public static <T> void checkIfNoDuplicateExistsIn(Collection<T> coll) {
+    	if (coll instanceof Set == false) {
+    		Set<T> s = new HashSet<T>(coll);
+    		assertEquals(s.size(), coll.size());
+    	}
+    }
 }

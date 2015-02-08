@@ -105,6 +105,7 @@ class DaoTest {
 
 	protected void testFindAllTags() {
 		Collection<Tag> tags = tagDao.findAllWithChildren();
+		TestUtil.checkIfNoDuplicateExistsIn(tags);
 
 		for (Tag t : tags) {
 			Long id = getAndValidateId(t);
