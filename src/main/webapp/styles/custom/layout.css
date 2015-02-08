@@ -128,6 +128,15 @@
     text-decoration: none;
 }
 
+#fragment-sort-option-container {
+	height:100px;
+	max-height:100px;
+	display:inline-block;
+	width:70%;
+	margin-left:15%;
+	margin-right:15%;
+}
+
 .button-link:hover {
     color: #ff830e;
 }
