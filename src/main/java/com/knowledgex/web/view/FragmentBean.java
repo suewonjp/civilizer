@@ -14,7 +14,7 @@ public final class FragmentBean implements Serializable {
     
     private Fragment fragment;
     
-    private String tagNames;
+    private String concatenatedTagNames;
     
     private boolean checked = false;
     
@@ -34,18 +34,18 @@ public final class FragmentBean implements Serializable {
         this.fragment = fragment;
     }
 
-    public String getTagNames() {
-        return tagNames;
-    }
+    public String getConcatenatedTagNames() {
+		return concatenatedTagNames;
+	}
 
-    public void setTagNames(String tags) {
-        this.tagNames = tags;
-    }
-    
-    public void clear() {
+	public void setConcatenatedTagNames(String concatenatedTagNames) {
+		this.concatenatedTagNames = concatenatedTagNames;
+	}
+
+	public void clear() {
         logger.info("clear() called");
         
-        tagNames = "";
+        setConcatenatedTagNames("");
         if (fragment != null) {
             fragment.setId(null);
             fragment.setTitle("");
@@ -54,7 +54,7 @@ public final class FragmentBean implements Serializable {
     }
     
     public String toString() {
-        return "{tags:" + tagNames
+        return "{tags:" + getConcatenatedTagNames()
                 + "}, {" + fragment.toString()
                 + "}"
                 ;

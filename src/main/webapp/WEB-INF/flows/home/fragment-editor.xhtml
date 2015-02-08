@@ -128,7 +128,7 @@ function previewFragment() {
                 </div>
             </div>
             <p:inputText id="title-input" value="#{userEditedFragmentBean.fragment.title}" autocomplete="false" />
-            <p:inputText id="tags-input" value="#{userEditedFragmentBean.tagNames}" autocomplete="false" />
+            <p:inputText id="tags-input" value="#{userEditedFragmentBean.concatenatedTagNames}" autocomplete="false" />
             <textarea id="fragment-content-editor" ></textarea>
             <h:inputHidden id="content-placeholder" value="#{userEditedFragmentBean.fragment.content}" />
             <h:inputHidden id="id-placeholder" value="#{userEditedFragmentBean.fragment.id}" />

@@ -93,7 +93,7 @@ public final class MainController {
         	FragmentBean fb = new FragmentBean();
         	fb.setFragment(f);
         	final String tagNames = Tag.getTagNamesFrom(f.getTags());
-        	fb.setTagNames(tagNames);
+        	fb.setConcatenatedTagNames(tagNames);
         	fragmentBeans.add(fb);
         }
         flb.setFragmentBeans(fragmentBeans);
@@ -139,7 +139,7 @@ public final class MainController {
 	}
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
-		final String tagNames = fb.getTagNames();
+		final String tagNames = fb.getConcatenatedTagNames();
 		final Collection<Tag> tags = saveTags(tagListBean, tagNames);
 	    
 	    final Fragment frg = fb.getFragment();

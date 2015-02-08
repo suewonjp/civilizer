@@ -18,14 +18,14 @@
 					<f:param name="fragmentLoopIndex" value="${loop.index}" />
 				</p:commandLink>
 				&nbsp;&nbsp;
-				<h:outputText value="[ #{fragmentBean.tagNames} ]" />
+				<h:outputText value="[ #{fragmentBean.concatenatedTagNames} ]" />
 				&nbsp;&nbsp;
 				<h:outputText style="font-weight:lighter;" value="#{fragmentBean.fragment.updateDatetime}">
 					<f:converter converterId="jodaDateTimeConverter" />
 				</h:outputText>
 				<div class="fragment-menu">
 					<a href="#editor-frame" class="edit-fragment-editor-trigger button-link"
-					   onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.tagNames}')">
+					   onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.concatenatedTagNames}')">
                         <span class="fa fa-pencil fa-3x" title="#{msg['label_fragment_edit']}"></span>
 					</a>
 					<c:choose>
