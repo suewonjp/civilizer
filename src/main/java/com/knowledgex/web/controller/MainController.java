@@ -152,7 +152,7 @@ public final class MainController {
 	    final Fragment frg = fb.getFragment();
 	    frg.setTags(tags);
 	    final DateTime dt = new DateTime();
-	    if (frg.getCreationDatetime() == null) {
+	    if (frg.getId() == null) {
 	    	// It is a new fragment...
 	    	frg.setCreationDatetime(dt);
 	    }
