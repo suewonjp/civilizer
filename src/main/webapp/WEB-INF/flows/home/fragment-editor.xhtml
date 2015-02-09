@@ -132,8 +132,8 @@ function previewFragment() {
             <textarea id="fragment-content-editor" ></textarea>
             <h:inputHidden id="content-placeholder" value="#{userEditedFragmentBean.fragment.content}" />
             <h:inputHidden id="id-placeholder" value="#{userEditedFragmentBean.fragment.id}" />
-            <p:commandButton onclick="previewFragment();" value="Preview" />
-            <p:commandButton onclick="prepareFragmentContent();" value="Save" action="save-fragment" />
+            <p:commandButton onclick="previewFragment();" value="#{msg['label_preview']}" />
+            <p:commandButton onclick="prepareFragmentContent();" value="#{msg['label_save']}" action="save-fragment" />
         </h:form>
     </div>
 </div>
