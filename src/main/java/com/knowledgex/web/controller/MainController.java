@@ -116,6 +116,13 @@ public final class MainController {
         return tagListBean;
     }
 	
+	public TagBean newTagBean() {
+		final TagBean tagBean = new TagBean();
+		final Tag tag = new Tag();
+		tagBean.setTag(tag);
+		return tagBean;
+	}
+	
 	private TagTree newTagTree() {
 		final TagTree tagTree = new TagTree();
 	    return tagTree;

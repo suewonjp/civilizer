@@ -9,6 +9,7 @@
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+        <evaluate expression="mainController.newTagBean()" result="flowScope.tagBean"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">
