@@ -167,7 +167,8 @@ public final class Tag implements Serializable {
     
     public static Collection<String> getTagNameCollectionFrom(String names) {
     	if (names == null || names.trim().isEmpty()) {
-    		return new ArrayList<String>();
+    		return Collections.emptyList();
+//    		return new ArrayList<String>();
     	}
     	String[] arr = names.split("\\s*[" + TAG_NAME_DELIMITER + "]+\\s*");
     	List<String> output = new ArrayList<String>();
