@@ -136,13 +136,13 @@ public final class MainController {
 		final Fragment frg = fragmentDao.findById(fragmentId);
 		frg.addTag(getTrashTag());
 		fragmentDao.save(frg);
-		ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been trashed", null);
+		ViewUtil.addMessage("Trashing", "Fragment #" + frg.getId(), null);
 	}
 
 	public void deleteFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId);
 		fragmentDao.delete(frg);
-		ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been deleted", null);
+		ViewUtil.addMessage("Deleting", "Fragment #" + frg.getId(), null);
 	}
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
@@ -152,14 +152,21 @@ public final class MainController {
 	    final Fragment frg = fb.getFragment();
 	    frg.setTags(tags);
 	    final DateTime dt = new DateTime();
+	    boolean weHaveNewFragment = false;
 	    if (frg.getId() == null) {
 	    	// It is a new fragment...
 	    	frg.setCreationDatetime(dt);
+	    	weHaveNewFragment = true;
 	    }
 	    frg.setUpdateDatetime(dt);
 	    
         fragmentDao.save(frg);
-        ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been saved", null);
+        if (weHaveNewFragment) {
+        	ViewUtil.addMessage("Creating", "Fragment #" + frg.getId(), null);
+        }
+        else {
+		    ViewUtil.addMessage("Updating", "Fragment #" + frg.getId(), null);
+		}
 	}
 	
 	private void saveTag(Tag t) {
@@ -190,7 +197,7 @@ public final class MainController {
 			saveTag(t);
 			
 			if (weHaveNewTag) {
-				ViewUtil.addMessage("Successful", "New tag \"" + t.getTagName() + "\" has been saved", null);
+				ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
 			}
 
 			output.add(t);
@@ -204,7 +211,7 @@ public final class MainController {
 			// a new tag
 			// [TODO] check name collision with the existing tags
 			saveTag(t);
-			ViewUtil.addMessage("Successful", "New tag \"" + t.getTagName() + "\" has been saved", null);
+			ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
 			
 		}
 		else {
@@ -214,7 +221,7 @@ public final class MainController {
 			final String oldName = t.getTagName();
 			t.setTagName(newName);
 			saveTag(t);
-			ViewUtil.addMessage("Successful", "Tag \"" + oldName + "\" has been renamed to \"" + newName + "\"", null);
+			ViewUtil.addMessage("Renaming", "Tag : " + oldName + " => " + newName, null);
 		}
 	}
 
