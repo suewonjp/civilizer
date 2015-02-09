@@ -13,11 +13,11 @@ $(document).ready(function() {
 	$editorFrame = $("#editor-frame");
 	
 	$("#new-fragment-editor-trigger, .new-fragment-editor-trigger-on-toolbar").click(function (e) {
-		onClickFragmentEditorTrigger($editorFrame, $window, e, "#{msg['label_fragment_new']}");
+		onClickFragmentEditorTrigger($editorFrame, $window, e, "#{msg['label_new_fragment']}");
     });
 	
 	$(".edit-fragment-editor-trigger").click(function (e) {
-		onClickFragmentEditorTrigger($editorFrame, $window, e, "#{msg['label_fragment_edit']}");
+		onClickFragmentEditorTrigger($editorFrame, $window, e, "#{msg['label_edit_fragment']}");
 	})
     
     $editorFrame.resizable({
@@ -122,7 +122,7 @@ function previewFragment() {
             <div id="editor-title-bar" >
                 <span id="editor-title"></span>
                 <div style="float: right;">
-	                <a id="editor-frame-close-button" href="#" title="#{msg['label_fragment_close_editor']}">
+	                <a id="editor-frame-close-button" href="#" title="#{msg['label_close']}">
 	                    <span class="fa fa-close fa-3x warning-color" ></span>
 	                </a>
                 </div>
