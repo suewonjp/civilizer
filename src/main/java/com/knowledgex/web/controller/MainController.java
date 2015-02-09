@@ -147,7 +147,7 @@ public final class MainController {
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
 		final String tagNames = fb.getConcatenatedTagNames();
-		final Set<Tag> tags = saveTags(tagListBean, tagNames);
+		final Set<Tag> tags = saveTagsWhenSavingFragment(tagListBean, tagNames);
 	    
 	    final Fragment frg = fb.getFragment();
 	    frg.setTags(tags);
@@ -162,31 +162,60 @@ public final class MainController {
         ViewUtil.addMessage("Successful", "Fragment #" + frg.getId() + " has been saved", null);
 	}
 	
-	private Set<Tag> saveTags(TagListBean tagListBean, String tagNames) {
+	private void saveTag(Tag t) {
+		final DateTime dt = new DateTime();
+	    if (t.getId() == null) {
+	    	// It is a new tag...
+	    	t.setCreationDatetime(dt);
+	    }
+	    t.setUpdateDatetime(dt);
+	    
+		tagDao.save(t);
+	}
+	
+	private Set<Tag> saveTagsWhenSavingFragment(TagListBean tagListBean, String tagNames) {
+		// [NOTE] this method should be called only when fragments are saved as its name implies
 		final Collection<Tag> existingTags = tagListBean.getTags();
 		final Collection<String> names = Tag.getTagNameCollectionFrom(tagNames);
 		final Set<Tag> output = new HashSet<Tag>();
 		for (String name : names) {
 			Tag t = Tag.getTagFromName(name, existingTags);
+			
 			boolean weHaveNewTag = false;
 			if (t == null) {
 				t = new Tag(name);
 				weHaveNewTag = true;
 			}
 			
-			final DateTime dt = new DateTime();
-		    if (t.getId() == null) {
-		    	t.setCreationDatetime(dt);
-		    }
-		    t.setUpdateDatetime(dt);
-		    
-			tagDao.save(t);
+			saveTag(t);
+			
 			if (weHaveNewTag) {
-				ViewUtil.addMessage("Successful", "Tag \"" + t.getTagName() + "\" has been saved", null);
+				ViewUtil.addMessage("Successful", "New tag \"" + t.getTagName() + "\" has been saved", null);
 			}
+
 			output.add(t);
 		}
 		return output;
+	}
+	
+	public void saveTag(TagBean tb, TagListBean tagListBean) {
+		Tag t = tb.getTag();
+		if (t.getId() == null) {
+			// a new tag
+			// [TODO] check name collision with the existing tags
+			saveTag(t);
+			ViewUtil.addMessage("Successful", "New tag \"" + t.getTagName() + "\" has been saved", null);
+			
+		}
+		else {
+			// an existing tag
+			final String newName = t.getTagName();
+			t = Tag.getTagFromId(t.getId(), tagListBean.getTags());
+			final String oldName = t.getTagName();
+			t.setTagName(newName);
+			saveTag(t);
+			ViewUtil.addMessage("Successful", "Tag \"" + oldName + "\" has been renamed to \"" + newName + "\"", null);
+		}
 	}
 
 	public FragmentBean inspectFragment(Integer index, FragmentListBean flb) {

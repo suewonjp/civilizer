@@ -9,7 +9,7 @@
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
-        <evaluate expression="mainController.newTagBean()" result="flowScope.tagBean"/>
+        <evaluate expression="mainController.newTagBean()" result="flowScope.userEditedTagBean"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">
@@ -42,6 +42,12 @@
         <transition on="save-fragment" to="home">
             <evaluate expression="mainController.saveFragment(userEditedFragmentBean, tagListBean)" />
             <evaluate expression="userEditedFragmentBean.clear()" />
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+        </transition>
+
+        <transition on="save-tag" to="home">
+            <evaluate expression="mainController.saveTag(userEditedTagBean, tagListBean)" />
+            <evaluate expression="userEditedTagBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 

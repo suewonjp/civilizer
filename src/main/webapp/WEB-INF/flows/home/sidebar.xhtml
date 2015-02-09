@@ -25,11 +25,16 @@ $(document).ready(function() {
 }); // end of $(document).ready()
 
 function showEditTagDialog(tagId, tagName) {
-// function showEditTagDialog() {
 	console.log(tagId);
 	console.log(tagName);
     var dlg = PF('editTagDlg');
     dlg.show();
+    if (tagId > 0) {
+    	// [NOTE] user editable tags have id > 0
+        $("#tag-group-form\\:id-placeholder-for-tag").val(tagId);
+    }
+    $("#tag-group-form\\:edit-tag-dlg-name-input").val(tagName);
+    
 }
 //]]>
 </script> 
@@ -38,13 +43,14 @@ function showEditTagDialog(tagId, tagName) {
 	<span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span>
 </div>
 
-<h:form>
+<h:form id="tag-group-form">
     <p:dialog header="#{msg['label_edit_tag']}" modal="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
-        <h:outputLabel for="edit-tag-dlg-name-inplace" value="#{msg['label_name']} :" />
-        <p:inputText id="edit-tag-dlg-name-inplace" value="Edit Me" />
+        <h:outputLabel for="edit-tag-dlg-name-input" value="#{msg['label_name']} :" />
+        <p:inputText id="edit-tag-dlg-name-input" value="#{userEditedTagBean.tag.tagName}" />
+        <h:inputHidden id="id-placeholder-for-tag" value="#{userEditedTagBean.tag.id}" />
         <br /><br />
-<!--         <p:commandButton action="edit-tag" value="#{msg['label_ok']}" icon="ui-icon-check"> -->
-        <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check">
+        <p:commandButton action="save-tag" value="#{msg['label_ok']}" icon="ui-icon-check">
+<!--         <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check"> -->
             <f:param name="curTagId" value="#{curTagId}"/>
             <f:param name="curPage" value="#{curPage}"/>
         </p:commandButton>

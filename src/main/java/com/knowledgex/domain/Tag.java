@@ -206,6 +206,17 @@ public final class Tag implements Serializable {
     	}
     	return tag;
     }
+
+    public static Tag getTagFromId(long id, Collection<Tag> tags) {
+    	Tag tag = null;
+    	for (Tag t : tags) {
+    		if (t.getId() == id) {
+    			tag = t;
+    			break;
+    		}
+    	}
+    	return tag;
+    }
     
     public static Collection<Tag> getTopParentTags(Collection<Tag> tags) {
         if (tags  == null|| tags.isEmpty()) {
