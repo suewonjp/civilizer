@@ -55,11 +55,7 @@ $(document).ready(function() {
     }
 }); // end of $(document).ready()
 
-function showSortOptionDialog(panelId, curTagId, curPage) {
-	console.log(panelId);
-	console.log(curTagId);
-	console.log(curPage);
-	
+function showSortOptionDialog(panelId) {
 	var dlg = PF('sortOptionDlg' + panelId);
 	dlg.show();
 }
@@ -131,7 +127,7 @@ function showSortOptionDialog(panelId, curTagId, curPage) {
 		        
 		        <p:spacer width="20" />
 
-		        <p:commandLink oncomplete="showSortOptionDialog(#{panelId}, #{curTagId},#{curPage})" >
+		        <p:commandLink oncomplete="showSortOptionDialog(#{panelId})" >
 			        <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort_fragments']}"></span>
 		        </p:commandLink>
 		        
