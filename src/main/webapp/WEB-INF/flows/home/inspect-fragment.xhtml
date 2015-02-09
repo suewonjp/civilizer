@@ -12,21 +12,21 @@
 
 <h:form >
     <h:panelGrid columns="2">
-        <h:outputLabel for="title">#{msg['label_fragment_title']}</h:outputLabel>
+        <h:outputLabel for="title">Title</h:outputLabel>
         <h:outputText id="title" value="#{fragmentBean.fragment.title}"/>
         
-        <h:outputLabel for="content">#{msg['label_fragment_content']}</h:outputLabel>
+        <h:outputLabel for="content">Content</h:outputLabel>
         <h:outputText id="content" value="#{fragmentBean.fragment.content}"/>
         
         <h:outputLabel for="checked">Checked</h:outputLabel>
         <p:selectBooleanCheckbox id="checked" value="#{fragmentBean.checked}" itemLabel="&nbsp;" />
         
-        <h:outputLabel for="creationDatetime">#{msg['label_fragment_creation_datetime']}</h:outputLabel>
+        <h:outputLabel for="creationDatetime">Created At</h:outputLabel>
         <p:calendar id="creationDatetime" value="#{fragmentBean.fragment.creationDatetime}" pattern="yyyy-MM-dd">
             <f:converter converterId="jodaDateTimeConverter" />
         </p:calendar>
         
-        <h:outputLabel for="updateDatetime">#{msg['label_fragment_update_datetime']}</h:outputLabel>
+        <h:outputLabel for="updateDatetime">Updated At</h:outputLabel>
         <p:calendar id="updateDatetime" value="#{fragmentBean.fragment.updateDatetime}" pattern="yyyy-MM-dd">
             <f:converter converterId="jodaDateTimeConverter" />
         </p:calendar>
