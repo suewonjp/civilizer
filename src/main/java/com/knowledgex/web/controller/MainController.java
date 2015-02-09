@@ -175,7 +175,7 @@ public final class MainController {
 			}
 			
 			final DateTime dt = new DateTime();
-		    if (t.getCreationDatetime() == null) {
+		    if (t.getId() == null) {
 		    	t.setCreationDatetime(dt);
 		    }
 		    t.setUpdateDatetime(dt);
