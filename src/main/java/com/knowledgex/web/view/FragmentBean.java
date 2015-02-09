@@ -10,6 +10,7 @@ import com.knowledgex.domain.Fragment;
 @SuppressWarnings("serial")
 public final class FragmentBean implements Serializable {
     
+    @SuppressWarnings("unused")
     private static final Logger logger = LoggerFactory.getLogger(FragmentBean.class);
     
     private Fragment fragment;
@@ -43,8 +44,6 @@ public final class FragmentBean implements Serializable {
 	}
 
 	public void clear() {
-        logger.info("clear() called");
-        
         setConcatenatedTagNames("");
         if (fragment != null) {
             fragment.setId(null);
