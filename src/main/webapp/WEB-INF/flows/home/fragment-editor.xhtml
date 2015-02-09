@@ -71,7 +71,7 @@ function onCloseFragmentEditor() {
     
     $("#fragment-content-editor").val(null);
     
-    $("#fragment-editor-form\\:id-placeholder").val(null);
+    $("#fragment-editor-form\\:id-placeholder-for-fragment").val(null);
     
     $("#fragment-content-editor").next().remove();
 }
@@ -84,7 +84,7 @@ function openFragmentEditorForEdit(fragmentId, tagNames) {
     var el = $("#fragment-group-form\\:fragment-title-placeholder-"+fragmentId);
     $("#fragment-editor-form\\:title-input").val(el.val());
     $("#fragment-editor-form\\:tags-input").val(tagNames);
-    $("#fragment-editor-form\\:id-placeholder").val(fragmentId);
+    $("#fragment-editor-form\\:id-placeholder-for-fragment").val(fragmentId);
     el = $("#fragment-group-form\\:fragment-content-placeholder-"+fragmentId);
     $("#fragment-content-editor").val(el.val());
 }
@@ -131,7 +131,7 @@ function previewFragment() {
             <p:inputText id="tags-input" value="#{userEditedFragmentBean.concatenatedTagNames}" autocomplete="false" />
             <textarea id="fragment-content-editor" ></textarea>
             <h:inputHidden id="content-placeholder" value="#{userEditedFragmentBean.fragment.content}" />
-            <h:inputHidden id="id-placeholder" value="#{userEditedFragmentBean.fragment.id}" />
+            <h:inputHidden id="id-placeholder-for-fragment" value="#{userEditedFragmentBean.fragment.id}" />
             <p:commandButton onclick="previewFragment();" value="#{msg['label_preview']}" />
             <p:commandButton onclick="prepareFragmentContent();" value="#{msg['label_save']}" action="save-fragment" />
         </h:form>
