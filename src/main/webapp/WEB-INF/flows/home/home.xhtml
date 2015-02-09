@@ -127,7 +127,7 @@ function showSortOptionDialog(panelId) {
 		        
 		        <p:spacer width="20" />
 
-		        <p:commandLink oncomplete="showSortOptionDialog(#{panelId})" >
+		        <p:commandLink oncomplete="showSortOptionDialog('#{panelId}')" >
 			        <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort_fragments']}"></span>
 		        </p:commandLink>
 		        

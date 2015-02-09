@@ -7,6 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 <script>
+//<![CDATA[
 $(document).ready(function() {
 	var currentTagGroupTabIndex = "0";
 
@@ -22,6 +23,15 @@ $(document).ready(function() {
         $tab.tabs('option', 'active', currentTagGroupTabIndex);
     }
 }); // end of $(document).ready()
+
+function showEditTagDialog(tagId, tagName) {
+// function showEditTagDialog() {
+	console.log(tagId);
+	console.log(tagName);
+    var dlg = PF('editTagDlg');
+    dlg.show();
+}
+//]]>
 </script> 
 
 <div>
@@ -29,16 +39,16 @@ $(document).ready(function() {
 </div>
 
 <h:form>
-<!--     <p:dialog header="#{msg['label_edit_tag']}" modal="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="false" resizable="false" > -->
-<!--         <h:outputLabel for="edit-tag-dlg-name-inplace" value="#{msg['label_name']} :" /> -->
-<!--         <p:inplace id="edit-tag-dlg-name-inplace"> -->
-<!--             <p:inputText value="Edit Me" /> -->
-<!--         </p:inplace> -->
+    <p:dialog header="#{msg['label_edit_tag']}" modal="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
+        <h:outputLabel for="edit-tag-dlg-name-inplace" value="#{msg['label_name']} :" />
+        <p:inputText id="edit-tag-dlg-name-inplace" value="Edit Me" />
+        <br /><br />
 <!--         <p:commandButton action="edit-tag" value="#{msg['label_ok']}" icon="ui-icon-check"> -->
-<!--             <f:param name="curTagId" value="#{curTagId}"/> -->
-<!--             <f:param name="curPage" value="#{curPage}"/> -->
-<!--         </p:commandButton> -->
-<!--     </p:dialog> -->
+        <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check">
+            <f:param name="curTagId" value="#{curTagId}"/>
+            <f:param name="curPage" value="#{curPage}"/>
+        </p:commandButton>
+    </p:dialog>
             
 	<div id="tag-group-tab-view">
 		<ul>
