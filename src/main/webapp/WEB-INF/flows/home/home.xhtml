@@ -81,7 +81,7 @@ function showSortOptionDialog(panelId, curTagId, curPage) {
             <c:set var="curTagId" value="#{panelContext.tagId}" />
             <c:set var="curPage" value="#{panelContext.curPage}" />
             
-            <p:dialog header="#{msg['label_fragment_sort_option_dlg_header']}" modal="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
+            <p:dialog header="#{msg['label_fragment_sort_option_dlg_header']}" modal="true" width="230px" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
                 <div id="fragment-sort-option-container" >
                     <p:selectOneListbox value="#{fragmentListBean.orderOption}">
                         <f:selectItem itemLabel="#{msg['label_fragment_sort_option_updated_time']}" itemValue="0" />
