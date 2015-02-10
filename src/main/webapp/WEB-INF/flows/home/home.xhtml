@@ -155,10 +155,23 @@ function showConfirmDialogRemoveFragment(fid, forDeleting) {
 		        </p:commandLink>
 		        
 		        <p:spacer width="20" />
+		        
+		        <c:choose>
+                    <c:when test="#{panelContext.fragmentDeletable}">
+                        <p:commandLink action="delete-fragments">
+		                    <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
+		                </p:commandLink>
+                    </c:when>
+                    <c:otherwise>
+                        <p:commandLink action="trash-fragments">
+		                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
+		                </p:commandLink>
+                    </c:otherwise>
+                </c:choose>
 
-		        <p:commandLink action="trash-fragments">
-                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
-                </p:commandLink>
+<!-- 		        <p:commandLink action="trash-fragments"> -->
+<!--                     <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span> -->
+<!--                 </p:commandLink> -->
 		        
 	        </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 		    

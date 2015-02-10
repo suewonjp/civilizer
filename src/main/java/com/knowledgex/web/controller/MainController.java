@@ -163,6 +163,16 @@ public final class MainController {
 		deleteFragment(fb.getFragment().getId());
 	}
 	
+	public void deleteFragments(FragmentListBean flb) {
+		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
+		for (FragmentBean fb : fragmentBeans) {
+			if (!fb.isChecked()) {
+				continue;
+			}
+			deleteFragment(fb.getFragment().getId());
+		}
+	}
+	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
 		final String tagNames = fb.getConcatenatedTagNames();
 		final Set<Tag> tags = saveTagsWhenSavingFragment(tagListBean, tagNames);
