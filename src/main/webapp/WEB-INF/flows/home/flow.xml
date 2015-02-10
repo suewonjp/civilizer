@@ -30,7 +30,8 @@
         </transition>
         
         <transition on="trash-fragment" to="home">
-            <evaluate expression="mainController.trashFragment(requestParameters.fragmentId)" />
+<!--             <evaluate expression="mainController.trashFragment(requestParameters.fragmentId)" /> -->
+            <evaluate expression="mainController.trashFragment(userEditedFragmentBean)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 

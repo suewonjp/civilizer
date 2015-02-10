@@ -40,7 +40,8 @@
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
-							<p:commandLink action="trash-fragment" >
+<!-- 							<p:commandLink action="trash-fragment" > -->
+							<p:commandLink oncomplete="showConfirmDialogTrashFragment('#{fragmentBean.fragment.id}')" >
 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
 								<span class="fa fa-trash fa-3x button-link" title="#{msg['label_trash_fragment']}"></span>
 							</p:commandLink>

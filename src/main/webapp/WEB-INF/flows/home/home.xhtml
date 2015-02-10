@@ -59,6 +59,13 @@ function showSortOptionDialog(panelId) {
 	var dlg = PF('sortOptionDlg' + panelId);
 	dlg.show();
 }
+
+function showConfirmDialogTrashFragment(fid) {
+	var dlg = PF('confirmDlgTrashFragment');
+    dlg.show();
+    $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
+}
+
 //]]>
 </script>
 </ui:define>
@@ -76,6 +83,12 @@ function showSortOptionDialog(panelId) {
 	        <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
             <c:set var="curTagId" value="#{panelContext.tagId}" />
             <c:set var="curPage" value="#{panelContext.curPage}" />
+            
+            <p:confirmDialog message="#{msg['confirm_trashing_fragments']}" header="#{msg['are_you_sure']}" severity="alert" widgetVar="confirmDlgTrashFragment">
+                <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{userEditedFragmentBean.fragment.id}" />
+			    <p:commandButton value="#{msg['label_yes']}" action="trash-fragment" oncomplete="PF('confirmDlgTrashFragment').hide()"/>
+			    <p:commandButton value="#{msg['label_no']}" onclick="PF('confirmDlgTrashFragment').hide();" type="button" />
+			</p:confirmDialog>
             
             <p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
                 <div id="fragment-sort-option-container" >

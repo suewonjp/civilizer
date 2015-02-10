@@ -139,6 +139,10 @@ public final class MainController {
 		ViewUtil.addMessage("Trashing", "Fragment #" + frg.getId(), null);
 	}
 
+	public void trashFragment(FragmentBean fb) {
+		trashFragment(fb.getFragment().getId());
+	}
+
 	public void trashFragments(FragmentListBean flb) {
 		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
 		for (FragmentBean fb : fragmentBeans) {
