@@ -70,6 +70,29 @@ function showConfirmDialogRemoveFragment(fid, forDeleting) {
     $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
 }
 
+function showSingletonConfirmDialog(fid, deleting) {
+	var msgTrash = $('#fragment-group-form\\:confirm-dlg-msg-trash-fragments');
+	var msgDelete = $('#fragment-group-form\\:confirm-dlg-msg-delete-fragments');
+	var btnTrash= $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
+	var btnDelete= $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
+	if (deleting) {
+		msgTrash.hide();
+		msgDelete.show();
+		btnTrash.hide();
+		btnDelete.show();
+	}
+	else {
+		msgTrash.show();
+		msgDelete.hide();
+		btnTrash.show();
+		btnDelete.hide();
+	}
+	
+	PF('singletonConfirmDlg').show();
+	
+    $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
+}
+
 //]]>
 </script>
 </ui:define>
@@ -90,6 +113,20 @@ function showConfirmDialogRemoveFragment(fid, forDeleting) {
             
             <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{userEditedFragmentBean.fragment.id}" />
 
+            <p:confirmDialog header="#{msg['are_you_sure']}" severity="alert" widgetVar="singletonConfirmDlg">
+                <f:facet name="message">
+				    <h:outputText id="confirm-dlg-msg-trash-fragments" value="#{msg['confirm_trashing_fragments']}" />
+				</f:facet>
+                <f:facet name="message">
+				    <h:outputText id="confirm-dlg-msg-delete-fragments" value="#{msg['confirm_deleting_fragments']}" />
+				</f:facet>
+
+			    <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
+			    <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
+
+			    <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
+			</p:confirmDialog>
+			
             <p:confirmDialog message="#{msg['confirm_trashing_fragments']}" header="#{msg['are_you_sure']}" severity="alert" widgetVar="confirmDlgTrashFragment">
 			    <p:commandButton value="#{msg['label_yes']}" action="trash-fragment" oncomplete="PF('confirmDlgTrashFragment').hide()"/>
 			    <p:commandButton value="#{msg['label_no']}" onclick="PF('confirmDlgTrashFragment').hide();" type="button" />
@@ -158,12 +195,14 @@ function showConfirmDialogRemoveFragment(fid, forDeleting) {
 		        
 		        <c:choose>
                     <c:when test="#{panelContext.fragmentDeletable}">
-                        <p:commandLink action="delete-fragments">
+                        <p:commandLink oncomplete="showSingletonConfirmDialog(null, true)" >
+<!--                         <p:commandLink action="delete-fragments"> -->
 		                    <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 		                </p:commandLink>
                     </c:when>
                     <c:otherwise>
-                        <p:commandLink action="trash-fragments">
+                        <p:commandLink oncomplete="showSingletonConfirmDialog(null, false)" >
+<!--                         <p:commandLink action="trash-fragments"> -->
 		                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
 		                </p:commandLink>
                     </c:otherwise>
