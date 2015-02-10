@@ -30,7 +30,6 @@
         </transition>
         
         <transition on="trash-fragment" to="home">
-<!--             <evaluate expression="mainController.trashFragment(requestParameters.fragmentId)" /> -->
             <evaluate expression="mainController.trashFragment(userEditedFragmentBean)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
@@ -41,7 +40,6 @@
         </transition>
 
         <transition on="delete-fragment" to="home">
-<!--             <evaluate expression="mainController.deleteFragment(requestParameters.fragmentId)" /> -->
             <evaluate expression="mainController.deleteFragment(userEditedFragmentBean)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>

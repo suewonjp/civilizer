@@ -18,9 +18,7 @@
 					<f:param name="fragmentLoopIndex" value="${loop.index}" />
 				</p:commandLink>
 				&nbsp;&nbsp;
-<!-- 				<h:outputText value="[ #{fragmentBean.concatenatedTagNames} ]" /> -->
                 <c:forEach var="tag" items="#{fragmentBean.fragment.tags}">
-<!--                     <h:outputText value="#{tag.tagName}, " /> -->
                     <ui:include src="each-tag.xhtml" />
                 </c:forEach>
 				&nbsp;&nbsp;
@@ -35,8 +33,6 @@
 					<c:choose>
 						<c:when test="#{panelContext.fragmentDeletable}">
 							<p:commandLink oncomplete="showConfirmDialogRemoveFragment('#{fragmentBean.fragment.id}', true)" >
-<!-- 							<p:commandLink action="delete-fragment" > -->
-<!-- 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" /> -->
 								<span class="fa fa-trash fa-3x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 							</p:commandLink>
 						</c:when>
