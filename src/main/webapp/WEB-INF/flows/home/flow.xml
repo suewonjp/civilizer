@@ -34,6 +34,11 @@
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
+        <transition on="trash-fragments" to="home">
+            <evaluate expression="mainController.trashFragments(fragmentListBeans[0])" />
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+        </transition>
+
         <transition on="delete-fragment" to="home">
             <evaluate expression="mainController.deleteFragment(requestParameters.fragmentId)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>

@@ -139,6 +139,16 @@ public final class MainController {
 		ViewUtil.addMessage("Trashing", "Fragment #" + frg.getId(), null);
 	}
 
+	public void trashFragments(FragmentListBean flb) {
+		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
+		for (FragmentBean fb : fragmentBeans) {
+			if (!fb.isChecked()) {
+				continue;
+			}
+			trashFragment(fb.getFragment().getId());
+		}
+	}
+
 	public void deleteFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId);
 		fragmentDao.delete(frg);
