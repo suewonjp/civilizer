@@ -158,21 +158,33 @@ public final class MainController {
 		fragmentDao.delete(frg);
 		ViewUtil.addMessage("Deleting", "Fragment #" + frg.getId(), null);
 	}
+
+	public void deleteFragment(FragmentBean fb) {
+		deleteFragment(fb.getFragment().getId());
+	}
 	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
 		final String tagNames = fb.getConcatenatedTagNames();
 		final Set<Tag> tags = saveTagsWhenSavingFragment(tagListBean, tagNames);
 	    
-	    final Fragment frg = fb.getFragment();
-	    frg.setTags(tags);
-	    final DateTime dt = new DateTime();
+	    Fragment frg = fb.getFragment();
 	    boolean weHaveNewFragment = false;
+	    
+	    final DateTime dt = new DateTime();
 	    if (frg.getId() == null) {
 	    	// It is a new fragment...
 	    	frg.setCreationDatetime(dt);
 	    	weHaveNewFragment = true;
 	    }
+	    else {
+	    	// It is an existing fragment...
+	    	final String content = frg.getContent();
+	    	frg = fragmentDao.findById(frg.getId());
+	    	frg.setContent(content);
+	    }
 	    frg.setUpdateDatetime(dt);
+
+	    frg.setTags(tags);
 	    
         fragmentDao.save(frg);
         if (weHaveNewFragment) {
