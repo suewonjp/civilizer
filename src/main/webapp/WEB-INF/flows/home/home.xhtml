@@ -60,8 +60,12 @@ function showSortOptionDialog(panelId) {
 	dlg.show();
 }
 
-function showConfirmDialogTrashFragment(fid) {
-	var dlg = PF('confirmDlgTrashFragment');
+function showConfirmDialogRemoveFragment(fid, forDeleting) {
+	var name = 'confirmDlgTrashFragment';
+	if (forDeleting) {
+		name = 'confirmDlgDeleteFragment';
+	}
+	var dlg = PF(name);
     dlg.show();
     $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
 }
@@ -84,10 +88,16 @@ function showConfirmDialogTrashFragment(fid) {
             <c:set var="curTagId" value="#{panelContext.tagId}" />
             <c:set var="curPage" value="#{panelContext.curPage}" />
             
+            <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{userEditedFragmentBean.fragment.id}" />
+
             <p:confirmDialog message="#{msg['confirm_trashing_fragments']}" header="#{msg['are_you_sure']}" severity="alert" widgetVar="confirmDlgTrashFragment">
-                <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{userEditedFragmentBean.fragment.id}" />
 			    <p:commandButton value="#{msg['label_yes']}" action="trash-fragment" oncomplete="PF('confirmDlgTrashFragment').hide()"/>
 			    <p:commandButton value="#{msg['label_no']}" onclick="PF('confirmDlgTrashFragment').hide();" type="button" />
+			</p:confirmDialog>
+
+            <p:confirmDialog message="#{msg['confirm_deleting_fragments']}" header="#{msg['are_you_sure']}" severity="alert" widgetVar="confirmDlgDeleteFragment">
+			    <p:commandButton value="#{msg['label_yes']}" action="delete-fragment" oncomplete="PF('confirmDlgDeleteFragment').hide()"/>
+			    <p:commandButton value="#{msg['label_no']}" onclick="PF('confirmDlgDeleteFragment').hide();" type="button" />
 			</p:confirmDialog>
             
             <p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >

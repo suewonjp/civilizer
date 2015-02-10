@@ -34,15 +34,14 @@
 					</a>
 					<c:choose>
 						<c:when test="#{panelContext.fragmentDeletable}">
-							<p:commandLink action="delete-fragment" >
-								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
+							<p:commandLink oncomplete="showConfirmDialogRemoveFragment('#{fragmentBean.fragment.id}', true)" >
+<!-- 							<p:commandLink action="delete-fragment" > -->
+<!-- 								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" /> -->
 								<span class="fa fa-trash fa-3x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
-<!-- 							<p:commandLink action="trash-fragment" > -->
-							<p:commandLink oncomplete="showConfirmDialogTrashFragment('#{fragmentBean.fragment.id}')" >
-								<f:param name="fragmentId" value="#{fragmentBean.fragment.id}" />
+							<p:commandLink oncomplete="showConfirmDialogRemoveFragment('#{fragmentBean.fragment.id}', false)" >
 								<span class="fa fa-trash fa-3x button-link" title="#{msg['label_trash_fragment']}"></span>
 							</p:commandLink>
 						</c:otherwise>
