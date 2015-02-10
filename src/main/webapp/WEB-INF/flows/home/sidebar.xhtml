@@ -50,9 +50,6 @@ function showEditTagDialog(tagId, tagName) {
         <h:inputHidden id="id-placeholder-for-tag" value="#{userEditedTagBean.tag.id}" />
         <br /><br />
         <p:commandButton action="save-tag" value="#{msg['label_ok']}" icon="ui-icon-check">
-<!--         <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check"> -->
-            <f:param name="curTagId" value="#{curTagId}"/>
-            <f:param name="curPage" value="#{curPage}"/>
         </p:commandButton>
     </p:dialog>
             
