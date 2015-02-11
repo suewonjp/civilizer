@@ -60,32 +60,38 @@ function showSortOptionDialog(panelId) {
 	dlg.show();
 }
 
-function showConfirmDialogRemoveFragment(fid, forDeleting) {
-	var name = 'confirmDlgTrashFragment';
-	if (forDeleting) {
-		name = 'confirmDlgDeleteFragment';
-	}
-	var dlg = PF(name);
-    dlg.show();
-    $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
-}
-
-function showSingletonConfirmDialog(fid, deleting) {
+function showSingletonConfirmDialog(fid, deleting, bulk) {
 	var msgTrash = $('#fragment-group-form\\:confirm-dlg-msg-trash-fragments');
 	var msgDelete = $('#fragment-group-form\\:confirm-dlg-msg-delete-fragments');
 	var btnTrash= $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
 	var btnDelete= $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
+	var btnBulkTrash= $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
+	var btnBulkDelete= $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
+	
+	msgTrash.hide();
+	msgDelete.hide();
+	btnTrash.hide();
+	btnDelete.hide();
+	btnBulkTrash.hide();
+	btnBulkDelete.hide();
+	
 	if (deleting) {
-		msgTrash.hide();
 		msgDelete.show();
-		btnTrash.hide();
-		btnDelete.show();
+		if (bulk) {
+			btnBulkDelete.show();
+		}
+		else {
+			btnDelete.show();
+		}
 	}
 	else {
 		msgTrash.show();
-		msgDelete.hide();
-		btnTrash.show();
-		btnDelete.hide();
+		if (bulk) {
+            btnBulkTrash.show();
+        }
+        else {
+            btnTrash.show();
+        }
 	}
 	
 	PF('singletonConfirmDlg').show();
@@ -123,6 +129,8 @@ function showSingletonConfirmDialog(fid, deleting) {
 
 			    <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
 			    <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
+			    <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
+			    <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
 
 			    <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
 			</p:confirmDialog>
@@ -195,23 +203,16 @@ function showSingletonConfirmDialog(fid, deleting) {
 		        
 		        <c:choose>
                     <c:when test="#{panelContext.fragmentDeletable}">
-                        <p:commandLink oncomplete="showSingletonConfirmDialog(null, true)" >
-<!--                         <p:commandLink action="delete-fragments"> -->
+                        <p:commandLink oncomplete="showSingletonConfirmDialog(null, true, true)" >
 		                    <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 		                </p:commandLink>
                     </c:when>
                     <c:otherwise>
-                        <p:commandLink oncomplete="showSingletonConfirmDialog(null, false)" >
-<!--                         <p:commandLink action="trash-fragments"> -->
+                        <p:commandLink oncomplete="showSingletonConfirmDialog(null, false, true)" >
 		                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
 		                </p:commandLink>
                     </c:otherwise>
                 </c:choose>
-
-<!-- 		        <p:commandLink action="trash-fragments"> -->
-<!--                     <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span> -->
-<!--                 </p:commandLink> -->
-		        
 	        </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 		    
 		    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
