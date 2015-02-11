@@ -25,17 +25,17 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
-    function generateClickHandler(panelIndex) {
-    	var fragmentCount = $("#fragment-panel-" + panelIndex + " .each-fragment-container").length;
+    function generateClickHandler(panelId) {
+    	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
         if (fragmentCount > 0) {
             var fragmentCheckboxSlaves = [];    
             
             for (var j=0; j<fragmentCount; ++j) {
-                var cb = PrimeFaces.widgets["fragmentCheckboxSlave" + panelIndex + "_" + j];
+                var cb = PF("fragmentCheckboxSlave" + panelId + "_" + j);
                 fragmentCheckboxSlaves.push(cb);
             }
         
-            var fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelIndex);
+            var fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelId);
             
             // Align the master checkbox with its slaves in horizontal position
             fragmentCheckboxMaster.jq.offset({ left:fragmentCheckboxSlaves[0].jq.offset().left });
@@ -56,37 +56,61 @@ $(document).ready(function() {
     }
     
     var fragmentCheckboxMaster;
-    var panelIndex;
+    var panelId;
     
-    panelIndex = 0;
-    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelIndex)
+    panelId = 0;
+    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelId)
     if (fragmentCheckboxMaster) {
-    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelIndex));
+    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
-    panelIndex = 1;
-    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelIndex)
+    panelId = 1;
+    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelId)
     if (fragmentCheckboxMaster) {
-    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelIndex));
+    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
-    panelIndex = 2;
-    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelIndex)
+    panelId = 2;
+    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelId)
     if (fragmentCheckboxMaster) {
-    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelIndex));
+    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
 }); // end of $(document).ready()
 
 function showSortOptionDialog(panelId) {
-	var dlg = PF('sortOptionDlg' + panelId);
-	dlg.show();
+	PF('sortOptionDlg' + panelId).show();
 }
 
-function showSingletonConfirmDialog(fid, deleting, bulk) {
+function fragmentCheckBoxesAreChecked(panelId) {
+	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
+    if (fragmentCount > 0) {
+        for (var j=0; j<fragmentCount; ++j) {
+            var cb = PF("fragmentCheckboxSlave" + panelId + "_" + j);
+            if (cb.isChecked()) {
+            	return true;
+            }
+        }
+    }
+    return false;
+}
+
+function showError(message) {
+	$('#fragment-group-form\\:error-dlg-msg').text(message);
+	PF("errorMsgDlg").show();
+}
+
+function showSingletonConfirmDialog(panelId, fid, deleting, bulk) {
+	if (bulk) {
+		if (fragmentCheckBoxesAreChecked(panelId) == false) {
+			showError("#{msg['no_fragment_is_selected']}");
+			return;
+		}
+	}
+	
 	var msgTrash = $('#fragment-group-form\\:confirm-dlg-msg-trash-fragments');
 	var msgDelete = $('#fragment-group-form\\:confirm-dlg-msg-delete-fragments');
-	var btnTrash= $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
-	var btnDelete= $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
-	var btnBulkTrash= $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
-	var btnBulkDelete= $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
+	var btnTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
+	var btnDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
+	var btnBulkTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
+	var btnBulkDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
 	
 	msgTrash.hide();
 	msgDelete.hide();
@@ -131,7 +155,14 @@ function showSingletonConfirmDialog(fid, deleting, bulk) {
     
     <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{userEditedFragmentBean.fragment.id}" />
     
-    <p:confirmDialog header="#{msg['are_you_sure']}" severity="alert" widgetVar="singletonConfirmDlg">
+    <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
+        <f:facet name="message">
+            <h:outputText id="error-dlg-msg" styleClass="warning-color" value="&nbsp;"/>
+        </f:facet>
+        <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check" onclick="PF('errorMsgDlg').hide();" type="button" />
+    </p:confirmDialog>
+    
+    <p:confirmDialog header="#{msg['are_you_sure']}" severity="alert" widgetVar="singletonConfirmDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
             <h:outputText id="confirm-dlg-msg-trash-fragments" value="#{msg['confirm_trashing_fragments']}" />
         </f:facet>
@@ -213,12 +244,12 @@ function showSingletonConfirmDialog(fid, deleting, bulk) {
 		        
 		        <c:choose>
                     <c:when test="#{panelContext.fragmentDeletable}">
-                        <p:commandLink oncomplete="showSingletonConfirmDialog(null, true, true)" >
+                        <p:commandLink oncomplete="showSingletonConfirmDialog('#{panelId}', null, true, true)" >
 		                    <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 		                </p:commandLink>
                     </c:when>
                     <c:otherwise>
-                        <p:commandLink oncomplete="showSingletonConfirmDialog(null, false, true)" >
+                        <p:commandLink oncomplete="showSingletonConfirmDialog('#{panelId}', null, false, true)" >
 		                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
 		                </p:commandLink>
                     </c:otherwise>
