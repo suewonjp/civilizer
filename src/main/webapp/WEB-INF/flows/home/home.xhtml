@@ -25,32 +25,53 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
-    var fragmentCount = $("#fragment-group .each-fragment-container").length;
-    if (fragmentCount > 0) {
-	    var fragmentCheckboxSlaves = [];    
-	    
-	    for (var i=0; i<fragmentCount; ++i) {
-	        var cb = PrimeFaces.widgets["fragmentCheckboxSlave" + i];
-	        fragmentCheckboxSlaves.push(cb);
-	    }
-	
-	    var fragmentCheckboxMaster = PF("fragmentCheckboxMaster");
-	    
-	    // Align the master checkbox with its slaves in horizontal position
-	    fragmentCheckboxMaster.jq.offset({ left:fragmentCheckboxSlaves[0].jq.offset().left });
-	    
-	    fragmentCheckboxMaster.jq.click(function (e) {
-	        if (fragmentCheckboxMaster.isChecked()) {
-		        for (var i=0; i<fragmentCount; ++i) {
-		            fragmentCheckboxSlaves[i].check();
-		        }
-	        }
-	        else {
-		        for (var i=0; i<fragmentCount; ++i) {
-	                fragmentCheckboxSlaves[i].uncheck();
-	            }
-	        }
-	    });
+    function generateClickHandler(panelIndex) {
+    	var fragmentCount = $("#fragment-panel-" + panelIndex + " .each-fragment-container").length;
+        if (fragmentCount > 0) {
+            var fragmentCheckboxSlaves = [];    
+            
+            for (var j=0; j<fragmentCount; ++j) {
+                var cb = PrimeFaces.widgets["fragmentCheckboxSlave" + panelIndex + "_" + j];
+                fragmentCheckboxSlaves.push(cb);
+            }
+        
+            var fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelIndex);
+            
+            // Align the master checkbox with its slaves in horizontal position
+            fragmentCheckboxMaster.jq.offset({ left:fragmentCheckboxSlaves[0].jq.offset().left });
+            
+            return function (e) {
+                if (fragmentCheckboxMaster.isChecked()) {
+                    for (var i=0; i<fragmentCount; ++i) {
+                        fragmentCheckboxSlaves[i].check();
+                    }
+                }
+                else {
+                    for (var i=0; i<fragmentCount; ++i) {
+                        fragmentCheckboxSlaves[i].uncheck();
+                    }
+                }
+            }
+        }
+    }
+    
+    var fragmentCheckboxMaster;
+    var panelIndex;
+    
+    panelIndex = 0;
+    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelIndex)
+    if (fragmentCheckboxMaster) {
+    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelIndex));
+    }
+    panelIndex = 1;
+    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelIndex)
+    if (fragmentCheckboxMaster) {
+    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelIndex));
+    }
+    panelIndex = 2;
+    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelIndex)
+    if (fragmentCheckboxMaster) {
+    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelIndex));
     }
 }); // end of $(document).ready()
 
@@ -153,8 +174,8 @@ function showSingletonConfirmDialog(fid, deleting, bulk) {
             </p:dialog>
 	        
 	        <p:panel id="fragment-panel-toolbar-#{panelId}" >
-		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster" />
-		        <p:tooltip for="checkbox-for-all-fragments" value="#{msg['label_check_uncheck_all_fragments']}" />
+		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster${panelId}" />
+		        <p:tooltip for="checkbox-for-all-fragments-#{panelId}" value="#{msg['label_check_uncheck_all_fragments']}" />
 		        
 		        <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}">
 			        <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>
