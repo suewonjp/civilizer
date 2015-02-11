@@ -28,6 +28,14 @@ public final class FragmentDaoImpl implements FragmentDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+    
+    public long countAll(boolean includeTrashed) {
+    	final String nq = includeTrashed ?
+    			"Fragment.countAll" : "Fragment.countAllButTrashed";
+    	return (Long) sessionFactory.getCurrentSession()
+    			.getNamedQuery(nq)
+    			.iterate().next();
+    }
 
     @Override
     @SuppressWarnings("unchecked")

@@ -29,6 +29,11 @@ public class DaoEmbeddedTest extends DaoTest {
     public void tearDown() throws Exception {
         super.tearDown();
     }
+    
+    @Test
+	public void testCountAllFragments() {
+		super.testCountAllFragments();
+	}
 
     @Test
     public void testFindAllTags() {

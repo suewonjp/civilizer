@@ -1,5 +1,18 @@
 //@formatter:off
 @NamedQueries({
+    @NamedQuery(name = "Fragment.countAll",
+        query = "select count(*) "
+        	  + "from Fragment f"
+              ),
+    @NamedQuery(name = "Fragment.countAllButTrashed",
+        query = "select count(*) "
+              + "from Fragment f "
+              + "where f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              ),
     @NamedQuery(name = "Fragment.findById",
         query = "select distinct f "
               + "from Fragment f "

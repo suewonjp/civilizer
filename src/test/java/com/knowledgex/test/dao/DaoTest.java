@@ -115,6 +115,21 @@ class DaoTest {
 			assertFalse(Hibernate.isInitialized(tag.getFragments()));
 		}
 	}
+	
+	protected void testCountAllFragments() {
+		{
+			final Collection<Fragment> fragments = fragmentDao.findAll();
+			final boolean includeTrashed = true;
+			final long c = fragmentDao.countAll(includeTrashed);
+			assertEquals(fragments.size(), c);
+		}
+		{
+			final Collection<Fragment> fragments = fragmentDao.findNonTrashed();
+			final boolean includeTrashed = false;
+			final long c = fragmentDao.countAll(includeTrashed);
+			assertEquals(fragments.size(), c);
+		}
+	}
 
 	protected void testFindAllFragments() {
 		Collection<Fragment> fragments = fragmentDao.findAll();

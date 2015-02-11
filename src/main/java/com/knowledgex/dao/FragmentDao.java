@@ -6,6 +6,8 @@ import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.FragmentOrder;
 
 public interface FragmentDao {
+	public long countAll(boolean includeTrashed);
+	
     public List<Fragment> findAll();
 
     public List<Fragment> findNonTrashed();
