@@ -93,6 +93,10 @@
               + "order by f.updateDatetime desc "
               ), 
     
+    @NamedQuery(name = "Tag.countAll",
+        query = "select count(*) "
+        	  + "from Tag t"
+              ),
     @NamedQuery(name = "Tag.findIdsOrderByTagName",
 		query = "select t.id "
 		      + "from Tag t "

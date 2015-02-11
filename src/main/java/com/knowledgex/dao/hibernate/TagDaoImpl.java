@@ -30,6 +30,13 @@ public final class TagDaoImpl implements TagDao {
     }
     
     @Override
+    public long countAll() {
+    	return (Long) sessionFactory.getCurrentSession()
+    			.getNamedQuery("Tag.countAll")
+    			.iterate().next();
+    }
+    
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public List<Tag> findAll() {

@@ -31,8 +31,8 @@ public class DaoEmbeddedTest extends DaoTest {
     }
     
     @Test
-	public void testCountAllFragments() {
-		super.testCountAllFragments();
+	public void testCountAll() {
+		super.testCountAll();
 	}
 
     @Test

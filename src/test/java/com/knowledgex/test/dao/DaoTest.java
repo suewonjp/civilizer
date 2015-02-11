@@ -116,7 +116,7 @@ class DaoTest {
 		}
 	}
 	
-	protected void testCountAllFragments() {
+	protected void testCountAll() {
 		{
 			final Collection<Fragment> fragments = fragmentDao.findAll();
 			final boolean includeTrashed = true;
@@ -128,6 +128,11 @@ class DaoTest {
 			final boolean includeTrashed = false;
 			final long c = fragmentDao.countAll(includeTrashed);
 			assertEquals(fragments.size(), c);
+		}
+		{
+			final Collection<Tag> tags = tagDao.findAll();
+			final long c = tagDao.countAll();
+			assertEquals(tags.size(), c);
 		}
 	}
 
