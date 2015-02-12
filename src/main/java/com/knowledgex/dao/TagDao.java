@@ -20,7 +20,7 @@ public interface TagDao {
 
     public Tag findByIdWithFragments(Long id);
     
-//    public long countFragments(Long id, boolean includeTrashed);
+    public long countFragments(Long id, boolean includeTrashed);
 
     public List<Fragment> findFragments(Long id);
 

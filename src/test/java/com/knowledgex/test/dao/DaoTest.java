@@ -102,6 +102,18 @@ class DaoTest {
 	protected void tearDown() throws Exception {
 		deleteAllTemporalObjects();
 	}
+	
+    protected void testExecuteArbitraryQuery() {
+	    List<?> result0, result1;
+	    
+	    result0 = fragmentDao.executeQuery("from Fragment");
+	    result1 = fragmentDao.findAll();
+	    assertEquals(result0, result1);
+
+	    result0 = fragmentDao.executeQuery("from Tag");
+	    result1 = tagDao.findAll();
+	    assertEquals(result0, result1);
+	}
 
 	protected void testFindAllTags() {
 		Collection<Tag> tags = tagDao.findAllWithChildren();
@@ -134,6 +146,24 @@ class DaoTest {
 			final long c = tagDao.countAll();
 			assertEquals(tags.size(), c);
 		}
+	}
+	
+	protected void testCountFragmentsPerTag() {
+	    final List<Tag> tags = tagDao.findAll();
+	    for (Tag tag : tags) {
+	        {
+                boolean includeTrashed = true;
+                final List<Fragment> fragments = tagDao.findFragments(tag.getId());
+                final long fc = tagDao.countFragments(tag.getId(), includeTrashed);
+                assertEquals(fc, fragments.size());
+            }
+	        {
+	            boolean includeTrashed = false;
+	            final List<Fragment> fragments = tagDao.findNonTrashedFragments(tag.getId(), 0, Integer.MAX_VALUE);
+	            final long fc = tagDao.countFragments(tag.getId(), includeTrashed);
+	            assertEquals(fc, fragments.size());
+	        }
+        }
 	}
 
 	protected void testFindAllFragments() {

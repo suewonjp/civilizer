@@ -90,10 +90,15 @@ public final class TagDaoImpl implements TagDao {
                 .uniqueResult();
     }
 
-//    @Override
-//    public long countFragments(Long id, boolean includeTrashed) {
-//        return 0;
-//    }
+    @Override
+    public long countFragments(Long id, boolean includeTrashed) {
+        final String qs = includeTrashed ?
+                "Tag.countFragments": "Tag.countNonTrashedFragments";
+        return (Long) sessionFactory.getCurrentSession()
+                .getNamedQuery(qs)
+                .setParameter("id", id)
+                .uniqueResult();
+    }
     
     @Override
     @SuppressWarnings("unchecked")

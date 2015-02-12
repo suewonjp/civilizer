@@ -31,9 +31,19 @@ public class DaoEmbeddedTest extends DaoTest {
     }
     
     @Test
+    public void testExecuteArbitraryQuery() {
+        super.testExecuteArbitraryQuery();
+    }
+    
+    @Test
 	public void testCountAll() {
 		super.testCountAll();
 	}
+    
+    @Test
+    public void testCountFragmentsPerTag() {
+        super.testCountFragmentsPerTag();
+    }
 
     @Test
     public void testFindAllTags() {
