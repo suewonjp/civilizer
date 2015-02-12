@@ -97,7 +97,7 @@ function showError(message) {
 	PF("errorMsgDlg").show();
 }
 
-function confirmTrashingFragments(message, panelId, fid, deleting, bulk) {
+function confirmTrashingFragments(panelId, fid, deleting, bulk) {
 	if (bulk) {
         if (fragmentCheckBoxesAreChecked(panelId) == false) {
             showError("#{msg['no_fragment_is_selected']}");
@@ -105,17 +105,20 @@ function confirmTrashingFragments(message, panelId, fid, deleting, bulk) {
         }
     }
 	
+	var message = deleting ? "#{msg['confirm_deleting_fragments']}" : "#{msg['confirm_trashing_fragments']}";
 	$('#fragment-group-form\\:confirm-dlg-msg').text(message);
     
     var btnTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
     var btnDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
     var btnBulkTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
     var btnBulkDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
+    var btnDeleteTag = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-tag");
     
     btnTrash.hide();
     btnDelete.hide();
     btnBulkTrash.hide();
     btnBulkDelete.hide();
+    btnDeleteTag.hide();
     
     if (deleting) {
         if (bulk) {
@@ -138,6 +141,33 @@ function confirmTrashingFragments(message, panelId, fid, deleting, bulk) {
     
     $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
 }
+
+function confirmTrashingTag(deleting) {
+	var message = deleting ? "#{msg['confirm_deleting_tag']}" : "#{msg['confirm_trashing_fragments_with_tag']}";
+    $('#fragment-group-form\\:confirm-dlg-msg').text(message);
+    
+    var btnTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
+    var btnDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
+    var btnBulkTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
+    var btnBulkDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
+    var btnDeleteTag = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-tag");
+    
+    btnTrash.hide();
+    btnDelete.hide();
+    btnBulkTrash.hide();
+    btnBulkDelete.hide();
+    btnDeleteTag.hide();
+    
+    if (deleting) {
+    	btnDeleteTag.show();
+    }
+    else {
+    	btnBulkTrash.show();
+    }
+    
+    PF('singletonConfirmDlg').show();
+}
+
 
 //]]>
 </script>
@@ -167,6 +197,7 @@ function confirmTrashingFragments(message, panelId, fid, deleting, bulk) {
         <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
+        <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
 
         <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
     </p:confirmDialog>
@@ -237,14 +268,12 @@ function confirmTrashingFragments(message, panelId, fid, deleting, bulk) {
 		        
 		        <c:choose>
                     <c:when test="#{panelContext.fragmentDeletable}">
-                        <c:set var="dlgMsg" value="#{msg['confirm_deleting_fragments']}" />
-                        <p:commandLink oncomplete="confirmTrashingFragments('#{dlgMsg}', '#{panelId}', null, true, true)" >
+                        <p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', null, true, true)" >
 		                    <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 		                </p:commandLink>
                     </c:when>
                     <c:otherwise>
-                        <c:set var="dlgMsg" value="#{msg['confirm_trashing_fragments']}" />
-                        <p:commandLink oncomplete="confirmTrashingFragments('#{dlgMsg}', '#{panelId}', null, false, true)" >
+                        <p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', null, false, true)" >
 		                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
 		                </p:commandLink>
                     </c:otherwise>

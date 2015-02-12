@@ -8,7 +8,8 @@
     >
     
 <span class="each-tag">
-    <p:commandLink action="filter-by-tag" styleClass="tag_button">
+    <c:set var="fragmentCount" value="#{tagListBean.fragmentCountList[loop.index]}" />
+    <p:commandLink oncomplete="confirmTrashingTag(Boolean('#{fragmentCount}' == 0))" title="#{fragmentCount} #{msg['label_fragments']}" styleClass="tag_button">
         <span class="fa fa-trash" style="color:indigo" >&nbsp;</span>
         <span class="fa fa-tag " title="#{msg['label_trash_tag']}">&nbsp;</span>
         <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>

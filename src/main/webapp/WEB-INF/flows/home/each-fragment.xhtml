@@ -32,14 +32,12 @@
 					</a>
 					<c:choose>
 						<c:when test="#{panelContext.fragmentDeletable}">
-						    <c:set var="dlgMsg" value="#{msg['confirm_deleting_fragments']}" />
-							<p:commandLink oncomplete="confirmTrashingFragments('#{dlgMsg}', '#{panelId}', '#{fragmentBean.fragment.id}', true, false)" >
+							<p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', '#{fragmentBean.fragment.id}', true, false)" >
 								<span class="fa fa-trash fa-3x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
-						    <c:set var="dlgMsg" value="#{msg['confirm_trashing_fragments']}" />
-							<p:commandLink oncomplete="confirmTrashingFragments('#{dlgMsg}', '#{panelId}', '#{fragmentBean.fragment.id}', false, false)" >
+							<p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', '#{fragmentBean.fragment.id}', false, false)" >
 								<span class="fa fa-trash fa-3x button-link" title="#{msg['label_trash_fragment']}"></span>
 							</p:commandLink>
 						</c:otherwise>

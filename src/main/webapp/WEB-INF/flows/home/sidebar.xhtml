@@ -95,7 +95,7 @@ function showEditTagDialog(tagId, tagName) {
             </c:forEach>
         </div>
 		<div id="tag-group-trash">
-            <c:forEach var="tag" items="#{tagListBean.tags}">
+            <c:forEach var="tag" items="#{tagListBean.tags}" varStatus="loop">
                 <ui:include src="each-tag-trash.xhtml" />
                 <br />
             </c:forEach>
