@@ -70,7 +70,7 @@ public final class FragmentDaoImpl implements FragmentDao {
 	    first = Math.max(0, first);
 	    count = Math.max(0, count);
 	    final Session s = sessionFactory.getCurrentSession();
-	    final List<Long> ids = s.getNamedQuery("Fragment.findIdsOrderByUpdateDatetime")
+	    final List<Long> ids = s.getNamedQuery("Fragment.findIds")
 	            .setFirstResult(first)
                 .setMaxResults(count)
                 .list();

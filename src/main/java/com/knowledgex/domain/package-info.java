@@ -37,7 +37,7 @@
               + "  left join fetch f.tags "
               + "where f.id = :id "
               ),
-    @NamedQuery(name = "Fragment.findIdsOrderByUpdateDatetime",
+    @NamedQuery(name = "Fragment.findIds",
         query = "select f.id "
               + "from Fragment f "
               + "order by f.updateDatetime desc "
@@ -122,14 +122,14 @@
     @NamedQuery(name = "Tag.findFragments",
         query = "select f "
               + "from Tag t "
-              + "  join t.fragments as f "
+              + "  inner join t.fragments as f "
               + "  left join fetch f.tags "
               + "where t.id = :id "
               ),
     @NamedQuery(name = "Tag.findNonTrashedFragments",
         query = "select distinct f "
               + "from Fragment f "
-              + "  join f.tags t "
+              + "  inner join f.tags t "
               + "  left join fetch f.tags "
               + "where t.id = :id and f.id not in ( "
               + "  select t2f.fragmentId "
@@ -140,7 +140,7 @@
     @NamedQuery(name = "Tag.findFragmentsWithIdFilter",
         query = "select distinct f "
               + "from Tag t "
-              + "  join t.fragments as f "
+              + "  inner join t.fragments as f "
               + "  left join fetch f.tags "
               + "where t.id in (:ids) "
               ),
