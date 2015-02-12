@@ -108,32 +108,23 @@ function confirmTrashingFragments(panelId, fid, deleting, bulk) {
 	var message = deleting ? "#{msg['confirm_deleting_fragments']}" : "#{msg['confirm_trashing_fragments']}";
 	$('#fragment-group-form\\:confirm-dlg-msg').text(message);
     
-    var btnTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
-    var btnDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
-    var btnBulkTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
-    var btnBulkDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
-    var btnDeleteTag = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-tag");
-    
-    btnTrash.hide();
-    btnDelete.hide();
-    btnBulkTrash.hide();
-    btnBulkDelete.hide();
-    btnDeleteTag.hide();
+    var yesBtn = $('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]');
+    yesBtn.hide();
     
     if (deleting) {
         if (bulk) {
-            btnBulkDelete.show();
+        	yesBtn.eq(3).show();
         }
         else {
-            btnDelete.show();
+        	yesBtn.eq(1).show();
         }
     }
     else {
         if (bulk) {
-            btnBulkTrash.show();
+        	yesBtn.eq(2).show();
         }
         else {
-            btnTrash.show();
+        	yesBtn.eq(0).show();
         }
     }
     
@@ -146,23 +137,14 @@ function confirmTrashingTag(deleting) {
 	var message = deleting ? "#{msg['confirm_deleting_tag']}" : "#{msg['confirm_trashing_fragments_with_tag']}";
     $('#fragment-group-form\\:confirm-dlg-msg').text(message);
     
-    var btnTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
-    var btnDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
-    var btnBulkTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
-    var btnBulkDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
-    var btnDeleteTag = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-tag");
-    
-    btnTrash.hide();
-    btnDelete.hide();
-    btnBulkTrash.hide();
-    btnBulkDelete.hide();
-    btnDeleteTag.hide();
+    var yesBtn = $('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]');
+    yesBtn.hide();
     
     if (deleting) {
-    	btnDeleteTag.show();
+    	yesBtn.eq(5).show();
     }
     else {
-    	btnBulkTrash.show();
+    	yesBtn.eq(4).show();
     }
     
     PF('singletonConfirmDlg').show();
@@ -180,6 +162,7 @@ function confirmTrashingTag(deleting) {
     <p:growl id="growl" showDetail="true" sticky="false" life="10000" />
     
     <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{userEditedFragmentBean.fragment.id}" />
+    <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{userEditedTagBean.tag.id}" />
     
     <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
@@ -197,6 +180,7 @@ function confirmTrashingTag(deleting) {
         <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
+        <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
 
         <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
