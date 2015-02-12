@@ -21,6 +21,16 @@ public final class TagListBean implements Serializable {
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
+    
+    public int indexOf(long tagId) {
+    	final long tc = tags.size();
+    	for (int i = 0; i < tc; i++) {
+			if (tags.get(i).getId() == tagId) {
+				return i;
+			}
+		}
+    	return -1;
+    }
 
     public List<Long> getFragmentCountList() {
         return fragmentCountList;

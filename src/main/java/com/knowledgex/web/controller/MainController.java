@@ -118,6 +118,11 @@ public final class MainController {
 	    for (int i=0; i<tc; ++i) {
 	        fcList.add(tagDao.countFragments(tags.get(i).getId(), includeTrashed));
 	    }
+	    
+	    // special handling for the trash tag; count everything
+	    final int indexOfTrash = tagListBean.indexOf(Tag.TRASH_TAG_ID);
+	    fcList.set(indexOfTrash, tagDao.countFragments(Tag.TRASH_TAG_ID, true));
+	    
 	    tagListBean.setFragmentCountList(fcList);
 	    final TagTree tagTree = newTagTree();
 	    tagListBean.setTagTree(tagTree);
