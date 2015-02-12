@@ -110,7 +110,15 @@ public final class MainController {
 	
 	public TagListBean newTagListBean() {
 		final TagListBean tagListBean = new TagListBean();
-	    tagListBean.setTags(tagDao.findAllWithChildren());
+		final List<Tag> tags = tagDao.findAllWithChildren();
+	    tagListBean.setTags(tags);
+	    final int tc = tags.size();
+	    List<Long> fcList = new ArrayList<Long>(tc);
+	    final boolean includeTrashed = false;
+	    for (int i=0; i<tc; ++i) {
+	        fcList.add(tagDao.countFragments(tags.get(i).getId(), includeTrashed));
+	    }
+	    tagListBean.setFragmentCountList(fcList);
 	    final TagTree tagTree = newTagTree();
 	    tagListBean.setTagTree(tagTree);
         return tagListBean;

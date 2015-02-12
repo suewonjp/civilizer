@@ -8,16 +8,26 @@ import com.knowledgex.domain.Tag;
 @SuppressWarnings("serial")
 public final class TagListBean implements Serializable {
 
-    private Collection<Tag> tags;
+    private List<Tag> tags;
+
+    private List<Long> fragmentCountList;
     
     private TagTree tagTree = null;
 
-    public Collection<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Collection<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public List<Long> getFragmentCountList() {
+        return fragmentCountList;
+    }
+
+    public void setFragmentCountList(List<Long> fragmentCountList) {
+        this.fragmentCountList = fragmentCountList;
     }
 
     public TagTree getTagTree() {
