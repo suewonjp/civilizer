@@ -32,7 +32,7 @@ public final class FragmentDaoImpl implements FragmentDao {
     @Override
     public long countAll(boolean includeTrashed) {
     	final String nq = includeTrashed ?
-    			"Fragment.countAll" : "Fragment.countAllButTrashed";
+    			"Fragment.countAll" : "Fragment.countAllNonTrashed";
     	return (Long) sessionFactory.getCurrentSession()
     			.getNamedQuery(nq)
     			.iterate().next();

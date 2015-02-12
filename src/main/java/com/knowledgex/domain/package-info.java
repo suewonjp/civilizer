@@ -4,7 +4,7 @@
         query = "select count(*) "
         	  + "from Fragment f"
               ),
-    @NamedQuery(name = "Fragment.countAllButTrashed",
+    @NamedQuery(name = "Fragment.countAllNonTrashed",
         query = "select count(*) "
               + "from Fragment f "
               + "where f.id not in ( "
