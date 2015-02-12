@@ -119,8 +119,24 @@
               + "  left join fetch t.fragments "
               + "where t.id = :id "
               ),
+//    @NamedQuery(name = "Tag.countFragments",
+//        query = "select count(f) "
+//              + "from Tag t "
+//              + "  inner join t.fragments as f "
+//              + "where t.id = :id "
+//              ),
+//    @NamedQuery(name = "Tag.countNonTrashedFragments",
+//        query = "select count(f) "
+//              + "from Tag t "
+//              + "  inner join t.fragments as f "
+//              + "where t.id = :id and f.id not in ( "
+//              + "  select t2f.fragmentId "
+//              + "  from Tag2Fragment t2f "
+//              + "  where t2f.tagId = 0 "
+//              + ") "
+//              ),
     @NamedQuery(name = "Tag.findFragments",
-        query = "select f "
+        query = "select distinct f "
               + "from Tag t "
               + "  inner join t.fragments as f "
               + "  left join fetch f.tags "
