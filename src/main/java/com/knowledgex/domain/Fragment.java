@@ -41,8 +41,8 @@ public final class Fragment implements Serializable {
     private String creator;
     private String updater;
     private Long tagId;
-    private Set<Fragment> relatedOnes = new HashSet<Fragment>();
-    private Set<Tag> tags = new HashSet<Tag>();
+    private Set<Fragment> relatedOnes = Collections.emptySet();
+    private Set<Tag> tags = Collections.emptySet();
 
     public Fragment() {
     }
@@ -227,6 +227,9 @@ public final class Fragment implements Serializable {
     }
     
     public void addTag(Tag tag) {
+        if (tags.equals(Collections.emptySet())) {
+            tags = new HashSet<Tag>();
+        }
         this.tags.add(tag);
     }
     

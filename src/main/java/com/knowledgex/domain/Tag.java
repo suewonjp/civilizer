@@ -37,8 +37,8 @@ public final class Tag implements Serializable {
     private String creator;
     private String updater;
     private Long fragmentId;
-    private Set<Fragment> fragments = new HashSet<Fragment>();
-    private Set<Tag> children = new HashSet<Tag>();
+    private Set<Fragment> fragments = Collections.emptySet();
+    private Set<Tag> children = Collections.emptySet();
 
     public Tag() {
     }
@@ -154,7 +154,10 @@ public final class Tag implements Serializable {
     }
     
     public void addChild(Tag c) {
-        this.children.add(c);
+        if (children.equals(Collections.emptySet())) {
+            children = new HashSet<Tag>();
+        }
+        children.add(c);
     }
     
     public static String getTagNamesFrom(Collection<Tag> tags) {
@@ -168,7 +171,6 @@ public final class Tag implements Serializable {
     public static Collection<String> getTagNameCollectionFrom(String names) {
     	if (names == null || names.trim().isEmpty()) {
     		return Collections.emptyList();
-//    		return new ArrayList<String>();
     	}
     	String[] arr = names.split("\\s*[" + TAG_NAME_DELIMITER + "]+\\s*");
     	List<String> output = new ArrayList<String>();
@@ -224,8 +226,7 @@ public final class Tag implements Serializable {
         }
         Collection<Tag> output = new ArrayList<Tag>(tags);
         for (Tag t : tags) {
-            Collection<Tag> children = t.getChildren();
-            for (Tag c : children) {
+            for (Tag c : t.getChildren()) {
                 if (output.contains(c)) {
                     output.remove(c);
                 }
