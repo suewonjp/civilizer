@@ -97,49 +97,45 @@ function showError(message) {
 	PF("errorMsgDlg").show();
 }
 
-function showSingletonConfirmDialog(panelId, fid, deleting, bulk) {
+function confirmTrashingFragments(message, panelId, fid, deleting, bulk) {
 	if (bulk) {
-		if (fragmentCheckBoxesAreChecked(panelId) == false) {
-			showError("#{msg['no_fragment_is_selected']}");
-			return;
-		}
-	}
+        if (fragmentCheckBoxesAreChecked(panelId) == false) {
+            showError("#{msg['no_fragment_is_selected']}");
+            return;
+        }
+    }
 	
-	var msgTrash = $('#fragment-group-form\\:confirm-dlg-msg-trash-fragments');
-	var msgDelete = $('#fragment-group-form\\:confirm-dlg-msg-delete-fragments');
-	var btnTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
-	var btnDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
-	var btnBulkTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
-	var btnBulkDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
-	
-	msgTrash.hide();
-	msgDelete.hide();
-	btnTrash.hide();
-	btnDelete.hide();
-	btnBulkTrash.hide();
-	btnBulkDelete.hide();
-	
-	if (deleting) {
-		msgDelete.show();
-		if (bulk) {
-			btnBulkDelete.show();
-		}
-		else {
-			btnDelete.show();
-		}
-	}
-	else {
-		msgTrash.show();
-		if (bulk) {
+	$('#fragment-group-form\\:confirm-dlg-msg').text(message);
+    
+    var btnTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragment");
+    var btnDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragment");
+    var btnBulkTrash = $("#fragment-group-form\\:confirm-dlg-yes-btn-trash-fragments");
+    var btnBulkDelete = $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-fragments");
+    
+    btnTrash.hide();
+    btnDelete.hide();
+    btnBulkTrash.hide();
+    btnBulkDelete.hide();
+    
+    if (deleting) {
+        if (bulk) {
+            btnBulkDelete.show();
+        }
+        else {
+            btnDelete.show();
+        }
+    }
+    else {
+        if (bulk) {
             btnBulkTrash.show();
         }
         else {
             btnTrash.show();
         }
-	}
-	
-	PF('singletonConfirmDlg').show();
-	
+    }
+    
+    PF('singletonConfirmDlg').show();
+    
     $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
 }
 
@@ -162,12 +158,9 @@ function showSingletonConfirmDialog(panelId, fid, deleting, bulk) {
         <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check" onclick="PF('errorMsgDlg').hide();" type="button" />
     </p:confirmDialog>
     
-    <p:confirmDialog header="#{msg['are_you_sure']}" severity="alert" widgetVar="singletonConfirmDlg" showEffect="fade" hideEffect="explode">
+    <p:confirmDialog header="#{msg['are_you_sure']}" severity="alert" widgetVar="singletonConfirmDlg" showEffect="fade" hideEffect="fade">
         <f:facet name="message">
-            <h:outputText id="confirm-dlg-msg-trash-fragments" value="#{msg['confirm_trashing_fragments']}" />
-        </f:facet>
-        <f:facet name="message">
-            <h:outputText id="confirm-dlg-msg-delete-fragments" value="#{msg['confirm_deleting_fragments']}" />
+            <h:outputText id="confirm-dlg-msg" value="&nbsp;" />
         </f:facet>
 
         <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
@@ -244,12 +237,14 @@ function showSingletonConfirmDialog(panelId, fid, deleting, bulk) {
 		        
 		        <c:choose>
                     <c:when test="#{panelContext.fragmentDeletable}">
-                        <p:commandLink oncomplete="showSingletonConfirmDialog('#{panelId}', null, true, true)" >
+                        <c:set var="dlgMsg" value="#{msg['confirm_deleting_fragments']}" />
+                        <p:commandLink oncomplete="confirmTrashingFragments('#{dlgMsg}', '#{panelId}', null, true, true)" >
 		                    <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 		                </p:commandLink>
                     </c:when>
                     <c:otherwise>
-                        <p:commandLink oncomplete="showSingletonConfirmDialog('#{panelId}', null, false, true)" >
+                        <c:set var="dlgMsg" value="#{msg['confirm_trashing_fragments']}" />
+                        <p:commandLink oncomplete="confirmTrashingFragments('#{dlgMsg}', '#{panelId}', null, false, true)" >
 		                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
 		                </p:commandLink>
                     </c:otherwise>
