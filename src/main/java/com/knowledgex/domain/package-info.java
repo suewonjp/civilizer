@@ -135,6 +135,12 @@
               + "  where t2f.tagId = 0 "
               + ") "
               ),
+    @NamedQuery(name = "Tag.findFragmentIds",
+        query = "select distinct f.id "
+              + "from Tag t "
+              + "  inner join t.fragments as f "
+              + "where t.id = :id "
+              ),
     @NamedQuery(name = "Tag.findFragments",
         query = "select distinct f "
               + "from Tag t "

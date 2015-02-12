@@ -151,6 +151,12 @@ public final class MainController {
 		trashFragment(fb.getFragment().getId());
 	}
 
+	private void trashFragments(List<Long> fragmentIds) {
+		for (Long id : fragmentIds) {
+			trashFragment(id);
+		}
+	}
+
 	public void trashFragments(FragmentListBean flb) {
 		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
 		for (FragmentBean fb : fragmentBeans) {
@@ -266,6 +272,25 @@ public final class MainController {
 			t.setTagName(newName);
 			saveTag(t);
 			ViewUtil.addMessage("Renaming", "Tag : " + oldName + " => " + newName, null);
+		}
+	}
+	
+	public void trashTag(TagBean tb) {
+		final Tag t = tb.getTag();
+		final Long id = t.getId();
+		if (id != null) {
+			final List<Long> fids = tagDao.findFragmentIds(id);
+			trashFragments(fids);
+		}
+	}
+
+	public void deleteTag(TagBean tb) {
+		Tag t = tb.getTag();
+		final Long id = t.getId();
+		if (id != null) {
+			t = tagDao.findById(id);
+			tagDao.delete(t);
+			ViewUtil.addMessage("Deleting", "Tag : " + t.getTagName(), null);
 		}
 	}
 

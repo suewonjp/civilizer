@@ -61,8 +61,14 @@
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
+        <transition on="trash-tag" to="home">
+            <evaluate expression="mainController.trashTag(userEditedTagBean)" />
+            <evaluate expression="userEditedTagBean.clear()" />
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+        </transition>
+        
         <transition on="delete-tag" to="home">
-<!--             <evaluate expression="mainController.saveTag(userEditedTagBean, tagListBean)" /> -->
+            <evaluate expression="mainController.deleteTag(userEditedTagBean)" />
             <evaluate expression="userEditedTagBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>

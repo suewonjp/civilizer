@@ -133,7 +133,7 @@ function confirmTrashingFragments(panelId, fid, deleting, bulk) {
     $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
 }
 
-function confirmTrashingTag(deleting) {
+function confirmTrashingTag(tagId, deleting) {
 	var message = deleting ? "#{msg['confirm_deleting_tag']}" : "#{msg['confirm_trashing_fragments_with_tag']}";
     $('#fragment-group-form\\:confirm-dlg-msg').text(message);
     
@@ -148,6 +148,8 @@ function confirmTrashingTag(deleting) {
     }
     
     PF('singletonConfirmDlg').show();
+    
+    $("#fragment-group-form\\:id-placeholder-for-trashed-tag").val(tagId);
 }
 
 

@@ -102,39 +102,42 @@ public final class TagDaoImpl implements TagDao {
     
     @Override
     @SuppressWarnings("unchecked")
+    public List<Long> findFragmentIds(Long id) {
+    	return sessionFactory.getCurrentSession()
+                .getNamedQuery("Tag.findFragmentIds")
+                .setParameter("id", id)
+                .list();
+    }
+    
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Fragment> findFragments(Long id) {
-        List<Fragment> output = (List<Fragment>)
-                sessionFactory.getCurrentSession()
+        return sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragments")
                 .setParameter("id", id)
                 .list();
-        return output;
     }
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Fragment> findFragments(Long id, int first, int count) {
-	    List<Fragment> output = (List<Fragment>)
-	            sessionFactory.getCurrentSession()
+	    return sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findFragments")
                 .setParameter("id", id)
                 .setFirstResult(first)
                 .setMaxResults(count)
                 .list();
-	    return output;
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Fragment> findNonTrashedFragments(Long id, int first, int count) {
-		List<Fragment> output = (List<Fragment>)
-				sessionFactory.getCurrentSession()
+		return sessionFactory.getCurrentSession()
 				.getNamedQuery("Tag.findNonTrashedFragments")
 				.setParameter("id", id)
 				.setFirstResult(first)
 				.setMaxResults(count)
 				.list();
-		return output;
 	}
     
     @Override
