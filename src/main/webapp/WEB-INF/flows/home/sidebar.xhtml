@@ -42,7 +42,7 @@ function showEditTagDialog(tagId, tagName) {
 </div>
 
 <h:form id="tag-group-form">
-    <p:dialog header="#{msg['label_edit_tag']}" modal="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
+    <p:dialog header="#{msg['label_edit_tag']}" width="200px" modal="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
         <h:outputLabel for="edit-tag-dlg-name-input" value="#{msg['label_name']} :" />
         <p:inputText id="edit-tag-dlg-name-input" value="#{userEditedTagBean.tag.tagName}" />
         <h:inputHidden id="id-placeholder-for-tag" value="#{userEditedTagBean.tag.id}" />
