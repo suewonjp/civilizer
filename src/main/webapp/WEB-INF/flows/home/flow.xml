@@ -92,6 +92,9 @@
         </transition>
 
         <transition on="go-home" to="home">
+            <evaluate
+                expression="mainController.newPanelContextBean(-1, 0)"
+                result="requestScope.panelContextBean"/>
         </transition>
     </view-state>
     

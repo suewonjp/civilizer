@@ -53,7 +53,10 @@ public final class MainController {
         		(existingFlb == null) ? new FragmentListBean() : existingFlb;
         
         if (pcb == null) {
-        	pcb = new PanelContextBean();
+        	pcb = flb.getPanelContextBean();
+        	if (pcb == null) {
+        		pcb = new PanelContextBean();
+        	}
         }
         
         final long tagId = pcb.getTagId();
