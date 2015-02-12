@@ -30,6 +30,13 @@ public final class TagDaoImpl implements TagDao {
     }
     
     @Override
+    public List<?> executeQuery(String query) {
+        return sessionFactory.getCurrentSession()
+                .createQuery(query)
+                .list();
+    }
+    
+    @Override
     public long countAll() {
     	return (Long) sessionFactory.getCurrentSession()
     			.getNamedQuery("Tag.countAll")
@@ -81,7 +88,12 @@ public final class TagDaoImpl implements TagDao {
                 .getNamedQuery("Tag.findByIdWithFragments")
                 .setParameter("id", id)
                 .uniqueResult();
-    }    
+    }
+
+//    @Override
+//    public long countFragments(Long id, boolean includeTrashed) {
+//        return 0;
+//    }
     
     @Override
     @SuppressWarnings("unchecked")

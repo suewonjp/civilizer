@@ -6,6 +6,8 @@ import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.Tag;
 
 public interface TagDao {
+    public List<?> executeQuery(String query);
+    
 	public long countAll();
 	
     public List<Tag> findAll();
@@ -17,6 +19,8 @@ public interface TagDao {
     public Tag findByIdWithChildren(Long id);
 
     public Tag findByIdWithFragments(Long id);
+    
+//    public long countFragments(Long id, boolean includeTrashed);
 
     public List<Fragment> findFragments(Long id);
 

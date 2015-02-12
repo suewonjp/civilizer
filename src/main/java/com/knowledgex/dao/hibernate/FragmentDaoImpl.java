@@ -30,6 +30,13 @@ public final class FragmentDaoImpl implements FragmentDao {
     }
     
     @Override
+    public List<?> executeQuery(String query) {
+        return sessionFactory.getCurrentSession()
+                .createQuery(query)
+                .list();
+    }
+    
+    @Override
     public long countAll(boolean includeTrashed) {
     	final String nq = includeTrashed ?
     			"Fragment.countAll" : "Fragment.countAllNonTrashed";
