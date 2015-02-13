@@ -82,6 +82,50 @@
               + ") "
               + "order by f.id desc "
               ),
+    @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderByUpdateDatetime",
+        query = "select f.id "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id = :tagId and f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              + "order by f.updateDatetime desc "
+              ),
+    @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderByCreationDatetime",
+        query = "select f.id "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id = :tagId and f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              + "order by f.creationDatetime desc "
+              ),
+    @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderByTitle",
+        query = "select f.id "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id = :tagId and f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              + "order by lower(f.title) desc "
+              ),
+    @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderById",
+        query = "select f.id "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id = :tagId and f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              + "order by f.id desc "
+              ),
     
     @NamedQuery(name = "Tag.countAll",
         query = "select count(*) "

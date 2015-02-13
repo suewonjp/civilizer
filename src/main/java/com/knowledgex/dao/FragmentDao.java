@@ -6,6 +6,7 @@ import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.FragmentOrder;
 
 public interface FragmentDao {
+    
     public List<?> executeQuery(String query);
     
 	public long countAll(boolean includeTrashed);
@@ -18,6 +19,8 @@ public interface FragmentDao {
 
     public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order, boolean asc);
 
+    public List<Fragment> findSomeNonTrashedByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc);
+
     public Fragment findById(Long id);
 
     public Fragment findByIdWithAll(Long id);
@@ -29,4 +32,5 @@ public interface FragmentDao {
     public Fragment save(Fragment frgm);
 
     public void delete(Fragment frgm);
+    
 }

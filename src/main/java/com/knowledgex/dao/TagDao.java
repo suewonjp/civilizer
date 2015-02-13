@@ -6,6 +6,7 @@ import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.Tag;
 
 public interface TagDao {
+    
     public List<?> executeQuery(String query);
     
 	public long countAll();
@@ -40,4 +41,5 @@ public interface TagDao {
     public Tag save(Tag tag);
 
     public void delete(Tag tag);
+    
 }

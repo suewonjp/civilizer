@@ -103,8 +103,7 @@ public final class FragmentDaoImpl implements FragmentDao {
 	    		, "Fragment.findIdsNonTrashedOrderByTitle"
 	    		, "Fragment.findIdsNonTrashedOrderById"
 	    };
-	    final List<Long> ids = s.getNamedQuery(namedQueries[order.ordinal()])
-                .list();
+	    final List<Long> ids = s.getNamedQuery(namedQueries[order.ordinal()]).list();
 	    if (asc) {
 	    	// default sort direction is descending
 	    	Collections.reverse(ids);
@@ -116,6 +115,35 @@ public final class FragmentDaoImpl implements FragmentDao {
             output.add((Fragment) q.setParameter("id", ids.get(i + first)).uniqueResult());
         }
 	    return output;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+	public List<Fragment> findSomeNonTrashedByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc) {
+	    first = Math.max(0, first);
+        count = Math.max(0, count);
+        final Session s = sessionFactory.getCurrentSession();
+        final String[] namedQueries = {
+                "Fragment.findIdsNonTrashedByTagIdOrderByUpdateDatetime"
+                , "Fragment.findIdsNonTrashedByTagIdOrderByCreationDatetime"
+                , "Fragment.findIdsNonTrashedByTagIdOrderByTitle"
+                , "Fragment.findIdsNonTrashedByTagIdOrderById"
+        };
+        final List<Long> ids = s.getNamedQuery(namedQueries[order.ordinal()])
+                .setParameter("tagId", tagId)
+                .list();
+        if (asc) {
+            // default sort direction is descending
+            Collections.reverse(ids);
+        }
+        final List<Fragment> output = new ArrayList<Fragment>(count);
+        count = Math.min(count, ids.size()-first);
+        Query q = s.getNamedQuery("Fragment.findByIdWithAll");
+        for (int i = 0; i < count; ++i) {
+            output.add((Fragment) q.setParameter("id", ids.get(i + first)).uniqueResult());
+        }
+        return output;
 	}
 
     @Override
