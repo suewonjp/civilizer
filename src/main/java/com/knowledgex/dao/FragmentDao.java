@@ -29,12 +29,6 @@ public interface FragmentDao {
 
     public Fragment findById(Long id, boolean withTags, boolean withRelatedOnes);
 
-//    public Fragment findByIdWithAll(Long id);
-
-//    public Fragment findByIdWithRelatedOnes(Long id);
-    
-//    public Fragment findByIdWithTags(Long id);
-    
     public List<Long> findIdsByTagId(long tagId);
 
     public Fragment save(Fragment frgm);

@@ -223,30 +223,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 		return output;
     }
 	
-//    @Override
-//    public Fragment findByIdWithAll(Long id) {
-//        return (Fragment) sessionFactory.getCurrentSession()
-//                .getNamedQuery("Fragment.findByIdWithAll")
-//                .setParameter("id", id)
-//                .uniqueResult();
-//    }
-    
-//    @Override
-//    public Fragment findByIdWithRelatedOnes(Long id) {
-//        return (Fragment) sessionFactory.getCurrentSession()
-//                .getNamedQuery("Fragment.findByIdWithRelatedOnes")
-//                .setParameter("id", id)
-//                .uniqueResult();
-//    }
-
-//    @Override
-//    public Fragment findByIdWithTags(Long id) {
-//        return (Fragment) sessionFactory.getCurrentSession()
-//                .getNamedQuery("Fragment.findByIdWithTags")
-//                .setParameter("id", id)
-//                .uniqueResult();
-//    }
-    
     @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)

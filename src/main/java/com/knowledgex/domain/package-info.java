@@ -64,18 +64,6 @@
               + "  left join fetch f.relatedOnes "
               + "where f.id = :id "
               ),
-//    @NamedQuery(name = "Fragment.findByIdWithRelatedOnes",
-//        query = "select distinct f "
-//              + "from Fragment f "
-//              + "  left join fetch f.relatedOnes "
-//              + "where f.id = :id "
-//              ),
-//    @NamedQuery(name = "Fragment.findByIdWithTags",
-//        query = "select distinct f "
-//              + "from Fragment f "
-//              + "  left join fetch f.tags "
-//              + "where f.id = :id "
-//              ),
     @NamedQuery(name = "Fragment.findIdsByTagId",
         query = "select f.id "
               + "from Fragment f "
@@ -220,46 +208,6 @@
               + "  left join fetch t.children "
               + "where t.id = :id "
               ),
-//    @NamedQuery(name = "Tag.findByIdWithFragments",
-//        query = "select distinct t "
-//              + "from Tag t "
-//              + "  left join fetch t.fragments "
-//              + "where t.id = :id "
-//              ),
-//    @NamedQuery(name = "Tag.countNonTrashedFragments",
-//        query = "select count(f) "
-//              + "from Tag t "
-//              + "  inner join t.fragments as f "
-//              + "where t.id = :id and f.id not in ( "
-//              + "  select t2f.fragmentId "
-//              + "  from Tag2Fragment t2f "
-//              + "  where t2f.tagId = 0 "
-//              + ") "
-//              ),
-//    @NamedQuery(name = "Tag.findFragmentIds",
-//        query = "select distinct f.id "
-//              + "from Tag t "
-//              + "  inner join t.fragments as f "
-//              + "where t.id = :id "
-//              ),
-//    @NamedQuery(name = "Tag.findFragments",
-//        query = "select distinct f "
-//              + "from Tag t "
-//              + "  inner join t.fragments as f "
-//              + "  left join fetch f.tags "
-//              + "where t.id = :id "
-//              ),
-//    @NamedQuery(name = "Tag.findNonTrashedFragments",
-//        query = "select distinct f "
-//              + "from Fragment f "
-//              + "  inner join f.tags t "
-//              + "  left join fetch f.tags "
-//              + "where t.id = :id and f.id not in ( "
-//              + "  select t2f.fragmentId "
-//              + "  from Tag2Fragment t2f "
-//              + "  where t2f.tagId = 0 "
-//              + ") "
-//              ),
     @NamedQuery(name = "Tag.findFragmentsWithIdFilter",
         query = "select distinct f "
               + "from Tag t "
