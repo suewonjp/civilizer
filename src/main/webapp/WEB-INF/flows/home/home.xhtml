@@ -187,7 +187,7 @@ function confirmTrashingTag(tagId, deleting) {
 
         <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
     </p:confirmDialog>
-
+    
     <div id="fragment-group">
         <c:set var="panelId" value="0" />
 	    <div id="fragment-panel-#{panelId}">
@@ -273,10 +273,12 @@ function confirmTrashingTag(tagId, deleting) {
 	    
 	    <c:set var="panelId" value="1" />
         <div id="fragment-panel-#{panelId}">
+            <p>&nbsp;</p>
         </div>
         
         <c:set var="panelId" value="2" />
         <div id="fragment-panel-#{panelId}">
+            <p>&nbsp;</p>
         </div>
     </div>
 </h:form>
@@ -287,7 +289,7 @@ function confirmTrashingTag(tagId, deleting) {
     <ui:include src="sidebar.xhtml"></ui:include>
 </ui:define>
 
-<ui:define name="footer"><h5>This is Footer!!!</h5></ui:define>
+<ui:define name="footer"></ui:define>
 
 
 </ui:composition>
