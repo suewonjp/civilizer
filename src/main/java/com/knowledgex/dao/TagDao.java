@@ -21,8 +21,6 @@ public interface TagDao {
 
     public Tag findByIdWithFragments(Long id);
     
-    public long countFragments(Long id, boolean includeTrashed);
-
     public List<Long> findFragmentIds(Long id);
     
     public List<Fragment> findFragments(Long id);

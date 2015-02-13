@@ -44,7 +44,17 @@ public final class FragmentDaoImpl implements FragmentDao {
     			.getNamedQuery(nq)
     			.iterate().next();
     }
-
+    
+    @Override
+    public long countByTagId(long tagId, boolean includeTrashed) {
+        final String nq = includeTrashed ?
+                "Fragment.countByTagId" : "Fragment.countNonTrashedByTagId";
+        return (Long) sessionFactory.getCurrentSession()
+                .getNamedQuery(nq)
+                .setParameter("tagId", tagId)
+                .iterate().next();
+    }
+    
     @Override
     @SuppressWarnings("unchecked")
     public List<Fragment> findAll() {
@@ -67,6 +77,18 @@ public final class FragmentDaoImpl implements FragmentDao {
                         + "  where t2f.tagId = 0 "
                         + ") "
                         )
+                .list();
+    }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    public List<Fragment> findByTagId(long tagId, boolean includeTrashed) {
+        final String nq = includeTrashed ?
+                "Fragment.findByTagId" : "Fragment.findNonTrashedByTagId";
+        return sessionFactory.getCurrentSession()
+                .getNamedQuery(nq)
+                .setParameter("tagId", tagId)
                 .list();
     }
 

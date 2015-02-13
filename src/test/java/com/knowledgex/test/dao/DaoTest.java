@@ -75,7 +75,6 @@ class DaoTest {
 	protected Long getAndValidateId(Tag f) {
 		Long id = f.getId();
 		assertTrue(id != null);
-//		assertTrue(id >= 0);
 		return id;
 	}
 
@@ -153,14 +152,14 @@ class DaoTest {
 	    for (Tag tag : tags) {
 	        {
                 boolean includeTrashed = true;
-                final List<Fragment> fragments = tagDao.findFragments(tag.getId());
-                final long fc = tagDao.countFragments(tag.getId(), includeTrashed);
+                final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), includeTrashed);
+                final long fc = fragmentDao.countByTagId(tag.getId(), includeTrashed);
                 assertEquals(fc, fragments.size());
             }
 	        {
 	            boolean includeTrashed = false;
-	            final List<Fragment> fragments = tagDao.findNonTrashedFragments(tag.getId(), 0, Integer.MAX_VALUE);
-	            final long fc = tagDao.countFragments(tag.getId(), includeTrashed);
+	            final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), includeTrashed);
+	            final long fc = fragmentDao.countByTagId(tag.getId(), includeTrashed);
 	            assertEquals(fc, fragments.size());
 	        }
         }

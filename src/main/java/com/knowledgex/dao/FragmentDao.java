@@ -11,10 +11,14 @@ public interface FragmentDao {
     
 	public long countAll(boolean includeTrashed);
 	
+	public long countByTagId(long tagId, boolean includeTrashed);
+	
     public List<Fragment> findAll();
 
     public List<Fragment> findNonTrashed();
     
+    public List<Fragment> findByTagId(long tagId, boolean includeTrashed);
+
     public List<Fragment> findSomeByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc);
 
     public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order, boolean asc);
