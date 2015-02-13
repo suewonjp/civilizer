@@ -74,20 +74,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 	@SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
 	public List<Fragment> findSomeByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc) {
-//	    first = Math.max(0, first);
-//	    count = Math.max(0, count);
-//	    final Session s = sessionFactory.getCurrentSession();
-//	    final List<Long> ids = s.getNamedQuery("Fragment.findIds")
-//	            .setFirstResult(first)
-//                .setMaxResults(count)
-//                .list();
-//	    final List<Fragment> output = new ArrayList<Fragment>(count);
-//	    count = Math.min(count, ids.size());
-//	    final Query q = s.getNamedQuery("Fragment.findByIdWithTags");
-//	    for (int i = 0; i < count; ++i) {
-//            output.add((Fragment) q.setParameter("id", ids.get(i)).uniqueResult());
-//        }
-//	    return output;
 	    
 	    first = Math.max(0, first);
         count = Math.max(0, count);

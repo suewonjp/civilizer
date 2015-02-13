@@ -74,14 +74,10 @@ public final class MainController {
         else if (tagId == Tag.TRASH_TAG_ID) {
         	// Fetch the trashed fragments
             fragments = fragmentDao.findSomeByTagId(tagId, first, count + 1, frgOrder, asc);
-//        	fragments = tagDao.findFragments(tagId, first, count + 1);
-//        	Fragment.sort(fragments, frgOrder, asc);
         }
         else {
         	// Fetch the fragments with the specified tag (non-trashed)
             fragments = fragmentDao.findSomeNonTrashedByTagId(tagId, first, count + 1, frgOrder, asc);
-//        	fragments = tagDao.findNonTrashedFragments(tagId, first, count + 1);
-//        	Fragment.sort(fragments, frgOrder, asc);
         }
         
         final boolean isLastPage = fragments.size() <= count;
