@@ -79,7 +79,7 @@ public class HibernateQueryTest {
 		final long id = fragments.get(TestUtil.getRandom().nextInt(fragments.size())).getId();
 		crit.add(Restrictions.eq("id", id));
 		final Fragment f0 = (Fragment) crit.uniqueResult();
-		final Fragment f1 = fragmentDao.findById(id);
+		final Fragment f1 = fragmentDao.findById(id, false, false);
 		assertEquals(f0, f1);
 	}
 
@@ -221,7 +221,7 @@ public class HibernateQueryTest {
 				.getNamedQuery("Tag2Fragment.findTrashedFragmentIds")
 				.list();
 		for (Long id : trashedFragmentIds) {
-			Fragment f = fragmentDao.findByIdWithTags(id);
+			Fragment f = fragmentDao.findById(id, true, false);
 			assertNotNull(f);
 			assertNotNull(f.getTags());
 			boolean hasTrashTag = false;

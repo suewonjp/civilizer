@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -74,20 +75,32 @@ public final class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public Tag findByIdWithChildren(Long id) {
-        return (Tag) sessionFactory.getCurrentSession()
-                .getNamedQuery("Tag.findByIdWithChildren")
-                .setParameter("id", id)
-                .uniqueResult();
+    public Tag findById(Long id, boolean withFragments, boolean withChildren) {
+    	Tag output = findById(id);
+    	if (withFragments) {
+    		Hibernate.initialize(output.getFragments());
+    	}
+    	if (withChildren) {
+    		Hibernate.initialize(output.getChildren());
+    	}
+    	return output;
     }
+    
+//   @Override
+//    public Tag findByIdWithChildren(Long id) {
+//        return (Tag) sessionFactory.getCurrentSession()
+//                .getNamedQuery("Tag.findByIdWithChildren")
+//                .setParameter("id", id)
+//                .uniqueResult();
+//    }
 
-    @Override
-    public Tag findByIdWithFragments(Long id) {
-        return (Tag) sessionFactory.getCurrentSession()
-                .getNamedQuery("Tag.findByIdWithFragments")
-                .setParameter("id", id)
-                .uniqueResult();
-    }
+//    @Override
+//    public Tag findByIdWithFragments(Long id) {
+//        return (Tag) sessionFactory.getCurrentSession()
+//                .getNamedQuery("Tag.findByIdWithFragments")
+//                .setParameter("id", id)
+//                .uniqueResult();
+//    }
     
 //    @Override
 //    @SuppressWarnings("unchecked")

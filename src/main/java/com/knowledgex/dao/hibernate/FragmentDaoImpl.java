@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -90,6 +91,32 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .list();
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    public List<Fragment> findByTagIds(Collection<Long> idsIn, Collection<Long> idsEx) {
+    	if (idsIn == null || idsIn.isEmpty()) {
+    		// Empty inclusion filter, empty results
+    		return null;
+    	}
+    	
+    	final Set<Long> setIn = new HashSet<Long>(idsIn); // needed for removing duplications
+    	final List<Fragment> output =
+    	        sessionFactory.getCurrentSession()
+                .getNamedQuery("Fragment.findByTagIds")
+                .setParameterList("tagIds", setIn)
+                .list();
+    	
+    	if (idsEx == null || idsEx.isEmpty()) {
+    		// We have an inclusive filter only
+    		return output;
+    	}
+    	
+    	// We have an exclusive filter
+    	Fragment.applyExclusiveTagFilter(output, idsEx);
+    	return output;
+    }
+    
 	@Override
 	@SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
@@ -175,8 +202,8 @@ public final class FragmentDaoImpl implements FragmentDao {
         }
         return output;
 	}
-
-    @Override
+	
+	@Override
     public Fragment findById(Long id) {
         return (Fragment) sessionFactory.getCurrentSession()
                 .getNamedQuery("Fragment.findById")
@@ -184,29 +211,41 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .uniqueResult();
     }
 
-    @Override
-    public Fragment findByIdWithAll(Long id) {
-        return (Fragment) sessionFactory.getCurrentSession()
-                .getNamedQuery("Fragment.findByIdWithAll")
-                .setParameter("id", id)
-                .uniqueResult();
+	@Override
+    public Fragment findById(Long id, boolean withTags, boolean withRelatedOnes) {
+		Fragment output = findById(id);
+		if (withTags) {
+			Hibernate.initialize(output.getTags());
+		}
+		if (withRelatedOnes) {
+			Hibernate.initialize(output.getRelatedOnes());
+		}
+		return output;
     }
+	
+//    @Override
+//    public Fragment findByIdWithAll(Long id) {
+//        return (Fragment) sessionFactory.getCurrentSession()
+//                .getNamedQuery("Fragment.findByIdWithAll")
+//                .setParameter("id", id)
+//                .uniqueResult();
+//    }
     
-    @Override
-    public Fragment findByIdWithRelatedOnes(Long id) {
-        return (Fragment) sessionFactory.getCurrentSession()
-                .getNamedQuery("Fragment.findByIdWithRelatedOnes")
-                .setParameter("id", id)
-                .uniqueResult();
-    }
+//    @Override
+//    public Fragment findByIdWithRelatedOnes(Long id) {
+//        return (Fragment) sessionFactory.getCurrentSession()
+//                .getNamedQuery("Fragment.findByIdWithRelatedOnes")
+//                .setParameter("id", id)
+//                .uniqueResult();
+//    }
 
-    @Override
-    public Fragment findByIdWithTags(Long id) {
-        return (Fragment) sessionFactory.getCurrentSession()
-                .getNamedQuery("Fragment.findByIdWithTags")
-                .setParameter("id", id)
-                .uniqueResult();
-    }
+//    @Override
+//    public Fragment findByIdWithTags(Long id) {
+//        return (Fragment) sessionFactory.getCurrentSession()
+//                .getNamedQuery("Fragment.findByIdWithTags")
+//                .setParameter("id", id)
+//                .uniqueResult();
+//    }
     
     @Override
     @SuppressWarnings("unchecked")

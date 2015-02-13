@@ -147,7 +147,7 @@ public final class MainController {
 	}
 	
 	public void trashFragment(Long fragmentId) {
-		final Fragment frg = fragmentDao.findByIdWithTags(fragmentId);
+		final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 		frg.addTag(getTrashTag());
 		fragmentDao.save(frg);
 		ViewUtil.addMessage("Trashing", "Fragment #" + frg.getId(), null);

@@ -16,9 +16,11 @@ public interface TagDao {
 
     public Tag findById(Long id);
 
-    public Tag findByIdWithChildren(Long id);
+    public Tag findById(Long id, boolean withFragments, boolean withChildren);
 
-    public Tag findByIdWithFragments(Long id);
+//    public Tag findByIdWithChildren(Long id);
+
+//    public Tag findByIdWithFragments(Long id);
     
 //    public List<Long> findFragmentIds(Long id);
 //    

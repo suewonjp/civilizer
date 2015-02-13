@@ -17,6 +17,8 @@ public interface FragmentDao {
 
     public List<Fragment> findByTagId(long tagId, boolean includeTrashed);
 
+    public List<Fragment> findByTagIds(Collection<Long> idsIn, Collection<Long> idsEx);
+
     public List<Fragment> findSomeByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc);
 
     public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order, boolean asc);
@@ -25,11 +27,13 @@ public interface FragmentDao {
 
     public Fragment findById(Long id);
 
-    public Fragment findByIdWithAll(Long id);
+    public Fragment findById(Long id, boolean withTags, boolean withRelatedOnes);
 
-    public Fragment findByIdWithRelatedOnes(Long id);
+//    public Fragment findByIdWithAll(Long id);
+
+//    public Fragment findByIdWithRelatedOnes(Long id);
     
-    public Fragment findByIdWithTags(Long id);
+//    public Fragment findByIdWithTags(Long id);
     
     public List<Long> findIdsByTagId(long tagId);
 

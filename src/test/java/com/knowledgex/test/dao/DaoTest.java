@@ -158,10 +158,23 @@ class DaoTest {
 
 		for (Fragment f : fragments) {
 			Long id = getAndValidateId(f);
-			Fragment frg = fragmentDao.findById(id);
+			boolean withTags = false, withRelatedOnes = false;
+			Fragment frg = fragmentDao.findById(id, withTags, withRelatedOnes);
 			assertEquality(frg, f);
 			assertFalse(Hibernate.isInitialized(frg.getTags()));
 			assertFalse(Hibernate.isInitialized(frg.getRelatedOnes()));
+			withTags = true;
+			frg = fragmentDao.findById(id, withTags, withRelatedOnes);
+			assertTrue(Hibernate.isInitialized(frg.getTags()));
+			for (Tag t : frg.getTags()) {				
+				assertTrue(Hibernate.isInitialized(t));
+			}
+			withRelatedOnes = true;
+			frg = fragmentDao.findById(id, withTags, withRelatedOnes);
+			assertTrue(Hibernate.isInitialized(frg.getRelatedOnes()));
+			for (Fragment r : frg.getRelatedOnes()) {				
+				assertTrue(Hibernate.isInitialized(r));
+			}
 		}
 	}
 
@@ -172,13 +185,11 @@ class DaoTest {
 
 		for (Tag t : tags) {
 		    Long id = getAndValidateId(t);
-			Tag tag = tagDao.findByIdWithFragments(id);
+			Tag tag = tagDao.findById(id, true, false);
 			Collection<Fragment> frgs = tag.getFragments();
 			assertTrue(Hibernate.isInitialized(frgs));
-			if (frgs.isEmpty() == false) {
-				for (Fragment f : frgs) {
-					assertTrue(fragmentNames.contains(f.getTitle()));
-				}
+			for (Fragment f : frgs) {
+				assertTrue(fragmentNames.contains(f.getTitle()));
 			}
 		}
 	}
@@ -192,7 +203,7 @@ class DaoTest {
 		for (Fragment f : fragments) {
 			Long id = getAndValidateId(f);
 
-			Fragment frgm = fragmentDao.findByIdWithTags(id);
+			Fragment frgm = fragmentDao.findById(id, true, false);
 			Collection<Tag> relatedTags = frgm.getTags();
 			assertTrue(Hibernate.isInitialized(relatedTags));
 			if (relatedTags.isEmpty() == false) {
@@ -209,7 +220,7 @@ class DaoTest {
 
 		for (Tag t : tags) {
 			Long id = getAndValidateId(t);
-			Tag tag = tagDao.findByIdWithChildren(id);
+			Tag tag = tagDao.findById(id, false, true);
 			Collection<Tag> children = tag.getChildren();
 			assertTrue(Hibernate.isInitialized(children));
 			if (children.isEmpty() == false) {
@@ -227,7 +238,7 @@ class DaoTest {
 
 		for (Fragment f : fragments) {
 			Long id = getAndValidateId(f);
-			Fragment frgm = fragmentDao.findByIdWithRelatedOnes(id);
+			Fragment frgm = fragmentDao.findById(id, false, true);
 			Collection<Fragment> relatedOnes = frgm.getRelatedOnes();
 			assertTrue(Hibernate.isInitialized(relatedOnes));
 			if (relatedOnes.isEmpty() == false) {
@@ -246,10 +257,10 @@ class DaoTest {
 	}
 
 	protected void testPersistNewFragment() {
-		Fragment frg = newFragment();
+		final Fragment frg = newFragment();
 
 		// Add new tag to this fragment
-		Tag tag = newTag("added tag " + counter++);
+		final Tag tag = newTag("added tag " + counter++);
 		frg.addTag(tag);
 
 		assertNull(frg.getId());
@@ -260,18 +271,11 @@ class DaoTest {
 		assertNotNull(tag.getId());
 		assertNotNull(tagDao.findById(tag.getId()));
 
-		Collection<Fragment> fs = fragmentDao.findByTagId(tag.getId(), true);
-//		Collection<Fragment> fs = tagDao.findFragments(tag.getId());
+		final List<Fragment> fs = fragmentDao.findByTagId(tag.getId(), true);
 		assertNotNull(fs);
 		assertEquals(fs.size(), 1);
-		for (Fragment f : fs) {
-			assertEquality(f, frg);
-//			Collection<Tag> tags = f.getTags();
-//			assertEquals(tags.size(), 1);
-//			for (Tag t : tags) {
-//				assertEquality(tag, t);
-//			}
-		}
+		final Fragment f = fs.get(0);
+		assertEquality(f, frg);
 	}
 
 	protected void testUpdateTag() {
@@ -289,7 +293,7 @@ class DaoTest {
 			t.setChildren(null);
 		}
 		for (int i = 1; i < temporalTags.size(); ++i) {
-			Tag parent = tagDao.findByIdWithChildren(temporalTags.get(i - 1).getId());
+			Tag parent = tagDao.findById(temporalTags.get(i - 1).getId(), false, true);
 			Tag child = temporalTags.get(i);
 			Collection<Tag> children = parent.getChildren();
 			assertTrue(Hibernate.isInitialized(children));
@@ -322,8 +326,7 @@ class DaoTest {
 		}
 		for (int i = 1; i < temporalFragments.size(); ++i) {
 			Fragment from = fragmentDao
-						.findByIdWithRelatedOnes(temporalFragments.get(i - 1)
-						.getId());
+						.findById(temporalFragments.get(i - 1).getId(), false, true);
 			Fragment to = temporalFragments.get(i);
 			Collection<Fragment> relatedOnes = from.getRelatedOnes();
 			assertTrue(Hibernate.isInitialized(relatedOnes));
@@ -332,6 +335,85 @@ class DaoTest {
 				assertEquality(f, to);
 			}
 		}
+	}
+	
+	protected void testFindFragmentsByTagIds() {
+		Collection<Tag> tags = tagDao.findAll();
+		
+		final int minTags = 4;
+		if (tags.size() < minTags) {
+			for (int i = 0; i < minTags; ++i) {
+				testPersistNewTag();
+			}
+			tags = tagDao.findAll();
+		}
+		
+		List<Long> ids = new ArrayList<Long>(tags.size());
+		for (Tag t : tags) {
+			ids.add(t.getId());
+		}
+		Collections.shuffle(ids);
+		
+		Collection<Fragment> fragments = null;
+		List<Long> idsIn = new ArrayList<Long>();
+		List<Long> idsEx = new ArrayList<Long>();
+		idsEx.add(ids.get(0));
+		idsEx.add(ids.get(1));
+		
+		// test edge cases
+		fragments = fragmentDao.findByTagIds(null, null);
+		assertNull(fragments);
+
+		fragments = fragmentDao.findByTagIds(null, idsEx);
+		assertNull(fragments);
+
+		assertTrue(idsIn.isEmpty());
+		fragments = fragmentDao.findByTagIds(idsIn, idsEx);
+		assertNull(fragments);
+		
+		idsIn.add(ids.get(ids.size()-1));
+		idsIn.add(ids.get(ids.size()-2));
+		
+		// The inclusive and exclusive filter should not have duplicate IDs!
+		for (Long idIn : idsIn) {
+			assertFalse(idsEx.contains(idIn));
+		}
+		
+		// test with an inclusive filter only
+		fragments = fragmentDao.findByTagIds(idsIn, null);
+		for (Fragment f : fragments) {
+			boolean contains = false;
+			for (Long tid : idsIn) {
+				if (f.containsTagId(tid)) {
+					contains = true;
+					break;
+				}
+			}
+			assertTrue(contains);
+		}
+		
+		// test with a duplicate inclusive filter
+		idsIn.add(idsIn.get(0));
+		Collection<Fragment> fragments2 = fragmentDao.findByTagIds(idsIn, null);
+		assertEquals(fragments, fragments2);
+		
+		// test with an exclusive filter
+		fragments = fragmentDao.findByTagIds(idsIn, idsEx);
+		for (Fragment f : fragments) {
+			boolean contains = false;
+			for (Long tid : idsEx) {
+				if (f.containsTagId(tid)) {
+					contains = true;
+					break;
+				}
+			}
+			assertFalse(contains);
+		}
+		
+		// test with a duplicate exclusive filter
+		idsEx.add(idsEx.get(0));
+		fragments2 = fragmentDao.findByTagIds(idsIn, idsEx);
+		assertEquals(fragments, fragments2);
 	}
 
 //	protected void testFindFragmentsByTagIds() {

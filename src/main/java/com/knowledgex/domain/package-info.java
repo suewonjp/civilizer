@@ -35,6 +35,13 @@
               + "  inner join f.tags t "
               + "where t.id = :tagId "
               ),
+    @NamedQuery(name = "Fragment.findByTagIds",
+        query = "select distinct f "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "  left join fetch f.tags "
+              + "where t.id in (:tagIds) "
+              ),
     @NamedQuery(name = "Fragment.findNonTrashedByTagId",
         query = "select distinct f "
               + "from Fragment f "
@@ -57,24 +64,25 @@
               + "  left join fetch f.relatedOnes "
               + "where f.id = :id "
               ),
-    @NamedQuery(name = "Fragment.findByIdWithRelatedOnes",
-        query = "select distinct f "
-              + "from Fragment f "
-              + "  left join fetch f.relatedOnes "
-              + "where f.id = :id "
-              ),
-    @NamedQuery(name = "Fragment.findByIdWithTags",
-        query = "select distinct f "
-              + "from Fragment f "
-              + "  left join fetch f.tags "
-              + "where f.id = :id "
-              ),
+//    @NamedQuery(name = "Fragment.findByIdWithRelatedOnes",
+//        query = "select distinct f "
+//              + "from Fragment f "
+//              + "  left join fetch f.relatedOnes "
+//              + "where f.id = :id "
+//              ),
+//    @NamedQuery(name = "Fragment.findByIdWithTags",
+//        query = "select distinct f "
+//              + "from Fragment f "
+//              + "  left join fetch f.tags "
+//              + "where f.id = :id "
+//              ),
     @NamedQuery(name = "Fragment.findIdsByTagId",
         query = "select f.id "
               + "from Fragment f "
               + "  inner join f.tags t "
               + "where t.id = :tagId "
               ),
+              
     @NamedQuery(name = "Fragment.findIdsNonTrashedOrderByUpdateDatetime",
         query = "select f.id "
               + "from Fragment f "
@@ -115,6 +123,7 @@
               + ") "
               + "order by f.id desc "
               ),
+              
     @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderByUpdateDatetime",
         query = "select f.id "
               + "from Fragment f "
@@ -159,6 +168,7 @@
               + ") "
               + "order by f.id desc "
               ),
+              
     @NamedQuery(name = "Fragment.findIdsByTagIdOrderByUpdateDatetime",
         query = "select f.id "
               + "from Fragment f "
@@ -188,6 +198,8 @@
               + "order by f.id desc "
               ),
     
+    //----------------------------------------------------------//
+              
     @NamedQuery(name = "Tag.countAll",
         query = "select count(*) "
         	  + "from Tag t"
@@ -208,12 +220,12 @@
               + "  left join fetch t.children "
               + "where t.id = :id "
               ),
-    @NamedQuery(name = "Tag.findByIdWithFragments",
-        query = "select distinct t "
-              + "from Tag t "
-              + "  left join fetch t.fragments "
-              + "where t.id = :id "
-              ),
+//    @NamedQuery(name = "Tag.findByIdWithFragments",
+//        query = "select distinct t "
+//              + "from Tag t "
+//              + "  left join fetch t.fragments "
+//              + "where t.id = :id "
+//              ),
 //    @NamedQuery(name = "Tag.countNonTrashedFragments",
 //        query = "select count(f) "
 //              + "from Tag t "
@@ -248,13 +260,13 @@
 //              + "  where t2f.tagId = 0 "
 //              + ") "
 //              ),
-//    @NamedQuery(name = "Tag.findFragmentsWithIdFilter",
-//        query = "select distinct f "
-//              + "from Tag t "
-//              + "  inner join t.fragments as f "
-//              + "  left join fetch f.tags "
-//              + "where t.id in (:ids) "
-//              ),
+    @NamedQuery(name = "Tag.findFragmentsWithIdFilter",
+        query = "select distinct f "
+              + "from Tag t "
+              + "  inner join t.fragments as f "
+              + "  left join fetch f.tags "
+              + "where t.id in (:ids) "
+              ),
     @NamedQuery(name = "Tag.findParentTags",
         query = "select distinct t "
               + "from Tag t "
@@ -262,6 +274,8 @@
               + "where child.id = :id "
               ),
 
+    //----------------------------------------------------------//              
+              
     @NamedQuery(name = "Tag2Fragment.findTrashedFragmentIds",
         query = "select t2f.fragmentId "
               + "from Tag2Fragment t2f "
