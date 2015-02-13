@@ -2,8 +2,7 @@ package com.knowledgex.dao;
 
 import java.util.*;
 
-import com.knowledgex.domain.Fragment;
-import com.knowledgex.domain.Tag;
+import com.knowledgex.domain.*;
 
 public interface TagDao {
     
@@ -21,18 +20,18 @@ public interface TagDao {
 
     public Tag findByIdWithFragments(Long id);
     
-    public List<Long> findFragmentIds(Long id);
-    
-    public List<Fragment> findFragments(Long id);
-
-    public List<Fragment> findFragments(Long id, int first, int count);
-
-    public List<Fragment> findNonTrashedFragments(Long id, int first, int count);
-    
-    public List<Fragment> findFragments(
-    		Collection<Long> idsIn
-    		, Collection<Long> idsEx
-    		);
+//    public List<Long> findFragmentIds(Long id);
+//    
+//    public List<Fragment> findFragments(Long id);
+//
+//    public List<Fragment> findFragments(Long id, int first, int count);
+//
+//    public List<Fragment> findNonTrashedFragments(Long id, int first, int count);
+//    
+//    public List<Fragment> findFragments(
+//    		Collection<Long> idsIn
+//    		, Collection<Long> idsEx
+//    		);
     
     public List<Tag> findParentTags(Long id);
 

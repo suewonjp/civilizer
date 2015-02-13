@@ -207,6 +207,16 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .setParameter("id", id)
                 .uniqueResult();
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    public List<Long> findIdsByTagId(long tagId) {
+    	return sessionFactory.getCurrentSession()
+                .getNamedQuery("Fragment.findIdsByTagId")
+                .setParameter("tagId", tagId)
+                .list();
+    }
 
     @Override
     public Fragment save(Fragment fragment) {

@@ -30,6 +30,8 @@ public interface FragmentDao {
     public Fragment findByIdWithRelatedOnes(Long id);
     
     public Fragment findByIdWithTags(Long id);
+    
+    public List<Long> findIdsByTagId(long tagId);
 
     public Fragment save(Fragment frgm);
 

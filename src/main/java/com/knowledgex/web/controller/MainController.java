@@ -285,7 +285,7 @@ public final class MainController {
 		final Tag t = tb.getTag();
 		final Long id = t.getId();
 		if (id != null) {
-			final List<Long> fids = tagDao.findFragmentIds(id);
+			final List<Long> fids = fragmentDao.findIdsByTagId(id);
 			trashFragments(fids);
 		}
 	}

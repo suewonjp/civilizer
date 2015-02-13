@@ -13,8 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.knowledgex.dao.TagDao;
-import com.knowledgex.domain.Fragment;
-import com.knowledgex.domain.Tag;
+import com.knowledgex.domain.*;
 
 @Repository("tagDao")
 @Transactional
@@ -90,73 +89,73 @@ public final class TagDaoImpl implements TagDao {
                 .uniqueResult();
     }
     
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Long> findFragmentIds(Long id) {
-    	return sessionFactory.getCurrentSession()
-                .getNamedQuery("Tag.findFragmentIds")
-                .setParameter("id", id)
-                .list();
-    }
-    
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Fragment> findFragments(Long id) {
-        return sessionFactory.getCurrentSession()
-                .getNamedQuery("Tag.findFragments")
-                .setParameter("id", id)
-                .list();
-    }
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Fragment> findFragments(Long id, int first, int count) {
-	    return sessionFactory.getCurrentSession()
-                .getNamedQuery("Tag.findFragments")
-                .setParameter("id", id)
-                .setFirstResult(first)
-                .setMaxResults(count)
-                .list();
-	}
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Fragment> findNonTrashedFragments(Long id, int first, int count) {
-		return sessionFactory.getCurrentSession()
-				.getNamedQuery("Tag.findNonTrashedFragments")
-				.setParameter("id", id)
-				.setFirstResult(first)
-				.setMaxResults(count)
-				.list();
-	}
-    
-    @Override
-    @SuppressWarnings("unchecked")
-	public List<Fragment> findFragments(
-			Collection<Long> idsIn
-			, Collection<Long> idsEx
-			) {
-    	if (idsIn == null || idsIn.isEmpty()) {
-    		// Empty inclusion filter, empty results
-    		return null;
-    	}
-    	
-    	final Set<Long> setIn = new HashSet<Long>(idsIn); // needed for removing duplications
-    	final List<Fragment> output =
-    	        sessionFactory.getCurrentSession()
-                .getNamedQuery("Tag.findFragmentsWithIdFilter")
-                .setParameterList("ids", setIn)
-                .list();
-    	
-    	if (idsEx == null || idsEx.isEmpty()) {
-    		// We have an inclusive filter only
-    		return output;
-    	}
-    	
-    	// We have an exclusive filter
-    	Fragment.applyExclusiveTagFilter(output, idsEx);
-    	return output;
-	}
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public List<Long> findFragmentIds(Long id) {
+//    	return sessionFactory.getCurrentSession()
+//                .getNamedQuery("Tag.findFragmentIds")
+//                .setParameter("id", id)
+//                .list();
+//    }
+//    
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public List<Fragment> findFragments(Long id) {
+//        return sessionFactory.getCurrentSession()
+//                .getNamedQuery("Tag.findFragments")
+//                .setParameter("id", id)
+//                .list();
+//    }
+//
+//	@Override
+//	@SuppressWarnings("unchecked")
+//	public List<Fragment> findFragments(Long id, int first, int count) {
+//	    return sessionFactory.getCurrentSession()
+//                .getNamedQuery("Tag.findFragments")
+//                .setParameter("id", id)
+//                .setFirstResult(first)
+//                .setMaxResults(count)
+//                .list();
+//	}
+//	
+//	@Override
+//	@SuppressWarnings("unchecked")
+//	public List<Fragment> findNonTrashedFragments(Long id, int first, int count) {
+//		return sessionFactory.getCurrentSession()
+//				.getNamedQuery("Tag.findNonTrashedFragments")
+//				.setParameter("id", id)
+//				.setFirstResult(first)
+//				.setMaxResults(count)
+//				.list();
+//	}
+//    
+//    @Override
+//    @SuppressWarnings("unchecked")
+//	public List<Fragment> findFragments(
+//			Collection<Long> idsIn
+//			, Collection<Long> idsEx
+//			) {
+//    	if (idsIn == null || idsIn.isEmpty()) {
+//    		// Empty inclusion filter, empty results
+//    		return null;
+//    	}
+//    	
+//    	final Set<Long> setIn = new HashSet<Long>(idsIn); // needed for removing duplications
+//    	final List<Fragment> output =
+//    	        sessionFactory.getCurrentSession()
+//                .getNamedQuery("Tag.findFragmentsWithIdFilter")
+//                .setParameterList("ids", setIn)
+//                .list();
+//    	
+//    	if (idsEx == null || idsEx.isEmpty()) {
+//    		// We have an inclusive filter only
+//    		return output;
+//    	}
+//    	
+//    	// We have an exclusive filter
+//    	Fragment.applyExclusiveTagFilter(output, idsEx);
+//    	return output;
+//	}
     
     @Override
     @SuppressWarnings("unchecked")
