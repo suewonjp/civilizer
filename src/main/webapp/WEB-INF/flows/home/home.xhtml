@@ -173,7 +173,7 @@ function confirmTrashingTag(tagId, deleting) {
         <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check" onclick="PF('errorMsgDlg').hide();" type="button" />
     </p:confirmDialog>
     
-    <p:confirmDialog header="#{msg['are_you_sure']}" severity="alert" widgetVar="singletonConfirmDlg" showEffect="fade" hideEffect="fade">
+    <p:confirmDialog header="#{msg['are_you_sure']}" width="450px" severity="alert" widgetVar="singletonConfirmDlg" showEffect="fade" hideEffect="fade">
         <f:facet name="message">
             <h:outputText id="confirm-dlg-msg" value="&nbsp;" />
         </f:facet>
