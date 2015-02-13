@@ -82,16 +82,6 @@
               + ") "
               + "order by f.id desc "
               ),
-    @NamedQuery(name = "Fragment.findNonTrashedWithTagsOrderByUpdateDatetime",
-        query = "from Fragment f "
-              + "  left join fetch f.tags "
-              + "where f.id not in ( "
-              + "  select t2f.fragmentId "
-              + "  from Tag2Fragment t2f "
-              + "  where t2f.tagId = 0 "
-              + ") "
-              + "order by f.updateDatetime desc "
-              ), 
     
     @NamedQuery(name = "Tag.countAll",
         query = "select count(*) "

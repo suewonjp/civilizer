@@ -93,25 +93,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 	@Override
 	@SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-	public List<Fragment> findSomeNonTrashed(int first, int count) {
-		first = Math.max(0, first);
-	    count = Math.max(0, count);
-	    List<Fragment> output = sessionFactory.getCurrentSession()
-	    		.getNamedQuery("Fragment.findNonTrashedWithTagsOrderByUpdateDatetime")
-	    		.setFirstResult(first)
-                .setMaxResults(count)
-                .list();
-	    if (count < output.size()) {
-	        // setMaxResults() method returns more items than the specified count in some unknown situations
-	        // So truncate the output list if those cases happen
-	        output = output.subList(0, count);
-	    }
-	    return output;
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
 	public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order, boolean asc) {
 		first = Math.max(0, first);
 	    count = Math.max(0, count);
