@@ -126,6 +126,34 @@
               + ") "
               + "order by f.id desc "
               ),
+    @NamedQuery(name = "Fragment.findIdsByTagIdOrderByUpdateDatetime",
+        query = "select f.id "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id = :tagId "
+              + "order by f.updateDatetime desc "
+              ),
+    @NamedQuery(name = "Fragment.findIdsByTagIdOrderByCreationDatetime",
+        query = "select f.id "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id = :tagId "
+              + "order by f.creationDatetime desc "
+              ),
+    @NamedQuery(name = "Fragment.findIdsByTagIdOrderByTitle",
+        query = "select f.id "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id = :tagId "
+              + "order by lower(f.title) desc "
+              ),
+    @NamedQuery(name = "Fragment.findIdsByTagIdOrderById",
+        query = "select f.id "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id = :tagId "
+              + "order by f.id desc "
+              ),
     
     @NamedQuery(name = "Tag.countAll",
         query = "select count(*) "
