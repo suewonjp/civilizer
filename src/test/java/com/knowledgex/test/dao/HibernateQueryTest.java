@@ -176,7 +176,7 @@ public class HibernateQueryTest {
 	@Test
 //	@SuppressWarnings("unchecked")
 	public void testDetachedCriteria() {
-		final List<Fragment> fragments = fragmentDao.findAll();
+		final List<Fragment> fragments = fragmentDao.findAll(true);
 		assertNotNull(fragments);
 		assertFalse(fragments.isEmpty());
 		for (Fragment f : fragments) {
@@ -197,7 +197,7 @@ public class HibernateQueryTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void testJoinTable() {
-		final List<Fragment> fragments = fragmentDao.findAll();
+		final List<Fragment> fragments = fragmentDao.findAll(true);
 		final List<Tag> tags = tagDao.findAll();		
 		final List<Tag2Fragment> t2fs = session
 				.createQuery("from Tag2Fragment t2f")

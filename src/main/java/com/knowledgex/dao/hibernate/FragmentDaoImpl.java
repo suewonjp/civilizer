@@ -57,18 +57,15 @@ public final class FragmentDaoImpl implements FragmentDao {
     
     @Override
     @SuppressWarnings("unchecked")
-    public List<Fragment> findAll() {
-        return sessionFactory.getCurrentSession()
-                .createQuery("from Fragment f")
-                .list();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
-    public List<Fragment> findNonTrashed() {
-        return sessionFactory.getCurrentSession()
-                .createQuery(
+    public List<Fragment> findAll(boolean includeTrashed) {
+        if (includeTrashed) {
+            return sessionFactory.getCurrentSession()
+                    .createQuery("from Fragment f")
+                    .list();
+        }
+        else {
+            return sessionFactory.getCurrentSession()
+                    .createQuery(
                           "select distinct f "
                         + "from Fragment f "
                         + "where f.id not in ( "
@@ -77,7 +74,8 @@ public final class FragmentDaoImpl implements FragmentDao {
                         + "  where t2f.tagId = 0 "
                         + ") "
                         )
-                .list();
+                    .list();
+        }
     }
     
     @Override

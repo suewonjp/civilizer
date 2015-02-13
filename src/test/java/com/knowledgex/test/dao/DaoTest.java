@@ -106,7 +106,7 @@ class DaoTest {
 	    List<?> result0, result1;
 	    
 	    result0 = fragmentDao.executeQuery("from Fragment");
-	    result1 = fragmentDao.findAll();
+	    result1 = fragmentDao.findAll(true);
 	    assertEquals(result0, result1);
 
 	    result0 = fragmentDao.executeQuery("from Tag");
@@ -128,16 +128,10 @@ class DaoTest {
 	}
 	
 	protected void testCountAll() {
-		{
-			final Collection<Fragment> fragments = fragmentDao.findAll();
-			final boolean includeTrashed = true;
-			final long c = fragmentDao.countAll(includeTrashed);
-			assertEquals(fragments.size(), c);
-		}
-		{
-			final Collection<Fragment> fragments = fragmentDao.findNonTrashed();
-			final boolean includeTrashed = false;
-			final long c = fragmentDao.countAll(includeTrashed);
+	    final boolean includeTrashedOrNot[] = { true, false };
+	    for (boolean b : includeTrashedOrNot) {
+			final Collection<Fragment> fragments = fragmentDao.findAll(b);
+			final long c = fragmentDao.countAll(b);
 			assertEquals(fragments.size(), c);
 		}
 		{
@@ -149,24 +143,18 @@ class DaoTest {
 	
 	protected void testCountFragmentsPerTag() {
 	    final List<Tag> tags = tagDao.findAll();
+	    final boolean includeTrashedOrNot[] = { true, false };
 	    for (Tag tag : tags) {
-	        {
-                boolean includeTrashed = true;
-                final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), includeTrashed);
-                final long fc = fragmentDao.countByTagId(tag.getId(), includeTrashed);
+	        for (boolean b : includeTrashedOrNot) {
+                final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), b);
+                final long fc = fragmentDao.countByTagId(tag.getId(), b);
                 assertEquals(fc, fragments.size());
             }
-	        {
-	            boolean includeTrashed = false;
-	            final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), includeTrashed);
-	            final long fc = fragmentDao.countByTagId(tag.getId(), includeTrashed);
-	            assertEquals(fc, fragments.size());
-	        }
         }
 	}
 
 	protected void testFindAllFragments() {
-		Collection<Fragment> fragments = fragmentDao.findAll();
+		Collection<Fragment> fragments = fragmentDao.findAll(TestUtil.getRandom().nextBoolean());
 
 		for (Fragment f : fragments) {
 			Long id = getAndValidateId(f);
@@ -179,7 +167,7 @@ class DaoTest {
 
 	protected void testTagToFragmentRelationship() {
 		Collection<Tag> tags = tagDao.findAll();
-		Collection<Fragment> fragments = fragmentDao.findAll();
+		Collection<Fragment> fragments = fragmentDao.findAll(true);
 		Collection<String> fragmentNames = Fragment.getFragmentTitleCollectionFrom(fragments);
 
 		for (Tag t : tags) {
@@ -199,7 +187,7 @@ class DaoTest {
 		Collection<Tag> tags = tagDao.findAll();
 		assertFalse(tags.isEmpty());
 		Collection<String> tagNames = Tag.getTagNameCollectionFrom(tags);
-		Collection<Fragment> fragments = fragmentDao.findAll();
+		Collection<Fragment> fragments = fragmentDao.findAll(true);
 
 		for (Fragment f : fragments) {
 			Long id = getAndValidateId(f);
@@ -233,7 +221,7 @@ class DaoTest {
 	}
 
 	protected void testRelatedFragments() {
-		Collection<Fragment> fragments = fragmentDao.findAll();
+		Collection<Fragment> fragments = fragmentDao.findAll(true);
 		Collection<String> fragmentNames = Fragment
 				.getFragmentTitleCollectionFrom(fragments);
 
@@ -438,7 +426,7 @@ class DaoTest {
 	}
 	
 	protected void testPagingFragments() {
-	    Collection<Fragment> allFragments = fragmentDao.findNonTrashed();
+	    Collection<Fragment> allFragments = fragmentDao.findAll(false);
 	    int allCount = allFragments.size();
 	    int first = 0, count = 0;
 	    Collection<Fragment> someFragments = null;
@@ -485,7 +473,7 @@ class DaoTest {
 	
 	@SuppressWarnings("unchecked")
 	protected void testPagingFragmentsWithOrder() {
-		final Collection<Fragment> allFragments = fragmentDao.findNonTrashed();
+		final Collection<Fragment> allFragments = fragmentDao.findAll(false);
 		final int allCount = allFragments.size();
 	    int first = 0, count = 0;
 	    List<Fragment> someFragments = null;
