@@ -191,94 +191,95 @@ function confirmTrashingTag(tagId, deleting) {
     <div id="fragment-group">
         <c:set var="panelId" value="0" />
 	    <div id="fragment-panel-#{panelId}">
-	        <c:set var="fragmentListBean" value="#{fragmentListBeans[panelId]}"/>
-	        <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
-            <c:set var="curTagId" value="#{panelContext.tagId}" />
-            <c:set var="curPage" value="#{panelContext.curPage}" />
+<!-- 	        <c:set var="fragmentListBean" value="#{fragmentListBeans[panelId]}"/> -->
+<!-- 	        <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" /> -->
+<!--             <c:set var="curTagId" value="#{panelContext.tagId}" /> -->
+<!--             <c:set var="curPage" value="#{panelContext.curPage}" /> -->
             
-            <p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
-                <div id="fragment-sort-option-container" >
-                    <p:selectOneListbox value="#{fragmentListBean.orderOption}">
-                        <f:selectItem itemLabel="#{msg['label_by_updated_time']}" itemValue="0" />
-                        <f:selectItem itemLabel="#{msg['label_by_created_time']}" itemValue="1" />
-                        <f:selectItem itemLabel="#{msg['label_by_title']}" itemValue="2" />
-                        <f:selectItem itemLabel="#{msg['label_by_id']}" itemValue="3" />
-                    </p:selectOneListbox>
-                </div>
-                <br /><br />
-                <p:inputSwitch value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" />
-                <br />
-	            <p:commandButton action="sort-fragments" value="#{msg['label_go_sort']}" icon="ui-icon-check">
-	                <f:param name="curTagId" value="#{curTagId}"/>
-                    <f:param name="curPage" value="#{curPage}"/>
-	            </p:commandButton>
-            </p:dialog>
+<!--             <p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" > -->
+<!--                 <div id="fragment-sort-option-container" > -->
+<!--                     <p:selectOneListbox value="#{fragmentListBean.orderOption}"> -->
+<!--                         <f:selectItem itemLabel="#{msg['label_by_updated_time']}" itemValue="0" /> -->
+<!--                         <f:selectItem itemLabel="#{msg['label_by_created_time']}" itemValue="1" /> -->
+<!--                         <f:selectItem itemLabel="#{msg['label_by_title']}" itemValue="2" /> -->
+<!--                         <f:selectItem itemLabel="#{msg['label_by_id']}" itemValue="3" /> -->
+<!--                     </p:selectOneListbox> -->
+<!--                 </div> -->
+<!--                 <br /><br /> -->
+<!--                 <p:inputSwitch value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" /> -->
+<!--                 <br /> -->
+<!-- 	            <p:commandButton action="sort-fragments" value="#{msg['label_go_sort']}" icon="ui-icon-check"> -->
+<!-- 	                <f:param name="curTagId" value="#{curTagId}"/> -->
+<!--                     <f:param name="curPage" value="#{curPage}"/> -->
+<!-- 	            </p:commandButton> -->
+<!--             </p:dialog> -->
 	        
-	        <p:panel id="fragment-panel-toolbar-#{panelId}" >
-		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster${panelId}" />
-		        <p:tooltip for="checkbox-for-all-fragments-#{panelId}" value="#{msg['label_check_uncheck_all_fragments']}" />
+<!-- 	        <p:panel id="fragment-panel-toolbar-#{panelId}" > -->
+<!-- 		        <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster${panelId}" /> -->
+<!-- 		        <p:tooltip for="checkbox-for-all-fragments-#{panelId}" value="#{msg['label_check_uncheck_all_fragments']}" /> -->
 		        
-		        <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}">
-			        <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>
-		        </a>
+<!-- 		        <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}"> -->
+<!-- 			        <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span> -->
+<!-- 		        </a> -->
 		        
-		        <p:spacer width="20" />
+<!-- 		        <p:spacer width="20" /> -->
 		        
-		        <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page">
-		            <f:param name="curTagId" value="#{curTagId}"/>
-		            <f:param name="curPage" value="#{curPage}"/>
-			        <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_go_to_prev_page']}"></span>
-		        </p:commandLink>
+<!-- 		        <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page"> -->
+<!-- 		            <f:param name="curTagId" value="#{curTagId}"/> -->
+<!-- 		            <f:param name="curPage" value="#{curPage}"/> -->
+<!-- 			        <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_go_to_prev_page']}"></span> -->
+<!-- 		        </p:commandLink> -->
 		        
-		        <p:spacer width="20" />
+<!-- 		        <p:spacer width="20" /> -->
 		        
-		        <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page">
-		            <f:param name="curTagId" value="#{curTagId}"/>
-                    <f:param name="curPage" value="#{curPage}"/>
-			        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_go_to_next_page']}"></span>
-		        </p:commandLink>
+<!-- 		        <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page"> -->
+<!-- 		            <f:param name="curTagId" value="#{curTagId}"/> -->
+<!--                     <f:param name="curPage" value="#{curPage}"/> -->
+<!-- 			        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_go_to_next_page']}"></span> -->
+<!-- 		        </p:commandLink> -->
 		        
-		        <p:spacer width="20" />
+<!-- 		        <p:spacer width="20" /> -->
 		        
-		        <p:commandLink action="go-home">
-			        <span class="fa fa-home fa-2x button-link" title="#{msg['label_go_home']}"></span>
-		        </p:commandLink>
+<!-- 		        <p:commandLink action="go-home"> -->
+<!-- 			        <span class="fa fa-home fa-2x button-link" title="#{msg['label_go_home']}"></span> -->
+<!-- 		        </p:commandLink> -->
 		        
-		        <p:spacer width="20" />
+<!-- 		        <p:spacer width="20" /> -->
 
-		        <p:commandLink oncomplete="showSortOptionDialog('#{panelId}')" >
-			        <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort_fragments']}"></span>
-		        </p:commandLink>
+<!-- 		        <p:commandLink oncomplete="showSortOptionDialog('#{panelId}')" > -->
+<!-- 			        <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort_fragments']}"></span> -->
+<!-- 		        </p:commandLink> -->
 		        
-		        <p:spacer width="20" />
+<!-- 		        <p:spacer width="20" /> -->
 		        
-		        <c:choose>
-                    <c:when test="#{panelContext.fragmentDeletable}">
-                        <p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', null, true, true)" >
-		                    <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
-		                </p:commandLink>
-                    </c:when>
-                    <c:otherwise>
-                        <p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', null, false, true)" >
-		                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
-		                </p:commandLink>
-                    </c:otherwise>
-                </c:choose>
-	        </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
+<!-- 		        <c:choose> -->
+<!--                     <c:when test="#{panelContext.fragmentDeletable}"> -->
+<!--                         <p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', null, true, true)" > -->
+<!-- 		                    <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span> -->
+<!-- 		                </p:commandLink> -->
+<!--                     </c:when> -->
+<!--                     <c:otherwise> -->
+<!--                         <p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', null, false, true)" > -->
+<!-- 		                    <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span> -->
+<!-- 		                </p:commandLink> -->
+<!--                     </c:otherwise> -->
+<!--                 </c:choose> -->
+<!-- 	        </p:panel> id="fragment-panel-toolbar-#{panelId}" -->
 		    
-		    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
-		        <ui:include src="each-fragment.xhtml" />
-		    </c:forEach>
+<!-- 		    <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop"> -->
+<!-- 		        <ui:include src="each-fragment.xhtml" /> -->
+<!-- 		    </c:forEach> -->
+            <ui:include src="each-fragment-panel.xhtml"></ui:include>
 	    </div>
 	    
 	    <c:set var="panelId" value="1" />
         <div id="fragment-panel-#{panelId}">
-            <p>&nbsp;</p>
+            <ui:include src="each-fragment-panel.xhtml"></ui:include>
         </div>
         
         <c:set var="panelId" value="2" />
         <div id="fragment-panel-#{panelId}">
-            <p>&nbsp;</p>
+            <ui:include src="each-fragment-panel.xhtml"></ui:include>
         </div>
     </div>
 </h:form>
