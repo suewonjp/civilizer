@@ -61,6 +61,12 @@
 	margin-left: 30px;
 }
 
+#panel-activation-button {
+	position: relative;
+	top: -8px;
+	margin-left: 30px;
+}
+
 #editor-title-bar {
 	clear: both;
 	display: block;

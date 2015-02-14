@@ -6,15 +6,24 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	>
-
+	
 <a href="home" class="button-link">
     <span id="app-title"> #{msg['application_name']} </span>
 </a>
 
 <a href="#editor-frame" id="new-fragment-editor-trigger" class="button-link new-resource-color" title="#{msg['label_new_fragment']}" >
-    <span class="fa fa-file-text fa-2x"></span>
-    <span class="fa fa-plus-square fa-lg" style="font-size: 80%; "></span>
+    <span class="fa fa-plus-square fa-2x"></span>
 </a>
+
+<h:form style="display: inline; margin: 0; padding: 0; ">
+    <span id="panel-activation-button">
+		<p:selectManyButton >
+	       <f:selectItem itemLabel="0" itemValue="0" />
+	       <f:selectItem itemLabel="1" itemValue="1" />
+	       <f:selectItem itemLabel="2" itemValue="2" />
+	    </p:selectManyButton>
+    </span>
+</h:form>
 
 <ui:include src="/WEB-INF/flows/home/fragment-editor.xhtml" />
 
