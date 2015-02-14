@@ -31,7 +31,7 @@
 #fragment-panel-0, #fragment-panel-1, #fragment-panel-2 {
 	width: 30%;
 	float: left;
-	margin-left: 50px;
+	margin-right: 50px;
 }
 
 .each-fragment-container {
