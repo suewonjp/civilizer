@@ -5,6 +5,8 @@
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
     start-state="home">
     
+    <var name="globalParam" class="com.knowledgex.web.view.ParameterBean"/>
+    
     <on-start>
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
@@ -14,18 +16,22 @@
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
+<!--             <evaluate -->
+<!--                 expression="mainController.populateFragmentListBean(fragmentListBeans[0], requestScope.panelContextBean)" -->
+<!--                 result="flowScope.fragmentListBeans[0]"/> -->
             <evaluate
-                expression="mainController.newFragmentListBean(fragmentListBeans[0], requestScope.panelContextBean)"
-                result="flowScope.fragmentListBeans[0]"/>
+                expression="mainController.populateFragmentListBeans(fragmentListBeans, requestScope.panelContextBean)"
+                />
         </on-entry>
         
         <transition on="inspect-fragment" to="inspect-fragment">
             <set name="requestScope.fragmentLoopIndex" value="requestParameters.fragmentLoopIndex" type="integer" />
+            <set name="requestScope.panelId" value="requestParameters.panelId" type="integer" />
         </transition>
         
         <transition on="filter-by-tag" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(requestParameters.tagId, 0)"
+                expression="mainController.newPanelContextBean(0, requestParameters.tagId, 0)"
                 result="requestScope.panelContextBean"/>
         </transition>
         
@@ -40,12 +46,12 @@
         </transition>
 
         <transition on="trash-fragments" to="home">
-            <evaluate expression="mainController.trashFragments(fragmentListBeans[0])" />
+            <evaluate expression="mainController.trashFragments(fragmentListBeans[globalParam.panelId])" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
         <transition on="delete-fragments" to="home">
-            <evaluate expression="mainController.deleteFragments(fragmentListBeans[0])" />
+            <evaluate expression="mainController.deleteFragments(fragmentListBeans[globalParam.panelId])" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
@@ -75,32 +81,32 @@
 
         <transition on="prev-fragment-page" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(requestParameters.curTagId, requestParameters.curPage-1)"
+                expression="mainController.newPanelContextBean(requestParameters.panelId, requestParameters.curTagId, requestParameters.curPage-1)"
                 result="requestScope.panelContextBean"/>
         </transition>
 
         <transition on="next-fragment-page" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(requestParameters.curTagId, requestParameters.curPage+1)"
+                expression="mainController.newPanelContextBean(requestParameters.panelId, requestParameters.curTagId, requestParameters.curPage+1)"
                 result="requestScope.panelContextBean"/>
         </transition>
 
         <transition on="sort-fragments" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(requestParameters.curTagId, requestParameters.curPage)"
+                expression="mainController.newPanelContextBean(requestParameters.panelId, requestParameters.curTagId, requestParameters.curPage)"
                 result="requestScope.panelContextBean"/>
         </transition>
 
         <transition on="go-home" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(-1, 0)"
+                expression="mainController.newPanelContextBean(requestParameters.panelId, -1000, 0)"
                 result="requestScope.panelContextBean"/>
         </transition>
     </view-state>
     
     <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
         <on-entry>
-            <evaluate expression="mainController.inspectFragment(fragmentLoopIndex, fragmentListBeans[0])"
+            <evaluate expression="mainController.inspectFragment(fragmentLoopIndex, fragmentListBeans[panelId])"
             result="viewScope.fragmentBean"/>
         </on-entry>
         <transition on ="back" to="home"/>

@@ -43,20 +43,35 @@ public final class MainController {
 	public List<FragmentListBean> newFragmentListBeans() {
 		final List<FragmentListBean> output =  new ArrayList<FragmentListBean>(MAX_FRAGMENT_PANELS);
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
-			output.add(null);
+			final FragmentListBean flb = new FragmentListBean();
+			final long tagId = (i == 0) ?
+					PanelContextBean.ALL_VALID_TAGS : PanelContextBean.EMPTY_TAG;
+			flb.setPanelContextBean(new PanelContextBean(i, tagId));
+			output.add(flb);
 		}
 		return output;
 	}
+	
+	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb) {
+		final PanelContextBean[] pcbs = new PanelContextBean[MAX_FRAGMENT_PANELS];
+		if (pcb != null) {
+			pcbs[pcb.getPanelId()] = pcb;
+		}
+		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
+			populateFragmentListBean(flbs.get(i), pcbs[i]);
+		}
+	}
 
-	public FragmentListBean newFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb) {
+	private FragmentListBean populateFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb) {
         final FragmentListBean flb =
-        		(existingFlb == null) ? new FragmentListBean() : existingFlb;
+        		existingFlb;
+//        		(existingFlb == null) ? new FragmentListBean() : existingFlb;
         
         if (pcb == null) {
         	pcb = flb.getPanelContextBean();
-        	if (pcb == null) {
-        		pcb = new PanelContextBean();
-        	}
+//        	if (pcb == null) {
+//        		pcb = new PanelContextBean();
+//        	}
         }
         
         final long tagId = pcb.getTagId();
@@ -67,9 +82,12 @@ public final class MainController {
         final boolean asc = flb.isOrderAsc();
         
         List<Fragment> fragments = null;
-        if (tagId == PanelContextBean.TAG_ID_FOR_ALL_VALID_TAGS) {
+        if (tagId == PanelContextBean.ALL_VALID_TAGS) {
         	// Fetch the fragments regardless of tags
         	fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder, asc);
+        }
+        else if (tagId == PanelContextBean.EMPTY_TAG) {
+        	fragments = Collections.emptyList();
         }
         else if (tagId == Tag.TRASH_TAG_ID) {
         	// Fetch the trashed fragments
@@ -82,7 +100,7 @@ public final class MainController {
         
         final boolean isLastPage = fragments.size() <= count;
         final boolean givenTagIsTrashTag = Tag.isTrashTag(tagId);
-        flb.setPanelContextBean(new PanelContextBean(tagId, curPage, count, isLastPage, givenTagIsTrashTag));
+        flb.setPanelContextBean(new PanelContextBean(pcb.getPanelId(), tagId, curPage, count, isLastPage, givenTagIsTrashTag));
 //        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         
         // [NOTE] The content of fragments should be IMMUTABLE form here!
@@ -142,8 +160,8 @@ public final class MainController {
 	    return tagTree;
 	}
 
-	public PanelContextBean newPanelContextBean(long tagId, int curPage) {
-		return new PanelContextBean(tagId, curPage);
+	public PanelContextBean newPanelContextBean(int panelId, long tagId, int curPage) {
+		return new PanelContextBean(panelId, tagId, curPage);
 	}
 	
 	public void trashFragment(Long fragmentId) {

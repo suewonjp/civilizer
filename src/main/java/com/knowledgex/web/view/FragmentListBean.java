@@ -6,7 +6,7 @@ import java.util.*;
 @SuppressWarnings("serial")
 public final class FragmentListBean implements Serializable {
     
-    private List<FragmentBean> fragmentBeans;
+    private List<FragmentBean> fragmentBeans = Collections.emptyList();
     
     private PanelContextBean panelContextBean;
     

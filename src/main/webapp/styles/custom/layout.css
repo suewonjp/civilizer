@@ -28,21 +28,10 @@
 	float: left;
 }
 
-#fragment-panel-0 {
-	width: 100%;
+#fragment-panel-0, #fragment-panel-1, #fragment-panel-2 {
+	width: 30%;
 	float: left;
-}
-
-#fragment-panel-1 {
-	width: 33%;
-	background-color: lightgray;
-	float: left;
-}
-
-#fragment-panel-2 {
-	width: 33%;
-	background-color: gray;
-    float: left;
+	margin-left: 50px;
 }
 
 #sidebar {
@@ -118,6 +107,7 @@
 {
     position: fixed;
     top: 94%;
+    z-index: 1000;
 }
 
 .fragment-header {

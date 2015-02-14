@@ -25,6 +25,10 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
+    $("fragment-group-form\\:fragment-panel-toolbar-0").offset({ left:$("#fragment-panel-0").offset().left });
+    $("fragment-group-form\\:fragment-panel-toolbar-1").offset({ left:$("#fragment-panel-1").offset().left });
+    $("fragment-group-form\\:fragment-panel-toolbar-2").offset({ left:$("#fragment-panel-2").offset().left });
+    
     function generateClickHandler(panelId) {
     	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
         if (fragmentCount > 0) {
@@ -97,7 +101,7 @@ function showError(message) {
 	PF("errorMsgDlg").show();
 }
 
-function confirmTrashingFragments(panelId, fid, deleting, bulk) {
+function confirmTrashingFragments(panelId, frgId, deleting, bulk) {
 	if (bulk) {
         if (fragmentCheckBoxesAreChecked(panelId) == false) {
             showError("#{msg['no_fragment_is_selected']}");
@@ -130,7 +134,8 @@ function confirmTrashingFragments(panelId, fid, deleting, bulk) {
     
     PF('singletonConfirmDlg').show();
     
-    $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(fid);
+    $("#fragment-group-form\\:id-placeholder-for-panel").val(panelId);
+    $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(frgId);
 }
 
 function confirmTrashingTag(tagId, deleting) {
@@ -165,6 +170,7 @@ function confirmTrashingTag(tagId, deleting) {
     
     <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{userEditedFragmentBean.fragment.id}" />
     <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{userEditedTagBean.tag.id}" />
+    <h:inputHidden id="id-placeholder-for-panel" value="#{globalParam.panelId}" />
     
     <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
@@ -180,8 +186,8 @@ function confirmTrashingTag(tagId, deleting) {
 
         <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
-        <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
-        <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
+        <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments" oncomplete="PF('singletonConfirmDlg').hide()" />
+        <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments" oncomplete="PF('singletonConfirmDlg').hide()" />
         <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
 

@@ -16,6 +16,7 @@
 				&nbsp;&nbsp;
 				<p:commandLink value="#{fragmentBean.fragment.title} " action="inspect-fragment">
 					<f:param name="fragmentLoopIndex" value="${loop.index}" />
+					<f:param name="panelId" value="#{panelId}" />
 				</p:commandLink>
 				&nbsp;&nbsp;
                 <c:forEach var="tag" items="#{fragmentBean.fragment.tags}">
@@ -27,7 +28,7 @@
 				</h:outputText>
 				<div class="fragment-menu">
 					<a href="#editor-frame" class="edit-fragment-editor-trigger button-link"
-					   onclick="openFragmentEditorForEdit('#{fragmentBean.fragment.id}', '#{fragmentBean.concatenatedTagNames}')">
+					   onclick="openFragmentEditorForEdit('#{panelId}', '#{fragmentBean.fragment.id}', '#{fragmentBean.concatenatedTagNames}')">
                         <span class="fa fa-pencil fa-3x" title="#{msg['label_edit_fragment']}"></span>
 					</a>
 					<c:choose>
@@ -42,8 +43,8 @@
 							</p:commandLink>
 						</c:otherwise>
 					</c:choose>
-					<h:inputHidden id="fragment-title-placeholder-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.title}" />
-					<h:inputHidden id="fragment-content-placeholder-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.content}" />
+					<h:inputHidden id="fragment-title-placeholder-panel#{panelId}-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.title}" />
+					<h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragmentBean.fragment.id}" value="#{fragmentBean.fragment.content}" />
 				</div>
 			</div>
 		</f:facet>

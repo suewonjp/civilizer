@@ -7,14 +7,13 @@
     xmlns:p="http://primefaces.org/ui"
     >
     
-    
+<p>&nbsp;</p>
 <c:set var="fragmentListBean" value="#{fragmentListBeans[panelId]}"/>
-<c:if test="${not empty fragmentListBean}">
+<!-- <c:if test="${not empty fragmentListBean}"> -->
 
-	<c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
+    <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
 	<c:set var="curTagId" value="#{panelContext.tagId}" />
 	<c:set var="curPage" value="#{panelContext.curPage}" />
-	
 	
 	<p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
 	    <div id="fragment-sort-option-container" >
@@ -29,6 +28,7 @@
 	    <p:inputSwitch value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" />
 	    <br />
 	    <p:commandButton action="sort-fragments" value="#{msg['label_go_sort']}" icon="ui-icon-check">
+	        <f:param name="panelId" value="#{panelId}"/>
 	        <f:param name="curTagId" value="#{curTagId}"/>
 	        <f:param name="curPage" value="#{curPage}"/>
 	    </p:commandButton>
@@ -45,6 +45,7 @@
 	    <p:spacer width="20" />
 	    
 	    <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page">
+	        <f:param name="panelId" value="#{panelId}"/>
 	        <f:param name="curTagId" value="#{curTagId}"/>
 	        <f:param name="curPage" value="#{curPage}"/>
 	        <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_go_to_prev_page']}"></span>
@@ -53,6 +54,7 @@
 	    <p:spacer width="20" />
 	    
 	    <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page">
+	        <f:param name="panelId" value="#{panelId}"/>
 	        <f:param name="curTagId" value="#{curTagId}"/>
 	        <f:param name="curPage" value="#{curPage}"/>
 	        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_go_to_next_page']}"></span>
@@ -61,6 +63,7 @@
 	    <p:spacer width="20" />
 	    
 	    <p:commandLink action="go-home">
+	        <f:param name="panelId" value="#{panelId}"/>
 	        <span class="fa fa-home fa-2x button-link" title="#{msg['label_go_home']}"></span>
 	    </p:commandLink>
 	    
@@ -90,6 +93,6 @@
 	    <ui:include src="each-fragment.xhtml" />
 	</c:forEach>
 
-</c:if>
+<!-- </c:if> -->
     
 </ui:composition>

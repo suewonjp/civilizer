@@ -5,32 +5,46 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public final class PanelContextBean implements Serializable {
 	
-	public static final long TAG_ID_FOR_ALL_VALID_TAGS = -1;
+	public static final long ALL_VALID_TAGS = -1000;
+	public static final long EMPTY_TAG    = -2000;
 	
 	private final long tagId;
+	private final int panelId;
 	private final int curPage;
 	private final int itemsPerPage;
 	private final boolean isLast;
 	private final boolean fragmentDeletable;
 	
 	public PanelContextBean() {
-		this.tagId = TAG_ID_FOR_ALL_VALID_TAGS;
+		this.tagId = ALL_VALID_TAGS;
+		this.panelId = 0;
 		this.curPage = 0;
 		this.itemsPerPage = 10;
 		this.isLast = false;
 		fragmentDeletable = false;
 	}
 
-	public PanelContextBean(long tagId, int curPage) {
+	public PanelContextBean(int panelId, long tagId) {
 		this.tagId = tagId;
+		this.panelId = panelId;
+		this.curPage = 0;
+		this.itemsPerPage = 10;
+		this.isLast = false;
+		fragmentDeletable = false;
+	}
+
+	public PanelContextBean(int panelId, long tagId, int curPage) {
+		this.tagId = tagId;
+		this.panelId = panelId;
 		this.curPage = curPage;
 		this.itemsPerPage = 10;
 		this.isLast = false;
 		fragmentDeletable = false;
 	}
 	
-	public PanelContextBean(long tagId, int curPage, int itemsPerPage, boolean isLast, boolean fragmentDeletable) {
+	public PanelContextBean(int panelId, long tagId, int curPage, int itemsPerPage, boolean isLast, boolean fragmentDeletable) {
 		this.tagId = tagId;
+		this.panelId = panelId;
 		this.curPage = curPage;
 		this.itemsPerPage = itemsPerPage;
 		this.isLast = isLast;
@@ -39,6 +53,10 @@ public final class PanelContextBean implements Serializable {
 	
 	public long getTagId() {
 		return tagId;
+	}
+
+	public int getPanelId() {
+		return panelId;
 	}
 
 	public int getCurPage() {
