@@ -7,6 +7,49 @@
 	xmlns:p="http://primefaces.org/ui"
 	>
 	
+<script>
+//<![CDATA[
+$(document).ready(function() {
+	var $btn = PF("panelActivationBtn").jq;
+	$btn.find("input").eq(0).prop("checked", true);
+	console.log($btn.find("input").eq(0).prop("checked"));
+	var panel0 = $("#fragment-panel-0");
+	var panel1 = $("#fragment-panel-1");
+	var panel2 = $("#fragment-panel-2");
+	panel0.css({ width:'100%' });
+	panel1.hide();
+	panel2.hide();
+}); // end of $(document).ready()
+
+function onPanelActivationChange() {
+	var $btn = PF("panelActivationBtn").jq;
+	var activeCount = 0;
+	var inputs = $btn.find("input");
+	for (var i=0; i<3; ++i) {
+		if (inputs.eq(i).prop("checked")) {
+			++activeCount;
+			$("#fragment-panel-"+i).show();
+		}
+		else {
+			$("#fragment-panel-"+i).hide();
+		}
+	}
+	var w = '100%';
+	switch (activeCount) {
+	case 2:
+		w = '45%';
+		break;
+	case 3: 
+		w = '30%';
+		break;
+	}
+	for (var i=0; i<3; ++i) {
+		$("#fragment-panel-"+i).css({ width:w });
+	}
+}
+//]]>
+</script>
+
 <a href="home" class="button-link">
     <span id="app-title"> #{msg['application_name']} </span>
 </a>
@@ -16,11 +59,11 @@
 </a>
 
 <h:form style="display: inline; margin: 0; padding: 0; ">
-    <span id="panel-activation-button">
-		<p:selectManyButton >
-	       <f:selectItem itemLabel="0" itemValue="0" />
-	       <f:selectItem itemLabel="1" itemValue="1" />
-	       <f:selectItem itemLabel="2" itemValue="2" />
+    <span id="panel-activation-button" >
+		<p:selectManyButton widgetVar="panelActivationBtn" onchange="onPanelActivationChange();">
+	        <f:selectItem itemLabel="#{msg['label_panel']} 0" itemValue="0" />
+	        <f:selectItem itemLabel="#{msg['label_panel']} 1" itemValue="1" />
+	        <f:selectItem itemLabel="#{msg['label_panel']} 2" itemValue="2" />
 	    </p:selectManyButton>
     </span>
 </h:form>
