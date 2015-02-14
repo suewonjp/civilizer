@@ -29,17 +29,17 @@
 				<div class="fragment-menu">
 					<a href="#editor-frame" class="edit-fragment-editor-trigger button-link"
 					   onclick="openFragmentEditorForEdit('#{panelId}', '#{fragmentBean.fragment.id}', '#{fragmentBean.concatenatedTagNames}')">
-                        <span class="fa fa-pencil fa-3x" title="#{msg['label_edit_fragment']}"></span>
+                        <span class="fa fa-pencil fa-2x" title="#{msg['label_edit_fragment']}"></span>
 					</a>
 					<c:choose>
 						<c:when test="#{panelContext.fragmentDeletable}">
 							<p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', '#{fragmentBean.fragment.id}', true, false)" >
-								<span class="fa fa-trash fa-3x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
+								<span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
 							<p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', '#{fragmentBean.fragment.id}', false, false)" >
-								<span class="fa fa-trash fa-3x button-link" title="#{msg['label_trash_fragment']}"></span>
+								<span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
 							</p:commandLink>
 						</c:otherwise>
 					</c:choose>
