@@ -10,30 +10,30 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
-	var $btn = PF("panelActivationBtn").jq;
-	$btn.find("input").eq(0).prop("checked", true);
-	console.log($btn.find("input").eq(0).prop("checked"));
-	var panel0 = $("#fragment-panel-0");
-	var panel1 = $("#fragment-panel-1");
-	var panel2 = $("#fragment-panel-2");
-	panel0.css({ width:'100%' });
-	panel1.hide();
-	panel2.hide();
+	var panels = [ $("#fragment-panel-0"), $("#fragment-panel-1"), $("#fragment-panel-2") ];
+	panels[0].css({ width:'100%' });
+	panels[1].hide();
+	panels[2].hide();
 }); // end of $(document).ready()
 
 function onPanelActivationChange() {
-	var $btn = PF("panelActivationBtn").jq;
+	var buttons = PF("panelToggler").jq.find("input");
+	var panels = [ $("#fragment-panel-0"), $("#fragment-panel-1"), $("#fragment-panel-2") ];
 	var activeCount = 0;
-	var inputs = $btn.find("input");
+	
 	for (var i=0; i<3; ++i) {
-		if (inputs.eq(i).prop("checked")) {
+		if (buttons.eq(i).prop("checked")) {
 			++activeCount;
-			$("#fragment-panel-"+i).show();
+			panels[i].show();
+			$("fragment-group-form\\:fragment-panel-toolbar-"+i).offset({
+				left: panels[i].offset().left
+			});
 		}
 		else {
-			$("#fragment-panel-"+i).hide();
+			panels[i].hide();
 		}
 	}
+	
 	var w = '100%';
 	switch (activeCount) {
 	case 2:
@@ -44,7 +44,7 @@ function onPanelActivationChange() {
 		break;
 	}
 	for (var i=0; i<3; ++i) {
-		$("#fragment-panel-"+i).css({ width:w });
+		panels[i].css({ width: w });
 	}
 }
 //]]>
@@ -59,8 +59,8 @@ function onPanelActivationChange() {
 </a>
 
 <h:form style="display: inline; margin: 0; padding: 0; ">
-    <span id="panel-activation-button" >
-		<p:selectManyButton widgetVar="panelActivationBtn" onchange="onPanelActivationChange();">
+    <span id="panel-activation-buttons" >
+		<p:selectManyButton value="#{customParams.activePanels}" widgetVar="panelToggler" onchange="onPanelActivationChange();">
 	        <f:selectItem itemLabel="#{msg['label_panel']} 0" itemValue="0" />
 	        <f:selectItem itemLabel="#{msg['label_panel']} 1" itemValue="1" />
 	        <f:selectItem itemLabel="#{msg['label_panel']} 2" itemValue="2" />

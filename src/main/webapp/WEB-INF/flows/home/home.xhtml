@@ -25,10 +25,6 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
-    $("fragment-group-form\\:fragment-panel-toolbar-0").offset({ left:$("#fragment-panel-0").offset().left });
-    $("fragment-group-form\\:fragment-panel-toolbar-1").offset({ left:$("#fragment-panel-1").offset().left });
-    $("fragment-group-form\\:fragment-panel-toolbar-2").offset({ left:$("#fragment-panel-2").offset().left });
-    
     function generateClickHandler(panelId) {
     	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
         if (fragmentCount > 0) {
