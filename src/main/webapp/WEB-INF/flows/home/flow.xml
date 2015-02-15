@@ -5,7 +5,7 @@
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
     start-state="home">
     
-    <var name="globalParam" class="com.knowledgex.web.view.ParameterBean"/>
+    <var name="customParams" class="com.knowledgex.web.view.ParameterBean"/>
     
     <on-start>
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
@@ -46,12 +46,12 @@
         </transition>
 
         <transition on="trash-fragments" to="home">
-            <evaluate expression="mainController.trashFragments(fragmentListBeans[globalParam.panelId])" />
+            <evaluate expression="mainController.trashFragments(fragmentListBeans[customParams.panelId])" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
         <transition on="delete-fragments" to="home">
-            <evaluate expression="mainController.deleteFragments(fragmentListBeans[globalParam.panelId])" />
+            <evaluate expression="mainController.deleteFragments(fragmentListBeans[customParams.panelId])" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
