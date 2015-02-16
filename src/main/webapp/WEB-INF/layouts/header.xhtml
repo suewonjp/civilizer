@@ -10,13 +10,22 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
-	var panels = [ $("#fragment-panel-0"), $("#fragment-panel-1"), $("#fragment-panel-2") ];
-	panels[0].css({ width:'100%' });
-	panels[1].hide();
-	panels[2].hide();
 	$("#panel-activation-buttons").buttonset();
-	$("#panel-toggler-0").prop("checked", true);
+
+	var activeCount = 0;
+	for (var i = 0; i < 3; i++) {
+		if (sessionStorage.getItem('panel-' + i) === "on") {
+			++activeCount;
+		    $("#panel-toggler-" + i).prop("checked", true);
+		}
+	}
+	if (activeCount === 0) {
+	    $("#panel-toggler-0").prop("checked", true);
+	}
+
 	$("#panel-activation-buttons").buttonset("refresh");
+	
+	onPanelActivationChange();
 }); // end of $(document).ready()
 
 function onPanelActivationChange() {
@@ -30,9 +39,11 @@ function onPanelActivationChange() {
 			$("fragment-group-form\\:fragment-panel-toolbar-"+i).offset({
 				left: panels[i].offset().left
 			});
+			sessionStorage.setItem('panel-' + i, 'on');
 		}
 		else {
 			panels[i].hide();
+			sessionStorage.setItem('panel-' + i, 'off');
 		}
 	}
 	
@@ -62,9 +73,18 @@ function onPanelActivationChange() {
 
 <h:form style="display: inline; margin: 0; padding: 0; ">
     <span id="panel-activation-buttons" >
-        <input type="checkbox" id="panel-toggler-0" style="display:none;" onchange="onPanelActivationChange();"/><label for="panel-toggler-0">#{msg['label_panel']} 0</label>
-        <input type="checkbox" id="panel-toggler-1" style="display:none;" onchange="onPanelActivationChange();"/><label for="panel-toggler-1">#{msg['label_panel']} 1</label>
-        <input type="checkbox" id="panel-toggler-2" style="display:none;" onchange="onPanelActivationChange();"/><label for="panel-toggler-2">#{msg['label_panel']} 2</label>
+        <input type="checkbox" id="panel-toggler-0" style="display:none;" onchange="onPanelActivationChange();"/>
+        <label for="panel-toggler-0" title="#{msg['toggle_panel']} 0">
+            <span class="fa fa-file-text">&nbsp;#{msg['label_panel']} 0</span>
+        </label>
+        <input type="checkbox" id="panel-toggler-1" style="display:none;" onchange="onPanelActivationChange();"/>
+        <label for="panel-toggler-1" title="#{msg['toggle_panel']} 1">
+            <span class="fa fa-file-text">&nbsp;#{msg['label_panel']} 1</span>
+        </label>
+        <input type="checkbox" id="panel-toggler-2" style="display:none;" onchange="onPanelActivationChange();"/>
+        <label for="panel-toggler-2" title="#{msg['toggle_panel']} 2">
+            <span class="fa fa-file-text">&nbsp;#{msg['label_panel']} 2</span>
+        </label>
     </span>
 </h:form>
 
