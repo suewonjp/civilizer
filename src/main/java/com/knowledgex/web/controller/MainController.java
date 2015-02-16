@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
@@ -318,6 +321,12 @@ public final class MainController {
 	    logger.info("inspectFragment() called");
 	    return fb;
 	}
+	
+    @RequestMapping(value = "/hello", method = { RequestMethod.GET })
+    public String hello(ModelMap model) {
+        model.addAttribute("name", "Suewon, Hello World!");
+        return "fragment";
+    } 
 
 
 }
