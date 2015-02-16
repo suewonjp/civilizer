@@ -16,9 +16,6 @@
     
     <view-state id="home" view="home.xhtml">
         <on-entry>
-<!--             <evaluate -->
-<!--                 expression="mainController.populateFragmentListBean(fragmentListBeans[0], requestScope.panelContextBean)" -->
-<!--                 result="flowScope.fragmentListBeans[0]"/> -->
             <evaluate
                 expression="mainController.populateFragmentListBeans(fragmentListBeans, requestScope.panelContextBean)"
                 />
@@ -31,7 +28,7 @@
         
         <transition on="filter-by-tag" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(0, requestParameters.tagId, 0)"
+                expression="mainController.newPanelContextBean(customParams.panelIdForTagPalette, requestParameters.tagId, 0)"
                 result="requestScope.panelContextBean"/>
         </transition>
         

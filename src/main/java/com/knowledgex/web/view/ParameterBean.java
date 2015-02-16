@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class ParameterBean implements Serializable {
 	
 	private int panelId = 0;
+	private int panelIdForTagPalette = 0;
 	
 	ParameterBean() {
 	}
@@ -17,6 +18,14 @@ public class ParameterBean implements Serializable {
 
 	public void setPanelId(int panelId) {
 		this.panelId = panelId;
+	}
+
+	public int getPanelIdForTagPalette() {
+		return panelIdForTagPalette;
+	}
+
+	public void setPanelIdForTagPalette(int panelIdForTagPalette) {
+		this.panelIdForTagPalette = panelIdForTagPalette;
 	}
 
 }

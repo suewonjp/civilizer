@@ -50,6 +50,15 @@ function showEditTagDialog(tagId, tagName) {
         <p:commandButton action="save-tag" value="#{msg['label_ok']}" icon="ui-icon-check">
         </p:commandButton>
     </p:dialog>
+    
+    <p:panelGrid columns="2" >
+	    <p:outputLabel for="panel-radio-for-tag-palette" value="#{msg['label_target']} #{msg['label_panel']} :" />
+	    <p:selectOneRadio id="panel-radio-for-tag-palette" value="#{customParams.panelIdForTagPalette}">
+	        <f:selectItem itemLabel="0" itemValue="0" />
+	        <f:selectItem itemLabel="1" itemValue="1" />
+	        <f:selectItem itemLabel="2" itemValue="2" />
+	    </p:selectOneRadio>
+    </p:panelGrid>
             
 	<div id="tag-palette-tab-view">
 		<ul>
