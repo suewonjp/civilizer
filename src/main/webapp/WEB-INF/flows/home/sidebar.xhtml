@@ -11,15 +11,15 @@
 $(document).ready(function() {
 	var currentTagGroupTabIndex = "0";
 
-    $tab = $( "#tag-group-tab-view" ).tabs({
+    $tab = $( "#tag-palette-tab-view" ).tabs({
          activate : function (e, ui) {
             currentTagGroupTabIndex = ui.newTab.index().toString();
-            sessionStorage.setItem('tag-group-tab-index', currentTagGroupTabIndex);
+            sessionStorage.setItem('tag-palette-tab-index', currentTagGroupTabIndex);
          }
     });
 
-    if (sessionStorage.getItem('tag-group-tab-index')) {
-        currentTagGroupTabIndex = sessionStorage.getItem('tag-group-tab-index');
+    if (sessionStorage.getItem('tag-palette-tab-index')) {
+        currentTagGroupTabIndex = sessionStorage.getItem('tag-palette-tab-index');
         $tab.tabs('option', 'active', currentTagGroupTabIndex);
     }
 }); // end of $(document).ready()
@@ -29,9 +29,9 @@ function showEditTagDialog(tagId, tagName) {
     dlg.show();
     if (tagId > 0) {
     	// [NOTE] user editable tags have id > 0
-        $("#tag-group-form\\:id-placeholder-for-tag").val(tagId);
+        $("#tag-palette-form\\:id-placeholder-for-tag").val(tagId);
     }
-    $("#tag-group-form\\:edit-tag-dlg-name-input").val(tagName);
+    $("#tag-palette-form\\:edit-tag-dlg-name-input").val(tagName);
     
 }
 //]]>
@@ -41,7 +41,7 @@ function showEditTagDialog(tagId, tagName) {
 	<span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span>
 </div>
 
-<h:form id="tag-group-form">
+<h:form id="tag-palette-form">
     <p:dialog header="#{msg['label_edit_tag']}" width="200px" modal="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
         <h:outputLabel for="edit-tag-dlg-name-input" value="#{msg['label_name']} :" />
         <p:inputText id="edit-tag-dlg-name-input" value="#{userEditedTagBean.tag.tagName}" />
@@ -51,50 +51,50 @@ function showEditTagDialog(tagId, tagName) {
         </p:commandButton>
     </p:dialog>
             
-	<div id="tag-group-tab-view">
+	<div id="tag-palette-tab-view">
 		<ul>
 			<li>
-				<a href="#tag-group-linear" title="#{msg['label_linear_view']}" >
+				<a href="#tag-palette-linear" title="#{msg['label_linear_view']}" >
 				    <span class="fa fa-list fa-2x" ></span>
 				</a>
 			</li>
 			<li>
-				<a href="#tag-group-tree" title="#{msg['label_tree_view']}" >
+				<a href="#tag-palette-tree" title="#{msg['label_tree_view']}" >
 				    <span class="fa fa-tree fa-2x" ></span>
 				</a>
 			</li>
 			<li>
-				<a href="#tag-group-edit" title="#{msg['label_edit_view']}" >
+				<a href="#tag-palette-edit" title="#{msg['label_edit_view']}" >
 				    <span class="fa fa-pencil fa-2x" ></span>
 				</a>
 			</li>
 			<li>
-				<a href="#tag-group-trash" title="#{msg['label_trash_view']}" >
+				<a href="#tag-palette-trash" title="#{msg['label_trash_view']}" >
 				    <span class="fa fa-trash fa-2x" ></span>
 				</a>
 			</li>
 		</ul>
 		
-		<div id="tag-group-linear">
+		<div id="tag-palette-linear">
 			<c:forEach var="tag" items="#{tagListBean.tags}">
 				<ui:include src="each-tag.xhtml" />
 				<br />
 			</c:forEach>
 		</div>
-		<div id="tag-group-tree">
+		<div id="tag-palette-tree">
 			<p:tree value="#{tagListBean.tagTree.root}" var="tag">
 				<p:treeNode>
 					<ui:include src="each-tag.xhtml" />
 				</p:treeNode>
 			</p:tree>
 		</div>
-		<div id="tag-group-edit">
+		<div id="tag-palette-edit">
             <c:forEach var="tag" items="#{tagListBean.tags}">
                 <ui:include src="each-tag-edit.xhtml" />
                 <br />
             </c:forEach>
         </div>
-		<div id="tag-group-trash">
+		<div id="tag-palette-trash">
             <c:forEach var="tag" items="#{tagListBean.tags}" varStatus="loop">
                 <ui:include src="each-tag-trash.xhtml" />
                 <br />
