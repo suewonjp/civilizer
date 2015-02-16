@@ -14,15 +14,17 @@ $(document).ready(function() {
 	panels[0].css({ width:'100%' });
 	panels[1].hide();
 	panels[2].hide();
+	$("#panel-activation-buttons").buttonset();
+	$("#panel-toggler-0").prop("checked", true);
+	$("#panel-activation-buttons").buttonset("refresh");
 }); // end of $(document).ready()
 
 function onPanelActivationChange() {
-	var buttons = PF("panelToggler").jq.find("input");
 	var panels = [ $("#fragment-panel-0"), $("#fragment-panel-1"), $("#fragment-panel-2") ];
 	var activeCount = 0;
 	
 	for (var i=0; i<3; ++i) {
-		if (buttons.eq(i).prop("checked")) {
+		if ($("#panel-toggler-" + i).prop("checked")) {
 			++activeCount;
 			panels[i].show();
 			$("fragment-group-form\\:fragment-panel-toolbar-"+i).offset({
@@ -60,11 +62,9 @@ function onPanelActivationChange() {
 
 <h:form style="display: inline; margin: 0; padding: 0; ">
     <span id="panel-activation-buttons" >
-		<p:selectManyButton value="#{customParams.activePanels}" widgetVar="panelToggler" onchange="onPanelActivationChange();">
-	        <f:selectItem itemLabel="#{msg['label_panel']} 0" itemValue="0" />
-	        <f:selectItem itemLabel="#{msg['label_panel']} 1" itemValue="1" />
-	        <f:selectItem itemLabel="#{msg['label_panel']} 2" itemValue="2" />
-	    </p:selectManyButton>
+        <input type="checkbox" id="panel-toggler-0" style="display:none;" onchange="onPanelActivationChange();"/><label for="panel-toggler-0">#{msg['label_panel']} 0</label>
+        <input type="checkbox" id="panel-toggler-1" style="display:none;" onchange="onPanelActivationChange();"/><label for="panel-toggler-1">#{msg['label_panel']} 1</label>
+        <input type="checkbox" id="panel-toggler-2" style="display:none;" onchange="onPanelActivationChange();"/><label for="panel-toggler-2">#{msg['label_panel']} 2</label>
     </span>
 </h:form>
 
