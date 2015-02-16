@@ -63,15 +63,10 @@ public final class MainController {
 	}
 
 	private FragmentListBean populateFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb) {
-        final FragmentListBean flb =
-        		existingFlb;
-//        		(existingFlb == null) ? new FragmentListBean() : existingFlb;
+        final FragmentListBean flb = existingFlb;
         
         if (pcb == null) {
         	pcb = flb.getPanelContextBean();
-//        	if (pcb == null) {
-//        		pcb = new PanelContextBean();
-//        	}
         }
         
         final long tagId = pcb.getTagId();
