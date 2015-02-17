@@ -328,8 +328,7 @@ public final class MainController {
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
     public String hello(ModelMap model, @PathVariable Long fragmentId) {
     	final Fragment frg = fragmentDao.findById(fragmentId, true, true);
-        model.addAttribute("fragmentTitle", frg.getTitle());
-        model.addAttribute("fragmentContent", frg.getContent());
+    	model.addAttribute("fragment", frg);
         return "fragment";
     } 
 

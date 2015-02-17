@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets">
@@ -13,9 +14,11 @@
 <h:body>
 
 <h1>Title:</h1>
-<h3>${fragmentTitle}</h3>
+<h3>${fragment.title}</h3>
 <h1>Content:</h1>
-<h3>${fragmentContent}</h3>
+<h3>${fragment.content}</h3>
+<h1>Updated at:</h1>
+<h3>${fragment.updateDatetime}</h3>
 
 </h:body>
 
