@@ -138,7 +138,7 @@ public class DomainFragmentTest {
 	    final Gson gson = builder.create();
 		final String jsonString = gson.toJson(fragments.get(0));
 		assertNotNull(jsonString);
-		logger.info(jsonString);
+//		logger.info(jsonString);
 		Fragment frg = gson.fromJson(jsonString, Fragment.class);
 		assertEquals(fragments.get(0), frg);
 	}
