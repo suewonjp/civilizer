@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,6 +27,8 @@ public final class MainController {
 	private static final int MAX_FRAGMENT_PANELS = 3;
     
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+    
+//    private final Gson gson = new GsonBuilder().registerTypeAdapter(DateTime.class, new JodaDateTimeConverter()).create();
     
 	@Autowired
 	private FragmentDao fragmentDao;
@@ -322,11 +325,14 @@ public final class MainController {
 	    return fb;
 	}
 	
-    @RequestMapping(value = "/hello", method = { RequestMethod.GET })
-    public String hello(ModelMap model) {
-        model.addAttribute("name", "Suewon, Hello World!");
+    @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
+    public String hello(ModelMap model, @PathVariable("fragmentId") String fragmentId) {
+    	final Long fid = new Long(fragmentId);
+    	final Fragment frg = fragmentDao.findById(fid, true, true);
+    	logger.info(frg.toString());
+        model.addAttribute("fragmentTitle", frg.getTitle());
+        model.addAttribute("fragmentContent", frg.getContent());
         return "fragment";
     } 
-
 
 }
