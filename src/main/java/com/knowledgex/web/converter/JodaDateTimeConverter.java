@@ -54,7 +54,7 @@ public final class JodaDateTimeConverter implements Converter, JsonDeserializer<
 	{
 		final String dateTimeAsString = je.getAsString();
 		if (!dateTimeAsString.isEmpty()) {
-			DateTimeFormat.forPattern(PATTERN).parseDateTime(dateTimeAsString);
+			return DateTimeFormat.forPattern(PATTERN).parseDateTime(dateTimeAsString);
 		}
 		return null;
 	}	
