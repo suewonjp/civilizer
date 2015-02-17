@@ -10,13 +10,17 @@ import org.apache.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import com.knowledgex.domain.*;
+import com.knowledgex.web.converter.*;
 import com.knowledgex.test.util.TestUtil;
 
 public class DomainFragmentTest {
 	
 	@SuppressWarnings("unused")
-	private static Log log = TestUtil.newLogger(DomainFragmentTest.class);
+	private static Log logger = TestUtil.newLogger(DomainFragmentTest.class);
 
 	private List<Fragment> fragments = new ArrayList<Fragment>();
 	
@@ -125,6 +129,18 @@ public class DomainFragmentTest {
             long id1 = f1.getId();
             assertTrue(id0 < id1);
         }
+	}
+	
+	@Test
+	public void testConvertToAndFromJsonFormat() {
+		final GsonBuilder builder = new GsonBuilder()
+	       .registerTypeAdapter(DateTime.class, new JodaDateTimeConverter());
+	    final Gson gson = builder.create();
+		final String jsonString = gson.toJson(fragments.get(0));
+		assertNotNull(jsonString);
+		logger.info(jsonString);
+		Fragment frg = gson.fromJson(jsonString, Fragment.class);
+		assertEquals(fragments.get(0), frg);
 	}
 	
 }
