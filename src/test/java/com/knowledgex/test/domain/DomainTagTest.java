@@ -14,7 +14,7 @@ import com.knowledgex.test.util.TestUtil;
 public class DomainTagTest {
 	
 	@SuppressWarnings("unused")
-	private static Log log = TestUtil.newLogger(DomainFragmentTest.class);
+	private static Log logger = TestUtil.newLogger(DomainFragmentTest.class);
 	
 	private List<Tag> tags = new ArrayList<Tag>();
 	

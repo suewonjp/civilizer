@@ -26,7 +26,7 @@ import com.knowledgex.test.util.TestUtil;
 
 public class HibernateQueryTest {
 	
-	private static Log log;
+	private static Log logger;
 	private static GenericXmlApplicationContext ctx;
 	private static final DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
 	
@@ -39,23 +39,23 @@ public class HibernateQueryTest {
 	public static void setUpBeforeClass() throws Exception {
 		assertNotNull(dtCmptr);
 		
-		log = TestUtil.newLogger(HibernateQueryTest.class);
+		logger = TestUtil.newLogger(HibernateQueryTest.class);
 
 		ctx = new GenericXmlApplicationContext();
 		ctx.load("classpath:datasource-context-h2-embedded.xml");
 		ctx.refresh();
-		log.info("GenericXmlApplicationContext initialized OK");
+		logger.info("GenericXmlApplicationContext initialized OK");
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
 		assertNotNull(fragmentDao);
-		log.info("fragmentDao initialized OK");
+		logger.info("fragmentDao initialized OK");
 
 		tagDao = ctx.getBean("tagDao", TagDao.class);
 		assertNotNull(tagDao);
-		log.info("tagDao initialized OK");
+		logger.info("tagDao initialized OK");
 		
 		SessionFactory sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);
 		assertNotNull(sessionFactory);
@@ -110,7 +110,7 @@ public class HibernateQueryTest {
 		for (int i=0; i<fragments1.size(); ++i) {
             Fragment f0 = fragments0.get(i);
             Fragment f1 = fragments1.get(i);
-            log.info("i="+i+", id0="+f0.getId()+",id1="+f1.getId());
+            logger.info("i="+i+", id0="+f0.getId()+",id1="+f1.getId());
             assertEquals(f0, f1);
 		}
 		

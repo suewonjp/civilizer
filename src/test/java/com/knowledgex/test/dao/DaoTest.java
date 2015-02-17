@@ -14,7 +14,7 @@ import com.knowledgex.test.util.TestUtil;
 
 class DaoTest {
 
-	private static Log log;
+	private static Log logger;
 	private static GenericXmlApplicationContext ctx;
 	private static int counter = 0;
 
@@ -28,12 +28,12 @@ class DaoTest {
 	    String dataSourceContextPath
 	  , Class<?> clazz
 	) throws Exception {
-		log = TestUtil.newLogger(clazz);
+		logger = TestUtil.newLogger(clazz);
 
 		ctx = new GenericXmlApplicationContext();
 		ctx.load(dataSourceContextPath);
 		ctx.refresh();
-		log.info("GenericXmlApplicationContext initialized OK");
+		logger.info("GenericXmlApplicationContext initialized OK");
 	}
 	
 	protected void deleteAllTemporalObjects() {
@@ -91,11 +91,11 @@ class DaoTest {
 	protected void setUp() throws Exception {
 		fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
 		assertNotNull(fragmentDao);
-		log.info("fragmentDao initialized OK");
+		logger.info("fragmentDao initialized OK");
 
 		tagDao = ctx.getBean("tagDao", TagDao.class);
 		assertNotNull(tagDao);
-		log.info("tagDao initialized OK");
+		logger.info("tagDao initialized OK");
 	}
 
 	protected void tearDown() throws Exception {
