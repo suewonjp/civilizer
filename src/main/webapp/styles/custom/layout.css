@@ -133,7 +133,7 @@
 	color: #f00;
 }
 
-.new-resource-color {
+.new-resource-color, .new-resource-color:focus  {
 	color: #ff0;
 }
 
