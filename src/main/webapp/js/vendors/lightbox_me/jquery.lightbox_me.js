@@ -168,7 +168,7 @@
                 var s = $self[0].style;
 
                 // reset CSS so width is re-calculated for margin-left CSS
-                $self.css({left: '50%', marginLeft: ($self.outerWidth() / 2) * -1,  zIndex: (opts.zIndex + 3) });
+//                $self.css({left: '50%', marginLeft: ($self.outerWidth() / 2) * -1,  zIndex: (opts.zIndex + 3) });
 
 
                 /* we have to get a little fancy when dealing with height, because lightbox_me

@@ -25,6 +25,22 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
+    $("#fragment-group").find(".fragment-header").find("a:nth-child(2)").on("mouseenter", function() {
+    	var href=$(this).attr('href');
+        $.get(href, null, populateFragmentOverlay);
+        
+    	$("#fragment-overlay").lightbox_me({
+            centered:false
+            , showOverlay:false
+            , lightboxSpeed:"fast"
+            , closeSelector:"#fragment-overlay-close-button"
+            , closeEsc:true
+            , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
+        });
+
+    	return false; // stop the link
+    });
+    
     function generateClickHandler(panelId) {
     	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
         if (fragmentCount > 0) {
@@ -74,6 +90,10 @@ $(document).ready(function() {
     	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
 }); // end of $(document).ready()
+
+function populateFragmentOverlay(data) {
+	$("#fragment-overlay-content").html(data);
+}
 
 function showSortOptionDialog(panelId) {
 	PF('sortOptionDlg' + panelId).show();
@@ -169,6 +189,19 @@ function confirmTrashingTag(tagId, deleting) {
     <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}" />
     <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}" />
     
+    <div style='display:none' >
+	    <div id='fragment-overlay' >
+	        <div id="fragment-overlay-title-bar" >
+	            <div style="float: right;">
+	                <a id="fragment-overlay-close-button" href="#" title="#{msg['label_close']}">
+	                    <span class="fa fa-close fa-3x warning-color" ></span>
+	                </a>
+	            </div>
+	        </div>
+	        <div id="fragment-overlay-content"></div>
+	    </div>
+	</div>
+    
     <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
             <h:outputText id="error-dlg-msg" styleClass="warning-color" value="&nbsp;"/>
@@ -216,6 +249,5 @@ function confirmTrashingTag(tagId, deleting) {
 </ui:define>
 
 <ui:define name="footer"></ui:define>
-
 
 </ui:composition>
