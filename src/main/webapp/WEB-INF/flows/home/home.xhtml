@@ -25,19 +25,11 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
-    $("#fragment-group").find(".fragment-header").find("a:nth-child(2)").on("mouseenter", function() {
+    $("#fragment-group").find(".fragment-header > a:nth-child(2)").on("mouseover", function(event) {
     	var href=$(this).attr('href');
-        $.get(href, null, populateFragmentOverlay);
+        console.log(event.target);
+        $.get(href, "", populateFragmentOverlay);
         
-    	$("#fragment-overlay").lightbox_me({
-            centered:false
-            , showOverlay:false
-            , lightboxSpeed:"fast"
-            , closeSelector:"#fragment-overlay-close-button"
-            , closeEsc:true
-            , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
-        });
-
     	return false; // stop the link
     });
     
@@ -92,6 +84,15 @@ $(document).ready(function() {
 }); // end of $(document).ready()
 
 function populateFragmentOverlay(data) {
+	$("#fragment-overlay").lightbox_me({
+        centered:false
+        , showOverlay:false
+        , lightboxSpeed:"fast"
+        , closeSelector:"#fragment-overlay-close-button"
+        , closeEsc:true
+        , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
+    });
+	
 	$("#fragment-overlay-content").html(data);
 }
 
@@ -180,6 +181,19 @@ function confirmTrashingTag(tagId, deleting) {
 
 <ui:define name="content">
 
+<div style='display:none' >
+    <div id='fragment-overlay' >
+        <div id="fragment-overlay-title-bar" >
+            <div style="float: right;">
+                <a id="fragment-overlay-close-button" href="#" title="#{msg['label_close']}">
+                    <span class="fa fa-close fa-3x warning-color" ></span>
+                </a>
+            </div>
+        </div>
+        <div id="fragment-overlay-content"></div>
+    </div>
+</div>
+
 <h:form id="fragment-group-form">
 <!--     <p:log id="log" /> -->
     <p:growl id="growl" showDetail="true" sticky="false" life="10000" />
@@ -188,19 +202,6 @@ function confirmTrashingTag(tagId, deleting) {
     <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{userEditedTagBean.tag.id}" />
     <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}" />
     <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}" />
-    
-    <div style='display:none' >
-	    <div id='fragment-overlay' >
-	        <div id="fragment-overlay-title-bar" >
-	            <div style="float: right;">
-	                <a id="fragment-overlay-close-button" href="#" title="#{msg['label_close']}">
-	                    <span class="fa fa-close fa-3x warning-color" ></span>
-	                </a>
-	            </div>
-	        </div>
-	        <div id="fragment-overlay-content"></div>
-	    </div>
-	</div>
     
     <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
