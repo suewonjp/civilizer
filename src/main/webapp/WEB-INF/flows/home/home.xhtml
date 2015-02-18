@@ -25,9 +25,8 @@ $(document).ready(function() {
    	    $this.html(parseMarkdown(content));
    	});
     
-    $("#fragment-group").find(".fragment-header > a:nth-child(2)").on("mouseover", function(event) {
+    $("#fragment-group").find(".fragment-header > a:nth-child(2)").on("mouseenter", function(event) {
     	var href=$(this).attr('href');
-        console.log(event.target);
         $.get(href, "", populateFragmentOverlay);
         
     	return false; // stop the link
