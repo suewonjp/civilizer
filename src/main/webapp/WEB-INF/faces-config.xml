@@ -7,11 +7,12 @@
     <application>
         <locale-config>
             <default-locale>en</default-locale>
-            <supported-locale>en</supported-locale>
+<!--             <supported-locale>en</supported-locale> -->
         </locale-config>    
-        <message-bundle>MessageResources</message-bundle>
+<!--         <message-bundle>MessageResources</message-bundle> -->
         <resource-bundle>
-            <base-name>MessageResources</base-name>
+            <base-name>i18n.MessageResources</base-name>
+<!--             <base-name>MessageResources</base-name> -->
             <var>msg</var>
        </resource-bundle>        
     </application>
