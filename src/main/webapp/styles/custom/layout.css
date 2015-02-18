@@ -163,7 +163,7 @@
 	color: black;
 }
 
-.tag_button {
+.tag_button, .tag_box {
 	margin: 2px 1px 1px 1px;
 	border:1px solid #ffc826;-webkit-box-shadow: #B4B5B5 1px 1px 1px  ;-moz-box-shadow: #B4B5B5 1px 1px 1px ; box-shadow: #B4B5B5 1px 1px 1px  ; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:10px;font-family:arial, helvetica, sans-serif; 
 	padding: 1px 1px 1px 1px; text-decoration:none; display:inline;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:lighter; color: #FFFFFF;

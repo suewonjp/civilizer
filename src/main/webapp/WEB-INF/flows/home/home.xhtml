@@ -93,6 +93,12 @@ function populateFragmentOverlay(data) {
     });
 	
 	$("#fragment-overlay-content").html(data);
+	
+	$("#fragment-overlay-content .fragment-content").each(function(){
+        var $this = $(this);
+        var content = $this.text();
+        $this.html(parseMarkdown(content));
+    });
 }
 
 function showSortOptionDialog(panelId) {
