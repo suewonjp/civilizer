@@ -127,7 +127,7 @@ function previewFragment() {
                 <span id="editor-title"></span>
                 <div style="float: right;">
 	                <a id="editor-frame-close-button" href="#" title="#{msg['label_close']}">
-	                    <span class="fa fa-close fa-3x warning-color" ></span>
+	                    <span class="fa fa-close fa-2x warning-color" ></span>
 	                </a>
                 </div>
             </div>
@@ -136,7 +136,7 @@ function previewFragment() {
             <textarea id="fragment-content-editor" ></textarea>
             <h:inputHidden id="content-placeholder" value="#{userEditedFragmentBean.fragment.content}" />
             <h:inputHidden id="id-placeholder-for-fragment" value="#{userEditedFragmentBean.fragment.id}" />
-            <p:commandButton onclick="previewFragment();" value="#{msg['label_preview']}" />
+            <p:commandButton onclick="previewFragment();" value="#{msg['label_preview']}" style="margin-left:10px;" />
             <p:commandButton onclick="prepareFragmentContent();" value="#{msg['label_save']}" action="save-fragment" />
         </h:form>
     </div>

@@ -69,10 +69,10 @@
 }
 
 #editor-frame, #fragment-overlay {
-	background-color: #b9b2b2;
-	border-style: ridge;
-	border-width: 10px;
-	border-color: #888822;
+	background-color: whitesmoke;
+	border-style: solid;
+	border-width: 3px;
+	border-color: navy;
 }
 
 #editor-frame input {
