@@ -2,6 +2,8 @@ package com.knowledgex.web.controller;
 
 import java.util.*;
 
+import javax.faces.context.FacesContext;
+
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -326,10 +328,23 @@ public final class MainController {
 	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
-    public String hello(ModelMap model, @PathVariable Long fragmentId) {
+    public String onRequestForFragment(ModelMap model, @PathVariable Long fragmentId) {
     	final Fragment frg = fragmentDao.findById(fragmentId, true, true);
     	model.addAttribute("fragment", frg);
         return "fragment";
-    } 
+    }
+
+    @RequestMapping(value = "/locale/{lang}", method = { RequestMethod.GET })
+    public String onRequestForLocale(@PathVariable String lang) {
+//    	FacesContext.getCurrentInstance().getViewRoot().setLocale(Locale.JAPAN);
+    	logger.info("+++++++ " + lang);
+    	return "redirect:/app/home";
+    }
+
+    @RequestMapping(value = "/welcome", method = { RequestMethod.GET })
+    public String onWelcome() {
+    	logger.info("****** welcome...");
+    	return "redirect:/app/home";
+    }
 
 }
