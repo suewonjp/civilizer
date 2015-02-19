@@ -2,8 +2,6 @@ package com.knowledgex.web.controller;
 
 import java.util.*;
 
-import javax.faces.context.FacesContext;
-
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +58,7 @@ public final class MainController {
 		return output;
 	}
 	
-	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb) {
+	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, String locale) {
 		final PanelContextBean[] pcbs = new PanelContextBean[MAX_FRAGMENT_PANELS];
 		if (pcb != null) {
 			pcbs[pcb.getPanelId()] = pcb;
