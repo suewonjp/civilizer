@@ -2,6 +2,9 @@ package com.knowledgex.web.controller;
 
 import java.util.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +29,8 @@ import com.knowledgex.web.view.*;
 @Component("mainController")
 public final class MainController {
 	
-	private static final int MAX_FRAGMENT_PANELS = 3;
+	private static final int    MAX_FRAGMENT_PANELS = 3;
+	private static final String REQUEST_PARAM_LOCALE = "locale";
     
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     
@@ -60,6 +65,10 @@ public final class MainController {
 	}
 	
 	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, RequestContext rc) {
+//		final ExternalContext ec = rc.getExternalContext();
+//		final ParameterMap pm =  ec.getRequestParameterMap();
+//		final String locale = pm.get(REQUEST_PARAM_LOCALE);
+//		logger.info(locale);
 		final PanelContextBean[] pcbs = new PanelContextBean[MAX_FRAGMENT_PANELS];
 		if (pcb != null) {
 			pcbs[pcb.getPanelId()] = pcb;
@@ -334,15 +343,16 @@ public final class MainController {
     }
 
     @RequestMapping(value = "/locale/{locale}", method = { RequestMethod.GET })
-    public String onRequestForLocale(@PathVariable String locale) {
-    	logger.info("+++++++ " + locale);
-    	return "redirect:/app/home";
+    public String onRequestForLocale(@PathVariable String locale, HttpServletResponse response) {
+    	Cookie cookie = new Cookie(REQUEST_PARAM_LOCALE, locale);
+        response.addCookie(cookie);
+    	return "redirect:/app/home?locale=" + locale;
     }
 
-    @RequestMapping(value = "/welcome", method = { RequestMethod.GET })
-    public String onWelcome() {
-    	logger.info("^o^ welcome...");
-    	return "redirect:/app/home";
+    @RequestMapping(value = "/signin", method = { RequestMethod.GET })
+    public String onSignIn(@CookieValue(value = REQUEST_PARAM_LOCALE, defaultValue = "en") String locale) {
+    	logger.info("*** locale is " + locale);
+    	return "redirect:/app/home?locale=" + locale;
     }
 
 }
