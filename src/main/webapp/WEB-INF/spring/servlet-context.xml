@@ -53,7 +53,7 @@
 <!-- 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource" -->
 <!-- 		id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application" -->
 <!-- 		p:fallbackToSystemLocale="false" /> -->
-		
-	<beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" id="localeResolver" p:cookieName="locale"/>
+
+<!-- 	<beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" id="localeResolver" p:cookieName="locale"/> -->
 
 </beans:beans>

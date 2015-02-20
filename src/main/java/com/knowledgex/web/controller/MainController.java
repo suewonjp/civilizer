@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.webflow.execution.RequestContext;
 
 import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
@@ -58,7 +59,7 @@ public final class MainController {
 		return output;
 	}
 	
-	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, String locale) {
+	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, RequestContext rc) {
 		final PanelContextBean[] pcbs = new PanelContextBean[MAX_FRAGMENT_PANELS];
 		if (pcb != null) {
 			pcbs[pcb.getPanelId()] = pcb;
@@ -332,16 +333,15 @@ public final class MainController {
         return "fragment";
     }
 
-    @RequestMapping(value = "/locale/{lang}", method = { RequestMethod.GET })
-    public String onRequestForLocale(@PathVariable String lang) {
-//    	FacesContext.getCurrentInstance().getViewRoot().setLocale(Locale.JAPAN);
-    	logger.info("+++++++ " + lang);
+    @RequestMapping(value = "/locale/{locale}", method = { RequestMethod.GET })
+    public String onRequestForLocale(@PathVariable String locale) {
+    	logger.info("+++++++ " + locale);
     	return "redirect:/app/home";
     }
 
     @RequestMapping(value = "/welcome", method = { RequestMethod.GET })
     public String onWelcome() {
-    	logger.info("****** welcome...");
+    	logger.info("^o^ welcome...");
     	return "redirect:/app/home";
     }
 

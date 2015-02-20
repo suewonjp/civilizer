@@ -17,7 +17,7 @@
     <view-state id="home" view="home.xhtml">
         <on-entry>
             <evaluate
-                expression="mainController.populateFragmentListBeans(fragmentListBeans, requestScope.panelContextBean, requestParameters.locale)"
+                expression="mainController.populateFragmentListBeans(fragmentListBeans, requestScope.panelContextBean, flowRequestContext)"
                 />
         </on-entry>
         
