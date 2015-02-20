@@ -12,8 +12,9 @@
 
 #header {
 	top: 0;
-	height: 40px;
-	background: url(images/coffee-bean-background-sml.jpg) repeat-x;
+	height: 50px;
+	background-color: burlywood;
+/* 	background: url(images/coffee-bean-background-sml.jpg) repeat-x; */
 }
 
 #footer {
@@ -64,7 +65,7 @@
 
 #panel-activation-buttons {
 	position: relative;
-	top: -8px;
+/* 	top: -8px; */
 	margin-left: 30px;
 }
 
