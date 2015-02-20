@@ -92,6 +92,36 @@ function onPanelActivationChange() {
     </span>
 </h:form>
 
+<div id="user-menu-area">
+<h:form id="user-menu-form">
+    <p:commandButton id="user-menu-trigger" value="Show" type="button" icon="ui-icon-extlink"/>
+    <p:slideMenu id="user-menu" overlay="true" trigger="user-menu-trigger" my="left top" at="left bottom" style="width:200px">
+        <p:submenu label="Ajax Menuitems">
+            <p:menuitem value="Save" ajax="false" />
+            <p:menuitem value="Update" ajax="false" />
+        </p:submenu>
+        <p:submenu label="Non-Ajax Menuitem">
+            <p:menuitem value="Delete" ajax="false" />
+        </p:submenu>
+        <p:submenu label="Navigations" >
+            <p:submenu label="Prime Links">
+                <p:menuitem value="Prime" url="http://www.prime.com.tr" />
+                <p:menuitem value="PrimeFaces" url="http://www.primefaces.org" />
+            </p:submenu>
+            <p:menuitem value="Mobile" outcome="/mobile/index" />
+        </p:submenu>
+    </p:slideMenu>
+    
+<!--     <p:menuButton value="Options"> -->
+<!--         <p:menuitem value="Save" icon="ui-icon-disk"/> -->
+<!--         <p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w"/> -->
+<!--         <p:menuitem value="Delete" ajax="false" icon="ui-icon-close"/> -->
+<!--         <p:separator /> -->
+<!--         <p:menuitem value="Homepage" url="http://www.primefaces.org" icon="ui-icon-extlink"/> -->
+<!--     </p:menuButton> -->
+</h:form>
+</div>
+
 <ui:include src="/WEB-INF/flows/home/fragment-editor.xhtml" />
 
 </ui:composition>
