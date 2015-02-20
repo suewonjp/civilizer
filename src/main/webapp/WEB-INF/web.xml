@@ -19,6 +19,10 @@
     <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
     <param-value>1</param-value>
   </context-param>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>ui-darkness</param-value>
+  </context-param>
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

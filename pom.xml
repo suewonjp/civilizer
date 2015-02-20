@@ -160,7 +160,7 @@
 			<version>2.3.0.RELEASE</version>
 		</dependency>
 
-		<!-- JSF 2 and Primefaces -->
+		<!-- JSF 2 -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
@@ -171,10 +171,17 @@
 			<artifactId>jsf-impl</artifactId>
 			<version>${jsf-version}</version>
 		</dependency>
+		
+		<!-- Primefaces -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>ui-darkness</artifactId>
+			<version>1.0.9</version>
 		</dependency>
 
         <!-- Gson -->
