@@ -14,7 +14,6 @@
 	top: 0;
 	height: 50px;
 	background-color: burlywood;
-/* 	background: url(images/coffee-bean-background-sml.jpg) repeat-x; */
 }
 
 #footer {
@@ -49,10 +48,6 @@
 	float: right;
 }
 
-/* #user-menu-form\:user-menu { */
-/* 	width: 10%; */
-/* } */
-
 #app-title {
 	color: #0ff;
 	font-size: 250%;
@@ -66,7 +61,6 @@
 
 #panel-activation-buttons {
 	position: relative;
-/* 	top: -8px; */
 	margin-left: 30px;
 }
 
@@ -134,9 +128,6 @@
 .fragment-menu {
 	display: none;
 	float: right;
-/* 	overflow: visible; */
-/* 	position: relative; */
-/* 	top: -15px; */
 }
 
 .warning-color {
