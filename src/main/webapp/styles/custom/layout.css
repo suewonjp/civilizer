@@ -45,12 +45,13 @@
 }
 
 #user-menu-area {
+	margin-right: 10px;
 	float: right;
 }
 
-#user-menu-form\:user-menu {
-	width: 100%;
-}
+/* #user-menu-form\:user-menu { */
+/* 	width: 10%; */
+/* } */
 
 #app-title {
 	color: #0ff;
