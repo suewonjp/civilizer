@@ -8,16 +8,14 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/faces http://www.springframework.org/schema/faces/spring-faces.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing 
-		infrastructure -->
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
 	<beans:import resource="webflow.xml" />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
-		up static resources in the ${webappRoot}/resources directory -->
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources location="/" mapping="/resources/**" />
 
 	<!-- Enable processing of JSF 2 resource requests. For example: /knowledgex/app/javax.faces.resource/jsf.js?ln=javax.faces -->
@@ -31,8 +29,7 @@
 		<beans:property name="flowRegistry" ref="flowRegistry" />
 	</beans:bean>
 
-	<!-- Resolves views selected for rendering by @Controllers to .xhtml resources 
-		in the /WEB-INF/ directory -->
+	<!-- Resolves views selected for rendering by @Controllers to .xhtml resources in the /WEB-INF/ directory -->
 	<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass"
 			value="org.springframework.faces.mvc.JsfView" />
@@ -45,15 +42,4 @@
 		<beans:property name="flowExecutor" ref="flowExecutor" />
 	</beans:bean>
 	
-<!-- 	<interceptors> -->
-<!-- 	   <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/> -->
-<!-- 	</interceptors> -->
-
-<!-- 	<beans:bean -->
-<!-- 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource" -->
-<!-- 		id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application" -->
-<!-- 		p:fallbackToSystemLocale="false" /> -->
-
-<!-- 	<beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" id="localeResolver" p:cookieName="locale"/> -->
-
 </beans:beans>
