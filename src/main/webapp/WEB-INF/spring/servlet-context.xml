@@ -34,7 +34,7 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-		<beans:property name="order" value="0" />
+		<beans:property name="order" value="2" />
 	</beans:bean>
 
 	<!-- Resolves views selected for rendering by @Controllers to .xhtml resources 

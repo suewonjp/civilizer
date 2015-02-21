@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.webflow.execution.RequestContext;
 
 import com.knowledgex.dao.FragmentDao;
@@ -350,15 +349,20 @@ public final class MainController {
     	return "redirect:/app/home?locale=" + locale;
     }
 
+//    @RequestMapping(value = "/signin", method = { RequestMethod.GET })
+//    public ModelAndView onSignIn(@CookieValue(value = REQUEST_PARAM_LOCALE, defaultValue = "en") String locale) {
+//    	ModelAndView model = new ModelAndView();
+//    	model.addObject("title", "Spring Security Hello World");
+//    	model.addObject("message", "This is protected page!");
+//    	model.setViewName("signin");
+//    	return model;
+//    }
+    
     @RequestMapping(value = "/signin", method = { RequestMethod.GET })
-    public ModelAndView onSignIn(@CookieValue(value = REQUEST_PARAM_LOCALE, defaultValue = "en") String locale) {
+    public String onSignIn(@CookieValue(value = REQUEST_PARAM_LOCALE, defaultValue = "en") String locale) {
+    	logger.info("**** please, sign in");
+    	return "signin";
 //    	return "redirect:/app/home?locale=" + locale;
-    	
-    	ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security Hello World");
-		model.addObject("message", "This is protected page!");
-		model.setViewName("signin");
-		return model;
     }
 
 }
