@@ -15,7 +15,6 @@
         <security:intercept-url pattern="/**" access="ROLE_USER" />
         
         <security:form-login login-page="/app/signin"
-                             default-target-url="/app/home"
                              authentication-failure-url="/app/signin?failed=1" />
         
         <security:logout logout-url="/app/signout" logout-success-url="/app/signin" />

@@ -18,27 +18,27 @@ $(document).ready(function() {
 
 <ui:define name="content">
 
-<h:form id="authentication-form">
+<h:form prependId="false">
     <p:growl id="growl" />
  
-    <p:panel id="panel" header="Welcome!">
+    <p:panel id="signin-form-panel" header="Welcome!">
         <p:messages id="messages" />
         <h:panelGrid columns="3" id="grid" cellpadding="5">
-            <p:outputLabel for="username" value="#{msg['label_username']}" />
-            <p:inputText id="username" value="#{authenticationBean.username}" required="true">
+            <p:outputLabel for="j_username" value="#{msg['label_username']}" />
+            <p:inputText id="j_username" value="#{authenticationBean.username}" required="true">
                 <f:validateLength minimum="2" />
             </p:inputText>
-            <p:message for="username" />
+            <p:message for="j_username" />
  
-            <p:outputLabel for="password" value="#{msg['label_password']}" />
-            <p:inputText id="password" value="#{authenticationBean.password}" required="true"/>
-            <p:message for="password" />
+            <p:outputLabel for="j_password" value="#{msg['label_password']}" />
+            <p:inputText id="j_password" value="#{authenticationBean.password}" required="true"/>
+            <p:message for="j_password" />
         </h:panelGrid>
       
         <p:commandButton id="sign-in-button" action="sign-in" value="#{msg['sign_in']}" icon="ui-icon-check" widgetVar="authenticateMe"/>
     </p:panel>
  
-    <p:spotlight target="panel" widgetVar="spot"/>
+    <p:spotlight target="signin-form-panel" widgetVar="spot"/>
 </h:form>
 
 </ui:define> <!-- end of content -->

@@ -10,6 +10,11 @@
     </on-start>
 
     <view-state id="signin" view="signin.xhtml">
+        <transition on="sign-in" to="exit">
+            <evaluate expression="signinController.handleSignin()" />
+        </transition>
     </view-state>
+    
+    <end-state id="exit" view="externalRedirect:/home" />
     
 </flow>
