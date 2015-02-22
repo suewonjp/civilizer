@@ -24,18 +24,18 @@ $(document).ready(function() {
     <p:panel id="panel" header="Welcome!" style="width:30%; margin-top:10px;">
         <p:messages id="messages" />
         <h:panelGrid columns="3" id="grid" cellpadding="5">
-            <p:outputLabel for="username" value="Username" />
+            <p:outputLabel for="username" value="#{msg['label_username']}" />
             <p:inputText id="username" value="#{authenticationBean.username}" required="true">
                 <f:validateLength minimum="2" />
             </p:inputText>
             <p:message for="username" />
  
-            <p:outputLabel for="password" value="Password:" />
+            <p:outputLabel for="password" value="#{msg['label_password']}" />
             <p:inputText id="password" value="#{authenticationBean.password}" required="true"/>
             <p:message for="password" />
         </h:panelGrid>
       
-        <p:commandButton value="Sign In" icon="ui-icon-check" widgetVar="authenticateMe" style="margin-top:20px;"/>
+        <p:commandButton value="#{msg['sign_in']}" icon="ui-icon-check" widgetVar="authenticateMe" style="margin-top:20px;"/>
     </p:panel>
  
     <p:spotlight target="panel" widgetVar="spot"/>
