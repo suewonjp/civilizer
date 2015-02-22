@@ -80,13 +80,18 @@ public final class MainController {
 
 	private FragmentListBean populateFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb) {
         final FragmentListBean flb = existingFlb;
+        final PanelContextBean oldPcb = flb.getPanelContextBean();
+        final PanelContextBean paramPcb = pcb;
         
         if (pcb == null) {
-        	pcb = flb.getPanelContextBean();
+        	pcb = oldPcb;
         }
         
         final long tagId = pcb.getTagId();
-        final int curPage = pcb.isLastPage() ? (pcb.getCurPage() - 1) : Math.max(0, pcb.getCurPage());
+        int curPage = pcb.getCurPage();
+        if (paramPcb != null) {
+            curPage = Math.max(0, oldPcb.isLastPage() ? (paramPcb.getCurPage() - 1) : paramPcb.getCurPage());
+        }
         final int count = pcb.getItemsPerPage();
         final int first = curPage * count;
         final FragmentOrder frgOrder = FragmentOrder.values()[flb.getOrderOption()];
