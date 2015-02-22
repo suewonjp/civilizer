@@ -363,11 +363,11 @@ public final class MainController {
 //    	return model;
 //    }
     
-    @RequestMapping(value = "/signin", method = { RequestMethod.GET })
-    public String onSignIn(@CookieValue(value = REQUEST_PARAM_LOCALE, defaultValue = "en") String locale) {
-    	logger.info("**** please, sign in");
-    	return "signin";
-//    	return "redirect:/app/home?locale=" + locale;
-    }
+//    @RequestMapping(value = "/signin", method = { RequestMethod.GET })
+//    public String onSignIn(@CookieValue(value = REQUEST_PARAM_LOCALE, defaultValue = "en") String locale) {
+//    	logger.info("**** please, sign in");
+//    	return "signin";
+////    	return "redirect:/app/home?locale=" + locale;
+//    }
 
 }
