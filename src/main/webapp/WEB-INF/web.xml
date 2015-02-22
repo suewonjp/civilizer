@@ -5,10 +5,6 @@
     </listener>
 
     <!-- Context parameters -->
-<!--     <context-param> -->
-<!--         <param-name>contextConfigLocation</param-name> -->
-<!--         <param-value>/WEB-INF/spring/root-context.xml</param-value> -->
-<!--     </context-param> -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring/*-context.xml</param-value>
@@ -31,16 +27,18 @@
     </context-param>
     
     <!-- Enables Spring Security -->
-<!--     <filter> -->
-<!--         <filter-name>springSecurityFilterChain</filter-name> -->
-<!--         <filter-class> -->
-<!--             org.springframework.web.filter.DelegatingFilterProxy -->
-<!--         </filter-class> -->
-<!--     </filter> -->
-<!--     <filter-mapping> -->
-<!-- 	    <filter-name>springSecurityFilterChain</filter-name> -->
-<!-- 	    <url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+    </filter>
+    <filter-mapping>
+	    <filter-name>springSecurityFilterChain</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
     
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

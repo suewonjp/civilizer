@@ -5,17 +5,28 @@
     xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+        
+    <security:global-method-security secured-annotations="enabled" />
 
-<!-- 	<security:http auto-config="true"> -->
-<!-- 		<security:intercept-url pattern="/signin**" access="ROLE_USER" /> -->
-<!-- 	</security:http> -->
-
-<!-- 	<security:authentication-manager> -->
-<!-- 		<security:authentication-provider> -->
-<!-- 			<security:user-service> -->
-<!-- 				<security:user name="bsw" password="0000" authorities="ROLE_USER" /> -->
-<!-- 			</security:user-service> -->
-<!-- 		</security:authentication-provider> -->
-<!-- 	</security:authentication-manager> -->
+	<security:http auto-config="true">
+        <security:intercept-url pattern="/app/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/app/javax.faces.resource/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/app/signin*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/**" access="ROLE_USER" />
+        
+        <security:form-login login-page="/app/signin"
+                             default-target-url="/app/home"
+                             authentication-failure-url="/app/signin?failed=1" />
+        
+        <security:logout logout-url="/app/signout" logout-success-url="/app/signin" />
+    </security:http>
+    
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="bsw" password="0000" authorities="ROLE_USER" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
 
 </beans>

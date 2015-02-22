@@ -11,6 +11,7 @@
     <flow-executor id="flowExecutor">
         <flow-execution-listeners>
             <listener ref="facesContextListener"/>
+            <listener ref="securityFlowExecutionListener" />
         </flow-execution-listeners>
     </flow-executor>
 
@@ -24,5 +25,8 @@
 
     <!-- A listener to create and release a FacesContext -->
     <beans:bean id="facesContextListener" class="org.springframework.faces.webflow.FlowFacesContextLifecycleListener"/>
+    
+    <!-- A listener to process the security rules. -->
+    <beans:bean id="securityFlowExecutionListener" class="org.springframework.webflow.security.SecurityFlowExecutionListener" />
 
 </beans:beans>
