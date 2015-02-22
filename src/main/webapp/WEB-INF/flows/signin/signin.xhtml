@@ -21,7 +21,7 @@ $(document).ready(function() {
 <h:form id="authentication-form">
     <p:growl id="growl" />
  
-    <p:panel id="panel" header="Welcome!" style="width:30%; margin-top:10px;">
+    <p:panel id="panel" header="Welcome!">
         <p:messages id="messages" />
         <h:panelGrid columns="3" id="grid" cellpadding="5">
             <p:outputLabel for="username" value="#{msg['label_username']}" />
@@ -35,7 +35,7 @@ $(document).ready(function() {
             <p:message for="password" />
         </h:panelGrid>
       
-        <p:commandButton value="#{msg['sign_in']}" icon="ui-icon-check" widgetVar="authenticateMe" style="margin-top:20px;"/>
+        <p:commandButton id="sign-in-button" action="sign-in" value="#{msg['sign_in']}" icon="ui-icon-check" widgetVar="authenticateMe"/>
     </p:panel>
  
     <p:spotlight target="panel" widgetVar="spot"/>
