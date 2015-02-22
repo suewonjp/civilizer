@@ -17,7 +17,7 @@
 }
 
 #footer {
-	border-style: groove;
+	border-style: inherit;
 	clear: both;
 }
 
