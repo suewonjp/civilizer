@@ -10,6 +10,10 @@
     </on-start>
 
     <view-state id="signin" view="signin.xhtml">
+        <on-entry>
+            <evaluate expression="signinController.onEntry(flowRequestContext)" />
+        </on-entry>
+        
         <transition on="sign-in" to="exit">
             <evaluate expression="signinController.handleSignin()" />
         </transition>
