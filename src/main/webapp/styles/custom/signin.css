@@ -1,6 +1,10 @@
 #signin-form-panel {
-	width: 30%;
+	width: 50%;
 	margin-top: 10px;
+}
+
+#j_username, #j_password {
+	width: 100%;
 }
 
 #sign-in-button {
