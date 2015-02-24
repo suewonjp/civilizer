@@ -9,8 +9,6 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class AuthenticationBean implements Serializable {
-	// [TODO] check if the user name is valid (e.g. not already in use, etc)
-	// [TODO] check if the password is valid
 
 	private String username;
     
