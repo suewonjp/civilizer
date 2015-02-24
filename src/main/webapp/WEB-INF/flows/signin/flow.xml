@@ -19,6 +19,6 @@
         </transition>
     </view-state>
     
-    <end-state id="exit" view="externalRedirect:/home" />
+    <end-state id="exit" />
     
 </flow>

@@ -38,6 +38,9 @@ $(window).load(function() {
             <p:password id="j_password" value="#{authenticationBean.password}" required="true"/>
             <p:message for="j_password" />
         </h:panelGrid>
+
+        <label id="signin-form-remember-me-label" for="_spring_security_remember_me">#{msg['label_remember_me']}</label>
+	    <input type="checkbox" name="_spring_security_remember_me" checked="checked"/>
       
         <p:commandButton id="sign-in-button" action="sign-in" value="#{msg['sign_in']}" icon="ui-icon-check" ajax="false" />
     </p:panel>

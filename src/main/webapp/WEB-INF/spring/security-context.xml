@@ -20,6 +20,8 @@
                              authentication-failure-url="/app/signin?failed=1" />
         
         <security:logout logout-url="/app/signout" logout-success-url="/app/signin" />
+        
+        <security:remember-me key="remember-me-key"/>
     </security:http>
     
 	<security:authentication-manager>

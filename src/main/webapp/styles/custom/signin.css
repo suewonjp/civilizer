@@ -7,6 +7,11 @@
 	width: 100%;
 }
 
+#signin-form-remember-me-label {
+	color: gold;
+	margin-left: 15%;
+}
+
 #sign-in-button {
-	margin-top: 20px;
+	margin-top: 40px;
 }
