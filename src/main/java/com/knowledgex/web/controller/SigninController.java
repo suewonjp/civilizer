@@ -48,10 +48,9 @@ public class SigninController {
     public void onEntry(RequestContext rc) {
         final ParameterMap pm = rc.getExternalContext().getRequestParameterMap();
         if (pm.get(REQUEST_PARAM_AUTH_FAILED) != null) {
-        	FacesContext facesContext = FacesContext.getCurrentInstance();
-        	LocaleBean localeBean = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{localeBean}", LocaleBean.class);
-        	Locale locale = localeBean.getLocale();
-        	ResourceBundle bundle = ResourceBundle.getBundle("i18n.MessageResources", locale);
+        	final LocaleBean localeBean = ViewUtil.findBean("localeBean");
+        	final Locale locale = localeBean.getLocale();
+        	final ResourceBundle bundle = ResourceBundle.getBundle("i18n.MessageResources", locale);
         	final String msg = bundle.getString("credential_incorrect");
         	
             ViewUtil.addMessage(msg, msg, FacesMessage.SEVERITY_ERROR);
