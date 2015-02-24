@@ -353,20 +353,4 @@ public final class MainController {
     	return "redirect:/app/home?locale=" + locale;
     }
 
-//    @RequestMapping(value = "/signin", method = { RequestMethod.GET })
-//    public ModelAndView onSignIn(@CookieValue(value = REQUEST_PARAM_LOCALE, defaultValue = "en") String locale) {
-//    	ModelAndView model = new ModelAndView();
-//    	model.addObject("title", "Spring Security Hello World");
-//    	model.addObject("message", "This is protected page!");
-//    	model.setViewName("signin");
-//    	return model;
-//    }
-    
-//    @RequestMapping(value = "/signin", method = { RequestMethod.GET })
-//    public String onSignIn(@CookieValue(value = REQUEST_PARAM_LOCALE, defaultValue = "en") String locale) {
-//    	logger.info("**** please, sign in");
-//    	return "signin";
-////    	return "redirect:/app/home?locale=" + locale;
-//    }
-
 }
