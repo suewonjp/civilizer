@@ -1,6 +1,8 @@
 package com.knowledgex.web.controller;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -20,8 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.RequestContext;
 
-import com.knowledgex.web.view.AuthenticationBean;
-import com.knowledgex.web.view.ViewUtil;
+import com.knowledgex.web.view.*;
 
 @Controller
 @Component("signinController")
@@ -47,7 +48,13 @@ public class SigninController {
     public void onEntry(RequestContext rc) {
         final ParameterMap pm = rc.getExternalContext().getRequestParameterMap();
         if (pm.get(REQUEST_PARAM_AUTH_FAILED) != null) {
-            ViewUtil.addMessage("Username or password not valid", "Username or password not valid", FacesMessage.SEVERITY_ERROR);
+        	FacesContext facesContext = FacesContext.getCurrentInstance();
+        	LocaleBean localeBean = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{localeBean}", LocaleBean.class);
+        	Locale locale = localeBean.getLocale();
+        	ResourceBundle bundle = ResourceBundle.getBundle("i18n.MessageResources", locale);
+        	final String msg = bundle.getString("credential_incorrect");
+        	
+            ViewUtil.addMessage(msg, msg, FacesMessage.SEVERITY_ERROR);
         }
     }
     
