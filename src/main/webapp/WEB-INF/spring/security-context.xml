@@ -11,6 +11,7 @@
 	<security:http auto-config="true">
         <security:intercept-url pattern="/app/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/app/javax.faces.resource/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+<!--         <security:intercept-url pattern="/app/authenticated" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
         <security:intercept-url pattern="/app/signin*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/**" access="ROLE_USER" />
         
@@ -27,6 +28,8 @@
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
+			    <!-- [TODO] hashed && salted password -->
+			    <!-- [TODO] user credential information stored && restored from persistence store -->
 				<security:user name="bsw" password="0000" authorities="ROLE_USER" />
 			</security:user-service>
 		</security:authentication-provider>

@@ -3,11 +3,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-    start-state="signin">
+    start-state="isAuthenticated">
     
     <on-start>
         <evaluate expression="signinController.newAuthenticationBean()" result="flowScope.authenticationBean"/>
     </on-start>
+    
+    <decision-state id="isAuthenticated">
+	    <if test="signinController.isAuthenticated()" then="exit" else="signin" />
+	</decision-state>
 
     <view-state id="signin" view="signin.xhtml">
         <on-entry>
@@ -15,10 +19,13 @@
         </on-entry>
         
         <transition on="sign-in" to="exit">
-            <evaluate expression="signinController.handleSignin()" />
+            <evaluate expression="signinController.handleSignin(authenticationBean)" />
+        </transition>
+
+        <transition on="redirect-to-home" to="home">
         </transition>
     </view-state>
     
-    <end-state id="exit" />
+    <end-state id="exit" view="externalRedirect:/home"/>
     
 </flow>

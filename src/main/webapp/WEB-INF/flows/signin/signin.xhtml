@@ -10,13 +10,16 @@
 <ui:define name="entry-point-scripts">
 <script>
 //<![CDATA[
+$(document).ready(function() {
+}); // end of $(document).ready()
+
 $(window).load(function() {
 	var msgBox = $("#signin-form-messages");
     if (msgBox.has("div").length) {
     	$("#signin-form-panel").width("80%");
 	    PF("spot").show();
     }
-}); // end of $(document).ready()
+}); // end of $(document).load()
 
 //]]>
 </script>
@@ -44,7 +47,7 @@ $(window).load(function() {
       
         <p:commandButton id="sign-in-button" action="sign-in" value="#{msg['sign_in']}" icon="ui-icon-check" ajax="false" />
     </p:panel>
- 
+    
     <p:spotlight target="signin-form-panel sign-in-button" widgetVar="spot"/>
 </h:form>
 

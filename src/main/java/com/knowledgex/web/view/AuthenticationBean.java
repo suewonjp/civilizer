@@ -9,11 +9,13 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class AuthenticationBean implements Serializable {
+	// [TODO] check if the user name is valid (e.g. not already in use, etc)
+	// [TODO] check if the password is valid
 
 	private String username;
     
     private String password;
- 
+    
     public String getUsername() {
         return username;
     }
@@ -29,11 +31,5 @@ public class AuthenticationBean implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    
-	public void save() {
-		username = null;
-		password = null;
-		ViewUtil.addMessage("Success", "You've registered", null);
-	}
-
+	
 }
