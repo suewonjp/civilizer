@@ -1,8 +1,6 @@
 package com.knowledgex.web.controller;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -48,10 +46,7 @@ public class SigninController {
     public void onEntry(RequestContext rc) {
         final ParameterMap pm = rc.getExternalContext().getRequestParameterMap();
         if (pm.get(REQUEST_PARAM_AUTH_FAILED) != null) {
-        	final LocaleBean localeBean = ViewUtil.findBean("localeBean");
-        	final Locale locale = localeBean.getLocale();
-        	final ResourceBundle bundle = ResourceBundle.getBundle("i18n.MessageResources", locale);
-        	final String msg = bundle.getString("credential_incorrect");
+        	final String msg = ViewUtil.getResourceBundleString("credential_incorrect");
         	
             ViewUtil.addMessage(msg, msg, FacesMessage.SEVERITY_ERROR);
         }
