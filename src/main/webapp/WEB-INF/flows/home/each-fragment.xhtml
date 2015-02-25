@@ -9,7 +9,7 @@
 
 <c:set var="fragment" value="#{fragmentBean.fragment}" />
 <div class="each-fragment-container">
-	<h:panelGrid styleClass="each-fragment" bgcolor="#eee" columns="1" border="1">
+	<h:panelGrid styleClass="each-fragment" columns="1" border="1">
 		<f:facet name="header">
 			<div class="fragment-header">
 				<p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;"
@@ -54,6 +54,16 @@
 		</f:facet>
 		<h:outputText value="#{fragment.content}" styleClass="fragment-content" />
 	</h:panelGrid>
+</div>
+
+<div class="related-fragment-container">
+    <c:forEach var="rf" items="#{fragment.relatedOnes}">
+        <span class="each-related-fragment fa fa-link">
+            <a href="${request.contextPath}/app/fragment/#{rf.id}">\##{rf.id}</a>
+            &nbsp;&nbsp;
+            <h:outputText value="#{rf.title}" />
+        </span>
+    </c:forEach>
 </div>
 
 </ui:composition>

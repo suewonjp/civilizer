@@ -5,7 +5,27 @@
 }
 
 .each-fragment-container {
-    overflow-x: scroll;
+    overflow-x: auto;
+    clear: both;
+}
+
+.each-fragment-container table {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.related-fragment-container {
+    margin-left: 2%;
+}
+
+.each-related-fragment {
+	margin-bottom: 5px;
+	margin-left: 5px;
+    height: 15px;
+    background-color: #eee;
+    border-style: solid;
+    border-color: #ccc;
+    float: left;
 }
 
 #user-menu-area {
