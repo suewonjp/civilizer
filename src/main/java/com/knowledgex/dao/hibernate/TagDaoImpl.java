@@ -45,7 +45,6 @@ public final class TagDaoImpl implements TagDao {
     
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
     public List<Tag> findAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Tag t")
@@ -54,7 +53,6 @@ public final class TagDaoImpl implements TagDao {
     
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
     public List<Tag> findAllWithChildren() {
     	final Session s = sessionFactory.getCurrentSession();
     	final List<Long> ids = s.getNamedQuery("Tag.findIdsOrderByTagName").list();

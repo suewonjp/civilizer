@@ -81,7 +81,6 @@ public final class FragmentDaoImpl implements FragmentDao {
     
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
     public List<Fragment> findByTagId(long tagId, boolean includeTrashed) {
         final String nq = includeTrashed ?
                 "Fragment.findByTagId" : "Fragment.findNonTrashedByTagId";
@@ -93,7 +92,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
     public List<Fragment> findByTagIds(Collection<Long> idsIn, Collection<Long> idsEx) {
     	if (idsIn == null || idsIn.isEmpty()) {
     		// Empty inclusion filter, empty results
@@ -119,7 +117,6 @@ public final class FragmentDaoImpl implements FragmentDao {
     
 	@Override
 	@SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
 	public List<Fragment> findSomeByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc) {
 	    first = Math.max(0, first);
         count = Math.max(0, count);
@@ -148,7 +145,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
 	public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order, boolean asc) {
 		first = Math.max(0, first);
 	    count = Math.max(0, count);
@@ -175,7 +171,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
 	public List<Fragment> findSomeNonTrashedByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc) {
 	    first = Math.max(0, first);
         count = Math.max(0, count);
@@ -226,7 +221,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 	
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
     public List<Long> findIdsByTagId(long tagId) {
     	return sessionFactory.getCurrentSession()
                 .getNamedQuery("Fragment.findIdsByTagId")
