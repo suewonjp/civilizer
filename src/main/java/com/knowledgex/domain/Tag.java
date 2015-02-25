@@ -34,9 +34,9 @@ public final class Tag implements Serializable {
     private String tagName;
     private DateTime creationDatetime;
     private DateTime updateDatetime;
-    private String creator;
-    private String updater;
-    private Long fragmentId;
+//    private String creator;
+//    private String updater;
+//    private Long fragmentId;
     private Set<Fragment> fragments = Collections.emptySet();
     private Set<Tag> children = Collections.emptySet();
 
@@ -92,32 +92,32 @@ public final class Tag implements Serializable {
         this.updateDatetime = updateDatetime;
     }
 
-    @Column(name = "creator")
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    @Column(name = "updater")
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    @Column(name = "fragment_id")
-    public Long getFragmentId() {
-        return fragmentId;
-    }
-
-    public void setFragmentId(Long fragmentId) {
-        this.fragmentId = fragmentId;
-    }
+//    @Column(name = "creator")
+//    public String getCreator() {
+//        return creator;
+//    }
+//
+//    public void setCreator(String creator) {
+//        this.creator = creator;
+//    }
+//
+//    @Column(name = "updater")
+//    public String getUpdater() {
+//        return updater;
+//    }
+//
+//    public void setUpdater(String updater) {
+//        this.updater = updater;
+//    }
+//
+//    @Column(name = "fragment_id")
+//    public Long getFragmentId() {
+//        return fragmentId;
+//    }
+//
+//    public void setFragmentId(Long fragmentId) {
+//        this.fragmentId = fragmentId;
+//    }
     
     @OneToMany(fetch=FetchType.LAZY)
     @Cascade({CascadeType.MERGE

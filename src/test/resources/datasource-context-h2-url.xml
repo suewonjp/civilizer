@@ -16,11 +16,11 @@
 		<property name="password" value="" />
 	</bean>
 
-<!-- 	<jdbc:initialize-database data-source="dataSource" -->
-<!-- 		ignore-failures="DROPS"> -->
-<!-- 		<jdbc:script location="classpath:db_test/schema.sql" /> -->
-<!-- 		<jdbc:script location="classpath:db_test/test-data.sql" /> -->
-<!-- 	</jdbc:initialize-database> -->
+	<jdbc:initialize-database data-source="dataSource"
+		ignore-failures="DROPS">
+		<jdbc:script location="classpath:db_test/schema.sql" />
+		<jdbc:script location="classpath:db_test/test-data.sql" />
+	</jdbc:initialize-database>
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
