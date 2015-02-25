@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.knowledgex.dao.FragmentDao;
+import com.knowledgex.dao.TagDao;
 import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.FragmentOrder;
 
@@ -171,7 +172,7 @@ public final class FragmentDaoImpl implements FragmentDao {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Fragment> findSomeNonTrashedByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc) {
+	public List<Fragment> findSomeNonTrashedByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc, TagDao tagDao) {
 	    first = Math.max(0, first);
         count = Math.max(0, count);
         final Session s = sessionFactory.getCurrentSession();
@@ -181,7 +182,8 @@ public final class FragmentDaoImpl implements FragmentDao {
                 , "Fragment.findIdsNonTrashedByTagIdOrderByTitle"
                 , "Fragment.findIdsNonTrashedByTagIdOrderById"
         };
-        final List<Long> tagIds = new ArrayList<Long>();
+        final Set<Long> tagIds = new HashSet<Long>();
+        tagDao.findIdsOfAllDescendants(tagId, null, tagIds);        
         tagIds.add(tagId);
         final List<Long> ids = s.getNamedQuery(namedQueries[order.ordinal()])
                 .setParameterList("tagIds", tagIds)

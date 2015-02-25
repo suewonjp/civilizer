@@ -113,7 +113,7 @@
               ),
               
     @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderByUpdateDatetime",
-        query = "select f.id "
+        query = "select distinct f.id "
               + "from Fragment f "
               + "  inner join f.tags t "
               + "where t.id in (:tagIds) and f.id not in ( "
@@ -124,7 +124,7 @@
               + "order by f.updateDatetime desc "
               ),
     @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderByCreationDatetime",
-        query = "select f.id "
+        query = "select distinct f.id "
               + "from Fragment f "
               + "  inner join f.tags t "
               + "where t.id in (:tagIds)  and f.id not in ( "
@@ -135,7 +135,7 @@
               + "order by f.creationDatetime desc "
               ),
     @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderByTitle",
-        query = "select f.id "
+        query = "select distinct f.id "
               + "from Fragment f "
               + "  inner join f.tags t "
               + "where t.id in (:tagIds)  and f.id not in ( "
@@ -146,7 +146,7 @@
               + "order by lower(f.title) desc "
               ),
     @NamedQuery(name = "Fragment.findIdsNonTrashedByTagIdOrderById",
-        query = "select f.id "
+        query = "select distinct f.id "
               + "from Fragment f "
               + "  inner join f.tags t "
               + "where t.id in (:tagIds)  and f.id not in ( "

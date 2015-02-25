@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.hibernate.Hibernate;
-import org.hibernate.Session;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.knowledgex.dao.*;

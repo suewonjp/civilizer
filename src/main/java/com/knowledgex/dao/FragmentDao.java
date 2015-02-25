@@ -23,7 +23,7 @@ public interface FragmentDao {
 
     public List<Fragment> findSomeNonTrashed(int first, int count, FragmentOrder order, boolean asc);
 
-    public List<Fragment> findSomeNonTrashedByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc);
+    public List<Fragment> findSomeNonTrashedByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc, TagDao tagDao);
 
     public Fragment findById(Long id);
 
