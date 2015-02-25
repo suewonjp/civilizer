@@ -121,7 +121,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 	@SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
 	public List<Fragment> findSomeByTagId(long tagId, int first, int count, FragmentOrder order, boolean asc) {
-	    
 	    first = Math.max(0, first);
         count = Math.max(0, count);
         final Session s = sessionFactory.getCurrentSession();
@@ -187,8 +186,10 @@ public final class FragmentDaoImpl implements FragmentDao {
                 , "Fragment.findIdsNonTrashedByTagIdOrderByTitle"
                 , "Fragment.findIdsNonTrashedByTagIdOrderById"
         };
+        final List<Long> tagIds = new ArrayList<Long>();
+        tagIds.add(tagId);
         final List<Long> ids = s.getNamedQuery(namedQueries[order.ordinal()])
-                .setParameter("tagId", tagId)
+                .setParameterList("tagIds", tagIds)
                 .list();
         if (asc) {
             // default sort direction is descending
