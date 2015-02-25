@@ -67,6 +67,19 @@ public final class TagDaoImpl implements TagDao {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public void findIdsOfAllDescendants(Long parentTagId, Session s, Set<Long> idsInOut) {
+    	if (s == null) {
+    		s = sessionFactory.getCurrentSession();
+    	}
+    	final List<Long> idsOfChildren = s.getNamedQuery("Tag.findIdsOfChildren").setParameter("id", parentTagId).list();
+    	idsInOut.addAll(idsOfChildren);
+    	for (Long cid : idsOfChildren) {
+			findIdsOfAllDescendants(cid, s, idsInOut);
+		}
+    }
+    
+    @Override
     public Tag findById(Long id) {
         return (Tag) sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findById")

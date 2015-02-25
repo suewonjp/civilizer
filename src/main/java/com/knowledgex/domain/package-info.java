@@ -197,6 +197,12 @@
 		      + "from Tag t "
 		      + "order by lower(t.tagName) asc "
 		      ),
+    @NamedQuery(name = "Tag.findIdsOfChildren",
+		query = "select c.id "
+		      + "from Tag t "
+              + "  inner join t.children c "
+              + "where t.id = :id"
+		      ),
     @NamedQuery(name = "Tag.findById",
         query = "select distinct t "
               + "from Tag t "

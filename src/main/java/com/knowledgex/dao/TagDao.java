@@ -2,6 +2,8 @@ package com.knowledgex.dao;
 
 import java.util.*;
 
+import org.hibernate.Session;
+
 import com.knowledgex.domain.*;
 
 public interface TagDao {
@@ -13,6 +15,8 @@ public interface TagDao {
     public List<Tag> findAll();
 
     public List<Tag> findAllWithChildren();
+
+    public void findIdsOfAllDescendants(Long parentTagId, Session s, Set<Long> idsInOut);
 
     public Tag findById(Long id);
 

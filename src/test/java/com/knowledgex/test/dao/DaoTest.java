@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.knowledgex.dao.*;
@@ -223,13 +224,28 @@ class DaoTest {
 			Tag tag = tagDao.findById(id, false, true);
 			Collection<Tag> children = tag.getChildren();
 			assertTrue(Hibernate.isInitialized(children));
-			if (children.isEmpty() == false) {
-				for (Tag c : children) {
-					assertTrue(tagNames.contains(c.getTagName()));
-				}
+			for (Tag c : children) {
+				assertTrue(tagNames.contains(c.getTagName()));
+			}
+			
+			final Set<Long> descendantIds = new HashSet<Long>();
+			tagDao.findIdsOfAllDescendants(id, null, descendantIds);
+			for (Long did : descendantIds) {
+				final Tag descendant = tagDao.findById(did);
+				final Set<Tag> ancestors = new HashSet<Tag>();
+				findAllAncestorsOfTag(descendant, ancestors);
+				assertTrue(ancestors.contains(tag));
 			}
 		}
 	}
+	
+	private void findAllAncestorsOfTag(Tag tag, Set<Tag> idsInOut) {
+		final List<Tag> parents = tagDao.findParentTags(tag.getId());
+		idsInOut.addAll(parents);
+		for (Tag t : parents) {
+			findAllAncestorsOfTag(t, idsInOut);
+		}
+    }
 
 	protected void testRelatedFragments() {
 		Collection<Fragment> fragments = fragmentDao.findAll(true);
