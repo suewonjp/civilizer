@@ -32,15 +32,6 @@ public final class Fragment implements Serializable {
     private String content;
     private DateTime creationDatetime;
     private DateTime updateDatetime;
-//    private String fileName;
-//    private String fileType;
-//    private Long fileSize;
-//    private Integer childrenOrderedBy = 1;
-//    private Boolean childrenOrderedInAsc = false;
-//    private String password;
-//    private String creator;
-//    private String updater;
-//    private Long tagId;
     private Set<Fragment> relatedOnes = Collections.emptySet();
     private Set<Tag> tags = Collections.emptySet();
 
@@ -107,87 +98,6 @@ public final class Fragment implements Serializable {
     public void setUpdateDatetime(DateTime updateDatetime) {
         this.updateDatetime = updateDatetime;
     }
-
-//    @Column(name = "file_name")
-//    public String getFileName() {
-//        return fileName;
-//    }
-//
-//    public void setFileName(String fileName) {
-//        this.fileName = fileName;
-//    }
-//
-//    @Column(name = "file_type")
-//    public String getFileType() {
-//        return fileType;
-//    }
-//
-//    public void setFileType(String fileType) {
-//        this.fileType = fileType;
-//    }
-//
-//    @Column(name = "file_size")
-//    public Long getFileSize() {
-//        return fileSize;
-//    }
-//
-//    public void setFileSize(Long fileSize) {
-//        this.fileSize = fileSize;
-//    }
-//
-//    @Column(name = "children_ordered_by")
-//    public Integer getChildrenOrderedBy() {
-//        return childrenOrderedBy;
-//    }
-//
-//    public void setChildrenOrderedBy(Integer childrenOrderedBy) {
-//        this.childrenOrderedBy = childrenOrderedBy;
-//    }
-//
-//    @Column(name = "children_ordered_in_asc")
-//    public Boolean getChildrenOrderedInAsc() {
-//        return childrenOrderedInAsc;
-//    }
-//
-//    public void setChildrenOrderedInAsc(Boolean childrenOrderedInAsc) {
-//        this.childrenOrderedInAsc = childrenOrderedInAsc;
-//    }
-//
-//    @Column(name = "password")
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
-//
-//    @Column(name = "creator")
-//    public String getCreator() {
-//        return creator;
-//    }
-//
-//    public void setCreator(String creator) {
-//        this.creator = creator;
-//    }
-//
-//    @Column(name = "updater")
-//    public String getUpdater() {
-//        return updater;
-//    }
-//
-//    public void setUpdater(String updater) {
-//        this.updater = updater;
-//    }
-//
-//    @Column(name = "tag_id")
-//    public Long getTagId() {
-//        return tagId;
-//    }
-//
-//    public void setTagId(Long tagId) {
-//        this.tagId = tagId;
-//    }
 
     @OneToMany(fetch=FetchType.LAZY)
     @Cascade({
