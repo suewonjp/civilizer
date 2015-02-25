@@ -14,7 +14,7 @@
 			<div class="fragment-header">
 				<p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;"
 				    widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
-				<a href="${request.contextPath}/app/fragment/#{fragment.id}">
+				<a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{fragment.id}">
 				    \##{fragment.id}
 				</a>
 				&nbsp;&nbsp;
@@ -59,7 +59,7 @@
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragment.relatedOnes}">
         <span class="each-related-fragment fa fa-link">
-            <a href="${request.contextPath}/app/fragment/#{rf.id}">\##{rf.id}</a>
+            <a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{rf.id}">\##{rf.id}</a>
             &nbsp;&nbsp;
             <h:outputText value="#{rf.title}" />
         </span>

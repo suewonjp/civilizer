@@ -32,8 +32,7 @@ $(document).ready(function() {
         return false; // stop the link
     }
     
-    $("#fragment-group").find(".fragment-header > a:nth-child(2)").on("mouseenter", triggerFragmentOverlay);
-    $("#fragment-group").find(".each-related-fragment > a:nth-child(1)").on("mouseenter", triggerFragmentOverlay);
+    $("#fragment-group").find(".fragment-overlay-trigger").on("mouseenter", triggerFragmentOverlay);
     
     function generateClickHandler(panelId) {
     	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
