@@ -189,12 +189,24 @@ public final class Tag implements Serializable {
     	}
     	return tag;
     }
+
+    public static int getIndexOf(long id, List<Tag> tags) {
+    	final int c = tags.size();
+    	int output = -1;
+    	for (int i=0; i<c; ++i) {
+    		if (tags.get(i).getId() == id) {
+    			output = i;
+    			break;
+    		}
+    	}
+    	return output;
+    }
     
     public static Collection<Tag> getTopParentTags(Collection<Tag> tags) {
         if (tags  == null|| tags.isEmpty()) {
             return null;
         }
-        Collection<Tag> output = new ArrayList<Tag>(tags);
+        List<Tag> output = new ArrayList<Tag>(tags);
         for (Tag t : tags) {
             for (Tag c : t.getChildren()) {
                 if (output.contains(c)) {
