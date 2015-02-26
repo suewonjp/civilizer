@@ -53,9 +53,11 @@ public final class TagDaoImpl implements TagDao {
     
     @Override
     @SuppressWarnings("unchecked")
-    public List<Tag> findAllWithChildren() {
+    public List<Tag> findAllWithChildren(boolean includeSpecialTags) {
     	final Session s = sessionFactory.getCurrentSession();
-    	final List<Long> ids = s.getNamedQuery("Tag.findIdsOrderByTagName").list();
+    	final String qs = includeSpecialTags ? 
+    			"Tag.findIdsOrderByTagName" : "Tag.findIdsNonSpecialOrderByTagName";
+    	final List<Long> ids = s.getNamedQuery(qs).list();
     	final List<Tag> output = new ArrayList<Tag>();
     	final Query q = s.getNamedQuery("Tag.findByIdWithChildren");
     	for (long id : ids) {

@@ -14,7 +14,7 @@ public interface TagDao {
 	
     public List<Tag> findAll();
 
-    public List<Tag> findAllWithChildren();
+    public List<Tag> findAllWithChildren(boolean includeSpecialTags);
 
     public void findIdsOfAllDescendants(Long parentTagId, Session s, Set<Long> idsInOut);
 

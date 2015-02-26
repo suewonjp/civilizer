@@ -144,20 +144,22 @@ public final class MainController {
 	
 	public TagListBean newTagListBean() {
 		final TagListBean tagListBean = new TagListBean();
-		final List<Tag> tags = tagDao.findAllWithChildren();
+		final List<Tag> tags = tagDao.findAllWithChildren(false);
 	    tagListBean.setTags(tags);
 	    final int tc = tags.size();
+	    
+	    // count fragments per tag and store it fcList
 	    List<Long> fcList = new ArrayList<Long>(tc);
 	    final boolean includeTrashed = false;
 	    for (int i=0; i<tc; ++i) {
 	        fcList.add(fragmentDao.countByTagId(tags.get(i).getId(), includeTrashed));
 	    }
-	    
-	    // special handling for the trash tag; count everything
-	    final int indexOfTrash = tagListBean.indexOf(Tag.TRASH_TAG_ID);
-	    fcList.set(indexOfTrash, fragmentDao.countByTagId(Tag.TRASH_TAG_ID, true));
-	    
 	    tagListBean.setFragmentCountList(fcList);
+	    
+	    // recount fragments of the trash tag
+//	    final int indexOfTrash = tagListBean.indexOf(Tag.TRASH_TAG_ID);
+//	    fcList.set(indexOfTrash, fragmentDao.countByTagId(Tag.TRASH_TAG_ID, true));
+	    
 	    final TagTree tagTree = newTagTree();
 	    tagListBean.setTagTree(tagTree);
         return tagListBean;
