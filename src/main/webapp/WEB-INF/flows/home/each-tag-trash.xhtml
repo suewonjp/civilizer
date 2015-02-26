@@ -8,7 +8,7 @@
     >
     
 <span class="each-tag">
-    <p:commandLink oncomplete="confirmTrashingTag('#{tag.id}', Boolean('#{fragmentCount}' == 0))" title="#{tagBean.fragmentCount} #{msg['label_fragments']}" styleClass="tag_button">
+    <p:commandLink oncomplete="confirmTrashingTag('#{tag.id}', Boolean('#{fragmentCount}' == 0))" title="#{tagBean.fragmentCount} #{msg['label_fragments']}" styleClass="tag-button">
         <span class="fa fa-trash" style="color:indigo" >&nbsp;</span>
         <span class="fa fa-tag " title="#{msg['label_trash_tag']}">&nbsp;</span>
         <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>

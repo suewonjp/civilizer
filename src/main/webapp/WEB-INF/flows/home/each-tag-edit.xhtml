@@ -8,7 +8,7 @@
     >
     
 <span class="each-tag">
-    <p:commandLink oncomplete="showEditTagDialog('#{tag.id}', '#{tag.tagName}')" styleClass="tag_button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
+    <p:commandLink oncomplete="showEditTagDialog('#{tag.id}', '#{tag.tagName}')" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
         <span class="fa fa-pencil" style="color:black" >&nbsp;</span>
         <span class="fa fa-tag " title="#{msg['label_edit_tag']}">&nbsp;</span>
         <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>

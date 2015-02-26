@@ -8,7 +8,7 @@
     >
     
 <span class="each-tag">
-	<p:commandLink action="filter-by-tag" styleClass="tag_button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
+	<p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
 		<span class="fa fa-tag " title="#{msg['label_search_fragments_with_tag']}">&nbsp;</span>
 		<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 		<f:param name="tagId" value="#{tag.id}" />

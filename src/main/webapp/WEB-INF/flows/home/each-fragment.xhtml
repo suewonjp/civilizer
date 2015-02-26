@@ -58,7 +58,8 @@
 
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragment.relatedOnes}">
-        <span class="each-related-fragment fa fa-link">
+        <span class="small-fragment-box">
+	        <span class="fa fa-link">&nbsp;&nbsp;</span>
             <a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{rf.id}">\##{rf.id}</a>
             &nbsp;&nbsp;
             <h:outputText value="#{rf.title}" />

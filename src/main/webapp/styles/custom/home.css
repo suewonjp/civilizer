@@ -18,14 +18,21 @@
     margin-left: 2%;
 }
 
-.each-related-fragment {
+.small-fragment-box {
 	margin-bottom: 5px;
 	margin-left: 5px;
     height: 15px;
-    background-color: #eee;
-    border-style: solid;
-    border-color: #ccc;
     float: left;
+    border:1px solid #cacaca; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif;
+    padding: 1px 3px 1px 1px; text-decoration:none; display:inline-block;
+/*     text-shadow: -1px -1px 0 rgba(0,0,0,0.3); */
+    font-weight:bold; color: #000;
+	background-color: #E6E6E6; background-image: -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#CCCCCC));
+	background-image: -webkit-linear-gradient(top, #E6E6E6, #CCCCCC);
+	background-image: -moz-linear-gradient(top, #E6E6E6, #CCCCCC);
+	background-image: -ms-linear-gradient(top, #E6E6E6, #CCCCCC);
+	background-image: -o-linear-gradient(top, #E6E6E6, #CCCCCC);
+	background-image: linear-gradient(to bottom, #E6E6E6, #CCCCCC);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E6E6E6, endColorstr=#CCCCCC);
 }
 
 #user-menu-area {
@@ -157,9 +164,11 @@
     color: black;
 }
 
-.tag_button, .tag_box {
+.tag-button, .tag-box {
     margin: 2px 1px 1px 1px;
-    border:1px solid #ffc826;-webkit-box-shadow: #B4B5B5 1px 1px 1px  ;-moz-box-shadow: #B4B5B5 1px 1px 1px ; box-shadow: #B4B5B5 1px 1px 1px  ; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:10px;font-family:arial, helvetica, sans-serif; 
+    border:1px solid #ffc826;
+    -webkit-box-shadow: #B4B5B5 1px 1px 1px  ;-moz-box-shadow: #B4B5B5 1px 1px 1px ; box-shadow: #B4B5B5 1px 1px 1px;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:10px;font-family:arial, helvetica, sans-serif; 
     padding: 1px 1px 1px 1px; text-decoration:none; display:inline;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:lighter; color: #FFFFFF;
     background-color: #ffd65e; background-image: -webkit-gradient(linear, left top, left bottom, from(#ffd65e), to(#febf04));
     background-image: -webkit-linear-gradient(top, #ffd65e, #febf04);
@@ -169,7 +178,7 @@
     background-image: linear-gradient(to bottom, #ffd65e, #febf04);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ffd65e, endColorstr=#febf04);
 }
 
-.tag_button:hover {
+.tag-button:hover {
     border:1px solid #f7b800;
     background-color: #ffc92b; background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc92b), to(#ce9a01));
     background-image: -webkit-linear-gradient(top, #ffc92b, #ce9a01);
