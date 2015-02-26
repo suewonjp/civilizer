@@ -85,26 +85,30 @@ function showEditTagDialog(tagId, tagName) {
         </ul>
         
         <div id="tag-palette-linear">
-            <c:forEach var="tag" items="#{tagListBean.tags}">
+            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
+                <c:set var="tag" value="#{tagBean.tag}"/>
                 <ui:include src="each-tag.xhtml" />
                 <br />
             </c:forEach>
         </div>
         <div id="tag-palette-tree">
-            <p:tree value="#{tagListBean.tagTree.root}" var="tag">
+            <p:tree value="#{tagListBean.tagTree.root}" var="tagBean">
+                <c:set var="tag" value="#{tagBean.tag}"/>
                 <p:treeNode>
                     <ui:include src="each-tag.xhtml" />
                 </p:treeNode>
             </p:tree>
         </div>
         <div id="tag-palette-edit">
-            <c:forEach var="tag" items="#{tagListBean.tags}">
+            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
+                <c:set var="tag" value="#{tagBean.tag}"/>
                 <ui:include src="each-tag-edit.xhtml" />
                 <br />
             </c:forEach>
         </div>
         <div id="tag-palette-trash">
-            <c:forEach var="tag" items="#{tagListBean.tags}" varStatus="loop">
+            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}" varStatus="loop">
+                <c:set var="tag" value="#{tagBean.tag}"/>
                 <ui:include src="each-tag-trash.xhtml" />
                 <br />
             </c:forEach>

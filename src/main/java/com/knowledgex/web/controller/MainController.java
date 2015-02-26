@@ -147,6 +147,13 @@ public final class MainController {
 		final List<Tag> tags = tagDao.findAllWithChildren(false);
 	    tagListBean.setTags(tags);
 	    final int tc = tags.size();
+	    final List<TagBean> tagBeans = new ArrayList<TagBean>();
+	    for (int i = 0; i < tc; i++) {
+	    	TagBean tb = new TagBean();
+	    	tb.setTag(tags.get(i));
+	    	tagBeans.add(tb);
+	    }
+	    tagListBean.setTagBeans(tagBeans);
 	    
 	    // count fragments per tag and store it fcList
 	    List<Long> fcList = new ArrayList<Long>(tc);

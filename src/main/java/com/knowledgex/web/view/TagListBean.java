@@ -10,6 +10,8 @@ public final class TagListBean implements Serializable {
 
     private List<Tag> tags;
 
+    private List<TagBean> tagBeans;
+
     private List<Long> fragmentCountList;
     
     private TagTree tagTree = null;
@@ -22,7 +24,15 @@ public final class TagListBean implements Serializable {
         this.tags = tags;
     }
     
-    public int indexOf(long tagId) {
+    public List<TagBean> getTagBeans() {
+		return tagBeans;
+	}
+
+	public void setTagBeans(List<TagBean> tagBeans) {
+		this.tagBeans = tagBeans;
+	}
+
+	public int indexOf(long tagId) {
     	final long tc = tags.size();
     	for (int i = 0; i < tc; i++) {
 			if (tags.get(i).getId() == tagId) {
@@ -46,7 +56,7 @@ public final class TagListBean implements Serializable {
 
     public void setTagTree(TagTree tagTree) {
         try {
-            tagTree.populateNodes(tags);
+            tagTree.populateNodes(tags, tagBeans);
         }
         catch (NullPointerException e) {
             e.printStackTrace();
