@@ -10,8 +10,8 @@
 <ui:define name="entry-point-scripts">
 <script>
 //<![CDATA[
-// $(document).ready(function() {
-// }); // end of $(document).ready()
+$(document).ready(function() {
+});
 
 $(window).load(function() {
 	var msgBox = $("#signin-form-messages");
@@ -19,7 +19,15 @@ $(window).load(function() {
     	$("#signin-form-panel").width("80%");
 	    PF("spot").show();
     }
-}); // end of $(document).load()
+});
+
+$(window).unload(function() {
+	history.pushState({}, "", "${request.contextPath}/app/home");
+});
+
+$(window).on("popstate", function(event) {
+    history.pushState({}, "", "${request.contextPath}/app/home");
+});
 
 //]]>
 </script>
@@ -32,11 +40,11 @@ $(window).load(function() {
         <p:messages id="signin-form-messages" />
         <h:panelGrid columns="3" cellpadding="5">
             <p:outputLabel for="j_username" value="#{msg['label_username']}" />
-            <p:inputText id="j_username" required="true" />
+            <p:inputText id="j_username" />
             <p:message for="j_username" />
  
             <p:outputLabel for="j_password" value="#{msg['label_password']}" />
-            <p:password id="j_password" required="true"/>
+            <p:password id="j_password" />
             <p:message for="j_password" />
         </h:panelGrid>
 
