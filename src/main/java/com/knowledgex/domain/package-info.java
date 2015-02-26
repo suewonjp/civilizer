@@ -197,6 +197,12 @@
 		      + "from Tag t "
 		      + "order by lower(t.tagName) asc "
 		      ),
+    @NamedQuery(name = "Tag.findIdsNonSpecialOrderByTagName",
+		query = "select t.id "
+		      + "from Tag t "
+		      + "where t.id > 0 "
+		      + "order by lower(t.tagName) asc "
+		      ),
     @NamedQuery(name = "Tag.findIdsOfChildren",
 		query = "select c.id "
 		      + "from Tag t "
