@@ -8,9 +8,9 @@ import com.knowledgex.domain.Tag;
 @SuppressWarnings("serial")
 public final class TagListBean implements Serializable {
 
-    private List<Tag> tags;
+    private List<Tag> tags = Collections.emptyList();
 
-    private List<TagBean> tagBeans;
+    private List<TagBean> tagBeans = Collections.emptyList();
 
     private TagTree tagTree = null;
 

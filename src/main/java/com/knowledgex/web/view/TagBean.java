@@ -13,7 +13,7 @@ public class TagBean implements Serializable {
     @SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(TagBean.class);
     
-    private Tag tag;
+    private Tag tag = null;
     
     private long fragmentCount = 0;
 

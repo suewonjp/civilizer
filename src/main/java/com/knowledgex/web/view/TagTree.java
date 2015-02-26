@@ -11,14 +11,9 @@ import com.knowledgex.domain.Tag;
 @SuppressWarnings("serial")
 public final class TagTree implements Serializable {
     
-    private TreeNode root = null;
+    private TreeNode root = new DefaultTreeNode("Root", null);
     
-    public TagTree() {
-    }
-
     public void populateNodes(List<Tag> tags, List<TagBean> tagBeans) {
-    	root = new DefaultTreeNode("Root", null);
-    	
     	// These tags have no parent
     	Collection<Tag> topParentTags = Tag.getTopParentTags(tags);
     	
