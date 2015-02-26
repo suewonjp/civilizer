@@ -87,7 +87,15 @@
 }
 
 #tag-palette-title {
-    color: #0a0;
+    color: green;
+    font-size: 150%;
+    font-style: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#bookmark-title {
+    color: gold;
     font-size: 150%;
     font-style: bold;
     margin-top: 10px;
