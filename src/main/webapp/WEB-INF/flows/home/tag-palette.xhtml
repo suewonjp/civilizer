@@ -1,0 +1,115 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
+<script>
+//<![CDATA[
+$(document).ready(function() {
+    var currentTagGroupTabIndex = "0";
+
+    $tab = $( "#tag-palette-tab-view" ).tabs({
+         activate : function (e, ui) {
+            currentTagGroupTabIndex = ui.newTab.index().toString();
+            sessionStorage.setItem('tag-palette-tab-index', currentTagGroupTabIndex);
+         }
+    });
+
+    if (sessionStorage.getItem('tag-palette-tab-index')) {
+        currentTagGroupTabIndex = sessionStorage.getItem('tag-palette-tab-index');
+        $tab.tabs('option', 'active', currentTagGroupTabIndex);
+    }
+}); // end of $(document).ready()
+
+function showEditTagDialog(tagId, tagName) {
+    var dlg = PF('editTagDlg');
+    dlg.show();
+    if (tagId > 0) {
+        // [NOTE] user editable tags have id > 0
+        $("#tag-palette-form\\:id-placeholder-for-tag").val(tagId);
+    }
+    $("#tag-palette-form\\:edit-tag-dlg-name-input").val(tagName);
+    
+}
+//]]>
+</script> 
+
+<div>
+    <span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span>
+</div>
+
+<h:form id="tag-palette-form">
+    <p:dialog header="#{msg['label_edit_tag']}" width="200px" modal="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
+        <h:outputLabel for="edit-tag-dlg-name-input" value="#{msg['label_name']} :" />
+        <p:inputText id="edit-tag-dlg-name-input" value="#{userEditedTagBean.tag.tagName}" />
+        <h:inputHidden id="id-placeholder-for-tag" value="#{userEditedTagBean.tag.id}" />
+        <br /><br />
+        <p:commandButton action="save-tag" value="#{msg['label_ok']}" icon="ui-icon-check">
+        </p:commandButton>
+    </p:dialog>
+    
+    <p:panelGrid columns="2" >
+        <p:outputLabel for="panel-radio-for-tag-palette" value="#{msg['label_target']} #{msg['label_panel']} :" />
+        <p:selectOneRadio id="panel-radio-for-tag-palette" value="#{customParams.panelIdForTagPalette}">
+            <f:selectItem itemLabel="0" itemValue="0" />
+            <f:selectItem itemLabel="1" itemValue="1" />
+            <f:selectItem itemLabel="2" itemValue="2" />
+        </p:selectOneRadio>
+    </p:panelGrid>
+            
+    <div id="tag-palette-tab-view">
+        <ul>
+            <li>
+                <a href="#tag-palette-linear" title="#{msg['label_linear_view']}" >
+                    <span class="fa fa-list fa-2x" ></span>
+                </a>
+            </li>
+            <li>
+                <a href="#tag-palette-tree" title="#{msg['label_tree_view']}" >
+                    <span class="fa fa-tree fa-2x" ></span>
+                </a>
+            </li>
+            <li>
+                <a href="#tag-palette-edit" title="#{msg['label_edit_view']}" >
+                    <span class="fa fa-pencil fa-2x" ></span>
+                </a>
+            </li>
+            <li>
+                <a href="#tag-palette-trash" title="#{msg['label_trash_view']}" >
+                    <span class="fa fa-trash fa-2x" ></span>
+                </a>
+            </li>
+        </ul>
+        
+        <div id="tag-palette-linear">
+            <c:forEach var="tag" items="#{tagListBean.tags}">
+                <ui:include src="each-tag.xhtml" />
+                <br />
+            </c:forEach>
+        </div>
+        <div id="tag-palette-tree">
+            <p:tree value="#{tagListBean.tagTree.root}" var="tag">
+                <p:treeNode>
+                    <ui:include src="each-tag.xhtml" />
+                </p:treeNode>
+            </p:tree>
+        </div>
+        <div id="tag-palette-edit">
+            <c:forEach var="tag" items="#{tagListBean.tags}">
+                <ui:include src="each-tag-edit.xhtml" />
+                <br />
+            </c:forEach>
+        </div>
+        <div id="tag-palette-trash">
+            <c:forEach var="tag" items="#{tagListBean.tags}" varStatus="loop">
+                <ui:include src="each-tag-trash.xhtml" />
+                <br />
+            </c:forEach>
+        </div>
+    </div>
+</h:form>
+
+</ui:composition>
