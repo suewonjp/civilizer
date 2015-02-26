@@ -12,6 +12,10 @@ public interface FragmentDao {
 	public long countAll(boolean includeTrashed);
 	
 	public long countByTagId(long tagId, boolean includeTrashed);
+
+	public long countByTagIds(Collection<Long> tagIds, boolean includeTrashed);
+	
+	public long countByTagAndItsDescendants(long tagId, boolean includeTrashed, TagDao tagDao);
 	
     public List<Fragment> findAll(boolean includeTrashed);
 

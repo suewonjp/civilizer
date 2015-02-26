@@ -14,6 +14,8 @@ public class TagBean implements Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(TagBean.class);
     
     private Tag tag;
+    
+    private long fragmentCount = 0;
 
 	public Tag getTag() {
 		return tag;
@@ -29,5 +31,13 @@ public class TagBean implements Serializable {
         	tag.setTagName("");
         }
     }
+
+	public long getFragmentCount() {
+		return fragmentCount;
+	}
+
+	public void setFragmentCount(long fragmentCount) {
+		this.fragmentCount = fragmentCount;
+	}
     
 }

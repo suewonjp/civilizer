@@ -19,11 +19,27 @@
               + "  inner join f.tags t "
               + "where t.id = :tagId "
               ),
+    @NamedQuery(name = "Fragment.countByTagIds",
+        query = "select count(distinct f) "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id in (:tagIds) "
+              ),
     @NamedQuery(name = "Fragment.countNonTrashedByTagId",
         query = "select count(f) "
               + "from Fragment f "
               + "  inner join f.tags t "
               + "where t.id = :tagId and f.id not in ( "
+              + "  select t2f.fragmentId "
+              + "  from Tag2Fragment t2f "
+              + "  where t2f.tagId = 0 "
+              + ") "
+              ),
+    @NamedQuery(name = "Fragment.countNonTrashedByTagIds",
+        query = "select count(distinct f) "
+              + "from Fragment f "
+              + "  inner join f.tags t "
+              + "where t.id in (:tagIds) and f.id not in ( "
               + "  select t2f.fragmentId "
               + "  from Tag2Fragment t2f "
               + "  where t2f.tagId = 0 "

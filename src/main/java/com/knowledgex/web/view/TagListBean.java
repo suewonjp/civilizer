@@ -12,8 +12,6 @@ public final class TagListBean implements Serializable {
 
     private List<TagBean> tagBeans;
 
-    private List<Long> fragmentCountList;
-    
     private TagTree tagTree = null;
 
     public List<Tag> getTags() {
@@ -40,14 +38,6 @@ public final class TagListBean implements Serializable {
 			}
 		}
     	return -1;
-    }
-
-    public List<Long> getFragmentCountList() {
-        return fragmentCountList;
-    }
-
-    public void setFragmentCountList(List<Long> fragmentCountList) {
-        this.fragmentCountList = fragmentCountList;
     }
 
     public TagTree getTagTree() {

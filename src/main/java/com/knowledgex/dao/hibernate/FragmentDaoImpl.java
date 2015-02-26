@@ -58,6 +58,24 @@ public final class FragmentDaoImpl implements FragmentDao {
     }
     
     @Override
+    public long countByTagIds(Collection<Long> tagIds, boolean includeTrashed) {
+    	final String nq = includeTrashed ?
+                "Fragment.countByTagIds" : "Fragment.countNonTrashedByTagIds";
+        return (Long) sessionFactory.getCurrentSession()
+                .getNamedQuery(nq)
+                .setParameterList("tagIds", tagIds)
+                .iterate().next();
+    }
+    
+    @Override
+    public long countByTagAndItsDescendants(long tagId, boolean includeTrashed, TagDao tagDao) {
+    	final Set<Long> tagIds = new HashSet<Long>();
+        tagDao.findIdsOfAllDescendants(tagId, null, tagIds);
+        tagIds.add(tagId);
+        return countByTagIds(tagIds, includeTrashed);
+    }
+    
+    @Override
     @SuppressWarnings("unchecked")
     public List<Fragment> findAll(boolean includeTrashed) {
         if (includeTrashed) {

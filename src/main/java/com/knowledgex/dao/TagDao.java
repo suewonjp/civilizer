@@ -18,6 +18,8 @@ public interface TagDao {
 
     public void findIdsOfAllDescendants(Long parentTagId, Session s, Set<Long> idsInOut);
 
+    public long countAllDescendants(Long id);
+
     public Tag findById(Long id);
 
     public Tag findById(Long id, boolean withFragments, boolean withChildren);

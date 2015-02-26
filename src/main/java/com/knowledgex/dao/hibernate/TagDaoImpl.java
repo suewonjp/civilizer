@@ -80,6 +80,13 @@ public final class TagDaoImpl implements TagDao {
     }
     
     @Override
+    public long countAllDescendants(Long id) {
+    	final Set<Long> descendantIds = new HashSet<Long>();
+		findIdsOfAllDescendants(id, sessionFactory.getCurrentSession(), descendantIds);
+		return descendantIds.size();
+    }
+    
+    @Override
     public Tag findById(Long id) {
         return (Tag) sessionFactory.getCurrentSession()
                 .getNamedQuery("Tag.findById")
