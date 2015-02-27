@@ -205,3 +205,8 @@
 .target-panel-selector-col-1 {
 	width: 60%;
 }
+
+#trashcan-form\:trashcan-panel {
+	width: 30%;
+	margin-bottom: 5px;
+}
