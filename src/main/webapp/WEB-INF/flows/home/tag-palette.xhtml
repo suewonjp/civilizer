@@ -9,6 +9,14 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
+	$("#tag-palette-tab-view").on("mouseenter", ".each-tag", function() {
+        $(this).find(".tag-menu").show();
+    });
+    
+    $("#tag-palette-tab-view").on("mouseleave", ".each-tag", function() {
+        $(this).find(".tag-menu").hide();
+    });
+    
     var currentTagGroupTabIndex = "0";
 
     $tab = $( "#tag-palette-tab-view" ).tabs({
@@ -51,15 +59,6 @@ function showEditTagDialog(tagId, tagName) {
         </p:commandButton>
     </p:dialog>
     
-    <p:panelGrid columns="2" >
-        <p:outputLabel for="panel-radio-for-tag-palette" value="#{msg['label_target']} #{msg['label_panel']} :" />
-        <p:selectOneRadio id="panel-radio-for-tag-palette" value="#{customParams.panelIdForTagPalette}">
-            <f:selectItem itemLabel="0" itemValue="0" />
-            <f:selectItem itemLabel="1" itemValue="1" />
-            <f:selectItem itemLabel="2" itemValue="2" />
-        </p:selectOneRadio>
-    </p:panelGrid>
-            
     <div id="tag-palette-tab-view">
         <ul>
             <li>
@@ -72,18 +71,17 @@ function showEditTagDialog(tagId, tagName) {
                     <span class="fa fa-tree fa-2x" ></span>
                 </a>
             </li>
-            <li>
-                <a href="#tag-palette-edit" title="#{msg['label_edit_view']}" >
-                    <span class="fa fa-pencil fa-2x" ></span>
-                </a>
-            </li>
-            <li>
-                <a href="#tag-palette-trash" title="#{msg['label_trash_view']}" >
-                    <span class="fa fa-trash fa-2x" ></span>
-                </a>
-            </li>
         </ul>
         
+        <h:panelGrid columns="2" styleClass="target-panel-selector" columnClasses="target-panel-selector-col-0, target-panel-selector-col-1" >
+	        <label class="fa fa-file-text" for="panel-radio-for-tag-palette" >&nbsp;&nbsp;#{msg['label_target']} #{msg['label_panel']}:</label>
+	        <p:selectOneRadio id="panel-radio-for-tag-palette" value="#{customParams.panelIdForTagPalette}">
+	            <f:selectItem itemLabel="0" itemValue="0" />
+	            <f:selectItem itemLabel="1" itemValue="1" />
+	            <f:selectItem itemLabel="2" itemValue="2" />
+	        </p:selectOneRadio>
+	    </h:panelGrid>
+	    
         <div id="tag-palette-linear">
             <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
                 <c:set var="tag" value="#{tagBean.tag}"/>
@@ -98,20 +96,6 @@ function showEditTagDialog(tagId, tagName) {
                     <ui:include src="each-tag.xhtml" />
                 </p:treeNode>
             </p:tree>
-        </div>
-        <div id="tag-palette-edit">
-            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
-                <c:set var="tag" value="#{tagBean.tag}"/>
-                <ui:include src="each-tag-edit.xhtml" />
-                <br />
-            </c:forEach>
-        </div>
-        <div id="tag-palette-trash">
-            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}" varStatus="loop">
-                <c:set var="tag" value="#{tagBean.tag}"/>
-                <ui:include src="each-tag-trash.xhtml" />
-                <br />
-            </c:forEach>
         </div>
     </div>
 </h:form>

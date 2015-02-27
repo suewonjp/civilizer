@@ -130,6 +130,10 @@
     float: right;
 }
 
+.tag-menu {
+    display: none;
+}
+
 .warning-color {
     color: #f00;
 }
@@ -186,4 +190,18 @@
     background-image: -ms-linear-gradient(top, #ffc92b, #ce9a01);
     background-image: -o-linear-gradient(top, #ffc92b, #ce9a01);
     background-image: linear-gradient(to bottom, #ffc92b, #ce9a01);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ffc92b, endColorstr=#ce9a01);
+}
+
+.target-panel-selector {
+	margin-bottom: -20px;
+	border-style: hidden;
+}
+
+.target-panel-selector-col-0 {
+	width: 40%;
+	padding-bottom: 20px;
+}
+
+.target-panel-selector-col-1 {
+	width: 60%;
 }
