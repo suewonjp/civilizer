@@ -18,6 +18,17 @@
 </div>
 
 <h:form id="bookmark-form">
+	<p:panel id="bookmark-panel" >
+		<c:forEach var="fragmentBean" items="#{bookmarkTagBean.fragmentBeans}" varStatus="loop">
+		    <c:set var="fragment" value="#{fragmentBean.fragment}" />
+		    <span class="small-fragment-box">
+	            <a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{fragment.id}">\##{fragment.id}</a>
+	            &nbsp;&nbsp;
+	            <h:outputText value="#{fragment.title}" />
+	        </span>
+	        <br/>
+		</c:forEach>
+	</p:panel>
 </h:form>
 
 </ui:composition>

@@ -41,14 +41,24 @@ public final class MainController {
 	@Autowired
 	private TagDao tagDao;
 	
-	private Tag trashTag = null;
+	private Tag trashcanTag = null;
+
+	private Tag bookmarkTag = null;
 	
-	private Tag getTrashTag() {
-		if (trashTag != null) {
-			return trashTag;
+	private Tag getTrashcanTag() {
+		if (trashcanTag != null) {
+			return trashcanTag;
 		}
-		trashTag = tagDao.findById(Tag.TRASH_TAG_ID);
-		return trashTag;
+		trashcanTag = tagDao.findById(Tag.TRASH_TAG_ID);
+		return trashcanTag;
+	}
+
+	private Tag getBookmarkTag() {
+		if (bookmarkTag != null) {
+			return bookmarkTag;
+		}
+		bookmarkTag = tagDao.findById(Tag.BOOKMARK_TAG_ID, true, false);
+		return bookmarkTag;
 	}
 	
 	public List<FragmentListBean> newFragmentListBeans() {
@@ -170,6 +180,24 @@ public final class MainController {
 		tagBean.setTag(tag);
 		return tagBean;
 	}
+
+	public SpecialTagBean newBookmarkTagBean() {
+		final SpecialTagBean tagBean = new SpecialTagBean();
+		
+		final Tag tag = getBookmarkTag();
+		tagBean.setTag(tag);
+		
+		final Set<Fragment> fragments = tag.getFragments();
+		final List<FragmentBean> fbs = new ArrayList<FragmentBean>();
+		for (Fragment fragment : fragments) {
+			final FragmentBean fb = new FragmentBean();
+			fb.setFragment(fragment);
+			fbs.add(fb);
+		}
+		tagBean.setFragmentBeans(fbs);
+		
+		return tagBean;
+	}
 	
 	private TagTree newTagTree() {
 		final TagTree tagTree = new TagTree();
@@ -182,7 +210,7 @@ public final class MainController {
 	
 	public void trashFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId, true, false);
-		frg.addTag(getTrashTag());
+		frg.addTag(getTrashcanTag());
 		fragmentDao.save(frg);
 		ViewUtil.addMessage("Trashing", "Fragment #" + frg.getId(), null);
 	}

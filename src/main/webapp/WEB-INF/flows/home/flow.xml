@@ -12,6 +12,7 @@
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         <evaluate expression="mainController.newTagBean()" result="flowScope.userEditedTagBean"/>
+        <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">
@@ -35,6 +36,7 @@
         <transition on="trash-fragment" to="home">
             <evaluate expression="mainController.trashFragment(userEditedFragmentBean)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="delete-fragment" to="home">
@@ -45,6 +47,7 @@
         <transition on="trash-fragments" to="home">
             <evaluate expression="mainController.trashFragments(fragmentListBeans[customParams.panelId])" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="delete-fragments" to="home">
@@ -56,18 +59,21 @@
             <evaluate expression="mainController.saveFragment(userEditedFragmentBean, tagListBean)" />
             <evaluate expression="userEditedFragmentBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="save-tag" to="home">
             <evaluate expression="mainController.saveTag(userEditedTagBean, tagListBean)" />
             <evaluate expression="userEditedTagBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="trash-tag" to="home">
             <evaluate expression="mainController.trashTag(userEditedTagBean)" />
             <evaluate expression="userEditedTagBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
         
         <transition on="delete-tag" to="home">

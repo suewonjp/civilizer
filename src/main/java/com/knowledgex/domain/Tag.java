@@ -29,6 +29,7 @@ public final class Tag implements Serializable {
 	
 	public static final String TAG_NAME_DELIMITER = ",";
 	public static final long TRASH_TAG_ID = 0L;
+	public static final long BOOKMARK_TAG_ID = -1L;
 
     private Long id;
     private String tagName;
