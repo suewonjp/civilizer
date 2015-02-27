@@ -8,18 +8,6 @@
 
 <ui:include src="bookmark.xhtml" />
 
-<h:form id="trashcan-form">
-<p:panelGrid columns="2" id="trashcan-panel">
-	<p:commandLink action="filter-by-tag">
-        <span class="fa fa-trash fa-2x button-link" style="color:lightgray"></span>
-        <f:param name="tagId" value="0" />
-    </p:commandLink>
-	<p:commandLink >
-        <span class="fa fa-trash fa-2x button-link warning-color"></span>
-    </p:commandLink>
-</p:panelGrid>
-</h:form>
-
 <ui:include src="tag-palette.xhtml" />
 
 </ui:composition>

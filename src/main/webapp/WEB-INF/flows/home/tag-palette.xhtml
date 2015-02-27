@@ -82,6 +82,13 @@ function showEditTagDialog(tagId, tagName) {
 	        </p:selectOneRadio>
 	    </h:panelGrid>
 	    
+	    <div id="trashcan">
+		    <p:commandLink action="filter-by-tag" title="#{msg['go_to_trashcan']}">
+		        <span class="fa fa-trash fa-2x button-link" style="color:lightgray"></span>
+		        <f:param name="tagId" value="0" />
+		    </p:commandLink>
+		</div>
+	    
         <div id="tag-palette-linear">
             <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
                 <c:set var="tag" value="#{tagBean.tag}"/>

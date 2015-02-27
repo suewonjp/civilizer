@@ -193,7 +193,7 @@
 }
 
 .target-panel-selector {
-	margin-bottom: -20px;
+	margin-bottom: -10px;
 	border-style: hidden;
 }
 
@@ -206,7 +206,7 @@
 	width: 60%;
 }
 
-#trashcan-form\:trashcan-panel {
-	width: 30%;
-	margin-bottom: 5px;
+#trashcan {
+	margin-left: 15px;
+	margin-bottom: 0px;
 }
