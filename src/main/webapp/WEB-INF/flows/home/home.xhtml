@@ -210,8 +210,8 @@ function confirmTrashingTag(tagId, deleting) {
 <!--     <p:log id="log" /> -->
     <p:growl id="growl" showDetail="true" sticky="false" life="10000" />
     
-    <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{userEditedFragmentBean.fragment.id}" />
-    <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{userEditedTagBean.tag.id}" />
+    <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{paramFragmentBean.fragment.id}" />
+    <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{paramTagBean.tag.id}" />
     <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}" />
     <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}" />
     

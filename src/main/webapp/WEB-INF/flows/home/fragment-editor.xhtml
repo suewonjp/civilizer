@@ -131,11 +131,11 @@ function previewFragment() {
 	                </a>
                 </div>
             </div>
-            <p:inputText id="title-input" value="#{userEditedFragmentBean.fragment.title}" autocomplete="false" />
-            <p:inputText id="tags-input" value="#{userEditedFragmentBean.concatenatedTagNames}" autocomplete="false" />
+            <p:inputText id="title-input" value="#{paramFragmentBean.fragment.title}" autocomplete="false" />
+            <p:inputText id="tags-input" value="#{paramFragmentBean.concatenatedTagNames}" autocomplete="false" />
             <textarea id="fragment-content-editor" ></textarea>
-            <h:inputHidden id="content-placeholder" value="#{userEditedFragmentBean.fragment.content}" />
-            <h:inputHidden id="id-placeholder-for-fragment" value="#{userEditedFragmentBean.fragment.id}" />
+            <h:inputHidden id="content-placeholder" value="#{paramFragmentBean.fragment.content}" />
+            <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}" />
             <p:commandButton onclick="previewFragment();" value="#{msg['label_preview']}" style="margin-left:10px;" />
             <p:commandButton onclick="prepareFragmentContent();" value="#{msg['label_save']}" action="save-fragment" />
         </h:form>

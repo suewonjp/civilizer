@@ -9,9 +9,9 @@
     
     <on-start>
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
-        <evaluate expression="mainController.newFragmentBean()" result="flowScope.userEditedFragmentBean"/>
+        <evaluate expression="mainController.newFragmentBean()" result="flowScope.paramFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
-        <evaluate expression="mainController.newTagBean()" result="flowScope.userEditedTagBean"/>
+        <evaluate expression="mainController.newTagBean()" result="flowScope.paramTagBean"/>
         <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
     </on-start>
     
@@ -34,13 +34,13 @@
         </transition>
         
         <transition on="trash-fragment" to="home">
-            <evaluate expression="mainController.trashFragment(userEditedFragmentBean)" />
+            <evaluate expression="mainController.trashFragment(paramFragmentBean)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="delete-fragment" to="home">
-            <evaluate expression="mainController.deleteFragment(userEditedFragmentBean)" />
+            <evaluate expression="mainController.deleteFragment(paramFragmentBean)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
@@ -56,29 +56,29 @@
         </transition>
 
         <transition on="save-fragment" to="home">
-            <evaluate expression="mainController.saveFragment(userEditedFragmentBean, tagListBean)" />
-            <evaluate expression="userEditedFragmentBean.clear()" />
+            <evaluate expression="mainController.saveFragment(paramFragmentBean, tagListBean)" />
+            <evaluate expression="paramFragmentBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="save-tag" to="home">
-            <evaluate expression="mainController.saveTag(userEditedTagBean, tagListBean)" />
-            <evaluate expression="userEditedTagBean.clear()" />
+            <evaluate expression="mainController.saveTag(paramTagBean, tagListBean)" />
+            <evaluate expression="paramTagBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="trash-tag" to="home">
-            <evaluate expression="mainController.trashTag(userEditedTagBean)" />
-            <evaluate expression="userEditedTagBean.clear()" />
+            <evaluate expression="mainController.trashTag(paramTagBean)" />
+            <evaluate expression="paramTagBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
         
         <transition on="delete-tag" to="home">
-            <evaluate expression="mainController.deleteTag(userEditedTagBean)" />
-            <evaluate expression="userEditedTagBean.clear()" />
+            <evaluate expression="mainController.deleteTag(paramTagBean)" />
+            <evaluate expression="paramTagBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
