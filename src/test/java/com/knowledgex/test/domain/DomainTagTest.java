@@ -5,15 +5,11 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 import org.apache.commons.logging.Log;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.knowledgex.domain.*;
 import com.knowledgex.test.util.TestUtil;
-import com.knowledgex.web.converter.JodaDateTimeConverter;
 
 public class DomainTagTest {
 	
@@ -257,16 +253,16 @@ public class DomainTagTest {
 	    }
 	}
 	
-	@Test
-	public void testConvertToAndFromJsonFormat() {
-		final GsonBuilder builder = new GsonBuilder()
-	       .registerTypeAdapter(DateTime.class, new JodaDateTimeConverter());
-	    final Gson gson = builder.create();
-		final String jsonString = gson.toJson(tags.get(0));
-		assertNotNull(jsonString);
-//		logger.info(jsonString);
-		Tag frg = gson.fromJson(jsonString, Tag.class);
-		assertEquals(tags.get(0), frg);
-	}
+//	@Test
+//	public void testConvertToAndFromJsonFormat() {
+//		final GsonBuilder builder = new GsonBuilder()
+//	       .registerTypeAdapter(DateTime.class, new JodaDateTimeConverter());
+//	    final Gson gson = builder.create();
+//		final String jsonString = gson.toJson(tags.get(0));
+//		assertNotNull(jsonString);
+////		logger.info(jsonString);
+//		Tag frg = gson.fromJson(jsonString, Tag.class);
+//		assertEquals(tags.get(0), frg);
+//	}
 
 }
