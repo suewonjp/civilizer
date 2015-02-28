@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.knowledgex.domain.*;
-import com.knowledgex.web.converter.*;
 import com.knowledgex.test.util.TestUtil;
 
 public class DomainFragmentTest {
