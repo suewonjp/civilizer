@@ -10,8 +10,7 @@
 <c:set var="fragment" value="#{fragmentBean.fragment}" />
 <div class="each-fragment-container">
 	<h:panelGrid styleClass="each-fragment" columns="1" border="1">
-		<f:facet name="header">
-			<div class="fragment-header">
+		<f:facet name="header"><div class="fragment-header">
 				<p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;"
 				    widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
 				<a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{fragment.id}">
@@ -30,31 +29,34 @@
 				<h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
 					<f:converter converterId="jodaDateTimeConverter" />
 				</h:outputText>
+				
 				<div class="fragment-menu">
 					<a href="#editor-frame" class="edit-fragment-editor-trigger button-link"
 					   onclick="openFragmentEditorForEdit('#{panelId}', '#{fragment.id}', '#{fragmentBean.concatenatedTagNames}')">
-                        <span class="fa fa-pencil fa-2x" title="#{msg['label_edit_fragment']}"></span>
+                        <span class="fa fa-pencil fa-2x" title="#{msg['label_edit_fragment']}">&nbsp;</span>
 					</a>
+					<p:commandLink>
+                        <span class="fa fa-bookmark fa-2x button-link " title="#{msg['label_bookmark_fragment']}">&nbsp;</span>
+                    </p:commandLink>
 					<c:choose>
 						<c:when test="#{panelContext.fragmentDeletable}">
-							<p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', '#{fragment.id}', true, false)" >
+							<p:commandLink style="text-decoration:none;" oncomplete="confirmTrashingFragments('#{panelId}', '#{fragment.id}', true, false)" >
 								<span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
 							</p:commandLink>
 						</c:when>
 						<c:otherwise>
-							<p:commandLink oncomplete="confirmTrashingFragments('#{panelId}', '#{fragment.id}', false, false)" >
+							<p:commandLink style="text-decoration:none;" oncomplete="confirmTrashingFragments('#{panelId}', '#{fragment.id}', false, false)" >
 								<span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
 							</p:commandLink>
 						</c:otherwise>
 					</c:choose>
 					<h:inputHidden id="fragment-title-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.title}" />
 					<h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.content}" />
-				</div>
-			</div>
-		</f:facet>
+				</div> <!-- fragment-menu -->
+			</div></f:facet> <!-- fragment-header -->
 		<h:outputText value="#{fragment.content}" styleClass="fragment-content" />
-	</h:panelGrid>
-</div>
+	</h:panelGrid> <!-- 	each-fragment -->
+</div> <!-- each-fragment-container -->
 
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragment.relatedOnes}">
