@@ -23,6 +23,11 @@
 				</p:commandLink>
 				&nbsp;&nbsp;
                 <c:forEach var="tag" items="#{fragment.tags}">
+<!--                     <p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}"> -->
+<!-- 				        <span class="fa fa-tag " ></span> -->
+<!-- 				        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText> -->
+<!-- 				        <f:param name="tagId" value="#{tag.id}" /> -->
+<!-- 				    </p:commandLink> -->
                     <ui:include src="each-tag.xhtml" />
                 </c:forEach>
 				&nbsp;&nbsp;
@@ -35,8 +40,9 @@
 					   onclick="openFragmentEditorForEdit('#{panelId}', '#{fragment.id}', '#{fragmentBean.concatenatedTagNames}')">
                         <span class="fa fa-pencil fa-2x" title="#{msg['label_edit_fragment']}">&nbsp;</span>
 					</a>
-					<p:commandLink>
+					<p:commandLink action="bookmark-fragment">
                         <span class="fa fa-bookmark fa-2x button-link " title="#{msg['label_bookmark_fragment']}">&nbsp;</span>
+                        <f:param name="fragmentId" value="#{fragment.id}" />
                     </p:commandLink>
 					<c:choose>
 						<c:when test="#{panelContext.fragmentDeletable}">

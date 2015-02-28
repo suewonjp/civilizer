@@ -43,8 +43,6 @@ public final class MainController {
 	
 	private Tag trashcanTag = null;
 
-	private Tag bookmarkTag = null;
-	
 	private Tag getTrashcanTag() {
 		if (trashcanTag != null) {
 			return trashcanTag;
@@ -54,11 +52,7 @@ public final class MainController {
 	}
 
 	private Tag getBookmarkTag() {
-		if (bookmarkTag != null) {
-			return bookmarkTag;
-		}
-		bookmarkTag = tagDao.findById(Tag.BOOKMARK_TAG_ID, true, false);
-		return bookmarkTag;
+		return tagDao.findById(Tag.BOOKMARK_TAG_ID, true, false);
 	}
 	
 	public List<FragmentListBean> newFragmentListBeans() {
@@ -208,6 +202,13 @@ public final class MainController {
 		return new PanelContextBean(panelId, tagId, curPage);
 	}
 	
+	public void bookmarkFragment(Long fragmentId) {
+	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
+	    frg.addTag(getBookmarkTag());
+	    fragmentDao.save(frg);
+	    ViewUtil.addMessage("Bookmarking", "Fragment #" + frg.getId(), null);
+	}
+
 	public void trashFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 		frg.addTag(getTrashcanTag());

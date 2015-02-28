@@ -33,6 +33,11 @@
                 result="requestScope.panelContextBean"/>
         </transition>
         
+        <transition on="bookmark-fragment" to="home">
+            <evaluate expression="mainController.bookmarkFragment(requestParameters.fragmentId)" />
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
+        </transition>
+        
         <transition on="trash-fragment" to="home">
             <evaluate expression="mainController.trashFragment(paramFragmentBean)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
