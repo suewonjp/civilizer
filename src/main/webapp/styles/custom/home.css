@@ -22,7 +22,7 @@
 	margin-bottom: 5px;
 	margin-left: 5px;
     height: 15px;
-    float: left;
+/*     float: left; */
     border:1px solid #cacaca; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif;
     padding: 1px 3px 1px 1px; text-decoration:none; display:inline-block;
 /*     text-shadow: -1px -1px 0 rgba(0,0,0,0.3); */

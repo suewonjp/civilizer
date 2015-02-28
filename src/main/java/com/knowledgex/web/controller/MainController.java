@@ -209,6 +209,13 @@ public final class MainController {
 	    ViewUtil.addMessage("Bookmarking", "Fragment #" + frg.getId(), null);
 	}
 
+	public void unbookmarkFragment(Long fragmentId) {
+	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
+	    frg.removeTag(getBookmarkTag());
+	    fragmentDao.save(frg);
+	    ViewUtil.addMessage("Unbookmarking", "Fragment #" + frg.getId(), null);
+	}
+
 	public void trashFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 		frg.addTag(getTrashcanTag());

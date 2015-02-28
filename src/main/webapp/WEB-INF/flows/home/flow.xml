@@ -37,6 +37,11 @@
             <evaluate expression="mainController.bookmarkFragment(requestParameters.fragmentId)" />
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
+
+        <transition on="unbookmark-fragment" to="home">
+            <evaluate expression="mainController.unbookmarkFragment(requestParameters.fragmentId)" />
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
+        </transition>
         
         <transition on="trash-fragment" to="home">
             <evaluate expression="mainController.trashFragment(paramFragmentBean)" />

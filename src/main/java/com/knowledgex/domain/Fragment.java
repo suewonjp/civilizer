@@ -142,6 +142,10 @@ public final class Fragment implements Serializable {
         }
         this.tags.add(tag);
     }
+
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
+    }
     
     public boolean containsTagId(long tagId) {
     	return Tag.containsId(getTags(), tagId);

@@ -26,6 +26,10 @@
 	            &nbsp;&nbsp;
 	            <h:outputText value="#{fragment.title}" />
 	        </span>
+	        <p:commandLink style="text-decoration:none;" action="unbookmark-fragment" >
+	           <span class="fa fa-close button-link " title="#{msg['label_unbookmark_fragment']}"></span>
+               <f:param name="fragmentId" value="#{fragment.id}" />
+	        </p:commandLink>
 	        <br/>
 		</c:forEach>
 	</p:panel>
