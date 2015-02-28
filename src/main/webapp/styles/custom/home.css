@@ -163,11 +163,6 @@
     color: #ff830e;
 }
 
-.each-tag {
-	/*[NOTE] this padding is necessary to make sure tag menus appear right on some browsers (e.g. Opera)*/
-	padding-right: 50px;
-}
-
 .each-tag-name {
     text-align: left;
     color: black;

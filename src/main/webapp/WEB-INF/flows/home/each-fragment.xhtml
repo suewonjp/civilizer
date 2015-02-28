@@ -23,12 +23,12 @@
 				</p:commandLink>
 				&nbsp;&nbsp;
                 <c:forEach var="tag" items="#{fragment.tags}">
-<!--                     <p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}"> -->
-<!-- 				        <span class="fa fa-tag " ></span> -->
-<!-- 				        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText> -->
-<!-- 				        <f:param name="tagId" value="#{tag.id}" /> -->
-<!-- 				    </p:commandLink> -->
-                    <ui:include src="each-tag.xhtml" />
+                    <p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
+				        <span class="fa fa-tag " ></span>
+				        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
+				        <f:param name="tagId" value="#{tag.id}" />
+				    </p:commandLink>
+<!--                     <ui:include src="each-tag.xhtml" /> -->
                 </c:forEach>
 				&nbsp;&nbsp;
 				<h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">

@@ -7,7 +7,7 @@
     xmlns:p="http://primefaces.org/ui"
     >
     
-<span class="each-tag">
+<span class="each-tag" style="padding-right: 50px;"> <!-- [NOTE] padding is necessary to make sure tag menus appear right on some browsers (e.g. Opera) -->
 	<p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
 		<span class="fa fa-tag " ></span>
 		<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
