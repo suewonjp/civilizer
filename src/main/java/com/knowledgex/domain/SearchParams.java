@@ -65,13 +65,14 @@ public final class SearchParams {
 			this.asIs = asIs;
 		}
 		
-		public static String escapeSqlWildcardCharacters(String word) {
+		public static Pair<String, Character> escapeSqlWildcardCharacters(String word) {
 			// Escape SQL wildcards. ( '_' and '%')
 			// If user provided words contain these characters, that means they are not intended on wildcards.
 			// So escaping them is necessary before SQL treats them as wildcards
 			
 			final boolean hasUnderscore = (word.indexOf('_') != -1);
 			final boolean hasPercent = (word.indexOf('%') != -1);
+			char escapeChar = ' ';
 			
 			if (hasUnderscore || hasPercent) {
 				for (int ascii=33; ascii<127; ++ascii) {
@@ -80,22 +81,24 @@ public final class SearchParams {
 					}
 					if (word.indexOf(ascii) == -1) {
 						// The word doesn't contain this character, so we can safely use it as an escape character.
+						escapeChar = (char) ascii;
 						if (hasUnderscore) {
-							word = word.replace("_", String.valueOf((char) ascii) + "_");
+							word = word.replace("_", String.valueOf(escapeChar) + "_");
 						}
 						if (hasPercent) {
-							word = word.replace("%", String.valueOf((char) ascii) + "%");
+							word = word.replace("%", String.valueOf(escapeChar) + "%");
 						}
 						break;
 					}
 				}
 			}
 			
-			return word;
+			return new Pair<String, Character>(word, escapeChar);
 		}
 		
 		public static String translateToPatternForSqlLIKEClause(String word, boolean wholeWord, boolean asIs) {
-			word = escapeSqlWildcardCharacters(word);
+//			final Pair<String, Character> tmp = escapeSqlWildcardCharacters(word);
+//			word = tmp.getFirst();
 			
 			if (! asIs) {
 				word = word.replace('?', '_').replace('*', '%');

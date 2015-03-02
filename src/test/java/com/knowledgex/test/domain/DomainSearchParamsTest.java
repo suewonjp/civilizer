@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.knowledgex.domain.Pair;
 import com.knowledgex.domain.SearchParams;
 import com.knowledgex.test.util.TestUtil;
 
@@ -88,29 +89,31 @@ public class DomainSearchParamsTest {
     		final String word = "_hello%suewon_bahng%";
     		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
     		assertEquals(kw.checkValidity(), true);
-    		final String escapedWord = SearchParams.Keyword.escapeSqlWildcardCharacters(word);
-    		assertEquals(escapedWord, "!_hello!%suewon!_bahng!%");
+    		final Pair<String, Character> res = SearchParams.Keyword.escapeSqlWildcardCharacters(word);
+    		assertEquals(res.getSecond(), new Character('!'));
+    		assertEquals(res.getFirst(), "!_hello!%suewon!_bahng!%");
     	}
 		{
 			final String word = "_hello!%suewon_bahng%";
 			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
 			assertEquals(kw.checkValidity(), true);
-			final String escapedWord = SearchParams.Keyword.escapeSqlWildcardCharacters(word);
-			assertEquals(escapedWord, "#_hello!#%suewon#_bahng#%");
+			final Pair<String, Character> res = SearchParams.Keyword.escapeSqlWildcardCharacters(word);
+			assertEquals(res.getSecond(), new Character('#'));
+			assertEquals(res.getFirst(), "#_hello!#%suewon#_bahng#%");
 		}
 	}
 	
 	@Test
 	public void testTranslateToPatternForSqlLIKEClause() {
 		{
-    		final String word = "'my _keyword_'";
+    		final String word = "'my keyword'";
     		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
     		assertEquals(kw.isWholeWord(), false);
     		assertEquals(kw.isAsIs(), true);
     		assertEquals(kw.checkValidity(), true);
     		final String translatedWord =
     				SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
-    		assertEquals(translatedWord, "%my !_keyword!_%");
+    		assertEquals(translatedWord, "%my keyword%");
     	}
 		{
 			final String word = "hello/w";
