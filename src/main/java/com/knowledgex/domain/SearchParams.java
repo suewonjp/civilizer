@@ -65,8 +65,62 @@ public final class SearchParams {
 			this.asIs = asIs;
 		}
 		
-		public boolean checkValidity() {
+		public static String escapeSqlWildcardCharacters(String word) {
+			// Escape SQL wildcards. ( '_' and '%')
+			// If user provided words contain these characters, that means they are not intended on wildcards.
+			// So escaping them is necessary before SQL treats them as wildcards
+			
+			final boolean hasUnderscore = (word.indexOf('_') != -1);
+			final boolean hasPercent = (word.indexOf('%') != -1);
+			
+			if (hasUnderscore || hasPercent) {
+				for (int ascii=33; ascii<127; ++ascii) {
+					if (ascii == '_' || ascii == '%' || ascii=='?' || ascii=='*'|| ascii=='\'' || ascii=='\"') {
+						continue;
+					}
+					if (word.indexOf(ascii) == -1) {
+						// The word doesn't contain this character, so we can safely use it as an escape character.
+						if (hasUnderscore) {
+							word = word.replace("_", String.valueOf((char) ascii) + "_");
+						}
+						if (hasPercent) {
+							word = word.replace("%", String.valueOf((char) ascii) + "%");
+						}
+						break;
+					}
+				}
+			}
+			
+			return word;
+		}
+		
+		public static String translateToPatternForSqlLIKEClause(String word, boolean wholeWord, boolean asIs) {
+			word = escapeSqlWildcardCharacters(word);
+			
+			if (! asIs) {
+				word = word.replace('?', '_').replace('*', '%');
+				
+				if (wholeWord) {
+					// [TODO] The following pattern won't match a case when the text ends with the word and the word doesn't appear anywhere else.
+					// We should take care of this edge case when we build the SQL query.
+					// e.g. the final SQL should be like so:
+					//    where text like '%[^a-z0-9_-]word[^a-z0-9_-]%' or like '%[^a-z0-9_-]word';
+					final String boundary = "[^a-z0-9_-]";
+					word = boundary + word + boundary;
+				}
+			}
+
+			word = "%" + word + "%";
+			
+			return word;
+		}
+		
+		private static boolean checkValidity(String word) {
 			return ! word.isEmpty();
+		}
+		
+		public boolean checkValidity() {
+			return checkValidity(word);
 		}
 
 		public String getWord() {
