@@ -1,12 +1,9 @@
 package com.knowledgex.test.dao;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class SearchTest extends DaoTest {
 	
@@ -32,9 +29,4 @@ public class SearchTest extends DaoTest {
         super.tearDown();
     }
     
-    @Test
-	public void testSearchWithTags() {
-    	assertTrue(true);
-	}
-
 }
