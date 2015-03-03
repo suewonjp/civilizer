@@ -146,6 +146,7 @@ public final class Tag implements Serializable {
     	String[] arr = names.split("\\s*[" + TAG_NAME_DELIMITER + "]+\\s*");
     	List<String> output = new ArrayList<String>();
     	for (String s : arr) {
+    		s = s.trim();
     		if (!s.isEmpty()) {
     			output.add(s);
     		}

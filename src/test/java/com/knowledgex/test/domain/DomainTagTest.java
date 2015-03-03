@@ -144,8 +144,23 @@ public class DomainTagTest {
 		
 		actualC = Tag.getTagNameCollectionFrom(delim+delim+delim);
 		assertTrue(actualC != null && actualC.isEmpty());
+
+		actualC = Tag.getTagNameCollectionFrom(delim+" \t\n "+delim);
+		assertTrue(actualC != null && actualC.isEmpty());
+		
+		actualC = Tag.getTagNameCollectionFrom("\t\n tag0  \n");
+		assertTrue(actualC != null && actualC.size() == 1);
+		for (String s : actualC) {
+			assertEquals(s, "tag0");
+		}
 		
 		actualC = Tag.getTagNameCollectionFrom(delim+"tag0"+delim+delim);
+		assertTrue(actualC != null && actualC.size() == 1);
+		for (String s : actualC) {
+			assertEquals(s, "tag0");
+		}
+
+		actualC = Tag.getTagNameCollectionFrom(delim+" \ttag0  "+delim+delim);
 		assertTrue(actualC != null && actualC.size() == 1);
 		for (String s : actualC) {
 			assertEquals(s, "tag0");
