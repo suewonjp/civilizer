@@ -14,15 +14,15 @@ import com.knowledgex.test.util.TestUtil;
 
 class DaoTest {
 
-	private static Log logger;
-	private static GenericXmlApplicationContext ctx;
-	private static int counter = 0;
+	protected static Log logger;
+	protected static GenericXmlApplicationContext ctx;
+	protected static int counter = 0;
 
-	private FragmentDao fragmentDao;
-	private TagDao tagDao;
+	protected FragmentDao fragmentDao;
+	protected TagDao tagDao;
 
-	private final List<Tag> temporalTags = new ArrayList<Tag>();
-	private final List<Fragment> temporalFragments = new ArrayList<Fragment>();
+	protected final List<Tag> temporalTags = new ArrayList<Tag>();
+	protected final List<Fragment> temporalFragments = new ArrayList<Fragment>();
 
 	protected static void setUpBeforeClass(
 	    String dataSourceContextPath
