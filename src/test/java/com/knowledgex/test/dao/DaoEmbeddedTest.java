@@ -1,7 +1,6 @@
 package com.knowledgex.test.dao;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,10 +13,6 @@ public class DaoEmbeddedTest extends DaoTest {
                 "classpath:datasource-context-h2-embedded.xml"
                 , DaoEmbeddedTest.class
                 );
-    }
-    
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
     }
 
     @Before
