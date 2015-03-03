@@ -1,13 +1,17 @@
 package com.knowledgex.test.dao;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
+import java.util.*;
+
+import org.junit.*;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
+
+import com.knowledgex.domain.*;
 
 public class SearchTest extends DaoTest {
 	
@@ -35,6 +39,64 @@ public class SearchTest extends DaoTest {
     @After
     public void tearDown() throws Exception {
         super.tearDown();
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testHibernateCriteriaAPI_like_ilike() {
+    	Tag[] tags = {
+    			newTag("tag"),
+    			newTag("$tag"),
+    			newTag("Tag"),
+    			newTag("TAG"),
+    			newTag("Tag-000"),
+    			newTag("my tag"),
+    			newTag("your tag :-)"),
+    			};
+    	
+    	for (Tag tag : tags) {
+			tagDao.save(tag);
+		}
+    	
+    	{
+			final Criteria crit = session.createCriteria(Tag.class);
+			crit.add(Restrictions.like("tagName", "%tag%"));
+			final List<Tag> results = crit.list();
+			logger.info(results);
+			assertTrue(results.contains(tags[0]));
+			assertTrue(results.contains(tags[1]));
+			assertTrue(!results.contains(tags[2]));
+			assertTrue(!results.contains(tags[3]));
+			assertTrue(!results.contains(tags[4]));
+			assertTrue(results.contains(tags[5]));
+			assertTrue(results.contains(tags[6]));
+		}
+    	{
+    		final Criteria crit = session.createCriteria(Tag.class);
+    		crit.add(Restrictions.like("tagName", "_tag"));
+    		final List<Tag> results = crit.list();
+    		logger.info(results);
+    		assertTrue(!results.contains(tags[0]));
+    		assertTrue(results.contains(tags[1]));
+    		assertTrue(!results.contains(tags[2]));
+    		assertTrue(!results.contains(tags[3]));
+    		assertTrue(!results.contains(tags[4]));
+    		assertTrue(!results.contains(tags[5]));
+    		assertTrue(!results.contains(tags[6]));
+    	}
+    	{
+    		final Criteria crit = session.createCriteria(Tag.class);
+    		crit.add(Restrictions.ilike("tagName", "tag%"));
+    		final List<Tag> results = crit.list();
+    		logger.info(results);
+    		assertTrue(results.contains(tags[0]));
+    		assertTrue(!results.contains(tags[1]));
+    		assertTrue(results.contains(tags[2]));
+    		assertTrue(results.contains(tags[3]));
+    		assertTrue(results.contains(tags[4]));
+    		assertTrue(!results.contains(tags[5]));
+    		assertTrue(!results.contains(tags[6]));
+    	}
     }
     
 }

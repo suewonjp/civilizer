@@ -16,13 +16,13 @@ class DaoTest {
 
 	protected static Log logger;
 	protected static GenericXmlApplicationContext ctx;
-	protected static int counter = 0;
+	private static int counter = 0;
 
 	protected FragmentDao fragmentDao;
 	protected TagDao tagDao;
 
-	protected final List<Tag> temporalTags = new ArrayList<Tag>();
-	protected final List<Fragment> temporalFragments = new ArrayList<Fragment>();
+	private final List<Tag> temporalTags = new ArrayList<Tag>();
+	private final List<Fragment> temporalFragments = new ArrayList<Fragment>();
 
 	protected static void setUpBeforeClass(
 	    String dataSourceContextPath
@@ -38,19 +38,25 @@ class DaoTest {
 	
 	protected void deleteAllTemporalObjects() {
 		for (Tag t : temporalTags) {
-			assertNotNull(tagDao.findById(t.getId()));
-			tagDao.delete(t);
+			if (tagDao.findById(t.getId()) != null) {
+				tagDao.delete(t);
+			}
 		}
 
 		for (Fragment frg : temporalFragments) {
-			assertNotNull(fragmentDao.findById(frg.getId()));
-			fragmentDao.delete(frg);
+			if (fragmentDao.findById(frg.getId()) != null) {
+				fragmentDao.delete(frg);
+			}
 		}
 	}
 
 	protected Tag newTag(String name) {
-		if (name == null)
+		if (name == null) {
 			name = "new tag " + temporalTags.size();
+		}
+		else {
+			name = name.trim();
+		}
 		Tag result = new Tag(name);
 		assertNotNull(result);
 		temporalTags.add(result);
