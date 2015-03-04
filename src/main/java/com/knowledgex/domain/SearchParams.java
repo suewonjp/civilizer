@@ -136,7 +136,7 @@ public final class SearchParams {
 			return ! word.isEmpty();
 		}
 		
-		public boolean checkValidity() {
+		public boolean isValid() {
 			return checkValidity(word);
 		}
 
@@ -183,15 +183,20 @@ public final class SearchParams {
 			
 			if (! src.isEmpty()) {
 				final Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");
+				
 				if (src.startsWith(targetDirective.expression)) {
 					// The source string starts with an explicit directive such as 'any:', 'tag:', etc.
 					// We skip the directive and pass the rest of the string.
 					src = src.substring(targetDirective.expression.length());
 				}
+				
 				final Matcher m = p.matcher(src);
 				
 				while (m.find()) {
-					words.add(new Keyword(m.group()));
+					final Keyword kw = new Keyword(m.group());
+					if (kw.isValid()) {
+						words.add(kw);
+					}
 				}
 			}
 			
@@ -231,15 +236,11 @@ public final class SearchParams {
 	
 	private final List<Keywords> keywords;
 
-	public SearchParams(List<Keywords> keywords) {
-		this.keywords = keywords;
-	}
-
 	public SearchParams(String src) {
+		src = src.trim();
 	    final List<Pair<Integer, Integer>> ranges = new ArrayList<Pair<Integer, Integer>>();
 	    List<Keywords> keywords = new ArrayList<Keywords>();
 	    Pattern p = Pattern.compile(TARGET_DIRECTIVE_PATTERN);
-	    src = src.trim();
 	    Matcher m = p.matcher(src);
 	    
 	    while (m.find()) {
@@ -272,7 +273,14 @@ public final class SearchParams {
 	        final Pair<Integer, Integer> r0 = ranges.get(i - 1);
 	        final Pair<Integer, Integer> r1 = ranges.get(i);
 	        final String s = src.substring(r0.getFirst(), r1.getFirst());
-	        keywords.add(new Keywords(s));
+	        final Keywords kws = new Keywords(s);
+	        if (! kws.getWords().isEmpty()) {
+	        	keywords.add(kws);
+	        }
+	    }
+	    
+	    if (keywords.isEmpty()) {
+	    	keywords = Collections.emptyList();
 	    }
 	    
 	    this.keywords = keywords;
