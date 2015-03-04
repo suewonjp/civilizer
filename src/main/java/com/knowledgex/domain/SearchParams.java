@@ -21,10 +21,12 @@ public final class SearchParams {
         new TargetDirective("anyintext:", TARGET_TEXT, true),
         new TargetDirective(":", TARGET_ALL, false),    
         new TargetDirective("any:", TARGET_ALL, true),
+        new TargetDirective("url:", TARGET_URL, false),    
+        new TargetDirective("anyinurl:", TARGET_URL, true),
     };
 	
 	private static final String TARGET_DIRECTIVE_PATTERN =
-	        "(\\b(tag|anyintag|title|anyintitle|text|anyintext|any)\\b)?:";
+	        "(\\b(any|tag|anyintag|title|anyintitle|text|anyintext|url|anyinurl)\\b)?:";
 	
 	public static final class Keyword {
 		private final String word;
@@ -33,43 +35,41 @@ public final class SearchParams {
 		private final boolean asIs;
 		
 		public Keyword(String src) {
-			Pattern p;
-			Matcher m;
 			String word = src.trim();
 			boolean caseSensitive = false;
 			boolean wholeWord = false;
 			boolean asIs = false;
 			
-//			p = Pattern.compile("^'(([^']|'\\w)+)'");
-//			m = p.matcher(src);
-//			if (m.find()) {
+			final Pattern p = Pattern.compile("(.*)/([cw]+)$");
+			final Matcher m = p.matcher(src);
+			
+			if (m.find()) {
+				word = m.group(1);
+				final String suffix = m.group(2);
+				if (suffix.indexOf('c') != -1) {
+					// [RULE] .../c => case sensitive
+					caseSensitive = true;
+				}
+				if (suffix.indexOf('w') != -1) {
+					// [RULE] .../w => whole word
+					wholeWord = true;
+				}
+			}
+			
 			if (word.startsWith("'") && word.endsWith("'")) {
-				// [RULE] '...' => as is, also becomes case sensitive and not whole word automatically
+				// [RULE] '...' => as-is mode; in this mode, flags set by the user get ignored;
 				asIs = true;
 				caseSensitive = true;
-//				word = m.group(1);
-				word = word.substring(1, word.length()-1);
-			}
-			else {
-				p = Pattern.compile("(.*)/([cw]+)");
-				m = p.matcher(src);
-				
-				if (m.find()) {
-					final String suffix = m.group(2);
-					word = m.group(1);
-					if (suffix.indexOf('c') != -1) {
-						// [RULE] .../c => case sensitive
-						caseSensitive = true;
-					}
-					if (suffix.indexOf('w') != -1) {
-						// [RULE] .../w => whole word
-						wholeWord = true;
-					}
+				wholeWord = false;
+				if (word.length() > 1) {
+					word = word.substring(1, word.length() - 1);
 				}
-				
-				if (word.startsWith("\"") && word.endsWith("\"")) {
-					// [RULE] if quoted with ", strip it
-					word = word.substring(1, word.length()-1);
+			}
+			
+			if (word.startsWith("\"") && word.endsWith("\"")) {
+				// [RULE] if quoted with ", strip it
+				if (word.length() > 1) {
+					word = word.substring(1, word.length() - 1);
 				}
 			}
 			
@@ -110,27 +110,27 @@ public final class SearchParams {
 			return new Pair<String, Character>(word, escapeChar);
 		}
 		
-		public static String translateToPatternForSqlLIKEClause(String word, boolean wholeWord, boolean asIs) {
-//			final Pair<String, Character> tmp = escapeSqlWildcardCharacters(word);
-//			word = tmp.getFirst();
-			
-			if (! asIs) {
-				word = word.replace('?', '_').replace('*', '%');
-				
-				if (wholeWord) {
-					// [TODO] The following pattern won't match a case when the text ends with the word and the word doesn't appear anywhere else.
-					// We should take care of this edge case when we build the SQL query.
-					// e.g. the final SQL should be like so:
-					//    where text like '%[^a-z0-9_-]word[^a-z0-9_-]%' or like '%[^a-z0-9_-]word';
-					final String boundary = "[^a-z0-9_-]";
-					word = boundary + word + boundary;
-				}
-			}
-
-			word = "%" + word + "%";
-			
-			return word;
-		}
+//		public static String translateToPatternForSqlLIKEClause(String word, boolean wholeWord, boolean asIs) {
+////			final Pair<String, Character> tmp = escapeSqlWildcardCharacters(word);
+////			word = tmp.getFirst();
+//			final String boundary = "[^a-z0-9_]";
+//			
+//			if (! asIs) {
+//				word = word.replace('?', '_').replace('*', '%');
+//				
+//				if (wholeWord) {
+//					// [TODO] The following pattern won't match a case when the text ends with the word and the word doesn't appear anywhere else.
+//					// We should take care of this edge case when we build the SQL query.
+//					// e.g. the final SQL should be like so:
+//					//    where text like '%[^a-z0-9_]word[^a-z0-9_]%' or like '%[^a-z0-9_]word';
+//					word = boundary + word + boundary;
+//				}
+//			}
+//
+//			word = "%" + word + "%";
+//			
+//			return word;
+//		}
 		
 		private static boolean checkValidity(String word) {
 			return ! word.isEmpty();
@@ -180,11 +180,19 @@ public final class SearchParams {
 			final TargetDirective targetDirective = parseTarget(src);
 			int target = targetDirective.target;
 			boolean any = targetDirective.any;
-			final Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");
-			final Matcher m = p.matcher(src.substring(targetDirective.expression.length()));
 			
-			while (m.find()) {
-				words.add(new Keyword(m.group()));
+			if (! src.isEmpty()) {
+				final Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");
+				if (src.startsWith(targetDirective.expression)) {
+					// The source string starts with an explicit directive such as 'any:', 'tag:', etc.
+					// We skip the directive and pass the rest of the string.
+					src = src.substring(targetDirective.expression.length());
+				}
+				final Matcher m = p.matcher(src);
+				
+				while (m.find()) {
+					words.add(new Keyword(m.group()));
+				}
 			}
 			
 			if (words.isEmpty()) {
@@ -205,7 +213,7 @@ public final class SearchParams {
 				}
 			}
 			
-			return def;
+			return def; // No directive specified, which means ':' is specified implicitly
 		}
 		
 		public List<Keyword> getWords() {
@@ -253,7 +261,8 @@ public final class SearchParams {
 	    }
 	    
 	    if (! ranges.isEmpty() && ranges.get(0).getFirst() > 0) {
-	        // If we have no directive found at the beginning, it is an implicit ':' directive
+	        // We have no directive found at the beginning of the input string.
+	    	// It is identical to the ':' directive mode.
 	        ranges.add(0, new Pair<Integer, Integer>(0, 0));
 	    }
 	    

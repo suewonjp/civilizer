@@ -16,7 +16,7 @@ public class DomainSearchParamsTest {
 	}
 
 	@Test
-	public void testKeywordFlags() {
+	public void testSearchParamsKeyword() {
 		// edge cases
     	{
     		final String word = "";
@@ -42,6 +42,38 @@ public class DomainSearchParamsTest {
 			assertEquals(kw.getWord(), "''");
 			assertEquals(kw.checkValidity(), true);
 		}
+    	{
+    		final String word = "'";
+    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+    		assertEquals(kw.getWord(), "'");
+    		assertEquals(kw.checkValidity(), true);
+    	}
+    	{
+    		final String word = "\"";
+    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+    		assertEquals(kw.getWord(), "\"");
+    		assertEquals(kw.checkValidity(), true);
+    	}
+    	{
+    		// [NOTE] If flags are inside double quotes, they are identified as just normal characters
+    		final String word = "\"Hello World/c\"";
+    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+    		assertEquals(kw.getWord(), "Hello World/c");
+    		assertEquals(kw.isCaseSensitive(), false);
+    		assertEquals(kw.isWholeWord(), false);
+    		assertEquals(kw.isAsIs(), false);
+    		assertEquals(kw.checkValidity(), true);
+    	}
+    	{
+    		// [NOTE] If flags follow single quotes, they get ignored
+    		final String word = "'Hello World'/w";
+    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+    		assertEquals(kw.getWord(), "Hello World");
+    		assertEquals(kw.isCaseSensitive(), true);
+    		assertEquals(kw.isWholeWord(), false);
+    		assertEquals(kw.isAsIs(), true);
+    		assertEquals(kw.checkValidity(), true);
+    	}
     	
     	// trivial cases
     	{
@@ -57,6 +89,15 @@ public class DomainSearchParamsTest {
     		final String word = "hello/c";
     		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
     		assertEquals(kw.getWord(), "hello");
+    		assertEquals(kw.isCaseSensitive(), true);
+    		assertEquals(kw.isWholeWord(), false);
+    		assertEquals(kw.isAsIs(), false);
+    		assertEquals(kw.checkValidity(), true);
+    	}
+    	{
+    		final String word = "\"Hello World\"/c";
+    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+    		assertEquals(kw.getWord(), "Hello World");
     		assertEquals(kw.isCaseSensitive(), true);
     		assertEquals(kw.isWholeWord(), false);
     		assertEquals(kw.isAsIs(), false);
@@ -103,37 +144,120 @@ public class DomainSearchParamsTest {
 		}
 	}
 	
+//	@Test
+//	public void testTranslateToPatternForSqlLIKEClause() {
+//		{
+//    		final String word = "'my keyword'";
+//    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+//    		assertEquals(kw.isWholeWord(), false);
+//    		assertEquals(kw.isAsIs(), true);
+//    		assertEquals(kw.checkValidity(), true);
+//    		final String translatedWord =
+//    				SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
+//    		assertEquals(translatedWord, "%my keyword%");
+//    	}
+//		{
+//			final String word = "hello/w";
+//			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+//			assertEquals(kw.isWholeWord(), true);
+//			assertEquals(kw.isAsIs(), false);
+//			assertEquals(kw.checkValidity(), true);
+//			final String translatedWord =
+//					SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
+//			assertEquals(translatedWord, "%[^a-z0-9_-]hello[^a-z0-9_-]%");
+//		}
+//		{
+//			final String word = "?hello*world";
+//			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+//			assertEquals(kw.isWholeWord(), false);
+//			assertEquals(kw.isAsIs(), false);
+//			assertEquals(kw.checkValidity(), true);
+//			final String translatedWord =
+//					SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
+//			assertEquals(translatedWord, "%_hello%world%");
+//		}
+//	}
+	
 	@Test
-	public void testTranslateToPatternForSqlLIKEClause() {
+	public void testSearchParamsKeywords() {
 		{
-    		final String word = "'my keyword'";
-    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-    		assertEquals(kw.isWholeWord(), false);
-    		assertEquals(kw.isAsIs(), true);
-    		assertEquals(kw.checkValidity(), true);
-    		final String translatedWord =
-    				SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
-    		assertEquals(translatedWord, "%my keyword%");
-    	}
-		{
-			final String word = "hello/w";
-			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-			assertEquals(kw.isWholeWord(), true);
-			assertEquals(kw.isAsIs(), false);
-			assertEquals(kw.checkValidity(), true);
-			final String translatedWord =
-					SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
-			assertEquals(translatedWord, "%[^a-z0-9_-]hello[^a-z0-9_-]%");
+			final String words = "";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getWords().isEmpty());
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
+			assertTrue(keywords.isAny() == false);
 		}
 		{
-			final String word = "?hello*world";
-			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-			assertEquals(kw.isWholeWord(), false);
-			assertEquals(kw.isAsIs(), false);
-			assertEquals(kw.checkValidity(), true);
-			final String translatedWord =
-					SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
-			assertEquals(translatedWord, "%_hello%world%");
+			final String words = " \t: \t\n ";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getWords().isEmpty());
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
+			assertTrue(keywords.isAny() == false);
+		}
+		{
+			final String words = ":word *phrase* '' \"\" wholeWorld/w";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getWords().size() == 5);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
+			assertTrue(keywords.isAny() == false);
+		}
+		{
+			final String words = "any: 'hello _%' ?Phrase*/c \"quoted phrase*\" ";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getWords().size() == 3);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
+			assertTrue(keywords.isAny() == true);
+		}
+		{
+			final String words = "tag: tag*";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_TAG);
+			assertTrue(keywords.isAny() == false);
+		}
+		{
+			final String words = "anyintag:tag0 tag2";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_TAG);
+			assertTrue(keywords.isAny() == true);
+		}
+		{
+			final String words = "title: title";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_TITLE);
+			assertTrue(keywords.isAny() == false);
+		}
+		{
+			final String words = "anyintitle:title* ?title?  ";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_TITLE);
+			assertTrue(keywords.isAny() == true);
+		}
+		{
+			final String words = "text: ...";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getWords().size() == 1);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_TEXT);
+			assertTrue(keywords.isAny() == false);
+		}
+		{
+			final String words = "anyintext: . ! ?  ' \" ";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getWords().size() == 5);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_TEXT);
+			assertTrue(keywords.isAny() == true);
+		}
+		{
+			final String words = "url:https*";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_URL);
+			assertTrue(keywords.isAny() == false);
+		}
+		{
+			final String words = "anyinurl: *.com *.org ";
+			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+			assertTrue(keywords.getTarget() == SearchParams.TARGET_URL);
+			assertTrue(keywords.isAny() == true);
 		}
 	}
+	
 }
