@@ -1,3 +1,3 @@
-String src = " '...' simple-word \"quoted\" 'as is' word* _word*";
-
-Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");Matcher m = p.matcher(src);boolean found = false;System.out.println("*********");System.out.println("input source string:" + src);System.out.println("*********");while (m.find()) {    System.out.format("I found the text" +        " \"%s\" starting at " +        "index %d and ending at index %d.%n",        m.group(),        m.start(),        m.end());    found = true;}if (!found){    System.out.format("No match found.%n");}
+Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");
+String src = " '...' simple-word \"quoted\" 'as is' word* _word*";
+Pattern p = Pattern.compile("(\\b(tag|anyintag|title|anyintitle|text|anyintext|any)\\b)?:");String src = "anyintag: tag0 tag1 : all text: word0 word1 ' any: ' anyintitle: title0 title1";Matcher m = p.matcher(src);boolean found = false;System.out.println("*********");System.out.println("input source string:" + src);System.out.println("*********");while (m.find()) {    System.out.format("I found the text" +        " \"%s\" starting at " +        "index %d and ending at index %d.%n",        m.group(),        m.start(),        m.end());    found = true;}if (!found){    System.out.format("No match found.%n");}

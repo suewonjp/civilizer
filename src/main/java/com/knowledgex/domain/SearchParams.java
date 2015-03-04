@@ -12,6 +12,20 @@ public final class SearchParams {
 	public static final int TARGET_TEXT    = 3;
 	public static final int TARGET_URL     = 4;
 	
+	private static final TargetDirective[] DIRECTIVES = {
+        new TargetDirective("tag:", TARGET_TAG, false), 
+        new TargetDirective("anyintag:", TARGET_TAG, true),
+        new TargetDirective("title:", TARGET_TITLE, false), 
+        new TargetDirective("anyintitle:", TARGET_TITLE, true),
+        new TargetDirective("text:", TARGET_TEXT, false),   
+        new TargetDirective("anyintext:", TARGET_TEXT, true),
+        new TargetDirective(":", TARGET_ALL, false),    
+        new TargetDirective("any:", TARGET_ALL, true),
+    };
+	
+	private static final String TARGET_DIRECTIVE_PATTERN =
+	        "(\\b(tag|anyintag|title|anyintitle|text|anyintext|any)\\b)?:";
+	
 	public static final class Keyword {
 		private final String word;
 		private final boolean caseSensitive;
@@ -167,7 +181,7 @@ public final class SearchParams {
 			int target = targetDirective.target;
 			boolean any = targetDirective.any;
 			final Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");
-			final Matcher m = p.matcher(src);
+			final Matcher m = p.matcher(src.substring(targetDirective.expression.length()));
 			
 			while (m.find()) {
 				words.add(new Keyword(m.group()));
@@ -183,19 +197,9 @@ public final class SearchParams {
 		}
 		
 		private static TargetDirective parseTarget(String src) {
-			final TargetDirective[] directives = {
-				new TargetDirective("tag:", TARGET_TAG, false),	
-				new TargetDirective("anyintag:", TARGET_TAG, true),
-				new TargetDirective("title:", TARGET_TITLE, false),	
-				new TargetDirective("anyintitle:", TARGET_TITLE, true),
-				new TargetDirective("text:", TARGET_TEXT, false),	
-				new TargetDirective("anyintext:", TARGET_TEXT, true),
-				new TargetDirective(":", TARGET_ALL, false),	
-				new TargetDirective("any:", TARGET_ALL, true),
-			};
-			final TargetDirective def = directives[6];
+			final TargetDirective def = DIRECTIVES[6];
 			
-			for (TargetDirective targetDirective : directives) {
+			for (TargetDirective targetDirective : DIRECTIVES) {
 				if (src.startsWith(targetDirective.expression)) {
 					return targetDirective;
 				}
@@ -221,6 +225,48 @@ public final class SearchParams {
 
 	public SearchParams(List<Keywords> keywords) {
 		this.keywords = keywords;
+	}
+
+	public SearchParams(String src) {
+	    final List<Pair<Integer, Integer>> ranges = new ArrayList<Pair<Integer, Integer>>();
+	    List<Keywords> keywords = new ArrayList<Keywords>();
+	    Pattern p = Pattern.compile(TARGET_DIRECTIVE_PATTERN);
+	    src = src.trim();
+	    Matcher m = p.matcher(src);
+	    
+	    while (m.find()) {
+	        ranges.add(new Pair<Integer, Integer>(m.start(), m.end()));
+	    }
+
+	    // We should ignore any directive existing inside '' quotes (as-is block)
+	    p = Pattern.compile("('([^']|'\\w)+')");
+	    m = p.matcher(src);
+	    while (m.find()) {
+	        Iterator<Pair<Integer, Integer>> itr = ranges.iterator();
+	        while (itr.hasNext()) {
+	            Pair<Integer, Integer> range = itr.next();
+	            if (m.start() <= range.getFirst() && range.getSecond() <= m.end()) {
+	                // If this directive is inside '' block (as-is block), it is not intended as a directive.
+	                itr.remove();
+	            }
+	        }
+	    }
+	    
+	    if (! ranges.isEmpty() && ranges.get(0).getFirst() > 0) {
+	        // If we have no directive found at the beginning, it is an implicit ':' directive
+	        ranges.add(0, new Pair<Integer, Integer>(0, 0));
+	    }
+	    
+	    ranges.add(new Pair<Integer, Integer>(src.length(), src.length()));
+	    
+	    for (int i=1; i<ranges.size(); ++i) {
+	        final Pair<Integer, Integer> r0 = ranges.get(i - 1);
+	        final Pair<Integer, Integer> r1 = ranges.get(i);
+	        final String s = src.substring(r0.getFirst(), r1.getFirst());
+	        keywords.add(new Keywords(s));
+	    }
+	    
+	    this.keywords = keywords;
 	}
 
 	public List<Keywords> getKeywords() {
