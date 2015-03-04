@@ -143,17 +143,67 @@ public final class SearchParams {
 		}
 	}
 	
+	private static final class TargetDirective {
+		public final String expression;
+		public final int target;
+		public final boolean any;
+		
+		public TargetDirective(String expr, int target, boolean any) {
+			this.expression = expr.intern();
+			this.target = target;
+			this.any = any;
+		}
+	}
+	
 	public static final class Keywords {
 		private final List<Keyword> words;
 		private final int target;
 		private final boolean any;
 		
-		public Keywords(List<Keyword> words, int target, boolean any) {
+		public Keywords(String src) {
+			src = src.trim();
+			List<Keyword> words = new ArrayList<Keyword>();
+			final TargetDirective targetDirective = parseTarget(src);
+			int target = targetDirective.target;
+			boolean any = targetDirective.any;
+			final Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");
+			final Matcher m = p.matcher(src);
+			
+			while (m.find()) {
+				words.add(new Keyword(m.group()));
+			}
+			
+			if (words.isEmpty()) {
+				words = Collections.emptyList();
+			}
+			
 			this.words = words;
 			this.target = target;
 			this.any = any;
 		}
-
+		
+		private static TargetDirective parseTarget(String src) {
+			final TargetDirective[] directives = {
+				new TargetDirective("tag:", TARGET_TAG, false),	
+				new TargetDirective("anyintag:", TARGET_TAG, true),
+				new TargetDirective("title:", TARGET_TITLE, false),	
+				new TargetDirective("anyintitle:", TARGET_TITLE, true),
+				new TargetDirective("text:", TARGET_TEXT, false),	
+				new TargetDirective("anyintext:", TARGET_TEXT, true),
+				new TargetDirective(":", TARGET_ALL, false),	
+				new TargetDirective("any:", TARGET_ALL, true),
+			};
+			final TargetDirective def = directives[6];
+			
+			for (TargetDirective targetDirective : directives) {
+				if (src.startsWith(targetDirective.expression)) {
+					return targetDirective;
+				}
+			}
+			
+			return def;
+		}
+		
 		public List<Keyword> getWords() {
 			return words;
 		}
