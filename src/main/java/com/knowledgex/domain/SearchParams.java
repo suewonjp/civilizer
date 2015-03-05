@@ -110,28 +110,6 @@ public final class SearchParams {
 			return new Pair<String, Character>(word, escapeChar);
 		}
 		
-//		public static String translateToPatternForSqlLIKEClause(String word, boolean wholeWord, boolean asIs) {
-////			final Pair<String, Character> tmp = escapeSqlWildcardCharacters(word);
-////			word = tmp.getFirst();
-//			final String boundary = "[^a-z0-9_]";
-//			
-//			if (! asIs) {
-//				word = word.replace('?', '_').replace('*', '%');
-//				
-//				if (wholeWord) {
-//					// [TODO] The following pattern won't match a case when the text ends with the word and the word doesn't appear anywhere else.
-//					// We should take care of this edge case when we build the SQL query.
-//					// e.g. the final SQL should be like so:
-//					//    where text like '%[^a-z0-9_]word[^a-z0-9_]%' or like '%[^a-z0-9_]word';
-//					word = boundary + word + boundary;
-//				}
-//			}
-//
-//			word = "%" + word + "%";
-//			
-//			return word;
-//		}
-		
 		private static boolean checkValidity(String word) {
 			return ! word.isEmpty();
 		}

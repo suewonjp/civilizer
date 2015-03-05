@@ -144,40 +144,6 @@ public class DomainSearchParamsTest {
 		}
 	}
 	
-//	@Test
-//	public void testTranslateToPatternForSqlLIKEClause() {
-//		{
-//    		final String word = "'my keyword'";
-//    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-//    		assertEquals(kw.isWholeWord(), false);
-//    		assertEquals(kw.isAsIs(), true);
-//    		assertEquals(kw.isValid(), true);
-//    		final String translatedWord =
-//    				SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
-//    		assertEquals(translatedWord, "%my keyword%");
-//    	}
-//		{
-//			final String word = "hello/w";
-//			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-//			assertEquals(kw.isWholeWord(), true);
-//			assertEquals(kw.isAsIs(), false);
-//			assertEquals(kw.isValid(), true);
-//			final String translatedWord =
-//					SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
-//			assertEquals(translatedWord, "%[^a-z0-9_-]hello[^a-z0-9_-]%");
-//		}
-//		{
-//			final String word = "?hello*world";
-//			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-//			assertEquals(kw.isWholeWord(), false);
-//			assertEquals(kw.isAsIs(), false);
-//			assertEquals(kw.isValid(), true);
-//			final String translatedWord =
-//					SearchParams.Keyword.translateToPatternForSqlLIKEClause(kw.getWord(), kw.isWholeWord(), kw.isAsIs());
-//			assertEquals(translatedWord, "%_hello%world%");
-//		}
-//	}
-	
 	@Test
 	public void testSearchParamsKeywords() {
 		{
