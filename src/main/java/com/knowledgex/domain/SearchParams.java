@@ -239,7 +239,7 @@ public final class SearchParams {
 	        }
 	    }
 	    
-	    if (! ranges.isEmpty() && ranges.get(0).getFirst() > 0) {
+	    if (ranges.isEmpty() || ranges.get(0).getFirst() > 0) {
 	        // We have no directive found at the beginning of the input string.
 	    	// It is identical to the ':' directive mode.
 	        ranges.add(0, new Pair<Integer, Integer>(0, 0));

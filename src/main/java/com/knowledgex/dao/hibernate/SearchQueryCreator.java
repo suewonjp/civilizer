@@ -33,9 +33,10 @@ public final class SearchQueryCreator {
         return word;
     }
     
-    private static void populateQueryWithKeywords(Criteria output, List<Keyword> words, int target, boolean any) {
+    
+    private static Junction populateQueryWithKeywords(List<Keyword> words, int target, boolean any) {
     	final String[] targetColumns = {
-    		null, "tagName", "title", "content", "content"
+    			null, "tagName", "title", "content", "content"
     	};
     	
     	final String column = targetColumns[target];
@@ -44,9 +45,9 @@ public final class SearchQueryCreator {
     	}
     	
     	final Junction junction = any ?
-    		Restrictions.disjunction() : Restrictions.conjunction();
-    	
-    	for (SearchParams.Keyword w : words) {
+    			Restrictions.disjunction() : Restrictions.conjunction();
+    			
+		for (SearchParams.Keyword w : words) {
 			final String pattern = newPattern(w);
 			
 			if (w.isWholeWord()) {
@@ -84,17 +85,19 @@ public final class SearchQueryCreator {
 						Restrictions.like(column, pattern) : Restrictions.ilike(column, pattern));
 			}
 		}
-    	
-    	output.add(junction);
+		
+		return junction;
     }
     
     public static Criteria newQuery(SearchParams params, Session session) {
     	final Criteria output = session.createCriteria(Fragment.class);
     	Criteria tagCrit = null;
     	
-    	if (params.hasTarget(SearchParams.TARGET_ALL) || params.hasTarget(SearchParams.TARGET_TAG)) {
+    	if (params.hasTarget(SearchParams.TARGET_TAG)) {
     		tagCrit = output.createCriteria("tags");
     	}
+    	
+    	Junction rootJunction = Restrictions.conjunction();
     	
     	for (SearchParams.Keywords keywords : params.getKeywords()) {
     		final int target = keywords.getTarget();
@@ -102,18 +105,27 @@ public final class SearchQueryCreator {
     		final boolean any = keywords.isAny();
     		
 			if (target == SearchParams.TARGET_ALL) {
-				populateQueryWithKeywords(tagCrit, words, SearchParams.TARGET_TAG, any);
-				populateQueryWithKeywords(output, words, SearchParams.TARGET_TITLE, any);
-				populateQueryWithKeywords(output, words, SearchParams.TARGET_TEXT, any);
+				Junction disj = Restrictions.disjunction();
+				
+				Junction junc = populateQueryWithKeywords(words, SearchParams.TARGET_TITLE, any);
+				disj.add(junc);
+				
+				junc = populateQueryWithKeywords(words, SearchParams.TARGET_TEXT, any);
+				disj.add(junc);
+				
+				rootJunction.add(disj);
 			}
 			else if (target == SearchParams.TARGET_TAG) {
-				populateQueryWithKeywords(tagCrit, words, target, any);
+				Junction junc = populateQueryWithKeywords(words, target, any);
+				tagCrit.add(junc);
 			}
 			else {
-				populateQueryWithKeywords(output, words, target, any);
+				Junction junc = populateQueryWithKeywords(words, target, any);
+				rootJunction.add(junc);
 			}
 		}
     	
+    	output.add(rootJunction);
         return output;
     }
 

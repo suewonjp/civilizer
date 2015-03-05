@@ -134,7 +134,7 @@ public class SearchTest extends DaoTest {
     
     @Test
     @SuppressWarnings("unchecked")
-    public void testMethod_SearchQueryCreator_newQuery() {
+    public void testSearch() {
     	final Tag[] tags = {
     			newTag("my tag"),
     			newTag("your tag :-)"),
@@ -145,18 +145,18 @@ public class SearchTest extends DaoTest {
 		}
     	
     	final Fragment[] fragments = {
-    			newFragment(".text()", "replaces the text inside a selection"),
-    			newFragment(".html()", "works like .text() but lets you insert HTML instead of just text"),
-    			newFragment(".append()", "lets you insert the specified content as the last child of an element"),
-    			newFragment(".prepend()", "lets you insert the specified content as the first child of an element"),
-    			newFragment(".before()", "adds content before the selection"),
-    			newFragment(".after()", "works just like .before(), except that the content is added after the selection (after its closing tag)."),
-    			newFragment(".replaceWith()", "completely replaces the selection (including the tag and everything inside it) with whatever you pass"),
-    			newFragment(".remove()", "removes the selection from the DOM;"),
-    			newFragment(".wrap()", "wraps each element in a selection in a pair of HTML tags."),
-    			newFragment(".wrapInner()", "wraps the contents of each element in a selection in HTML tags."),
-    			newFragment(".unwrap()", "simply removes the parent tag surrounding the selection."),
-    			newFragment(".empty()", "removes all of the contents of a selection, but leaves the selection in place"),
+    			/*0*/newFragment(".text()", "replaces the text inside a selection"),
+    			/*1*/newFragment(".html()", "works like .text() but lets you insert html instead of just text"),
+    			/*2*/newFragment(".append()", "lets you insert the specified content as the last child of an element"),
+    			/*3*/newFragment(".prepend()", "lets you insert the specified content as the first child of an element"),
+    			/*4*/newFragment(".before()", "adds content before the selection"),
+    			/*5*/newFragment(".after()", "works just like .before(), except that the content is added after the selection (after its closing tag)."),
+    			/*6*/newFragment(".replaceWith()", "completely replaces the selection (including the tag and everything inside it) with whatever you pass"),
+    			/*7*/newFragment(".remove()", "removes the selection from the DOM;"),
+    			/*8*/newFragment(".wrap()", "wraps each element in a selection in a pair of HTML tags."),
+    			/*9*/newFragment(".wrapInner()", "wraps the contents of each element in a selection in HTML tags."),
+    		   /*10*/newFragment(".unwrap()", "simply removes the parent tag surrounding the selection."),
+    		   /*11*/newFragment(".empty()", "removes all of the contents of a selection, but leaves the selection in place"),
     	};
     	
     	for (Fragment fragment : fragments) {
@@ -184,8 +184,97 @@ public class SearchTest extends DaoTest {
 			assertNotNull(crit);
 			final List<Fragment> results = crit.list();
 			assertEquals(1, results.size());
-			assertEquality(fragments[8], results.get(0));
+			assertTrue(results.contains(fragments[8]));
 		}
+    	{
+    		final String searchPhrase = "title:.*() ";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(fragments.length, results.size());
+    	}
+    	{
+    		final String searchPhrase = "anyintitle:pend wrap ";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(5, results.size());
+    		assertTrue(results.contains(fragments[2]));
+    		assertTrue(results.contains(fragments[3]));
+    		assertTrue(results.contains(fragments[8]));
+    		assertTrue(results.contains(fragments[9]));
+    		assertTrue(results.contains(fragments[10]));
+    	}
+    	{
+    		final String searchPhrase = "title:before()  text:before";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(2, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(1, results.size());
+    		assertTrue(results.contains(fragments[4]));
+    	}
+    	{
+    		final String searchPhrase = "text";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(2, results.size());
+    		assertTrue(results.contains(fragments[0]));
+    		assertTrue(results.contains(fragments[1]));
+    	}
+    	{
+    		final String searchPhrase = ":replace";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(2, results.size());
+    		assertTrue(results.contains(fragments[0]));
+    		assertTrue(results.contains(fragments[6]));
+    	}
+    	{
+    		final String searchPhrase = ":replace/w";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(0, results.size());
+    	}
+    	{
+    		final String searchPhrase = ": text html";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(1, results.size());
+    		assertTrue(results.contains(fragments[1]));
+    	}
+    	{
+    		final String searchPhrase = "any: text html";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(4, results.size());
+    		assertTrue(results.contains(fragments[0]));
+    		assertTrue(results.contains(fragments[1]));
+    		assertTrue(results.contains(fragments[8]));
+    		assertTrue(results.contains(fragments[9]));
+    	}
+    	{
+    		final String searchPhrase = "text: HTML/c";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(2, results.size());
+    		assertTrue(results.contains(fragments[8]));
+    		assertTrue(results.contains(fragments[9]));
+    	}
     }
     
 }
