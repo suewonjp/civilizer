@@ -15,7 +15,8 @@ import com.knowledgex.domain.SearchParams.Keyword;
 
 public final class SearchQueryCreator {
 	
-	private static final String WORD_BOUNDARY = "[^a-z0-9_]";
+	public static final String WORD_BOUNDARY = "[^a-zA-Z0-9_]";
+	public static final String WORD_CHARACTER = "[a-zA-Z0-9_]";
     
     public static String newPattern(SearchParams.Keyword keyword) {
         final Pair<String, Character> tmp =
@@ -23,7 +24,7 @@ public final class SearchQueryCreator {
         String word = tmp.getFirst();
         
         if (! keyword.isAsIs()) {
-            word = word.replace('?', '_').replace('*', '%');
+            word = word.replace("?", WORD_CHARACTER).replace('*', '%');
         }
         
         if (! keyword.isWholeWord()) {

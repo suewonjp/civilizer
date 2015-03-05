@@ -47,13 +47,13 @@ public class SearchTest extends DaoTest {
     @SuppressWarnings("unchecked")
     public void testHibernateCriteriaAPI_like_ilike() {
     	final Tag[] tags = {
-    			newTag("tag"),
-    			newTag("$tag"),
-    			newTag("Tag"),
-    			newTag("TAG"),
-    			newTag("Tag-000"),
-    			newTag("my tag"),
-    			newTag("your tag :-)"),
+    			/*0*/newTag("tag"),
+    			/*1*/newTag("$tag"),
+    			/*2*/newTag("Tag"),
+    			/*3*/newTag("TAG"),
+    			/*4*/newTag("Tag-000"),
+    			/*5*/newTag("my tag"),
+    			/*6*/newTag("your tag :-)"),
     	};
     	
     	for (Tag tag : tags) {
@@ -65,11 +65,9 @@ public class SearchTest extends DaoTest {
 			crit.add(Restrictions.like("tagName", "%tag%"));
 			final List<Tag> results = crit.list();
 			logger.info(results);
+			assertEquals(4, results.size());
 			assertTrue(results.contains(tags[0]));
 			assertTrue(results.contains(tags[1]));
-			assertTrue(!results.contains(tags[2]));
-			assertTrue(!results.contains(tags[3]));
-			assertTrue(!results.contains(tags[4]));
 			assertTrue(results.contains(tags[5]));
 			assertTrue(results.contains(tags[6]));
 		}
@@ -78,26 +76,27 @@ public class SearchTest extends DaoTest {
     		crit.add(Restrictions.like("tagName", "_tag"));
     		final List<Tag> results = crit.list();
     		logger.info(results);
-    		assertTrue(!results.contains(tags[0]));
+    		assertEquals(1, results.size());
     		assertTrue(results.contains(tags[1]));
-    		assertTrue(!results.contains(tags[2]));
-    		assertTrue(!results.contains(tags[3]));
-    		assertTrue(!results.contains(tags[4]));
-    		assertTrue(!results.contains(tags[5]));
-    		assertTrue(!results.contains(tags[6]));
+    	}
+    	{
+    		final Criteria crit = session.createCriteria(Tag.class);
+    		crit.add(Restrictions.sqlRestriction("TAG_NAME like 'my tag'"));
+    		final List<Tag> results = crit.list();
+    		logger.info(results);
+    		assertEquals(1, results.size());
+    		assertTrue(results.contains(tags[5]));
     	}
     	{
     		final Criteria crit = session.createCriteria(Tag.class);
     		crit.add(Restrictions.ilike("tagName", "tag%"));
     		final List<Tag> results = crit.list();
     		logger.info(results);
+    		assertEquals(4, results.size());
     		assertTrue(results.contains(tags[0]));
-    		assertTrue(!results.contains(tags[1]));
     		assertTrue(results.contains(tags[2]));
     		assertTrue(results.contains(tags[3]));
     		assertTrue(results.contains(tags[4]));
-    		assertTrue(!results.contains(tags[5]));
-    		assertTrue(!results.contains(tags[6]));
     	}
     }
     
@@ -128,7 +127,7 @@ public class SearchTest extends DaoTest {
           assertEquals(kw.isAsIs(), false);
           assertEquals(kw.isValid(), true);
           final String pattern = SearchQueryCreator.newPattern(kw);
-          assertEquals(pattern, "%_hello%world%");
+          assertEquals(pattern, "%" + SearchQueryCreator.WORD_CHARACTER + "hello%world%");
       }
     }
     
@@ -266,7 +265,7 @@ public class SearchTest extends DaoTest {
     		assertTrue(results.contains(fragments[9]));
     	}
     	{
-    		final String searchPhrase = "text: HTML/c";
+    		final String searchPhrase = "text:HTML/c";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
     		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
@@ -275,6 +274,27 @@ public class SearchTest extends DaoTest {
     		assertTrue(results.contains(fragments[8]));
     		assertTrue(results.contains(fragments[9]));
     	}
+    	{
+    		final String searchPhrase = ": \"lets you insert\"";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(3, results.size());
+    		assertTrue(results.contains(fragments[1]));
+    		assertTrue(results.contains(fragments[2]));
+    		assertTrue(results.contains(fragments[3]));
+    	}
+//    	{
+//    		final String searchPhrase = "text: tag?";
+//    		final SearchParams sp = new SearchParams(searchPhrase);
+//    		assertEquals(1, sp.getKeywords().size());
+//    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+//    		final List<Fragment> results = crit.list();
+//    		assertEquals(2, results.size());
+//    		assertTrue(results.contains(fragments[8]));
+//    		assertTrue(results.contains(fragments[9]));
+//    	}
     }
     
 }
