@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
+import com.knowledgex.dao.hibernate.SearchQueryCreator;
 import com.knowledgex.domain.*;
 
 public class SearchTest extends DaoTest {
@@ -97,6 +98,37 @@ public class SearchTest extends DaoTest {
     		assertTrue(!results.contains(tags[5]));
     		assertTrue(!results.contains(tags[6]));
     	}
+    }
+    
+    @Test
+    public void testMethod_SearchQueryCreator_newPattern() {
+      {
+          final String word = "'my keyword'";
+          final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+          assertEquals(kw.isWholeWord(), false);
+          assertEquals(kw.isAsIs(), true);
+          assertEquals(kw.isValid(), true);
+          final String pattern = SearchQueryCreator.newPattern(kw);
+          assertEquals(pattern, "%my keyword%");
+      }
+      {
+          final String word = "hello/w";
+          final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+          assertEquals(kw.isWholeWord(), true);
+          assertEquals(kw.isAsIs(), false);
+          assertEquals(kw.isValid(), true);
+          final String pattern = SearchQueryCreator.newPattern(kw);
+          assertEquals(pattern, "hello");
+      }
+      {
+          final String word = "?hello*world";
+          final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+          assertEquals(kw.isWholeWord(), false);
+          assertEquals(kw.isAsIs(), false);
+          assertEquals(kw.isValid(), true);
+          final String pattern = SearchQueryCreator.newPattern(kw);
+          assertEquals(pattern, "%_hello%world%");
+      }
     }
     
 }
