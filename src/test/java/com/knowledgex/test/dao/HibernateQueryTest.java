@@ -6,8 +6,6 @@ import org.junit.*;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
@@ -20,18 +18,12 @@ import org.hibernate.Session;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 
-import com.knowledgex.dao.*;
 import com.knowledgex.domain.*;
 import com.knowledgex.test.util.TestUtil;
 
-public class HibernateQueryTest {
+public class HibernateQueryTest extends DaoTest {
 	
-	private static Log logger;
-	private static GenericXmlApplicationContext ctx;
 	private static final DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
-	
-	private FragmentDao fragmentDao;
-	private TagDao tagDao;
 	
 	private Session session;
 	
@@ -39,23 +31,15 @@ public class HibernateQueryTest {
 	public static void setUpBeforeClass() throws Exception {
 		assertNotNull(dtCmptr);
 		
-		logger = TestUtil.newLogger(HibernateQueryTest.class);
-
-		ctx = new GenericXmlApplicationContext();
-		ctx.load("classpath:datasource-context-h2-embedded.xml");
-		ctx.refresh();
-		logger.info("GenericXmlApplicationContext initialized OK");
+		DaoTest.setUpBeforeClass(
+                "classpath:datasource-context-h2-embedded.xml"
+                , HibernateQueryTest.class
+                );
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
-		assertNotNull(fragmentDao);
-		logger.info("fragmentDao initialized OK");
-
-		tagDao = ctx.getBean("tagDao", TagDao.class);
-		assertNotNull(tagDao);
-		logger.info("tagDao initialized OK");
+	    super.setUp();
 		
 		SessionFactory sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);
 		assertNotNull(sessionFactory);
@@ -63,6 +47,11 @@ public class HibernateQueryTest {
 		session = SessionFactoryUtils.getSession(sessionFactory, true);
 		assertNotNull(session);
 	}
+	
+	@After
+    public void tearDown() throws Exception {
+        super.tearDown();
+    }
 	
 	@Test
 	@SuppressWarnings("unchecked")
