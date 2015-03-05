@@ -267,5 +267,16 @@ public final class SearchParams {
 	public List<Keywords> getKeywords() {
 		return keywords;
 	}
+	
+	public boolean hasTarget(int target) {
+		boolean hasIt = false;
+		for (Keywords words : keywords) {
+			if (words.getTarget() == target) {
+				hasIt = true;
+				break;
+			}
+		}
+		return hasIt;
+	}
 
 }

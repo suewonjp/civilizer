@@ -72,6 +72,13 @@ class DaoTest {
 		return frg;
 	}
 
+	protected Fragment newFragment(String title, String content) {
+		Fragment frg = new Fragment(title, content, null);
+		assertNotNull(frg);
+		temporalFragments.add(frg);
+		return frg;
+	}
+
 	protected Long getAndValidateId(Fragment f) {
 		Long id = f.getId();
 		assertTrue(id != null && id >= 0);

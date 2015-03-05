@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 import com.knowledgex.dao.hibernate.SearchQueryCreator;
 import com.knowledgex.domain.*;
+import com.knowledgex.test.util.TestUtil;
 
 public class SearchTest extends DaoTest {
 	
@@ -45,7 +46,7 @@ public class SearchTest extends DaoTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testHibernateCriteriaAPI_like_ilike() {
-    	Tag[] tags = {
+    	final Tag[] tags = {
     			newTag("tag"),
     			newTag("$tag"),
     			newTag("Tag"),
@@ -53,7 +54,7 @@ public class SearchTest extends DaoTest {
     			newTag("Tag-000"),
     			newTag("my tag"),
     			newTag("your tag :-)"),
-    			};
+    	};
     	
     	for (Tag tag : tags) {
 			tagDao.save(tag);
@@ -129,6 +130,62 @@ public class SearchTest extends DaoTest {
           final String pattern = SearchQueryCreator.newPattern(kw);
           assertEquals(pattern, "%_hello%world%");
       }
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testMethod_SearchQueryCreator_newQuery() {
+    	final Tag[] tags = {
+    			newTag("my tag"),
+    			newTag("your tag :-)"),
+    	};
+    	
+    	for (Tag tag : tags) {
+			tagDao.save(tag);
+		}
+    	
+    	final Fragment[] fragments = {
+    			newFragment(".text()", "replaces the text inside a selection"),
+    			newFragment(".html()", "works like .text() but lets you insert HTML instead of just text"),
+    			newFragment(".append()", "lets you insert the specified content as the last child of an element"),
+    			newFragment(".prepend()", "lets you insert the specified content as the first child of an element"),
+    			newFragment(".before()", "adds content before the selection"),
+    			newFragment(".after()", "works just like .before(), except that the content is added after the selection (after its closing tag)."),
+    			newFragment(".replaceWith()", "completely replaces the selection (including the tag and everything inside it) with whatever you pass"),
+    			newFragment(".remove()", "removes the selection from the DOM;"),
+    			newFragment(".wrap()", "wraps each element in a selection in a pair of HTML tags."),
+    			newFragment(".wrapInner()", "wraps the contents of each element in a selection in HTML tags."),
+    			newFragment(".unwrap()", "simply removes the parent tag surrounding the selection."),
+    			newFragment(".empty()", "removes all of the contents of a selection, but leaves the selection in place"),
+    	};
+    	
+    	for (Fragment fragment : fragments) {
+    		final int n = TestUtil.getRandom().nextInt(3);
+    		
+    		if (n == 0) {
+    			fragment.addTag(tags[0]);
+    		}
+    		else if (n == 1) {
+    			fragment.addTag(tags[1]);
+    		}
+    		else {
+    			fragment.addTag(tags[0]);
+    			fragment.addTag(tags[1]);
+    		}
+    		
+			fragmentDao.save(fragment);
+		}
+    	
+    	{
+			final String searchPhrase = "title:.wrap() ";
+			final SearchParams sp = new SearchParams(searchPhrase);
+			assertEquals(1, sp.getKeywords().size());
+			final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+			assertNotNull(crit);
+			final List<Fragment> results = crit.list();
+			assertEquals(1, results.size());
+			assertEquality(fragments[8], results.get(0));
+		}
     }
     
 }

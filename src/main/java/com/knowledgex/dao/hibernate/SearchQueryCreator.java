@@ -33,7 +33,7 @@ public final class SearchQueryCreator {
         return word;
     }
     
-    private void populateQueryWithKeywords(Criteria output, List<Keyword> words, int target, boolean any) {
+    private static void populateQueryWithKeywords(Criteria output, List<Keyword> words, int target, boolean any) {
     	final String[] targetColumns = {
     		null, "tagName", "title", "content", "content"
     	};
@@ -88,20 +88,32 @@ public final class SearchQueryCreator {
     	output.add(junction);
     }
     
-    public Criteria newQuery(SearchParams params, Session session) {
+    public static Criteria newQuery(SearchParams params, Session session) {
     	final Criteria output = session.createCriteria(Fragment.class);
     	Criteria tagCrit = null;
     	
+    	if (params.hasTarget(SearchParams.TARGET_ALL) || params.hasTarget(SearchParams.TARGET_TAG)) {
+    		tagCrit = output.createCriteria("tags");
+    	}
+    	
     	for (SearchParams.Keywords keywords : params.getKeywords()) {
-    		Criteria crit = output;
-			if (keywords.getTarget() == SearchParams.TARGET_TAG) {
-				if (tagCrit == null) {
-					tagCrit = output.createCriteria("tags");
-				}
-				crit = tagCrit;
+    		final int target = keywords.getTarget();
+    		final List<Keyword> words = keywords.getWords();
+    		final boolean any = keywords.isAny();
+    		
+			if (target == SearchParams.TARGET_ALL) {
+				populateQueryWithKeywords(tagCrit, words, SearchParams.TARGET_TAG, any);
+				populateQueryWithKeywords(output, words, SearchParams.TARGET_TITLE, any);
+				populateQueryWithKeywords(output, words, SearchParams.TARGET_TEXT, any);
 			}
-			populateQueryWithKeywords(crit, keywords.getWords(), keywords.getTarget(), keywords.isAny());
+			else if (target == SearchParams.TARGET_TAG) {
+				populateQueryWithKeywords(tagCrit, words, target, any);
+			}
+			else {
+				populateQueryWithKeywords(output, words, target, any);
+			}
 		}
+    	
         return output;
     }
 
