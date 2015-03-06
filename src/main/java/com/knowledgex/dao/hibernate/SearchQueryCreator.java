@@ -19,10 +19,6 @@ public final class SearchQueryCreator {
     
     public static String getPatternFromKeyword(SearchParams.Keyword keyword) {
         String word = keyword.getWord();
-        
-        if (! keyword.isCaseSensitive() && ! keyword.isRegex()) {
-            word = word.toLowerCase();
-        }
 
         if (keyword.isTrivial()) {
             final Pair<String, Character> tmp =
@@ -34,9 +30,9 @@ public final class SearchQueryCreator {
     }
     
     
-    private static Junction populateQueryWithKeywords(List<Keyword> words, int target, boolean any) {
+    private static Junction buildQueryWithKeywords(List<Keyword> words, int target, boolean any) {
     	final String[] targetColumns = {
-    			null, "tagName", "title", "content", "content"
+    	        null, "TAG_NAME", "TITLE", "CONTENT", "CONTENT"
     	};
     	
     	final String column = targetColumns[target];
@@ -49,37 +45,43 @@ public final class SearchQueryCreator {
     			
 		for (SearchParams.Keyword w : words) {
 			final String pattern = getPatternFromKeyword(w);
+			String sql = null;
 			
 			if (w.isTrivial()) {
-                junction.add(w.isCaseSensitive() ?
-                        Restrictions.like(column, pattern) : Restrictions.ilike(column, pattern));
+                if (w.isCaseSensitive()) {
+                    sql = column + " like " + "'" + pattern + "'";
+                }
+                else {
+                    sql = "lower(" + column + ") like " + "'" + pattern.toLowerCase() + "'";
+                }
             }
 			else {
 			    if (w.isWholeWord()) {
-			        final Disjunction disj = Restrictions.disjunction();
-	                String p = null;
-	                
-	                p = "%" + WORD_BOUNDARY + pattern + WORD_BOUNDARY + "%";
-	                disj.add(w.isCaseSensitive() ? 
-	                        Restrictions.like(column, p) : Restrictions.ilike(column, p));
-	                p = pattern + WORD_BOUNDARY + "%";
-	                disj.add(w.isCaseSensitive() ? 
-	                        Restrictions.like(column, p) : Restrictions.ilike(column, p));
-	                p = "%" + WORD_BOUNDARY + pattern;
-	                disj.add(w.isCaseSensitive() ? 
-	                        Restrictions.like(column, p) : Restrictions.ilike(column, p));
-	                p =  pattern;
-	                disj.add(w.isCaseSensitive() ? 
-	                        Restrictions.like(column, p) : Restrictions.ilike(column, p));
-	                junction.add(disj);
+			        if (w.isCaseSensitive()) {
+			            sql = column + " regexp " + "'\\b" + pattern + "\\b'";
+			        }
+			        else {
+			            sql = "lower(" + column + ") regexp " + "'\\b" + pattern.toLowerCase() + "\\b'";
+			        }
+			    }
+			    else {
+			        if (w.isCaseSensitive()) {
+                        sql = column + " regexp " + "'" + pattern + "'";
+                    }
+                    else {
+                        sql = "lower(" + column + ") regexp " + "'" + pattern.toLowerCase() + "'";
+                    }
 			    }
 			}
+			
+			// [TODO] research compatibility issues with other DBMS vendors
+			junction.add(Restrictions.sqlRestriction(sql));
 		}
 		
 		return junction;
     }
     
-    public static Criteria newQuery(SearchParams params, Session session) {
+    public static Criteria buildQuery(SearchParams params, Session session) {
     	final Criteria output = session.createCriteria(Fragment.class);
     	Criteria tagCrit = null;
     	
@@ -97,20 +99,20 @@ public final class SearchQueryCreator {
 			if (target == SearchParams.TARGET_ALL) {
 				Junction disj = Restrictions.disjunction();
 				
-				Junction junc = populateQueryWithKeywords(words, SearchParams.TARGET_TITLE, any);
+				Junction junc = buildQueryWithKeywords(words, SearchParams.TARGET_TITLE, any);
 				disj.add(junc);
 				
-				junc = populateQueryWithKeywords(words, SearchParams.TARGET_TEXT, any);
+				junc = buildQueryWithKeywords(words, SearchParams.TARGET_TEXT, any);
 				disj.add(junc);
 				
 				rootJunction.add(disj);
 			}
 			else if (target == SearchParams.TARGET_TAG) {
-				Junction junc = populateQueryWithKeywords(words, target, any);
+				Junction junc = buildQueryWithKeywords(words, target, any);
 				tagCrit.add(junc);
 			}
 			else {
-				Junction junc = populateQueryWithKeywords(words, target, any);
+				Junction junc = buildQueryWithKeywords(words, target, any);
 				rootJunction.add(junc);
 			}
 		}

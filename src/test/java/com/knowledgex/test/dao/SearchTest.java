@@ -103,12 +103,12 @@ public class SearchTest extends DaoTest {
     @Test
     public void testMethod_SearchQueryCreator_getPatternFromKeyword() {
       {
-          final String word = "\"my keyword\"";
+          final String word = "\"My keyword\"";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word);
           assertEquals(false, kw.isWholeWord());
           assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.getPatternFromKeyword(kw);
-          assertEquals(pattern, "%my keyword%");
+          assertEquals(pattern, "%My keyword%");
       }
       {
           final String word = "hello/w";
@@ -117,15 +117,6 @@ public class SearchTest extends DaoTest {
           assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.getPatternFromKeyword(kw);
           assertEquals(pattern, "hello");
-      }
-      {
-          final String word = "hELLo";
-          final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-          assertEquals(false, kw.isWholeWord());
-          assertEquals(false, kw.isCaseSensitive());
-          assertEquals(true, kw.isValid());
-          final String pattern = SearchQueryCreator.getPatternFromKeyword(kw);
-          assertEquals(pattern, "%hello%");
       }
     }
     
@@ -177,7 +168,7 @@ public class SearchTest extends DaoTest {
 			final String searchPhrase = "title:.wrap() ";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(1, sp.getKeywords().size());
-			final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
 			assertNotNull(crit);
 			final List<Fragment> results = crit.list();
 			assertEquals(1, results.size());
@@ -187,7 +178,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = "title:. () ";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(fragments.length, results.size());
     	}
@@ -195,7 +186,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = "anytitle:pend wrap ";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(5, results.size());
     		assertTrue(results.contains(fragments[2]));
@@ -208,7 +199,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = "title:before()  text:before";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(2, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(1, results.size());
     		assertTrue(results.contains(fragments[4]));
@@ -217,7 +208,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = "text";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(2, results.size());
     		assertTrue(results.contains(fragments[0]));
@@ -227,7 +218,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = ":replace";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(2, results.size());
     		assertTrue(results.contains(fragments[0]));
@@ -237,7 +228,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = ":replace/w";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(0, results.size());
     	}
@@ -245,7 +236,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = ": text html";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(1, results.size());
     		assertTrue(results.contains(fragments[1]));
@@ -254,7 +245,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = "any: text html";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(4, results.size());
     		assertTrue(results.contains(fragments[0]));
@@ -266,7 +257,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = "text:HTML/c";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(2, results.size());
     		assertTrue(results.contains(fragments[8]));
@@ -276,7 +267,7 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = ": \"lets you insert\"";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
     		final List<Fragment> results = crit.list();
     		assertEquals(3, results.size());
     		assertTrue(results.contains(fragments[1]));
