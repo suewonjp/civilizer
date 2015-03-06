@@ -130,15 +130,6 @@ public class SearchTest extends DaoTest {
           final String pattern = SearchQueryCreator.newPattern(kw);
           assertEquals(pattern, "%hello%");
       }
-//      {
-//          final String word = "?hello*world";
-//          final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-//          assertEquals(kw.isWholeWord(), false);
-//          assertEquals(kw.isAsIs(), false);
-//          assertEquals(kw.isValid(), true);
-//          final String pattern = SearchQueryCreator.newPattern(kw);
-//          assertEquals(pattern, "%" + SearchQueryCreator.WORD_CHARACTER + "hello%world%");
-//      }
     }
     
     @Test
@@ -295,16 +286,6 @@ public class SearchTest extends DaoTest {
     		assertTrue(results.contains(fragments[2]));
     		assertTrue(results.contains(fragments[3]));
     	}
-//    	{
-//    		final String searchPhrase = "text: tag?";
-//    		final SearchParams sp = new SearchParams(searchPhrase);
-//    		assertEquals(1, sp.getKeywords().size());
-//    		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
-//    		final List<Fragment> results = crit.list();
-//    		assertEquals(2, results.size());
-//    		assertTrue(results.contains(fragments[8]));
-//    		assertTrue(results.contains(fragments[9]));
-//    	}
     }
     
 }

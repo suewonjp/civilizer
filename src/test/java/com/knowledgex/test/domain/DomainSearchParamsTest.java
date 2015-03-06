@@ -36,12 +36,6 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.getWord(), "''");
     		assertEquals(kw.isValid(), true);
     	}
-//    	{
-//			final String word = "''''";
-//			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-//			assertEquals(kw.getWord(), "''");
-//			assertEquals(kw.isValid(), true);
-//		}
     	{
     		final String word = "'";
     		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
@@ -64,27 +58,6 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.isAsIs(), true);
     		assertEquals(kw.isValid(), true);
     	}
-//    	{
-//    		// [NOTE] If flags follow single quotes, they get ignored
-//    		final String word = "'Hello World'/w";
-//    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-//    		assertEquals(kw.getWord(), "Hello World");
-//    		assertEquals(kw.isCaseSensitive(), true);
-//    		assertEquals(kw.isWholeWord(), false);
-//    		assertEquals(kw.isAsIs(), true);
-//    		assertEquals(kw.isValid(), true);
-//    	}
-    	
-    	// trivial cases
-//    	{
-//    		final String word = "'my \"keyword\"'";
-//    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-//    		assertEquals(kw.getWord(), "my \"keyword\"");
-//    		assertEquals(kw.isCaseSensitive(), true);
-//    		assertEquals(kw.isWholeWord(), false);
-//    		assertEquals(kw.isAsIs(), true);
-//    		assertEquals(kw.isValid(), true);
-//    	}
     	{
     		final String word = "hello/c";
     		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
