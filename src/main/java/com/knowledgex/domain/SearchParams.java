@@ -56,22 +56,24 @@ public final class SearchParams {
 				}
 			}
 			
-			if (word.startsWith("'") && word.endsWith("'")) {
-				// [RULE] '...' => as-is mode; in this mode, flags set by the user get ignored;
+			if (word.startsWith("\"") && word.endsWith("\"")) {
+//			if (word.startsWith("'") && word.endsWith("'")) {
+				// [RULE] '...' => as-is mode;
+			    //// in this mode, flags set by the user get ignored;
 				asIs = true;
-				caseSensitive = true;
-				wholeWord = false;
+//				caseSensitive = true;
+//				wholeWord = false;
 				if (word.length() > 1) {
 					word = word.substring(1, word.length() - 1);
 				}
 			}
 			
-			if (word.startsWith("\"") && word.endsWith("\"")) {
-				// [RULE] if quoted with ", strip it
-				if (word.length() > 1) {
-					word = word.substring(1, word.length() - 1);
-				}
-			}
+//			if (word.startsWith("\"") && word.endsWith("\"")) {
+//				// [RULE] if quoted with ", strip it
+//				if (word.length() > 1) {
+//					word = word.substring(1, word.length() - 1);
+//				}
+//			}
 			
 			this.word = word;
 			this.caseSensitive = caseSensitive;
@@ -160,7 +162,8 @@ public final class SearchParams {
 			boolean any = targetDirective.any;
 			
 			if (! src.isEmpty()) {
-				final Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");
+				final Pattern p = Pattern.compile("(\"[^\"]+\")|(\\S+)");
+//				final Pattern p = Pattern.compile("('([^']|'\\w)+')|(\"[^\"]+\")|(\\S+)");
 				
 				if (src.startsWith(targetDirective.expression)) {
 					// The source string starts with an explicit directive such as 'any:', 'tag:', etc.
@@ -226,7 +229,8 @@ public final class SearchParams {
 	    }
 
 	    // We should ignore any directive existing inside '' quotes (as-is block)
-	    p = Pattern.compile("('([^']|'\\w)+')");
+	    p = Pattern.compile("(\"([^\"])+\")");
+//	    p = Pattern.compile("('([^']|'\\w)+')");
 	    m = p.matcher(src);
 	    while (m.find()) {
 	        Iterator<Pair<Integer, Integer>> itr = ranges.iterator();

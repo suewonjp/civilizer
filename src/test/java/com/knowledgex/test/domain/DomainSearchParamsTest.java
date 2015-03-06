@@ -33,15 +33,15 @@ public class DomainSearchParamsTest {
     	{
     		final String word = "''";
     		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-    		assertEquals(kw.getWord(), "");
-    		assertEquals(kw.isValid(), false);
+    		assertEquals(kw.getWord(), "''");
+    		assertEquals(kw.isValid(), true);
     	}
-    	{
-			final String word = "''''";
-			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-			assertEquals(kw.getWord(), "''");
-			assertEquals(kw.isValid(), true);
-		}
+//    	{
+//			final String word = "''''";
+//			final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+//			assertEquals(kw.getWord(), "''");
+//			assertEquals(kw.isValid(), true);
+//		}
     	{
     		final String word = "'";
     		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
@@ -61,30 +61,30 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.getWord(), "Hello World/c");
     		assertEquals(kw.isCaseSensitive(), false);
     		assertEquals(kw.isWholeWord(), false);
-    		assertEquals(kw.isAsIs(), false);
-    		assertEquals(kw.isValid(), true);
-    	}
-    	{
-    		// [NOTE] If flags follow single quotes, they get ignored
-    		final String word = "'Hello World'/w";
-    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-    		assertEquals(kw.getWord(), "Hello World");
-    		assertEquals(kw.isCaseSensitive(), true);
-    		assertEquals(kw.isWholeWord(), false);
     		assertEquals(kw.isAsIs(), true);
     		assertEquals(kw.isValid(), true);
     	}
+//    	{
+//    		// [NOTE] If flags follow single quotes, they get ignored
+//    		final String word = "'Hello World'/w";
+//    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+//    		assertEquals(kw.getWord(), "Hello World");
+//    		assertEquals(kw.isCaseSensitive(), true);
+//    		assertEquals(kw.isWholeWord(), false);
+//    		assertEquals(kw.isAsIs(), true);
+//    		assertEquals(kw.isValid(), true);
+//    	}
     	
     	// trivial cases
-    	{
-    		final String word = "'my \"keyword\"'";
-    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-    		assertEquals(kw.getWord(), "my \"keyword\"");
-    		assertEquals(kw.isCaseSensitive(), true);
-    		assertEquals(kw.isWholeWord(), false);
-    		assertEquals(kw.isAsIs(), true);
-    		assertEquals(kw.isValid(), true);
-    	}
+//    	{
+//    		final String word = "'my \"keyword\"'";
+//    		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+//    		assertEquals(kw.getWord(), "my \"keyword\"");
+//    		assertEquals(kw.isCaseSensitive(), true);
+//    		assertEquals(kw.isWholeWord(), false);
+//    		assertEquals(kw.isAsIs(), true);
+//    		assertEquals(kw.isValid(), true);
+//    	}
     	{
     		final String word = "hello/c";
     		final SearchParams.Keyword kw = new SearchParams.Keyword(word);
@@ -100,7 +100,7 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.getWord(), "Hello World");
     		assertEquals(kw.isCaseSensitive(), true);
     		assertEquals(kw.isWholeWord(), false);
-    		assertEquals(kw.isAsIs(), false);
+    		assertEquals(kw.isAsIs(), true);
     		assertEquals(kw.isValid(), true);
     	}
     	{
@@ -149,87 +149,87 @@ public class DomainSearchParamsTest {
 		{
 			final String words = "";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getWords().isEmpty());
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
-			assertTrue(keywords.isAny() == false);
+			assertEquals(0, keywords.getWords().size());
+			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(false, keywords.isAny());
 		}
 		{
 			final String words = " \t: \t\n ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getWords().isEmpty());
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
-			assertTrue(keywords.isAny() == false);
+			assertEquals(0, keywords.getWords().size());
+			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = " : '' \"\"\t";
+			final String words = " :  \"\"\t";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getWords().isEmpty());
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
-			assertTrue(keywords.isAny() == false);
+			assertEquals(0, keywords.getWords().size());
+			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = ":word *phrase* '' \"\" wholeWorld/w";
+			final String words = ":word phrase '' \"\" wholeWorld/w";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getWords().size() == 3);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
-			assertTrue(keywords.isAny() == false);
+			assertEquals(4, keywords.getWords().size());
+			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = "any: 'hello _%' ?Phrase*/c \"quoted phrase*\" ";
+			final String words = "any: 'hello _%' Phrase/c \"quoted phrase\" ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getWords().size() == 3);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_ALL);
-			assertTrue(keywords.isAny() == true);
+			assertEquals(4, keywords.getWords().size());
+			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(true, keywords.isAny());
 		}
 		{
-			final String words = "tag: tag*";
+			final String words = "tag: tag";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_TAG);
-			assertTrue(keywords.isAny() == false);
+			assertEquals(SearchParams.TARGET_TAG, keywords.getTarget());
+			assertEquals(false, keywords.isAny());
 		}
 		{
 			final String words = "anyintag:tag0 tag2";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_TAG);
-			assertTrue(keywords.isAny() == true);
+			assertEquals(SearchParams.TARGET_TAG, keywords.getTarget());
+			assertEquals(true, keywords.isAny());
 		}
 		{
 			final String words = "title: title";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_TITLE);
-			assertTrue(keywords.isAny() == false);
+			assertEquals(SearchParams.TARGET_TITLE, keywords.getTarget());
+			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = "anyintitle:title* ?title?  ";
+			final String words = "anyintitle:title \"title:\"  ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_TITLE);
-			assertTrue(keywords.isAny() == true);
+			assertEquals(SearchParams.TARGET_TITLE, keywords.getTarget());
+			assertEquals(true, keywords.isAny());
 		}
 		{
 			final String words = "text: ...";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getWords().size() == 1);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_TEXT);
-			assertTrue(keywords.isAny() == false);
+			assertEquals(1, keywords.getWords().size());
+			assertEquals(SearchParams.TARGET_TEXT, keywords.getTarget());
+			assertEquals(false, keywords.isAny());
 		}
 		{
 			final String words = "anyintext: . ! ?  ' \" ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getWords().size() == 5);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_TEXT);
-			assertTrue(keywords.isAny() == true);
+			assertEquals(5, keywords.getWords().size());
+			assertEquals(SearchParams.TARGET_TEXT, keywords.getTarget());
+			assertEquals(true, keywords.isAny());
 		}
 		{
-			final String words = "url:https*";
+			final String words = "url:.com";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_URL);
-			assertTrue(keywords.isAny() == false);
+			assertEquals(SearchParams.TARGET_URL, keywords.getTarget());
+			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = "anyinurl: *.com *.org ";
+			final String words = "anyinurl: .com .org ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertTrue(keywords.getTarget() == SearchParams.TARGET_URL);
-			assertTrue(keywords.isAny() == true);
+			assertEquals(SearchParams.TARGET_URL, keywords.getTarget());
+			assertEquals(true, keywords.isAny());
 		}
 	}
 	
@@ -238,34 +238,34 @@ public class DomainSearchParamsTest {
 		{
 			final String searchPhrase = "";
 			final SearchParams sp = new SearchParams(searchPhrase);
-			assertTrue(sp.getKeywords().isEmpty());
+			assertEquals(0, sp.getKeywords().size());
 		}
 		{
 			final String searchPhrase = ":";
 			final SearchParams sp = new SearchParams(searchPhrase);
-			assertTrue(sp.getKeywords().isEmpty());
+			assertEquals(0, sp.getKeywords().size());
 		}
 		{
 			final String searchPhrase = "anyintitle:";
 			final SearchParams sp = new SearchParams(searchPhrase);
-			assertTrue(sp.getKeywords().isEmpty());
+			assertEquals(0, sp.getKeywords().size());
 		}
 		{
-			// [NOTE] any directive inside single quotes should be ignored
-			final String searchPhrase = "anyintitle:*title 'any:' url:ftp";
+			// [NOTE] any directive inside double quotes should be ignored
+			final String searchPhrase = "anyintitle:title \"any:\" url:.org";
 			final SearchParams sp = new SearchParams(searchPhrase);
-			assertTrue(sp.getKeywords().size() == 2);
+			assertEquals(2, sp.getKeywords().size());
 		}
 		
 		{
-			final String searchPhrase = "word* phrase/w anyintag: tag0";
+			final String searchPhrase = "word phrase/w anyintag: tag0";
 			final SearchParams sp = new SearchParams(searchPhrase);
-			assertTrue(sp.getKeywords().size() == 2);
+			assertEquals(2, sp.getKeywords().size());
 		}
 		{
-			final String searchPhrase = "text:word* phrase/w anyintag: ?TAG?/c any:''";
+			final String searchPhrase = "text:word phrase/w anyintag:TAG any:";
 			final SearchParams sp = new SearchParams(searchPhrase);
-			assertTrue(sp.getKeywords().size() == 2);
+			assertEquals(2, sp.getKeywords().size());
 		}
 	}
 	

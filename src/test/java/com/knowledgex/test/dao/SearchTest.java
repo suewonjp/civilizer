@@ -103,7 +103,7 @@ public class SearchTest extends DaoTest {
     @Test
     public void testMethod_SearchQueryCreator_newPattern() {
       {
-          final String word = "'my keyword'";
+          final String word = "\"my keyword\"";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word);
           assertEquals(kw.isWholeWord(), false);
           assertEquals(kw.isAsIs(), true);
@@ -186,7 +186,7 @@ public class SearchTest extends DaoTest {
 			assertTrue(results.contains(fragments[8]));
 		}
     	{
-    		final String searchPhrase = "title:.*() ";
+    		final String searchPhrase = "title:. () ";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
     		final Criteria crit = SearchQueryCreator.newQuery(sp, session);
