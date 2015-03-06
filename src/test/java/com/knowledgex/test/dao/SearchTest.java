@@ -106,7 +106,6 @@ public class SearchTest extends DaoTest {
           final String word = "\"my keyword\"";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word);
           assertEquals(false, kw.isWholeWord());
-          assertEquals(true, kw.isAsIs());
           assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.newPattern(kw);
           assertEquals(pattern, "%my keyword%");
@@ -115,7 +114,6 @@ public class SearchTest extends DaoTest {
           final String word = "hello/w";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word);
           assertEquals(true, kw.isWholeWord());
-          assertEquals(false, kw.isAsIs());
           assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.newPattern(kw);
           assertEquals(pattern, "hello");
@@ -124,7 +122,6 @@ public class SearchTest extends DaoTest {
           final String word = "hELLo";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word);
           assertEquals(false, kw.isWholeWord());
-          assertEquals(false, kw.isAsIs());
           assertEquals(false, kw.isCaseSensitive());
           assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.newPattern(kw);

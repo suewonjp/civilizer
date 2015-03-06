@@ -55,7 +55,6 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.getWord(), "Hello World/c");
     		assertEquals(kw.isCaseSensitive(), false);
     		assertEquals(kw.isWholeWord(), false);
-    		assertEquals(kw.isAsIs(), true);
     		assertEquals(kw.isValid(), true);
     	}
     	{
@@ -64,7 +63,6 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.getWord(), "hello");
     		assertEquals(kw.isCaseSensitive(), true);
     		assertEquals(kw.isWholeWord(), false);
-    		assertEquals(kw.isAsIs(), false);
     		assertEquals(kw.isValid(), true);
     	}
     	{
@@ -73,7 +71,6 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.getWord(), "Hello World");
     		assertEquals(kw.isCaseSensitive(), true);
     		assertEquals(kw.isWholeWord(), false);
-    		assertEquals(kw.isAsIs(), true);
     		assertEquals(kw.isValid(), true);
     	}
     	{
@@ -82,7 +79,6 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.getWord(), "hello");
     		assertEquals(kw.isCaseSensitive(), false);
     		assertEquals(kw.isWholeWord(), true);
-    		assertEquals(kw.isAsIs(), false);
     		assertEquals(kw.isValid(), true);
     	}
     	{
@@ -92,7 +88,6 @@ public class DomainSearchParamsTest {
     		assertEquals(kw.getWord(), "hello");
     		assertEquals(kw.isCaseSensitive(), true);
     		assertEquals(kw.isWholeWord(), true);
-    		assertEquals(kw.isAsIs(), false);
     		assertEquals(kw.isValid(), true);
     	}
 	}

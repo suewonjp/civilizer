@@ -32,13 +32,11 @@ public final class SearchParams {
 		private final String word;
 		private final boolean caseSensitive;
 		private final boolean wholeWord;
-		private final boolean asIs;
 		
 		public Keyword(String src) {
 			String word = src.trim();
 			boolean caseSensitive = false;
 			boolean wholeWord = false;
-			boolean asIs = false;
 			
 			final Pattern p = Pattern.compile("(.*)/([cw]+)$");
 			final Matcher m = p.matcher(src);
@@ -57,8 +55,8 @@ public final class SearchParams {
 			}
 			
 			if (word.startsWith("\"") && word.endsWith("\"")) {
-				// [RULE] '...' => as-is mode;
-				asIs = true;
+				// [RULE] "..." treats phrases containing spaces as a single unit
+			    // Also any flag or directive inside the quotes will be treated as normal trivial characters
 				if (word.length() > 1) {
 					word = word.substring(1, word.length() - 1);
 				}
@@ -67,13 +65,12 @@ public final class SearchParams {
 			this.word = word;
 			this.caseSensitive = caseSensitive;
 			this.wholeWord = wholeWord;
-			this.asIs = asIs;
 		}
 		
 		public static Pair<String, Character> escapeSqlWildcardCharacters(String word) {
-			// Escape SQL wildcards. ( '_' and '%')
-			// If user provided words contain these characters, that means they are not intended on wildcards.
-			// So escaping them is necessary before SQL treats them as wildcards
+			// Escape SQL wild cards used in pattern matching for 'where ... like ...' clause. ( '_' and '%')
+			// When user provided words contain these characters, they are just trivial, non significant characters.
+			// So escaping them is necessary before SQL treats them as wild cards
 			
 			final boolean hasUnderscore = (word.indexOf('_') != -1);
 			final boolean hasPercent = (word.indexOf('%') != -1);
@@ -119,10 +116,6 @@ public final class SearchParams {
 
 		public boolean isWholeWord() {
 			return wholeWord;
-		}
-
-		public boolean isAsIs() {
-			return asIs;
 		}
 	}
 	
