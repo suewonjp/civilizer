@@ -120,49 +120,57 @@ public class SearchTest extends DaoTest {
       }
     }
     
+    protected Pair<Fragment[], Tag[]> createTestData() {
+        final Tag[] tags = {
+                newTag("my tag"),
+                newTag("your tag :-)"),
+        };
+        
+        for (Tag tag : tags) {
+            tagDao.save(tag);
+        }
+        
+        final Fragment[] fragments = {
+                /*0*/newFragment(".text()", "replaces the text inside a selection"),
+                /*1*/newFragment(".html()", "works like .text() but lets you insert html instead of just text"),
+                /*2*/newFragment(".append()", "lets you insert the specified content as the last child of an element"),
+                /*3*/newFragment(".prepend()", "lets you insert the specified content as the first child of an element"),
+                /*4*/newFragment(".before()", "adds content before the selection"),
+                /*5*/newFragment(".after()", "works just like .before(), except that the content is added after the selection (after its closing tag)."),
+                /*6*/newFragment(".replaceWith()", "completely replaces the selection (including the tag and everything inside it) with whatever you pass"),
+                /*7*/newFragment(".remove()", "removes the selection from the DOM;"),
+                /*8*/newFragment(".wrap()", "wraps each element in a selection in a pair of HTML tags."),
+                /*9*/newFragment(".wrapInner()", "wraps the contents of each element in a selection in HTML tags."),
+               /*10*/newFragment(".unwrap()", "simply removes the parent tag surrounding the selection."),
+               /*11*/newFragment(".empty()", "removes all of the contents of a selection, but leaves the selection in place"),
+        };
+        
+        for (Fragment fragment : fragments) {
+            final int n = TestUtil.getRandom().nextInt(3);
+            
+            if (n == 0) {
+                fragment.addTag(tags[0]);
+            }
+            else if (n == 1) {
+                fragment.addTag(tags[1]);
+            }
+            else {
+                fragment.addTag(tags[0]);
+                fragment.addTag(tags[1]);
+            }
+            
+            fragmentDao.save(fragment);
+        }
+        
+        return new Pair<Fragment[], Tag[]>(fragments, tags);
+    }
+    
     @Test
     @SuppressWarnings("unchecked")
-    public void testSearch() {
-    	final Tag[] tags = {
-    			newTag("my tag"),
-    			newTag("your tag :-)"),
-    	};
-    	
-    	for (Tag tag : tags) {
-			tagDao.save(tag);
-		}
-    	
-    	final Fragment[] fragments = {
-    			/*0*/newFragment(".text()", "replaces the text inside a selection"),
-    			/*1*/newFragment(".html()", "works like .text() but lets you insert html instead of just text"),
-    			/*2*/newFragment(".append()", "lets you insert the specified content as the last child of an element"),
-    			/*3*/newFragment(".prepend()", "lets you insert the specified content as the first child of an element"),
-    			/*4*/newFragment(".before()", "adds content before the selection"),
-    			/*5*/newFragment(".after()", "works just like .before(), except that the content is added after the selection (after its closing tag)."),
-    			/*6*/newFragment(".replaceWith()", "completely replaces the selection (including the tag and everything inside it) with whatever you pass"),
-    			/*7*/newFragment(".remove()", "removes the selection from the DOM;"),
-    			/*8*/newFragment(".wrap()", "wraps each element in a selection in a pair of HTML tags."),
-    			/*9*/newFragment(".wrapInner()", "wraps the contents of each element in a selection in HTML tags."),
-    		   /*10*/newFragment(".unwrap()", "simply removes the parent tag surrounding the selection."),
-    		   /*11*/newFragment(".empty()", "removes all of the contents of a selection, but leaves the selection in place"),
-    	};
-    	
-    	for (Fragment fragment : fragments) {
-    		final int n = TestUtil.getRandom().nextInt(3);
-    		
-    		if (n == 0) {
-    			fragment.addTag(tags[0]);
-    		}
-    		else if (n == 1) {
-    			fragment.addTag(tags[1]);
-    		}
-    		else {
-    			fragment.addTag(tags[0]);
-    			fragment.addTag(tags[1]);
-    		}
-    		
-			fragmentDao.save(fragment);
-		}
+    public void testBasicSearch() {
+        final Pair<Fragment[], Tag[]> pair = createTestData();
+        final Fragment[] fragments = pair.getFirst();
+//        final Tag[] tags = pair.getSecond();
     	
     	{
 			final String searchPhrase = "title:.wrap() ";

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.Restrictions;
 
@@ -15,8 +14,6 @@ import com.knowledgex.domain.SearchParams.Keyword;
 
 public final class SearchQueryCreator {
 	
-	public static final String WORD_BOUNDARY = "[^a-zA-Z0-9_]";
-    
     public static String getPatternFromKeyword(SearchParams.Keyword keyword) {
         String word = keyword.getWord();
 
@@ -28,7 +25,6 @@ public final class SearchQueryCreator {
 
         return word;
     }
-    
     
     private static Junction buildQueryWithKeywords(List<Keyword> words, int target, boolean any) {
     	final String[] targetColumns = {
