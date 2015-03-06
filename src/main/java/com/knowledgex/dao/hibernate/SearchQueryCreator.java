@@ -52,7 +52,10 @@ public final class SearchQueryCreator {
                 }
             }
 			else {
-			    if (w.isWholeWord()) {
+				if (w.isRegex()) {
+					sql = column + " regexp " + "'" + pattern + "'";
+				}
+				else if (w.isWholeWord()) {
 			        if (w.isCaseSensitive()) {
 			            sql = column + " regexp " + "'\\b" + pattern + "\\b'";
 			        }

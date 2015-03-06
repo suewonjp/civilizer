@@ -37,7 +37,7 @@ public final class SearchParams {
 			boolean wholeWord = false;
 			boolean regex = false;
 			
-			final Pattern p = Pattern.compile("(.*)/([cw]+)$");
+			final Pattern p = Pattern.compile("(.*)/([cwr]+)$");
 			final Matcher m = p.matcher(src);
 			
 			if (m.find()) {
@@ -50,6 +50,10 @@ public final class SearchParams {
 				if (suffix.indexOf('w') != -1) {
 					// [RULE] .../w => whole word
 					wholeWord = true;
+				}
+				if (suffix.indexOf('r') != -1) {
+					// [RULE] .../r => regular expression
+					regex = true;
 				}
 			}
 			

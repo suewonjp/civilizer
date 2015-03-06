@@ -284,4 +284,44 @@ public class SearchTest extends DaoTest {
     	}
     }
     
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testRegexSearch() {
+    	final Pair<Fragment[], Tag[]> pair = createTestData();
+        final Fragment[] fragments = pair.getFirst();
+    	
+    	{
+			final String searchPhrase = "title:\\.\\w+()/r ";
+			final SearchParams sp = new SearchParams(searchPhrase);
+			assertEquals(1, sp.getKeywords().size());
+			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+			assertNotNull(crit);
+			final List<Fragment> results = crit.list();
+			assertEquals(fragments.length, results.size());
+		}
+    	{
+    		final String searchPhrase = "text:\\(.*\\)/r ";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+    		assertNotNull(crit);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(3, results.size());
+    		assertTrue(results.contains(fragments[1]));
+    		assertTrue(results.contains(fragments[5]));
+    		assertTrue(results.contains(fragments[6]));
+    	}
+    	{
+    		final String searchPhrase = "title:[a-z]+[A-Z]+/r ";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+    		assertNotNull(crit);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(2, results.size());
+    		assertTrue(results.contains(fragments[6]));
+    		assertTrue(results.contains(fragments[9]));
+    	}
+    }
+    
 }
