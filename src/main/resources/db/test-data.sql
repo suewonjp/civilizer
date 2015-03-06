@@ -147,7 +147,7 @@ Use the `printf()` function.
     End a line with two or more spaces:
 '), TIMESTAMP '2014-11-03 19:12:44.752', TIMESTAMP '2014-11-03 19:12:44.752')
 ,(16, 'Trashed 2', STRINGDECODE('    This is another trashed fragment...'), TIMESTAMP '2014-11-03 19:12:44.752', TIMESTAMP '2015-02-06 12:32:00.000')
-,(17, ' Contexts and Dependency Injection (CDI)', STRINGDECODE('
+,(17, 'Contexts and Dependency Injection (CDI)', STRINGDECODE('
 One of the most important features in Java EE is **Contexts and Dependency Injection (CDI)**. CDI helps bind the web tier and the business logic or transactional tier of the Java EE platform together.  
 CDI is architected from two methodologies: contexts and dependency injection.
 \r\n
