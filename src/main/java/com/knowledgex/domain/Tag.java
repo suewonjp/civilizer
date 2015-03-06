@@ -28,8 +28,14 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 public final class Tag implements Serializable {
 	
 	public static final String TAG_NAME_DELIMITER = ",";
-	public static final long TRASH_TAG_ID = 0L;
-	public static final long BOOKMARK_TAG_ID = -1L;
+
+	public static final String[] SPECIAL_TAG_NAMES = {
+		"#trash",
+		"#bookmark",
+	};
+	
+	public static final int TRASH_TAG_ID = 0;
+	public static final int BOOKMARK_TAG_ID = -1;
 
     private Long id;
     private String tagName;
@@ -257,6 +263,15 @@ public final class Tag implements Serializable {
     		}
     	}
     	
+    	return false;
+    }
+    
+    public static boolean isSpecialTag(String name) {
+    	for (String n : SPECIAL_TAG_NAMES) {
+			if (n.equals(name)) {
+				return true;
+			}
+		}
     	return false;
     }
     

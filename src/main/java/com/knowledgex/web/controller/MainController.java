@@ -43,16 +43,32 @@ public final class MainController {
 	
 	private Tag trashcanTag = null;
 
+	private Tag bookmarkTag = null;
+
 	private Tag getTrashcanTag() {
 		if (trashcanTag != null) {
 			return trashcanTag;
 		}
-		trashcanTag = tagDao.findById(Tag.TRASH_TAG_ID);
+		trashcanTag = tagDao.findById((long) Tag.TRASH_TAG_ID);
 		return trashcanTag;
 	}
 
 	private Tag getBookmarkTag() {
-		return tagDao.findById(Tag.BOOKMARK_TAG_ID, true, false);
+		if (bookmarkTag != null) {
+			return bookmarkTag;
+		}
+		bookmarkTag = tagDao.findById((long) Tag.BOOKMARK_TAG_ID);
+		return bookmarkTag;
+	}
+	
+	private Tag getSpecialTag(String name) {
+		if (name.equals(Tag.SPECIAL_TAG_NAMES[Tag.TRASH_TAG_ID])) {
+			return getTrashcanTag();
+		}
+		else if (name.equals(Tag.SPECIAL_TAG_NAMES[-Tag.BOOKMARK_TAG_ID])) {
+			return getBookmarkTag();
+		}
+		return null;
 	}
 	
 	public List<FragmentListBean> newFragmentListBeans() {
@@ -181,7 +197,8 @@ public final class MainController {
 		final Tag tag = getBookmarkTag();
 		tagBean.setTag(tag);
 		
-		final Set<Fragment> fragments = tag.getFragments();
+		final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), false);
+//		final Set<Fragment> fragments = tag.getFragments();
 		final List<FragmentBean> fbs = new ArrayList<FragmentBean>();
 		for (Fragment fragment : fragments) {
 			final FragmentBean fb = new FragmentBean();
@@ -312,7 +329,8 @@ public final class MainController {
 		final Collection<String> names = Tag.getTagNameCollectionFrom(tagNames);
 		final Set<Tag> output = new HashSet<Tag>();
 		for (String name : names) {
-			Tag t = Tag.getTagFromName(name, existingTags);
+			Tag t = Tag.isSpecialTag(name) ?
+					getSpecialTag(name) : Tag.getTagFromName(name, existingTags);
 			
 			boolean weHaveNewTag = false;
 			if (t == null) {
