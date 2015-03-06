@@ -29,6 +29,8 @@ public final class SearchParams {
 		private final String word;
 		private final boolean caseSensitive;
 		private final boolean wholeWord;
+		private final boolean beginningWith;
+		private final boolean endingWith;
 		private final boolean regex;
 		private final boolean inverse;
 		
@@ -36,10 +38,12 @@ public final class SearchParams {
 			String word = src.trim();
 			boolean caseSensitive = false;
 			boolean wholeWord = false;
+			boolean beginningWith = false;
+			boolean endingWith = false;
 			boolean regex = false;
 			boolean inverse = false;
 			
-			final Pattern p = Pattern.compile("(.*)/([cwr-]+)$");
+			final Pattern p = Pattern.compile("(.*)/([cwber-]+)$");
 			final Matcher m = p.matcher(src);
 			
 			if (m.find()) {
@@ -52,6 +56,14 @@ public final class SearchParams {
 				if (suffix.indexOf('w') != -1) {
 					// [RULE] .../w => whole word
 					wholeWord = true;
+				}
+				if (suffix.indexOf('b') != -1) {
+					// [RULE] .../b => beginning with
+					beginningWith = true;
+				}
+				if (suffix.indexOf('e') != -1) {
+					// [RULE] .../e => ending with
+					endingWith = true;
 				}
 				if (suffix.indexOf('r') != -1) {
 					// [RULE] .../r => regular expression
@@ -71,9 +83,15 @@ public final class SearchParams {
 				}
 			}
 			
+			if (beginningWith && endingWith) {
+				wholeWord = true;
+			}
+			
 			this.word = word;
 			this.caseSensitive = caseSensitive;
 			this.wholeWord = wholeWord;
+			this.beginningWith = beginningWith;
+			this.endingWith = endingWith;
 			this.regex = regex;
 			this.inverse = inverse;
 		}
@@ -118,7 +136,7 @@ public final class SearchParams {
 		}
 
 		public boolean isTrivial() {
-            return !regex && !wholeWord;
+            return !regex && !wholeWord && !beginningWith && !endingWith;
         }
 		
 		public String getWord() {
@@ -133,10 +151,18 @@ public final class SearchParams {
 			return wholeWord;
 		}
 
-        public boolean isRegex() {
-            return regex;
-        }
-        
+		public boolean isBeginningWith() {
+			return beginningWith;
+		}
+
+		public boolean isEndingWith() {
+			return endingWith;
+		}
+		
+		public boolean isRegex() {
+			return regex;
+		}
+		
 		public boolean isInverse() {
 			return inverse;
 		}

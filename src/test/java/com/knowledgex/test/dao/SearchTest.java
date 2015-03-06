@@ -233,14 +233,6 @@ public class SearchTest extends DaoTest {
     		assertTrue(results.contains(fragments[6]));
     	}
     	{
-    		final String searchPhrase = ":replace/w";
-    		final SearchParams sp = new SearchParams(searchPhrase);
-    		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
-    		assertEquals(0, results.size());
-    	}
-    	{
     		final String searchPhrase = ": text html";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
@@ -282,6 +274,64 @@ public class SearchTest extends DaoTest {
     		assertTrue(results.contains(fragments[2]));
     		assertTrue(results.contains(fragments[3]));
     	}
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testWordBoundarySearch() {
+    	final Pair<Fragment[], Tag[]> pair = createTestData();
+        final Fragment[] fragments = pair.getFirst();
+        
+        {
+    		final String searchPhrase = ":replace/w";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(0, results.size());
+    	}
+        {
+        	final String searchPhrase = ":wrap/w ";
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	assertEquals(1, sp.getKeywords().size());
+        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+        	final List<Fragment> results = crit.list();
+        	assertEquals(1, results.size());
+        	assertTrue(results.contains(fragments[8]));
+        }
+        {
+        	final String searchPhrase = ":wrap/b ";
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	assertEquals(1, sp.getKeywords().size());
+        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+        	final List<Fragment> results = crit.list();
+        	assertEquals(2, results.size());
+        	assertTrue(results.contains(fragments[8]));
+        	assertTrue(results.contains(fragments[9]));
+        }
+        {
+        	final String searchPhrase = ":wrap/e ";
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	assertEquals(1, sp.getKeywords().size());
+        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+        	final List<Fragment> results = crit.list();
+        	assertEquals(2, results.size());
+        	assertTrue(results.contains(fragments[8]));
+        	assertTrue(results.contains(fragments[10]));
+        }
+        {
+        	final String searchPhrase = "tag/b ";
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	assertEquals(1, sp.getKeywords().size());
+        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+        	final List<Fragment> results = crit.list();
+        	assertEquals(5, results.size());
+        	assertTrue(results.contains(fragments[5]));
+        	assertTrue(results.contains(fragments[6]));
+        	assertTrue(results.contains(fragments[8]));
+        	assertTrue(results.contains(fragments[9]));
+        	assertTrue(results.contains(fragments[10]));
+        }
     }
     
     @Test

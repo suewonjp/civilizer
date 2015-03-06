@@ -63,13 +63,24 @@ public final class SearchQueryCreator {
 			            sql = "lower(" + column + ") regexp " + "'\\b" + pattern.toLowerCase() + "\\b'";
 			        }
 			    }
+				else if (w.isBeginningWith()) {
+					if (w.isCaseSensitive()) {
+						sql = column + " regexp " + "'\\b" + pattern + "'";
+					}
+					else {
+						sql = "lower(" + column + ") regexp " + "'\\b" + pattern.toLowerCase() + "'";
+					}
+				}
+				else if (w.isEndingWith()) {
+					if (w.isCaseSensitive()) {
+						sql = column + " regexp " + "'" + pattern + "\\b'";
+					}
+					else {
+						sql = "lower(" + column + ") regexp " + "'" + pattern.toLowerCase() + "\\b'";
+					}
+				}
 			    else {
-			        if (w.isCaseSensitive()) {
-                        sql = column + " regexp " + "'" + pattern + "'";
-                    }
-                    else {
-                        sql = "lower(" + column + ") regexp " + "'" + pattern.toLowerCase() + "'";
-                    }
+			        throw new UnsupportedOperationException();
 			    }
 			}
 			
