@@ -324,4 +324,48 @@ public class SearchTest extends DaoTest {
     	}
     }
     
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testInverseSearch() {
+    	final Pair<Fragment[], Tag[]> pair = createTestData();
+        final Fragment[] fragments = pair.getFirst();
+    	
+    	{
+			final String searchPhrase = "text:selection/w-";
+			final SearchParams sp = new SearchParams(searchPhrase);
+			assertEquals(1, sp.getKeywords().size());
+			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+			assertNotNull(crit);
+			final List<Fragment> results = crit.list();
+			assertEquals(3, results.size());
+			assertTrue(results.contains(fragments[1]));
+    		assertTrue(results.contains(fragments[2]));
+    		assertTrue(results.contains(fragments[3]));
+		}
+    	{
+    		final String searchPhrase = "title:wrap un/-";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+    		assertNotNull(crit);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(2, results.size());
+    		assertTrue(results.contains(fragments[8]));
+    		assertTrue(results.contains(fragments[9]));
+    	}
+    	{
+    		final String searchPhrase = "text:content contents/w-";
+    		final SearchParams sp = new SearchParams(searchPhrase);
+    		assertEquals(1, sp.getKeywords().size());
+    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+    		assertNotNull(crit);
+    		final List<Fragment> results = crit.list();
+    		assertEquals(4, results.size());
+    		assertTrue(results.contains(fragments[2]));
+    		assertTrue(results.contains(fragments[3]));
+    		assertTrue(results.contains(fragments[4]));
+    		assertTrue(results.contains(fragments[5]));
+    	}
+    }
+    
 }

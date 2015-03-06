@@ -73,6 +73,10 @@ public final class SearchQueryCreator {
 			    }
 			}
 			
+			if (w.isInverse()) {
+				sql = "not " + sql;
+			}
+			
 			// [TODO] research compatibility issues with other DBMS vendors
 			junction.add(Restrictions.sqlRestriction(sql));
 		}

@@ -30,14 +30,16 @@ public final class SearchParams {
 		private final boolean caseSensitive;
 		private final boolean wholeWord;
 		private final boolean regex;
+		private final boolean inverse;
 		
 		public Keyword(String src) {
 			String word = src.trim();
 			boolean caseSensitive = false;
 			boolean wholeWord = false;
 			boolean regex = false;
+			boolean inverse = false;
 			
-			final Pattern p = Pattern.compile("(.*)/([cwr]+)$");
+			final Pattern p = Pattern.compile("(.*)/([cwr-]+)$");
 			final Matcher m = p.matcher(src);
 			
 			if (m.find()) {
@@ -55,6 +57,10 @@ public final class SearchParams {
 					// [RULE] .../r => regular expression
 					regex = true;
 				}
+				if (suffix.indexOf('-') != -1) {
+					// [RULE] .../- => inverse; the query returns data not matching the pattern.
+					inverse = true;
+				}
 			}
 			
 			if (word.startsWith("\"") && word.endsWith("\"")) {
@@ -69,6 +75,7 @@ public final class SearchParams {
 			this.caseSensitive = caseSensitive;
 			this.wholeWord = wholeWord;
 			this.regex = regex;
+			this.inverse = inverse;
 		}
 		
 		public static Pair<String, Character> escapeSqlWildcardCharacters(String word) {
@@ -110,6 +117,10 @@ public final class SearchParams {
 			return checkValidity(word);
 		}
 
+		public boolean isTrivial() {
+            return !regex && !wholeWord;
+        }
+		
 		public String getWord() {
 			return word;
 		}
@@ -126,9 +137,9 @@ public final class SearchParams {
             return regex;
         }
         
-        public boolean isTrivial() {
-            return !regex && !wholeWord;
-        }
+		public boolean isInverse() {
+			return inverse;
+		}
 	}
 	
 	private static final class TargetDirective {
