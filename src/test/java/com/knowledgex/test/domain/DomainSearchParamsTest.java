@@ -188,7 +188,7 @@ public class DomainSearchParamsTest {
 			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = "anyintag:tag0 tag2";
+			final String words = "anytag:tag0 tag2";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(SearchParams.TARGET_TAG, keywords.getTarget());
 			assertEquals(true, keywords.isAny());
@@ -200,7 +200,7 @@ public class DomainSearchParamsTest {
 			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = "anyintitle:title \"title:\"  ";
+			final String words = "anytitle:title \"title:\"  ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(SearchParams.TARGET_TITLE, keywords.getTarget());
 			assertEquals(true, keywords.isAny());
@@ -213,7 +213,7 @@ public class DomainSearchParamsTest {
 			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = "anyintext: . ! ?  ' \" ";
+			final String words = "anytext: . ! ?  ' \" ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(5, keywords.getWords().size());
 			assertEquals(SearchParams.TARGET_TEXT, keywords.getTarget());
@@ -226,7 +226,7 @@ public class DomainSearchParamsTest {
 			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = "anyinurl: .com .org ";
+			final String words = "anyurl: .com .org ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(SearchParams.TARGET_URL, keywords.getTarget());
 			assertEquals(true, keywords.isAny());
@@ -246,24 +246,24 @@ public class DomainSearchParamsTest {
 			assertEquals(0, sp.getKeywords().size());
 		}
 		{
-			final String searchPhrase = "anyintitle:";
+			final String searchPhrase = "anytitle:";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(0, sp.getKeywords().size());
 		}
 		{
 			// [NOTE] any directive inside double quotes should be ignored
-			final String searchPhrase = "anyintitle:title \"any:\" url:.org";
+			final String searchPhrase = "anytitle:title \"any:\" url:.org";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(2, sp.getKeywords().size());
 		}
 		
 		{
-			final String searchPhrase = "word phrase/w anyintag: tag0";
+			final String searchPhrase = "word phrase/w anytag: tag0";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(2, sp.getKeywords().size());
 		}
 		{
-			final String searchPhrase = "text:word phrase/w anyintag:TAG any:";
+			final String searchPhrase = "text:word phrase/w anytag:TAG any:";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(2, sp.getKeywords().size());
 		}

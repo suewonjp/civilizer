@@ -14,19 +14,19 @@ public final class SearchParams {
 	
 	private static final TargetDirective[] DIRECTIVES = {
         new TargetDirective("tag:", TARGET_TAG, false), 
-        new TargetDirective("anyintag:", TARGET_TAG, true),
+        new TargetDirective("anytag:", TARGET_TAG, true),
         new TargetDirective("title:", TARGET_TITLE, false), 
-        new TargetDirective("anyintitle:", TARGET_TITLE, true),
+        new TargetDirective("anytitle:", TARGET_TITLE, true),
         new TargetDirective("text:", TARGET_TEXT, false),   
-        new TargetDirective("anyintext:", TARGET_TEXT, true),
+        new TargetDirective("anytext:", TARGET_TEXT, true),
         new TargetDirective(":", TARGET_ALL, false),    
         new TargetDirective("any:", TARGET_ALL, true),
         new TargetDirective("url:", TARGET_URL, false),    
-        new TargetDirective("anyinurl:", TARGET_URL, true),
+        new TargetDirective("anyurl:", TARGET_URL, true),
     };
 	
 	private static final String TARGET_DIRECTIVE_PATTERN =
-	        "(\\b(any|tag|anyintag|title|anyintitle|text|anyintext|url|anyinurl)\\b)?:";
+	        "(\\b(any|tag|anytag|title|anytitle|text|anytext|url|anyurl)\\b)?:";
 	
 	public static final class Keyword {
 		private final String word;

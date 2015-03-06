@@ -105,30 +105,40 @@ public class SearchTest extends DaoTest {
       {
           final String word = "\"my keyword\"";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-          assertEquals(kw.isWholeWord(), false);
-          assertEquals(kw.isAsIs(), true);
-          assertEquals(kw.isValid(), true);
+          assertEquals(false, kw.isWholeWord());
+          assertEquals(true, kw.isAsIs());
+          assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.newPattern(kw);
           assertEquals(pattern, "%my keyword%");
       }
       {
           final String word = "hello/w";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-          assertEquals(kw.isWholeWord(), true);
-          assertEquals(kw.isAsIs(), false);
-          assertEquals(kw.isValid(), true);
+          assertEquals(true, kw.isWholeWord());
+          assertEquals(false, kw.isAsIs());
+          assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.newPattern(kw);
           assertEquals(pattern, "hello");
       }
       {
-          final String word = "?hello*world";
+          final String word = "hELLo";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word);
-          assertEquals(kw.isWholeWord(), false);
-          assertEquals(kw.isAsIs(), false);
-          assertEquals(kw.isValid(), true);
+          assertEquals(false, kw.isWholeWord());
+          assertEquals(false, kw.isAsIs());
+          assertEquals(false, kw.isCaseSensitive());
+          assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.newPattern(kw);
-          assertEquals(pattern, "%" + SearchQueryCreator.WORD_CHARACTER + "hello%world%");
+          assertEquals(pattern, "%hello%");
       }
+//      {
+//          final String word = "?hello*world";
+//          final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+//          assertEquals(kw.isWholeWord(), false);
+//          assertEquals(kw.isAsIs(), false);
+//          assertEquals(kw.isValid(), true);
+//          final String pattern = SearchQueryCreator.newPattern(kw);
+//          assertEquals(pattern, "%" + SearchQueryCreator.WORD_CHARACTER + "hello%world%");
+//      }
     }
     
     @Test
@@ -194,7 +204,7 @@ public class SearchTest extends DaoTest {
     		assertEquals(fragments.length, results.size());
     	}
     	{
-    		final String searchPhrase = "anyintitle:pend wrap ";
+    		final String searchPhrase = "anytitle:pend wrap ";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
     		final Criteria crit = SearchQueryCreator.newQuery(sp, session);

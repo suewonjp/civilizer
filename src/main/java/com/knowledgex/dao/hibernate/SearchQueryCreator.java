@@ -16,19 +16,23 @@ import com.knowledgex.domain.SearchParams.Keyword;
 public final class SearchQueryCreator {
 	
 	public static final String WORD_BOUNDARY = "[^a-zA-Z0-9_]";
-	public static final String WORD_CHARACTER = "[a-zA-Z0-9_]";
+//	public static final String WORD_CHARACTER = "[a-zA-Z0-9_]";
     
     public static String newPattern(SearchParams.Keyword keyword) {
         final Pair<String, Character> tmp =
                 SearchParams.Keyword.escapeSqlWildcardCharacters(keyword.getWord());
         String word = tmp.getFirst();
         
-        if (! keyword.isAsIs()) {
-            word = word.replace("?", WORD_CHARACTER).replace('*', '%');
-        }
+//        if (! keyword.isAsIs()) {
+//            word = word.replace("?", WORD_CHARACTER).replace('*', '%');
+//        }
         
         if (! keyword.isWholeWord()) {
             word = "%" + word + "%";
+        }
+        
+        if (! keyword.isCaseSensitive()) {
+            word = word.toLowerCase();
         }
         
         return word;
