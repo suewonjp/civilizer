@@ -15,7 +15,7 @@ import com.knowledgex.domain.SearchParams.Keyword;
 public final class SearchQueryCreator {
 	
     public static String getPatternFromKeyword(SearchParams.Keyword keyword) {
-        String word = keyword.getWord();
+        String word = keyword.getWord().replace("'", "''");
 
         if (keyword.isTrivial()) {
             final Pair<String, Character> tmp =
@@ -101,6 +101,7 @@ public final class SearchQueryCreator {
     	
     	if (params.hasTarget(SearchParams.TARGET_TAG)) {
     		tagCrit = output.createCriteria("tags");
+    		output.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
     	}
     	
     	Junction rootJunction = Restrictions.conjunction();
