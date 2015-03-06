@@ -187,18 +187,6 @@ public class DomainSearchParamsTest {
 			assertEquals(SearchParams.TARGET_TEXT, keywords.getTarget());
 			assertEquals(true, keywords.isAny());
 		}
-		{
-			final String words = "url:.com";
-			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertEquals(SearchParams.TARGET_URL, keywords.getTarget());
-			assertEquals(false, keywords.isAny());
-		}
-		{
-			final String words = "anyurl: .com .org ";
-			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertEquals(SearchParams.TARGET_URL, keywords.getTarget());
-			assertEquals(true, keywords.isAny());
-		}
 	}
 	
 	@Test
@@ -220,7 +208,7 @@ public class DomainSearchParamsTest {
 		}
 		{
 			// [NOTE] any directive inside double quotes should be ignored
-			final String searchPhrase = "anytitle:title \"any:\" url:.org";
+			final String searchPhrase = "anytitle:title \"any:\" text:\"good content\"";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(2, sp.getKeywords().size());
 		}

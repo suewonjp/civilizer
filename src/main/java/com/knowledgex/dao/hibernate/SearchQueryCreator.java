@@ -17,19 +17,19 @@ public final class SearchQueryCreator {
 	
 	public static final String WORD_BOUNDARY = "[^a-zA-Z0-9_]";
     
-    public static String newPattern(SearchParams.Keyword keyword) {
-        final Pair<String, Character> tmp =
-                SearchParams.Keyword.escapeSqlWildcardCharacters(keyword.getWord());
-        String word = tmp.getFirst();
+    public static String getPatternFromKeyword(SearchParams.Keyword keyword) {
+        String word = keyword.getWord();
         
-        if (! keyword.isWholeWord()) {
-            word = "%" + word + "%";
-        }
-        
-        if (! keyword.isCaseSensitive()) {
+        if (! keyword.isCaseSensitive() && ! keyword.isRegex()) {
             word = word.toLowerCase();
         }
-        
+
+        if (keyword.isTrivial()) {
+            final Pair<String, Character> tmp =
+                SearchParams.Keyword.escapeSqlWildcardCharacters(word);
+            word = "%" + tmp.getFirst() + "%";
+        }
+
         return word;
     }
     
@@ -48,41 +48,31 @@ public final class SearchQueryCreator {
     			Restrictions.disjunction() : Restrictions.conjunction();
     			
 		for (SearchParams.Keyword w : words) {
-			final String pattern = newPattern(w);
+			final String pattern = getPatternFromKeyword(w);
 			
-			if (w.isWholeWord()) {
-				final Disjunction disj = Restrictions.disjunction();
-				String p = null;
-				
-				p = "%" + WORD_BOUNDARY + pattern + WORD_BOUNDARY + "%";
-				disj.add(w.isCaseSensitive() ? 
-						Restrictions.like(column, p) : Restrictions.ilike(column, p));
-				p = pattern + WORD_BOUNDARY + "%";
-				disj.add(w.isCaseSensitive() ? 
-						Restrictions.like(column, p) : Restrictions.ilike(column, p));
-				p = "%" + WORD_BOUNDARY + pattern;
-				disj.add(w.isCaseSensitive() ? 
-						Restrictions.like(column, p) : Restrictions.ilike(column, p));
-				p =  pattern;
-				disj.add(w.isCaseSensitive() ? 
-						Restrictions.like(column, p) : Restrictions.ilike(column, p));
-				junction.add(disj);
-			}
-			else if (target == SearchParams.TARGET_URL) {
-				final Disjunction disj = Restrictions.disjunction();
-				String p = null;
-				
-				p = "%http://" + pattern + "%";
-				disj.add(w.isCaseSensitive() ? 
-						Restrictions.like(column, p) : Restrictions.ilike(column, p));
-				p = "%https://" + pattern + "%";
-				disj.add(w.isCaseSensitive() ? 
-						Restrictions.like(column, p) : Restrictions.ilike(column, p));
-				junction.add(disj);
-			}
+			if (w.isTrivial()) {
+                junction.add(w.isCaseSensitive() ?
+                        Restrictions.like(column, pattern) : Restrictions.ilike(column, pattern));
+            }
 			else {
-				junction.add(w.isCaseSensitive() ?
-						Restrictions.like(column, pattern) : Restrictions.ilike(column, pattern));
+			    if (w.isWholeWord()) {
+			        final Disjunction disj = Restrictions.disjunction();
+	                String p = null;
+	                
+	                p = "%" + WORD_BOUNDARY + pattern + WORD_BOUNDARY + "%";
+	                disj.add(w.isCaseSensitive() ? 
+	                        Restrictions.like(column, p) : Restrictions.ilike(column, p));
+	                p = pattern + WORD_BOUNDARY + "%";
+	                disj.add(w.isCaseSensitive() ? 
+	                        Restrictions.like(column, p) : Restrictions.ilike(column, p));
+	                p = "%" + WORD_BOUNDARY + pattern;
+	                disj.add(w.isCaseSensitive() ? 
+	                        Restrictions.like(column, p) : Restrictions.ilike(column, p));
+	                p =  pattern;
+	                disj.add(w.isCaseSensitive() ? 
+	                        Restrictions.like(column, p) : Restrictions.ilike(column, p));
+	                junction.add(disj);
+			    }
 			}
 		}
 		

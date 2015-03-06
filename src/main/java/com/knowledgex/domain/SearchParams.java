@@ -10,7 +10,6 @@ public final class SearchParams {
 	public static final int TARGET_TAG     = 1;
 	public static final int TARGET_TITLE   = 2;
 	public static final int TARGET_TEXT    = 3;
-	public static final int TARGET_URL     = 4;
 	
 	private static final TargetDirective[] DIRECTIVES = {
         new TargetDirective("tag:", TARGET_TAG, false), 
@@ -21,22 +20,22 @@ public final class SearchParams {
         new TargetDirective("anytext:", TARGET_TEXT, true),
         new TargetDirective(":", TARGET_ALL, false),    
         new TargetDirective("any:", TARGET_ALL, true),
-        new TargetDirective("url:", TARGET_URL, false),    
-        new TargetDirective("anyurl:", TARGET_URL, true),
     };
 	
 	private static final String TARGET_DIRECTIVE_PATTERN =
-	        "(\\b(any|tag|anytag|title|anytitle|text|anytext|url|anyurl)\\b)?:";
+	        "(\\b(any|tag|anytag|title|anytitle|text|anytext)\\b)?:";
 	
 	public static final class Keyword {
 		private final String word;
 		private final boolean caseSensitive;
 		private final boolean wholeWord;
+		private final boolean regex;
 		
 		public Keyword(String src) {
 			String word = src.trim();
 			boolean caseSensitive = false;
 			boolean wholeWord = false;
+			boolean regex = false;
 			
 			final Pattern p = Pattern.compile("(.*)/([cw]+)$");
 			final Matcher m = p.matcher(src);
@@ -65,6 +64,7 @@ public final class SearchParams {
 			this.word = word;
 			this.caseSensitive = caseSensitive;
 			this.wholeWord = wholeWord;
+			this.regex = regex;
 		}
 		
 		public static Pair<String, Character> escapeSqlWildcardCharacters(String word) {
@@ -117,6 +117,14 @@ public final class SearchParams {
 		public boolean isWholeWord() {
 			return wholeWord;
 		}
+
+        public boolean isRegex() {
+            return regex;
+        }
+        
+        public boolean isTrivial() {
+            return !regex && !wholeWord;
+        }
 	}
 	
 	private static final class TargetDirective {
