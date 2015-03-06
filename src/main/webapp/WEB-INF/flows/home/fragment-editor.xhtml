@@ -60,11 +60,6 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
 }
 
 function clearFragmentEditor() {
-//     var previewFrame = $("#fragment-content-editor ~ .markItUpPreviewFrame");
-//     if (previewFrame) {
-//         previewFrame.remove();
-//     }
-    
     var el = $("#fragment-editor-form\\:title-input");
     el.val(null);
     el.watermark("Title");
@@ -114,45 +109,7 @@ function previewFragment() {
     });
     
     $("#fragment-overlay-content").html(renderedHtml);
-    
-// 	var renderedHtml = $(parseMarkdown(srcContent));
-// 	var previewFrame = $("#fragment-preview-frame");
-// 	if (previewFrame.size()) {
-// 		// div for preview already exists
-// 		previewFrame.empty();
-// 	}
-// 	else {
-// 		// create a new div for preview
-//         previewFrame = $("<div id='fragment-preview-frame'>");
-//         $("#markItUpFragment-content-editor").after(previewFrame);
-// 	}
-//     previewFrame.append(renderedHtml);
 }
-
-// function prepareFragmentContent() {
-//     var $editor = $("#fragment-content-editor");
-//     var srcContent = $editor.val();
-//     $("#fragment-editor-form\\:content-placeholder").val(srcContent);
-//     return { editor:$editor, src:srcContent };
-// }
-
-// function previewFragment() {
-// 	var data = prepareFragmentContent();
-// 	var renderedHtml = $(parseMarkdown(data.src));
-// 	var $editor = data.editor;
-// 	var $next = $("#markItUpFragment-content-editor").next();
-// 	if ($next.attr("id") == "fragment-preview-frame") {
-// 		// div for preview already exists
-// 		$next.empty();
-// 		$next.append(renderedHtml);
-// 	}
-// 	else {
-// 		// create a new div for preview
-// 		$next = $("<div id='fragment-preview-frame' >");
-// 		$next.append(renderedHtml);
-// 		$editor.after($next);
-// 	}
-// }
 //]]>
 </script>
 
