@@ -40,11 +40,11 @@ H2 [Quickstart](http://www.h2database.com/html/quickstart.html "H2 Quickstart")
 '), TIMESTAMP '2014-11-03 19:08:24.763', TIMESTAMP '2014-11-03 19:08:24.763')
 
 ,(5, 'Headers : Setext-style', STRINGDECODE('
-        Header 1
-        ========
+    Header 1
+    ========
 
-        Header 2
-        --------
+    Header 2
+    --------
 * * *
 Header 1
 ========
@@ -87,19 +87,19 @@ H2 [Quickstart][id].\r\n\r\n
 '), TIMESTAMP '2014-11-03 19:08:24.763', TIMESTAMP '2014-11-03 19:08:24.763')
 
 ,(11, 'Headers : atx-style', STRINGDECODE('
-        (closing # is optional):
-        # Header 1 #
-        ## Header 2
+    (closing # is optional):
+    # Header 1 #
+    ## Header 2
 * * *
 # Header 1
 ## Header 2
 '), TIMESTAMP '2014-11-03 19:12:44.752', TIMESTAMP '2014-11-03 19:12:44.752')
 
 ,(12, 'Lists - unordered', STRINGDECODE('
-        Unordered, with paragraphs: ("*" or "+" or "-" can be used)
-        *   A list item.
-            With multiple paragraphs.
-        *   Bar
+    Unordered, with paragraphs: ("*" or "+" or "-" can be used)
+    *   A list item.  
+        With multiple paragraphs.
+    *   Bar
 * * *
 *   A list item.
     With multiple paragraphs.
@@ -107,15 +107,15 @@ H2 [Quickstart][id].\r\n\r\n
 '), TIMESTAMP '2014-11-03 19:12:44.752', TIMESTAMP '2014-11-03 19:12:44.752')
 
 ,(13, 'Lists - mixed & nested', STRINGDECODE('
-        You can nest them:
-        *   An unordered list item
-            * A nested unordered list item
-        *   Another list item
-            0.  The first nested ordered list item
-            0.  A second nested ordered list item
-                * A nested unordered list
-            0. This is the last nested ordered list item
-        *   The last unordered list item
+    You can nest them:
+    *   An unordered list item
+        * A nested unordered list item
+    *   Another list item
+        0.  The first nested ordered list item
+        0.  A second nested ordered list item
+            * A nested unordered list
+        0. This is the last nested ordered list item
+    *   The last unordered list item
 * * *
 *   An unordered list item
     * A nested unordered list item
