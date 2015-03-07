@@ -31,7 +31,7 @@ public class SigninController {
 //    private static final String USER_IS_NOT_AUTHENTICATED = "no";
     
 	@SuppressWarnings("unused")
-    private static final Logger logger = LoggerFactory.getLogger(SigninController.class);
+    private final Logger logger = LoggerFactory.getLogger(SigninController.class);
     
     public AuthenticationBean newAuthenticationBean() {
         return new AuthenticationBean();

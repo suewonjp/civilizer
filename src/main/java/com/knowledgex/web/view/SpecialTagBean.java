@@ -14,7 +14,7 @@ import com.knowledgex.domain.Tag;
 public class SpecialTagBean implements Serializable {
 	
 	@SuppressWarnings("unused")
-	private static final Logger logger = LoggerFactory.getLogger(SpecialTagBean.class);
+	private final Logger logger = LoggerFactory.getLogger(SpecialTagBean.class);
 	
 	private List<FragmentBean> fragmentBeans = Collections.emptyList();
 	

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class LocaleBean implements Serializable {
 	
 	@SuppressWarnings("unused")
-    private static final Logger logger = LoggerFactory.getLogger(LocaleBean.class);
+    private final Logger logger = LoggerFactory.getLogger(LocaleBean.class);
 
     private Locale locale;
 

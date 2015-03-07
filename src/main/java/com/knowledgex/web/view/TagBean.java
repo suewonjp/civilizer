@@ -11,7 +11,7 @@ import com.knowledgex.domain.Tag;
 public class TagBean implements Serializable {
 
     @SuppressWarnings("unused")
-	private static final Logger logger = LoggerFactory.getLogger(TagBean.class);
+	private final Logger logger = LoggerFactory.getLogger(TagBean.class);
     
     private Tag tag = null;
     

@@ -11,7 +11,7 @@ import com.knowledgex.domain.Fragment;
 public final class FragmentBean implements Serializable {
     
     @SuppressWarnings("unused")
-    private static final Logger logger = LoggerFactory.getLogger(FragmentBean.class);
+    private final Logger logger = LoggerFactory.getLogger(FragmentBean.class);
     
     private Fragment fragment;
     
