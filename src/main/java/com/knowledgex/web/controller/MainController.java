@@ -97,12 +97,11 @@ public final class MainController {
 //		final ParameterMap pm =  ec.getRequestParameterMap();
 //		final String locale = pm.get(REQUEST_PARAM_LOCALE);
 //		logger.info(locale);
-		final PanelContextBean[] pcbs = new PanelContextBean[MAX_FRAGMENT_PANELS];
-		if (pcb != null) {
-			pcbs[pcb.getPanelId()] = pcb;
-		}
+		
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
-			populateFragmentListBean(flbs.get(i), pcbs[i]);
+			final PanelContextBean pc = (pcb != null && pcb.getPanelId() == i) ?
+					pcb : null;
+			populateFragmentListBean(flbs.get(i), pc);
 		}
 	}
 
