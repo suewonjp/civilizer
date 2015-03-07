@@ -28,6 +28,9 @@ import com.knowledgex.web.view.*;
 @Component("mainController")
 public final class MainController {
 	
+	// [DEV]
+	private static final String DEVELOPMENT_MESSAGE_CLIENT_ID = "fragment-group-form:development-messages";
+	
 	private static final int    MAX_FRAGMENT_PANELS = 3;
 	private static final String REQUEST_PARAM_LOCALE = "locale";
     
@@ -41,6 +44,7 @@ public final class MainController {
 	@Autowired
 	private TagDao tagDao;
 	
+	// [TODO] refactor code to maintain special tags
 	private Tag trashcanTag = null;
 
 	private Tag bookmarkTag = null;
@@ -69,6 +73,11 @@ public final class MainController {
 			return getBookmarkTag();
 		}
 		return null;
+	}
+	
+	// [DEV]
+	public void yetToBeDeveloped() {
+		ViewUtil.addMessage(DEVELOPMENT_MESSAGE_CLIENT_ID, "Yet to be developed", "The feature is not ready for now", null);
 	}
 	
 	public List<FragmentListBean> newFragmentListBeans() {
@@ -353,7 +362,9 @@ public final class MainController {
 		Tag t = tb.getTag();
 		if (t.getId() == null) {
 			// a new tag
-			// [TODO] check name collision with the existing tags
+			// [TODO] handle exceptions occurred in the persistence layer.
+			// - e.g. tag name collision exception with the existing tags
+			// - and redirect the exception information to the view layer elegantly
 			saveTag(t);
 			ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
 			

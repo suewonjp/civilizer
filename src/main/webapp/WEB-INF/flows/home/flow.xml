@@ -93,6 +93,7 @@
         </transition>
 
         <transition on="search-fragments" to="home">
+            <evaluate expression="mainController.yetToBeDeveloped()" />
         </transition>
 
         <transition on="prev-fragment-page" to="home">
