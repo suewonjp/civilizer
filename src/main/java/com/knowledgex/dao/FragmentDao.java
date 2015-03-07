@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.FragmentOrder;
+import com.knowledgex.domain.SearchParams;
 
 public interface FragmentDao {
     
@@ -34,6 +35,8 @@ public interface FragmentDao {
     public Fragment findById(Long id, boolean withTags, boolean withRelatedOnes);
 
     public List<Long> findIdsByTagId(long tagId);
+    
+    public List<Fragment> findBySearchParams(SearchParams sp);
 
     public Fragment save(Fragment frgm);
 

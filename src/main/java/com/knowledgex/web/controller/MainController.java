@@ -21,6 +21,7 @@ import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
 import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.FragmentOrder;
+import com.knowledgex.domain.SearchParams;
 import com.knowledgex.domain.Tag;
 import com.knowledgex.web.view.*;
 
@@ -87,12 +88,13 @@ public final class MainController {
 			final long tagId = (i == 0) ?
 					PanelContextBean.ALL_VALID_TAGS : PanelContextBean.EMPTY_TAG;
 			flb.setPanelContextBean(new PanelContextBean(i, tagId));
+			flb.setSearchContextBean(new SearchContextBean(i));
 			output.add(flb);
 		}
 		return output;
 	}
 	
-	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, RequestContext rc) {
+	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, SearchContextBean scb, RequestContext rc) {
 //		final ExternalContext ec = rc.getExternalContext();
 //		final ParameterMap pm =  ec.getRequestParameterMap();
 //		final String locale = pm.get(REQUEST_PARAM_LOCALE);
@@ -101,11 +103,13 @@ public final class MainController {
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
 			final PanelContextBean pc = (pcb != null && pcb.getPanelId() == i) ?
 					pcb : null;
-			populateFragmentListBean(flbs.get(i), pc);
+			final SearchContextBean sc = (scb != null && scb.getPanelId() == i) ?
+					scb : null;
+			populateFragmentListBean(flbs.get(i), pc, sc);
 		}
 	}
 
-	private FragmentListBean populateFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb) {
+	private FragmentListBean populateFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb, SearchContextBean scb) {
         final FragmentListBean flb = existingFlb;
         final PanelContextBean oldPcb = flb.getPanelContextBean();
         final PanelContextBean paramPcb = pcb;
@@ -124,8 +128,14 @@ public final class MainController {
         final FragmentOrder frgOrder = FragmentOrder.values()[flb.getOrderOption()];
         final boolean asc = flb.isOrderAsc();
         
+        final SearchParams sp = (scb != null) ?
+        		SearchContextBean.buildSearchParams() : null;
+        
         List<Fragment> fragments = null;
-        if (tagId == PanelContextBean.ALL_VALID_TAGS) {
+        if (sp != null) {
+        	// Fetch the fragments by the search parameters
+        }
+        else if (tagId == PanelContextBean.ALL_VALID_TAGS) {
         	// Fetch the fragments regardless of tags
         	fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder, asc);
         }
@@ -143,7 +153,7 @@ public final class MainController {
         
         final boolean isLastPage = fragments.size() <= count;
         final boolean givenTagIsTrashTag = Tag.isTrashTag(tagId);
-        flb.setPanelContextBean(new PanelContextBean(pcb.getPanelId(), tagId, curPage, count, isLastPage, givenTagIsTrashTag));
+        flb.setPanelContextBean(new PanelContextBean(pcb.getPanelId(), tagId, curPage, count, isLastPage, givenTagIsTrashTag, sp));
 //        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         
         // [NOTE] The content of fragments should be IMMUTABLE form here!

@@ -7,7 +7,14 @@ import com.knowledgex.domain.SearchParams;
 @SuppressWarnings("serial")
 public final class SearchContextBean implements Serializable {
 	
-	SearchContextBean() {
+	private final int panelId;
+	
+	public SearchContextBean(int panelId) {
+		this.panelId = panelId;
+	}
+
+	public int getPanelId() {
+		return panelId;
 	}
 
 	public static SearchParams buildSearchParams() {

@@ -2,12 +2,15 @@ package com.knowledgex.web.view;
 
 import java.io.Serializable;
 
+import com.knowledgex.domain.SearchParams;
+
 @SuppressWarnings("serial")
 public final class PanelContextBean implements Serializable {
 	
 	public static final long ALL_VALID_TAGS = -1000;
 	public static final long EMPTY_TAG    = -2000;
 	
+	private final SearchParams searchParams;
 	private final long tagId;
 	private final int panelId;
 	private final int curPage;
@@ -22,6 +25,7 @@ public final class PanelContextBean implements Serializable {
 		this.itemsPerPage = 10;
 		this.isLast = false;
 		fragmentDeletable = false;
+		searchParams = null;
 	}
 
 	public PanelContextBean(int panelId, long tagId) {
@@ -31,6 +35,7 @@ public final class PanelContextBean implements Serializable {
 		this.itemsPerPage = 10;
 		this.isLast = false;
 		fragmentDeletable = false;
+		searchParams = null;
 	}
 
 	public PanelContextBean(int panelId, long tagId, int curPage) {
@@ -40,17 +45,23 @@ public final class PanelContextBean implements Serializable {
 		this.itemsPerPage = 10;
 		this.isLast = false;
 		fragmentDeletable = false;
+		searchParams = null;
 	}
 	
-	public PanelContextBean(int panelId, long tagId, int curPage, int itemsPerPage, boolean isLast, boolean fragmentDeletable) {
+	public PanelContextBean(int panelId, long tagId, int curPage, int itemsPerPage, boolean isLast, boolean fragmentDeletable, SearchParams searchParams) {
 		this.tagId = tagId;
 		this.panelId = panelId;
 		this.curPage = curPage;
 		this.itemsPerPage = itemsPerPage;
 		this.isLast = isLast;
 		this.fragmentDeletable = fragmentDeletable;
+		this.searchParams = searchParams;
 	}
 	
+	public SearchParams getSearchParams() {
+		return searchParams;
+	}
+
 	public long getTagId() {
 		return tagId;
 	}

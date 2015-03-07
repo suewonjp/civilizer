@@ -17,6 +17,7 @@ import com.knowledgex.dao.FragmentDao;
 import com.knowledgex.dao.TagDao;
 import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.FragmentOrder;
+import com.knowledgex.domain.SearchParams;
 
 @Repository("fragmentDao")
 @Transactional
@@ -246,6 +247,12 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .getNamedQuery("Fragment.findIdsByTagId")
                 .setParameter("tagId", tagId)
                 .list();
+    }
+    
+    @Override
+    // [STUB]
+    public List<Fragment> findBySearchParams(SearchParams sp) {
+    	return null;
     }
 
     @Override

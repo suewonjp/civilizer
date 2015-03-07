@@ -18,7 +18,7 @@
     <view-state id="home" view="home.xhtml">
         <on-entry>
             <evaluate
-                expression="mainController.populateFragmentListBeans(fragmentListBeans, requestScope.panelContextBean, flowRequestContext)"
+                expression="mainController.populateFragmentListBeans(fragmentListBeans, requestScope.panelContextBean, requestScope.searchContextBean, flowRequestContext)"
                 />
         </on-entry>
         
