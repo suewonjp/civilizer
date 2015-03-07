@@ -92,6 +92,9 @@
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
+        <transition on="search-fragments" to="home">
+        </transition>
+
         <transition on="prev-fragment-page" to="home">
             <evaluate
                 expression="mainController.newPanelContextBean(requestParameters.panelId, requestParameters.curTagId, requestParameters.curPage-1)"

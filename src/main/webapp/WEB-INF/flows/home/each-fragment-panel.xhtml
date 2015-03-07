@@ -40,7 +40,14 @@
         <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>
     </a>
     
-    <p:spacer width="20" />
+    <p:spacer width="10" />
+    
+    <p:commandLink >
+        <f:param name="panelId" value="#{panelId}" action="search-fragments"/>
+        <span class="fa fa-search fa-2x button-link" title="#{msg['label_search']}"></span>
+    </p:commandLink>
+    
+    <p:spacer width="10" />
     
     <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page">
         <f:param name="panelId" value="#{panelId}"/>
@@ -49,7 +56,7 @@
         <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_go_to_prev_page']}"></span>
     </p:commandLink>
     
-    <p:spacer width="20" />
+    <p:spacer width="10" />
     
     <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page">
         <f:param name="panelId" value="#{panelId}"/>
@@ -58,20 +65,20 @@
         <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_go_to_next_page']}"></span>
     </p:commandLink>
     
-    <p:spacer width="20" />
+    <p:spacer width="10" />
     
     <p:commandLink action="go-home">
         <f:param name="panelId" value="#{panelId}"/>
         <span class="fa fa-home fa-2x button-link" title="#{msg['label_go_home']}"></span>
     </p:commandLink>
     
-    <p:spacer width="20" />
+    <p:spacer width="10" />
 
     <p:commandLink oncomplete="showSortOptionDialog('#{panelId}')" >
         <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort_fragments']}"></span>
     </p:commandLink>
     
-    <p:spacer width="20" />
+    <p:spacer width="10" />
     
     <c:choose>
         <c:when test="#{panelContext.fragmentDeletable}">
