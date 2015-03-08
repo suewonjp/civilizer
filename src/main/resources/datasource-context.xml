@@ -41,6 +41,7 @@
 				<prop key="hibernate.max_fetch_depth">3</prop>
 				<prop key="hibernate.jdbc.fetch_size">50</prop>
 				<prop key="hibernate.jdbc.batch_size">10</prop>
+				<prop key="hibernate.connection.pool_size">2</prop>
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
