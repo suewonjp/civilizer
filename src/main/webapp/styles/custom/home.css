@@ -216,8 +216,9 @@
 }
 
 #fragment-group-form\:messages, #fragment-group-form\:development-messages {
-	margin-top: 45px;
-	margin-bottom: 0px;
+	position: relative;
+	top: 40px;
+	margin-bottom: 5px;
 }
 
 #quick-search-area {
