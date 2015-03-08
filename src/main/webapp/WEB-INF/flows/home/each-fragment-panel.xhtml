@@ -33,21 +33,21 @@
 </p:dialog>
 
 <p:panel id="fragment-panel-toolbar-#{panelId}" >
-    <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxMaster${panelId}" />
+    <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}" />
     <p:tooltip for="checkbox-for-all-fragments-#{panelId}" value="#{msg['label_check_uncheck_all_fragments']}" />
     
     <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}">
         <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>
     </a>
     
-    <p:spacer width="10" />
+    <p:spacer width="6" />
     
     <p:commandLink action="search-fragments">
         <f:param name="panelId" value="#{panelId}" />
         <span class="fa fa-search fa-2x button-link" title="#{msg['label_search']}"></span>
     </p:commandLink>
     
-    <p:spacer width="10" />
+    <p:spacer width="6" />
     
     <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page">
         <f:param name="panelId" value="#{panelId}"/>
@@ -56,7 +56,7 @@
         <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_go_to_prev_page']}"></span>
     </p:commandLink>
     
-    <p:spacer width="10" />
+    <p:spacer width="6" />
     
     <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page">
         <f:param name="panelId" value="#{panelId}"/>
@@ -65,20 +65,20 @@
         <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_go_to_next_page']}"></span>
     </p:commandLink>
     
-    <p:spacer width="10" />
+    <p:spacer width="6" />
     
     <p:commandLink action="go-home">
         <f:param name="panelId" value="#{panelId}"/>
         <span class="fa fa-home fa-2x button-link" title="#{msg['label_go_home']}"></span>
     </p:commandLink>
     
-    <p:spacer width="10" />
+    <p:spacer width="6" />
 
     <p:commandLink oncomplete="showSortOptionDialog('#{panelId}')" >
         <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort_fragments']}"></span>
     </p:commandLink>
     
-    <p:spacer width="10" />
+    <p:spacer width="6" />
     
     <c:choose>
         <c:when test="#{panelContext.fragmentDeletable}">

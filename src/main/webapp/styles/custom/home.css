@@ -214,3 +214,8 @@
 #bookmark-form\:bookmark-panel {
 	margin-bottom: 20px;
 }
+
+#fragment-group-form\:messages, #fragment-group-form\:development-messages {
+	margin-top: 45px;
+	margin-bottom: 0px;
+}

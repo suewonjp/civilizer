@@ -209,9 +209,9 @@ function confirmTrashingTag(tagId, deleting) {
 <h:form id="fragment-group-form">
 <!--     <p:log id="log" /> -->
     <p:growl id="growl" showDetail="true" sticky="false" life="10000" />
-    <p:messages id="messages" globalOnly="true" showDetail="true" closable="true"/>
+    <p:messages id="messages" globalOnly="true" showDetail="true" closable="true" />
     <!-- [DEV] -->
-    <p:messages id="development-messages" globalOnly="false" showDetail="true" closable="true"/>
+    <p:messages id="development-messages" globalOnly="false" showDetail="true" closable="true" />
     
     <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{paramFragmentBean.fragment.id}" />
     <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{paramTagBean.tag.id}" />

@@ -71,7 +71,7 @@ function onPanelActivationChange() {
     <span class="fa fa-plus-square fa-2x"></span>
 </a>
 
-<h:form style="display: inline; margin: 0; padding: 0; ">
+<h:form style="display:inline; margin:0; padding:0;">
     <span id="panel-activation-buttons" >
         <input type="checkbox" id="panel-toggler-0" style="display:none;" onchange="onPanelActivationChange();"/>
         <label for="panel-toggler-0" title="#{msg['toggle_panel']} 0">
@@ -85,6 +85,35 @@ function onPanelActivationChange() {
         <label for="panel-toggler-2" title="#{msg['toggle_panel']} 2">
             <span class="fa fa-file-text">&nbsp;#{msg['label_panel']} 2</span>
         </label>
+    </span>
+</h:form>
+
+<h:form prependId="false" style="display:inline; margin:0; padding:0;">
+    <span id="quick-search-area" >
+        <span id="quick-search-0" class="fa fa-search fa-2x ui-panel ui-widget ui-widget-content ui-corner-all" />
+        <span id="quick-search-box-0" >
+            <p:remoteCommand name="quickSearch0" action="search-fragments">
+            </p:remoteCommand>
+            <h:inputText style="width:260px" onkeyup="if (event.keyCode == 13) { quickSearch0(); return false; }"/>
+        </span>
+        
+        <p:spacer width="20" />
+        
+        <span id="quick-search-1" class="fa fa-search fa-2x ui-panel ui-widget ui-widget-content ui-corner-all" />
+        <span id="quick-search-box-1" >
+            <p:remoteCommand name="quickSearch1" action="search-fragments">
+            </p:remoteCommand>
+            <h:inputText style="width:260px" onkeyup="if (event.keyCode == 13) { quickSearch1(); return false; }"/>
+        </span>
+        
+        <p:spacer width="20" />
+        
+        <span id="quick-search-2" class="fa fa-search fa-2x ui-panel ui-widget ui-widget-content ui-corner-all" />
+        <span id="quick-search-box-2" >
+            <p:remoteCommand name="quickSearch2" action="search-fragments">
+            </p:remoteCommand>
+            <h:inputText style="width:260px" onkeyup="if (event.keyCode == 13) { quickSearch2(); return false; }"/>
+        </span>
     </span>
 </h:form>
 
