@@ -90,29 +90,29 @@ function onPanelActivationChange() {
 
 <h:form prependId="false" style="display:inline; margin:0; padding:0;">
     <span id="quick-search-area" >
-        <span id="quick-search-0" class="fa fa-search fa-2x ui-panel ui-widget ui-widget-content ui-corner-all" />
+        <span id="quick-search-0" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
         <span id="quick-search-box-0" >
             <p:remoteCommand name="quickSearch0" action="search-fragments">
             </p:remoteCommand>
-            <h:inputText style="width:260px" onkeyup="if (event.keyCode == 13) { quickSearch0(); return false; }"/>
+            <h:inputText onkeyup="if (event.keyCode == 13) { quickSearch0(); return false; }"/>
         </span>
         
-        <p:spacer width="20" />
+        <p:spacer width="5" />
         
-        <span id="quick-search-1" class="fa fa-search fa-2x ui-panel ui-widget ui-widget-content ui-corner-all" />
+        <span id="quick-search-1" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
         <span id="quick-search-box-1" >
             <p:remoteCommand name="quickSearch1" action="search-fragments">
             </p:remoteCommand>
-            <h:inputText style="width:260px" onkeyup="if (event.keyCode == 13) { quickSearch1(); return false; }"/>
+            <h:inputText onkeyup="if (event.keyCode == 13) { quickSearch1(); return false; }"/>
         </span>
         
-        <p:spacer width="20" />
+        <p:spacer width="5" />
         
-        <span id="quick-search-2" class="fa fa-search fa-2x ui-panel ui-widget ui-widget-content ui-corner-all" />
+        <span id="quick-search-2" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
         <span id="quick-search-box-2" >
             <p:remoteCommand name="quickSearch2" action="search-fragments">
             </p:remoteCommand>
-            <h:inputText style="width:260px" onkeyup="if (event.keyCode == 13) { quickSearch2(); return false; }"/>
+            <h:inputText onkeyup="if (event.keyCode == 13) { quickSearch2(); return false; }"/>
         </span>
     </span>
 </h:form>

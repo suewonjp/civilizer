@@ -97,7 +97,7 @@ function showEditTagDialog(tagId, tagName) {
             </c:forEach>
         </div>
         <div id="tag-palette-tree">
-            <p:tree value="#{tagListBean.tagTree.root}" var="tagBean">
+            <p:tree value="#{tagListBean.tagTree.root}" var="tagBean" style="width:100%">
                 <c:set var="tag" value="#{tagBean.tag}"/>
                 <p:treeNode>
                     <ui:include src="each-tag.xhtml" />

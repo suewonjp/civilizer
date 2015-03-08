@@ -53,7 +53,7 @@
 
 #panel-activation-buttons {
     position: relative;
-    margin-left: 30px;
+    margin-left: 15px;
 }
 
 #editor-title-bar, #fragment-overlay-title-bar {
@@ -218,4 +218,14 @@
 #fragment-group-form\:messages, #fragment-group-form\:development-messages {
 	margin-top: 45px;
 	margin-bottom: 0px;
+}
+
+#quick-search-area {
+	margin-left: 12px;
+	width: 60%;
+}
+
+#quick-search-area, input {
+	min-width:200px;
+	max-width:260px;
 }
