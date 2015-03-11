@@ -13,6 +13,7 @@
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         <evaluate expression="mainController.newTagBean()" result="flowScope.paramTagBean"/>
         <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
+        <evaluate expression="mainController.newSearchContextBeans()" result="flowScope.searchContextBeans"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">
@@ -94,6 +95,10 @@
 
         <transition on="search-fragments" to="home">
             <evaluate expression="mainController.yetToBeDeveloped()" />
+        </transition>
+
+        <transition on="quick-search-fragments" to="home">
+            <set name="requestScope.searchContextBean" value="searchContextBeans[requestParameters.panelId]" />
         </transition>
 
         <transition on="prev-fragment-page" to="home">

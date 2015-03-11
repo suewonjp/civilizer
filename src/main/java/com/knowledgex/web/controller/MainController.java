@@ -88,7 +88,7 @@ public final class MainController {
 			final long tagId = (i == 0) ?
 					PanelContextBean.ALL_VALID_TAGS : PanelContextBean.EMPTY_TAG;
 			flb.setPanelContextBean(new PanelContextBean(i, tagId));
-			flb.setSearchContextBean(new SearchContextBean(i));
+//			flb.setSearchContextBean(new SearchContextBean(i));
 			output.add(flb);
 		}
 		return output;
@@ -129,9 +129,9 @@ public final class MainController {
         final boolean asc = flb.isOrderAsc();
         
         final SearchParams sp = (scb != null) ?
-        		SearchContextBean.buildSearchParams() : null;
-        
-        List<Fragment> fragments = null;
+        		scb.buildSearchParams() : null;
+        		
+        List<Fragment> fragments = Collections.emptyList();
         if (sp != null) {
         	// Fetch the fragments by the search parameters
         }
@@ -151,14 +151,14 @@ public final class MainController {
             fragments = fragmentDao.findSomeNonTrashedByTagId(tagId, first, count + 1, frgOrder, asc, tagDao);
         }
         
+        // [NOTE] The content of fragments should be IMMUTABLE form here!
+        
         final boolean isLastPage = fragments.size() <= count;
         final boolean givenTagIsTrashTag = Tag.isTrashTag(tagId);
         flb.setPanelContextBean(new PanelContextBean(pcb.getPanelId(), tagId, curPage, count, isLastPage, givenTagIsTrashTag, sp));
 //        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         
-        // [NOTE] The content of fragments should be IMMUTABLE form here!
-        
-        final List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
+        List<FragmentBean> fragmentBeans = new ArrayList<FragmentBean>();
         final int c = Math.min(count, fragments.size());
        	for (int i=0; i<c; ++i) {
        		Fragment f = fragments.get(i);
@@ -168,6 +168,9 @@ public final class MainController {
         	fb.setConcatenatedTagNames(tagNames);
         	fragmentBeans.add(fb);
         }
+       	if (fragmentBeans.isEmpty()) {
+       		fragmentBeans = Collections.emptyList();
+       	}
         flb.setFragmentBeans(fragmentBeans);
         
         return flb;
@@ -235,6 +238,23 @@ public final class MainController {
 
 	public PanelContextBean newPanelContextBean(int panelId, long tagId, int curPage) {
 		return new PanelContextBean(panelId, tagId, curPage);
+	}
+	
+//	public SearchContextBean[] newSearchContextBeans() {
+//		SearchContextBean[] output = { new SearchContextBean(0), new SearchContextBean(1), new SearchContextBean(2) };
+//		return output;
+//	}
+
+	public List<SearchContextBean> newSearchContextBeans() {
+		List<SearchContextBean> output = new ArrayList<SearchContextBean>();
+		output.add(new SearchContextBean(0));
+		output.add(new SearchContextBean(1));
+		output.add(new SearchContextBean(2));
+		return output;
+	}
+	
+	public SearchContextBean getSearchContextBean(List<SearchContextBean> beans, int panelId) {
+		return beans.get(panelId);
 	}
 	
 	public void bookmarkFragment(Long fragmentId) {

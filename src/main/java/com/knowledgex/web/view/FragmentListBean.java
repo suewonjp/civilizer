@@ -10,7 +10,7 @@ public final class FragmentListBean implements Serializable {
     
     private PanelContextBean panelContextBean = null;
     
-    private SearchContextBean searchContextBean = null;
+//    private SearchContextBean searchContextBean = null;
     
     private int orderOption = 0;
     
@@ -32,13 +32,13 @@ public final class FragmentListBean implements Serializable {
 		this.panelContextBean = panelContextBean;
 	}
 
-	public SearchContextBean getSearchContextBean() {
-		return searchContextBean;
-	}
-
-	public void setSearchContextBean(SearchContextBean searchContextBean) {
-		this.searchContextBean = searchContextBean;
-	}
+//	public SearchContextBean getSearchContextBean() {
+//		return searchContextBean;
+//	}
+//
+//	public void setSearchContextBean(SearchContextBean searchContextBean) {
+//		this.searchContextBean = searchContextBean;
+//	}
 
 	public FragmentBean getFragmentBeanAt(int index) {
     	return fragmentBeans.get(index);
