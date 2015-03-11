@@ -22,9 +22,15 @@ $(document).ready(function() {
     if (activeCount === 0) {
         $("#panel-toggler-0").prop("checked", true);
     }
+    
     var idSpecifiedFromTagPalette = $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio").val();
     if (idSpecifiedFromTagPalette) {
         $("#panel-toggler-" + idSpecifiedFromTagPalette).prop("checked", true);
+    }
+    
+    var idSpecifiedFromSearch = $("#fragment-group-form\\:id-placeholder-for-search").val();
+    if (idSpecifiedFromSearch) {
+        $("#panel-toggler-" + idSpecifiedFromSearch).prop("checked", true);
     }
 
     $("#panel-activation-buttons").buttonset("refresh");

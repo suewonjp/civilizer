@@ -1,10 +1,12 @@
 package com.knowledgex.domain;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public final class SearchParams {
+@SuppressWarnings("serial")
+public final class SearchParams implements Serializable {
 	
 	public static final int TARGET_ALL     = 0;
 	public static final int TARGET_TAG     = 1;
@@ -25,7 +27,7 @@ public final class SearchParams {
 	private static final String TARGET_DIRECTIVE_PATTERN =
 	        "(\\b(any|tag|anytag|title|anytitle|text|anytext)\\b)?:";
 	
-	public static final class Keyword {
+	public static final class Keyword implements Serializable {
 		private final String word;
 		private final boolean caseSensitive;
 		private final boolean wholeWord;
@@ -168,7 +170,7 @@ public final class SearchParams {
 		}
 	}
 	
-	private static final class TargetDirective {
+	private static final class TargetDirective implements Serializable {
 		public final String expression;
 		public final int target;
 		public final boolean any;
@@ -180,7 +182,7 @@ public final class SearchParams {
 		}
 	}
 	
-	public static final class Keywords {
+	public static final class Keywords implements Serializable {
 		private final List<Keyword> words;
 		private final int target;
 		private final boolean any;

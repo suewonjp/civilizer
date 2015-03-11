@@ -217,6 +217,7 @@ function confirmTrashingTag(tagId, deleting) {
     <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{paramTagBean.tag.id}" />
     <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}" />
     <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}" />
+    <h:inputHidden id="id-placeholder-for-search" value="#{customParams.panelIdForSearch}" />
     
     <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">

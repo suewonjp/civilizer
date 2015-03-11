@@ -129,11 +129,12 @@ public final class MainController {
         final boolean asc = flb.isOrderAsc();
         
         final SearchParams sp = (scb != null) ?
-        		scb.buildSearchParams() : null;
+        		scb.buildSearchParams() : pcb.getSearchParams();
         		
         List<Fragment> fragments = Collections.emptyList();
         if (sp != null) {
         	// Fetch the fragments by the search parameters
+        	fragments = fragmentDao.findBySearchParams(sp);
         }
         else if (tagId == PanelContextBean.ALL_VALID_TAGS) {
         	// Fetch the fragments regardless of tags

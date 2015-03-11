@@ -4,10 +4,11 @@ import java.io.Serializable;
 //import java.util.*;
 
 @SuppressWarnings("serial")
-public class ParameterBean implements Serializable {
+public final class ParameterBean implements Serializable {
 	
 	private int panelId = 0;
 	private int panelIdForTagPalette = 0;
+	private int panelIdForSearch = 0;
 	
 	ParameterBean() {
 	}
@@ -26,6 +27,14 @@ public class ParameterBean implements Serializable {
 
 	public void setPanelIdForTagPalette(int panelIdForTagPalette) {
 		this.panelIdForTagPalette = panelIdForTagPalette;
+	}
+
+	public int getPanelIdForSearch() {
+		return panelIdForSearch;
+	}
+
+	public void setPanelIdForSearch(int panelIdForSearch) {
+		this.panelIdForSearch = panelIdForSearch;
 	}
 
 }

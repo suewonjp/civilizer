@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -249,10 +250,17 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .list();
     }
     
+    @SuppressWarnings("unchecked")
     @Override
-    // [STUB]
     public List<Fragment> findBySearchParams(SearchParams sp) {
-    	return null;
+    	Session session = sessionFactory.getCurrentSession();
+    	Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+    	List<Fragment> output = crit.list();
+    	for (Fragment fragment : output) {
+    		Hibernate.initialize(fragment.getTags());
+    		Hibernate.initialize(fragment.getRelatedOnes());
+		}
+    	return output;
     }
 
     @Override

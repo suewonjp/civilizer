@@ -99,6 +99,7 @@
 
         <transition on="quick-search-fragments" to="home">
             <set name="requestScope.searchContextBean" value="searchContextBeans[requestParameters.panelId]" />
+            <evaluate expression="customParams.setPanelIdForSearch(requestParameters.panelId)" />
         </transition>
 
         <transition on="prev-fragment-page" to="home">

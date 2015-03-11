@@ -97,12 +97,8 @@ public final class SearchQueryCreator {
     
     public static Criteria buildQuery(SearchParams params, Session session) {
     	final Criteria output = session.createCriteria(Fragment.class);
-    	Criteria tagCrit = null;
-    	
-    	if (params.hasTarget(SearchParams.TARGET_TAG)) {
-    		tagCrit = output.createCriteria("tags");
-    		output.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-    	}
+    	Criteria tagCrit = output.createCriteria("tags");
+    	output.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
     	
     	Junction rootJunction = Restrictions.conjunction();
     	
