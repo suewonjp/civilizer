@@ -70,6 +70,12 @@ function onPanelActivationChange() {
         panels[i].css({ width: w });
     }
 }
+
+function kickSearch(event, remoteCommand, panelId) {
+	if (event.keyCode == 13) {
+		remoteCommand([{name:'panelId',value:panelId}]);
+	}
+}
 //]]>
 </script>
 
@@ -100,7 +106,7 @@ function onPanelActivationChange() {
         <span id="quick-search-0" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
         <span id="quick-search-box-0" >
             <p:remoteCommand name="quickSearch0" action="quick-search-fragments" />
-            <h:inputText value="#{scb.quickSearchText}" onkeyup="if (event.keyCode == 13) { quickSearch0([{name:'panelId',value:'0'}]); return false; }"/>
+            <h:inputText value="#{scb.quickSearchText}" onkeyup="kickSearch(event, quickSearch0, 0); return false;"/>
         </span>
         
         <p:spacer width="5" />
@@ -109,7 +115,7 @@ function onPanelActivationChange() {
         <span id="quick-search-1" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
         <span id="quick-search-box-1" >
             <p:remoteCommand name="quickSearch1" action="quick-search-fragments" />
-            <h:inputText value="#{scb.quickSearchText}" onkeyup="if (event.keyCode == 13) { quickSearch1([{name:'panelId',value:'1'}]); return false; }"/>
+            <h:inputText value="#{scb.quickSearchText}" onkeyup="kickSearch(event, quickSearch1, 1); return false;"/>
         </span>
         
         <p:spacer width="5" />
@@ -118,7 +124,7 @@ function onPanelActivationChange() {
         <span id="quick-search-2" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
         <span id="quick-search-box-2" >
             <p:remoteCommand name="quickSearch2" action="quick-search-fragments" />
-            <h:inputText value="#{scb.quickSearchText}" onkeyup="if (event.keyCode == 13) { quickSearch2([{name:'panelId',value:'2'}]); return false; }"/>
+            <h:inputText value="#{scb.quickSearchText}" onkeyup="kickSearch(event, quickSearch0, 2); return false;"/>
         </span>
     </span>
 </h:form>
