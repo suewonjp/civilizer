@@ -17,7 +17,7 @@
 				    \##{fragment.id}
 				</a>
 				&nbsp;&nbsp;
-				<p:commandLink value="#{fragment.title} " action="inspect-fragment">
+				<p:commandLink value="#{fragmentBean.title} " action="inspect-fragment">
 					<f:param name="fragmentLoopIndex" value="${loop.index}" />
 					<f:param name="panelId" value="#{panelId}" />
 				</p:commandLink>
@@ -60,7 +60,7 @@
 					<h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.content}" />
 				</div>
 			</div></f:facet>
-		<h:outputText value="#{fragment.content}" styleClass="fragment-content" />
+		<h:outputText value="#{fragmentBean.content}" styleClass="fragment-content" />
 	</h:panelGrid> <!-- 	each-fragment -->
 </div> <!-- each-fragment-container -->
 

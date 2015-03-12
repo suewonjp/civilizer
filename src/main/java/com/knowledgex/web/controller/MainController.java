@@ -165,6 +165,8 @@ public final class MainController {
        		Fragment f = fragments.get(i);
         	FragmentBean fb = new FragmentBean();
         	fb.setFragment(f);
+        	fb.setTitle(f.getTitle());
+        	fb.setContent(f.getContent());
         	final String tagNames = Tag.getTagNamesFrom(f.getTags());
         	fb.setConcatenatedTagNames(tagNames);
         	fragmentBeans.add(fb);
