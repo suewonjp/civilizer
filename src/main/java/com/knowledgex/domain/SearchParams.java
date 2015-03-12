@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+// [TODO] adding rules regarding pagination and ordering
+
 @SuppressWarnings("serial")
 public final class SearchParams implements Serializable {
 	

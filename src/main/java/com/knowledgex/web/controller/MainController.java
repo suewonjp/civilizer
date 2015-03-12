@@ -134,6 +134,7 @@ public final class MainController {
         List<Fragment> fragments = Collections.emptyList();
         if (sp != null) {
         	// Fetch the fragments by the search parameters
+        	// [TODO] pagination and ordering when fetching fragments by search
         	fragments = fragmentDao.findBySearchParams(sp);
         }
         else if (tagId == PanelContextBean.ALL_VALID_TAGS) {
