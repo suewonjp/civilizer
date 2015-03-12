@@ -166,6 +166,7 @@ public final class MainController {
        		Fragment f = fragments.get(i);
         	FragmentBean fb = new FragmentBean();
         	fb.setFragment(f);
+        	// [TODO] highlighting keywords if the fragments have been collected from searching
         	fb.setTitle(f.getTitle());
         	fb.setContent(f.getContent());
         	final String tagNames = Tag.getTagNamesFrom(f.getTags());
