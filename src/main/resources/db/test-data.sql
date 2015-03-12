@@ -165,6 +165,7 @@ Although it is possible to develop Java EE applications without the use of CDI, 
 become more robust and efficient than those that do not use CDI features.
 
 '), TIMESTAMP '2015-02-28 22:04:00.000', TIMESTAMP '2015-02-28 22:04:00.000')
+,(18, 'inline HTML', STRINGDECODE('<b>inline</b> html test'), TIMESTAMP '2015-03-12 20:22:00.000', TIMESTAMP '2015-03-12 20:22:00.000')
 ;
 
 INSERT INTO TAG(TAG_ID, TAG_NAME, CREATION_DATETIME, UPDATE_DATETIME) VALUES
@@ -219,6 +220,8 @@ INSERT INTO TAG2FRAGMENT(TAG2FRAGMENT_ID, TAG_ID, FRAGMENT_ID) VALUES
 ,(21, 0, 16)
 ,(22, -1, 10)
 ,(23, -1, 5)
+,(24, 13, 17)
+,(25, 13, 18)
 ;
 
 INSERT INTO FRAGMENT2FRAGMENT(FRAGMENT2FRAGMENT_ID, FROM_ID, TO_ID) VALUES
