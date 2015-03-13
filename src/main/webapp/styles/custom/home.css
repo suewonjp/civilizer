@@ -5,7 +5,6 @@
 }
 
 .each-fragment-container, .each-fragment {
-	white-space: nowrap;
     overflow-x: auto;
     clear: both;
 }
@@ -120,6 +119,7 @@
 }
 
 .fragment-header {
+	white-space: nowrap;
     max-height: 22px;
     height: 22px;
     width: 100%;
@@ -229,4 +229,15 @@
 
 #quick-search-area, input {
     width: 16%;
+}
+
+.search-keyword {
+    border:1px solid #8bcf54;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;
+    background-color: #a9db80; background-image: -webkit-gradient(linear, left top, left bottom, from(#a9db80), to(#96c56f));
+	background-image: -webkit-linear-gradient(top, #a9db80, #96c56f);
+	background-image: -moz-linear-gradient(top, #a9db80, #96c56f);
+	background-image: -ms-linear-gradient(top, #a9db80, #96c56f);
+	background-image: -o-linear-gradient(top, #a9db80, #96c56f);
+	background-image: linear-gradient(to bottom, #a9db80, #96c56f);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a9db80, endColorstr=#96c56f);
 }
