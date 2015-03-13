@@ -30,7 +30,7 @@
 			<security:user-service>
 			    <!-- [TODO] hashed && salted password -->
 			    <!-- [TODO] user credential information stored && restored from persistence store -->
-				<security:user name="bsw" password="0000" authorities="ROLE_USER" />
+				<security:user name="owner" password="owner" authorities="ROLE_USER" />
 			</security:user-service>
 		</security:authentication-provider>
 	</security:authentication-manager>
