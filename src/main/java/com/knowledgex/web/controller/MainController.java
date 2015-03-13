@@ -82,18 +82,31 @@ public final class MainController {
 		ViewUtil.addMessage(DEVELOPMENT_MESSAGE_CLIENT_ID, "Yet to be developed", "The feature is not ready for now", null);
 	}
 	
-	public List<FragmentListBean> newFragmentListBeans() {
-		final List<FragmentListBean> output =  new ArrayList<FragmentListBean>(MAX_FRAGMENT_PANELS);
+	public FragmentListBean[] newFragmentListBeans() {
+		final FragmentListBean[] output =  { null, null, null };
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
 			final FragmentListBean flb = new FragmentListBean();
 			final long tagId = (i == 0) ?
 					PanelContextBean.ALL_VALID_TAGS : PanelContextBean.EMPTY_TAG;
 			flb.setPanelContextBean(new PanelContextBean(i, tagId));
 //			flb.setSearchContextBean(new SearchContextBean(i));
-			output.add(flb);
+			output[i] = flb;
 		}
 		return output;
 	}
+
+//	public List<FragmentListBean> newFragmentListBeans() {
+//	    final List<FragmentListBean> output =  new ArrayList<FragmentListBean>(MAX_FRAGMENT_PANELS);
+//	    for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
+//	        final FragmentListBean flb = new FragmentListBean();
+//	        final long tagId = (i == 0) ?
+//	                PanelContextBean.ALL_VALID_TAGS : PanelContextBean.EMPTY_TAG;
+//	        flb.setPanelContextBean(new PanelContextBean(i, tagId));
+////			flb.setSearchContextBean(new SearchContextBean(i));
+//	        output.add(flb);
+//	    }
+//	    return output;
+//	}
 	
 	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, SearchContextBean scb, RequestContext rc) {
 //		final ExternalContext ec = rc.getExternalContext();
@@ -252,18 +265,18 @@ public final class MainController {
 		return new PanelContextBean(panelId, tagId, curPage);
 	}
 	
-//	public SearchContextBean[] newSearchContextBeans() {
-//		SearchContextBean[] output = { new SearchContextBean(0), new SearchContextBean(1), new SearchContextBean(2) };
-//		return output;
-//	}
-
-	public List<SearchContextBean> newSearchContextBeans() {
-		List<SearchContextBean> output = new ArrayList<SearchContextBean>();
-		output.add(new SearchContextBean(0));
-		output.add(new SearchContextBean(1));
-		output.add(new SearchContextBean(2));
+	public SearchContextBean[] newSearchContextBeans() {
+		SearchContextBean[] output = { new SearchContextBean(0), new SearchContextBean(1), new SearchContextBean(2) };
 		return output;
 	}
+
+//	public List<SearchContextBean> newSearchContextBeans() {
+//		List<SearchContextBean> output = new ArrayList<SearchContextBean>();
+//		output.add(new SearchContextBean(0));
+//		output.add(new SearchContextBean(1));
+//		output.add(new SearchContextBean(2));
+//		return output;
+//	}
 	
 	public SearchContextBean getSearchContextBean(List<SearchContextBean> beans, int panelId) {
 		return beans.get(panelId);
