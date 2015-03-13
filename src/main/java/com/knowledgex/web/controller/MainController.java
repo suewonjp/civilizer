@@ -23,6 +23,7 @@ import com.knowledgex.domain.Fragment;
 import com.knowledgex.domain.FragmentOrder;
 import com.knowledgex.domain.SearchParams;
 import com.knowledgex.domain.Tag;
+import com.knowledgex.domain.TextDecorator;
 import com.knowledgex.web.view.*;
 
 @Controller
@@ -166,9 +167,16 @@ public final class MainController {
        		Fragment f = fragments.get(i);
         	FragmentBean fb = new FragmentBean();
         	fb.setFragment(f);
-        	// [TODO] highlighting keywords if the fragments have been collected from searching
-        	fb.setTitle(f.getTitle());
-        	fb.setContent(f.getContent());
+        	
+        	String title = f.getTitle();
+        	String content = f.getContent();
+        	if (sp != null) {
+        	    title = TextDecorator.highlight(title, sp);
+        	    content = TextDecorator.highlight(content, sp);
+        	}
+        	fb.setTitle(title);
+        	fb.setContent(content);
+        	
         	final String tagNames = Tag.getTagNamesFrom(f.getTags());
         	fb.setConcatenatedTagNames(tagNames);
         	fragmentBeans.add(fb);

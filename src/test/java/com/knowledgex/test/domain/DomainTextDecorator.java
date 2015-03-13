@@ -18,9 +18,23 @@ public class DomainTextDecorator {
 	@Before
 	public void setUp() throws Exception {
 	}
+	
+	@Test
+    public void testHighlightNoMatch() {
+	    final String text = "Hello World!! ";
+        final String searchKeywords = "world";
+        final SearchParams sp = new SearchParams(searchKeywords);
+        assertEquals(1, sp.getKeywords().size());
+        assertEquals(1, sp.getKeywords().get(0).getWords().size());
+        
+        final String decoratedText = TextDecorator.highlight(text, sp);
+        assertNotNull(decoratedText);
+        
+        assertEquals(text, decoratedText);
+	}
 
 	@Test
-	public void testHighlight() {
+	public void testHighlightTrivial() {
 		final String text = 
 				"Functions with no arguments can be called without the parentheses. "
 				+ "For example, the length() function on String can be invoked as \"abc\".length rather than \"abc\".length(). "
@@ -32,11 +46,14 @@ public class DomainTextDecorator {
 		
 		final String decoratedText = TextDecorator.highlight(text, sp);
 		assertNotNull(decoratedText);
+		assertTrue(decoratedText.contains("<span class=\"search-keyword\">length</span>"));
+		assertTrue(decoratedText.contains("<span class=\"search-keyword\">parentheses</span>"));
 		
-		assertEquals("Functions with no arguments can be called without the <span class=\"search-keyword\">parentheses</span>. "
-				+ "For example, the <span class=\"search-keyword\">length</span>() function on String can be invoked as \"abc\".<span class=\"search-keyword\">length</span> rather than \"abc\".<span class=\"search-keyword\">length</span>(). "
-				+ "If the function is a Scala function defined without <span class=\"search-keyword\">parentheses</span>, then the function must be called without <span class=\"search-keyword\">parentheses</span>"
-				, decoratedText);
+		final String tmp = decoratedText
+		        .replace("<span class=\"search-keyword\">", "")
+		        .replace("</span>", "");
+		
+		assertEquals(text, tmp);
 	}
 
 }
