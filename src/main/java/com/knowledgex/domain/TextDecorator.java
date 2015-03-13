@@ -37,11 +37,11 @@ public final class TextDecorator {
 			final int si = m.start();
 			final int ei = m.end();
 			output += input.substring(pi, si) + PREFIX_HTML_TAG_FOR_HIGHLIGHT + input.substring(si, ei) + POSTFIX_HTML_TAG_FOR_HIGHLIGHT;
-			
 			pi = ei;
 		}
+		output += input.substring(pi, input.length());
 		
-		return output;
+		return pi == 0 ? input : output;
 	}
 
 }
