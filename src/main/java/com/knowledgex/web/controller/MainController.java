@@ -232,7 +232,6 @@ public final class MainController {
 		tagBean.setTag(tag);
 		
 		final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), false);
-//		final Set<Fragment> fragments = tag.getFragments();
 		final List<FragmentBean> fbs = new ArrayList<FragmentBean>();
 		for (Fragment fragment : fragments) {
 			final FragmentBean fb = new FragmentBean();

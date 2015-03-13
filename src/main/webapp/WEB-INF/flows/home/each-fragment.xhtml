@@ -17,10 +17,6 @@
 				    \##{fragment.id}
 				</a>
 				&nbsp;&nbsp;
-<!-- 				<p:commandLink value="#{fragmentBean.title} " action="inspect-fragment"> -->
-<!-- 					<f:param name="fragmentLoopIndex" value="${loop.index}" /> -->
-<!-- 					<f:param name="panelId" value="#{panelId}" /> -->
-<!-- 				</p:commandLink> -->
                 <span><h:outputText escape="false" value="#{fragmentBean.title}" /></span>
 				&nbsp;&nbsp;
                 <c:forEach var="tag" items="#{fragment.tags}">
@@ -29,7 +25,6 @@
 				        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 				        <f:param name="tagId" value="#{tag.id}" />
 				    </p:commandLink>
-<!--                     <ui:include src="each-tag.xhtml" /> -->				    
                 </c:forEach>
 				&nbsp;&nbsp;
 				<h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
