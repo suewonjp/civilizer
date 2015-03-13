@@ -83,6 +83,14 @@ $(document).ready(function() {
     if (fragmentCheckboxMaster) {
     	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
+    
+    $(".fragment-title").draggable({
+    	revert: true
+    	, cursor:"move"
+    	, scroll: false
+    	, helper: "clone"
+    	, zIndex: 10000
+    });
 }); // end of $(document).ready()
 
 function populateFragmentOverlay(data) {

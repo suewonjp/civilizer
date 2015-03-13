@@ -18,14 +18,12 @@
     margin-left: 2%;
 }
 
-.small-fragment-box {
+.small-fragment-box, .fragment-title {
 	margin-bottom: 5px;
 	margin-left: 5px;
     height: 15px;
-/*     float: left; */
     border:1px solid #cacaca; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif;
     padding: 1px 3px 1px 1px; text-decoration:none; display:inline-block;
-/*     text-shadow: -1px -1px 0 rgba(0,0,0,0.3); */
     font-weight:bold; color: #000;
 	background-color: #E6E6E6; background-image: -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#CCCCCC));
 	background-image: -webkit-linear-gradient(top, #E6E6E6, #CCCCCC);
