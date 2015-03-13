@@ -6,20 +6,54 @@ import java.util.regex.Pattern;
 
 public final class TextDecorator {
 	
-	private static final String PREFIX_HTML_TAG_FOR_HIGHLIGHT = "<span class=\"search-keyword\">";
-	private static final String POSTFIX_HTML_TAG_FOR_HIGHLIGHT = "</span>";
+	public static final String PREFIX_HTML_TAG_FOR_HIGHLIGHT = "<span class='search-keyword'>";
+	public static final String POSTFIX_HTML_TAG_FOR_HIGHLIGHT = "</span>";
 	
-	public static String highlight(String input, SearchParams sp) {
+	private static final RangeComparator rangeComparator = new RangeComparator();
+	
+	private static class RangeComparator implements Comparator<Pair<Integer, Integer>> {
+		@Override
+        public int compare(Pair<Integer, Integer> arg0, Pair<Integer, Integer> arg1) {
+            int d = arg0.getFirst() - arg1.getFirst();
+            if (d == 0) {
+            	// in case that the two ranges overlap
+            	// the bigger range will have higher priority
+            	d = arg1.getSecond() - arg0.getSecond();
+            }
+            return d;
+        }
+	}
+	
+	private static void match(List<Pair<Integer, Integer>> output, String input, SearchParams sp, boolean caseSensitive) {
 		// Create a pattern from the search parameters
 		Set<String> keywordSet = new HashSet<String>();
-		for (SearchParams.Keywords keywords : sp.getKeywords()) {
-			for (SearchParams.Keyword kw : keywords.getWords()) {
-				keywordSet.add(kw.getWord());
+		if (caseSensitive) {
+			for (SearchParams.Keywords keywords : sp.getKeywords()) {
+				for (SearchParams.Keyword kw : keywords.getWords()) {
+					if (kw.isCaseSensitive()) {
+						keywordSet.add(kw.getWord());
+					}
+				}
 			}
 		}
+		else {
+			for (SearchParams.Keywords keywords : sp.getKeywords()) {
+				for (SearchParams.Keyword kw : keywords.getWords()) {
+					if (! kw.isCaseSensitive()) {
+						keywordSet.add(kw.getWord().toLowerCase());
+					}
+				}
+			}
+		}
+		
+		final int keywordCount = keywordSet.size();
+		if (keywordCount == 0) {
+			return;
+		}
+		
 		String regex = "";
-		String[] keywords = keywordSet.toArray(new String[keywordSet.size()]);
-		final int c = keywordSet.size() - 1;
+		String[] keywords = keywordSet.toArray(new String[keywordCount]);
+		final int c = keywordCount - 1;
 		for (int i=0; i<c; ++i) {
 			regex += keywords[i] + "|";
 		}
@@ -27,21 +61,45 @@ public final class TextDecorator {
 		final Pattern p = Pattern.compile(regex);
 		
 		// Apply regular expression with the pattern
-		final Matcher m = p.matcher(input);
+		final String text = caseSensitive ? 
+				input : input.toLowerCase();
+		final Matcher m = p.matcher(text);
+		
+		// Populate the output ranges
+		while (m.find()) {
+			output.add(new Pair<Integer, Integer>(m.start(), m.end()));
+		}
+	}
+	
+	public static String highlight(String input, SearchParams sp) {
+		final List<Pair<Integer, Integer>> ranges = new ArrayList<Pair<Integer, Integer>>();
+		
+		// Each range (int, int pair) indicates a matched keyword;
+		// We need two pass operations; case sensitive and case insensitive
+		match(ranges, input, sp, false);
+		match(ranges, input, sp, true);
+		
+		// Sort the ranges;
+		// If not doing this, the resultant styling may get ugly
+		Collections.sort(ranges, rangeComparator);
 		
 		String output = "";
-		
-		// Attach an HTML tag (i.e. <span class="search-keyword" />) to each matched text
-		int pi = 0;
-		while (m.find()) {
-			final int si = m.start();
-			final int ei = m.end();
+		int pi = 0; // the end of the previous range
+		for (Pair<Integer, Integer> r : ranges) {
+			final int si = r.getFirst();
+			if (si < pi) {
+				// The range overlaps the previous range;
+				// This case may be very rare, but we cannot guarantee it won't happen;
+				// We just ignore it because a proper styling doesn't come up
+				continue;
+			}
+			final int ei = r.getSecond();
 			output += input.substring(pi, si) + PREFIX_HTML_TAG_FOR_HIGHLIGHT + input.substring(si, ei) + POSTFIX_HTML_TAG_FOR_HIGHLIGHT;
 			pi = ei;
-		}
+		}		
 		output += input.substring(pi, input.length());
 		
 		return pi == 0 ? input : output;
 	}
-
+	
 }
