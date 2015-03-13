@@ -148,7 +148,8 @@ Use the `printf()` function.
 '), TIMESTAMP '2014-11-03 19:12:44.752', TIMESTAMP '2014-11-03 19:12:44.752')
 ,(16, 'Trashed 2', STRINGDECODE('    This is another trashed fragment...'), TIMESTAMP '2014-11-03 19:12:44.752', TIMESTAMP '2015-02-06 12:32:00.000')
 ,(17, 'Contexts and Dependency Injection (CDI)', STRINGDECODE('
-One of the most important features in Java EE is **Contexts and Dependency Injection (CDI)**. CDI helps bind the web tier and the business logic or transactional tier of the Java EE platform together.  
+One of the most important features in Java EE is **Contexts and Dependency Injection (CDI)**.  
+CDI helps bind the web tier and the business logic or transactional tier of the Java EE platform together.  
 CDI is architected from two methodologies: contexts and dependency injection.
 \r\n
 - **Contexts**
@@ -156,11 +157,11 @@ CDI is architected from two methodologies: contexts and dependency injection.
 - **dependency injection** 
  - is defined as the ability to inject components into an application in a type-safe way, including the ability to choose at deployment time which implementation of a particular interface to inject.
 \r\n
-To make use of CDI, a developer should become familiar with a series of annotations that can be used to decorate objects and injected components. 
-Since **CDI provides a high level of loose coupling**, it is an important piece of any Java enterprise application.
+To make use of CDI, a developer should become familiar with a series of annotations that can be used to decorate objects and injected components.  
+Since **CDI provides a high level of loose coupling**, it is an important piece of any Java enterprise application.  
 Those applications that make use of CDI in the right way can become very efficient because CDI provides a
 decoupling of resources, as well as strong typing, by eliminating the requirement to use String-based names for
-managed resources and by using declarative Java annotations to specify just about everything. 
+managed resources and by using declarative Java annotations to specify just about everything.  
 Although it is possible to develop Java EE applications without the use of CDI, it is very easy to use and enables enterprise applications to
 become more robust and efficient than those that do not use CDI features.
 
