@@ -128,7 +128,17 @@
 
 .fragment-menu {
     display: none;
+    position:relative;
+    top: -24px;
     float: right;
+}
+
+.fragment-content  {
+	word-wrap: break-word;
+}
+
+.fragment-content pre {
+	white-space: normal;
 }
 
 .tag-menu {
