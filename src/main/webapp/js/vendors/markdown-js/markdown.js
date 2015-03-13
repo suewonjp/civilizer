@@ -432,11 +432,12 @@
 
 
   function escapeHTML( text ) {
-    return text.replace( /&/g, "&amp;" )
+	  return text;
+//    return text.replace( /&/g, "&amp;" )
 //               .replace( /</g, "&lt;" )
 //               .replace( />/g, "&gt;" )
-               .replace( /"/g, "&quot;" )
-               .replace( /'/g, "&#39;" );
+//               .replace( /"/g, "&quot;" )
+//               .replace( /'/g, "&#39;" );
   }
 
   function render_tree( jsonml ) {
