@@ -23,11 +23,6 @@
                 />
         </on-entry>
         
-        <transition on="inspect-fragment" to="inspect-fragment">
-            <set name="requestScope.fragmentLoopIndex" value="requestParameters.fragmentLoopIndex" type="integer" />
-            <set name="requestScope.panelId" value="requestParameters.panelId" type="integer" />
-        </transition>
-        
         <transition on="filter-by-tag" to="home">
             <evaluate
                 expression="mainController.newPanelContextBean(customParams.panelIdForTagPalette, requestParameters.tagId, 0)"
@@ -131,14 +126,6 @@
         </transition>
     </view-state>
     
-    <view-state id="inspect-fragment" view="inspect-fragment.xhtml">
-        <on-entry>
-            <evaluate expression="mainController.inspectFragment(fragmentLoopIndex, fragmentListBeans[panelId])"
-            result="viewScope.fragmentBean"/>
-        </on-entry>
-        <transition on ="back" to="home"/>
-    </view-state>
-
     <end-state id="exit" />
              
     <global-transitions>

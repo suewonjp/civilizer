@@ -433,12 +433,6 @@ public final class MainController {
 			ViewUtil.addMessage("Deleting", "Tag : " + t.getTagName(), null);
 		}
 	}
-
-	public FragmentBean inspectFragment(Integer index, FragmentListBean flb) {
-		final FragmentBean fb = flb.getFragmentBeanAt(index);
-	    logger.info("inspectFragment() called");
-	    return fb;
-	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
     public String onRequestForFragment(ModelMap model, @PathVariable Long fragmentId) {
