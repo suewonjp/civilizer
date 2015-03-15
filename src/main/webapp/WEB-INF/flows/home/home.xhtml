@@ -91,6 +91,28 @@ $(document).ready(function() {
     	, helper: "clone"
     	, zIndex: 10000
     });
+    var effectClassOnDrop = "ui-state-active";
+    $(".each-fragment-container").droppable({
+		drop: function(event, ui) {
+			var from = ui.draggable;
+			var to = $(event.target);
+			to.removeClass(effectClassOnDrop);
+		    console.log(from.attr("_fid"));
+		    console.log(to.find(".fragment-title").attr("_fid"));
+		},
+		over: function(event, ui) {
+			var to = $(event.target);
+			to.addClass(effectClassOnDrop);
+		},
+		out: function(event, ui) {
+			var to = $(event.target);
+			to.removeClass(effectClassOnDrop);
+		},
+		deactivate: function(event, ui) {
+			var to = $(event.target);
+			to.removeClass(effectClassOnDrop);
+		},
+    });
 }); // end of $(document).ready()
 
 function populateFragmentOverlay(data) {
