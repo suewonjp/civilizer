@@ -34,7 +34,7 @@ public final class FragmentDaoImpl implements FragmentDao {
     }
     
     @Override
-    public List<?> executeQuery(String query) {
+    public List<?> executeQueryForResult(String query) {
         return sessionFactory.getCurrentSession()
                 .createQuery(query)
                 .list();

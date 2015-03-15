@@ -30,7 +30,7 @@ public final class TagDaoImpl implements TagDao {
     }
     
     @Override
-    public List<?> executeQuery(String query) {
+    public List<?> executeQueryForResult(String query) {
         return sessionFactory.getCurrentSession()
                 .createQuery(query)
                 .list();

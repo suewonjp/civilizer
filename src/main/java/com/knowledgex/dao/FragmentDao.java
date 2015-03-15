@@ -8,7 +8,7 @@ import com.knowledgex.domain.SearchParams;
 
 public interface FragmentDao {
     
-    public List<?> executeQuery(String query);
+    public List<?> executeQueryForResult(String query);
     
 	public long countAll(boolean includeTrashed);
 	
