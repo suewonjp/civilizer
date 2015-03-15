@@ -118,11 +118,11 @@ class DaoTest {
     protected void testExecuteArbitraryQuery() {
 	    List<?> result0, result1;
 	    
-	    result0 = fragmentDao.executeQuery("from Fragment");
+	    result0 = fragmentDao.executeQueryForResult("from Fragment");
 	    result1 = fragmentDao.findAll(true);
 	    assertEquals(result0, result1);
 
-	    result0 = fragmentDao.executeQuery("from Tag");
+	    result0 = fragmentDao.executeQueryForResult("from Tag");
 	    result1 = tagDao.findAll();
 	    assertEquals(result0, result1);
 	}
@@ -345,6 +345,7 @@ class DaoTest {
 			Fragment from = temporalFragments.get(i - 1);
 			Fragment to = temporalFragments.get(i);
 			from.relateTo(to);
+			to.relateTo(from);
 		}
 		for (Fragment frg : temporalFragments) {
 			fragmentDao.save(frg);
@@ -526,6 +527,19 @@ class DaoTest {
 	            assertTrue(r <= 0);
 		    }
 		}
+	}
+	
+	protected void testExplicitQuery() {
+		testPersistNewFragment();
+		testPersistNewFragment();
+		final long id0 = temporalFragments.get(0).getId();
+		final long id1 = temporalFragments.get(1).getId();
+		final String sqlQuery = "insert into fragment2fragment(from_id, to_id) values ("+ id0 + ", "+ id1+ ")";
+		fragmentDao.executeQuery(sqlQuery, true);
+		final Fragment from = fragmentDao.findById(temporalFragments.get(0).getId(), false, true);
+		final Fragment to = fragmentDao.findById(temporalFragments.get(1).getId(), false, true);
+		assertTrue(from.isRelatedTo(to));
+		assertTrue(to.isRelatedTo(from));
 	}
 
 }

@@ -89,7 +89,7 @@
         </transition>
 
         <transition on="relate-fragments" to="home">
-            <evaluate expression="mainController.yetToBeDeveloped(requestParameters.from, requestParameters.to)" />
+            <evaluate expression="mainController.relateFragments(requestParameters.from, requestParameters.to)" />
         </transition>
         
         <transition on="search-fragments" to="home">

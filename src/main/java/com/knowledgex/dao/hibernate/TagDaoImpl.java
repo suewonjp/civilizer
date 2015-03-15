@@ -37,6 +37,13 @@ public final class TagDaoImpl implements TagDao {
     }
     
     @Override
+    public void executeQuery(String query, boolean sql) {
+    	Session session = sessionFactory.getCurrentSession();
+    	Query q = sql ? session.createSQLQuery(query) : session.createQuery(query);
+    	q.executeUpdate();
+    }
+    
+    @Override
     public long countAll() {
     	return (Long) sessionFactory.getCurrentSession()
     			.getNamedQuery("Tag.countAll")

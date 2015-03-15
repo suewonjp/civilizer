@@ -104,5 +104,10 @@ public class DaoEmbeddedTest extends DaoTest {
     public void testPagingFragmentsWithOrder() {
     	super.testPagingFragmentsWithOrder();
     }
+    
+    @Test
+    public void testExplicitQuery() {
+    	super.testExplicitQuery();
+    }
 
 }

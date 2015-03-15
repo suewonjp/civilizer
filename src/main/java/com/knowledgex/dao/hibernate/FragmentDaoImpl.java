@@ -39,6 +39,13 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .createQuery(query)
                 .list();
     }
+
+    @Override
+    public void executeQuery(String query, boolean sql) {
+    	Session session = sessionFactory.getCurrentSession();
+    	Query q = sql ? session.createSQLQuery(query) : session.createQuery(query);
+    	q.executeUpdate();
+    }
     
     @Override
     public long countAll(boolean includeTrashed) {
@@ -261,6 +268,17 @@ public final class FragmentDaoImpl implements FragmentDao {
     		Hibernate.initialize(fragment.getRelatedOnes());
 		}
     	return output;
+    }
+    
+    @Override
+    public void relateFragments(long id0, long id1) {
+    	final Session session = sessionFactory.getCurrentSession();
+    	final String[] qs = {
+    			"insert into fragment2fragment(from_id, to_id) values ("+ id0 + ", "+ id1+ ")",
+    			"insert into fragment2fragment(from_id, to_id) values ("+ id1 + ", "+ id0+ ")",
+    	};
+    	session.createSQLQuery(qs[0]).executeUpdate();
+    	session.createSQLQuery(qs[1]).executeUpdate();
     }
 
     @Override

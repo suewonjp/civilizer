@@ -9,6 +9,8 @@ import com.knowledgex.domain.SearchParams;
 public interface FragmentDao {
     
     public List<?> executeQueryForResult(String query);
+
+    public void executeQuery(String query, boolean sql);
     
 	public long countAll(boolean includeTrashed);
 	
@@ -37,6 +39,8 @@ public interface FragmentDao {
     public List<Long> findIdsByTagId(long tagId);
     
     public List<Fragment> findBySearchParams(SearchParams sp);
+    
+    public void relateFragments(long id0, long id1);
 
     public Fragment save(Fragment frgm);
 

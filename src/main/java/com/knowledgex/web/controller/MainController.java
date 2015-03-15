@@ -36,7 +36,8 @@ public final class MainController {
 	private static final int    MAX_FRAGMENT_PANELS = 3;
 	private static final String REQUEST_PARAM_LOCALE = "locale";
     
-    private final Logger logger = LoggerFactory.getLogger(MainController.class);
+    @SuppressWarnings("unused")
+	private final Logger logger = LoggerFactory.getLogger(MainController.class);
     
 //    private final Gson gson = new GsonBuilder().registerTypeAdapter(DateTime.class, new JodaDateTimeConverter()).create();
     
@@ -432,6 +433,11 @@ public final class MainController {
 			tagDao.delete(t);
 			ViewUtil.addMessage("Deleting", "Tag : " + t.getTagName(), null);
 		}
+	}
+	
+	public void relateFragments(int fromId, int toId) {
+		fragmentDao.relateFragments(fromId, toId);
+		ViewUtil.addMessage("Relating", "Fragment : " + fromId + " <==> " + toId, null);
 	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })

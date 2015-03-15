@@ -9,6 +9,8 @@ import com.knowledgex.domain.*;
 public interface TagDao {
     
     public List<?> executeQueryForResult(String query);
+
+    public void executeQuery(String query, boolean sql);
     
 	public long countAll();
 	
