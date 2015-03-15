@@ -71,8 +71,8 @@ public class DaoUrlTest extends DaoTest {
     }
     
     @Test
-    public void testUpdateFragment() {
-        super.testUpdateFragment();
+    public void testRelateFragments() {
+        super.testRelateFragments();
     }
     
     @Test

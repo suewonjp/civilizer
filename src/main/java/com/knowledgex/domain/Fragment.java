@@ -118,15 +118,20 @@ public final class Fragment implements Serializable {
         this.relatedOnes = relatedOnes;
     }
     
-    public void relateTo(Fragment frg) {
-    	if (relatedOnes.equals(Collections.emptySet())) {
-    		relatedOnes = new HashSet<Fragment>();
-    	}
-    	relatedOnes.add(frg);
-    }
+//    public void _relateTo(Fragment frg) {
+//    	if (relatedOnes.equals(Collections.emptySet())) {
+//    		relatedOnes = new HashSet<Fragment>();
+//    	}
+//    	relatedOnes.add(frg);
+//    }
+//    
+//    public void relateTo(Fragment frg) {
+//    	_relateTo(frg);
+//    	frg._relateTo(this);
+//    }
     
     public boolean isRelatedTo(Fragment frg) {
-    	return relatedOnes.contains(frg) || frg.getRelatedOnes().contains(this);
+    	return relatedOnes.contains(frg);
     }
 
     @OneToMany(fetch=FetchType.LAZY)

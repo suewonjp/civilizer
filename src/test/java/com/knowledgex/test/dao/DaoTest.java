@@ -337,19 +337,23 @@ class DaoTest {
 		}
 	}
 
-	protected void testUpdateFragment() {
+	protected void testRelateFragments() {
 		for (int i = 0; i < 6; ++i) {
 			testPersistNewFragment();
 		}
 		for (int i = 1; i < temporalFragments.size(); ++i) {
 			Fragment from = temporalFragments.get(i - 1);
 			Fragment to = temporalFragments.get(i);
-			from.relateTo(to);
-			to.relateTo(from);
+			fragmentDao.relateFragments(from.getId(), to.getId());
 		}
-		for (Fragment frg : temporalFragments) {
-			fragmentDao.save(frg);
-		}
+//		for (int i = 1; i < temporalFragments.size(); ++i) {
+//			Fragment from = temporalFragments.get(i - 1);
+//			Fragment to = temporalFragments.get(i);
+//			from.relateTo(to);
+//		}
+//		for (Fragment frg : temporalFragments) {
+//			fragmentDao.save(frg);
+//		}
 		for (int i = 1; i < temporalFragments.size(); ++i) {
 			Fragment from = fragmentDao
 						.findById(temporalFragments.get(i - 1).getId(), false, true);
@@ -539,7 +543,6 @@ class DaoTest {
 		final Fragment from = fragmentDao.findById(temporalFragments.get(0).getId(), false, true);
 		final Fragment to = fragmentDao.findById(temporalFragments.get(1).getId(), false, true);
 		assertTrue(from.isRelatedTo(to));
-		assertTrue(to.isRelatedTo(from));
 	}
 
 }
