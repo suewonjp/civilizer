@@ -89,25 +89,11 @@ public final class MainController {
 			final long tagId = (i == 0) ?
 					PanelContextBean.ALL_VALID_TAGS : PanelContextBean.EMPTY_TAG;
 			flb.setPanelContextBean(new PanelContextBean(i, tagId));
-//			flb.setSearchContextBean(new SearchContextBean(i));
 			output[i] = flb;
 		}
 		return output;
 	}
 
-//	public List<FragmentListBean> newFragmentListBeans() {
-//	    final List<FragmentListBean> output =  new ArrayList<FragmentListBean>(MAX_FRAGMENT_PANELS);
-//	    for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
-//	        final FragmentListBean flb = new FragmentListBean();
-//	        final long tagId = (i == 0) ?
-//	                PanelContextBean.ALL_VALID_TAGS : PanelContextBean.EMPTY_TAG;
-//	        flb.setPanelContextBean(new PanelContextBean(i, tagId));
-////			flb.setSearchContextBean(new SearchContextBean(i));
-//	        output.add(flb);
-//	    }
-//	    return output;
-//	}
-	
 	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, SearchContextBean scb, RequestContext rc) {
 //		final ExternalContext ec = rc.getExternalContext();
 //		final ParameterMap pm =  ec.getRequestParameterMap();
@@ -270,14 +256,6 @@ public final class MainController {
 		return output;
 	}
 
-//	public List<SearchContextBean> newSearchContextBeans() {
-//		List<SearchContextBean> output = new ArrayList<SearchContextBean>();
-//		output.add(new SearchContextBean(0));
-//		output.add(new SearchContextBean(1));
-//		output.add(new SearchContextBean(2));
-//		return output;
-//	}
-	
 	public SearchContextBean getSearchContextBean(List<SearchContextBean> beans, int panelId) {
 		return beans.get(panelId);
 	}
@@ -417,7 +395,6 @@ public final class MainController {
 		if (t.getId() == null) {
 			// a new tag
 			// [TODO] handle exceptions occurred in the persistence layer.
-			// - e.g. tag name collision exception with the existing tags
 			// - and redirect the exception information to the view layer elegantly
 			saveTag(t);
 			ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);

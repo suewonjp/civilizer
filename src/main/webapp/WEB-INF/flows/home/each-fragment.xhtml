@@ -21,10 +21,6 @@
                     <h:outputText escape="false" value="#{fragmentBean.title}" />
                 </span>
 				&nbsp;&nbsp;
-<!-- 				<p:commandLink > -->
-<!--                     <p:draggable revert="true" cursor="move"/> -->
-<!--                     <span class="fa fa-anchor button-link " title="#{msg['label_bookmark_fragment']}">&nbsp;</span> -->
-<!--                 </p:commandLink> -->
                 <c:forEach var="tag" items="#{fragment.tags}">
                     <p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
 				        <span class="fa fa-tag " ></span>
