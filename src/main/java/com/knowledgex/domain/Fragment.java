@@ -101,7 +101,8 @@ public final class Fragment implements Serializable {
 
     @OneToMany(fetch=FetchType.LAZY)
     @Cascade({
-        CascadeType.MERGE
+    	CascadeType.PERSIST
+      , CascadeType.MERGE
       , CascadeType.REFRESH
       , CascadeType.SAVE_UPDATE
       , CascadeType.DETACH
@@ -115,6 +116,17 @@ public final class Fragment implements Serializable {
 
     public void setRelatedOnes(Set<Fragment> relatedOnes) {
         this.relatedOnes = relatedOnes;
+    }
+    
+    public void relateTo(Fragment frg) {
+    	if (relatedOnes.equals(Collections.emptySet())) {
+    		relatedOnes = new HashSet<Fragment>();
+    	}
+    	relatedOnes.add(frg);
+    }
+    
+    public boolean isRelatedTo(Fragment frg) {
+    	return relatedOnes.contains(frg) || frg.getRelatedOnes().contains(this);
     }
 
     @OneToMany(fetch=FetchType.LAZY)

@@ -344,24 +344,18 @@ class DaoTest {
 		for (int i = 1; i < temporalFragments.size(); ++i) {
 			Fragment from = temporalFragments.get(i - 1);
 			Fragment to = temporalFragments.get(i);
-			Set<Fragment> s = new HashSet<Fragment>();
-			s.add(to);
-			from.setRelatedOnes(s);
+			from.relateTo(to);
 		}
 		for (Fragment frg : temporalFragments) {
 			fragmentDao.save(frg);
-			frg.setRelatedOnes(null);
 		}
 		for (int i = 1; i < temporalFragments.size(); ++i) {
 			Fragment from = fragmentDao
 						.findById(temporalFragments.get(i - 1).getId(), false, true);
-			Fragment to = temporalFragments.get(i);
-			Collection<Fragment> relatedOnes = from.getRelatedOnes();
-			assertTrue(Hibernate.isInitialized(relatedOnes));
-			assertEquals(relatedOnes.size(), 1);
-			for (Fragment f : relatedOnes) {
-				assertEquality(f, to);
-			}
+			Fragment to = fragmentDao
+					.findById(temporalFragments.get(i).getId(), false, true);
+			assertTrue(from.isRelatedTo(to));
+			assertTrue(to.isRelatedTo(from));
 		}
 	}
 	
