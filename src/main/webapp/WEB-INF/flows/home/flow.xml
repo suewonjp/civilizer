@@ -93,6 +93,10 @@
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
+        <transition on="relate-fragments" to="home">
+            <evaluate expression="mainController.yetToBeDeveloped(requestParameters.from, requestParameters.to)" />
+        </transition>
+        
         <transition on="search-fragments" to="home">
             <evaluate expression="mainController.yetToBeDeveloped()" />
         </transition>

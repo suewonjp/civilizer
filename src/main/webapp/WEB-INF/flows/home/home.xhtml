@@ -97,8 +97,7 @@ $(document).ready(function() {
 			var from = ui.draggable;
 			var to = $(event.target);
 			to.removeClass(effectClassOnDrop);
-		    console.log(from.attr("_fid"));
-		    console.log(to.find(".fragment-title").attr("_fid"));
+			relateFragments([ {name:"from", value:from.attr("_fid")}, {name:"to", value:to.find(".fragment-title").attr("_fid")} ]);
 		},
 		over: function(event, ui) {
 			var to = $(event.target);

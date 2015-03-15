@@ -78,8 +78,12 @@ public final class MainController {
 	}
 	
 	// [DEV]
-	public void yetToBeDeveloped() {
-		ViewUtil.addMessage(DEVELOPMENT_MESSAGE_CLIENT_ID, "Yet to be developed", "The feature is not ready for now", null);
+	public void yetToBeDeveloped(Object ... param) {
+		String params = "";
+		for (Object p : param) {
+			params += p.toString() + ", ";
+		}
+		ViewUtil.addMessage(DEVELOPMENT_MESSAGE_CLIENT_ID, "Yet to be developed", params, null);
 	}
 	
 	public FragmentListBean[] newFragmentListBeans() {
