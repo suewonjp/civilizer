@@ -97,7 +97,16 @@ $(document).ready(function() {
 			var from = ui.draggable;
 			var to = $(event.target);
 			to.removeClass(effectClassOnDrop);
-			relateFragments([ {name:"from", value:from.attr("_fid")}, {name:"to", value:to.find(".fragment-title").attr("_fid")} ]);
+			if (from.hasClass("fragment-title")) {
+			    relateFragments([ {name:"from", value:from.attr("_fid")}, {name:"to", value:to.find(".fragment-title").attr("_fid")} ]);
+			}
+			else if (from.hasClass("each-tag")) {
+				var targetPanelId = findPanel(to);
+				$("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio").val(targetPanelId);
+				$("#panel-toggler-" + targetPanelId).prop("checked", true);
+				$("#panel-activation-buttons").buttonset("refresh");
+				filterByTag([ {name:"tagId", value:from.attr("_tid")} ]);
+			}
 		},
 		over: function(event, ui) {
 			var to = $(event.target);
@@ -112,7 +121,40 @@ $(document).ready(function() {
 			to.removeClass(effectClassOnDrop);
 		},
     });
+    $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable({
+    	drop: function(event, ui) {
+            var from = ui.draggable;
+            var to = $(event.target);
+            if (from.hasClass("each-tag")) {
+                var targetPanelId = findPanel(to);
+                $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio").val(targetPanelId);
+                $("#panel-toggler-" + targetPanelId).prop("checked", true);
+                $("#panel-activation-buttons").buttonset("refresh");
+                filterByTag([ {name:"tagId", value:from.attr("_tid")} ]);
+            }
+        },
+        over: function(event, ui) {
+            var to = $(event.target);
+            to.addClass(effectClassOnDrop);
+        },
+        out: function(event, ui) {
+            var to = $(event.target);
+            to.removeClass(effectClassOnDrop);
+        },
+        deactivate: function(event, ui) {
+            var to = $(event.target);
+            to.removeClass(effectClassOnDrop);
+        },
+    });
 }); // end of $(document).ready()
+
+function findPanel(obj) {
+	var panelParent = obj.parents('[id^="fragment-panel-"]');
+	if (panelParent) {
+		return panelParent.attr("_pid");
+	}
+	return -1;
+}
 
 function populateFragmentOverlay(data) {
 	$("#fragment-overlay").lightbox_me({
@@ -270,19 +312,22 @@ function confirmTrashingTag(tagId, deleting) {
         <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
     </p:confirmDialog>
     
+    <p:remoteCommand name="relateFragments" action="relate-fragments" />
+    <p:remoteCommand name="filterByTag" action="filter-by-tag" />
+    
     <div id="fragment-group">
         <c:set var="panelId" value="0" />
-	    <div id="fragment-panel-#{panelId}">
+	    <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
             <ui:include src="each-fragment-panel.xhtml"></ui:include>
 	    </div>
 	    
 	    <c:set var="panelId" value="1" />
-        <div id="fragment-panel-#{panelId}">
+        <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
             <ui:include src="each-fragment-panel.xhtml"></ui:include>
         </div>
         
         <c:set var="panelId" value="2" />
-        <div id="fragment-panel-#{panelId}">
+        <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
             <ui:include src="each-fragment-panel.xhtml"></ui:include>
         </div>
     </div>

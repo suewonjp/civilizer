@@ -30,6 +30,14 @@ $(document).ready(function() {
         currentTagGroupTabIndex = sessionStorage.getItem('tag-palette-tab-index');
         $tab.tabs('option', 'active', currentTagGroupTabIndex);
     }
+    
+    $(".each-tag").draggable({
+        revert: true
+        , cursor:"move"
+        , scroll: false
+        , helper: "clone"
+        , zIndex: 10000
+    });
 }); // end of $(document).ready()
 
 function showEditTagDialog(tagId, tagName) {
