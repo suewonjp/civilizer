@@ -269,7 +269,7 @@ function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
 	    $("#fragment-group-form\\:id-placeholder-for-panel").val(panelId);
     }
     else {
-	    $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(frgId);
+	    $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
     }
 }
 
@@ -292,6 +292,14 @@ function confirmTrashingTag(tagId, deleting) {
     $("#fragment-group-form\\:id-placeholder-for-trashed-tag").val(tagId);
 }
 
+function confirmUnbookmarkingFragment(frgId) {
+	var message = "#{msg['confirm_unbookmarking_fragment']}";
+    $('#fragment-group-form\\:confirm-dlg-msg').text(message);
+	$('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]').hide();
+	$("#fragment-group-form\\:confirm-dlg-yes-btn-unbookmark-fragment").show();
+	PF('singletonConfirmDlg').show();
+	$("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
+}
 
 //]]>
 </script>
@@ -323,7 +331,7 @@ function confirmTrashingTag(tagId, deleting) {
     <!-- [DEV] -->
     <p:messages id="development-messages" globalOnly="false" showDetail="true" closable="true" />
     
-    <h:inputHidden id="id-placeholder-for-trashed-fragment" value="#{paramFragmentBean.fragment.id}" />
+    <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}" />
     <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{paramTagBean.tag.id}" />
     <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}" />
     <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}" />
@@ -347,6 +355,7 @@ function confirmTrashingTag(tagId, deleting) {
         <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments" oncomplete="PF('singletonConfirmDlg').hide()" />
         <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
+        <p:commandButton id="confirm-dlg-yes-btn-unbookmark-fragment" value="#{msg['label_yes']}" action="unbookmark-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
 
         <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
     </p:confirmDialog>

@@ -35,7 +35,7 @@
         </transition>
 
         <transition on="unbookmark-fragment" to="home">
-            <evaluate expression="mainController.unbookmarkFragment(requestParameters.fragmentId)" />
+            <evaluate expression="mainController.unbookmarkFragment(paramFragmentBean.fragment.id)" />
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
         

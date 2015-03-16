@@ -26,7 +26,7 @@
 	            &nbsp;&nbsp;
 	            <h:outputText value="#{fragment.title}" />
 	        </span>
-	        <p:commandLink style="text-decoration:none;" action="unbookmark-fragment" >
+	        <p:commandLink style="text-decoration:none;" oncomplete="confirmUnbookmarkingFragment('#{fragment.id}')" >
 	           <span class="fa fa-close button-link " title="#{msg['label_unbookmark_fragment']}"></span>
                <f:param name="fragmentId" value="#{fragment.id}" />
 	        </p:commandLink>
