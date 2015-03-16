@@ -88,6 +88,11 @@ $(document).ready(function() {
 }); // end of $(document).ready()
 
 function setUpDragAndDrop() {
+	var fragmentDeletable = [
+	   Boolean('#{fragmentListBeans[0].panelContextBean.fragmentDeletable}' == 'true'),
+	   Boolean('#{fragmentListBeans[1].panelContextBean.fragmentDeletable}' == 'true'),
+	   Boolean('#{fragmentListBeans[2].panelContextBean.fragmentDeletable}' == 'true'),
+	];
 	var draggableSettings = {
         revert: true
         , cursor:"move"
@@ -132,6 +137,24 @@ function setUpDragAndDrop() {
         }
     };    
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
+    
+    // D&D for trashing/deleting a fragment
+    droppable = newBaseDroppable(effectClassOnDrop);
+    droppable.drop = function(event, ui) {
+        var from = ui.draggable;
+        var to = $(event.target);
+        to.removeClass(effectClassOnDrop);
+        if (from.hasClass("fragment-title")) {
+	        var panelId = findPanel(from);
+	       	var deleting = fragmentDeletable[panelId];
+        	var frgId = from.attr("_fid");
+        	confirmTrashingFragments(frgId, deleting, false, null);
+        }
+        else if (from.hasClass("each-tag")) {
+        	confirmTrashingTag(from.attr("_tid"), Boolean(from.attr("_frgCount") == 0));
+        }
+    };    
+    $("#trashcan").droppable(droppable);
 }
 
 function fetchFragmentsByTag(from, to) {
