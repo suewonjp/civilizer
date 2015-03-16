@@ -155,6 +155,19 @@ function setUpDragAndDrop() {
         }
     };    
     $("#trashcan").droppable(droppable);
+
+    // D&D for bookmarking a fragment
+    droppable = newBaseDroppable(effectClassOnDrop);
+    droppable.drop = function(event, ui) {
+        var from = ui.draggable;
+        var to = $(event.target);
+        to.removeClass(effectClassOnDrop);
+        if (from.hasClass("fragment-title")) {
+        	var frgId = from.attr("_fid");
+        	bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
+        }
+    };    
+    $("#bookmark-form\\:bookmark-panel").droppable(droppable);
 }
 
 function fetchFragmentsByTag(from, to) {
@@ -362,6 +375,7 @@ function confirmUnbookmarkingFragment(frgId) {
     
     <p:remoteCommand name="relateFragments" action="relate-fragments" />
     <p:remoteCommand name="filterByTag" action="filter-by-tag" />
+    <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment" />
     
     <div id="fragment-group">
         <c:set var="panelId" value="0" />
