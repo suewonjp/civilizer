@@ -209,7 +209,7 @@ function showError(message) {
 	PF("errorMsgDlg").show();
 }
 
-function confirmTrashingFragments(panelId, frgId, deleting, bulk) {
+function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
 	if (bulk) {
         if (fragmentCheckBoxesAreChecked(panelId) == false) {
             showError("#{msg['no_fragment_is_selected']}");
@@ -242,8 +242,12 @@ function confirmTrashingFragments(panelId, frgId, deleting, bulk) {
     
     PF('singletonConfirmDlg').show();
     
-    $("#fragment-group-form\\:id-placeholder-for-panel").val(panelId);
-    $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(frgId);
+    if (bulk) {
+	    $("#fragment-group-form\\:id-placeholder-for-panel").val(panelId);
+    }
+    else {
+	    $("#fragment-group-form\\:id-placeholder-for-trashed-fragment").val(frgId);
+    }
 }
 
 function confirmTrashingTag(tagId, deleting) {
