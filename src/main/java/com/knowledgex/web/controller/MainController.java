@@ -379,10 +379,6 @@ public final class MainController {
 		}
 	}
 	
-	private void saveTag(Tag t) {
-		tagDao.save(t);
-	}
-	
 	private Set<Tag> saveTagsWhenSavingFragment(TagListBean tagListBean, String tagNames) {
 		// [NOTE] this method should be called only when fragments are saved as its name implies
 		final Collection<Tag> existingTags = tagListBean.getTags();
@@ -399,7 +395,7 @@ public final class MainController {
 			}
 			
 			try {
-				saveTag(t);
+				tagDao.save(t);
 				if (weHaveNewTag) {
 					ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
 				}
@@ -418,7 +414,7 @@ public final class MainController {
 		if (t.getId() == null) {
 			// a new tag
 			try {
-				saveTag(t);
+				tagDao.save(t);
 				ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
 			}
 			catch (Exception e) {
@@ -433,7 +429,7 @@ public final class MainController {
 			final String oldName = t.getTagName();
 			t.setTagName(newName);
 			try {
-				saveTag(t);
+				tagDao.save(t);
 				ViewUtil.addMessage("Renaming", "Tag : " + oldName + " => " + newName, null);
 			}
 			catch (Exception e) {
