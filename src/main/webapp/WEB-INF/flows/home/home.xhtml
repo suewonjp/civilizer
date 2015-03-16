@@ -99,7 +99,11 @@ $(document).ready(function() {
         var to = $(event.target);
         to.removeClass(effectClassOnDrop);
         if (from.hasClass("fragment-title")) {
-            relateFragments([ {name:"from", value:from.attr("_fid")}, {name:"to", value:to.find(".fragment-title").attr("_fid")} ]);
+        	var fromId = from.attr("_fid");
+            var toId = to.find(".fragment-title").attr("_fid");
+            if (fromId != toId) {
+	            relateFragments([ {name:"from", value:fromId}, {name:"to", value:toId} ]);
+            }
         }
         else if (from.hasClass("each-tag")) {
             fetchFragmentsByTag(from, to);
