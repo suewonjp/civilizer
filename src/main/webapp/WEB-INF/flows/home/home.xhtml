@@ -84,25 +84,35 @@ $(document).ready(function() {
     	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
     
-    $(".fragment-title").draggable({
-    	revert: true
-    	, cursor:"move"
-    	, scroll: false
-    	, helper: "clone"
-    	, zIndex: 10000
-    });
+    setUpDragAndDrop();
+}); // end of $(document).ready()
+
+function setUpDragAndDrop() {
+	var draggableSettings = {
+        revert: true
+        , cursor:"move"
+        , scroll: false
+        , helper: "clone"
+        , zIndex: 10000
+    };
+	
+	$(".fragment-title").draggable(draggableSettings);
+	
+	$(".each-tag").draggable(draggableSettings);
     
     var effectClassOnDrop = "ui-state-active";
+    
+    // D&D for relating fragments
     var droppable = newBaseDroppable(effectClassOnDrop);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
         to.removeClass(effectClassOnDrop);
         if (from.hasClass("fragment-title")) {
-        	var fromId = from.attr("_fid");
+            var fromId = from.attr("_fid");
             var toId = to.find(".fragment-title").attr("_fid");
             if (fromId != toId) {
-	            relateFragments([ {name:"from", value:fromId}, {name:"to", value:toId} ]);
+                relateFragments([ {name:"from", value:fromId}, {name:"to", value:toId} ]);
             }
         }
         else if (from.hasClass("each-tag")) {
@@ -111,17 +121,18 @@ $(document).ready(function() {
     };
     $(".each-fragment-container").droppable(droppable);
     
+    // D&D for fetching fragments by a perticular tag
     droppable = newBaseDroppable(effectClassOnDrop);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
         to.removeClass(effectClassOnDrop);
         if (from.hasClass("each-tag")) {
-        	fetchFragmentsByTag(from, to);
+            fetchFragmentsByTag(from, to);
         }
     };    
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
-}); // end of $(document).ready()
+}
 
 function fetchFragmentsByTag(from, to) {
 	var targetPanelId = findPanel(to);
