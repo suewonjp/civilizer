@@ -385,12 +385,12 @@ public final class MainController {
 	}
 	
 	private void saveTag(Tag t) {
-		final DateTime dt = new DateTime();
-	    if (t.getId() == null) {
-	    	// It is a new tag...
-	    	t.setCreationDatetime(dt);
-	    }
-	    t.setUpdateDatetime(dt);
+//		final DateTime dt = new DateTime();
+//	    if (t.getId() == null) {
+//	    	// It is a new tag...
+//	    	t.setCreationDatetime(dt);
+//	    }
+//	    t.setUpdateDatetime(dt);
 	    
 		tagDao.save(t);
 	}
