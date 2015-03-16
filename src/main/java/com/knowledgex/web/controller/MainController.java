@@ -290,7 +290,7 @@ public final class MainController {
 		}
 	}
 
-	public void trashFragment(Long fragmentId) {
+	private void trashFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 		frg.addTag(getTrashcanTag());
 		try {
@@ -322,7 +322,7 @@ public final class MainController {
 		}
 	}
 
-	public void deleteFragment(Long fragmentId) {
+	private void deleteFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId);
 		try {
 			fragmentDao.delete(frg);
@@ -372,13 +372,12 @@ public final class MainController {
 	    
         try {
 			fragmentDao.save(frg);
-			if (weHaveNewFragment) {
-				ViewUtil.addMessage("Creating", "Fragment #" + frg.getId(),
-						null);
-			} else {
-				ViewUtil.addMessage("Updating", "Fragment #" + frg.getId(),
-						null);
-			}
+			ViewUtil.addMessage(weHaveNewFragment ? "Creating" : "Updating", "Fragment #" + frg.getId(), null);
+//			if (weHaveNewFragment) {
+//				ViewUtil.addMessage("Creating", "Fragment #" + frg.getId(), null);
+//			} else {
+//				ViewUtil.addMessage("Updating", "Fragment #" + frg.getId(), null);
+//			}
 		}
         catch (Exception e) {
 			ViewUtil.addMessage("Error on saving a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
