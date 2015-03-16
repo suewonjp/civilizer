@@ -91,6 +91,10 @@
         <transition on="relate-fragments" to="home">
             <evaluate expression="mainController.relateFragments(requestParameters.from, requestParameters.to)" />
         </transition>
+
+        <transition on="unrelate-fragments" to="home">
+            <evaluate expression="mainController.unrelateFragments(customParams.fragmentId0, customParams.fragmentId1)" />
+        </transition>
         
         <transition on="search-fragments" to="home">
             <evaluate expression="mainController.yetToBeDeveloped()" />

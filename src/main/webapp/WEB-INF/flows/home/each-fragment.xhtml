@@ -69,6 +69,10 @@
             <a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{rf.id}">\##{rf.id}</a>
             &nbsp;&nbsp;
             <h:outputText value="#{rf.title}" />
+            &nbsp;&nbsp;
+            <p:commandLink style="text-decoration:none; color:brown;" oncomplete="confirmUnrelateFragments('#{fragment.id}', '#{rf.id}')" >
+               <span class="fa fa-close button-link " title="#{msg['clear_relationship']}"></span>
+            </p:commandLink>
         </span>
     </c:forEach>
 </div>

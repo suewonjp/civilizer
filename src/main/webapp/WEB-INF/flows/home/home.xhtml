@@ -314,6 +314,16 @@ function confirmUnbookmarkingFragment(frgId) {
 	$("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
 }
 
+function confirmUnrelateFragments(frgId0, frgId1) {
+	var message = "#{msg['confirm_unrelating_fragments']}";
+    $('#fragment-group-form\\:confirm-dlg-msg').text(message);
+    $('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]').hide();
+    $("#fragment-group-form\\:confirm-dlg-yes-btn-unrelate-fragments").show();
+    PF('singletonConfirmDlg').show();
+    $("#fragment-group-form\\:id-placeholder-for-fragment0").val(frgId0);
+    $("#fragment-group-form\\:id-placeholder-for-fragment1").val(frgId1);
+}
+
 //]]>
 </script>
 </ui:define>
@@ -349,6 +359,8 @@ function confirmUnbookmarkingFragment(frgId) {
     <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}" />
     <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}" />
     <h:inputHidden id="id-placeholder-for-search" value="#{customParams.panelIdForSearch}" />
+    <h:inputHidden id="id-placeholder-for-fragment0" value="#{customParams.fragmentId0}" />
+    <h:inputHidden id="id-placeholder-for-fragment1" value="#{customParams.fragmentId1}" />
     
     <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
@@ -369,6 +381,7 @@ function confirmUnbookmarkingFragment(frgId) {
         <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
         <p:commandButton id="confirm-dlg-yes-btn-unbookmark-fragment" value="#{msg['label_yes']}" action="unbookmark-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
+        <p:commandButton id="confirm-dlg-yes-btn-unrelate-fragments" value="#{msg['label_yes']}" action="unrelate-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
 
         <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
     </p:confirmDialog>

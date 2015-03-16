@@ -282,6 +282,17 @@ public final class FragmentDaoImpl implements FragmentDao {
     }
 
     @Override
+    public void unrelateFragments(long id0, long id1) {
+    	final Session session = sessionFactory.getCurrentSession();
+    	final String[] qs = {
+    			"delete from fragment2fragment where from_id = " + id0 + " and to_id = " + id1,
+    			"delete from fragment2fragment where from_id = " + id1 + " and to_id = " + id0,
+    	};
+    	session.createSQLQuery(qs[0]).executeUpdate();
+    	session.createSQLQuery(qs[1]).executeUpdate();
+    }
+
+    @Override
     public Fragment save(Fragment fragment) {
         sessionFactory.getCurrentSession().saveOrUpdate(fragment);
         log.info("Fragment saved with id: " + fragment.getId());

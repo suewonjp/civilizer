@@ -465,10 +465,20 @@ public final class MainController {
 	public void relateFragments(int fromId, int toId) {
 		try {
 			fragmentDao.relateFragments(fromId, toId);
-			ViewUtil.addMessage("Relating", "Fragment : " + fromId + " <==> " + toId, null);
+			ViewUtil.addMessage("Relating", "Fragments : " + fromId + " <==> " + toId, null);
 		}
 		catch (Exception e) {
 			ViewUtil.addMessage("Error on relating fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}
+	}
+
+	public void unrelateFragments(int fromId, int toId) {
+		try {
+			fragmentDao.unrelateFragments(fromId, toId);
+			ViewUtil.addMessage("Unrelating", "Fragments : " + fromId + " <==> " + toId, null);
+		}
+		catch (Exception e) {
+			ViewUtil.addMessage("Error on unrelating fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
