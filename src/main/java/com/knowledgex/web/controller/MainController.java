@@ -2,6 +2,7 @@ package com.knowledgex.web.controller;
 
 import java.util.*;
 
+import javax.faces.application.FacesMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -268,22 +269,37 @@ public final class MainController {
 	public void bookmarkFragment(Long fragmentId) {
 	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 	    frg.addTag(getBookmarkTag());
-	    fragmentDao.save(frg);
-	    ViewUtil.addMessage("Bookmarking", "Fragment #" + frg.getId(), null);
+	    try {
+			fragmentDao.save(frg);
+			ViewUtil.addMessage("Bookmarking", "Fragment #" + frg.getId(), null);
+		}
+	    catch (Exception e) {
+			ViewUtil.addMessage("Error on bookmarking!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}
 	}
 
 	public void unbookmarkFragment(Long fragmentId) {
 	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 	    frg.removeTag(getBookmarkTag());
-	    fragmentDao.save(frg);
-	    ViewUtil.addMessage("Unbookmarking", "Fragment #" + frg.getId(), null);
+	    try {
+			fragmentDao.save(frg);
+			ViewUtil.addMessage("Unbookmarking", "Fragment #" + frg.getId(), null);
+		}
+	    catch (Exception e) {
+			ViewUtil.addMessage("Error on unbookmarking!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}
 	}
 
 	public void trashFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 		frg.addTag(getTrashcanTag());
-		fragmentDao.save(frg);
-		ViewUtil.addMessage("Trashing", "Fragment #" + frg.getId(), null);
+		try {
+			fragmentDao.save(frg);
+			ViewUtil.addMessage("Trashing", "Fragment #" + frg.getId(), null);
+		}
+		catch (Exception e) {
+			ViewUtil.addMessage("Error on trashing a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}
 	}
 
 	public void trashFragment(FragmentBean fb) {
@@ -308,8 +324,13 @@ public final class MainController {
 
 	public void deleteFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId);
-		fragmentDao.delete(frg);
-		ViewUtil.addMessage("Deleting", "Fragment #" + frg.getId(), null);
+		try {
+			fragmentDao.delete(frg);
+			ViewUtil.addMessage("Deleting", "Fragment #" + frg.getId(), null);
+		}
+		catch (Exception e) {
+			ViewUtil.addMessage("Error on deleting a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}
 	}
 
 	public void deleteFragment(FragmentBean fb) {
@@ -349,12 +370,18 @@ public final class MainController {
 
 	    frg.setTags(tags);
 	    
-        fragmentDao.save(frg);
-        if (weHaveNewFragment) {
-        	ViewUtil.addMessage("Creating", "Fragment #" + frg.getId(), null);
-        }
-        else {
-		    ViewUtil.addMessage("Updating", "Fragment #" + frg.getId(), null);
+        try {
+			fragmentDao.save(frg);
+			if (weHaveNewFragment) {
+				ViewUtil.addMessage("Creating", "Fragment #" + frg.getId(),
+						null);
+			} else {
+				ViewUtil.addMessage("Updating", "Fragment #" + frg.getId(),
+						null);
+			}
+		}
+        catch (Exception e) {
+			ViewUtil.addMessage("Error on saving a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
@@ -384,10 +411,14 @@ public final class MainController {
 				weHaveNewTag = true;
 			}
 			
-			saveTag(t);
-			
-			if (weHaveNewTag) {
-				ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
+			try {
+				saveTag(t);
+				if (weHaveNewTag) {
+					ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
+				}
+			}
+			catch (Exception e) {
+				ViewUtil.addMessage("Error on saving a tag during saving fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 			}
 
 			output.add(t);
@@ -399,10 +430,13 @@ public final class MainController {
 		Tag t = tb.getTag();
 		if (t.getId() == null) {
 			// a new tag
-			// [TODO] handle exceptions occurred in the persistence layer.
-			// - and redirect the exception information to the view layer elegantly
-			saveTag(t);
-			ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
+			try {
+				saveTag(t);
+				ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
+			}
+			catch (Exception e) {
+				ViewUtil.addMessage("Error on creating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			}
 			
 		}
 		else {
@@ -411,8 +445,13 @@ public final class MainController {
 			t = Tag.getTagFromId(t.getId(), tagListBean.getTags());
 			final String oldName = t.getTagName();
 			t.setTagName(newName);
-			saveTag(t);
-			ViewUtil.addMessage("Renaming", "Tag : " + oldName + " => " + newName, null);
+			try {
+				saveTag(t);
+				ViewUtil.addMessage("Renaming", "Tag : " + oldName + " => " + newName, null);
+			}
+			catch (Exception e) {
+				ViewUtil.addMessage("Error on renaming a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			}
 		}
 	}
 	
@@ -430,14 +469,24 @@ public final class MainController {
 		final Long id = t.getId();
 		if (id != null) {
 			t = tagDao.findById(id);
-			tagDao.delete(t);
-			ViewUtil.addMessage("Deleting", "Tag : " + t.getTagName(), null);
+			try {
+				tagDao.delete(t);
+				ViewUtil.addMessage("Deleting", "Tag : " + t.getTagName(), null);
+			}
+			catch (Exception e) {
+				ViewUtil.addMessage("Error on deleting a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			}
 		}
 	}
 	
 	public void relateFragments(int fromId, int toId) {
-		fragmentDao.relateFragments(fromId, toId);
-		ViewUtil.addMessage("Relating", "Fragment : " + fromId + " <==> " + toId, null);
+		try {
+			fragmentDao.relateFragments(fromId, toId);
+			ViewUtil.addMessage("Relating", "Fragment : " + fromId + " <==> " + toId, null);
+		}
+		catch (Exception e) {
+			ViewUtil.addMessage("Error on relating fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
