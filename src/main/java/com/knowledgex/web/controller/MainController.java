@@ -373,11 +373,6 @@ public final class MainController {
         try {
 			fragmentDao.save(frg);
 			ViewUtil.addMessage(weHaveNewFragment ? "Creating" : "Updating", "Fragment #" + frg.getId(), null);
-//			if (weHaveNewFragment) {
-//				ViewUtil.addMessage("Creating", "Fragment #" + frg.getId(), null);
-//			} else {
-//				ViewUtil.addMessage("Updating", "Fragment #" + frg.getId(), null);
-//			}
 		}
         catch (Exception e) {
 			ViewUtil.addMessage("Error on saving a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
@@ -385,13 +380,6 @@ public final class MainController {
 	}
 	
 	private void saveTag(Tag t) {
-//		final DateTime dt = new DateTime();
-//	    if (t.getId() == null) {
-//	    	// It is a new tag...
-//	    	t.setCreationDatetime(dt);
-//	    }
-//	    t.setUpdateDatetime(dt);
-	    
 		tagDao.save(t);
 	}
 	

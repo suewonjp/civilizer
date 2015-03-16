@@ -17,10 +17,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-//import org.hibernate.annotations.Type;
-//import org.joda.time.DateTime;
-//import org.springframework.format.annotation.DateTimeFormat;
-//import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @SuppressWarnings("serial")
 @Entity
@@ -39,8 +35,6 @@ public final class Tag implements Serializable {
 
     private Long id;
     private String tagName;
-//    private DateTime creationDatetime;
-//    private DateTime updateDatetime;
     private Set<Fragment> fragments = Collections.emptySet();
     private Set<Tag> children = Collections.emptySet();
 
@@ -49,9 +43,6 @@ public final class Tag implements Serializable {
 
     public Tag(String name) {
     	setTagName(name);
-//    	DateTime dt = new DateTime();
-//    	setCreationDatetime(dt);
-//        setUpdateDatetime(dt);
     }
 
     @Id
@@ -73,28 +64,6 @@ public final class Tag implements Serializable {
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }
-
-//    @Column(name = "creation_datetime")
-//    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-//    @DateTimeFormat(iso=ISO.DATE)
-//    public DateTime getCreationDatetime() {
-//        return creationDatetime;
-//    }
-//
-//    public void setCreationDatetime(DateTime creationDatetime) {
-//        this.creationDatetime = creationDatetime;
-//    }
-//
-//    @Column(name = "update_datetime")
-//    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-//    @DateTimeFormat(iso=ISO.DATE)
-//    public DateTime getUpdateDatetime() {
-//        return updateDatetime;
-//    }
-//
-//    public void setUpdateDatetime(DateTime updateDatetime) {
-//        this.updateDatetime = updateDatetime;
-//    }
 
     @OneToMany(fetch=FetchType.LAZY)
     @Cascade({CascadeType.MERGE
