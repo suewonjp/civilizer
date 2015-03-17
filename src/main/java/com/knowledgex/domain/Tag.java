@@ -114,7 +114,7 @@ public final class Tag implements Serializable {
     	return result;
     }
     
-    public static Collection<String> getTagNameCollectionFrom(String names) {
+    public static List<String> getTagNameCollectionFrom(String names) {
     	if (names == null || names.trim().isEmpty()) {
     		return Collections.emptyList();
     	}
