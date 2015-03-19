@@ -181,6 +181,10 @@ function fetchFragmentsByTag(from, to) {
 function newBaseDroppable(effectClassOnDrop) {
 	var output = {
 		over: function(event, ui) {
+			var from = ui.draggable;
+			if (from.attr("id") == "editor-frame") {
+				return;
+			}
             var to = $(event.target);
             to.addClass(effectClassOnDrop);
         },
