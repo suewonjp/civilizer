@@ -126,8 +126,8 @@
 
 .fragment-menu {
     display: none;
-    position:relative;
-    top: -24px;
+/*     position:relative; */
+/*     top: -24px; */
     float: right;
 }
 
