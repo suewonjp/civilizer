@@ -10,6 +10,17 @@
     
     <title>#{msg['application_name']}</title>
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
+    <script src="${request.contextPath}/app/resources/js/vendors/jquery-ui/jquery-ui.min.js" />
+    <script src="${request.contextPath}/app/resources/js/vendors/markdown-js/markdown.js"></script>
+    <script src="${request.contextPath}/app/resources/js/vendors/markitup/jquery.markitup.js"></script>
+    <script src="${request.contextPath}/app/resources/js/vendors/markitup/sets/markdown/set.js"></script>
+    <script src="${request.contextPath}/app/resources/js/vendors/watermark/jquery.watermark.min.js"></script>
+    <script src="${request.contextPath}/app/resources/js/vendors/lightbox_me/jquery.lightbox_me.js"></script>
+    <script src="${request.contextPath}/app/resources/js/vendors/css_browser_selector.js"></script>
+
+    <ui:insert name="entry-point-scripts" />
+    
     <link rel="stylesheet" href="${request.contextPath}/app/resources/styles/blueprint/screen.css" type="text/css" media="screen, projection" />
     <link rel="stylesheet" href="${request.contextPath}/app/resources/styles/blueprint/print.css" type="text/css" media="print" />
     <link rel="stylesheet" href="${request.contextPath}/app/resources/js/vendors/markitup/skins/markitup/style.css" type="text/css" />
@@ -23,16 +34,6 @@
     <!--[if lt IE 8]>
         <link rel="stylesheet" href="${request.servletPath}/styles/blueprint/ie.css" type="text/css" media="screen, projection" />
     <![endif]-->
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
-    <script src="${request.contextPath}/app/resources/js/vendors/jquery-ui/jquery-ui.min.js" />
-    <script src="${request.contextPath}/app/resources/js/vendors/markdown-js/markdown.js"></script>
-    <script src="${request.contextPath}/app/resources/js/vendors/markitup/jquery.markitup.js"></script>
-    <script src="${request.contextPath}/app/resources/js/vendors/markitup/sets/markdown/set.js"></script>
-    <script src="${request.contextPath}/app/resources/js/vendors/watermark/jquery.watermark.min.js"></script>
-    <script src="${request.contextPath}/app/resources/js/vendors/lightbox_me/jquery.lightbox_me.js"></script>
-
-    <ui:insert name="entry-point-scripts" />
 </h:head>
 
 <f:view contentType="text/html" locale="#{localeBean.locale}">
