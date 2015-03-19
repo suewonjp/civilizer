@@ -66,7 +66,6 @@ function clearFragmentEditor() {
     el.val(null);
     el.watermark("Title");
     
-//     el = $("#fragment-editor-form\\:tags-input_input");
     el = $("#fragment-editor-form\\:tags-input");
     el.val(null);
     el.watermark("Tags");
@@ -85,18 +84,6 @@ function parseMarkdown(inputText) {
 function openFragmentEditorForEdit(panelId, fragmentId, tagNames) {
     var el = $("#fragment-group-form\\:fragment-title-placeholder-panel"+panelId+"-"+fragmentId);
     $("#fragment-editor-form\\:title-input").val(el.val());
-    
-//     var tags = tagNames.split(",");
-//     if (tags.length && tags[tags.length-1] == "") {
-//     	tags.pop();
-//     }
-//     var tgt = $("#editor-tags");
-//     tgt.empty();
-//     for (var i=0; i<tags.length; ++i) {
-//     	tgt.append('<span class="tag-box"><span class="fa fa-tag"><span style="color:black">'+tags[i]+'</span></span></span>');
-//     }
-    
-//     $("#fragment-editor-form\\:tags-input_input").val(tagNames);
     $("#fragment-editor-form\\:tags-input").val(tagNames);
     $("#fragment-editor-form\\:id-placeholder-for-fragment").val(fragmentId);
     el = $("#fragment-group-form\\:fragment-content-placeholder-panel"+panelId+"-"+fragmentId);
@@ -188,7 +175,6 @@ function autocompleteForTypingTags() {
             </div>
             <p:inputText id="title-input" value="#{paramFragmentBean.fragment.title}" autocomplete="false" onkeypress="if (event.keyCode == 13) { event.preventDefault(); }"/>
             <div id="editor-tags"></div>
-<!--             <p:autoComplete id="tags-input" style="width:95%" value="#{paramFragmentBean.concatenatedTagNames}" completeMethod="#{tagListBean.suggest}" dropdown="true" autocomplete="false"/> -->
             <p:inputText id="tags-input" value="#{paramFragmentBean.concatenatedTagNames}" autocomplete="false" onkeypress="if (event.keyCode == 13) { event.preventDefault(); }"/>
             <textarea id="fragment-content-editor" ></textarea>
             <h:inputHidden id="content-placeholder" value="#{paramFragmentBean.fragment.content}" />
