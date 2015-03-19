@@ -1,71 +1,72 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	>
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    >
 
 <c:set var="fragment" value="#{fragmentBean.fragment}" />
 <div class="each-fragment-container">
-	<h:panelGrid styleClass="each-fragment" columns="1" border="1">
-		<f:facet name="header"><div class="fragment-header">
-				<p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;"
-				    widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
-				<a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{fragment.id}">
-				    \##{fragment.id}
-				</a>
-				&nbsp;&nbsp;
+    <h:panelGrid styleClass="each-fragment" columns="1" border="1">
+        <f:facet name="header">
+            <div class="fragment-header">
+                <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;"
+                    widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
+                <a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{fragment.id}">
+                    \##{fragment.id}
+                </a>
+                &nbsp;&nbsp;
                 <span class="fragment-title" _fid="#{fragment.id}">
                     <h:outputText escape="false" value="#{fragmentBean.title}" />
                 </span>
-				&nbsp;&nbsp;
+                &nbsp;&nbsp;
                 <c:forEach var="tag" items="#{fragment.tags}">
                     <p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
-				        <span class="fa fa-tag " ></span>
-				        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
-				        <f:param name="tagId" value="#{tag.id}" />
-				    </p:commandLink>
+                        <span class="fa fa-tag " ></span>
+                        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
+                        <f:param name="tagId" value="#{tag.id}" />
+                    </p:commandLink>
                 </c:forEach>
-				&nbsp;&nbsp;
-				<h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
-					<f:converter converterId="jodaDateTimeConverter" />
-				</h:outputText>
-				
-				<div class="fragment-menu">
-					<a href="#editor-frame" class="edit-fragment-editor-trigger button-link"
-					   onclick="openFragmentEditorForEdit('#{panelId}', '#{fragment.id}', '#{fragmentBean.concatenatedTagNames}')">
+                &nbsp;&nbsp;
+                <h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
+                    <f:converter converterId="jodaDateTimeConverter" />
+                </h:outputText>
+                
+                <div class="fragment-menu">
+                    <a href="#editor-frame" class="edit-fragment-editor-trigger button-link"
+                       onclick="openFragmentEditorForEdit('#{panelId}', '#{fragment.id}', '#{fragmentBean.concatenatedTagNames}')">
                         <span class="fa fa-pencil fa-2x" title="#{msg['label_edit_fragment']}">&nbsp;</span>
-					</a>
-					<p:commandLink action="bookmark-fragment">
+                    </a>
+                    <p:commandLink action="bookmark-fragment">
                         <span class="fa fa-bookmark fa-2x button-link " title="#{msg['label_bookmark_fragment']}">&nbsp;</span>
                         <f:param name="fragmentId" value="#{fragment.id}" />
                     </p:commandLink>
-					<c:choose>
-						<c:when test="#{panelContext.fragmentDeletable}">
-							<p:commandLink style="text-decoration:none;" oncomplete="confirmTrashingFragments('#{fragment.id}', true, false, '#{panelId}')" >
-								<span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
-							</p:commandLink>
-						</c:when>
-						<c:otherwise>
-							<p:commandLink style="text-decoration:none;" oncomplete="confirmTrashingFragments(''#{fragment.id}', false, false, '#{panelId}')" >
-								<span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
-							</p:commandLink>
-						</c:otherwise>
-					</c:choose>
-					<h:inputHidden id="fragment-title-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.title}" />
-					<h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.content}" />
-				</div>
-			</div></f:facet>
-		<h:outputText value="#{fragmentBean.content}" styleClass="fragment-content" />
-	</h:panelGrid> <!-- 	each-fragment -->
+                    <c:choose>
+                        <c:when test="#{panelContext.fragmentDeletable}">
+                            <p:commandLink style="text-decoration:none;" oncomplete="confirmTrashingFragments('#{fragment.id}', true, false, '#{panelId}')" >
+                                <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
+                            </p:commandLink>
+                        </c:when>
+                        <c:otherwise>
+                            <p:commandLink style="text-decoration:none;" oncomplete="confirmTrashingFragments(''#{fragment.id}', false, false, '#{panelId}')" >
+                                <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
+                            </p:commandLink>
+                        </c:otherwise>
+                    </c:choose>
+                    <h:inputHidden id="fragment-title-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.title}" />
+                    <h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.content}" />
+                </div>
+            </div></f:facet>
+        <h:outputText value="#{fragmentBean.content}" styleClass="fragment-content" />
+    </h:panelGrid> <!--     each-fragment -->
 </div> <!-- each-fragment-container -->
 
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragment.relatedOnes}">
         <span class="small-fragment-box">
-	        <span class="fa fa-link">&nbsp;&nbsp;</span>
+            <span class="fa fa-link">&nbsp;&nbsp;</span>
             <a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{rf.id}">\##{rf.id}</a>
             &nbsp;&nbsp;
             <h:outputText value="#{rf.title}" />
