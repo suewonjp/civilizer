@@ -35,32 +35,7 @@ $(document).ready(function() {
     
     $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);
     
-    var tagSuggestions = [];
-    $("#tag-palette-linear .each-tag").each(function (index, value) {
-    	tagSuggestions.push($(value).find(".each-tag-name").text());
-    });
-    
-    $("#fragment-editor-form\\:tags-input").autocomplete({
-        source: function(req, res) {
-             var tags = req.term.split(/\s*[\,]\s*/);
-             if (tags.length && tags[tags.length-1] == "") {
-                  tags.pop();
-             }
-             var typed = tags[tags.length-1];
-             tags.pop();
-             var prefix = "";
-             for (var i=0; i<tags.length; ++i) {
-            	 prefix += tags[i] + ",";
-             }
-             var output = [];
-             for (var i=0; i<tagSuggestions.length; ++i) {
-            	 if (tagSuggestions[i].indexOf(typed) > -1) {
-                     output.push(prefix + tagSuggestions[i]);
-                 }
-             }
-             res(output);
-        },
-    });
+    autocompleteForTypingTags();
 }); // end of $(document).ready()
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {
@@ -149,6 +124,53 @@ function previewFragment() {
     });
     
     $("#fragment-overlay-content").html(renderedHtml);
+}
+
+function autocompleteForTypingTags() {
+	var tagSuggestions = [];
+    $("#tag-palette-linear .each-tag").each(function (index, value) {
+        tagSuggestions.push($(value).find(".each-tag-name").text());
+    });
+    
+    var split = function (input) {
+        return input.trim().split(/\,\s*/);
+    }
+    
+    $("#fragment-editor-form\\:tags-input").autocomplete({
+        source: function(req, res) {
+             var tags = split(req.term);
+             if (tags.length && tags[tags.length-1] == "") {
+                  tags.pop();
+             }
+             var typed = tags[tags.length-1];
+             tags.pop();
+             var prefix = "";
+             for (var i=0; i<tags.length; ++i) {
+                 prefix += tags[i] + ",";
+             }
+             var output = [];
+             for (var i=0; i<tagSuggestions.length; ++i) {
+                 if (tagSuggestions[i].indexOf(typed) > -1) {
+                     output.push(tagSuggestions[i]);
+                 }
+             }
+             res(output);
+        },
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            var terms = split(this.value);
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push(ui.item.value);
+            // add placeholder to get the comma-and-space at the end
+            this.value = terms.join(",");
+            return false;
+        },
+    });
 }
 //]]>
 </script>
