@@ -1,27 +1,22 @@
 package com.civilizer.config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.CopyOption;
+import java.util.*;
+import java.io.*;
+
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Properties;
+import java.nio.file.StandardCopyOption;
 
 public final class Configurator {
 	
 	private static final String DEFAULT_PRIVATE_HOME_NAME = ".civilizer";
 	private static final String DEFAULT_PRIVATE_HOME_PATH = System.getProperty("user.home") + "/" + DEFAULT_PRIVATE_HOME_NAME;
 	private static final String OPTION_FILE_NAME = "app-options.properties";
+	private static final String DEFAULT_DB_FOLDER_NAME = "database";
 	
 	public Configurator() {
-//		addAppOptionsToSystemProperties();
-		
-		System.setProperty("civilizer.db_file_prefix", "db-data/test");
-		System.out.println("++++++++++++++++ " + System.getProperty("civilizer.db_file_prefix"));
+		addAppOptionsToSystemProperties();
 	}
 	
 	private void addAppOptionsToSystemProperties() {
@@ -38,7 +33,7 @@ public final class Configurator {
 		
 		try {
 			final FileInputStream optionFile = new FileInputStream(privateHomePath + "/" + OPTION_FILE_NAME);
-			final Properties p = new Properties(System.getProperties());
+			final Properties p = new Properties();
 			
 			try {
 				p.load(optionFile);
@@ -47,7 +42,23 @@ public final class Configurator {
 				e.printStackTrace();
 			}
 			
-			System.setProperties(p);
+			final String dbFilePrefix = p.getProperty("civilizer.db_file_prefix");
+			String absDbFilePrefix = null;
+			if (dbFilePrefix.startsWith("/")) {
+			    // absolute path
+			    absDbFilePrefix = dbFilePrefix;
+			}
+			else {
+			    // relative path
+			    absDbFilePrefix = privateHome + "/" + dbFilePrefix;
+			}
+			p.setProperty("civilizer.db_file_prefix", absDbFilePrefix);
+			
+			Enumeration<Object> keys = p.keys();
+			while (keys.hasMoreElements()) {
+			    final String k = keys.nextElement().toString();
+			    System.setProperty(k, p.getProperty(k));
+			}
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -56,17 +67,19 @@ public final class Configurator {
 	
 	private void setupPrivateHome(File privateHome) {
 		final Path optionFilePath = FileSystems.getDefault().getPath(privateHome.getAbsolutePath(), OPTION_FILE_NAME);
-//		final String optionFilePath = privateHome.getAbsolutePath() + "/" + OPTION_FILE_NAME;
-//		final File optionFile = new File(optionFilePath.toString());
 		final File optionFile = optionFilePath.toFile();
 		if (! optionFile.exists()) {
-			InputStream defOptionsStream = getClass().getResourceAsStream(OPTION_FILE_NAME);
-//			InputStream defOptionsStream = this.getClass().getClassLoader().getResourceAsStream(OPTION_FILE_NAME);
+			InputStream defOptionsStream = getClass().getClassLoader().getResourceAsStream(OPTION_FILE_NAME);
 			try {
-				Files.copy(defOptionsStream, optionFilePath, (CopyOption[]) null);
+				Files.copy(defOptionsStream, optionFilePath, StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		final File dbFolder = new File(privateHome.getAbsoluteFile() + "/" + DEFAULT_DB_FOLDER_NAME);
+		if (! dbFolder.isDirectory()) {
+		    dbFolder.mkdir();
 		}
 	}
 	

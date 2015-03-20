@@ -11,6 +11,7 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.h2.Driver" />
+<!-- 		<property name="url" value="jdbc:h2:file:/Users/bsw/.civilizer/database/civilizer;MODE=Oracle;FILE_LOCK=NO;DB_CLOSE_DELAY=10" /> -->
 <!-- 		<property name="url" value="jdbc:h2:file:db-data/test;MODE=Oracle;FILE_LOCK=NO;DB_CLOSE_DELAY=10" /> -->
 		<property name="url" value="jdbc:h2:file:#{ systemProperties['civilizer.db_file_prefix'] };MODE=Oracle;FILE_LOCK=NO;DB_CLOSE_DELAY=10" />
 		<property name="username" value="sa" />
