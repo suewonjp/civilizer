@@ -20,10 +20,10 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources location="/" mapping="/resources/**" />
 
-	<!-- Enable processing of JSF 2 resource requests. For example: /knowledgex/app/javax.faces.resource/jsf.js?ln=javax.faces -->
+	<!-- Enable processing of JSF 2 resource requests. For example: /civilizer/app/javax.faces.resource/jsf.js?ln=javax.faces -->
 	<faces:resources />
 
-	<context:component-scan base-package="com.knowledgex.web" />
+	<context:component-scan base-package="com.civilizer.web" />
 
 	<!-- Maps request paths to flows in the flowRegistry -->
 	<beans:bean
