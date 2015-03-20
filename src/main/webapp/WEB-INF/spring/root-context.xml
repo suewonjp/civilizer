@@ -7,6 +7,9 @@
     
     <!-- Root Context: defines shared resources visible to all other web components -->
 
+    <bean id="configurator" class="com.civilizer.config.Configurator"/>
+
     <import resource="classpath:datasource-context.xml" />
+    
     
 </beans>
