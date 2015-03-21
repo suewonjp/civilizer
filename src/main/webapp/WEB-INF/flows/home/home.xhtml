@@ -94,11 +94,10 @@ function setUpDragAndDrop() {
 	   Boolean('#{fragmentListBeans[2].panelContextBean.fragmentDeletable}' == 'true'),
 	];
 	var draggableSettings = {
-        revert: true
-        , cursor:"move"
-        , scroll: false
-        , helper: "clone"
-        , zIndex: 10000
+        cursor:"move",
+        scroll: false,
+        helper: "clone",
+        zIndex: 10000,
     };
 	
 	$(".fragment-title").draggable(draggableSettings);

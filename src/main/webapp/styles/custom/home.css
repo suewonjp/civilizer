@@ -1,5 +1,9 @@
+.ui-growl {
+	top: 60px;
+}
+
 #fragment-group {
-	margin-top: 12px;
+	margin-top: 15px;
 }
 
 #fragment-panel-0, #fragment-panel-1, #fragment-panel-2 {
