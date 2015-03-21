@@ -119,9 +119,9 @@ function setUpDragAndDrop() {
                 relateFragments([ {name:"from", value:fromId}, {name:"to", value:toId} ]);
             }
         }
-        else if (from.hasClass("each-tag")) {
-            fetchFragmentsByTag(from, to);
-        }
+//         else if (from.hasClass("each-tag")) {
+//             fetchFragmentsByTag(from, to);
+//         }
     };
     $(".each-fragment-container").droppable(droppable);
     
@@ -182,6 +182,7 @@ function newBaseDroppable(effectClassOnDrop) {
 		over: function(event, ui) {
 			var from = ui.draggable;
 			if (from.attr("id") == "editor-frame") {
+				// do not make components responsive when dragging around the fragment editor
 				return;
 			}
             var to = $(event.target);
