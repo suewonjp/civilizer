@@ -13,20 +13,23 @@ public final class Configurator {
 	private static final String OPTION_FILE_NAME = "app-options.properties";
 	public static final String KEY_PRIVATE_HOME_PATH = "civilizer.private_home_path";
 	public static final String KEY_DB_FILE_PREFIX = "civilizer.db_file_prefix";
+	public static final String KEY_UPLOADED_FILES_HOME = "civilizer.uploaded_files_home";
 	
 	@SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(Configurator.class);
 	
 	public Configurator() {
 	    final File privateHome = detectPrivateHome(DEFAULT_PRIVATE_HOME_NAME);
-        setupPrivateHome(privateHome);
+        preSetupPrivateHome(privateHome);
 		addAppOptionsToSystemProperties(privateHome);
+		postSetupPrivateHome(privateHome);
 	}
 
 	public Configurator(String defaultPrivateHomeName) {
 	    final File privateHome = detectPrivateHome(defaultPrivateHomeName);
-        setupPrivateHome(privateHome);
+        preSetupPrivateHome(privateHome);
         addAppOptionsToSystemProperties(privateHome);
+        postSetupPrivateHome(privateHome);
 	}
 	
 	public static String getDefaultPrivateHomePath(String defaultPrivateHomeName) {
@@ -44,11 +47,8 @@ public final class Configurator {
         return new File(privateHomePath);
 	}
 	
-	private void setupPrivateHome(File privateHome) {
-	    if (! privateHome.isDirectory()) {
-	        // create the private home directory unless it exists
-            privateHome.mkdir();
-        }
+	private void preSetupPrivateHome(File privateHome) {
+	    createUnexistingDirectory(privateHome);
 	    
 	    final String tgtOptionFilePath = privateHome.getAbsolutePath() + File.separatorChar + OPTION_FILE_NAME;
 	    final File tgtOptionFile = new File(tgtOptionFilePath);
@@ -64,6 +64,11 @@ public final class Configurator {
 	    }
     }
 	
+	private void postSetupPrivateHome(File privateHome) {
+		final String uploadedFileHomePath = System.getProperty(KEY_UPLOADED_FILES_HOME);
+		createUnexistingDirectory(new File(uploadedFileHomePath));
+	}
+	
 	private void addAppOptionsToSystemProperties(File privateHome) {
 		try {
 		    // load options from the application option file
@@ -72,17 +77,10 @@ public final class Configurator {
 		    p.load(new FileInputStream(optionFilePath));
 			
 		    // make sure the database file prefix is an absolute path
-			final String dbFilePrefix = p.getProperty(KEY_DB_FILE_PREFIX);
-			String absDbFilePrefix = null;
-			if (new File(dbFilePrefix).isAbsolute()) {
-			    // already absolute path
-			    absDbFilePrefix = dbFilePrefix;
-			}
-			else {
-			    // relative path
-			    absDbFilePrefix = privateHome.getAbsolutePath() + File.separatorChar + dbFilePrefix;
-			}
-			p.setProperty(KEY_DB_FILE_PREFIX, absDbFilePrefix);
+		    setPathAbsolute(p, KEY_DB_FILE_PREFIX, privateHome);
+			
+			// make sure the uploaded file folder path is absolute
+			setPathAbsolute(p, KEY_UPLOADED_FILES_HOME, privateHome);
 			
 			// add the application options into the system properties
 			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")
@@ -99,6 +97,26 @@ public final class Configurator {
 		}
 		catch (IOException e) {
             e.printStackTrace();
+        }
+	}
+	
+	private void setPathAbsolute(Properties p, String key, File privateHome) {
+		final String srcPath = p.getProperty(key);
+		String absPath = null;
+		if (new File(srcPath).isAbsolute()) {
+		    // already absolute path
+			absPath = srcPath;
+		}
+		else {
+		    // relative path
+			absPath = privateHome.getAbsolutePath() + File.separatorChar + srcPath;
+		}
+		p.setProperty(key, absPath);
+	}
+	
+	private void createUnexistingDirectory(File dir) {
+		if (! dir.isDirectory()) {
+            dir.mkdir();
         }
 	}
 	

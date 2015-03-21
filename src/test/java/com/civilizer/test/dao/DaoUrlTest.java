@@ -3,9 +3,9 @@ package com.civilizer.test.dao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.civilizer.config.Configurator;
 import com.civilizer.test.util.TestUtil;
 
 public class DaoUrlTest extends DaoTest {
@@ -17,6 +17,11 @@ public class DaoUrlTest extends DaoTest {
                 "classpath:datasource-context-h2-url.xml"
                 , DaoUrlTest.class
                 );
+    }
+    
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    	TestUtil.unconfigure();
     }
 
     @Before
