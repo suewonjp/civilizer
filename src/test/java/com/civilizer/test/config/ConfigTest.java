@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
+import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
 import com.civilizer.dao.FragmentDao;
 import com.civilizer.test.util.TestUtil;
@@ -67,10 +68,8 @@ public class ConfigTest {
 
     @Test
     public void testSetUpPrivateHomeProvidedAtRuntime() {
-    	assertNull(System.getProperty(Configurator.KEY_PRIVATE_HOME_PATH));
-    	
     	final String path = System.getProperty("user.dir") + "/test/private-home";    	
-    	System.setProperty(Configurator.KEY_PRIVATE_HOME_PATH, path);
+    	System.setProperty(AppOptions.PRIVATE_HOME_PATH, path);
     	new Configurator();
     	
     	final File f = new File(path);

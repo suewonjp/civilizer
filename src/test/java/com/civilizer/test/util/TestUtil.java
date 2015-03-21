@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
 
 public final class TestUtil {
@@ -82,11 +83,11 @@ public final class TestUtil {
     
     public static void configure() {
     	final String path = System.getProperty("user.dir") + "/test/private-home";
-    	System.setProperty(Configurator.KEY_PRIVATE_HOME_PATH, path);
+    	System.setProperty(AppOptions.PRIVATE_HOME_PATH, path);
     	new Configurator();
     }
 
     public static void unconfigure() {
-    	System.clearProperty(Configurator.KEY_PRIVATE_HOME_PATH);
+    	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
     }
 }

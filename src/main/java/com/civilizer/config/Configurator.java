@@ -9,11 +9,8 @@ import org.slf4j.LoggerFactory;
 
 public final class Configurator {
 	
-	private static final String DEFAULT_PRIVATE_HOME_NAME = ".civilizer";
-	private static final String OPTION_FILE_NAME = "app-options.properties";
-	public static final String KEY_PRIVATE_HOME_PATH = "civilizer.private_home_path";
-	public static final String KEY_DB_FILE_PREFIX = "civilizer.db_file_prefix";
-	public static final String KEY_UPLOADED_FILES_HOME = "civilizer.uploaded_files_home";
+	private static final String DEFAULT_PRIVATE_HOME_NAME       = ".civilizer";
+	private static final String OPTION_FILE_NAME                = "app-options.properties";
 	
 	@SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(Configurator.class);
@@ -38,7 +35,7 @@ public final class Configurator {
 	
 	private File detectPrivateHome(String defaultPrivateHomeName) {
 	    final String defaultPrivateHomePath = getDefaultPrivateHomePath(defaultPrivateHomeName);
-        final String privateHomePathByRuntimeArg = System.getProperty(KEY_PRIVATE_HOME_PATH);
+        final String privateHomePathByRuntimeArg = System.getProperty(AppOptions.PRIVATE_HOME_PATH);
         
         // We use default private home path unless a path is provided at runtime
         final String privateHomePath = (privateHomePathByRuntimeArg == null) ?
@@ -65,7 +62,7 @@ public final class Configurator {
     }
 	
 	private void postSetupPrivateHome(File privateHome) {
-		final String uploadedFileHomePath = System.getProperty(KEY_UPLOADED_FILES_HOME);
+		final String uploadedFileHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		createUnexistingDirectory(new File(uploadedFileHomePath));
 	}
 	
@@ -77,10 +74,10 @@ public final class Configurator {
 		    p.load(new FileInputStream(optionFilePath));
 			
 		    // make sure the database file prefix is an absolute path
-		    setPathAbsolute(p, KEY_DB_FILE_PREFIX, privateHome);
+		    setPathAbsolute(p, AppOptions.DB_FILE_PREFIX, privateHome);
 			
 			// make sure the uploaded file folder path is absolute
-			setPathAbsolute(p, KEY_UPLOADED_FILES_HOME, privateHome);
+			setPathAbsolute(p, AppOptions.UPLOADED_FILES_HOME, privateHome);
 			
 			// add the application options into the system properties
 			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")

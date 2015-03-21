@@ -17,11 +17,11 @@ public class DaoUrlTest extends DaoTest {
                 "classpath:datasource-context-h2-url.xml"
                 , DaoUrlTest.class
                 );
+    	TestUtil.unconfigure();
     }
     
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
-    	TestUtil.unconfigure();
     }
 
     @Before
