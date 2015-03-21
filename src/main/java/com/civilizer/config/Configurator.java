@@ -3,57 +3,89 @@ package com.civilizer.config;
 import java.util.*;
 import java.io.*;
 
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class Configurator {
 	
 	private static final String DEFAULT_PRIVATE_HOME_NAME = ".civilizer";
-	private static final String DEFAULT_PRIVATE_HOME_PATH = System.getProperty("user.home") + "/" + DEFAULT_PRIVATE_HOME_NAME;
 	private static final String OPTION_FILE_NAME = "app-options.properties";
-	private static final String DEFAULT_DB_FOLDER_NAME = "database";
+	private static final String KEY_PRIVATE_HOME_PATH = "civilizer.private_home_path";
+	private static final String KEY_DB_FILE_PREFIX = "civilizer.db_file_prefix";
+	
+	@SuppressWarnings("unused")
+    private final Logger logger = LoggerFactory.getLogger(Configurator.class);
 	
 	public Configurator() {
-		addAppOptionsToSystemProperties();
+	    final File privateHome = detectPrivateHome(DEFAULT_PRIVATE_HOME_NAME);
+        setupPrivateHome(privateHome);
+		addAppOptionsToSystemProperties(privateHome);
+	}
+
+	public Configurator(String defaultPrivateHomeName) {
+	    final File privateHome = detectPrivateHome(defaultPrivateHomeName);
+        setupPrivateHome(privateHome);
+        addAppOptionsToSystemProperties(privateHome);
 	}
 	
-	private void addAppOptionsToSystemProperties() {
-		final String privateHomePathByRuntimeArg = System.getProperty("civilizer.config_folder_path");
-		final String privateHomePath = (privateHomePathByRuntimeArg == null) ?
-				DEFAULT_PRIVATE_HOME_PATH : privateHomePathByRuntimeArg;
-		
-		final File privateHome = new File(privateHomePath);
-		if (! privateHome.isDirectory()) {
-			privateHome.mkdir();
-		}
-		
-		setupPrivateHome(privateHome);
-		
+	public static String getDefaultPrivateHomePath(String defaultPrivateHomeName) {
+	    return System.getProperty("user.home") + File.separatorChar + defaultPrivateHomeName;
+	}
+	
+	private File detectPrivateHome(String defaultPrivateHomeName) {
+	    final String defaultPrivateHomePath = getDefaultPrivateHomePath(defaultPrivateHomeName);
+        final String privateHomePathByRuntimeArg = System.getProperty(KEY_PRIVATE_HOME_PATH);
+        
+        // We use default private home path unless a path is provided at runtime
+        final String privateHomePath = (privateHomePathByRuntimeArg == null) ?
+                defaultPrivateHomePath : privateHomePathByRuntimeArg;
+        
+        return new File(privateHomePath);
+	}
+	
+	private void setupPrivateHome(File privateHome) {
+	    if (! privateHome.isDirectory()) {
+	        // create the private home directory unless it exists
+            privateHome.mkdir();
+        }
+	    
+	    final String tgtOptionFilePath = privateHome.getAbsolutePath() + File.separatorChar + OPTION_FILE_NAME;
+	    final File tgtOptionFile = new File(tgtOptionFilePath);
+	    if (! tgtOptionFile.exists()) {
+	        // copy the default application option file unless it exists
+	        final File defaultOptionFile = 
+	                new File (getClass().getClassLoader().getResource(OPTION_FILE_NAME).getFile());
+	        try {
+                FileUtils.copyFile(defaultOptionFile, tgtOptionFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+	    }
+    }
+	
+	private void addAppOptionsToSystemProperties(File privateHome) {
 		try {
-			final FileInputStream optionFile = new FileInputStream(privateHomePath + "/" + OPTION_FILE_NAME);
-			final Properties p = new Properties();
+		    // load options from the application option file
+		    final Properties p = new Properties();
+		    final String optionFilePath = privateHome.getAbsolutePath() + File.separatorChar + OPTION_FILE_NAME;
+		    p.load(new FileInputStream(optionFilePath));
 			
-			try {
-				p.load(optionFile);
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			final String dbFilePrefix = p.getProperty("civilizer.db_file_prefix");
+		    // make sure the database file prefix to an absolute path
+			final String dbFilePrefix = p.getProperty(KEY_DB_FILE_PREFIX);
 			String absDbFilePrefix = null;
-			if (dbFilePrefix.startsWith("/")) {
-			    // absolute path
+			if (new File(dbFilePrefix).isAbsolute()) {
+			    // already absolute path
 			    absDbFilePrefix = dbFilePrefix;
 			}
 			else {
 			    // relative path
-			    absDbFilePrefix = privateHome + "/" + dbFilePrefix;
+			    absDbFilePrefix = privateHome.getAbsolutePath() + File.separatorChar + dbFilePrefix;
 			}
-			p.setProperty("civilizer.db_file_prefix", absDbFilePrefix);
+			p.setProperty(KEY_DB_FILE_PREFIX, absDbFilePrefix);
 			
+			// add the application options into the system properties
+			// and then, we can access the options via SpringEL (i.g. "{systemProperties['key']}")
 			Enumeration<Object> keys = p.keys();
 			while (keys.hasMoreElements()) {
 			    final String k = keys.nextElement().toString();
@@ -63,24 +95,9 @@ public final class Configurator {
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private void setupPrivateHome(File privateHome) {
-		final Path optionFilePath = FileSystems.getDefault().getPath(privateHome.getAbsolutePath(), OPTION_FILE_NAME);
-		final File optionFile = optionFilePath.toFile();
-		if (! optionFile.exists()) {
-			InputStream defOptionsStream = getClass().getClassLoader().getResourceAsStream(OPTION_FILE_NAME);
-			try {
-				Files.copy(defOptionsStream, optionFilePath, StandardCopyOption.REPLACE_EXISTING);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		final File dbFolder = new File(privateHome.getAbsoluteFile() + "/" + DEFAULT_DB_FOLDER_NAME);
-		if (! dbFolder.isDirectory()) {
-		    dbFolder.mkdir();
-		}
+		catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 }

@@ -9,6 +9,7 @@ public class DaoUrlTest extends DaoTest {
     
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
+        System.setProperty("civilizer.db_file_prefix", "db-data/test");
         DaoTest.setUpBeforeClass(
                 "classpath:datasource-context-h2-url.xml"
                 , DaoUrlTest.class
