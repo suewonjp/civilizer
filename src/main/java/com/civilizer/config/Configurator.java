@@ -11,8 +11,8 @@ public final class Configurator {
 	
 	private static final String DEFAULT_PRIVATE_HOME_NAME = ".civilizer";
 	private static final String OPTION_FILE_NAME = "app-options.properties";
-	private static final String KEY_PRIVATE_HOME_PATH = "civilizer.private_home_path";
-	private static final String KEY_DB_FILE_PREFIX = "civilizer.db_file_prefix";
+	public static final String KEY_PRIVATE_HOME_PATH = "civilizer.private_home_path";
+	public static final String KEY_DB_FILE_PREFIX = "civilizer.db_file_prefix";
 	
 	@SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(Configurator.class);
@@ -71,7 +71,7 @@ public final class Configurator {
 		    final String optionFilePath = privateHome.getAbsolutePath() + File.separatorChar + OPTION_FILE_NAME;
 		    p.load(new FileInputStream(optionFilePath));
 			
-		    // make sure the database file prefix to an absolute path
+		    // make sure the database file prefix is an absolute path
 			final String dbFilePrefix = p.getProperty(KEY_DB_FILE_PREFIX);
 			String absDbFilePrefix = null;
 			if (new File(dbFilePrefix).isAbsolute()) {
@@ -85,7 +85,9 @@ public final class Configurator {
 			p.setProperty(KEY_DB_FILE_PREFIX, absDbFilePrefix);
 			
 			// add the application options into the system properties
-			// and then, we can access the options via SpringEL (i.g. "{systemProperties['key']}")
+			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")
+			// [NOTE] do not use System.setProperties() method to operate the same thing;
+			// It will cause "systemProperties" SpEL expression not to work properly
 			Enumeration<Object> keys = p.keys();
 			while (keys.hasMoreElements()) {
 			    final String k = keys.nextElement().toString();

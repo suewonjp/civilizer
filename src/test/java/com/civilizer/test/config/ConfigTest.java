@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import com.civilizer.dao.FragmentDao;
 
 public class ConfigTest {
     
-    List<File> filesToDelete = new ArrayList<File>();
+    static List<File> filesToDelete = new ArrayList<File>();
     
     private static void deleteFile(File file) {
         try {
@@ -33,15 +34,20 @@ public class ConfigTest {
         }
     }
     
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+        for (File file : filesToDelete) {
+            deleteFile(file);
+        }
+    }
+    
     @Before
     public void setUp() throws Exception {
+    	filesToDelete = new ArrayList<File>();
     }
     
     @After
     public void tearDown() throws Exception {
-        for (File file : filesToDelete) {
-            deleteFile(file);
-        }
     }
 
     @Test
@@ -52,18 +58,28 @@ public class ConfigTest {
         filesToDelete.add(privateHome);
         assertNotNull(privateHome);
         assertEquals(true, privateHome.isAbsolute());
-        if (privateHome.exists()) {
-            deleteFile(privateHome);
-        }
         
         new Configurator(defaultPrivateHomeName);
         
         assertEquals(true, privateHome.isDirectory());
     }
+
+    @Test
+    public void testSetUpPrivateHomeProvidedAtRuntime() {
+    	final String path = System.getProperty("user.dir") + "/test/private-home";
+    	
+    	System.setProperty(Configurator.KEY_PRIVATE_HOME_PATH, path);
+
+    	new Configurator();
+    	
+    	final File f = new File(path);
+    	assertNotNull(f);
+    	assertEquals(true, f.isDirectory());
+    }
     
     @Test
     public void testConfigureDataSource() {
-        System.setProperty("civilizer.db_file_prefix", "db-data/test");
+        System.setProperty(Configurator.KEY_DB_FILE_PREFIX, "db-data/test");
         
         GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
         ctx.load("classpath:datasource-context-h2-url.xml");
