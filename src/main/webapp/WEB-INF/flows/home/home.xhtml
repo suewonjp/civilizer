@@ -106,6 +106,11 @@ function setUpDragAndDrop() {
     
     var effectClassOnDrop = "ui-state-active";
     
+    // [TODO] revisiting drag & drop code;
+    // now, unrelated droppables get colorized when dragging around a draggable
+    // it is a minor problem but needs fixing;
+    // refactor code so that coupled droppable/draggable pairs only get colorized
+    
     // D&D for relating fragments
     var droppable = newBaseDroppable(effectClassOnDrop);
     droppable.drop = function(event, ui) {
