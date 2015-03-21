@@ -81,8 +81,12 @@ public final class TestUtil {
     }
     
     public static void configure() {
-    	final String path = System.getProperty("user.dir") + "/test/private-home";    	
+    	final String path = System.getProperty("user.dir") + "/test/private-home";
     	System.setProperty(Configurator.KEY_PRIVATE_HOME_PATH, path);
     	new Configurator();
+    }
+
+    public static void unconfigure() {
+    	System.clearProperty(Configurator.KEY_PRIVATE_HOME_PATH);
     }
 }
