@@ -15,6 +15,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.civilizer.config.Configurator;
 import com.civilizer.dao.FragmentDao;
+import com.civilizer.test.util.TestUtil;
 
 public class ConfigTest {
     
@@ -66,10 +67,10 @@ public class ConfigTest {
 
     @Test
     public void testSetUpPrivateHomeProvidedAtRuntime() {
-    	final String path = System.getProperty("user.dir") + "/test/private-home";
+    	assertNull(System.getProperty(Configurator.KEY_PRIVATE_HOME_PATH));
     	
+    	final String path = System.getProperty("user.dir") + "/test/private-home";    	
     	System.setProperty(Configurator.KEY_PRIVATE_HOME_PATH, path);
-
     	new Configurator();
     	
     	final File f = new File(path);
@@ -79,7 +80,7 @@ public class ConfigTest {
     
     @Test
     public void testConfigureDataSource() {
-        System.setProperty(Configurator.KEY_DB_FILE_PREFIX, "db-data/test");
+        TestUtil.configure();
         
         GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
         ctx.load("classpath:datasource-context-h2-url.xml");

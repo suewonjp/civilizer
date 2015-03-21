@@ -6,13 +6,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.civilizer.config.Configurator;
+import com.civilizer.test.util.TestUtil;
 
 public class DaoUrlTest extends DaoTest {
     
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        System.setProperty(Configurator.KEY_DB_FILE_PREFIX, "db-data/test");
-        DaoTest.setUpBeforeClass(
+    	TestUtil.configure();
+    	DaoTest.setUpBeforeClass(
                 "classpath:datasource-context-h2-url.xml"
                 , DaoUrlTest.class
                 );

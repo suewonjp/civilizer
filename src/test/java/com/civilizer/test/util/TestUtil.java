@@ -9,6 +9,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.civilizer.config.Configurator;
+
 public final class TestUtil {
 
     private static final Log log = newLogger();
@@ -76,5 +78,11 @@ public final class TestUtil {
     		Set<T> s = new HashSet<T>(coll);
     		assertEquals(s.size(), coll.size());
     	}
+    }
+    
+    public static void configure() {
+    	final String path = System.getProperty("user.dir") + "/test/private-home";    	
+    	System.setProperty(Configurator.KEY_PRIVATE_HOME_PATH, path);
+    	new Configurator();
     }
 }
