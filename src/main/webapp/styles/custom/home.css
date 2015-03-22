@@ -99,22 +99,6 @@
     border-style: double;
 }
 
-#tag-palette-title {
-    color: green;
-    font-size: 150%;
-    font-style: bold;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-#bookmark-title {
-    color: gold;
-    font-size: 150%;
-    font-style: bold;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
 #fragment-group-form\:fragment-panel-toolbar-0
 , #fragment-group-form\:fragment-panel-toolbar-1
 , #fragment-group-form\:fragment-panel-toolbar-2
@@ -236,7 +220,26 @@ so this kind of hack has been incorporated
 	margin-bottom: 0px;
 }
 
-#bookmark-form\:bookmark-panel {
+#bookmark-title, #tag-palette-title, #file-box-title {
+	font-size: 150%;
+    font-style: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#bookmark-title {
+    color: gold;
+}
+
+#tag-palette-title {
+    color: green;
+}
+
+#file-box-title {
+    color: brown;
+}
+
+#bookmark-form\:bookmark-panel, #tag-palette-panel, #file-box-form\:file-box-panel {
 	margin-bottom: 20px;
 }
 
