@@ -9,17 +9,17 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
-	$("#tag-palette-tab-view").on("mouseenter", ".each-tag", function() {
+	$("#tag-palette-panel").on("mouseenter", ".each-tag", function() {
         $(this).find(".tag-menu").show();
     });
     
-    $("#tag-palette-tab-view").on("mouseleave", ".each-tag", function() {
+    $("#tag-palette-panel").on("mouseleave", ".each-tag", function() {
         $(this).find(".tag-menu").hide();
     });
     
     var currentTagGroupTabIndex = "0";
 
-    $tab = $( "#tag-palette-tab-view" ).tabs({
+    $tab = $( "#tag-palette-panel" ).tabs({
          activate : function (e, ui) {
             currentTagGroupTabIndex = ui.newTab.index().toString();
             sessionStorage.setItem('tag-palette-tab-index', currentTagGroupTabIndex);
@@ -59,7 +59,7 @@ function showEditTagDialog(tagId, tagName) {
         </p:commandButton>
     </p:dialog>
     
-    <div id="tag-palette-tab-view">
+    <div id="tag-palette-panel">
         <ul>
             <li>
                 <a href="#tag-palette-linear" title="#{msg['label_linear_view']}" >
