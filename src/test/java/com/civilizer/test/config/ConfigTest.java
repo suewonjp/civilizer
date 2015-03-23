@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.After;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -36,6 +37,11 @@ public class ConfigTest {
         }
     }
     
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        filesToDelete = new ArrayList<File>();
+    }
+    
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
         for (File file : filesToDelete) {
@@ -45,7 +51,6 @@ public class ConfigTest {
     
     @Before
     public void setUp() throws Exception {
-    	filesToDelete = new ArrayList<File>();
     }
     
     @After
@@ -62,10 +67,10 @@ public class ConfigTest {
         assertEquals(true, privateHome.isAbsolute());
         deleteFile(privateHome);
         assertEquals(false, privateHome.isDirectory());
-        filesToDelete.add(privateHome);
         
         new Configurator(defaultPrivateHomeName);
         
+        filesToDelete.add(privateHome);
         assertEquals(true, privateHome.isDirectory());
     }
 
