@@ -1,5 +1,6 @@
 package com.civilizer.web.controller;
 
+import java.io.File;
 import java.util.*;
 
 import javax.faces.application.FacesMessage;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.webflow.execution.RequestContext;
 
+import com.civilizer.config.AppOptions;
 import com.civilizer.dao.FragmentDao;
 import com.civilizer.dao.TagDao;
 import com.civilizer.domain.Fragment;
@@ -479,6 +481,18 @@ public final class MainController {
 		}
 		catch (Exception e) {
 			ViewUtil.addMessage("Error on unrelating fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
+	public void uploadFile(FileUploadBean fileUploadBean) {
+		// [TODO] validate the uploaded file
+		final String fileHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String fileWritePath = fileHomePath + File.separatorChar + fileUploadBean.getFileName();
+		if (fileUploadBean.saveFile(fileWritePath)) {
+			ViewUtil.addMessage("File Upload", fileUploadBean.getFileName(), null);
+		}
+		else {
+			ViewUtil.addMessage("Error in File Upload!!!", fileUploadBean.getFileName(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	

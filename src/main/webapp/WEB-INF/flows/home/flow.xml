@@ -133,8 +133,7 @@
         </transition>
         
         <transition on="upload-file" to="home" >
-			<evaluate expression="fileUploadBean.processFile()"/>
-			<evaluate expression="mainController.yetToBeDeveloped()" />
+			<evaluate expression="mainController.uploadFile(fileUploadBean)" />
 		</transition>
     </view-state>
     
