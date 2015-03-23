@@ -44,12 +44,21 @@ public final class Configurator {
         return new File(privateHomePath);
 	}
 	
+	private void mergeAppOptions() {
+		// [TODO] merge and update options;
+		// add default options that do not exist in the existing option list
+		// mark as obsolete any existing options that do not exist in the default option list
+	}
+	
 	private void preSetupPrivateHome(File privateHome) {
 	    createUnexistingDirectory(privateHome);
 	    
 	    final String tgtOptionFilePath = privateHome.getAbsolutePath() + File.separatorChar + OPTION_FILE_NAME;
 	    final File tgtOptionFile = new File(tgtOptionFilePath);
-	    if (! tgtOptionFile.exists()) {
+	    if (tgtOptionFile.exists()) {
+	    	mergeAppOptions();
+	    }
+	    else {
 	        // copy the default application option file unless it exists
 	        final File defaultOptionFile = 
 	                new File (getClass().getClassLoader().getResource(OPTION_FILE_NAME).getFile());
