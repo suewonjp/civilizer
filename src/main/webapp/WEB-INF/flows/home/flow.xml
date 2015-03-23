@@ -17,6 +17,9 @@
     </on-start>
     
     <view-state id="home" view="home.xhtml">
+    
+    	<var name="fileUploadBean" class="com.civilizer.web.view.FileUploadBean"/>
+    
         <on-entry>
             <evaluate
                 expression="mainController.populateFragmentListBeans(fragmentListBeans, requestScope.panelContextBean, requestScope.searchContextBean, flowRequestContext)"
@@ -128,6 +131,11 @@
                 expression="mainController.newPanelContextBean(requestParameters.panelId, -1000, 0)"
                 result="requestScope.panelContextBean"/>
         </transition>
+        
+        <transition on="upload-file" to="home" >
+			<evaluate expression="fileUploadBean.processFile()"/>
+			<evaluate expression="mainController.yetToBeDeveloped()" />
+		</transition>
     </view-state>
     
     <end-state id="exit" />

@@ -17,8 +17,14 @@
     <span id="file-box-title" class="fa fa-file" >&nbsp;&nbsp;#{msg['label_filebox']}</span>
 </div>
 
-<h:form id="file-box-form">
+<h:form id="file-box-form" enctype="multipart/form-data">
 	<p:panel id="file-box-panel" >
+		<p:fileUpload value="#{fileUploadBean.file}" mode="simple" skinSimple="true" style="width:200px"/>
+		<br/>
+		<br/>
+		<p:commandLink action="upload-file" ajax="false">
+			<span class="fa fa-check button-link ui-button">UPLOAD</span>
+		</p:commandLink>
 	</p:panel>
 </h:form>
 
