@@ -29,6 +29,21 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>ui-darkness</param-value>
     </context-param>
+    <context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>commons</param-value>
+	</context-param>
+	
+	<!-- Enables PrimeFaces File Upload -->
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>appServlet</servlet-name>
+	</filter-mapping>
+	<!-- -->
     
     <!-- Enables Spring Security -->
     <filter>
@@ -43,6 +58,7 @@
 	    <dispatcher>FORWARD</dispatcher>
         <dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
+	<!-- -->
     
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
