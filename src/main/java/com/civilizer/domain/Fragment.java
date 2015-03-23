@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Type;
@@ -240,21 +239,23 @@ public final class Fragment implements Serializable {
         final Long id = getId();
         final Long otherId = other.getId();
         if (id == null) {
-            if (otherId != null)
+            if (otherId != null) {
                 return false;
-        } else if (!id.equals(otherId))
+            }
+        } else if (!id.equals(otherId)) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Fragment - id: " + id
+        return    "id: " + id
                 + ", title: "+ title
-                + ", content: "+ content
-                + ", tag count: "+ (Hibernate.isInitialized(tags) ? tags.size() : 0)
-                + ", created at: "+ creationDatetime
-                + ", updated at: "+ updateDatetime
+//                + ", content: "+ content
+//                + ", tag count: "+ (Hibernate.isInitialized(tags) ? tags.size() : 0)
+//                + ", created at: "+ creationDatetime
+//                + ", updated at: "+ updateDatetime
                 ;
     }
 

@@ -267,10 +267,12 @@ public final class Tag implements Serializable {
         final Long id = getId();
         final Long otherId = other.getId();
         if (id == null) {
-            if (otherId != null)
+            if (otherId != null) {
                 return false;
-        } else if (!id.equals(otherId))
+            }
+        } else if (!id.equals(otherId)) {
             return false;
+        }
         return true;
     }
 
