@@ -54,12 +54,15 @@ public class ConfigTest {
 
     @Test
     public void testSetUpDefaultPrivateHome() {
+    	TestUtil.unconfigure();
         final String defaultPrivateHomeName = ".civilizer~";
         final String defaultPrivateHomePath = Configurator.getDefaultPrivateHomePath(defaultPrivateHomeName);
-        final File privateHome = new File(defaultPrivateHomePath);
-        filesToDelete.add(privateHome);
+        File privateHome = new File(defaultPrivateHomePath);
         assertNotNull(privateHome);
         assertEquals(true, privateHome.isAbsolute());
+        deleteFile(privateHome);
+        assertEquals(false, privateHome.isDirectory());
+        filesToDelete.add(privateHome);
         
         new Configurator(defaultPrivateHomeName);
         
@@ -68,13 +71,15 @@ public class ConfigTest {
 
     @Test
     public void testSetUpPrivateHomeProvidedAtRuntime() {
-    	final String path = System.getProperty("user.dir") + "/test/private-home";    	
+    	final String path = System.getProperty("user.dir") + "/test/private-home";
     	System.setProperty(AppOptions.PRIVATE_HOME_PATH, path);
     	new Configurator();
     	
     	final File f = new File(path);
     	assertNotNull(f);
     	assertEquals(true, f.isDirectory());
+    	
+    	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
     }
     
     @Test
