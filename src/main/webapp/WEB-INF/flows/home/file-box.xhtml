@@ -20,7 +20,7 @@
 <h:form id="file-box-form" enctype="multipart/form-data">
 	<p:panel id="file-box-panel" >
 		<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
-		<p:fileUpload value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizezLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
+		<p:fileUpload value="#{fileUploadBean.file}" mode="simple" skinSimple="true" label="#{msg['label_select_file']}" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
 		<br/>
 		<br/>
 		<!-- [TODO] add style to make it look like a button -->
