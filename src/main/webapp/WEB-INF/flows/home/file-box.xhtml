@@ -19,9 +19,11 @@
 
 <h:form id="file-box-form" enctype="multipart/form-data">
 	<p:panel id="file-box-panel" >
-		<p:fileUpload value="#{fileUploadBean.file}" mode="simple" skinSimple="true" style="width:200px"/>
+		<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
+		<p:fileUpload value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizezLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
 		<br/>
 		<br/>
+		<!-- [TODO] add style to make it look like a button -->
 		<p:commandLink action="upload-file" ajax="false">
 			<span class="fa fa-check button-link ui-button">UPLOAD</span>
 		</p:commandLink>
