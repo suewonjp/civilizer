@@ -485,7 +485,6 @@ public final class MainController {
 	}
 	
 	public void uploadFile(FileUploadBean fileUploadBean) {
-		// [TODO] validate the uploaded file
 		final String fileHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		final String fileWritePath = fileHomePath + File.separatorChar + fileUploadBean.getFileName();
 		if (fileUploadBean.saveFile(fileWritePath)) {

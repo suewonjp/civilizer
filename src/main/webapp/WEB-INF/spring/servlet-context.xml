@@ -8,16 +8,14 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/faces http://www.springframework.org/schema/faces/spring-faces.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing 
-		infrastructure -->
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
 	<beans:import resource="webflow.xml" />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
-		up static resources in the ${webappRoot}/resources directory -->
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources location="/" mapping="/resources/**" />
 
 	<!-- Enable processing of JSF 2 resource requests. For example: /civilizer/app/javax.faces.resource/jsf.js?ln=javax.faces -->
@@ -37,8 +35,7 @@
 		<beans:property name="order" value="2" />
 	</beans:bean>
 
-	<!-- Resolves views selected for rendering by @Controllers to .xhtml resources 
-		in the /WEB-INF/ directory -->
+	<!-- Resolves views selected for rendering by @Controllers to .xhtml resources in the /WEB-INF/ directory -->
 	<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass" value="org.springframework.faces.mvc.JsfView" />
 		<beans:property name="prefix" value="/WEB-INF/views/" />

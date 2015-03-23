@@ -11,7 +11,7 @@
     </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring/*-context.xml</param-value>
+        <param-value>/WEB-INF/spring/root-context.xml /WEB-INF/spring/security-context.xml</param-value>
     </context-param>
     <context-param>
         <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
