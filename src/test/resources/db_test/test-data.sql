@@ -186,6 +186,11 @@ INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES
 ,(100, 'markdown')
 ;
 
+INSERT INTO FILE(FILE_NAME) VALUES
+('jstl-tags.png')
+,('folder 0/db-datatypes.png')
+;
+
 INSERT INTO TAG2TAG(PARENT_ID, CHILD_ID) VALUES
 (100, 1)
 ,(100, 2)
