@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class FileEntity implements Serializable {
 	
 	private Long id;
-	private String fileName;
+	private String fileName = "";
 	
 	@Id
     @GeneratedValue(strategy = IDENTITY)

@@ -34,7 +34,7 @@ public final class Tag implements Serializable {
 	public static final int BOOKMARK_TAG_ID = -1;
 
     private Long id;
-    private String tagName;
+    private String tagName = "";
     private Set<Fragment> fragments = Collections.emptySet();
     private Set<Tag> children = Collections.emptySet();
 

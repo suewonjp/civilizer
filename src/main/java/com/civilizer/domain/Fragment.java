@@ -27,8 +27,8 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Table(name = "FRAGMENT")
 public final class Fragment implements Serializable {
     private Long id;
-    private String title;
-    private String content;
+    private String title = "";
+    private String content = "";
     private DateTime creationDatetime;
     private DateTime updateDatetime;
     private Set<Fragment> relatedOnes = Collections.emptySet();
