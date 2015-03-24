@@ -12,7 +12,7 @@ import com.civilizer.config.AppOptions;
 import com.civilizer.domain.FileEntity;
 import com.civilizer.test.util.TestUtil;
 
-public class DomainFileTest {
+public class DomainFileEntityTest {
 
 	@Before
 	public void setUp() throws Exception {
