@@ -54,7 +54,15 @@ public class FileEntity implements Serializable {
 		if (fileName.isEmpty()) {
 			return null;
 		}
-		return new File(prefix + File.separatorChar + fileName);
+		return new File(prefix + fileName);
+	}
+	
+	public boolean persisted(String filesHome) {
+		final File file = toFile(filesHome);
+		if (file == null) {
+			return false;
+		}
+		return file.isFile();
 	}
 	
 	public static Collection<FileEntity> getFilesUnder(String directory) {

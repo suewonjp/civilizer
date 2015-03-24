@@ -2,6 +2,8 @@ package com.civilizer.test.dao;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import org.apache.commons.logging.Log;
@@ -569,6 +571,36 @@ class DaoTest {
 			assertNotNull(fe2);
 			assertEquals(true, fileEntitiesFromDB.contains(fe2));
 		}
+		
+		TestUtil.unconfigure();
+	}
+	
+	protected void testFileEntityPersistence() {
+		TestUtil.configure();
+		final String filesHome = TestUtil.getFilesHomePath();
+		
+		final FileEntity fe = new FileEntity("~~~~temp~new~file~~~~");
+		final File f = fe.toFile(filesHome);
+		assertNotNull(f);
+		if (f.isFile()) {
+			assertTrue(f.delete());
+		}
+		assertEquals(false, fe.persisted(filesHome));
+		
+		assertEquals(fe, fileEntityDao.save(fe));
+		assertNotNull(fe.getId());
+		assertEquals(fe, fileEntityDao.findById(fe.getId()));
+		
+		try {
+			assertTrue(f.createNewFile());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		assertEquals(true, fe.persisted(filesHome));
+		
+		fileEntityDao.delete(fe);
+		assertNull(fe.getId());
+		assertEquals(false, fe.persisted(filesHome));
 		
 		TestUtil.unconfigure();
 	}

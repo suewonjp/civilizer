@@ -1,9 +1,11 @@
 package com.civilizer.dao.hibernate;
 
+import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +58,7 @@ public class FileEntityDaoImpl implements FileEntityDao {
 	@Override
 	public FileEntity save(FileEntity fe) {
 		sessionFactory.getCurrentSession().saveOrUpdate(fe);
-        return fe;
+		return fe;
 	}
 
 	@Override
