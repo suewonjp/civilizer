@@ -2,6 +2,8 @@ package com.civilizer.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.*;
+import java.io.File;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -10,12 +12,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.io.FileUtils;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "FILE")
 public class FileEntity implements Serializable {
 	
 	private Long id;
+	
+	// [RULE] should be a relative path
 	private String fileName = "";
 	
 	public FileEntity() {}
@@ -42,6 +48,33 @@ public class FileEntity implements Serializable {
 	
 	public void setFileName(String name) {
 		this.fileName = name.intern();
+	}
+	
+	public File toFile(String prefix) {
+		if (fileName.isEmpty()) {
+			return null;
+		}
+		return new File(prefix + File.separatorChar + fileName);
+	}
+	
+	public static Collection<FileEntity> getFilesUnder(String directory) {
+		final File dir = new File(directory);
+		if (! dir.isDirectory()) {
+			Collection<FileEntity> tmp = Collections.emptyList();
+			return tmp;
+		}
+		directory = dir.getAbsolutePath();
+		
+		@SuppressWarnings("unchecked")
+		Collection<File> files = FileUtils.listFiles(dir, null, true);
+		final Collection<FileEntity> output = new ArrayList<>();
+		final int beginIndex = directory.length();
+		for (File file : files) {
+			// [NOTE] as a rule, we need to pass a relative path when creating a FileEntry
+			output.add(new FileEntity(file.getAbsolutePath().substring(beginIndex)));
+		}
+		
+		return output;
 	}
 	
 	@Override
