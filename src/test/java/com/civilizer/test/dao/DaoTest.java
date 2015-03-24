@@ -20,6 +20,7 @@ class DaoTest {
 
 	protected FragmentDao fragmentDao;
 	protected TagDao tagDao;
+	protected FileEntityDao fileEntityDao;
 
 	private final List<Tag> temporalTags = new ArrayList<Tag>();
 	private final List<Fragment> temporalFragments = new ArrayList<Fragment>();
@@ -104,11 +105,14 @@ class DaoTest {
 	protected void setUp() throws Exception {
 		fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
 		assertNotNull(fragmentDao);
-		logger.info("fragmentDao initialized OK");
 
 		tagDao = ctx.getBean("tagDao", TagDao.class);
 		assertNotNull(tagDao);
-		logger.info("tagDao initialized OK");
+		
+		fileEntityDao = ctx.getBean("fileEntityDao", FileEntityDao.class);
+		assertNotNull(fileEntityDao);
+		
+		logger.info("all DAOs initialized OK");
 	}
 
 	protected void tearDown() throws Exception {
@@ -543,6 +547,30 @@ class DaoTest {
 		final Fragment from = fragmentDao.findById(temporalFragments.get(0).getId(), false, true);
 		final Fragment to = fragmentDao.findById(temporalFragments.get(1).getId(), false, true);
 		assertTrue(from.isRelatedTo(to));
+	}
+	
+	protected void testFileEntityQuery() {
+		TestUtil.configure();
+		final String filesHome = TestUtil.getFilesHomePath();
+		
+		Collection<FileEntity> fileEntries = FileEntity.getFilesUnder(filesHome);
+		assertNotNull(fileEntries);
+		assertEquals(false, fileEntries.isEmpty());
+		assertEquals(fileEntries.size(), fileEntityDao.countAll());
+		
+		List<FileEntity> fileEntitiesFromDB = fileEntityDao.findAll();
+		assertNotNull(fileEntitiesFromDB);
+		assertEquals(fileEntries.size(), fileEntitiesFromDB.size());
+		
+		for (FileEntity fe : fileEntries) {
+			System.out.println(fe);
+			assertEquals(true, fileEntitiesFromDB.contains(fe));
+			final FileEntity fe2 = fileEntityDao.findByName(fe.getFileName());
+			assertNotNull(fe2);
+			assertEquals(true, fileEntitiesFromDB.contains(fe2));
+		}
+		
+		TestUtil.unconfigure();
 	}
 
 }

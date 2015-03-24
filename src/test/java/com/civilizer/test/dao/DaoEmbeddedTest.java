@@ -109,5 +109,10 @@ public class DaoEmbeddedTest extends DaoTest {
     public void testExplicitQuery() {
     	super.testExplicitQuery();
     }
+    
+    @Test
+	public void testFileEntityQuery() {
+    	super.testFileEntityQuery();
+	}
 
 }

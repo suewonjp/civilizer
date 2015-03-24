@@ -93,5 +93,10 @@ public class DaoUrlTest extends DaoTest {
     public void testPagingFragmentsWithOrder() {
     	super.testPagingFragmentsWithOrder();
     }
+    
+    @Test
+	public void testFileEntityQuery() {
+    	super.testFileEntityQuery();
+	}
 
 }

@@ -2,6 +2,7 @@ package com.civilizer.test.util;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 
@@ -89,5 +90,9 @@ public final class TestUtil {
 
     public static void unconfigure() {
     	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
+    }
+    
+    public static String getFilesHomePath() {
+    	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + "files";
     }
 }

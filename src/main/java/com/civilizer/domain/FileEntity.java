@@ -21,7 +21,7 @@ public class FileEntity implements Serializable {
 	
 	private Long id;
 	
-	// [RULE] should be a relative path
+	// [RULE] should be a relative path and begin with slash (/)
 	private String fileName = "";
 	
 	public FileEntity() {}
@@ -68,7 +68,7 @@ public class FileEntity implements Serializable {
 		@SuppressWarnings("unchecked")
 		Collection<File> files = FileUtils.listFiles(dir, null, true);
 		final Collection<FileEntity> output = new ArrayList<>();
-		final int beginIndex = directory.length();
+		final int beginIndex = directory.length(); // 
 		for (File file : files) {
 			// [NOTE] as a rule, we need to pass a relative path when creating a FileEntry
 			output.add(new FileEntity(file.getAbsolutePath().substring(beginIndex)));

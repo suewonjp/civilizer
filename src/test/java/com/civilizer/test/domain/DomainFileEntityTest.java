@@ -8,7 +8,6 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.civilizer.config.AppOptions;
 import com.civilizer.domain.FileEntity;
 import com.civilizer.test.util.TestUtil;
 
@@ -20,9 +19,9 @@ public class DomainFileEntityTest {
 
 	@Test
 	public void testMethod_equals() {
-		final FileEntity f0 = new FileEntity("whatever.txt");
-		final FileEntity f1 = new FileEntity("whatever.txt");
-		final FileEntity f2 = new FileEntity("another.txt");
+		final FileEntity f0 = new FileEntity("/whatever.txt");
+		final FileEntity f1 = new FileEntity("/whatever.txt");
+		final FileEntity f2 = new FileEntity("/another.txt");
 		
 		assertEquals(true, f0.equals(f1));
 		assertEquals(false, f2.equals(f1));
@@ -31,7 +30,7 @@ public class DomainFileEntityTest {
 	@Test
 	public void testMethod_toFile() {
 		{
-			final FileEntity fe = new FileEntity("whatever.txt");
+			final FileEntity fe = new FileEntity("/whatever.txt");
 			final File f = fe.toFile("");
 			assertNotNull(f);
 		}
@@ -53,8 +52,7 @@ public class DomainFileEntityTest {
 		
 		// trivial cases
 		TestUtil.configure();
-		final String filesHome =
-			System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + "files";
+		final String filesHome = TestUtil.getFilesHomePath();
 		Collection<FileEntity> fileEntries = FileEntity.getFilesUnder(filesHome);
 		assertNotNull(fileEntries);
 		if (fileEntries.isEmpty()) {
