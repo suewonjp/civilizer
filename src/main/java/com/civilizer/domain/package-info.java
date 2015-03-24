@@ -257,6 +257,21 @@
               + "from Tag2Fragment t2f "
               + "where t2f.tagId = 0 "
               ),
+    
+    //----------------------------------------------------------//              
+    
+
+    @NamedQuery(name = "FileEntity.countAll",
+        query = "select count(*) "
+        	  + "from FileEntity f"
+              ),
+
+    @NamedQuery(name = "FileEntity.findById",
+        query = "select distinct fe "
+              + "from FileEntity fe "
+              + "where fe.id = :id"
+              ),
+
 }) 
 
 package com.civilizer.domain;

@@ -24,17 +24,25 @@ public class FileEntityDaoImpl implements FileEntityDao {
 
 	@Override
 	public long countAll() {
-		return 0;
+		return (Long) sessionFactory.getCurrentSession()
+    			.getNamedQuery("FileEntity.countAll")
+    			.iterate().next();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<FileEntity> findAll() {
-		return null;
+		return sessionFactory.getCurrentSession()
+                .createQuery("from FileEntity fe")
+                .list();
 	}
 
 	@Override
 	public FileEntity findById(Long id) {
-		return null;
+		return (FileEntity) sessionFactory.getCurrentSession()
+                .getNamedQuery("FileEntity.findById")
+                .setParameter("id", id)
+                .uniqueResult();
 	}
 
 	@Override
