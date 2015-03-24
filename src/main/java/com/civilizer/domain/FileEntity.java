@@ -18,6 +18,12 @@ public class FileEntity implements Serializable {
 	private Long id;
 	private String fileName = "";
 	
+	public FileEntity() {}
+	
+	public FileEntity(String name) {
+		setFileName(name);
+	}
+	
 	@Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "file_id")
@@ -35,7 +41,7 @@ public class FileEntity implements Serializable {
 	}
 	
 	public void setFileName(String name) {
-		this.fileName = name;
+		this.fileName = name.intern();
 	}
 	
 	@Override
@@ -54,16 +60,7 @@ public class FileEntity implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         FileEntity other = (FileEntity) obj;
-        final Long id = getId();
-        final Long otherId = other.getId();
-        if (id == null) {
-            if (otherId != null) {
-                return false;
-            }
-        } else if (!id.equals(otherId)) {
-            return false;
-        }
-        return true;
+        return this.fileName.equals(other.fileName);
     }
 
     @Override
