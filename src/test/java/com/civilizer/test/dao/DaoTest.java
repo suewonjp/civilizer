@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.hibernate.Hibernate;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -555,17 +556,26 @@ class DaoTest {
 		TestUtil.configure();
 		final String filesHome = TestUtil.getFilesHomePath();
 		
-		Collection<FileEntity> fileEntries = FileEntity.getFilesUnder(filesHome);
-		assertNotNull(fileEntries);
-		assertEquals(false, fileEntries.isEmpty());
-		assertEquals(fileEntries.size(), fileEntityDao.countAll());
-		
 		List<FileEntity> fileEntitiesFromDB = fileEntityDao.findAll();
 		assertNotNull(fileEntitiesFromDB);
-		assertEquals(fileEntries.size(), fileEntitiesFromDB.size());
+		assertEquals(fileEntitiesFromDB.size(), fileEntityDao.countAll());
 		
-		for (FileEntity fe : fileEntries) {
-			System.out.println(fe);
+		for (FileEntity fe : fileEntitiesFromDB) {
+			final File f = fe.toFile(filesHome);
+			try {
+				FileUtils.touch(f);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			assertEquals(true, f.isFile());
+		}
+		
+		Collection<FileEntity> fileEntities = FileEntity.getFilesUnder(filesHome);
+		assertNotNull(fileEntities);
+		assertEquals(fileEntities.size(), fileEntitiesFromDB.size());
+		
+		for (FileEntity fe : fileEntities) {
+//			System.out.println(fe);
 			assertEquals(true, fileEntitiesFromDB.contains(fe));
 			final FileEntity fe2 = fileEntityDao.findByName(fe.getFileName());
 			assertNotNull(fe2);

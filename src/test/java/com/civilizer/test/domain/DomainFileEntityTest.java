@@ -45,21 +45,21 @@ public class DomainFileEntityTest {
 	public void testMethod_getFilesUnder() {
 		// edge cases
 		{
-			Collection<FileEntity> fileEntries = FileEntity.getFilesUnder("~~~non-existing-directory~~~");
-			assertNotNull(fileEntries);
-			assertEquals(true, fileEntries.isEmpty());
+			Collection<FileEntity> fileEntities = FileEntity.getFilesUnder("~~~non-existing-directory~~~");
+			assertNotNull(fileEntities);
+			assertEquals(true, fileEntities.isEmpty());
 		}
 		
 		// trivial cases
 		TestUtil.configure();
 		final String filesHome = TestUtil.getFilesHomePath();
-		Collection<FileEntity> fileEntries = FileEntity.getFilesUnder(filesHome);
-		assertNotNull(fileEntries);
-		if (fileEntries.isEmpty()) {
+		Collection<FileEntity> fileEntities = FileEntity.getFilesUnder(filesHome);
+		assertNotNull(fileEntities);
+		if (fileEntities.isEmpty()) {
 			System.out.println("###### Warning : " + filesHome +
 					" does not contain any file; the test is not effective");
 		}
-		for (FileEntity fe : fileEntries) {
+		for (FileEntity fe : fileEntities) {
 			final File f = fe.toFile(filesHome);
 //			System.out.println(f.getAbsolutePath());
 			assertEquals(true, f.isFile());
