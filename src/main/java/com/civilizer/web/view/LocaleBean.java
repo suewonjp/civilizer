@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
-public class LocaleBean implements Serializable {
+public final class LocaleBean implements Serializable {
 	
 	@SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(LocaleBean.class);

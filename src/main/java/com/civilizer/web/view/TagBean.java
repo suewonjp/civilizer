@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.civilizer.domain.Tag;
 
 @SuppressWarnings("serial")
-public class TagBean implements Serializable {
+public final class TagBean implements Serializable {
 
     @SuppressWarnings("unused")
 	private final Logger logger = LoggerFactory.getLogger(TagBean.class);

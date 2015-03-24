@@ -8,7 +8,7 @@ import javax.faces.bean.SessionScoped;
 @SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
-public class AuthenticationBean implements Serializable {
+public final class AuthenticationBean implements Serializable {
 
 	private String username;
     

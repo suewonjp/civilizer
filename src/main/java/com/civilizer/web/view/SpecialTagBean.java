@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.civilizer.domain.Tag;
 
 @SuppressWarnings("serial")
-public class SpecialTagBean implements Serializable {
+public final class SpecialTagBean implements Serializable {
 	
 	@SuppressWarnings("unused")
 	private final Logger logger = LoggerFactory.getLogger(SpecialTagBean.class);
