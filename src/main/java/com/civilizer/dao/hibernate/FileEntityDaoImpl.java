@@ -44,6 +44,14 @@ public class FileEntityDaoImpl implements FileEntityDao {
                 .setParameter("id", id)
                 .uniqueResult();
 	}
+	
+	@Override
+	public FileEntity findByName(String name) {
+		return (FileEntity) sessionFactory.getCurrentSession()
+                .getNamedQuery("FileEntity.findByName")
+                .setParameter("name", name)
+                .uniqueResult();
+	}
 
 	@Override
 	public FileEntity save(FileEntity fe) {

@@ -12,6 +12,8 @@ public interface FileEntityDao {
 
     public FileEntity findById(Long id);
 
+    public FileEntity findByName(String name);
+
     public FileEntity save(FileEntity fe);
 
     public void delete(FileEntity fe);

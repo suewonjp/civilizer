@@ -272,6 +272,12 @@
               + "where fe.id = :id"
               ),
 
+    @NamedQuery(name = "FileEntity.findByName",
+        query = "select distinct fe "
+              + "from FileEntity fe "
+              + "where fe.fileName = :name"
+              ),
+
 }) 
 
 package com.civilizer.domain;
