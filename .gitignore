@@ -1,7 +1,7 @@
 .DS_Store
-target
+/target
 .swp
-db-data/
-test/
-!**/test/
+/db-data/
+/test/
+!/src/test/
 
