@@ -25,10 +25,6 @@ public interface TreeNode<E> {
 	
 	void clear();
 	
-	boolean equals(Object o);
-	
-	int hashCode();
-	
 	E getData();
 	
 	void setData(E data);
@@ -39,12 +35,16 @@ public interface TreeNode<E> {
 	
 	TreeNode<E> findDescendantWith(E o);
 		
-	void addChild(TreeNode<E> child);
+	TreeNode<E> addChild(TreeNode<E> child);
 
-	void removeChild(TreeNode<E> child);
+	TreeNode<E> removeChild(TreeNode<E> child);
 
-	void addChildWith(E o);
+	TreeNode<E> addChildWith(E o);
 	
-	void removeChildWith(E o);
+	TreeNode<E> removeChildWith(E o);
+	
+	boolean isParentOf(TreeNode<E> n);
+
+	boolean isDescendantOf(TreeNode<E> n);
 	
 }

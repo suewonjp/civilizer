@@ -85,18 +85,36 @@ public class FileEntity implements Serializable {
 		return output;
 	}
 	
-	public void addToNameTree(TreeNode<String> tree) {
+	public void addToPathTree(TreeNode<Object> root) {
+		// [NOTE] the root node should contain an empty string ("")
 		final String[] names = fileName.split("/");
-		if (! tree.contains(names[0])) {
-			tree.addChildWith(names[0]);
+		
+		TreeNode<Object> prev = root.findDescendantWith(names[0]);
+		
+		if (prev == null) {
+			TreeNode<Object> child = new DefaultTreeNode<Object>(names[0]);
+			root.addChild(child);
+			prev = child;
 		}
-		for (int i=1; i<names.length; ++i) {
-			TreeNode<String> parent = tree.findDescendantWith(names[i - 1]);
-			if (! tree.contains(names[i])) {
-				TreeNode<String> child = new DefaultTreeNode<>(names[i]);
-				parent.addChild(child);
+		
+		if (names.length > 1) {
+			// this file is located under some folders 
+			for (int i=1; i<names.length-1; ++i) {
+				TreeNode<Object> parent = root.findDescendantWith(names[i - 1]);
+				prev = root.findDescendantWith(names[i]);
+				if (prev == null) {
+					// these nodes represent intermediate paths (folders) and contain string values
+					TreeNode<Object> child = new DefaultTreeNode<Object>(names[i]);
+					parent.addChild(child);
+					prev = child;
+				}
 			}
+			// this node represents a file name below any folder except the root folder;
+			prev = prev.addChild(new DefaultTreeNode<Object>(names[names.length - 1]));
 		}
+		
+		// [NOTE] the leaf node contains a FileEntry instance unlike other nodes which contain string values
+		prev.addChild(new DefaultTreeNode<Object>(this));
 	}
 	
 	@Override

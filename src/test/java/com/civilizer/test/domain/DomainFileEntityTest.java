@@ -70,37 +70,50 @@ public class DomainFileEntityTest {
 	}
 	
 	@Test
-	public void testMethod_addToNameTree() {
+	public void testMethod_addToPathTree() {
 		final FileEntity f0 = new FileEntity("/xxx/some.txt");
 		final FileEntity f1 = new FileEntity("/xxx/yyy/whatever.txt");
 		final FileEntity f2 = new FileEntity("/another.txt");
 		final FileEntity f3 = new FileEntity("/xxx/yyy/zzz/another.txt");
 		
-		TreeNode<String> tree = new DefaultTreeNode<>("");
+		TreeNode<Object> tree = new DefaultTreeNode<Object>("");
 		assertEquals("", tree.getData());
 		
-		f0.addToNameTree(tree);
-		f1.addToNameTree(tree);
-		f2.addToNameTree(tree);
-		f3.addToNameTree(tree);
+		f0.addToPathTree(tree);
+		f1.addToPathTree(tree);
+		f2.addToPathTree(tree);
+		f3.addToPathTree(tree);
 		
-		assertEquals(7, tree.size());
+		Object[] expectedNodes = {
+				"", "xxx", "yyy", "zzz", "some.txt", "whatever.txt", "another.txt", "another.txt",
+				f0, f1, f2, f3
+		};
 		
-		assertEquals(true, tree.contains("xxx"));
-		assertEquals(true, tree.contains("yyy"));
-		assertEquals(true, tree.contains("zzz"));
-		assertEquals(true, tree.contains("whatever.txt"));
-		assertEquals(false, tree.contains("other.txt"));
-		assertEquals(true, tree.contains("another.txt"));
+		assertEquals(expectedNodes.length, tree.size());
 		
-		TreeNode<String> n0 = tree.findDescendantWith("xxx");
-		Collection<TreeNode<String>> ch = n0.getChildren();
-		assertEquals(2, ch.size());
+		for (Object o : expectedNodes) {
+			assertEquals(true, tree.contains(o));
+		}
 		
-		TreeNode<String> n1 = tree.findDescendantWith("yyy");
-		TreeNode<String> n2 = tree.findDescendantWith("some.txt");
-		assertEquals(true, ch.contains(n1));
-		assertEquals(true, ch.contains(n2));
+		assertEquals(false, tree.contains("someother.txt"));
+		
+		TreeNode<Object> n0 = tree.findDescendantWith("xxx");
+		Collection<TreeNode<Object>> ch0 = n0.getChildren();
+		assertEquals(2, ch0.size());
+		assertEquals(true, n0.contains(f0));
+		assertEquals(true, n0.contains(f1));
+		assertEquals(false, n0.contains(f2));
+		assertEquals(true, n0.contains(f3));
+		
+		TreeNode<Object> n1 = tree.findDescendantWith("yyy");
+		assertEquals(false, n1.contains(f0));
+		assertEquals(true, n1.contains(f1));
+		assertEquals(false, n1.contains(f2));
+		assertEquals(true, n1.contains(f3));
+		
+		TreeNode<Object> n2 = tree.findDescendantWith("some.txt");
+		assertEquals(true, ch0.contains(n1));
+		assertEquals(true, ch0.contains(n2));
 	}
 
 }

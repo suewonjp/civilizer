@@ -96,13 +96,13 @@ public class DomainTreeNodeTest {
 		final TreeNode<Character> g = new DefaultTreeNode<Character> ('g');
 		final TreeNode<Character> h = new DefaultTreeNode<Character> ('h');
 		
-		h.addChild(d);
-		h.addChild(e);
-		h.addChild(g);
-		d.addChild(a);
-		d.addChild(b);
-		d.addChild(c);
-		g.addChild(f);
+		assertEquals(d, h.addChild(d));
+		assertEquals(e, h.addChild(e));
+		assertEquals(g, h.addChild(g));
+		assertEquals(a, d.addChild(a));
+		assertEquals(b, d.addChild(b));
+		assertEquals(c, d.addChild(c));
+		assertEquals(f, g.addChild(f));
 		
 		final TreeNode<Character> root = h;
 		
@@ -138,9 +138,14 @@ public class DomainTreeNodeTest {
 		assertEquals(a, root.findDescendantWith('a'));
 		assertEquals(null, root.findDescendantWith('z'));
 
-		root.removeChildWith('g');
+		assertEquals(g, root.removeChildWith('g'));
 		assertEquals(false, root.contains('g'));
 		assertEquals(false, root.contains('f'));
+		
+		final TreeNode<Character> i = e.addChildWith('i');
+		assertEquals(true, i.isLeaf());
+		assertEquals(true, e.isParentOf(i));
+		assertEquals(true, i.isDescendantOf(root));
 	}
 
 }

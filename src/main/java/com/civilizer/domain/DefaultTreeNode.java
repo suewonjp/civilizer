@@ -199,29 +199,62 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 	}
 
 	@Override
-	public void addChild(TreeNode<E> child) {
+	public TreeNode<E> addChild(TreeNode<E> child) {
 		if (children.isEmpty()) {
 			children = new ArrayList<>();
 		}
 		children.add(child);
+		return child;
 	}
 	
 	@Override
-	public void removeChild(TreeNode<E> child) {
+	public TreeNode<E> removeChild(TreeNode<E> child) {
 		children.remove(child);
+		return child;
 	}
 
 	@Override
-	public void addChildWith(E o) {
-		addChild(new DefaultTreeNode<E>(o));
+	public TreeNode<E> addChildWith(E o) {
+		return addChild(new DefaultTreeNode<E>(o));
 	}
 
 	@Override
-	public void removeChildWith(E o) {
+	public TreeNode<E> removeChildWith(E o) {
 		TreeNode<E> node = findDescendantWith(o);
 		if (node != null) {
 			removeChild(node);
 		}
+		return node;
+	}
+	
+	@Override
+	public String toString() {
+		final String[] result = { "\n" };
+		traverseByBreathFirstOrder(new Traverser<TreeNode<E>, String[]>() {
+			@Override
+			public boolean onNode(TreeNode<E> node, String[] result) {
+				result[0] += node.getData().toString() + "\n";
+				return true;
+			}
+		}, result);
+		return result[0];
+	}
+
+	@Override
+	public boolean isParentOf(TreeNode<E> n) {
+		if (n == null) {
+			return false;
+		}
+		return children.contains(n);
+	}
+
+	@Override
+	public boolean isDescendantOf(TreeNode<E> n) {
+		if (n == null) {
+			return false;
+		}
+		TreeNode<E> tmp = findDescendantWith(data);
+		return this.equals(tmp);
 	}
 	
 }
