@@ -15,6 +15,8 @@ public interface TreeNode<E> {
 		boolean onNode(TreeNode node, U callerData);
 	}
 	
+	<U> boolean traverse(Traverser<TreeNode<E>, U> traverser, U callerData, TraverseOrder traverseOrder);
+	
 	int size();
 	
 	boolean contains(E o);
@@ -44,7 +46,5 @@ public interface TreeNode<E> {
 	void addChildWith(E o);
 	
 	void removeChildWith(E o);
-	
-	<U> boolean traverse(Traverser<TreeNode<E>, U> traverser, U callerData, TraverseOrder traverseOrder);
 	
 }

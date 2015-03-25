@@ -85,6 +85,20 @@ public class FileEntity implements Serializable {
 		return output;
 	}
 	
+	public void addToNameTree(TreeNode<String> tree) {
+		final String[] names = fileName.split("/");
+		if (! tree.contains(names[0])) {
+			tree.addChildWith(names[0]);
+		}
+		for (int i=1; i<names.length; ++i) {
+			TreeNode<String> parent = tree.findDescendantWith(names[i - 1]);
+			if (! tree.contains(names[i])) {
+				TreeNode<String> child = new DefaultTreeNode<>(names[i]);
+				parent.addChild(child);
+			}
+		}
+	}
+	
 	@Override
     public int hashCode() {
         final int prime = 59;

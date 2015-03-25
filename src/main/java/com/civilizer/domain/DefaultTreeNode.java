@@ -16,6 +16,94 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 		super();
 		setData(data);
 	}
+	
+	@Override
+	public <U> boolean traverse(Traverser<TreeNode<E>, U> traverser, U callerData, TraverseOrder traverseOrder) {
+		switch (traverseOrder) {
+		case PRE:
+			return traverseByPreOrder(traverser, callerData);
+		case POST:
+			return traverseByPostOrder(traverser, callerData);
+		case BREATH_FIRST:
+			return traverseByBreathFirstOrder(traverser, callerData);
+		}
+		return true;
+	}
+	
+	protected <U> boolean traverseByPreOrder(Traverser<TreeNode<E>, U> traverser, U callerData) {
+		final Deque<TreeNode<E>> dq = new LinkedList<>();
+		dq.add(this);
+		
+		while (! dq.isEmpty()) {
+			TreeNode<E> n = dq.pollLast();
+			
+			if (! traverser.onNode(n, callerData)) {
+				// No more iteration if the caller callback returns false;
+				return false;
+			}
+			
+			final List<TreeNode<E>> children = (List<TreeNode<E>>) n.getChildren();
+			final int childrenCount = children.size();
+			for (int i=childrenCount-1; i>=0; --i) {
+				final TreeNode<E> child = (TreeNode<E>) children.get(i);
+				dq.add(child);
+			}
+		}
+		
+		return true;
+	}
+	
+	protected <U> boolean traverseByPostOrder(Traverser<TreeNode<E>, U> traverser, U callerData) {
+		final Deque<TreeNode<E>> dq = new LinkedList<>();
+		final Deque<TreeNode<E>> dq2 = new LinkedList<>();
+		dq.add(this);
+		
+		while (! dq.isEmpty()) {
+			TreeNode<E> n = dq.pollLast();
+			dq2.add(n);
+			
+			final List<TreeNode<E>> children = (List<TreeNode<E>>) n.getChildren();
+			final int childrenCount = children.size();
+			for (int i=0; i<childrenCount; ++i) {
+				final TreeNode<E> child = (TreeNode<E>) children.get(i);
+				dq.add(child);
+			}
+		}
+		
+		while (! dq2.isEmpty()) {
+			TreeNode<E> n = dq2.pollLast();
+			
+			if (! traverser.onNode(n, callerData)) {
+				// No more iteration if the caller callback returns false;
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	protected <U> boolean traverseByBreathFirstOrder(Traverser<TreeNode<E>, U> traverser, U callerData) {
+		final Deque<TreeNode<E>> dq = new LinkedList<>();
+		dq.add(this);
+		
+		while (! dq.isEmpty()) {
+			TreeNode<E> n = dq.pollFirst();
+			
+			if (! traverser.onNode(n, callerData)) {
+				// No more iteration if the caller callback returns false;
+				return false;
+			}
+			
+			final List<TreeNode<E>> children = (List<TreeNode<E>>) n.getChildren();
+			final int childrenCount = children.size();
+			for (int i=0; i<childrenCount; ++i) {
+				final TreeNode<E> child = (TreeNode<E>) children.get(i);
+				dq.add(child);
+			}
+		}
+		
+		return true;
+	}
 
 	@Override
 	public int size() {
@@ -136,92 +224,4 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 		}
 	}
 	
-	@Override
-	public <U> boolean traverse(Traverser<TreeNode<E>, U> traverser, U callerData, TraverseOrder traverseOrder) {
-		switch (traverseOrder) {
-		case PRE:
-			return traverseByPreOrder(traverser, callerData);
-		case POST:
-			return traverseByPostOrder(traverser, callerData);
-		case BREATH_FIRST:
-			return traverseByBreathFirstOrder(traverser, callerData);
-		}
-		return true;
-	}
-	
-	protected <U> boolean traverseByPreOrder(Traverser<TreeNode<E>, U> traverser, U callerData) {
-		final Deque<TreeNode<E>> dq = new LinkedList<>();
-		dq.add(this);
-		
-		while (! dq.isEmpty()) {
-			TreeNode<E> n = dq.pollLast();
-			
-			if (! traverser.onNode(n, callerData)) {
-				// No more iteration if the caller callback returns false;
-				return false;
-			}
-			
-			final List<TreeNode<E>> children = (List<TreeNode<E>>) n.getChildren();
-			final int childrenCount = children.size();
-			for (int i=childrenCount-1; i>=0; --i) {
-				final TreeNode<E> child = (TreeNode<E>) children.get(i);
-				dq.add(child);
-			}
-		}
-		
-		return true;
-	}
-	
-	protected <U> boolean traverseByPostOrder(Traverser<TreeNode<E>, U> traverser, U callerData) {
-		final Deque<TreeNode<E>> dq = new LinkedList<>();
-		final Deque<TreeNode<E>> dq2 = new LinkedList<>();
-		dq.add(this);
-		
-		while (! dq.isEmpty()) {
-			TreeNode<E> n = dq.pollLast();
-			dq2.add(n);
-			
-			final List<TreeNode<E>> children = (List<TreeNode<E>>) n.getChildren();
-			final int childrenCount = children.size();
-			for (int i=0; i<childrenCount; ++i) {
-				final TreeNode<E> child = (TreeNode<E>) children.get(i);
-				dq.add(child);
-			}
-		}
-		
-		while (! dq2.isEmpty()) {
-			TreeNode<E> n = dq2.pollLast();
-			
-			if (! traverser.onNode(n, callerData)) {
-				// No more iteration if the caller callback returns false;
-				return false;
-			}
-		}
-		
-		return true;
-	}
-
-	protected <U> boolean traverseByBreathFirstOrder(Traverser<TreeNode<E>, U> traverser, U callerData) {
-		final Deque<TreeNode<E>> dq = new LinkedList<>();
-		dq.add(this);
-		
-		while (! dq.isEmpty()) {
-			TreeNode<E> n = dq.pollFirst();
-			
-			if (! traverser.onNode(n, callerData)) {
-				// No more iteration if the caller callback returns false;
-				return false;
-			}
-			
-			final List<TreeNode<E>> children = (List<TreeNode<E>>) n.getChildren();
-			final int childrenCount = children.size();
-			for (int i=0; i<childrenCount; ++i) {
-				final TreeNode<E> child = (TreeNode<E>) children.get(i);
-				dq.add(child);
-			}
-		}
-		
-		return true;
-	}
-
 }
