@@ -3,3 +3,5 @@ target
 .swp
 db-data/
 test/
+!**/test/
+
