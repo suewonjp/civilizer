@@ -85,7 +85,7 @@ public class DomainFileEntityTest {
 		f3.addToPathTree(tree);
 		
 		Object[] expectedNodes = {
-				"", "xxx", "yyy", "zzz", "some.txt", "whatever.txt", "another.txt", "another.txt",
+				"", "xxx", "yyy", "zzz",// "some.txt", "whatever.txt", "another.txt", "another.txt",
 				f0, f1, f2, f3
 		};
 		
@@ -111,7 +111,7 @@ public class DomainFileEntityTest {
 		assertEquals(false, n1.contains(f2));
 		assertEquals(true, n1.contains(f3));
 		
-		TreeNode<Object> n2 = tree.findDescendantWith("some.txt");
+		TreeNode<Object> n2 = tree.findDescendantWith(f0);
 		assertEquals(true, ch0.contains(n1));
 		assertEquals(true, ch0.contains(n2));
 	}

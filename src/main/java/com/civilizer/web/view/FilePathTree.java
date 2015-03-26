@@ -13,7 +13,7 @@ public class FilePathTree implements Serializable {
 	private org.primefaces.model.TreeNode root; // = new org.primefaces.model.DefaultTreeNode("Root", null);
 	
 	public void populateNodes(List<FileEntity> fileEntities) {
-		TreeNode<Object> pathTree = new DefaultTreeNode<Object>("Root");
+		TreeNode<Object> pathTree = new DefaultTreeNode<Object>("");
 		
 		for (FileEntity fe : fileEntities) {
 			fe.addToPathTree(pathTree);
