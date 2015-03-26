@@ -25,10 +25,10 @@ public class FilePathBean implements Serializable {
 		if (entity instanceof FileEntity) {
 			FileEntity fe = (FileEntity) entity;
 			String[] tmp = fe.getFileName().split("/");
-			return tmp[tmp.length - 1];
+			return Character.toString((char) 0xf016) + ' ' + tmp[tmp.length - 1];
 		}
 		else {
-			return entity.toString();
+			return Character.toString((char) 0xf07c) + ' ' + entity.toString();
 		}
 	}
 
