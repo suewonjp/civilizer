@@ -137,7 +137,7 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public E[] toArray(E[] a, TraverseOrder traverseOrder) {
+	public E[] toDataArray(E[] a, TraverseOrder traverseOrder) {
 		final int size = size();
 		if (a.length < size) {
 			a = (E[]) Array.newInstance(a.getClass().getComponentType(), size);
@@ -155,6 +155,12 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 		
 		return a;
 	}
+
+//	@Override
+//	public Object toArray(TraverseOrder traverseOrder) {
+//		final int size = size();
+//		return null;
+//	}
 
 	@Override
 	public void clear() {
@@ -226,8 +232,11 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 	
 	@Override
 	public TreeNode<E> removeChild(TreeNode<E> child) {
-		children.remove(child);
-		return child;
+		if (child != null && children.remove(child)) {
+			child.setParent(null);
+			return child;
+		}
+		return null;
 	}
 
 	@Override
@@ -238,10 +247,7 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 	@Override
 	public TreeNode<E> removeDescendantWith(E o) {
 		TreeNode<E> node = findDescendantWith(o);
-		if (node != null) {
-			removeChild(node);
-		}
-		return node;
+		return removeChild(node);
 	}
 	
 	@Override

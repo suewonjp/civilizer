@@ -119,19 +119,19 @@ public class DomainTreeNodeTest {
 		char[] chars = new char[8];
 		Character[] chars2 = new Character[8];
 		
-		chars2 = root.toArray(chars2, TreeNode.TraverseOrder.PRE);
+		chars2 = root.toDataArray(chars2, TreeNode.TraverseOrder.PRE);
 		for (int i=0; i<chars.length; ++i) {
 			chars[i] = chars2[i];
 		}
 		assertEquals("hdabcegf", new String(chars));
 
-		chars2 = root.toArray(chars2, TreeNode.TraverseOrder.POST);
+		chars2 = root.toDataArray(chars2, TreeNode.TraverseOrder.POST);
 		for (int i=0; i<chars.length; ++i) {
 			chars[i] = chars2[i];
 		}
 		assertEquals("abcdefgh", new String(chars));
 
-		chars2 = root.toArray(chars2, TreeNode.TraverseOrder.BREATH_FIRST);
+		chars2 = root.toDataArray(chars2, TreeNode.TraverseOrder.BREATH_FIRST);
 		for (int i=0; i<chars.length; ++i) {
 			chars[i] = chars2[i];
 		}

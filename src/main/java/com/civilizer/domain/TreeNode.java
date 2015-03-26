@@ -21,7 +21,9 @@ public interface TreeNode<E> {
 	
 	boolean contains(E o);
 	
-	E[] toArray(E[] a, TraverseOrder traverseOrder);
+	E[] toDataArray(E[] a, TraverseOrder traverseOrder);
+
+//	Object[] toArray(TraverseOrder traverseOrder);
 	
 	void clear();
 	
