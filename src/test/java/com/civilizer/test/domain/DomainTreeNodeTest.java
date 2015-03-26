@@ -105,6 +105,7 @@ public class DomainTreeNodeTest {
 		assertEquals(f, g.addChild(f));
 		
 		final TreeNode<Character> root = h;
+		assertEquals(true, root.isRoot());
 		
 		assertEquals(8, root.size());
 		assertEquals(true, root.contains('d'));
@@ -113,6 +114,7 @@ public class DomainTreeNodeTest {
 		assertEquals(true, f.isLeaf());
 		assertEquals(false, g.isLeaf());
 		assertEquals(false, h.isLeaf());
+		assertEquals(true, d.isParentOf(c));
 		
 		char[] chars = new char[8];
 		Character[] chars2 = new Character[8];

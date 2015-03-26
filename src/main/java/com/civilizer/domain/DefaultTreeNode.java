@@ -6,6 +6,7 @@ import java.util.*;
 public class DefaultTreeNode<E> implements TreeNode<E> {
 	
 	private List<TreeNode<E>> children = Collections.emptyList();
+	private TreeNode<E> parent;
 	private E data;
 	
 	public DefaultTreeNode() {
@@ -177,6 +178,21 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 	}
 
 	@Override
+	public boolean isRoot() {
+		return parent == null;
+	}
+
+	@Override
+	public TreeNode<E> getParent() {
+		return parent;
+	}
+
+	@Override
+	public void setParent(TreeNode<E> p) {
+		this.parent = p;
+	}
+
+	@Override
 	public Collection<TreeNode<E>> getChildren() {
 		return children;
 	}
@@ -204,6 +220,7 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 			children = new ArrayList<>();
 		}
 		children.add(child);
+		child.setParent(this);
 		return child;
 	}
 	
@@ -245,7 +262,7 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 		if (n == null) {
 			return false;
 		}
-		return children.contains(n);
+		return this.equals(n.getParent());
 	}
 
 	@Override

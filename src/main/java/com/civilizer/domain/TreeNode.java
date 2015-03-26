@@ -30,6 +30,12 @@ public interface TreeNode<E> {
 	void setData(E data);
 	
 	boolean isLeaf();
+
+	boolean isRoot();
+	
+	TreeNode<E> getParent();
+	
+	void setParent(TreeNode<E> p);
 	
 	Collection<TreeNode<E>> getChildren();
 	
