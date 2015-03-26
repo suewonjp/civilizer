@@ -29,10 +29,10 @@
 		</p:commandLink>
 		
 		<div id="file-path-tree">
-            <p:tree value="#{fileListBean.filePathTree.root}" var="filePath" style="width:100%">
+            <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>
                     <span>
-                    	<h:outputText value="#{filePath}"></h:outputText>
+                    	<h:outputText value="#{filePathBean}"></h:outputText>
                     </span>
                 </p:treeNode>
             </p:tree>

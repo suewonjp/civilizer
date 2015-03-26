@@ -26,7 +26,9 @@ public class FilePathTree implements Serializable {
 		for (Object o : paths) {
 			@SuppressWarnings("unchecked")
 			TreeNode<Object> path = (TreeNode<Object>) o;
-			mapPath2TreeNode.put(o, new org.primefaces.model.DefaultTreeNode(path.getData()));
+			FilePathBean filePathBean = new FilePathBean();
+			filePathBean.setEntity(path.getData());
+			mapPath2TreeNode.put(o, new org.primefaces.model.DefaultTreeNode(filePathBean));
 		}
 		for (Object o : paths) {
 			@SuppressWarnings("unchecked")
