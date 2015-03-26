@@ -175,6 +175,7 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 	@Override
 	public void clear() {
 		children.clear();
+		parent = null;
 		data = null;
 	}
 	
