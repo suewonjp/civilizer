@@ -276,3 +276,7 @@ so this kind of hack has been incorporated
 #file-path-tree {
 	margin-top: 20px;
 }
+
+#file-box-form\:upload-button {
+	visibility: hidden;
+}

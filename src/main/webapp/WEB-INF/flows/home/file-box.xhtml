@@ -8,8 +8,15 @@
     
 <script>
 //<![CDATA[
-// $(document).ready(function() {
-// }); // end of $(document).ready()
+$(document).ready(function() {
+	$("#file-box-form\\:file-selector").change(function () {
+	    var fileName = $(this).val();
+	    if (fileName) {
+	    	// make the upload button visible only when we have a file to upload
+	    	$("#file-box-form\\:upload-button").css("visibility", "visible");
+	    }
+	});
+}); // end of $(document).ready()
 //]]>
 </script>
 
@@ -20,12 +27,11 @@
 <h:form id="file-box-form" enctype="multipart/form-data">
 	<p:panel id="file-box-panel" >
 		<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
-		<p:fileUpload value="#{fileUploadBean.file}" mode="simple" skinSimple="true" label="#{msg['label_select_file']}" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
-		<br/>
+		<p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
 		<br/>
 		<!-- [TODO] add style to make it look like a button -->
-		<p:commandLink action="upload-file" ajax="false">
-			<span class="fa fa-check button-link ui-button">UPLOAD</span>
+		<p:commandLink id="upload-button" action="upload-file" ajax="false" title="#{msg['label_upload_file']}">
+			<span class="fa fa-2x fa-upload button-link ui-button"></span>
 		</p:commandLink>
 		
 		<div id="file-path-tree">
