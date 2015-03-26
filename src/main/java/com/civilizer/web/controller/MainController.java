@@ -292,9 +292,10 @@ public final class MainController {
 	    frg.addTag(getBookmarkTag());
 	    try {
 			fragmentDao.save(frg);
-			ViewUtil.addMessage("Bookmarking", "Fragment #" + frg.getId(), null);
+			ViewUtil.addMessage("Bookmarked", "Fragment #" + frg.getId(), null);
 		}
 	    catch (Exception e) {
+	    	e.printStackTrace();
 			ViewUtil.addMessage("Error on bookmarking!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
@@ -304,9 +305,10 @@ public final class MainController {
 	    frg.removeTag(getBookmarkTag());
 	    try {
 			fragmentDao.save(frg);
-			ViewUtil.addMessage("Unbookmarking", "Fragment #" + frg.getId(), null);
+			ViewUtil.addMessage("Unbookmarked", "Fragment #" + frg.getId(), null);
 		}
 	    catch (Exception e) {
+	    	e.printStackTrace();
 			ViewUtil.addMessage("Error on unbookmarking!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
@@ -316,9 +318,10 @@ public final class MainController {
 		frg.addTag(getTrashcanTag());
 		try {
 			fragmentDao.save(frg);
-			ViewUtil.addMessage("Trashing", "Fragment #" + frg.getId(), null);
+			ViewUtil.addMessage("Trashed", "Fragment #" + frg.getId(), null);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			ViewUtil.addMessage("Error on trashing a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
@@ -347,9 +350,10 @@ public final class MainController {
 		final Fragment frg = fragmentDao.findById(fragmentId);
 		try {
 			fragmentDao.delete(frg);
-			ViewUtil.addMessage("Deleting", "Fragment #" + frg.getId(), null);
+			ViewUtil.addMessage("Deleted", "Fragment #" + frg.getId(), null);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			ViewUtil.addMessage("Error on deleting a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
@@ -393,9 +397,10 @@ public final class MainController {
 	    
         try {
 			fragmentDao.save(frg);
-			ViewUtil.addMessage(weHaveNewFragment ? "Creating" : "Updating", "Fragment #" + frg.getId(), null);
+			ViewUtil.addMessage(weHaveNewFragment ? "Created" : "Updated", "Fragment #" + frg.getId(), null);
 		}
         catch (Exception e) {
+        	e.printStackTrace();
 			ViewUtil.addMessage("Error on saving a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
@@ -418,10 +423,11 @@ public final class MainController {
 			try {
 				tagDao.save(t);
 				if (weHaveNewTag) {
-					ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
+					ViewUtil.addMessage("Created", "Tag : " + t.getTagName(), null);
 				}
 			}
 			catch (Exception e) {
+				e.printStackTrace();
 				ViewUtil.addMessage("Error on saving a tag during saving fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 			}
 
@@ -436,9 +442,10 @@ public final class MainController {
 			// a new tag
 			try {
 				tagDao.save(t);
-				ViewUtil.addMessage("Creating", "Tag : " + t.getTagName(), null);
+				ViewUtil.addMessage("Created", "Tag : " + t.getTagName(), null);
 			}
 			catch (Exception e) {
+				e.printStackTrace();
 				ViewUtil.addMessage("Error on creating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 			}
 			
@@ -451,9 +458,10 @@ public final class MainController {
 			t.setTagName(newName);
 			try {
 				tagDao.save(t);
-				ViewUtil.addMessage("Renaming", "Tag : " + oldName + " => " + newName, null);
+				ViewUtil.addMessage("Renamed", "Tag : " + oldName + " => " + newName, null);
 			}
 			catch (Exception e) {
+				e.printStackTrace();
 				ViewUtil.addMessage("Error on renaming a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 			}
 		}
@@ -475,9 +483,10 @@ public final class MainController {
 			t = tagDao.findById(id);
 			try {
 				tagDao.delete(t);
-				ViewUtil.addMessage("Deleting", "Tag : " + t.getTagName(), null);
+				ViewUtil.addMessage("Deleted", "Tag : " + t.getTagName(), null);
 			}
 			catch (Exception e) {
+				e.printStackTrace();
 				ViewUtil.addMessage("Error on deleting a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 			}
 		}
@@ -486,9 +495,10 @@ public final class MainController {
 	public void relateFragments(int fromId, int toId) {
 		try {
 			fragmentDao.relateFragments(fromId, toId);
-			ViewUtil.addMessage("Relating", "Fragments : " + fromId + " <==> " + toId, null);
+			ViewUtil.addMessage("Related", "Fragments : " + fromId + " <==> " + toId, null);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			ViewUtil.addMessage("Error on relating fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
@@ -496,21 +506,32 @@ public final class MainController {
 	public void unrelateFragments(int fromId, int toId) {
 		try {
 			fragmentDao.unrelateFragments(fromId, toId);
-			ViewUtil.addMessage("Unrelating", "Fragments : " + fromId + " <==> " + toId, null);
+			ViewUtil.addMessage("Unrelated", "Fragments : " + fromId + " <" + Character.toString((char) 0x2260) + "> " + toId, null);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			ViewUtil.addMessage("Error on unrelating fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
 	public void uploadFile(FileUploadBean fileUploadBean) {
 		final String fileHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
-		final String fileWritePath = fileHomePath + File.separatorChar + fileUploadBean.getFileName();
+		final String filePath = File.separatorChar + fileUploadBean.getFileName();
+		final String fileWritePath = fileHomePath + filePath;
 		if (fileUploadBean.saveFile(fileWritePath)) {
-			ViewUtil.addMessage("File Upload", fileUploadBean.getFileName(), null);
+			ViewUtil.addMessage("File Uploaded", fileUploadBean.getFileName(), null);
+//			final FileEntity fe = new FileEntity(filePath);
+//			try {
+//				fileEntityDao.save(fe);
+//				ViewUtil.addMessage("File Uploaded", fileUploadBean.getFileName(), null);
+//			}
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				ViewUtil.addMessage("Error on File Upload!!!", fileUploadBean.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+//			}
 		}
 		else {
-			ViewUtil.addMessage("Error in File Upload!!!", fileUploadBean.getFileName(), FacesMessage.SEVERITY_ERROR);
+			ViewUtil.addMessage("Error on File Upload!!!", fileUploadBean.getFileName(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
