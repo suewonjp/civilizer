@@ -272,3 +272,7 @@ so this kind of hack has been incorporated
 .ui-autocomplete {
 	z-index:1000;
 }
+
+#file-path-tree {
+	margin-top: 20px;
+}

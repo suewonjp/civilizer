@@ -36,6 +36,7 @@ public class FilePathTree implements Serializable {
 			org.primefaces.model.TreeNode tnp = mapPath2TreeNode.get(parent);
 			if (tnp != null) {
 				tn.setParent(tnp);
+				tnp.getChildren().add(tn);
 				tnp.setExpanded(true);
 			}
 		}
