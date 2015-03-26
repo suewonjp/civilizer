@@ -138,7 +138,7 @@ public class DomainTreeNodeTest {
 		assertEquals(a, root.findDescendantWith('a'));
 		assertEquals(null, root.findDescendantWith('z'));
 
-		assertEquals(g, root.removeChildWith('g'));
+		assertEquals(g, root.removeDescendantWith('g'));
 		assertEquals(false, root.contains('g'));
 		assertEquals(false, root.contains('f'));
 		

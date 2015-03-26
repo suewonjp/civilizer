@@ -219,7 +219,7 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 	}
 
 	@Override
-	public TreeNode<E> removeChildWith(E o) {
+	public TreeNode<E> removeDescendantWith(E o) {
 		TreeNode<E> node = findDescendantWith(o);
 		if (node != null) {
 			removeChild(node);

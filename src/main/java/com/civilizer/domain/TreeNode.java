@@ -41,7 +41,7 @@ public interface TreeNode<E> {
 
 	TreeNode<E> addChildWith(E o);
 	
-	TreeNode<E> removeChildWith(E o);
+	TreeNode<E> removeDescendantWith(E o);
 	
 	boolean isParentOf(TreeNode<E> n);
 
