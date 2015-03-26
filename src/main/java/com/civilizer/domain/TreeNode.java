@@ -23,7 +23,7 @@ public interface TreeNode<E> {
 	
 	E[] toDataArray(E[] a, TraverseOrder traverseOrder);
 
-//	Object[] toArray(TraverseOrder traverseOrder);
+	Object[] toArray(TraverseOrder traverseOrder);
 	
 	void clear();
 	

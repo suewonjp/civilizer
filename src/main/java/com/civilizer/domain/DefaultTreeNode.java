@@ -156,11 +156,21 @@ public class DefaultTreeNode<E> implements TreeNode<E> {
 		return a;
 	}
 
-//	@Override
-//	public Object toArray(TraverseOrder traverseOrder) {
-//		final int size = size();
-//		return null;
-//	}
+	@Override
+	public Object[] toArray(TraverseOrder traverseOrder) {
+		final int size = size();
+		Object[] a = new Object[size];
+		traverse(new Traverser<TreeNode<E>, Object[]>() {
+			int index = 0;
+			
+			@Override
+			public boolean onNode(TreeNode<E> node, Object[] a) {
+				a[index++] = node;
+				return true;
+			}
+		}, a, traverseOrder);
+		return a;
+	}
 
 	@Override
 	public void clear() {
