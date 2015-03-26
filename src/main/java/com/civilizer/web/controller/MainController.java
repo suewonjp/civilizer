@@ -51,9 +51,9 @@ public final class MainController {
 	private TagDao tagDao;
 	
 	// [TODO] refactor code to maintain special tags
-	private Tag trashcanTag = null;
+	private Tag trashcanTag;
 
-	private Tag bookmarkTag = null;
+	private Tag bookmarkTag;
 
 	private Tag getTrashcanTag() {
 		if (trashcanTag != null) {

@@ -18,7 +18,7 @@ public final class SpecialTagBean implements Serializable {
 	
 	private List<FragmentBean> fragmentBeans = Collections.emptyList();
 	
-	private Tag tag = null;
+	private Tag tag;
 	
 	public Collection<FragmentBean> getFragmentBeans() {
     	return fragmentBeans;

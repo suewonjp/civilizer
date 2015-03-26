@@ -8,9 +8,9 @@ public final class FragmentListBean implements Serializable {
     
     private List<FragmentBean> fragmentBeans = Collections.emptyList();
     
-    private PanelContextBean panelContextBean = null;
+    private PanelContextBean panelContextBean;
     
-//    private SearchContextBean searchContextBean = null;
+//    private SearchContextBean searchContextBean;
     
     private int orderOption = 0;
     

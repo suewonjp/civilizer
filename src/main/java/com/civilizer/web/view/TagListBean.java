@@ -12,7 +12,7 @@ public final class TagListBean implements Serializable {
 
     private List<TagBean> tagBeans = Collections.emptyList();
 
-    private TagTree tagTree = null;
+    private TagTree tagTree;
 
     public List<Tag> getTags() {
         return tags;
@@ -45,13 +45,7 @@ public final class TagListBean implements Serializable {
     }
 
     public void setTagTree(TagTree tagTree) {
-        try {
-            tagTree.populateNodes(tags, tagBeans);
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        
+        tagTree.populateNodes(tags, tagBeans);
         this.tagTree = tagTree;
     }
     
