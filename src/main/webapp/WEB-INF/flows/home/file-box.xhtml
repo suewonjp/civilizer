@@ -37,7 +37,7 @@ $(document).ready(function() {
 		<div id="file-path-tree">
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>
-                    <span class="fa">#{filePathBean}</span>
+                    <span class="fa" style="color:#{filePathBean.toColorNotation()}">#{filePathBean}</span>
                 </p:treeNode>
             </p:tree>
         </div>

@@ -21,6 +21,15 @@ public class FilePathBean implements Serializable {
 		return entity instanceof String;
 	}
 	
+	public String toColorNotation() {
+		if (entity instanceof FileEntity) {
+			return "white";
+		}
+		else {
+			return "gold";
+		}
+	}
+	
 	public String toString() {
 		if (entity instanceof FileEntity) {
 			FileEntity fe = (FileEntity) entity;
