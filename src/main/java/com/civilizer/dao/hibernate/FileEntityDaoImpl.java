@@ -54,9 +54,8 @@ public class FileEntityDaoImpl implements FileEntityDao {
 	}
 
 	@Override
-	public FileEntity save(FileEntity fe) {
+	public void save(FileEntity fe) {
 		sessionFactory.getCurrentSession().saveOrUpdate(fe);
-		return fe;
 	}
 
 	@Override

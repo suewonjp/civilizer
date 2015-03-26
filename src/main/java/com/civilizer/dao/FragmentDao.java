@@ -44,7 +44,7 @@ public interface FragmentDao {
 
     public void unrelateFragments(long id0, long id1);
 
-    public Fragment save(Fragment frgm);
+    public void save(Fragment frgm);
 
     public void delete(Fragment frgm);
     

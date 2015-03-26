@@ -4,8 +4,6 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,8 +17,6 @@ import com.civilizer.domain.*;
 @Repository("tagDao")
 @Transactional
 public final class TagDaoImpl implements TagDao {
-
-    private final Log log = LogFactory.getLog(TagDaoImpl.class);
 
     private SessionFactory sessionFactory;
     
@@ -123,16 +119,13 @@ public final class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public Tag save(Tag tag) {
+    public void save(Tag tag) {
         sessionFactory.getCurrentSession().saveOrUpdate(tag);
-        log.info("Tag saved with id: " + tag.getId());
-        return tag;
     }
 
     @Override
     public void delete(Tag tag) {
         sessionFactory.getCurrentSession().delete(tag);
-        log.info("Tag deleted with id: " + tag.getId());
     }
 
 }

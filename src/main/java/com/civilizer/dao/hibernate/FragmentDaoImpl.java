@@ -4,8 +4,6 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -23,8 +21,6 @@ import com.civilizer.domain.SearchParams;
 @Repository("fragmentDao")
 @Transactional
 public final class FragmentDaoImpl implements FragmentDao {
-
-    private final Log log = LogFactory.getLog(FragmentDaoImpl.class);
 
     private SessionFactory sessionFactory;
 
@@ -293,16 +289,13 @@ public final class FragmentDaoImpl implements FragmentDao {
     }
 
     @Override
-    public Fragment save(Fragment fragment) {
+    public void save(Fragment fragment) {
         sessionFactory.getCurrentSession().saveOrUpdate(fragment);
-        log.info("Fragment saved with id: " + fragment.getId());
-        return fragment;
     }
 
     @Override
     public void delete(Fragment fragment) {
         sessionFactory.getCurrentSession().delete(fragment);
-        log.info("Fragment deleted with id: " + fragment.getId());
     }
 
 }

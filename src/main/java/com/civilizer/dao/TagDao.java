@@ -28,7 +28,7 @@ public interface TagDao {
 
     public List<Tag> findParentTags(Long id);
 
-    public Tag save(Tag tag);
+    public void save(Tag tag);
 
     public void delete(Tag tag);
     

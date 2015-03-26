@@ -597,7 +597,7 @@ class DaoTest {
 		}
 		assertEquals(false, fe.persisted(filesHome));
 		
-		assertEquals(fe, fileEntityDao.save(fe));
+		fileEntityDao.save(fe);
 		assertNotNull(fe.getId());
 		assertEquals(fe, fileEntityDao.findById(fe.getId()));
 		
