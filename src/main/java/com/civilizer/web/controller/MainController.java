@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.webflow.execution.RequestContext;
 
 import com.civilizer.config.AppOptions;
+import com.civilizer.dao.FileEntityDao;
 import com.civilizer.dao.FragmentDao;
 import com.civilizer.dao.TagDao;
+import com.civilizer.domain.FileEntity;
 import com.civilizer.domain.Fragment;
 import com.civilizer.domain.FragmentOrder;
 import com.civilizer.domain.SearchParams;
@@ -49,6 +51,9 @@ public final class MainController {
 
 	@Autowired
 	private TagDao tagDao;
+	
+	@Autowired
+	private FileEntityDao fileEntityDao;
 	
 	// [TODO] refactor code to maintain special tags
 	private Tag trashcanTag;
@@ -225,6 +230,15 @@ public final class MainController {
         return tagListBean;
     }
 	
+	public FileListBean newFileListBean() {
+		final FileListBean output = new FileListBean();
+		final List<FileEntity> fileEntities = fileEntityDao.findAll();
+		output.setFileEntities(fileEntities);
+		final FilePathTree filePathTree = newFilePathTree();
+		output.setFilePathTree(filePathTree);
+		return output;
+	}
+	
 	public TagBean newTagBean() {
 		final TagBean tagBean = new TagBean();
 		final Tag tag = new Tag();
@@ -253,6 +267,11 @@ public final class MainController {
 	private TagTree newTagTree() {
 		final TagTree tagTree = new TagTree();
 	    return tagTree;
+	}
+
+	private FilePathTree newFilePathTree() {
+		final FilePathTree fpTree = new FilePathTree();
+		return fpTree;
 	}
 
 	public PanelContextBean newPanelContextBean(int panelId, long tagId, int curPage) {

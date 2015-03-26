@@ -11,6 +11,7 @@
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.paramFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+        <evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
         <evaluate expression="mainController.newTagBean()" result="flowScope.paramTagBean"/>
         <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         <evaluate expression="mainController.newSearchContextBeans()" result="flowScope.searchContextBeans"/>
