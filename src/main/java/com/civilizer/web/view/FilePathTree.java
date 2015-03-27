@@ -1,6 +1,7 @@
 package com.civilizer.web.view;
 
 import java.util.*;
+import java.io.File;
 import java.io.Serializable;
 
 import com.civilizer.domain.DefaultTreeNode;
@@ -10,7 +11,24 @@ import com.civilizer.domain.TreeNode;
 @SuppressWarnings("serial")
 public class FilePathTree implements Serializable {
 	
-	private org.primefaces.model.TreeNode root; // = new org.primefaces.model.DefaultTreeNode("Root", null);
+	private org.primefaces.model.TreeNode root;
+	
+	private List<FilePathBean> filePathBeans;
+	
+	private static String getFullPathOf(TreeNode<Object> path) {
+		final Object entity = path.getData();
+		if (entity instanceof FileEntity) {
+			return ((FileEntity) entity).toString();
+		}
+		else {
+			TreeNode<Object> tmp = path;
+			String fullPath = File.separatorChar + tmp.getData().toString();
+			while ((tmp = tmp.getParent()) != null) {
+				fullPath = tmp.getData().toString() + fullPath;
+			}
+			return fullPath;
+		}
+	}
 	
 	public void populateNodes(List<FileEntity> fileEntities) {
 		TreeNode<Object> pathTree = new DefaultTreeNode<Object>("");
@@ -23,14 +41,22 @@ public class FilePathTree implements Serializable {
 		
 		Object[] paths = pathTree.toArray(TreeNode.TraverseOrder.BREATH_FIRST);
 		
-		for (Object o : paths) {
+		filePathBeans = new ArrayList<FilePathBean>();
+		
+		for (int i=0; i<paths.length; ++i) {
+			final Object o = paths[i];
 			@SuppressWarnings("unchecked")
 			TreeNode<Object> path = (TreeNode<Object>) o;
-			FilePathBean filePathBean = new FilePathBean();
+			FilePathBean filePathBean = new FilePathBean(i);
+			filePathBeans.add(filePathBean);
 			filePathBean.setEntity(path.getData());
+			final String fp = getFullPathOf(path);
+			filePathBean.setFullPath(fp);
 			mapPath2TreeNode.put(o, new org.primefaces.model.DefaultTreeNode(filePathBean));
 		}
-		for (Object o : paths) {
+		
+		for (int i=0; i<paths.length; ++i) {
+			final Object o = paths[i];
 			@SuppressWarnings("unchecked")
 			TreeNode<Object> path = (TreeNode<Object>) o;
 			TreeNode<Object> parent = path.getParent();

@@ -14,7 +14,28 @@ $(document).ready(function() {
 	    if (fileName) {
 	    	// make the upload button visible only when we have a file to upload
 	    	$("#file-box-form\\:upload-button").css("visibility", "visible");
+	    	
+	    	var dest = $("#file-path-tree .fa-upload");
+	    	if (dest.length > 0) {
+	    		// a destination place has been specified
+	    		dest = dest.attr("_fp");
+	    	}
+	    	else {
+	    		// no destination place has been specified. just send the file in the root directory
+	    		dest = "/";
+	    	}
+	    	
+	    	$("#upload-destination-info").html("#{msg['will_upload_to']}" + "<span class='fa fa-folder-open' style='color:gold; font-weight:bold'>" + dest + "</span>");
 	    }
+	});
+	
+	$(".file-path-tree-node").click(function () {
+		$(".file-path-tree-node").removeClass("fa-upload");
+		var $this = $(this);
+		if ($this.attr("_isFolder") === "true") {
+			var id = $this.attr("_id");
+			$this.addClass("fa-upload");
+		}
 	});
 }); // end of $(document).ready()
 //]]>
@@ -29,15 +50,20 @@ $(document).ready(function() {
 		<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
 		<p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
 		<br/>
-		<!-- [TODO] add style to make it look like a button -->
+		
 		<p:commandLink id="upload-button" action="upload-file" ajax="false" title="#{msg['label_upload_file']}">
 			<span class="fa fa-2x fa-upload button-link ui-button"></span>
 		</p:commandLink>
 		
+		<span id="upload-destination-info"></span>
+		
 		<div id="file-path-tree">
+            <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}" />
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>
-                    <span class="fa" style="color:#{filePathBean.toColorNotation()}">#{filePathBean}</span>
+                    <span class="file-path-tree-node fa" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{filePathBean.isFolder()}" style="color:#{filePathBean.toColorNotation()}">
+                    	#{filePathBean}
+                    </span>
                 </p:treeNode>
             </p:tree>
         </div>
