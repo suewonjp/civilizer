@@ -241,6 +241,8 @@ so this kind of hack has been incorporated
 
 #bookmark-form\:bookmark-panel, #tag-palette-panel, #file-box-form\:file-box-panel {
 	margin-bottom: 20px;
+	overflow-x: auto;
+	overflow-y: auto;
 }
 
 #fragment-group-form\:messages, #fragment-group-form\:development-messages {
