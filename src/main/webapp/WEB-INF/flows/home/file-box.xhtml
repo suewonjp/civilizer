@@ -9,6 +9,17 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
+	$("#file-path-tree").on("mouseenter", ".each-file", function() {
+		var menu = $(this).find(".file-menu");
+		if (menu.attr("_isFolder") !== "true") {
+	        menu.css("visibility", "visible");
+		}
+    });
+    
+    $("#file-path-tree").on("mouseleave", ".each-file", function() {
+        $(this).find(".file-menu").css("visibility", "hidden");
+    });
+    
 	$("#file-box-form\\:file-selector").change(function () {
 	    var fileName = $(this).val();
 	    if (fileName) {
@@ -42,6 +53,10 @@ $(document).ready(function() {
 		}
 	});
 }); // end of $(document).ready()
+
+function showRenameFileDialog(fileId, filePath) {
+	alert("yet to be implemented!");
+}
 //]]>
 </script>
 
@@ -65,10 +80,19 @@ $(document).ready(function() {
 		
 		<div id="file-path-tree">
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
-                <p:treeNode>
-                    <span class="file-path-tree-node fa" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{filePathBean.isFolder()}" style="color:#{filePathBean.toColorNotation()}">
+                <p:treeNode styleClass="each-file">
+                	<c:set var="isFolder" value="#{filePathBean.isFolder()}"/>
+                    <span class="file-path-tree-node fa" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{isFolder}" style="color:#{filePathBean.toColorNotation()}">
                     	#{filePathBean}
                     </span>
+                    <span class="file-menu" _isFolder="#{isFolder}">
+					    <p:commandLink oncomplete="showRenameFileDialog('#{filePathBean.id}', '#{filePathBean}')" styleClass="file-button" title="#{msg['label_rename_file']}">
+					        <span class="fa fa-pencil" style="color:black" >&nbsp;</span>
+					    </p:commandLink>
+						<p:commandLink oncomplete="confirmDeletingFile('#{filePathBean.id}')" styleClass="file-button" title="#{msg['label_delete_file']}">
+					        <span class="fa fa-trash" style="color:indigo" >&nbsp;</span>
+					    </p:commandLink>
+					</span>
                 </p:treeNode>
             </p:tree>
         </div>

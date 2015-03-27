@@ -177,7 +177,7 @@ so this kind of hack has been incorporated
     color: black;
 }
 
-.tag-button, .tag-box {
+.tag-button, .tag-box, .file-button {
     margin: 2px 1px 1px 1px;
     border:1px solid #ffc826;
     -webkit-box-shadow: #B4B5B5 1px 1px 1px  ;-moz-box-shadow: #B4B5B5 1px 1px 1px ; box-shadow: #B4B5B5 1px 1px 1px;
@@ -278,5 +278,9 @@ so this kind of hack has been incorporated
 }
 
 #file-box-form\:upload-button {
+	visibility: hidden;
+}
+
+.file-menu {
 	visibility: hidden;
 }
