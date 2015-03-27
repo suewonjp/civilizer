@@ -50,7 +50,7 @@
                             </p:commandLink>
                         </c:when>
                         <c:otherwise>
-                            <p:commandLink style="text-decoration:none;" oncomplete="confirmTrashingFragments(''#{fragment.id}', false, false, '#{panelId}')" >
+                            <p:commandLink style="text-decoration:none;" oncomplete="confirmTrashingFragments('#{fragment.id}', false, false, '#{panelId}')" >
                                 <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
                             </p:commandLink>
                         </c:otherwise>
