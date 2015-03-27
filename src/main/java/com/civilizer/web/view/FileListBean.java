@@ -32,6 +32,7 @@ public final class FileListBean implements Serializable {
 	public void setFilePathTree(FilePathTree filePathTree) {
 		filePathTree.populateNodes(fileEntities);
 		this.filePathTree = filePathTree;
+		detectBrokenLinks();
 	}
 	
 	public int getSelectedNodeId() {
@@ -43,9 +44,19 @@ public final class FileListBean implements Serializable {
 	}
 
 	public void detectBrokenLinks() {
-		final String uuploadedFilesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
-		for (FileEntity fe : fileEntities) {
-			final File f = fe.toFile(uuploadedFilesHomePath);
+		final String uploadedFilesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final List<FilePathBean> filePathBeans = filePathTree.getFilePathBeans();
+		for (FilePathBean fpb : filePathBeans) {
+			if (fpb.isFolder()) {
+				continue;
+			}
+			if (fpb.getEntity() instanceof FileEntity == false) {
+				continue;
+			}
+			final File f = ((FileEntity) fpb.getEntity()).toFile(uploadedFilesHomePath);
+			if (f.isFile() == false) {
+				fpb.setBroken(true);
+			}
 		}
 	}
 

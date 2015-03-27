@@ -13,6 +13,8 @@ public class FilePathBean implements Serializable {
 	
 	private int id = -1;
 	
+	private boolean broken;
+	
 	public FilePathBean() {}
 
 	public FilePathBean(int id) { this.id = id; }
@@ -33,6 +35,14 @@ public class FilePathBean implements Serializable {
 		this.id = id;
 	}
 	
+	public boolean isBroken() {
+		return broken;
+	}
+
+	public void setBroken(boolean broken) {
+		this.broken = broken;
+	}
+
 	public String getFullPath() {
 		return fullPath;
 	}
@@ -47,6 +57,9 @@ public class FilePathBean implements Serializable {
 		
 	public String toColorNotation() {
 		if (entity instanceof FileEntity) {
+			if (isBroken()) {
+				return "red";
+			}
 			return "white";
 		}
 		else {
@@ -58,7 +71,12 @@ public class FilePathBean implements Serializable {
 		if (entity instanceof FileEntity) {
 			FileEntity fe = (FileEntity) entity;
 			String[] tmp = fe.getFileName().split("/");
-			return Character.toString((char) 0xf016) + ' ' + tmp[tmp.length - 1];
+			String postfix = "";
+			if (isBroken()) {
+				// [TODO] replace hard-coded Unicode literals with some understandable symbols;
+				postfix = ' ' + Character.toString((char) 0xf059);
+			}
+			return Character.toString((char) 0xf016) + ' ' + tmp[tmp.length - 1] + postfix;
 		}
 		else {
 			return Character.toString((char) 0xf07c) + ' ' + entity.toString();

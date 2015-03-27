@@ -76,5 +76,9 @@ public class FilePathTree implements Serializable {
 	public org.primefaces.model.TreeNode getRoot() {
 		return root;
 	}
+	
+	public List<FilePathBean> getFilePathBeans() {
+		return filePathBeans;
+	}
 
 }
