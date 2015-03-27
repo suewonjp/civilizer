@@ -519,16 +519,15 @@ public final class MainController {
 		final String filePath = File.separatorChar + fileUploadBean.getFileName();
 		final String fileWritePath = fileHomePath + filePath;
 		if (fileUploadBean.saveFile(fileWritePath)) {
-			ViewUtil.addMessage("File Uploaded", fileUploadBean.getFileName(), null);
-//			final FileEntity fe = new FileEntity(filePath);
-//			try {
-//				fileEntityDao.save(fe);
-//				ViewUtil.addMessage("File Uploaded", fileUploadBean.getFileName(), null);
-//			}
-//			catch (Exception e) {
-//				e.printStackTrace();
-//				ViewUtil.addMessage("Error on File Upload!!!", fileUploadBean.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-//			}
+			final FileEntity fe = new FileEntity(filePath);
+			try {
+				fileEntityDao.save(fe);
+				ViewUtil.addMessage("File Uploaded", fileUploadBean.getFileName(), null);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				ViewUtil.addMessage("Error on File Upload!!!", fileUploadBean.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			}
 		}
 		else {
 			ViewUtil.addMessage("Error on File Upload!!!", fileUploadBean.getFileName(), FacesMessage.SEVERITY_ERROR);
