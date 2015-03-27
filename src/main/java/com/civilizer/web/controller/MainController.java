@@ -1,6 +1,5 @@
 package com.civilizer.web.controller;
 
-import java.io.File;
 import java.util.*;
 
 import javax.faces.application.FacesMessage;
@@ -514,23 +513,23 @@ public final class MainController {
 		}
 	}
 	
-	public void uploadFile(FileUploadBean fileUploadBean) {
-		final String fileHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
-		final String filePath = File.separatorChar + fileUploadBean.getFileName();
-		final String fileWritePath = fileHomePath + filePath;
+	public void uploadFile(FileUploadBean fileUploadBean, FileListBean fileListBean) {
+		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String filePath = fileListBean.getFilePath(fileUploadBean.getFileName());
+		final String fileWritePath = filesHomePath + filePath;
 		if (fileUploadBean.saveFile(fileWritePath)) {
 			final FileEntity fe = new FileEntity(filePath);
 			try {
 				fileEntityDao.save(fe);
-				ViewUtil.addMessage("File Uploaded", fileUploadBean.getFileName(), null);
+				ViewUtil.addMessage("File Uploaded", filePath, null);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-				ViewUtil.addMessage("Error on File Upload!!!", fileUploadBean.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on File Upload!!!", filePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 			}
 		}
 		else {
-			ViewUtil.addMessage("Error on File Upload!!!", fileUploadBean.getFileName(), FacesMessage.SEVERITY_ERROR);
+			ViewUtil.addMessage("Error on File Upload!!!", filePath, FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	

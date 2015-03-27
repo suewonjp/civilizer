@@ -59,5 +59,13 @@ public final class FileListBean implements Serializable {
 			}
 		}
 	}
+	
+	public String getFilePath(String fileName) {
+		final String intermediatePath = (selectedNodeId > -1) ?
+				filePathTree.getFilePathBeans().get(selectedNodeId).getFullPath() : File.separator;
+		
+		return intermediatePath.equals(File.separator) ?
+				File.separatorChar + fileName : intermediatePath + File.separatorChar + fileName;
+	}
 
 }

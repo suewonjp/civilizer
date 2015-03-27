@@ -13,19 +13,24 @@ $(document).ready(function() {
 	    var fileName = $(this).val();
 	    if (fileName) {
 	    	// make the upload button visible only when we have a file to upload
+	    	// [TODO] add simple animation for users not to miss the button
 	    	$("#file-box-form\\:upload-button").css("visibility", "visible");
 	    	
+	    	var holderForDestId = $("#file-box-form\\:id-placeholder-for-selected-node");
 	    	var dest = $("#file-path-tree .fa-upload");
+	    	var path;
 	    	if (dest.length > 0) {
 	    		// a destination place has been specified
-	    		dest = dest.attr("_fp");
+	    		path = dest.attr("_fp");
+	    		holderForDestId.val(dest.attr("_id"));
 	    	}
 	    	else {
 	    		// no destination place has been specified. just send the file in the root directory
-	    		dest = "/";
+	    		path = "/";
+	    		holderForDestId.val(0);
 	    	}
 	    	
-	    	$("#upload-destination-info").html("#{msg['will_upload_to']}" + "<span class='fa fa-folder-open' style='color:gold; font-weight:bold'>" + dest + "</span>");
+	    	$("#upload-destination-info").html("&nbsp;&nbsp;<span class='fa fa-folder-open' style='color:gold; font-weight:bold'>" + path + "</span>");
 	    }
 	});
 	
@@ -47,6 +52,8 @@ $(document).ready(function() {
 
 <h:form id="file-box-form" enctype="multipart/form-data">
 	<p:panel id="file-box-panel" >
+        <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}" />
+
 		<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
 		<p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
 		<br/>
@@ -58,7 +65,6 @@ $(document).ready(function() {
 		<span id="upload-destination-info"></span>
 		
 		<div id="file-path-tree">
-            <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}" />
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>
                     <span class="file-path-tree-node fa" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{filePathBean.isFolder()}" style="color:#{filePathBean.toColorNotation()}">

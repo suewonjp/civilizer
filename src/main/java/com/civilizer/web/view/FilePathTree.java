@@ -16,9 +16,10 @@ public class FilePathTree implements Serializable {
 	private List<FilePathBean> filePathBeans;
 	
 	private static String getFullPathOf(TreeNode<Object> path) {
+		// [NOTE] the returned path will start with a file separator (e.g. / or \)
 		final Object entity = path.getData();
 		if (entity instanceof FileEntity) {
-			return ((FileEntity) entity).toString();
+			return ((FileEntity) entity).toString().replace('/', File.separatorChar);
 		}
 		else {
 			TreeNode<Object> tmp = path;

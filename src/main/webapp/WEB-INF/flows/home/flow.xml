@@ -134,7 +134,7 @@
         </transition>
         
         <transition on="upload-file" to="home" >
-			<evaluate expression="mainController.uploadFile(fileUploadBean)" />
+			<evaluate expression="mainController.uploadFile(fileUploadBean, fileListBean)" />
 			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
 		</transition>
     </view-state>
