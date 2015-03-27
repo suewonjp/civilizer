@@ -189,6 +189,9 @@ INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES
 INSERT INTO FILE(FILE_NAME) VALUES
 ('/empty.txt')
 ,('/folder 0/empty.txt')
+,('/folder 0/foo.txt')
+,('/folder 0/folder 2/empty.txt')
+,('/folder 1/bar.txt')
 ;
 
 INSERT INTO TAG2TAG(PARENT_ID, CHILD_ID) VALUES
