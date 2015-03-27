@@ -13,8 +13,7 @@ $(document).ready(function() {
 	    var fileName = $(this).val();
 	    if (fileName) {
 	    	// make the upload button visible only when we have a file to upload
-	    	// [TODO] add simple animation for users not to miss the button
-	    	$("#file-box-form\\:upload-button").css("visibility", "visible");
+	    	$("#file-box-form\\:upload-button").css("visibility", "visible").effect("shake");
 	    	
 	    	var holderForDestId = $("#file-box-form\\:id-placeholder-for-selected-node");
 	    	var dest = $("#file-path-tree .fa-upload");
