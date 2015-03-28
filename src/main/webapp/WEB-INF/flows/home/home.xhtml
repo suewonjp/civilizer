@@ -386,14 +386,15 @@ function confirmDeletingFile(fileId) {
             <h:outputText id="confirm-dlg-msg" value="&nbsp;" />
         </f:facet>
 
-        <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
-        <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
-        <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments" oncomplete="PF('singletonConfirmDlg').hide()" />
-        <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments" oncomplete="PF('singletonConfirmDlg').hide()" />
-        <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
-        <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" oncomplete="PF('singletonConfirmDlg').hide()"/>
-        <p:commandButton id="confirm-dlg-yes-btn-unbookmark-fragment" value="#{msg['label_yes']}" action="unbookmark-fragment" oncomplete="PF('singletonConfirmDlg').hide()"/>
-        <p:commandButton id="confirm-dlg-yes-btn-unrelate-fragments" value="#{msg['label_yes']}" action="unrelate-fragments" oncomplete="PF('singletonConfirmDlg').hide()"/>
+        <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" />
+        <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" />
+        <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments"  />
+        <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments"  />
+        <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" />
+        <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" />
+        <p:commandButton id="confirm-dlg-yes-btn-unbookmark-fragment" value="#{msg['label_yes']}" action="unbookmark-fragment" />
+        <p:commandButton id="confirm-dlg-yes-btn-unrelate-fragments" value="#{msg['label_yes']}" action="unrelate-fragments" />
+<!--         <p:commandButton id="confirm-dlg-yes-btn-delete-files" value="#{msg['label_yes']}" action="delete-files" /> -->
 
         <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
     </p:confirmDialog>
