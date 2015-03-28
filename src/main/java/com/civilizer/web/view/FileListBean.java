@@ -15,6 +15,8 @@ public final class FileListBean implements Serializable {
 	
 	private FilePathTree filePathTree;
 	
+	private String fileName;
+	
 	private int selectedNodeId;
 
 	public List<FileEntity> getFileEntities() {
@@ -35,6 +37,14 @@ public final class FileListBean implements Serializable {
 		detectBrokenLinks();
 	}
 	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	public int getSelectedNodeId() {
 		return selectedNodeId;
 	}
@@ -66,6 +76,10 @@ public final class FileListBean implements Serializable {
 		
 		return intermediatePath.equals(File.separator) ?
 				File.separatorChar + fileName : intermediatePath + File.separatorChar + fileName;
+	}
+	
+	public String getFilePath(int index) {
+		return filePathTree.getFilePathBeans().get(index).getFullPath();
 	}
 
 }

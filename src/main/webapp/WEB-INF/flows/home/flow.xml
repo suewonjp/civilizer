@@ -137,6 +137,11 @@
 			<evaluate expression="mainController.uploadFile(fileUploadBean, fileListBean)" />
 			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
 		</transition>
+
+        <transition on="rename-file" to="home" >
+			<evaluate expression="mainController.renameFile(fileListBean)" />
+			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
+		</transition>
     </view-state>
     
     <end-state id="exit" />

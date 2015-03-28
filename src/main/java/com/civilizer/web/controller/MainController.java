@@ -532,6 +532,15 @@ public final class MainController {
 			ViewUtil.addMessage("Error on File Upload!!!", filePath, FacesMessage.SEVERITY_ERROR);
 		}
 	}
+
+	public void renameFile(FileListBean fileListBean) {
+		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String newName = fileListBean.getFileName();
+		final String filePath = fileListBean.getFilePath(fileListBean.getSelectedNodeId());
+		final String pathOnFileSystem = filesHomePath + filePath;
+		
+		yetToBeDeveloped(newName, filePath, pathOnFileSystem);
+	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
     public String onRequestForFragment(ModelMap model, @PathVariable Long fragmentId) {

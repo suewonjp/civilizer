@@ -10,14 +10,11 @@
 //<![CDATA[
 $(document).ready(function() {
 	$("#file-path-tree").on("mouseenter", ".each-file", function() {
-		var menu = $(this).find(".file-menu");
-		if (menu.attr("_isFolder") !== "true") {
-	        menu.css("visibility", "visible");
-		}
+		$(this).find(".file-menu").first().css("visibility", "visible");
     });
     
     $("#file-path-tree").on("mouseleave", ".each-file", function() {
-        $(this).find(".file-menu").css("visibility", "hidden");
+    	$(this).find(".file-menu").css("visibility", "hidden");
     });
     
 	$("#file-box-form\\:file-selector").change(function () {
@@ -54,8 +51,11 @@ $(document).ready(function() {
 	});
 }); // end of $(document).ready()
 
-function showRenameFileDialog(fileId, filePath) {
-	alert("yet to be implemented!");
+function showRenameFileDialog(fileId, fileName) {
+	var dlg = PF('renameFileDlg');
+    dlg.show();
+    $("#file-box-form\\:id-placeholder-for-selected-node").val(fileId);
+    $("#file-box-form\\:rename-file-dlg-name-input").val(fileName);
 }
 //]]>
 </script>
@@ -65,6 +65,14 @@ function showRenameFileDialog(fileId, filePath) {
 </div>
 
 <h:form id="file-box-form" enctype="multipart/form-data">
+	<p:dialog header="#{msg['label_rename_file']}" width="300px" modal="true" showEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false" >
+        <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['label_name']} :" />
+        <p:inputText style="min-width:200px" id="rename-file-dlg-name-input" value="#{fileListBean.fileName}" />
+        <br /><br />
+        <p:commandButton action="rename-file" value="#{msg['label_ok']}" icon="ui-icon-check">
+        </p:commandButton>
+    </p:dialog>
+    
 	<p:panel id="file-box-panel" >
         <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}" />
 
@@ -86,7 +94,7 @@ function showRenameFileDialog(fileId, filePath) {
                     	#{filePathBean}
                     </span>
                     <span class="file-menu" _isFolder="#{isFolder}">
-					    <p:commandLink oncomplete="showRenameFileDialog('#{filePathBean.id}', '#{filePathBean}')" styleClass="file-button" title="#{msg['label_rename_file']}">
+					    <p:commandLink oncomplete="showRenameFileDialog('#{filePathBean.id}', '#{filePathBean.getName()}')" styleClass="file-button" title="#{msg['label_rename_file']}">
 					        <span class="fa fa-pencil" style="color:black" >&nbsp;</span>
 					    </p:commandLink>
 						<p:commandLink oncomplete="confirmDeletingFile('#{filePathBean.id}')" styleClass="file-button" title="#{msg['label_delete_file']}">

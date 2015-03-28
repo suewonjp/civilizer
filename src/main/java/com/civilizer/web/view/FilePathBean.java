@@ -67,6 +67,17 @@ public class FilePathBean implements Serializable {
 		}
 	}
 	
+	public String getName() {
+		if (entity instanceof FileEntity) {
+			FileEntity fe = (FileEntity) entity;
+			String[] tmp = fe.getFileName().split("/");
+			return tmp[tmp.length - 1];
+		}
+		else {
+			return entity.toString();
+		}
+	}
+	
 	public String toString() {
 		if (entity instanceof FileEntity) {
 			FileEntity fe = (FileEntity) entity;
