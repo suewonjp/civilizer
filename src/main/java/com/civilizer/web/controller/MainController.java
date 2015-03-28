@@ -536,10 +536,22 @@ public final class MainController {
 	public void renameFile(FileListBean fileListBean) {
 		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		final String newName = fileListBean.getFileName();
-		final String filePath = fileListBean.getFilePath(fileListBean.getSelectedNodeId());
-		final String pathOnFileSystem = filesHomePath + filePath;
+		final String oldFilePath = fileListBean.getFilePath(fileListBean.getSelectedNodeId());
+		final String oldPathOnFileSystem = filesHomePath + oldFilePath;
+		final List<FileEntity> entities = fileEntityDao.findByNamePattern(oldFilePath);
 		
-		yetToBeDeveloped(newName, filePath, pathOnFileSystem);
+		for (FileEntity fe : entities) {
+			fe.replaceNameSegment(oldFilePath, newName);
+			try {
+				fileEntityDao.save(fe);
+				ViewUtil.addMessage("File Renamed", fe.getFileName(), null);
+			} catch (Exception e) {
+				e.printStackTrace();
+				ViewUtil.addMessage("Error on Renaming Files!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			}		
+		}
+		
+		yetToBeDeveloped(newName, oldFilePath, oldPathOnFileSystem);
 	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
