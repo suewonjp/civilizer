@@ -536,15 +536,9 @@ public final class MainController {
 	}
 
 	public void renameFile(FileListBean fileListBean) {
-		final int selectedNodeId = fileListBean.getSelectedNodeId();
-		if (selectedNodeId == -1) {
-			// [RULE] Create a new directory in this case;
-			yetToBeDeveloped(selectedNodeId);
-			return;
-		}
 		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		final String newName = fileListBean.getFileName();
-		final String oldFilePath = fileListBean.getFilePath(selectedNodeId);
+		final String oldFilePath = fileListBean.getFilePath(fileListBean.getSelectedNodeId());
 		final List<FileEntity> entities = fileEntityDao.findByNamePattern(oldFilePath);
 		
 		for (FileEntity fe : entities) {
