@@ -236,7 +236,11 @@ public final class MainController {
 		final List<FileEntity> fileEntities = fileEntityDao.findAll();
 		output.setFileEntities(fileEntities);
 		final FilePathTree filePathTree = newFilePathTree();
-		output.setFilePathTree(filePathTree, oldFileListBean.getTransientEntities());
+		List<FileEntity> transientEntities = Collections.emptyList();
+		if (oldFileListBean != null) {
+			transientEntities = oldFileListBean.getTransientEntities();
+		}
+		output.setFilePathTree(filePathTree, transientEntities);
 		return output;
 	}
 	
