@@ -106,7 +106,7 @@ function showNewDirectoryDialog() {
                 <p:treeNode>
 	                <span class="each-file">
 	                	<c:set var="isFolder" value="#{filePathBean.isFolder()}"/>
-	                    <span class="file-path-tree-node fa" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{isFolder}" style="color:#{filePathBean.toColorNotation()}">
+	                    <span class="file-path-tree-node fa #{filePathBean.getCssClassName()}" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{isFolder}" >
 	                    	#{filePathBean}
 	                    </span>
 	                    <span class="file-menu" _isFolder="#{isFolder}">

@@ -286,3 +286,15 @@ so this kind of hack has been incorporated
 .file-menu {
 	visibility: hidden;
 }
+
+.fb-file {
+	color: white;
+}
+
+.fb-dir {
+	color: gold;
+}
+
+.fb-broken {
+	color: red;
+}

@@ -54,18 +54,6 @@ public class FilePathBean implements Serializable {
 	public boolean isFolder() {
 		return entity instanceof String;
 	}
-		
-	public String toColorNotation() {
-		if (entity instanceof FileEntity) {
-			if (isBroken()) {
-				return "red";
-			}
-			return "white";
-		}
-		else {
-			return "gold";
-		}
-	}
 	
 	public String getName() {
 		if (entity instanceof FileEntity) {
@@ -78,19 +66,27 @@ public class FilePathBean implements Serializable {
 		}
 	}
 	
+	public String getCssClassName() {
+		if (entity instanceof FileEntity) {
+			String postfix = "";
+			if (isBroken()) {
+				postfix = "fa-question-circle fb-broken";
+			}
+			return "fb-file fa-file-o " + postfix;
+		}
+		else {
+			return "fb-dir fa-folder-open ";
+		}
+	}
+	
 	public String toString() {
 		if (entity instanceof FileEntity) {
 			FileEntity fe = (FileEntity) entity;
 			String[] tmp = fe.getFileName().split("/");
-			String postfix = "";
-			if (isBroken()) {
-				// [TODO] replace hard-coded Unicode literals with some understandable symbols;
-				postfix = ' ' + Character.toString((char) 0xf059);
-			}
-			return Character.toString((char) 0xf016) + ' ' + tmp[tmp.length - 1] + postfix;
+			return tmp[tmp.length - 1];
 		}
 		else {
-			return Character.toString((char) 0xf07c) + ' ' + entity.toString();
+			return entity.toString();
 		}
 	}
 
