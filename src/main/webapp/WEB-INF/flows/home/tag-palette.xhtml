@@ -10,11 +10,11 @@
 //<![CDATA[
 $(document).ready(function() {
 	$("#tag-palette-panel").on("mouseenter", ".each-tag", function() {
-        $(this).find(".tag-menu").show();
+        $(this).find(".tag-menu").first().show();
     });
     
     $("#tag-palette-panel").on("mouseleave", ".each-tag", function() {
-        $(this).find(".tag-menu").hide();
+        $(this).find(".tag-menu").first().hide();
     });
     
     var currentTagGroupTabIndex = "0";
