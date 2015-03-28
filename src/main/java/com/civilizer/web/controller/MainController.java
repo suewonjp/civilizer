@@ -539,10 +539,10 @@ public final class MainController {
 		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		final String newName = fileListBean.getFileName();
 		final String oldFilePath = fileListBean.getFilePath(fileListBean.getSelectedNodeId());
-		final String oldPathOnFileSystem = filesHomePath + oldFilePath;
 		final List<FileEntity> entities = fileEntityDao.findByNamePattern(oldFilePath);
 		
 		for (FileEntity fe : entities) {
+			final String oldPathOnFileSystem = filesHomePath + fe.getFileName();
 			fe.replaceNameSegment(oldFilePath, newName);
 			final String newPathOnFileSystem = filesHomePath + fe.getFileName();
 			try {
