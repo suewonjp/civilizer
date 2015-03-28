@@ -1,0 +1,11 @@
+
+System.out.println(System.getProperty("user.dir"));
+
+File f0 = new File("test/tmp/hello.txt");
+//FileUtils.write(f0, "hello, world\n\n", Charset.defaultCharset(), true);
+
+File f1 = new File("test/tmp/tmp2/tmp3/hello-2nd.txt");
+
+FileUtils.moveFile(f0, f1);
+
+FileUtils.deleteQuietly(new File("test/tmp"));
