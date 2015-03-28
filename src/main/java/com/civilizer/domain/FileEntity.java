@@ -89,7 +89,6 @@ public class FileEntity implements Serializable {
 		}
 		directory = dir.getAbsolutePath();
 		
-		@SuppressWarnings("unchecked")
 		Collection<File> files = FileUtils.listFiles(dir, null, true);
 		final Collection<FileEntity> output = new ArrayList<>();
 		final int beginIndex = directory.length();
@@ -129,38 +128,6 @@ public class FileEntity implements Serializable {
 		}
 	}
 
-//	public void addToPathTree(TreeNode<Object> root, int dummy) {
-//		// [NOTE] the root node should contain an empty string ("")
-//		final String[] names = fileName.split("/");
-//		
-//		TreeNode<Object> prev = root.findDescendantWith(names[0]);
-//		
-//		if (prev == null) {
-//			TreeNode<Object> child = new DefaultTreeNode<Object>(names[0]);
-//			root.addChild(child);
-//			prev = child;
-//		}
-//		
-//		if (names.length > 1) {
-//			// this file is located under some folders 
-//			for (int i=1; i<names.length-1; ++i) {
-//				TreeNode<Object> parent = root.findDescendantWith(names[i - 1]);
-//				prev = root.findDescendantWith(names[i]);
-//				if (prev == null) {
-//					// these nodes represent intermediate paths (folders) and contain string values
-//					TreeNode<Object> child = new DefaultTreeNode<Object>(names[i]);
-//					parent.addChild(child);
-//					prev = child;
-//				}
-//			}
-//			// this node represents a file name below any folder except the root folder;
-//			prev = prev.addChild(new DefaultTreeNode<Object>(names[names.length - 1]));
-//		}
-//		
-//		// [NOTE] the leaf node contains a FileEntry instance unlike other nodes which contain string values
-//		prev.addChild(new DefaultTreeNode<Object>(this));
-//	}
-	
 	@Override
     public int hashCode() {
         final int prime = 59;
