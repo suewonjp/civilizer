@@ -550,10 +550,28 @@ public final class MainController {
 				final File oldFile = new File(oldPathOnFileSystem);
 				final File newFile = new File(newPathOnFileSystem);
 				FileUtils.moveFile(oldFile, newFile);
-				ViewUtil.addMessage("File Renamed", fe.getFileName(), null);
+				ViewUtil.addMessage("Files Renamed", fe.getFileName(), null);
 			} catch (Exception e) {
 				e.printStackTrace();
 				ViewUtil.addMessage("Error on Renaming Files!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			}
+		}
+	}
+
+	public void deleteFile(FileListBean fileListBean) {
+		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String filePath = fileListBean.getFilePath(fileListBean.getSelectedNodeId());
+		final List<FileEntity> entities = fileEntityDao.findByNamePattern(filePath);
+		
+		for (FileEntity fe : entities) {
+			final String pathOnFileSystem = filesHomePath + fe.getFileName();
+			try {
+				fileEntityDao.delete(fe);
+				FileUtils.deleteQuietly(new File(pathOnFileSystem));
+				ViewUtil.addMessage("Files Deleted", fe.getFileName(), null);
+			} catch (Exception e) {
+				e.printStackTrace();
+				ViewUtil.addMessage("Error on Deleting Files!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 			}
 		}
 	}

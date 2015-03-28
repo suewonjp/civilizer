@@ -142,6 +142,11 @@
 			<evaluate expression="mainController.renameFile(fileListBean)" />
 			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
 		</transition>
+
+        <transition on="delete-file" to="home" >
+			<evaluate expression="mainController.deleteFile(fileListBean)" />
+			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
+		</transition>
     </view-state>
     
     <end-state id="exit" />
