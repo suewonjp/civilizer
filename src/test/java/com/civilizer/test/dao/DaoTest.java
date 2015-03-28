@@ -106,6 +106,9 @@ class DaoTest {
 	}
 
 	protected void setUp() throws Exception {
+		TestUtil.configure();
+		final String filesHome = TestUtil.getFilesHomePath();
+		
 		fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
 		assertNotNull(fragmentDao);
 
@@ -115,11 +118,25 @@ class DaoTest {
 		fileEntityDao = ctx.getBean("fileEntityDao", FileEntityDao.class);
 		assertNotNull(fileEntityDao);
 		
+		// make sure all test files exist on the file system
+		List<FileEntity> fileEntitiesFromDB = fileEntityDao.findAll();
+		assertNotNull(fileEntitiesFromDB);
+		for (FileEntity fe : fileEntitiesFromDB) {
+			final File f = fe.toFile(filesHome);
+			try {
+				FileUtils.touch(f);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			assertEquals(true, f.isFile());
+		}
+		
 		logger.info("all DAOs initialized OK");
 	}
 
 	protected void tearDown() throws Exception {
 		deleteAllTemporalObjects();
+		TestUtil.unconfigure();
 	}
 	
     protected void testExecuteArbitraryQuery() {
@@ -553,40 +570,47 @@ class DaoTest {
 	}
 	
 	protected void testFileEntityQuery() {
-		TestUtil.configure();
 		final String filesHome = TestUtil.getFilesHomePath();
 		
 		List<FileEntity> fileEntitiesFromDB = fileEntityDao.findAll();
 		assertNotNull(fileEntitiesFromDB);
 		assertEquals(fileEntitiesFromDB.size(), fileEntityDao.countAll());
 		
-		for (FileEntity fe : fileEntitiesFromDB) {
-			final File f = fe.toFile(filesHome);
-			try {
-				FileUtils.touch(f);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			assertEquals(true, f.isFile());
-		}
-		
 		Collection<FileEntity> fileEntities = FileEntity.getFilesUnder(filesHome);
 		assertNotNull(fileEntities);
 		assertEquals(fileEntities.size(), fileEntitiesFromDB.size());
 		
 		for (FileEntity fe : fileEntities) {
-//			System.out.println(fe);
 			assertEquals(true, fileEntitiesFromDB.contains(fe));
 			final FileEntity fe2 = fileEntityDao.findByName(fe.getFileName());
 			assertNotNull(fe2);
 			assertEquals(true, fileEntitiesFromDB.contains(fe2));
 		}
 		
-		TestUtil.unconfigure();
+		{
+			final String fullPath = "/abc/efg/hijk/lmn";
+			FileEntity fe = new FileEntity(fullPath);
+			fileEntityDao.save(fe);
+			
+			try {
+				String pattern = fullPath;
+				List<FileEntity> results = fileEntityDao
+						.findByNamePattern(pattern);
+				assertEquals(1, results.size());
+				assertEquals(fe, results.get(0));
+
+				pattern = "/abc/efg/";
+				results = fileEntityDao.findByNamePattern(pattern);
+				assertEquals(1, results.size());
+				assertEquals(fe, results.get(0));
+			}
+			finally {
+				fileEntityDao.delete(fe);
+			}
+		}
 	}
 	
 	protected void testFileEntityPersistence() {
-		TestUtil.configure();
 		final String filesHome = TestUtil.getFilesHomePath();
 		
 		final FileEntity fe = new FileEntity("~~~~temp~new~file~~~~");
@@ -611,8 +635,6 @@ class DaoTest {
 		fileEntityDao.delete(fe);
 		assertNull(fe.getId());
 		assertEquals(false, fe.persisted(filesHome));
-		
-		TestUtil.unconfigure();
 	}
 
 }

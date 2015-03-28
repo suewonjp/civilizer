@@ -278,6 +278,11 @@
               + "where fe.fileName = :name"
               ),
 
+    @NamedQuery(name = "FileEntity.findByNamePattern",
+        query = "select fe "
+              + "from FileEntity fe "
+              + "where fe.fileName like :pattern"
+              ),
 }) 
 
 package com.civilizer.domain;

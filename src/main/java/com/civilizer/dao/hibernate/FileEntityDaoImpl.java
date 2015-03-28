@@ -53,6 +53,16 @@ public class FileEntityDaoImpl implements FileEntityDao {
                 .uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FileEntity> findByNamePattern(String pattern) {
+		pattern = '%' + pattern + '%';
+		return sessionFactory.getCurrentSession()
+                .getNamedQuery("FileEntity.findByNamePattern")
+                .setParameter("pattern", pattern)
+                .list();
+	}
+	
 	@Override
 	public void save(FileEntity fe) {
 		sessionFactory.getCurrentSession().saveOrUpdate(fe);

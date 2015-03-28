@@ -14,6 +14,8 @@ public interface FileEntityDao {
 
     public FileEntity findByName(String name);
 
+    public List<FileEntity> findByNamePattern(String pattern);
+
     public void save(FileEntity fe);
 
     public void delete(FileEntity fe);
