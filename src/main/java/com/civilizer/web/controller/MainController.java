@@ -1,11 +1,13 @@
 package com.civilizer.web.controller;
 
+import java.io.File;
 import java.util.*;
 
 import javax.faces.application.FacesMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -542,16 +544,18 @@ public final class MainController {
 		
 		for (FileEntity fe : entities) {
 			fe.replaceNameSegment(oldFilePath, newName);
+			final String newPathOnFileSystem = filesHomePath + fe.getFileName();
 			try {
 				fileEntityDao.save(fe);
+				final File oldFile = new File(oldPathOnFileSystem);
+				final File newFile = new File(newPathOnFileSystem);
+				FileUtils.moveFile(oldFile, newFile);
 				ViewUtil.addMessage("File Renamed", fe.getFileName(), null);
 			} catch (Exception e) {
 				e.printStackTrace();
 				ViewUtil.addMessage("Error on Renaming Files!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-			}		
+			}
 		}
-		
-		yetToBeDeveloped(newName, oldFilePath, oldPathOnFileSystem);
 	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
