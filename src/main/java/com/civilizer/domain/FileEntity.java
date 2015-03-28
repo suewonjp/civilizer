@@ -50,6 +50,10 @@ public class FileEntity implements Serializable {
 		this.fileName = name.intern();
 	}
 	
+	public boolean isChildOf(FileEntity fe) {
+		return fe.getFileName().indexOf(fileName) > -1;
+	}
+	
 	public void replaceNameSegment(String oldIntermediatePath, String newSegment) {
 		/*
 		 * let's say,

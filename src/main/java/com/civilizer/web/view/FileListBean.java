@@ -12,6 +12,8 @@ import com.civilizer.domain.FileEntity;
 public final class FileListBean implements Serializable {
 	
 	private List<FileEntity> fileEntities = Collections.emptyList();
+
+	private List<FileEntity> transientEntities = Collections.emptyList();
 	
 	private FilePathTree filePathTree;
 	
@@ -27,12 +29,37 @@ public final class FileListBean implements Serializable {
 		this.fileEntities = fileEntities;
 	}
 
+	public List<FileEntity> getTransientEntities() {
+		return transientEntities;
+	}
+
+	public void setTransientEntities(List<FileEntity> transientEntities) {
+		this.transientEntities = transientEntities;
+	}
+
 	public FilePathTree getFilePathTree() {
 		return filePathTree;
 	}
+	
+	private boolean transientEntryGetsPersisted(FileEntity tgt) {
+		for (FileEntity fe : fileEntities) {
+			if (tgt.isChildOf(fe)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-	public void setFilePathTree(FilePathTree filePathTree) {
-		filePathTree.populateNodes(fileEntities);
+	public void setFilePathTree(FilePathTree filePathTree, List<FileEntity> transientEntites) {
+		Iterator<FileEntity> itr = transientEntites.iterator();
+		while (itr.hasNext()) {
+			FileEntity fe = itr.next();
+			if (transientEntryGetsPersisted(fe)) {
+				itr.remove();
+			}
+		}
+		
+		filePathTree.populateNodes(fileEntities, transientEntites);
 		this.filePathTree = filePathTree;
 		detectBrokenLinks();
 	}

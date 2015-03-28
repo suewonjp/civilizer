@@ -231,12 +231,12 @@ public final class MainController {
         return tagListBean;
     }
 	
-	public FileListBean newFileListBean() {
+	public FileListBean newFileListBean(FileListBean oldFileListBean) {
 		final FileListBean output = new FileListBean();
 		final List<FileEntity> fileEntities = fileEntityDao.findAll();
 		output.setFileEntities(fileEntities);
 		final FilePathTree filePathTree = newFilePathTree();
-		output.setFilePathTree(filePathTree);
+		output.setFilePathTree(filePathTree, oldFileListBean.getTransientEntities());
 		return output;
 	}
 	

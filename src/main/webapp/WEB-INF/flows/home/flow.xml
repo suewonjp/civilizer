@@ -11,7 +11,7 @@
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>
         <evaluate expression="mainController.newFragmentBean()" result="flowScope.paramFragmentBean"/>
         <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
-        <evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
+        <evaluate expression="mainController.newFileListBean(null)" result="flowScope.fileListBean"/>
         <evaluate expression="mainController.newTagBean()" result="flowScope.paramTagBean"/>
         <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         <evaluate expression="mainController.newSearchContextBeans()" result="flowScope.searchContextBeans"/>
@@ -135,17 +135,17 @@
         
         <transition on="upload-file" to="home" >
 			<evaluate expression="mainController.uploadFile(fileUploadBean, fileListBean)" />
-			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
+			<evaluate expression="mainController.newFileListBean(fileListBean))" result="flowScope.fileListBean"/>
 		</transition>
 
         <transition on="rename-file" to="home" >
 			<evaluate expression="mainController.renameFile(fileListBean)" />
-			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
+			<evaluate expression="mainController.newFileListBean(fileListBean))" result="flowScope.fileListBean"/>
 		</transition>
 
         <transition on="delete-file" to="home" >
 			<evaluate expression="mainController.deleteFile(fileListBean)" />
-			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
+			<evaluate expression="mainController.newFileListBean(fileListBean))" result="flowScope.fileListBean"/>
 		</transition>
     </view-state>
     

@@ -31,10 +31,14 @@ public class FilePathTree implements Serializable {
 		}
 	}
 	
-	public void populateNodes(List<FileEntity> fileEntities) {
+	public void populateNodes(List<FileEntity> fileEntities, List<FileEntity> trancientEntities) {
 		TreeNode<Object> pathTree = new DefaultTreeNode<Object>("");
 		
 		for (FileEntity fe : fileEntities) {
+			fe.addToPathTree(pathTree);
+		}
+
+		for (FileEntity fe : trancientEntities) {
 			fe.addToPathTree(pathTree);
 		}
 		
