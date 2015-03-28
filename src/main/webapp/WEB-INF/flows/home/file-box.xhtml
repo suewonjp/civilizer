@@ -54,8 +54,23 @@ $(document).ready(function() {
 function showRenameFileDialog(fileId, fileName) {
 	var dlg = PF('renameFileDlg');
     dlg.show();
+    dlg.jq.find("input").focus(function() {
+    	$(this).select();
+    });
+    dlg.jq.find(".ui-dialog-title").text("#{msg['label_rename_file']}");
     $("#file-box-form\\:id-placeholder-for-selected-node").val(fileId);
     $("#file-box-form\\:rename-file-dlg-name-input").val(fileName);
+}
+
+function showNewDirectoryDialog() {
+	var dlg = PF('renameFileDlg');
+    dlg.show();
+    dlg.jq.find("input").focus(function() {
+    	$(this).select();
+    });
+    dlg.jq.find(".ui-dialog-title").text("#{msg['label_new_directory']}");
+	$("#file-box-form\\:id-placeholder-for-selected-node").val(-1);
+    $("#file-box-form\\:rename-file-dlg-name-input").val("new-directory");
 }
 //]]>
 </script>
@@ -65,8 +80,8 @@ function showRenameFileDialog(fileId, fileName) {
 </div>
 
 <h:form id="file-box-form" enctype="multipart/form-data">
-	<p:dialog header="#{msg['label_rename_file']}" width="300px" modal="true" showEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false" >
-        <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['label_name']} :" />
+	<p:dialog header="" width="300px" modal="true" showEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false" >
+        <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['label_name']} " />
         <p:inputText style="min-width:200px" id="rename-file-dlg-name-input" value="#{fileListBean.fileName}" />
         <br /><br />
         <p:commandButton action="rename-file" value="#{msg['label_ok']}" icon="ui-icon-check">
@@ -81,7 +96,7 @@ function showRenameFileDialog(fileId, fileName) {
 		<br/>
 		
 		<p:commandLink id="upload-button" action="upload-file" ajax="false" title="#{msg['label_upload_file']}">
-			<span class="fa fa-2x fa-upload button-link ui-button"></span>
+			<span class="fa fa-2x fa-upload button-link"></span>
 		</p:commandLink>
 		
 		<span id="upload-destination-info"></span>
@@ -106,6 +121,11 @@ function showRenameFileDialog(fileId, fileName) {
                 </p:treeNode>
             </p:tree>
         </div>
+        <br/>
+        <p:commandLink oncomplete="showNewDirectoryDialog()" style="text-decoration:none" title="#{msg['label_new_directory']}">
+			<span class="fa fa-2x fa-folder-o button-link"></span>
+	    	<span class="fa fa-plus-square new-resource-color"></span>
+		</p:commandLink>
 	</p:panel>
 </h:form>
 
