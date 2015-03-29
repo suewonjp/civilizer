@@ -100,9 +100,9 @@ function setUpDragAndDrop() {
         zIndex: 10000,
     };
 	
-	$(".fragment-title").draggable(draggableSettings);
+	$(".fragment-title").addClass("dnd-source").draggable(draggableSettings);
 	
-	$(".each-tag").draggable(draggableSettings);
+	$(".each-tag").addClass("dnd-source").draggable(draggableSettings);
     
     var effectClassOnDrop = "ui-state-active";
     
@@ -186,12 +186,10 @@ function newBaseDroppable(effectClassOnDrop) {
 	var output = {
 		over: function(event, ui) {
 			var from = ui.draggable;
-			if (from.attr("id") == "editor-frame") {
-				// do not make components responsive when dragging around the fragment editor
-				return;
+			if (from.hasClass("dnd-source")) {
+	            var to = $(event.target);
+	            to.addClass(effectClassOnDrop);
 			}
-            var to = $(event.target);
-            to.addClass(effectClassOnDrop);
         },
         out: function(event, ui) {
             var to = $(event.target);
