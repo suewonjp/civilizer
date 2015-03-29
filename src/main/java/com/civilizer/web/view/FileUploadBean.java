@@ -1,7 +1,9 @@
 package com.civilizer.web.view;
 
+import java.io.File;
 import java.io.Serializable;
 
+import org.apache.commons.io.FileUtils;
 import org.primefaces.model.UploadedFile;
 
 @SuppressWarnings("serial")
@@ -25,7 +27,7 @@ public final class FileUploadBean  implements Serializable {
 		boolean result = false;
 		
 		try {
-			this.file.write(path);
+			FileUtils.writeByteArrayToFile(new File(path), this.file.getContents());
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

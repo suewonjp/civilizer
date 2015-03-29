@@ -50,8 +50,8 @@ public class FileEntity implements Serializable {
 		this.fileName = name.intern();
 	}
 	
-	public boolean isChildOf(FileEntity fe) {
-		return fe.getFileName().indexOf(fileName) > -1;
+	public boolean isChildOf(String parentPath) {
+		return fileName.startsWith(parentPath);
 	}
 	
 	public void replaceNameSegment(String oldIntermediatePath, String newSegment) {
@@ -61,6 +61,9 @@ public class FileEntity implements Serializable {
 		 *   oldIntermediatePath = "/abc/def/ghi" ; oldIntermediatePath should be a subset of fileName
 		 *   newSegment = "foo"
 		 */
+		if (oldIntermediatePath == null) {
+			oldIntermediatePath = fileName;
+		}
 		final String[] tmp = oldIntermediatePath.split("/");
 		final String oldSegment = tmp[tmp.length - 1];
 		// oldSegment => "ghi"
@@ -82,7 +85,7 @@ public class FileEntity implements Serializable {
 		if (file == null) {
 			return false;
 		}
-		return file.isFile();
+		return file.exists();
 	}
 	
 	public static Collection<FileEntity> getFilesUnder(String directory) {

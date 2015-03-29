@@ -14,6 +14,8 @@ public class FilePathTree implements Serializable {
 	private org.primefaces.model.TreeNode root;
 	
 	private List<FilePathBean> filePathBeans;
+
+	private List<FilePathBean> folderCreators = new ArrayList<FilePathBean>();
 	
 	private static String getFullPathOf(TreeNode<Object> path) {
 		// [NOTE] the returned path will start with a file separator (e.g. / or \)
@@ -23,11 +25,15 @@ public class FilePathTree implements Serializable {
 		}
 		else {
 			TreeNode<Object> tmp = path;
-			String fullPath = File.separatorChar + tmp.getData().toString();
+			String fullPath = tmp.getData().toString();
 			while ((tmp = tmp.getParent()) != null) {
-				fullPath = tmp.getData().toString() + fullPath;
+				final String seg = tmp.getData().toString();
+				if (seg.isEmpty()) {
+					continue;
+				}
+				fullPath = tmp.getData().toString() + File.separatorChar + fullPath;
 			}
-			return fullPath;
+			return File.separatorChar + fullPath;
 		}
 	}
 	
@@ -52,12 +58,42 @@ public class FilePathTree implements Serializable {
 			final Object o = paths[i];
 			@SuppressWarnings("unchecked")
 			TreeNode<Object> path = (TreeNode<Object>) o;
+			
 			FilePathBean filePathBean = new FilePathBean(i);
 			filePathBeans.add(filePathBean);
 			filePathBean.setEntity(path.getData());
 			final String fp = getFullPathOf(path);
 			filePathBean.setFullPath(fp);
-			mapPath2TreeNode.put(o, new org.primefaces.model.DefaultTreeNode(filePathBean));
+			
+			org.primefaces.model.TreeNode viewNode = new org.primefaces.model.DefaultTreeNode(filePathBean);
+			
+			if (filePathBean.isFolder()) {
+				// a folder creator;
+				// it represents a UI that users can click on so that they can create a new folder;
+				// every persisted folder should have one and only creator
+				FilePathBean creator = new FilePathBean();
+				final String notation = "+";
+				creator.setEntity(notation);
+				creator.setCreator(true);
+				creator.setFullPath(fp);
+				folderCreators.add(creator);
+				// [NOTE] this value == actual index + 1; see getCreator();
+				creator.setId(folderCreators.size());
+				new org.primefaces.model.DefaultTreeNode(creator, viewNode);
+			}
+			else {
+				Object data = path.getData();
+				if (data instanceof FileEntity) {
+					if (trancientEntities.contains((FileEntity) data)) {
+						// a transient folder;
+						// it is a virtual folder not persisted on the file system yet;
+						// so it will disappear after the user's session expires
+						filePathBean.setTraansient(true);
+					}
+				}
+			}
+			
+			mapPath2TreeNode.put(o, viewNode);
 		}
 		
 		for (int i=0; i<paths.length; ++i) {
@@ -84,6 +120,12 @@ public class FilePathTree implements Serializable {
 	
 	public List<FilePathBean> getFilePathBeans() {
 		return filePathBeans;
+	}
+	
+	public FilePathBean getCreator(int creatorId) {
+		// [NOTE] As a rule, *creatorId* comes as a minus value; also it is +1 greater than the actual index;
+		final int id = Math.abs(creatorId) - 1;
+		return folderCreators.get(id);
 	}
 
 }

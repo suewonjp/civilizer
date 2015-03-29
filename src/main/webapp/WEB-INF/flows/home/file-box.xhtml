@@ -10,12 +10,19 @@
 //<![CDATA[
 $(document).ready(function() {
 	$("#file-path-tree").on("mouseenter", ".each-file", function() {
-		$(this).find(".file-menu").first().css("visibility", "visible");
+		var target = $(this).find(".file-menu").first();
+		if (! target.prev("span").hasClass("fb-creator")) {
+			target.css("visibility", "visible");
+		}
     });
     
     $("#file-path-tree").on("mouseleave", ".each-file", function() {
     	$(this).find(".file-menu").first().css("visibility", "hidden");
     });
+    
+    $(".fb-creator").click(function() {
+    	showNewDirectoryDialog(this);
+    });    
     
 	$("#file-box-form\\:file-selector").change(function () {
 	    var fileName = $(this).val();
@@ -30,6 +37,7 @@ $(document).ready(function() {
 	    		// a destination place has been specified
 	    		path = dest.attr("_fp");
 	    		holderForDestId.val(dest.attr("_id"));
+	    		console.log(path);
 	    	}
 	    	else {
 	    		// no destination place has been specified. just send the file in the root directory
@@ -44,7 +52,7 @@ $(document).ready(function() {
 	$(".file-path-tree-node").click(function () {
 		$(".file-path-tree-node").removeClass("fa-upload");
 		var $this = $(this);
-		if ($this.attr("_isFolder") === "true") {
+		if ($this.attr("_isFolder") === "true" && ! $this.hasClass("fb-creator")) {
 			var id = $this.attr("_id");
 			$this.addClass("fa-upload");
 		}
@@ -62,14 +70,22 @@ function showRenameFileDialog(fileId, fileName) {
     $("#file-box-form\\:rename-file-dlg-name-input").val(fileName);
 }
 
-function showNewDirectoryDialog() {
+function showNewDirectoryDialog(target) {
 	var dlg = PF('renameFileDlg');
     dlg.show();
     dlg.jq.find("input").focus(function() {
     	$(this).select();
     });
     dlg.jq.find(".ui-dialog-title").text("#{msg['label_new_directory']}");
-	$("#file-box-form\\:id-placeholder-for-selected-node").val(-1);
+    
+    // As a rule, we should send the id as a minus value;
+    // see FilePathBean.getCreator() or MainController.renameFile()
+    var id = -1;
+    if (target) {
+    	id = -$(target).attr("_id");
+    }
+	$("#file-box-form\\:id-placeholder-for-selected-node").val(id);
+	
     $("#file-box-form\\:rename-file-dlg-name-input").val("new-directory");
 }
 //]]>
@@ -122,10 +138,10 @@ function showNewDirectoryDialog() {
             </p:tree>
         </div>
         <br/>
-        <p:commandLink oncomplete="showNewDirectoryDialog()" style="text-decoration:none" title="#{msg['label_new_directory']}">
-			<span class="fa fa-2x fa-folder-o button-link"></span>
-	    	<span class="fa fa-plus-square new-resource-color"></span>
-		</p:commandLink>
+<!--         <p:commandLink oncomplete="showNewDirectoryDialog()" style="text-decoration:none" title="#{msg['label_new_directory']}"> -->
+<!-- 			<span class="fa fa-2x fa-folder-o button-link"></span> -->
+<!-- 	    	<span class="fa fa-plus-square new-resource-color"></span> -->
+<!-- 		</p:commandLink> -->
 	</p:panel>
 </h:form>
 

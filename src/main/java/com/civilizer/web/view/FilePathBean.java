@@ -9,11 +9,16 @@ public class FilePathBean implements Serializable {
 	
 	private Object entity;
 	
-	private String fullPath;
+	private String fullPath = "";
 	
 	private int id = -1;
 	
+	private boolean creator;
+	
 	private boolean broken;
+	
+	private boolean traansient; // not a typo. *transient* is a reserved keyword
+	
 	
 	public FilePathBean() {}
 
@@ -35,12 +40,28 @@ public class FilePathBean implements Serializable {
 		this.id = id;
 	}
 	
+	public boolean isCreator() {
+		return creator;
+	}
+
+	public void setCreator(boolean creator) {
+		this.creator = creator;
+	}
+
 	public boolean isBroken() {
 		return broken;
 	}
 
 	public void setBroken(boolean broken) {
 		this.broken = broken;
+	}
+
+	public boolean isTraansient() {
+		return traansient;
+	}
+
+	public void setTraansient(boolean traansient) {
+		this.traansient = traansient;
 	}
 
 	public String getFullPath() {
@@ -52,7 +73,7 @@ public class FilePathBean implements Serializable {
 	}
 
 	public boolean isFolder() {
-		return entity instanceof String;
+		return isTraansient() || entity instanceof String;
 	}
 	
 	public String getName() {
@@ -67,15 +88,21 @@ public class FilePathBean implements Serializable {
 	}
 	
 	public String getCssClassName() {
+		String postfix = "";
 		if (entity instanceof FileEntity) {
-			String postfix = "";
-			if (isBroken()) {
+			if (isTraansient()) {
+				postfix = "fb-transient";
+			}
+			else if (isBroken()) {
 				postfix = "fa-question-circle fb-broken";
 			}
 			return "fb-file fa-file-o " + postfix;
 		}
 		else {
-			return "fb-dir fa-folder-open ";
+			if (isCreator()) {
+				postfix = "fb-creator";
+			}
+			return "fb-dir fa-folder-open " + postfix;
 		}
 	}
 	

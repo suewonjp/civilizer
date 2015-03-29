@@ -29,38 +29,93 @@ public final class FileListBean implements Serializable {
 		this.fileEntities = fileEntities;
 	}
 
-	public List<FileEntity> getTransientEntities() {
-		return transientEntities;
-	}
-
-	public void setTransientEntities(List<FileEntity> transientEntities) {
-		this.transientEntities = transientEntities;
-	}
-
 	public FilePathTree getFilePathTree() {
 		return filePathTree;
 	}
 	
-	private boolean transientEntryGetsPersisted(FileEntity tgt) {
-		for (FileEntity fe : fileEntities) {
-			if (tgt.isChildOf(fe)) {
+	public List<FileEntity> getTransientEntities() {
+		return transientEntities;
+	}
+	
+	public void removeTransientEntity(FilePathBean filePathBean) {
+		transientEntities.remove(filePathBean.getEntity());
+	}
+	
+	public void removeMatchedTransientEntities(FilePathBean filePathBean) {
+		final String parentPath = filePathBean.getFullPath();
+		Iterator<FileEntity> itr = transientEntities.iterator();
+		while (itr.hasNext()) {
+			FileEntity fe = itr.next();
+			if (fe.isChildOf(parentPath)) {
+				// the parent folder is supposed to be removed;
+				// so remove this transient entity too
+				itr.remove();
+			}
+		}
+	}
+
+	public void renameMatchedTransientEntities(FilePathBean filePathBean, String newName) {
+		final String parentPath = filePathBean.getFullPath();
+		Iterator<FileEntity> itr = transientEntities.iterator();
+		while (itr.hasNext()) {
+			FileEntity fe = itr.next();
+			if (fe.isChildOf(parentPath)) {
+				// the parent folder is supposed to be renamed;
+				// so apply it to this transient entity
+				fe.replaceNameSegment(parentPath, newName);
+			}
+		}
+	}
+	
+	public boolean createNewTransientFolder(int creatorId, String name, String filesHomePath) {
+		FilePathBean creator = filePathTree.getCreator(creatorId);
+		final String parentPath = creator.getFullPath();
+		final String path = (parentPath.equals(File.separator) ? "" : parentPath)
+				+ File.separatorChar + name;
+		final FileEntity fe = new FileEntity(path);
+		
+		if (fe.persisted(filesHomePath)) {
+			return false;
+		}
+		if (transientEntities.contains(fe)) {
+			return false;
+		}
+		
+		if (transientEntities.isEmpty()) {
+			transientEntities = new ArrayList<FileEntity>();
+		}
+			
+		transientEntities.add(fe);
+		return true;
+	}
+	
+	private boolean transientEntityGetsPersisted(FileEntity transientEntity) {
+		for (FileEntity persistedFile : fileEntities) {
+			if (persistedFile.isChildOf(transientEntity.getFileName())) {
+				// this directory has some persisted files under it
+				// meaning that the directory exists on the file system; it is not transient any more
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public void setFilePathTree(FilePathTree filePathTree, List<FileEntity> transientEntites) {
-		Iterator<FileEntity> itr = transientEntites.iterator();
+	public void setFilePathTree(FilePathTree filePathTree, List<FileEntity> transientEntities) {
+		// Clear all transient entities that have been persisted;
+		Iterator<FileEntity> itr = transientEntities.iterator();
 		while (itr.hasNext()) {
 			FileEntity fe = itr.next();
-			if (transientEntryGetsPersisted(fe)) {
+			if (transientEntityGetsPersisted(fe)) {
 				itr.remove();
 			}
 		}
 		
-		filePathTree.populateNodes(fileEntities, transientEntites);
+		this.transientEntities = transientEntities;
+		
+		filePathTree.populateNodes(fileEntities, transientEntities);
+		
 		this.filePathTree = filePathTree;
+		
 		detectBrokenLinks();
 	}
 	
@@ -84,29 +139,30 @@ public final class FileListBean implements Serializable {
 		final String uploadedFilesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		final List<FilePathBean> filePathBeans = filePathTree.getFilePathBeans();
 		for (FilePathBean fpb : filePathBeans) {
-			if (fpb.isFolder()) {
+			if (fpb.isFolder() || fpb.getEntity() instanceof FileEntity == false) {
 				continue;
 			}
-			if (fpb.getEntity() instanceof FileEntity == false) {
-				continue;
-			}
+			
 			final File f = ((FileEntity) fpb.getEntity()).toFile(uploadedFilesHomePath);
 			if (f.isFile() == false) {
+				// this file is managed by the data layer;
+				// however, it does not exist on the file system for whatever reasons;
+				// so let the user aware of it
 				fpb.setBroken(true);
 			}
 		}
 	}
 	
-	public String getFilePath(String fileName) {
-		final String intermediatePath = (selectedNodeId > -1) ?
-				filePathTree.getFilePathBeans().get(selectedNodeId).getFullPath() : File.separator;
+	public String getFilePath(int index, String leafName) {
+		final FilePathBean filePathBean = getFilePathBean(index);
+		final String intermediatePath = filePathBean.getFullPath();
 		
 		return intermediatePath.equals(File.separator) ?
-				File.separatorChar + fileName : intermediatePath + File.separatorChar + fileName;
+				File.separatorChar + leafName : intermediatePath + File.separatorChar + leafName;
 	}
-	
-	public String getFilePath(int index) {
-		return filePathTree.getFilePathBeans().get(index).getFullPath();
+
+	public FilePathBean getFilePathBean(int index) {
+		return filePathTree.getFilePathBeans().get(index);
 	}
 
 }

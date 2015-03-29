@@ -298,3 +298,11 @@ so this kind of hack has been incorporated
 .fb-broken {
 	color: red;
 }
+
+.fb-transient {
+	color: lime;
+}
+
+.fb-creator {
+	color: aqua;
+}
