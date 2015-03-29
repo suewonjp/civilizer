@@ -265,7 +265,7 @@ function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
 	var message = deleting ? "#{msg['confirm_deleting_fragments']}" : "#{msg['confirm_trashing_fragments']}";
 	$('#fragment-group-form\\:confirm-dlg-msg').text(message);
     
-    var yesBtn = $('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]');
+	var yesBtn = $("#confirm-dlg-yes-btn-group").children();
     yesBtn.hide();
     
     if (deleting) {
@@ -299,7 +299,7 @@ function confirmTrashingTag(tagId, deleting) {
 	var message = deleting ? "#{msg['confirm_deleting_tag']}" : "#{msg['confirm_trashing_fragments_with_tag']}";
     $('#fragment-group-form\\:confirm-dlg-msg').text(message);
     
-    var yesBtn = $('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]');
+    var yesBtn = $("#confirm-dlg-yes-btn-group").children();
     yesBtn.hide();
     
     if (deleting) {
@@ -317,7 +317,7 @@ function confirmTrashingTag(tagId, deleting) {
 function confirmUnbookmarkingFragment(frgId) {
 	var message = "#{msg['confirm_unbookmarking_fragment']}";
     $('#fragment-group-form\\:confirm-dlg-msg').text(message);
-	$('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]').hide();
+	$("#confirm-dlg-yes-btn-group").children().hide();
 	$("#fragment-group-form\\:confirm-dlg-yes-btn-unbookmark-fragment").show();
 	PF('singletonConfirmDlg').show();
 	$("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
@@ -326,7 +326,7 @@ function confirmUnbookmarkingFragment(frgId) {
 function confirmUnrelatingFragments(frgId0, frgId1) {
 	var message = "#{msg['confirm_unrelating_fragments']}";
     $('#fragment-group-form\\:confirm-dlg-msg').text(message);
-    $('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]').hide();
+    $("#confirm-dlg-yes-btn-group").children().hide();
     $("#fragment-group-form\\:confirm-dlg-yes-btn-unrelate-fragments").show();
     PF('singletonConfirmDlg').show();
     $("#fragment-group-form\\:id-placeholder-for-fragment0").val(frgId0);
@@ -336,7 +336,7 @@ function confirmUnrelatingFragments(frgId0, frgId1) {
 function confirmDeletingFile(fileId) {
 	var message = "#{msg['confirm_deleting_files']}";
     $('#fragment-group-form\\:confirm-dlg-msg').text(message);
-    $('[id^="fragment-group-form\\:confirm-dlg-yes-btn-"]').hide();
+    $("#confirm-dlg-yes-btn-group").children().hide();
     $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-files").show();
     PF('singletonConfirmDlg').show();
     $("#fragment-group-form\\:id-placeholder-for-file").val(fileId);
@@ -392,15 +392,17 @@ function confirmDeletingFile(fileId) {
             <h:outputText id="confirm-dlg-msg" value="&nbsp;" />
         </f:facet>
 
-        <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" />
-        <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" />
-        <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments"  />
-        <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments"  />
-        <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" />
-        <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" />
-        <p:commandButton id="confirm-dlg-yes-btn-unbookmark-fragment" value="#{msg['label_yes']}" action="unbookmark-fragment" />
-        <p:commandButton id="confirm-dlg-yes-btn-unrelate-fragments" value="#{msg['label_yes']}" action="unrelate-fragments" />
-        <p:commandButton id="confirm-dlg-yes-btn-delete-files" value="#{msg['label_yes']}" action="delete-file" />
+		<div id="confirm-dlg-yes-btn-group">
+	        <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" />
+	        <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" />
+	        <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments"  />
+	        <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments"  />
+	        <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" />
+	        <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" />
+	        <p:commandButton id="confirm-dlg-yes-btn-unbookmark-fragment" value="#{msg['label_yes']}" action="unbookmark-fragment" />
+	        <p:commandButton id="confirm-dlg-yes-btn-unrelate-fragments" value="#{msg['label_yes']}" action="unrelate-fragments" />
+	        <p:commandButton id="confirm-dlg-yes-btn-delete-files" value="#{msg['label_yes']}" action="delete-file" />
+		</div>
 
         <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
     </p:confirmDialog>
