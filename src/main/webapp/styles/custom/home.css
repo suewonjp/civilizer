@@ -306,3 +306,15 @@ so this kind of hack has been incorporated
 .fb-creator {
 	color: aqua;
 }
+
+.markItUpEditor {
+	font:12px 'Courier New', Courier, monospace;
+	padding:2px 2px 2px 2px;
+	border:2px solid #3c769d;
+	width:98%;
+	min-height:480px;
+	background:#fff;
+	clear:both;
+	line-height:16px;
+	overflow:auto;
+}
