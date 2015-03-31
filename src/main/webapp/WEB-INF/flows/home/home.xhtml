@@ -312,6 +312,15 @@ function confirmTrashingTag(tagId, deleting) {
     $("#fragment-group-form\\:id-placeholder-for-trashed-tag").val(tagId);
 }
 
+function confirmTrashingTagFromCtxtMenu() {
+	var menu = $("#tag-context-menu");
+	var target = menu.data("target-tag");
+	var tagId = target.attr("_tid");
+	var deleting = target.attr("_frgCount") == 0;
+	
+	confirmTrashingTag(tagId, deleting);
+}
+
 function confirmUnbookmarkingFragment(frgId) {
 	var message = "#{msg['confirm_unbookmarking_fragment']}";
     $('#fragment-group-form\\:confirm-dlg-msg').text(message);

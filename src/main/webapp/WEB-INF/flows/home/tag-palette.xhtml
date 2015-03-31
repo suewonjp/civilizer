@@ -30,11 +30,36 @@ $(document).ready(function() {
         currentTagGroupTabIndex = sessionStorage.getItem('tag-palette-tab-index');
         $tab.tabs('option', 'active', currentTagGroupTabIndex);
     }
+    
+    $(".each-tag").bind("contextmenu", function(event) {
+    	var menu = $("#tag-context-menu");
+    	menu.css({ left:event.pageX, top:event.pageY }).show();
+    	menu.data("target-tag", $(event.target).closest(".each-tag"));
+    	event.preventDefault();
+    });
+
+    $(document).bind("click", function(event) {
+    	$("#tag-context-menu").hide();
+    });
 }); // end of $(document).ready()
 
-function showEditTagDialog(tagId, tagName) {
+// function showEditTagDialog(tagId, tagName) {
+//     var dlg = PF('editTagDlg');
+//     dlg.show();
+//     if (tagId > 0) {
+//         // [NOTE] user editable tags have id > 0
+//         $("#tag-palette-form\\:id-placeholder-for-tag").val(tagId);
+//     }
+//     $("#tag-palette-form\\:edit-tag-dlg-name-input").val(tagName);
+// }
+
+function showEditTagDialog() {
     var dlg = PF('editTagDlg');
     dlg.show();
+	var menu = $("#tag-context-menu");
+	var target = menu.data("target-tag");
+	var tagId = target.attr("_tid");
+	var tagName = target.find(".each-tag-name").text();
     if (tagId > 0) {
         // [NOTE] user editable tags have id > 0
         $("#tag-palette-form\\:id-placeholder-for-tag").val(tagId);
@@ -58,6 +83,13 @@ function showEditTagDialog(tagId, tagName) {
         <p:commandButton action="save-tag" value="#{msg['label_ok']}" icon="ui-icon-check">
         </p:commandButton>
     </p:dialog>
+    
+    <div id="tag-context-menu" style="display:none; z-index:5000; position:absolute;">
+	    <p:menu>
+            <p:menuitem styleClass="fa" onclick="showEditTagDialog()" value="&#xf040; #{msg['label_edit_tag']}"/>
+            <p:menuitem styleClass="fa" onclick="confirmTrashingTagFromCtxtMenu()" value="&#xf1f8; #{msg['label_trash_tag']}"/>
+	    </p:menu>
+    </div>
     
     <div id="tag-palette-panel">
         <ul>
