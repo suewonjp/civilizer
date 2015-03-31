@@ -57,7 +57,29 @@ $(document).ready(function() {
 			$this.addClass("fa-upload");
 		}
 	});
+	
+	$(".each-file").bind("contextmenu", function(event) {
+    	var menu = $("#file-context-menu");
+    	menu.css({ left:event.pageX, top:event.pageY }).show();
+    	menu.data("target-file", $(event.target));
+    	event.preventDefault();
+    });
+
+    $(document).bind("click", function(event) {
+    	$("#file-context-menu").hide();
+    });
 }); // end of $(document).ready()
+
+// function showRenameFileDialog(fileId, fileName) {
+// 	var dlg = PF('renameFileDlg');
+//     dlg.show();
+//     dlg.jq.find("input").focus(function() {
+//     	$(this).select();
+//     });
+//     dlg.jq.find(".ui-dialog-title").text("#{msg['label_rename_file']}");
+//     $("#file-box-form\\:id-placeholder-for-selected-node").val(fileId);
+//     $("#file-box-form\\:rename-file-dlg-name-input").val(fileName);
+// }
 
 function showRenameFileDialog(fileId, fileName) {
 	var dlg = PF('renameFileDlg');
@@ -66,6 +88,11 @@ function showRenameFileDialog(fileId, fileName) {
     	$(this).select();
     });
     dlg.jq.find(".ui-dialog-title").text("#{msg['label_rename_file']}");
+    
+    var menu = $("#file-context-menu");
+	var target = menu.data("target-file");
+	var fileId = target.attr("_id");
+	var fileName = target.text().trim();
     $("#file-box-form\\:id-placeholder-for-selected-node").val(fileId);
     $("#file-box-form\\:rename-file-dlg-name-input").val(fileName);
 }
@@ -104,6 +131,13 @@ function showNewDirectoryDialog(target) {
         </p:commandButton>
     </p:dialog>
     
+    <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">
+	    <p:menu>
+            <p:menuitem styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename_file']}"/>
+            <p:menuitem styleClass="fa" onclick="confirmDeletingFile()" value="&#xf1f8; #{msg['label_delete_file']}"/>
+	    </p:menu>
+    </div>
+    
 	<p:panel id="file-box-panel" >
         <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}" />
 
@@ -125,14 +159,14 @@ function showNewDirectoryDialog(target) {
 	                    <span class="file-path-tree-node fa #{filePathBean.getCssClassName()}" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{isFolder}" >
 	                    	#{filePathBean}
 	                    </span>
-	                    <span class="file-menu" _isFolder="#{isFolder}">
-						    <p:commandLink oncomplete="showRenameFileDialog('#{filePathBean.id}', '#{filePathBean.getName()}')" styleClass="file-button" title="#{msg['label_rename_file']}">
-						        <span class="fa fa-pencil" style="color:black" >&nbsp;</span>
-						    </p:commandLink>
-							<p:commandLink oncomplete="confirmDeletingFile('#{filePathBean.id}')" styleClass="file-button" title="#{msg['label_delete_file']}">
-						        <span class="fa fa-trash" style="color:indigo" >&nbsp;</span>
-						    </p:commandLink>
-						</span>
+<!-- 	                    <span class="file-menu" _isFolder="#{isFolder}"> -->
+<!-- 						    <p:commandLink oncomplete="showRenameFileDialog('#{filePathBean.id}', '#{filePathBean.getName()}')" styleClass="file-button" title="#{msg['label_rename_file']}"> -->
+<!-- 						        <span class="fa fa-pencil" style="color:black" >&nbsp;</span> -->
+<!-- 						    </p:commandLink> -->
+<!-- 							<p:commandLink oncomplete="confirmDeletingFile('#{filePathBean.id}')" styleClass="file-button" title="#{msg['label_delete_file']}"> -->
+<!-- 						        <span class="fa fa-trash" style="color:indigo" >&nbsp;</span> -->
+<!-- 						    </p:commandLink> -->
+<!-- 						</span> -->
 	                </span>
                 </p:treeNode>
             </p:tree>
