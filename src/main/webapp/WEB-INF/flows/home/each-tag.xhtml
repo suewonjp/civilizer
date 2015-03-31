@@ -13,14 +13,6 @@
 		<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 		<f:param name="tagId" value="#{tag.id}" />
 	</p:commandLink>
-<!-- 	<span class="tag-menu"> -->
-<!-- 	    <p:commandLink oncomplete="showEditTagDialog('#{tag.id}', '#{tag.tagName}')" styleClass="tag-button" title="#{msg['label_edit_tag']}"> -->
-<!-- 	        <span class="fa fa-pencil" style="color:black" >&nbsp;</span> -->
-<!-- 	    </p:commandLink> -->
-<!-- 		<p:commandLink oncomplete="confirmTrashingTag('#{tag.id}', Boolean('#{tagBean.fragmentCount}' == 0))" styleClass="tag-button" title="#{msg['label_trash_tag']}"> -->
-<!-- 	        <span class="fa fa-trash" style="color:indigo" >&nbsp;</span> -->
-<!-- 	    </p:commandLink> -->
-<!-- 	</span> -->
 </span>
 
 </ui:composition>
