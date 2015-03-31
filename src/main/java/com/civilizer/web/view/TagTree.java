@@ -24,7 +24,7 @@ public final class TagTree implements Serializable {
     	// These tags have no parent
     	Collection<Tag> topParentTags = Tag.getTopParentTags(tags);
     	
-    	root =  new org.primefaces.model.DefaultTreeNode("Root", null);
+    	root =  new org.primefaces.model.DefaultTreeNode(null, null);
     	
     	for (Tag t : topParentTags) {
     		final int index = Tag.getIndexOf(t.getId(), tags);
