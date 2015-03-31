@@ -20,9 +20,9 @@ $(document).ready(function() {
     	$(this).find(".file-menu").first().css("visibility", "hidden");
     });
     
-    $(".fb-creator").click(function() {
-    	showNewDirectoryDialog(this);
-    });    
+//     $(".fb-creator").click(function() {
+//     	showNewDirectoryDialog(this);
+//     });    
     
 	$("#file-box-form\\:file-selector").change(function () {
 	    var fileName = $(this).val();
@@ -61,7 +61,14 @@ $(document).ready(function() {
 	$(".each-file").bind("contextmenu", function(event) {
     	var menu = $("#file-context-menu");
     	menu.css({ left:event.pageX, top:event.pageY }).show();
-    	menu.data("target-file", $(event.target));
+    	var target = $(event.target);
+    	if (target.attr("_isFolder") === "true") {
+    		menu.find("#file-box-form\\:new-folder-menu").show();
+    	}
+    	else {
+    		menu.find("#file-box-form\\:new-folder-menu").hide();
+    	}
+    	menu.data("target-file", target);
     	event.preventDefault();
     });
 
@@ -94,12 +101,16 @@ function showNewDirectoryDialog(target) {
     });
     dlg.jq.find(".ui-dialog-title").text("#{msg['label_new_folder']}");
     
+    var menu = $("#file-context-menu");
+	var target = menu.data("target-file");
+	
     // As a rule, we should send the id as a minus value;
-    // see FilePathBean.getCreator() or MainController.renameFile()
-    var id = -1;
-    if (target) {
-    	id = -$(target).attr("_id");
-    }
+    // see MainController.renameFile()
+	var id = -target.attr("_id");
+//     var id = -1;
+//     if (target) {
+//     	id = -$(target).attr("_id");
+//     }
 	$("#file-box-form\\:id-placeholder-for-selected-node").val(id);
 	
     $("#file-box-form\\:rename-file-dlg-name-input").val("new-directory");
@@ -122,6 +133,7 @@ function showNewDirectoryDialog(target) {
     
     <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
+            <p:menuitem id="new-folder-menu" styleClass="fa" onclick="showNewDirectoryDialog()" value="&#xf07c;+ #{msg['label_new_folder']}"/>
             <p:menuitem styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
             <p:menuitem styleClass="fa" onclick="confirmDeletingFile()" value="&#xf1f8; #{msg['label_delete']}"/>
 	    </p:menu>

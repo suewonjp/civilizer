@@ -548,7 +548,7 @@ public final class MainController {
 		
 		if (selectedNodeId < 0) {
 			// [RULE] Create a new directory in this case;
-			if (! fileListBean.createNewTransientFolder(selectedNodeId, newName, filesHomePath)) {
+			if (! fileListBean.createNewTransientFolder(-selectedNodeId, newName, filesHomePath)) {
 				ViewUtil.addMessage("Error on Creating a Folder!!!", newName + " : already exists!", FacesMessage.SEVERITY_ERROR);
 			}
 			return;
