@@ -13,8 +13,6 @@ public class FilePathBean implements Serializable {
 	
 	private int id = -1;
 	
-//	private boolean creator;
-	
 	private boolean broken;
 	
 	private boolean traansient; // not a typo. *transient* is a reserved keyword
@@ -40,14 +38,6 @@ public class FilePathBean implements Serializable {
 		this.id = id;
 	}
 	
-//	public boolean isCreator() {
-//		return creator;
-//	}
-//
-//	public void setCreator(boolean creator) {
-//		this.creator = creator;
-//	}
-
 	public boolean isBroken() {
 		return broken;
 	}
@@ -99,9 +89,6 @@ public class FilePathBean implements Serializable {
 			return "fb-file fa-file-o " + postfix;
 		}
 		else {
-//			if (isCreator()) {
-//				postfix = "fb-creator";
-//			}
 			return "fb-dir fa-folder-open " + postfix;
 		}
 	}

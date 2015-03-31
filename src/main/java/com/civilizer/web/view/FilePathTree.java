@@ -15,8 +15,6 @@ public class FilePathTree implements Serializable {
 	
 	private List<FilePathBean> filePathBeans;
 
-//	private List<FilePathBean> folderCreators = new ArrayList<FilePathBean>();
-	
 	private static String getFullPathOf(TreeNode<Object> path) {
 		// [NOTE] the returned path will start with a file separator (e.g. / or \)
 		final Object entity = path.getData();
@@ -67,21 +65,7 @@ public class FilePathTree implements Serializable {
 			
 			org.primefaces.model.TreeNode viewNode = new org.primefaces.model.DefaultTreeNode(filePathBean);
 			
-			if (filePathBean.isFolder()) {
-				// a folder creator;
-				// it represents a UI that users can click on so that they can create a new folder;
-				// every persisted folder should have one and only creator
-//				FilePathBean creator = new FilePathBean();
-//				final String notation = "+";
-//				creator.setEntity(notation);
-//				creator.setCreator(true);
-//				creator.setFullPath(fp);
-//				folderCreators.add(creator);
-//				// [NOTE] this value == actual index + 1; see getCreator();
-//				creator.setId(folderCreators.size());
-//				new org.primefaces.model.DefaultTreeNode(creator, viewNode);
-			}
-			else {
+			if (filePathBean.isFolder() == false) {
 				Object data = path.getData();
 				if (data instanceof FileEntity) {
 					if (trancientEntities.contains((FileEntity) data)) {
@@ -121,11 +105,5 @@ public class FilePathTree implements Serializable {
 	public List<FilePathBean> getFilePathBeans() {
 		return filePathBeans;
 	}
-	
-//	public FilePathBean getCreator(int creatorId) {
-//		// [NOTE] As a rule, *creatorId* comes as a minus value; also it is +1 greater than the actual index;
-//		final int id = Math.abs(creatorId) - 1;
-//		return folderCreators.get(id);
-//	}
 
 }

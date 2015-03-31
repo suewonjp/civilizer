@@ -67,28 +67,6 @@ public final class FileListBean implements Serializable {
 		}
 	}
 	
-//	public boolean createNewTransientFolder(int creatorId, String name, String filesHomePath) {
-//		FilePathBean creator = filePathTree.getCreator(creatorId);
-//		final String parentPath = creator.getFullPath();
-//		final String path = (parentPath.equals(File.separator) ? "" : parentPath)
-//				+ File.separatorChar + name;
-//		final FileEntity fe = new FileEntity(path);
-//		
-//		if (fe.persisted(filesHomePath)) {
-//			return false;
-//		}
-//		if (transientEntities.contains(fe)) {
-//			return false;
-//		}
-//		
-//		if (transientEntities.isEmpty()) {
-//			transientEntities = new ArrayList<FileEntity>();
-//		}
-//			
-//		transientEntities.add(fe);
-//		return true;
-//	}
-
 	public boolean createNewTransientFolder(int parentFolderId, String name, String filesHomePath) {
 		final FilePathBean parentPathBean = getFilePathBean(parentFolderId);
 		final String parentPath = parentPathBean.getFullPath();

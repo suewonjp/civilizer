@@ -11,18 +11,11 @@
 $(document).ready(function() {
 	$("#file-path-tree").on("mouseenter", ".each-file", function() {
 		var target = $(this).find(".file-menu").first();
-// 		if (! target.prev("span").hasClass("fb-creator")) {
-// 			target.css("visibility", "visible");
-// 		}
     });
     
     $("#file-path-tree").on("mouseleave", ".each-file", function() {
     	$(this).find(".file-menu").first().css("visibility", "hidden");
     });
-    
-//     $(".fb-creator").click(function() {
-//     	showNewDirectoryDialog(this);
-//     });    
     
 	$("#file-box-form\\:file-selector").change(function () {
 	    var fileName = $(this).val();
@@ -53,7 +46,6 @@ $(document).ready(function() {
 		$(".each-file").removeClass("fa-upload fb-target-dir");
 		var $this = $(this);
 		if ($this.attr("_isFolder") === "true") {
-// 		if ($this.attr("_isFolder") === "true" && ! $this.hasClass("fb-creator")) {
 			$this.addClass("fa-upload fb-target-dir");
 		}
 	});
@@ -107,10 +99,6 @@ function showNewDirectoryDialog(target) {
     // As a rule, we should send the id as a minus value;
     // see MainController.renameFile()
 	var id = -target.attr("_id");
-//     var id = -1;
-//     if (target) {
-//     	id = -$(target).attr("_id");
-//     }
 	$("#file-box-form\\:id-placeholder-for-selected-node").val(id);
 	
     $("#file-box-form\\:rename-file-dlg-name-input").val("new-directory");
