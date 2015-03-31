@@ -547,8 +547,9 @@ public final class MainController {
 		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		
 		if (selectedNodeId < 0) {
-			// [RULE] Create a new directory in this case;
-			if (! fileListBean.createNewTransientFolder(-selectedNodeId, newName, filesHomePath)) {
+			// [RULE] Create a new directory if *selectedNodeId* is a minus value;
+			// [NOTE] we need to decode *selectedNodeId* before passing it to the next processing
+			if (! fileListBean.createNewTransientFolder(-selectedNodeId - 1, newName, filesHomePath)) {
 				ViewUtil.addMessage("Error on Creating a Folder!!!", newName + " : already exists!", FacesMessage.SEVERITY_ERROR);
 			}
 			return;

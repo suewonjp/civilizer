@@ -78,18 +78,15 @@ public class FilePathBean implements Serializable {
 	}
 	
 	public String getCssClassName() {
-		String postfix = "";
 		if (entity instanceof FileEntity) {
 			if (isTraansient()) {
-				postfix = "fb-transient";
+				return "fb-transient fa-folder-open";
 			}
-			else if (isBroken()) {
-				postfix = "fa-question-circle fb-broken";
-			}
-			return "fb-file fa-file-o " + postfix;
+			return "fb-file fa-file-o "
+				+ (isBroken() ? "fa-question-circle fb-broken" : "");
 		}
 		else {
-			return "fb-dir fa-folder-open " + postfix;
+			return "fb-dir fa-folder-open";
 		}
 	}
 	

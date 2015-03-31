@@ -89,7 +89,7 @@ public final class FileListBean implements Serializable {
 		return true;
 	}
 	
-	private boolean transientEntityGetsPersisted(FileEntity transientEntity) {
+	private boolean transientEntityPersisted(FileEntity transientEntity) {
 		for (FileEntity persistedFile : fileEntities) {
 			if (persistedFile.isChildOf(transientEntity.getFileName())) {
 				// this directory has some persisted files under it
@@ -105,7 +105,7 @@ public final class FileListBean implements Serializable {
 		Iterator<FileEntity> itr = transientEntities.iterator();
 		while (itr.hasNext()) {
 			FileEntity fe = itr.next();
-			if (transientEntityGetsPersisted(fe)) {
+			if (transientEntityPersisted(fe)) {
 				itr.remove();
 			}
 		}
