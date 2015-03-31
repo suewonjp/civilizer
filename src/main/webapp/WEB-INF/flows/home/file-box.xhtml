@@ -49,12 +49,11 @@ $(document).ready(function() {
 	    }
 	});
 	
-	$(".file-path-tree-node").click(function () {
-		$(".file-path-tree-node").removeClass("fa-upload");
+	$(".each-file").click(function () {
+		$(".each-file").removeClass("fa-upload").removeClass("fb-target-dir");
 		var $this = $(this);
 		if ($this.attr("_isFolder") === "true" && ! $this.hasClass("fb-creator")) {
-			var id = $this.attr("_id");
-			$this.addClass("fa-upload");
+			$this.addClass("fa-upload").addClass("fb-target-dir");
 		}
 	});
 	
@@ -143,11 +142,8 @@ function showNewDirectoryDialog(target) {
 		<div id="file-path-tree">
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>
-	                <span class="each-file">
-	                	<c:set var="isFolder" value="#{filePathBean.isFolder()}"/>
-	                    <span class="file-path-tree-node fa #{filePathBean.getCssClassName()}" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{isFolder}" >
-	                    	#{filePathBean}
-	                    </span>
+                    <span class="each-file fa #{filePathBean.getCssClassName()}" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{filePathBean.isFolder()}">
+                    	#{filePathBean}
 	                </span>
                 </p:treeNode>
             </p:tree>
