@@ -15,7 +15,7 @@ public class FilePathTree implements Serializable {
 	
 	private List<FilePathBean> filePathBeans;
 
-	private List<FilePathBean> folderCreators = new ArrayList<FilePathBean>();
+//	private List<FilePathBean> folderCreators = new ArrayList<FilePathBean>();
 	
 	private static String getFullPathOf(TreeNode<Object> path) {
 		// [NOTE] the returned path will start with a file separator (e.g. / or \)
@@ -71,15 +71,15 @@ public class FilePathTree implements Serializable {
 				// a folder creator;
 				// it represents a UI that users can click on so that they can create a new folder;
 				// every persisted folder should have one and only creator
-				FilePathBean creator = new FilePathBean();
-				final String notation = "+";
-				creator.setEntity(notation);
-				creator.setCreator(true);
-				creator.setFullPath(fp);
-				folderCreators.add(creator);
-				// [NOTE] this value == actual index + 1; see getCreator();
-				creator.setId(folderCreators.size());
-				new org.primefaces.model.DefaultTreeNode(creator, viewNode);
+//				FilePathBean creator = new FilePathBean();
+//				final String notation = "+";
+//				creator.setEntity(notation);
+//				creator.setCreator(true);
+//				creator.setFullPath(fp);
+//				folderCreators.add(creator);
+//				// [NOTE] this value == actual index + 1; see getCreator();
+//				creator.setId(folderCreators.size());
+//				new org.primefaces.model.DefaultTreeNode(creator, viewNode);
 			}
 			else {
 				Object data = path.getData();
@@ -122,10 +122,10 @@ public class FilePathTree implements Serializable {
 		return filePathBeans;
 	}
 	
-	public FilePathBean getCreator(int creatorId) {
-		// [NOTE] As a rule, *creatorId* comes as a minus value; also it is +1 greater than the actual index;
-		final int id = Math.abs(creatorId) - 1;
-		return folderCreators.get(id);
-	}
+//	public FilePathBean getCreator(int creatorId) {
+//		// [NOTE] As a rule, *creatorId* comes as a minus value; also it is +1 greater than the actual index;
+//		final int id = Math.abs(creatorId) - 1;
+//		return folderCreators.get(id);
+//	}
 
 }
