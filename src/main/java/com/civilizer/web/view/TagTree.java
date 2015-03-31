@@ -3,39 +3,65 @@ package com.civilizer.web.view;
 import java.io.Serializable;
 import java.util.*;
 
-import org.primefaces.model.TreeNode;
-import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.event.NodeCollapseEvent;
+import org.primefaces.event.NodeExpandEvent;
 
 import com.civilizer.domain.Tag;
 
 @SuppressWarnings("serial")
 public final class TagTree implements Serializable {
     
-    private TreeNode root = new DefaultTreeNode("Root", null);
+    private org.primefaces.model.TreeNode root;
+    
+    private List<Tag> tags;
+    
+    private List<TagBean> tagBeans;
     
     public void populateNodes(List<Tag> tags, List<TagBean> tagBeans) {
+    	this.tags = tags;
+    	this.tagBeans = tagBeans;
+    	
     	// These tags have no parent
     	Collection<Tag> topParentTags = Tag.getTopParentTags(tags);
     	
-    	Map<Long, TreeNode> mapTagId2TreeNode = new HashMap<Long, TreeNode>();
+    	root =  new org.primefaces.model.DefaultTreeNode("Root", null);
     	
     	for (Tag t : topParentTags) {
     		final int index = Tag.getIndexOf(t.getId(), tags);
-    		mapTagId2TreeNode.put(t.getId(), new DefaultTreeNode(tagBeans.get(index), root));
+    		final org.primefaces.model.TreeNode parentNode = new org.primefaces.model.DefaultTreeNode(tagBeans.get(index), root);
+    		if (t.getChildren().isEmpty() == false) {
+    			// If it has children, just insert a dummy child node for users to expand the tree;
+    			// The actual children will be inserted at runtime with Ajax
+    			new org.primefaces.model.DefaultTreeNode(null, parentNode);
+    		}
     	}
-    	
-    	for (Tag t : tags) {
-    		Collection<Tag> children = t.getChildren();
+    }
+    
+    public void onNodeExpand(NodeExpandEvent event) {
+    	final org.primefaces.model.TreeNode parentNode = event.getTreeNode();
+    	final Object data = parentNode.getData();
+    	if (data instanceof TagBean) {
+    		parentNode.getChildren().clear();
+    		TagBean tagBean = (TagBean) data;
+    		Tag tag = tagBean.getTag();
+    		Collection<Tag> children = tag.getChildren();
     		for (Tag c : children) {
-    			TreeNode parentTreeNode = mapTagId2TreeNode.get(t.getId());
     			final int index = Tag.getIndexOf(c.getId(), tags);
-    			mapTagId2TreeNode.put(c.getId(), new DefaultTreeNode(tagBeans.get(index), parentTreeNode));
-    			parentTreeNode.setExpanded(true);
+    			new org.primefaces.model.DefaultTreeNode(tagBeans.get(index), parentNode);
     		}
     	}
     }
 
-    public TreeNode getRoot() {
+    public void onNodeCollapse(NodeCollapseEvent event) {
+    	final org.primefaces.model.TreeNode parentNode = event.getTreeNode();
+    	final Object data = parentNode.getData();
+    	if (data instanceof TagBean) {
+    		parentNode.getChildren().clear();
+    		new org.primefaces.model.DefaultTreeNode(null, parentNode);
+    	}
+    }
+
+    public  org.primefaces.model.TreeNode getRoot() {
         return root;
     }
 
