@@ -47,7 +47,13 @@ public final class TagTree implements Serializable {
     		Collection<Tag> children = tag.getChildren();
     		for (Tag c : children) {
     			final int index = Tag.getIndexOf(c.getId(), tags);
-    			new org.primefaces.model.DefaultTreeNode(tagBeans.get(index), parentNode);
+    			final org.primefaces.model.TreeNode cn =
+    					new org.primefaces.model.DefaultTreeNode(tagBeans.get(index), parentNode);
+    			if (c.getChildren().isEmpty() == false) {
+    				// If it has children, just insert a dummy child node for users to expand the tree;
+        			// The actual children will be inserted at runtime with Ajax
+        			new org.primefaces.model.DefaultTreeNode(null, cn);
+    			}
     		}
     	}
     }
