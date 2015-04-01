@@ -35,6 +35,53 @@ public class FilePathTree implements Serializable {
 		}
 	}
 	
+//	public void populateNodes(List<FileEntity> fileEntities) {
+//		TreeNode<Object> pathTree = new DefaultTreeNode<Object>("");
+//		
+//		for (FileEntity fe : fileEntities) {
+//			fe.addToPathTree(pathTree);
+//		}
+//
+//		Map<Object, org.primefaces.model.TreeNode> mapPath2TreeNode = new HashMap<>();
+//		
+//		Object[] paths = pathTree.toArray(TreeNode.TraverseOrder.BREATH_FIRST);
+//		
+//		filePathBeans = new ArrayList<FilePathBean>();
+//		
+//		for (int i=0; i<paths.length; ++i) {
+//			final Object o = paths[i];
+//			@SuppressWarnings("unchecked")
+//			TreeNode<Object> path = (TreeNode<Object>) o;
+//			
+//			final FilePathBean filePathBean = new FilePathBean(i);
+//			filePathBeans.add(filePathBean);
+//			final Object data = path.getData();
+//			filePathBean.setEntity(data);
+//			final String fp = getFullPathOf(path);
+//			filePathBean.setFullPath(fp);
+//			
+//			final org.primefaces.model.TreeNode viewNode = new org.primefaces.model.DefaultTreeNode(filePathBean);			
+//			mapPath2TreeNode.put(o, viewNode);
+//		}
+//		
+//		for (int i=0; i<paths.length; ++i) {
+//			final Object o = paths[i];
+//			@SuppressWarnings("unchecked")
+//			TreeNode<Object> path = (TreeNode<Object>) o;
+//			TreeNode<Object> parent = path.getParent();
+//			org.primefaces.model.TreeNode tn = mapPath2TreeNode.get(path);
+//			org.primefaces.model.TreeNode tnp = mapPath2TreeNode.get(parent);
+//			if (tnp != null) {
+//				tn.setParent(tnp);
+//				tnp.getChildren().add(tn);
+//				tnp.setExpanded(true);
+//			}
+//		}
+//		
+//		root = mapPath2TreeNode.get(pathTree);
+//		root.setExpanded(true);
+//	}
+	
 	public void populateNodes(List<FileEntity> fileEntities, List<FileEntity> trancientEntities) {
 		TreeNode<Object> pathTree = new DefaultTreeNode<Object>("");
 		
@@ -57,26 +104,27 @@ public class FilePathTree implements Serializable {
 			@SuppressWarnings("unchecked")
 			TreeNode<Object> path = (TreeNode<Object>) o;
 			
-			FilePathBean filePathBean = new FilePathBean(i);
+			final FilePathBean filePathBean = new FilePathBean(i);
 			filePathBeans.add(filePathBean);
-			filePathBean.setEntity(path.getData());
+			final Object data = path.getData();
+			filePathBean.setEntity(data);
 			final String fp = getFullPathOf(path);
 			filePathBean.setFullPath(fp);
 			
-			org.primefaces.model.TreeNode viewNode = new org.primefaces.model.DefaultTreeNode(filePathBean);
-			
-			if (filePathBean.isFolder() == false) {
-				Object data = path.getData();
-				if (data instanceof FileEntity) {
-					if (trancientEntities.contains((FileEntity) data)) {
-						// a transient folder;
-						// it is a virtual folder not persisted on the file system yet;
-						// so it will disappear after the user's session expires
-						filePathBean.setTraansient(true);
-					}
+			// detect a transient folder;
+			// it is a virtual folder not persisted on the file system yet;
+			// so it will disappear after the user's session expires
+			if (data instanceof FileEntity) {
+				filePathBean.setTraansient(trancientEntities.contains((FileEntity) data));
+			}
+			else {
+				if (trancientEntities.contains(new FileEntity(fp))) {
+					// In this case, a transient folder has a sub transient folder;
+					filePathBean.setTraansient(true);
 				}
 			}
 			
+			final org.primefaces.model.TreeNode viewNode = new org.primefaces.model.DefaultTreeNode(filePathBean);			
 			mapPath2TreeNode.put(o, viewNode);
 		}
 		

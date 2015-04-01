@@ -9,3 +9,6 @@ File f1 = new File("test/tmp/tmp2/tmp3/hello-2nd.txt");
 FileUtils.moveFile(f0, f1);
 
 FileUtils.deleteQuietly(new File("test/tmp"));
+
+Iterator<File> itr = FileUtils.iterateFiles(new File("test/tmp/tmp2/"), null, true);
+System.out.println(itr.hasNext());

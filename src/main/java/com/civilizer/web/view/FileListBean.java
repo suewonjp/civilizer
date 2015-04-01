@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Collections;
 
+import org.apache.commons.io.FileUtils;
+
 import com.civilizer.config.AppOptions;
 import com.civilizer.domain.FileEntity;
 
@@ -67,6 +69,11 @@ public final class FileListBean implements Serializable {
 		}
 	}
 	
+	private static boolean directoryEmpty(File dir) {
+		// [NOTE] An empty directory means it has no file and its all sub-directories have no file at all
+		return ! FileUtils.iterateFiles(dir, null, true).hasNext();
+	}
+	
 	public boolean createNewTransientFolder(int parentFolderId, String name, String filesHomePath) {
 		final FilePathBean parentPathBean = getFilePathBean(parentFolderId);
 		final String parentPath = parentPathBean.getFullPath();
@@ -74,11 +81,19 @@ public final class FileListBean implements Serializable {
 				+ File.separatorChar + name;
 		final FileEntity fe = new FileEntity(path);
 		
-		if (fe.persisted(filesHomePath)) {
-			return false;
-		}
 		if (transientEntities.contains(fe)) {
 			return false;
+		}
+		
+		final File file = fe.toFile(filesHomePath);
+		if (file.isFile()) {
+			return false;
+		}
+		if (file.isDirectory()) {
+			if (! directoryEmpty(file)) {
+				// the folder already exists, but is not empty;
+				return false;
+			}
 		}
 		
 		if (transientEntities.isEmpty()) {

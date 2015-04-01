@@ -17,7 +17,6 @@ public class FilePathBean implements Serializable {
 	
 	private boolean traansient; // not a typo. *transient* is a reserved keyword
 	
-	
 	public FilePathBean() {}
 
 	public FilePathBean(int id) { this.id = id; }
@@ -66,27 +65,16 @@ public class FilePathBean implements Serializable {
 		return isTraansient() || entity instanceof String;
 	}
 	
-	public String getName() {
-		if (entity instanceof FileEntity) {
-			FileEntity fe = (FileEntity) entity;
-			String[] tmp = fe.getFileName().split("/");
-			return tmp[tmp.length - 1];
+	public String getCssClassName() {
+		if (isTraansient()) {
+			return "fb-transient fa-folder-open";
+		}
+		else if (isFolder()) {
+			return "fb-dir fa-folder-open";
 		}
 		else {
-			return entity.toString();
-		}
-	}
-	
-	public String getCssClassName() {
-		if (entity instanceof FileEntity) {
-			if (isTraansient()) {
-				return "fb-transient fa-folder-open";
-			}
 			return "fb-file fa-file-o "
 				+ (isBroken() ? "fa-question-circle fb-broken" : "");
-		}
-		else {
-			return "fb-dir fa-folder-open";
 		}
 	}
 	
