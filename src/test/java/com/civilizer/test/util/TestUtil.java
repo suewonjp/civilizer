@@ -100,7 +100,7 @@ public final class TestUtil {
     	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + "files";
     }
     
-    public static void touchTestFiles(FileEntityDao fileEntityDao) {
+    public static void touchTestFilesForFileBox(FileEntityDao fileEntityDao) {
     	final String filesHome = getFilesHomePath();
     	List<FileEntity> fileEntitiesFromDB = fileEntityDao.findAll();
 		assertNotNull(fileEntitiesFromDB);

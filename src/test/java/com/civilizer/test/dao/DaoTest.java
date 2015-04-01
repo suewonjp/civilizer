@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.hibernate.Hibernate;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -107,7 +106,6 @@ class DaoTest {
 
 	protected void setUp() throws Exception {
 		TestUtil.configure();
-		final String filesHome = TestUtil.getFilesHomePath();
 		
 		fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
 		assertNotNull(fragmentDao);
@@ -119,7 +117,7 @@ class DaoTest {
 		assertNotNull(fileEntityDao);
 		
 		// make sure all test files exist on the file system
-		TestUtil.touchTestFiles(fileEntityDao);
+		TestUtil.touchTestFilesForFileBox(fileEntityDao);
 		
 		logger.info("all DAOs initialized OK");
 	}
