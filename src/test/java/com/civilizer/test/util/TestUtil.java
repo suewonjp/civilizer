@@ -3,15 +3,19 @@ package com.civilizer.test.util;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
+import com.civilizer.dao.FileEntityDao;
+import com.civilizer.domain.FileEntity;
 
 public final class TestUtil {
 
@@ -94,5 +98,21 @@ public final class TestUtil {
     
     public static String getFilesHomePath() {
     	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + "files";
+    }
+    
+    public static void touchTestFiles(FileEntityDao fileEntityDao) {
+    	final String filesHome = getFilesHomePath();
+    	List<FileEntity> fileEntitiesFromDB = fileEntityDao.findAll();
+		assertNotNull(fileEntitiesFromDB);
+		
+		for (FileEntity fe : fileEntitiesFromDB) {
+			final File f = fe.toFile(filesHome);
+			try {
+				FileUtils.touch(f);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			assertEquals(true, f.isFile());
+		}
     }
 }

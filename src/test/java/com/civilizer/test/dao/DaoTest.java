@@ -119,17 +119,7 @@ class DaoTest {
 		assertNotNull(fileEntityDao);
 		
 		// make sure all test files exist on the file system
-		List<FileEntity> fileEntitiesFromDB = fileEntityDao.findAll();
-		assertNotNull(fileEntitiesFromDB);
-		for (FileEntity fe : fileEntitiesFromDB) {
-			final File f = fe.toFile(filesHome);
-			try {
-				FileUtils.touch(f);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			assertEquals(true, f.isFile());
-		}
+		TestUtil.touchTestFiles(fileEntityDao);
 		
 		logger.info("all DAOs initialized OK");
 	}
