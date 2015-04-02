@@ -3,7 +3,6 @@ package com.civilizer.test.web;
 import static org.junit.Assert.*;
 
 import java.util.*;
-import java.util.logging.FileHandler;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,20 +24,17 @@ import com.civilizer.web.view.FilePathTree;
 
 public class WebFileBoxTest {
 	
-	private static GenericXmlApplicationContext ctx;
 	private static FileEntityDao fileEntityDao;
+	
+	static String filesHomePath;
 	
 	@BeforeClass
     public static void setUpBeforeClass() throws Exception {
 		TestUtil.configure();
-		ctx = new GenericXmlApplicationContext();
-		ctx.load("classpath:datasource-context-h2-embedded.xml");
-		ctx.refresh();
 		
-		fileEntityDao = ctx.getBean("fileEntityDao", FileEntityDao.class);
-		assertNotNull(fileEntityDao);
+		filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		
-		TestUtil.touchTestFilesForFileBox(fileEntityDao);
+		renewTestData();
 	}
 	
 	@AfterClass
@@ -49,10 +45,55 @@ public class WebFileBoxTest {
 	@Before
     public void setUp() throws Exception {
     }
+	
+	@After
+	public void tearDown() throws Exception {
+	}
+	
+	private static void renewTestData() {
+		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+		ctx.load("classpath:datasource-context-h2-embedded.xml");
+		ctx.refresh();
+		
+		fileEntityDao = ctx.getBean("fileEntityDao", FileEntityDao.class);
+		assertNotNull(fileEntityDao);
+		
+		try {
+			FileUtils.deleteDirectory(new File(filesHomePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		TestUtil.touchTestFilesForFileBox(fileEntityDao);
+	}
+	
+	private static int getRandomFilePathId(FilePathTree filePathTree, boolean forFolder) {
+		final List<FilePathBean> filePathBeans = filePathTree.getFilePathBeans();
+		int output = 0;
+		for (int i=0; i<filePathBeans.size(); ++i) {
+			final FilePathBean filePathBean = filePathBeans.get(i);
+			if (filePathBean.isBroken())
+				continue;
+			if (TestUtil.getRandom().nextInt(3) != 0)
+				continue;
+			if (filePathBean.isFolder()) {
+				if (forFolder) {
+					output = i;
+					break;
+				}
+			}
+			else {
+				if (! forFolder) {
+					output = i;
+					break;
+				}
+			}
+		}
+		return output;
+	}
 
 	@Test
 	public void testConstructPathTree() {
-		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		Collection<File> dirs = FileUtils.listFilesAndDirs(
 				new File(filesHomePath),  // directory
 				FalseFileFilter.INSTANCE, // exclude all files
@@ -105,8 +146,6 @@ public class WebFileBoxTest {
 	
 	@Test
 	public void testCreateNewDirectory() {
-		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
-		
 		final List<FileEntity> fileEntities = fileEntityDao.findAll();
 		
 		final FileListBean fileListBean = new FileListBean();
@@ -115,31 +154,127 @@ public class WebFileBoxTest {
 		FilePathTree filePathTree = new FilePathTree();
 		fileListBean.setFilePathTree(filePathTree);
 		
-		final List<FilePathBean> filePathBeans = filePathTree.getFilePathBeans();
-		int parentFolderId = 0;
-		for (int i=0; i<filePathBeans.size(); ++i) {
-			final FilePathBean filePathBean = filePathBeans.get(i);
-			if (! filePathBean.isBroken() &&  filePathBean.isFolder() && TestUtil.getRandom().nextBoolean()) {
-				parentFolderId = i;
-				break;
-			}
-		}
+		for (int j=0; j<3; ++j) {
+			final int parentFolderId = getRandomFilePathId(filePathTree, true);
+			final FilePathBean parentPath = fileListBean.getFilePathBean(parentFolderId);
+			assertEquals(true, parentPath.isFolder());
 
-		final String newFolderName = "new-directory";
-		final File dir = fileListBean.createNewFolder(parentFolderId, newFolderName, filesHomePath);
-		assertNotNull(dir);
-		assertEquals(true, dir.isDirectory());
-		try {
-			FileUtils.forceDeleteOnExit(dir);
-//			System.out.println("***** " + dir);
-		} catch (IOException e) {
-			e.printStackTrace();
+			final String newFolderName = "new-directory";
+			final File newDir = fileListBean.createNewFolder(parentFolderId, newFolderName, filesHomePath);
+			assertNotNull(newDir);
+			assertEquals(true, newDir.isDirectory());
+			
+			try {
+				boolean contained = FileUtils.directoryContains(new File(filesHomePath+File.separatorChar+parentPath.getFullPath()), newDir);
+				assertEquals(true, contained);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			try {
+				FileUtils.forceDeleteOnExit(newDir);
+//				System.out.println("***** " + newDir);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			filePathTree = new FilePathTree();
+			fileListBean.setFilePathTree(filePathTree);
+			final FilePathBean tmp = new FilePathBean(newDir.getAbsolutePath().replace(filesHomePath, ""));
+			assertEquals(true, filePathTree.getFilePathBeans().contains(tmp));
+		}
+	}
+	
+	@Test
+	public void testRenameFiles() {
+		final List<FileEntity> fileEntities = fileEntityDao.findAll();
+		
+		final FileListBean fileListBean = new FileListBean();
+		fileListBean.setFileEntities(fileEntities);
+		
+		FilePathTree filePathTree = new FilePathTree();
+		fileListBean.setFilePathTree(filePathTree);
+		
+		for (int j=0; j<2; ++j) {
+			final boolean forFolder = TestUtil.getRandom().nextBoolean();
+			final int selectedNodeId = getRandomFilePathId(filePathTree, forFolder);
+			final String newName = forFolder ?
+					"renamed-folder"+j : "renamed-file"+j+".txt";
+			final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
+			if (filePathBean.getName().equals("")) {
+				// can't rename the root directory
+				--j;
+				continue;
+			}
+			final String oldFilePath = filePathBean.getFullPath();
+			
+			List<FileEntity> entities = fileEntityDao.findByNamePattern(oldFilePath);
+
+			for (FileEntity fe : entities) {
+				final String oldPathOnFileSystem = filesHomePath + fe.getFileName();
+				fe.replaceNameSegment(oldFilePath, newName);
+				final String newPathOnFileSystem = filesHomePath + fe.getFileName();
+				try {
+					fileEntityDao.save(fe);
+					final File oldFile = new File(oldPathOnFileSystem);
+					final File newFile = new File(newPathOnFileSystem);
+					FileUtils.moveFile(oldFile, newFile);
+//					System.out.println("***** " + oldFile);
+//					System.out.println("***** " + newFile);
+					assertEquals(false, oldFile.isFile());
+					assertEquals(true, newFile.isFile());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			FileListBean.removeEmptyDirectories(filesHomePath);
 		}
 		
-		filePathTree = new FilePathTree();
+		// file structures for test are heavily modified. refresh it.
+		renewTestData();
+	}
+	
+	@Test
+	public void testDeleteFiles() {
+		final List<FileEntity> fileEntities = fileEntityDao.findAll();
+		
+		final FileListBean fileListBean = new FileListBean();
+		fileListBean.setFileEntities(fileEntities);
+		
+		FilePathTree filePathTree = new FilePathTree();
 		fileListBean.setFilePathTree(filePathTree);
-		final FilePathBean tmp = new FilePathBean(dir.getAbsolutePath().replace(filesHomePath, ""));
-		assertEquals(true, filePathTree.getFilePathBeans().contains(tmp));
+		
+		for (int j=0; j<2; ++j) {
+			final boolean forFolder = TestUtil.getRandom().nextBoolean();
+			final int selectedNodeId = getRandomFilePathId(filePathTree, forFolder);
+			final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
+			if (filePathBean.getName().equals("")) {
+				// can't delete the root directory
+				--j;
+				continue;
+			}
+			final String filePath = filePathBean.getFullPath();
+			
+			List<FileEntity> entities = fileEntityDao.findByNamePattern(filePath);
+			
+			for (FileEntity fe : entities) {
+				final String pathOnFileSystem = filesHomePath + fe.getFileName();
+				try {
+					fileEntityDao.delete(fe);
+					FileUtils.deleteQuietly(new File(pathOnFileSystem));
+					assertEquals(false, new File(pathOnFileSystem).exists());
+					FileUtils.deleteQuietly(new File(pathOnFileSystem));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			FileListBean.removeEmptyDirectories(filesHomePath);
+		}
+		
+		// file structures for test are heavily modified. refresh it.
+		renewTestData();
 	}
 
 }

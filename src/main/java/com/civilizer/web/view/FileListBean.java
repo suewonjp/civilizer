@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Collections;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FalseFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import com.civilizer.config.AppOptions;
 import com.civilizer.domain.FileEntity;
@@ -69,9 +71,28 @@ public final class FileListBean implements Serializable {
 		}
 	}
 	
-	private static boolean directoryEmpty(File dir) {
+	public static boolean directoryEmpty(File dir) {
 		// [NOTE] An empty directory means it has no file and its all sub-directories have no file at all
 		return ! FileUtils.iterateFiles(dir, null, true).hasNext();
+	}
+	
+	// [NOTE] as a rule, empty directories should be detected and deleted whenever the file structure changes
+	public static void removeEmptyDirectories(String filesHomePath) {
+		Collection<File> dirs = FileUtils.listFilesAndDirs(
+				new File(filesHomePath),  // directory
+				FalseFileFilter.INSTANCE, // exclude all files
+				TrueFileFilter.INSTANCE   // include all sub directories
+		);
+		
+		for (File dir : dirs) {
+			if (dir.getPath().equals(filesHomePath)) {
+				// skip the root directory
+				continue;
+			}
+			if (dir.isDirectory() && directoryEmpty(dir)) {
+				FileUtils.deleteQuietly(dir);
+			}
+		}
 	}
 	
 	public File createNewFolder(int parentFolderId, String name, String filesHomePath) {
