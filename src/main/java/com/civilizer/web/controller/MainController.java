@@ -1,6 +1,7 @@
 package com.civilizer.web.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import javax.faces.application.FacesMessage;
@@ -236,11 +237,7 @@ public final class MainController {
 		final List<FileEntity> fileEntities = fileEntityDao.findAll();
 		output.setFileEntities(fileEntities);
 		final FilePathTree filePathTree = newFilePathTree();
-		List<FileEntity> transientEntities = Collections.emptyList();
-		if (oldFileListBean != null) {
-			transientEntities = oldFileListBean.getTransientEntities();
-		}
-		output.setFilePathTree(filePathTree, transientEntities);
+		output.setFilePathTree(filePathTree);
 		return output;
 	}
 	
@@ -549,7 +546,7 @@ public final class MainController {
 		if (selectedNodeId < 0) {
 			// [RULE] Create a new directory if *selectedNodeId* is a minus value;
 			// [NOTE] we need to decode *selectedNodeId* before passing it to the next processing
-			if (! fileListBean.createNewTransientFolder(-selectedNodeId - 1, newName, filesHomePath)) {
+			if (fileListBean.createNewFolder(-selectedNodeId - 1, newName, filesHomePath) == null) {
 				ViewUtil.addMessage("Error on Creating a Folder!!!", newName + " : already exists!", FacesMessage.SEVERITY_ERROR);
 			}
 			return;
@@ -557,27 +554,48 @@ public final class MainController {
 		
 		final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
 		
-		if (filePathBean.isTraansient()) {
-			Object o = filePathBean.getEntity();
-			FileEntity fe = (FileEntity) o;
-			fe.replaceNameSegment(null, newName);
-			return;
+		final String oldFilePath = filePathBean.getFullPath();
+		List<FileEntity> entities = Collections.emptyList();
+		
+		if (filePathBean.isFolder()) {
+			final File oldDir = filePathBean.toFile(filesHomePath);
+			final FileEntity fe = new FileEntity(oldFilePath);
+			fe.replaceNameSegment(oldFilePath, newName);
+			final File newDir = fe.toFile(filesHomePath);
+			
+			try {
+				FileUtils.moveDirectory(oldDir, newDir);
+			} catch (IOException e) {
+				e.printStackTrace();
+				ViewUtil.addMessage("Error on Renaming Folders!!!", oldFilePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			}
+			
+			entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
+		}
+		else {
+			final File oldFile = filePathBean.toFile(filesHomePath);
+			final FileEntity fe = new FileEntity(oldFilePath);
+			fe.replaceNameSegment(oldFilePath, newName);
+			final File newFile = fe.toFile(filesHomePath);
+			
+			try {
+				FileUtils.moveFile(oldFile, newFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+				ViewUtil.addMessage("Error on Renaming Files!!!", oldFilePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			}
+			
+			FileEntity entity = fileEntityDao.findByName(oldFilePath);
+			if (entity != null) {
+				entities = new ArrayList<>();
+				entities.add(entity);
+			}
 		}
 		
-		fileListBean.renameMatchedTransientEntities(filePathBean, newName);
-		
-		final String oldFilePath = filePathBean.getFullPath();
-		final List<FileEntity> entities = fileEntityDao.findByNamePattern(oldFilePath);
-		
 		for (FileEntity fe : entities) {
-			final String oldPathOnFileSystem = filesHomePath + fe.getFileName();
 			fe.replaceNameSegment(oldFilePath, newName);
-			final String newPathOnFileSystem = filesHomePath + fe.getFileName();
 			try {
 				fileEntityDao.save(fe);
-				final File oldFile = new File(oldPathOnFileSystem);
-				final File newFile = new File(newPathOnFileSystem);
-				FileUtils.moveFile(oldFile, newFile);
 				ViewUtil.addMessage("Files Renamed", fe.getFileName(), null);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -590,22 +608,26 @@ public final class MainController {
 		final int selectedNodeId = fileListBean.getSelectedNodeId();
 		final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
 		
-		if (filePathBean.isTraansient()) {
-			fileListBean.removeTransientEntity(filePathBean);
-			return;
-		}
-		
-		fileListBean.removeMatchedTransientEntities(filePathBean);
-		
 		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		final String filePath = filePathBean.getFullPath();
-		final List<FileEntity> entities = fileEntityDao.findByNamePattern(filePath);
+		List<FileEntity> entities = Collections.emptyList();
+		
+		if (filePathBean.isFolder()) {
+			entities = fileEntityDao.findByNamePattern(filePath + '%');
+		}
+		else {
+			FileEntity entity = fileEntityDao.findByName(filePath);
+			if (entity != null) {
+				entities = new ArrayList<>();
+				entities.add(entity);
+			}
+		}
+		
+		FileUtils.deleteQuietly(filePathBean.toFile(filesHomePath));
 		
 		for (FileEntity fe : entities) {
-			final String pathOnFileSystem = filesHomePath + fe.getFileName();
 			try {
 				fileEntityDao.delete(fe);
-				FileUtils.deleteQuietly(new File(pathOnFileSystem));
 				ViewUtil.addMessage("Files Deleted", fe.getFileName(), null);
 			} catch (Exception e) {
 				e.printStackTrace();

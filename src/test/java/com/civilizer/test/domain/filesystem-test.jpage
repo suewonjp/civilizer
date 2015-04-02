@@ -6,6 +6,11 @@ File f0 = new File("test/tmp/hello.txt");
 
 File f1 = new File("test/tmp/tmp2/tmp3/hello-2nd.txt");
 
+FileUtils.touch(f0);
+FileUtils.touch(f1);
+
+FileUtils.moveDirectory(new File("test/tmp"), new File("test/tmp4"));
+
 FileUtils.moveFile(f0, f1);
 
 FileUtils.deleteQuietly(new File("test/tmp"));

@@ -160,7 +160,7 @@ function showNewDirectoryDialog(target) {
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>
                     <span class="each-file fa #{filePathBean.getCssClassName()}" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{filePathBean.isFolder()}">
-                    	#{filePathBean}
+                    	#{filePathBean.getName()}
 	                </span>
                 </p:treeNode>
             </p:tree>

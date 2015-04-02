@@ -89,6 +89,9 @@ public class WebFileBoxTest {
 				}
 			}
 		}
+		while (output == 0) {
+			output = getRandomFilePathId(filePathTree, forFolder);
+		}
 		return output;
 	}
 
@@ -187,6 +190,8 @@ public class WebFileBoxTest {
 	
 	@Test
 	public void testRenameFiles() {
+		testCreateNewDirectory();
+		
 		final List<FileEntity> fileEntities = fileEntityDao.findAll();
 		
 		final FileListBean fileListBean = new FileListBean();
@@ -201,34 +206,61 @@ public class WebFileBoxTest {
 			final String newName = forFolder ?
 					"renamed-folder"+j : "renamed-file"+j+".txt";
 			final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
+			assertEquals(forFolder, filePathBean.isFolder());
 			if (filePathBean.getName().equals("")) {
 				// can't rename the root directory
 				--j;
 				continue;
 			}
-			final String oldFilePath = filePathBean.getFullPath();
+			final String oldFilePath = filePathBean.getFullPath();			
+			List<FileEntity> entities = Collections.emptyList();
 			
-			List<FileEntity> entities = fileEntityDao.findByNamePattern(oldFilePath);
-
-			for (FileEntity fe : entities) {
-				final String oldPathOnFileSystem = filesHomePath + fe.getFileName();
+			if (filePathBean.isFolder()) {
+				final File oldDir = filePathBean.toFile(filesHomePath);
+				final FileEntity fe = new FileEntity(oldFilePath);
 				fe.replaceNameSegment(oldFilePath, newName);
-				final String newPathOnFileSystem = filesHomePath + fe.getFileName();
+				final File newDir = fe.toFile(filesHomePath);
+				assertEquals(oldDir.getParent(), newDir.getParent());
+				
 				try {
-					fileEntityDao.save(fe);
-					final File oldFile = new File(oldPathOnFileSystem);
-					final File newFile = new File(newPathOnFileSystem);
-					FileUtils.moveFile(oldFile, newFile);
-//					System.out.println("***** " + oldFile);
-//					System.out.println("***** " + newFile);
-					assertEquals(false, oldFile.isFile());
-					assertEquals(true, newFile.isFile());
-				} catch (Exception e) {
+					FileUtils.moveDirectory(oldDir, newDir);
+				} catch (IOException e) {
 					e.printStackTrace();
+				}
+				
+				entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
+			}
+			else {
+				final File oldFile = filePathBean.toFile(filesHomePath);
+				final FileEntity fe = new FileEntity(oldFilePath);
+				fe.replaceNameSegment(oldFilePath, newName);
+				final File newFile = fe.toFile(filesHomePath);
+//				System.out.println("***** " + oldFile);
+//				System.out.println("***** " + newFile);
+				assertEquals(oldFile.getParent(), newFile.getParent());
+				
+				try {
+					FileUtils.moveFile(oldFile, newFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				assertEquals(false, oldFile.isFile());
+				assertEquals(true, newFile.isFile());
+				
+				FileEntity entity = fileEntityDao.findByName(oldFilePath);
+				if (entity != null) {
+					entities = new ArrayList<>();
+					entities.add(entity);
 				}
 			}
 			
-			FileListBean.removeEmptyDirectories(filesHomePath);
+			for (FileEntity fe : entities) {
+				fe.replaceNameSegment(oldFilePath, newName);
+				fileEntityDao.save(fe);
+			}
+			
+			filePathTree = new FilePathTree();
+			fileListBean.setFilePathTree(filePathTree);
 		}
 		
 		// file structures for test are heavily modified. refresh it.
@@ -255,22 +287,33 @@ public class WebFileBoxTest {
 				continue;
 			}
 			final String filePath = filePathBean.getFullPath();
+			List<FileEntity> entities = Collections.emptyList();
 			
-			List<FileEntity> entities = fileEntityDao.findByNamePattern(filePath);
+			if (filePathBean.isFolder()) {
+				entities = fileEntityDao.findByNamePattern(filePath + '%');
+			}
+			else {
+				FileEntity entity = fileEntityDao.findByName(filePath);
+				if (entity != null) {
+					entities = new ArrayList<>();
+					entities.add(entity);
+				}
+			}
+			
+			FileUtils.deleteQuietly(filePathBean.toFile(filesHomePath));
 			
 			for (FileEntity fe : entities) {
 				final String pathOnFileSystem = filesHomePath + fe.getFileName();
 				try {
-					fileEntityDao.delete(fe);
-					FileUtils.deleteQuietly(new File(pathOnFileSystem));
 					assertEquals(false, new File(pathOnFileSystem).exists());
-					FileUtils.deleteQuietly(new File(pathOnFileSystem));
+					fileEntityDao.delete(fe);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 			
-			FileListBean.removeEmptyDirectories(filesHomePath);
+			filePathTree = new FilePathTree();
+			fileListBean.setFilePathTree(filePathTree);
 		}
 		
 		// file structures for test are heavily modified. refresh it.

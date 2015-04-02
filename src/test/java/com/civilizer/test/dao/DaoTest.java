@@ -581,13 +581,13 @@ class DaoTest {
 			fileEntityDao.save(fe);
 			
 			try {
-				String pattern = fullPath;
+				String pattern = fullPath + '%';
 				List<FileEntity> results = fileEntityDao
 						.findByNamePattern(pattern);
 				assertEquals(1, results.size());
 				assertEquals(fe, results.get(0));
 
-				pattern = "/abc/efg/";
+				pattern = "/abc/efg/%";
 				results = fileEntityDao.findByNamePattern(pattern);
 				assertEquals(1, results.size());
 				assertEquals(fe, results.get(0));

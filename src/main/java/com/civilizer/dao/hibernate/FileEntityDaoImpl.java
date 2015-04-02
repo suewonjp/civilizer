@@ -56,7 +56,8 @@ public class FileEntityDaoImpl implements FileEntityDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FileEntity> findByNamePattern(String pattern) {
-		pattern = '%' + pattern + '%';
+//		pattern += '%';
+//		pattern = '%' + pattern + '%';
 		return sessionFactory.getCurrentSession()
                 .getNamedQuery("FileEntity.findByNamePattern")
                 .setParameter("pattern", pattern)
