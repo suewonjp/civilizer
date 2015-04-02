@@ -29,8 +29,6 @@
 		<security:authentication-provider>
 			<security:password-encoder ref="encoder" />
 			<security:user-service>
-			    <!-- [TODO] hashed && salted password -->
-			    <!-- [TODO] user credential information stored && restored from persistence store -->
 				<security:user name="owner" password="$2a$10$w.Jjtx0mrjH4E.DxQEmBZu.D1oCBKy26utS8KCOSn0fmq1xs2GXiK" authorities="ROLE_USER" />
 			</security:user-service>
 		</security:authentication-provider>
