@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.civilizer.domain.DefaultTreeNode;
 import com.civilizer.domain.FileEntity;
+import com.civilizer.domain.Pair;
 import com.civilizer.domain.TreeNode;
 import com.civilizer.test.util.TestUtil;
 
@@ -114,6 +115,29 @@ public class DomainFileEntityTest {
 		TreeNode<Object> n2 = tree.findDescendantWith(f0);
 		assertEquals(true, ch0.contains(n1));
 		assertEquals(true, ch0.contains(n2));
+	}
+	
+	@Test
+	public void testMethod_splitName() {
+		Pair<String, String> splitPath = null;
+		{
+			final FileEntity f = new FileEntity("/");
+			splitPath = f.splitName();
+			assertEquals("", splitPath.getFirst());
+			assertEquals("", splitPath.getSecond());
+		}
+		{
+			final FileEntity f = new FileEntity("/xxx");
+			splitPath = f.splitName();
+			assertEquals("", splitPath.getFirst());
+			assertEquals("xxx", splitPath.getSecond());
+		}
+		{
+			final FileEntity f = new FileEntity("/xxx/yyy/zzz");
+			splitPath = f.splitName();
+			assertEquals("/xxx/yyy", splitPath.getFirst());
+			assertEquals("zzz", splitPath.getSecond());
+		}
 	}
 
 }

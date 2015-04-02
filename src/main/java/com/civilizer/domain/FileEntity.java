@@ -54,6 +54,17 @@ public class FileEntity implements Serializable {
 		return fileName.startsWith(parentPath);
 	}
 	
+	public Pair<String, String> splitName() {
+		final String[] tmp = fileName.split("/");
+		final String name = tmp.length > 0 ?
+				tmp[tmp.length - 1] : "";
+		String parentPath = "";
+		for (int i=1; i<tmp.length-1; ++i) {
+			parentPath += File.separatorChar + tmp[i];
+		}
+		return new Pair<String, String>(parentPath, name);
+	}
+	
 	public void replaceNameSegment(String oldIntermediatePath, String newSegment) {
 		/*
 		 * let's say,
