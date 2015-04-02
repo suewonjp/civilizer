@@ -9,6 +9,8 @@ public class FilePathBean implements Serializable {
 	
 	private Object entity;
 	
+	private String name = "";
+	
 	private String fullPath = "";
 	
 	private int id = -1;
@@ -21,12 +23,29 @@ public class FilePathBean implements Serializable {
 
 	public FilePathBean(int id) { this.id = id; }
 
+	public FilePathBean(String fullPath) { 
+		this.fullPath = fullPath;
+	}
+
+	public FilePathBean(String name, String fullPath) { 
+		this.name = name;
+		this.fullPath = fullPath;
+	}
+
 	public Object getEntity() {
 		return entity;
 	}
 
 	public void setEntity(Object entity) {
 		this.entity = entity;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getId() {
@@ -78,6 +97,19 @@ public class FilePathBean implements Serializable {
 		}
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FilePathBean other = (FilePathBean) obj;
+        return this.fullPath.equals(other.fullPath);
+	}
+	
+	@Override
 	public String toString() {
 		if (entity instanceof FileEntity) {
 			FileEntity fe = (FileEntity) entity;
@@ -85,6 +117,9 @@ public class FilePathBean implements Serializable {
 			return tmp[tmp.length - 1];
 		}
 		else {
+			if (entity == null) {
+				return fullPath;
+			}
 			return entity.toString();
 		}
 	}

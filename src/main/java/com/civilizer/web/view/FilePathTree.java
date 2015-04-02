@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import com.civilizer.domain.DefaultTreeNode;
 import com.civilizer.domain.FileEntity;
+import com.civilizer.domain.Pair;
 import com.civilizer.domain.TreeNode;
 
 @SuppressWarnings("serial")
@@ -35,52 +36,35 @@ public class FilePathTree implements Serializable {
 		}
 	}
 	
-//	public void populateNodes(List<FileEntity> fileEntities) {
-//		TreeNode<Object> pathTree = new DefaultTreeNode<Object>("");
-//		
-//		for (FileEntity fe : fileEntities) {
-//			fe.addToPathTree(pathTree);
-//		}
-//
-//		Map<Object, org.primefaces.model.TreeNode> mapPath2TreeNode = new HashMap<>();
-//		
-//		Object[] paths = pathTree.toArray(TreeNode.TraverseOrder.BREATH_FIRST);
-//		
-//		filePathBeans = new ArrayList<FilePathBean>();
-//		
-//		for (int i=0; i<paths.length; ++i) {
-//			final Object o = paths[i];
-//			@SuppressWarnings("unchecked")
-//			TreeNode<Object> path = (TreeNode<Object>) o;
-//			
-//			final FilePathBean filePathBean = new FilePathBean(i);
-//			filePathBeans.add(filePathBean);
-//			final Object data = path.getData();
-//			filePathBean.setEntity(data);
-//			final String fp = getFullPathOf(path);
-//			filePathBean.setFullPath(fp);
-//			
-//			final org.primefaces.model.TreeNode viewNode = new org.primefaces.model.DefaultTreeNode(filePathBean);			
-//			mapPath2TreeNode.put(o, viewNode);
-//		}
-//		
-//		for (int i=0; i<paths.length; ++i) {
-//			final Object o = paths[i];
-//			@SuppressWarnings("unchecked")
-//			TreeNode<Object> path = (TreeNode<Object>) o;
-//			TreeNode<Object> parent = path.getParent();
-//			org.primefaces.model.TreeNode tn = mapPath2TreeNode.get(path);
-//			org.primefaces.model.TreeNode tnp = mapPath2TreeNode.get(parent);
-//			if (tnp != null) {
-//				tn.setParent(tnp);
-//				tnp.getChildren().add(tn);
-//				tnp.setExpanded(true);
-//			}
-//		}
-//		
-//		root = mapPath2TreeNode.get(pathTree);
-//		root.setExpanded(true);
-//	}
+	public static void addToPathTree(TreeNode<FilePathBean> root, String path) {
+		final String[] names = path.split("/");
+		String name = "";
+		String fullPath = name;
+		TreeNode<FilePathBean> parent = root;
+		FilePathBean data = parent.getData();
+		
+		for (int i=1; i<names.length; ++i) {
+			parent = root.findDescendantWith(data);
+			name = names[i];
+			fullPath += File.separatorChar + name;
+			data = new FilePathBean(name, fullPath);
+			if (parent != null && root.findDescendantWith(data) == null) {
+				parent.addChild(new DefaultTreeNode<FilePathBean>(data));
+			}
+		}
+	}
+	
+	public static boolean addFileEntityToPathTree(TreeNode<FilePathBean> root, FileEntity fileEntity) {
+		Pair<String, String> splitPath = fileEntity.splitName();
+		TreeNode<FilePathBean> parent = root.findDescendantWith(new FilePathBean(splitPath.getFirst()));
+		if (parent == null) {
+			return false;
+		}
+		else {
+			parent.addChild(new DefaultTreeNode<FilePathBean>(new FilePathBean(splitPath.getSecond(), fileEntity.getFileName())));
+			return true;
+		}
+	}
 	
 	public void populateNodes(List<FileEntity> fileEntities, List<FileEntity> trancientEntities) {
 		TreeNode<Object> pathTree = new DefaultTreeNode<Object>("");
