@@ -4,6 +4,11 @@ import java.util.*;
 import java.io.File;
 import java.io.Serializable;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FalseFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
+
+import com.civilizer.config.AppOptions;
 import com.civilizer.domain.DefaultTreeNode;
 import com.civilizer.domain.FileEntity;
 import com.civilizer.domain.Pair;
@@ -64,6 +69,60 @@ public class FilePathTree implements Serializable {
 			parent.addChild(new DefaultTreeNode<FilePathBean>(new FilePathBean(splitPath.getSecond(), fileEntity.getFileName())));
 			return true;
 		}
+	}
+	
+	public void populateNodes(List<FileEntity> fileEntities) {
+		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		Collection<File> dirs = FileUtils.listFilesAndDirs(
+				new File(filesHomePath),  // directory
+				FalseFileFilter.INSTANCE, // exclude all files
+				TrueFileFilter.INSTANCE   // include all sub directories
+		);
+		
+		final TreeNode<FilePathBean> pathTree = new DefaultTreeNode<>(new FilePathBean("", ""));
+		
+		for (File file : dirs) {
+			String path = file.toString().replace(filesHomePath, "");
+			FilePathTree.addToPathTree(pathTree, path);
+		}
+		
+		for (FileEntity fileEntity : fileEntities) {
+			FilePathTree.addFileEntityToPathTree(pathTree, fileEntity);
+		}
+		
+		Map<Object, org.primefaces.model.TreeNode> mapPath2TreeNode = new HashMap<>();
+		filePathBeans = new ArrayList<FilePathBean>();
+		Object[] paths = pathTree.toArray(TreeNode.TraverseOrder.BREATH_FIRST);
+		
+		for (int i=0; i<paths.length; ++i) {
+			final Object o = paths[i];
+			@SuppressWarnings("unchecked")
+			TreeNode<FilePathBean> path = (TreeNode<FilePathBean>) o;
+
+			final FilePathBean filePathBean = path.getData();
+			filePathBean.setId(i);
+			filePathBean.check(filesHomePath);
+			filePathBeans.add(filePathBean);
+			
+			mapPath2TreeNode.put(path, new org.primefaces.model.DefaultTreeNode(filePathBean));
+		}
+		
+		for (int i=0; i<paths.length; ++i) {
+			final Object o = paths[i];
+			@SuppressWarnings("unchecked")
+			TreeNode<FilePathBean> path = (TreeNode<FilePathBean>) o;
+			TreeNode<FilePathBean> parent = path.getParent();
+			org.primefaces.model.TreeNode tn = mapPath2TreeNode.get(path);
+			org.primefaces.model.TreeNode tnp = mapPath2TreeNode.get(parent);
+			if (tnp != null) {
+				tn.setParent(tnp);
+				tnp.getChildren().add(tn);
+				tnp.setExpanded(true);
+			}
+		}
+		
+		root = mapPath2TreeNode.get(pathTree);
+		root.setExpanded(true);
 	}
 	
 	public void populateNodes(List<FileEntity> fileEntities, List<FileEntity> trancientEntities) {

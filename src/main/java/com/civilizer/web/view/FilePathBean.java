@@ -1,5 +1,6 @@
 package com.civilizer.web.view;
 
+import java.io.File;
 import java.io.Serializable;
 
 import com.civilizer.domain.FileEntity;
@@ -14,6 +15,8 @@ public class FilePathBean implements Serializable {
 	private String fullPath = "";
 	
 	private int id = -1;
+	
+	private boolean folder;
 	
 	private boolean broken;
 	
@@ -81,7 +84,7 @@ public class FilePathBean implements Serializable {
 	}
 
 	public boolean isFolder() {
-		return isTraansient() || entity instanceof String;
+		return folder || isTraansient() || entity instanceof String;
 	}
 	
 	public String getCssClassName() {
@@ -94,6 +97,16 @@ public class FilePathBean implements Serializable {
 		else {
 			return "fb-file fa-file-o "
 				+ (isBroken() ? "fa-question-circle fb-broken" : "");
+		}
+	}
+	
+	public void check(String filesHomePath) {
+		final File f = new File(filesHomePath + File.separatorChar + fullPath);
+		if (f.isDirectory()) {
+			folder = true;
+		}
+		else if (f.isFile() == false) {
+			broken = true;
 		}
 	}
 	

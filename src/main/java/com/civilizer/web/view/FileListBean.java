@@ -74,6 +74,24 @@ public final class FileListBean implements Serializable {
 		return ! FileUtils.iterateFiles(dir, null, true).hasNext();
 	}
 	
+	public File createNewFolder(int parentFolderId, String name, String filesHomePath) {
+		final FilePathBean parentPathBean = getFilePathBean(parentFolderId);
+		final String parentPath = parentPathBean.getFullPath();
+		final String path = filesHomePath + File.separatorChar + parentPath + File.separatorChar + name;
+		final File file = new File(path);
+		
+		if (file.isFile()) {
+			return null;
+		}
+		if (file.isDirectory() == false) {
+			if (! file.mkdir()) {
+				return null;
+			}
+		}
+		
+		return file;
+	}
+	
 	public boolean createNewTransientFolder(int parentFolderId, String name, String filesHomePath) {
 		final FilePathBean parentPathBean = getFilePathBean(parentFolderId);
 		final String parentPath = parentPathBean.getFullPath();
@@ -128,6 +146,14 @@ public final class FileListBean implements Serializable {
 		this.transientEntities = transientEntities;
 		
 		filePathTree.populateNodes(fileEntities, transientEntities);
+		
+		this.filePathTree = filePathTree;
+		
+		detectBrokenLinks();
+	}
+
+	public void setFilePathTree(FilePathTree filePathTree) {
+		filePathTree.populateNodes(fileEntities);
 		
 		this.filePathTree = filePathTree;
 		
