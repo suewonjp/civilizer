@@ -1,0 +1,11 @@
+
+int i = 0;
+String password = "owner";
+
+while (i < 5) {
+	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	String hashedPassword = passwordEncoder.encode(password);
+	 
+	System.out.println(hashedPassword);
+	i++;
+}
