@@ -232,7 +232,7 @@ public final class MainController {
         return tagListBean;
     }
 	
-	public FileListBean newFileListBean(FileListBean oldFileListBean) {
+	public FileListBean newFileListBean() {
 		final FileListBean output = new FileListBean();
 		final List<FileEntity> fileEntities = fileEntityDao.findAll();
 		output.setFileEntities(fileEntities);
