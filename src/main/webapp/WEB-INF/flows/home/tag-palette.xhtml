@@ -65,7 +65,7 @@ function showEditTagDialog() {
 </div>
 
 <h:form id="tag-palette-form">
-    <p:dialog header="#{msg['label_rename']}" width="300px" modal="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
+    <p:dialog header="#{msg['label_rename']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
         <h:outputLabel for="edit-tag-dlg-name-input" value="#{msg['label_name']} :" />
         <p:inputText style="min-width:200px" id="edit-tag-dlg-name-input" value="#{paramTagBean.tag.tagName}" />
         <h:inputHidden id="id-placeholder-for-tag" value="#{paramTagBean.tag.id}" />

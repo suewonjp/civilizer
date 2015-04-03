@@ -13,7 +13,7 @@
 <c:set var="curTagId" value="#{panelContext.tagId}" />
 <c:set var="curPage" value="#{panelContext.curPage}" />
 
-<p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
+<p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" closeOnEscape="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
     <div id="fragment-sort-option-container" >
         <p:selectOneListbox value="#{fragmentListBean.orderOption}">
             <f:selectItem itemLabel="#{msg['label_by_updated_time']}" itemValue="0" />

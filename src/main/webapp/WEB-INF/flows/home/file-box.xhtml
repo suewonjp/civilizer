@@ -61,10 +61,14 @@ $(document).ready(function() {
     		menu.find("#file-box-form\\:new-folder").show();
     	}
     	if (isNaN(parseInt(target.attr("_id")))) {
+    		// the menu has no specified target;
+    		// the target will be the root folder
     		menu.find("#file-box-form\\:rename").hide();
+    		menu.find("#file-box-form\\:move").hide();
     		menu.find("#file-box-form\\:delete").hide();
     	}
     	else {
+    		// the menu has a target file or folder
     		menu.find("#file-box-form\\:rename").show();
     		menu.find("#file-box-form\\:delete").show();
     	}
@@ -76,6 +80,16 @@ $(document).ready(function() {
     	$("#file-context-menu").hide();
     });
 }); // end of $(document).ready()
+
+function showMoveFileDialog() {
+	var dlg = PF('moveFileDlg');
+    dlg.show();
+    
+    var menu = $("#file-context-menu");
+	var target = menu.data("target-file");
+	var fromFileId = target.attr("_id");
+	var fromFileName = target.text().trim();
+}
 
 function showRenameFileDialog(fileId, fileName) {
 	var dlg = PF('renameFileDlg');
@@ -127,18 +141,22 @@ function showNewDirectoryDialog(target) {
 </div>
 
 <h:form id="file-box-form" enctype="multipart/form-data">
-	<p:dialog header="" width="300px" modal="true" showEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false" >
+	<p:dialog header="" width="300px" modal="true" closeOnEscape="true" closhowEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false" >
         <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['label_name']} " />
         <p:inputText style="min-width:200px" id="rename-file-dlg-name-input" value="#{fileListBean.fileName}" />
         <br /><br />
-        <p:commandButton action="rename-file" value="#{msg['label_ok']}" icon="ui-icon-check">
-        </p:commandButton>
+        <p:commandButton action="rename-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
+    </p:dialog>
+
+	<p:dialog header="#{msg['label_move']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false" >
+        <p:commandButton action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
     
     <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
             <p:menuitem id="new-folder" styleClass="fa" onclick="showNewDirectoryDialog()" value="&#xf07c;+ #{msg['label_new_folder']}"/>
             <p:menuitem id="rename"  styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
+            <p:menuitem id="move"  styleClass="fa" onclick="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"/>
             <p:menuitem id="delete" styleClass="fa" onclick="confirmDeletingFile()" value="&#xf1f8; #{msg['label_delete']}"/>
 	    </p:menu>
     </div>
