@@ -66,9 +66,11 @@ public class FilePathTree implements Serializable {
 			FilePathTree.addToPathTree(pathTree, path);
 		}
 		
-		for (FileEntity fileEntity : fileEntities) {
-			FilePathTree.addFileEntityToPathTree(pathTree, fileEntity);
-		}
+		if (fileEntities != null) {
+            for (FileEntity fileEntity : fileEntities) {
+                FilePathTree.addFileEntityToPathTree(pathTree, fileEntity);
+            }
+        }
 		
 		Map<Object, org.primefaces.model.TreeNode> mapPath2TreeNode = new HashMap<>();
 		filePathBeans = new ArrayList<FilePathBean>();
@@ -87,6 +89,14 @@ public class FilePathTree implements Serializable {
 			mapPath2TreeNode.put(path, new org.primefaces.model.DefaultTreeNode(filePathBean));
 		}
 		
+		if (root == null) {
+		    root = mapPath2TreeNode.get(pathTree);
+		}
+		else {
+		    mapPath2TreeNode.put(pathTree, root);
+		}
+		root.setExpanded(true);
+		
 		for (int i=0; i<paths.length; ++i) {
 			final Object o = paths[i];
 			@SuppressWarnings("unchecked")
@@ -100,9 +110,10 @@ public class FilePathTree implements Serializable {
 				tnp.setExpanded(true);
 			}
 		}
-		
-		root = mapPath2TreeNode.get(pathTree);
-		root.setExpanded(true);
+	}
+	
+	public void createRoot() {
+	    root = new org.primefaces.model.DefaultTreeNode(new FilePathBean("", ""));
 	}
 	
 	public org.primefaces.model.TreeNode getRoot() {

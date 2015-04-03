@@ -89,11 +89,7 @@ public final class FileListBean implements Serializable {
 
 	public void setFolderTree(FilePathTree folderTree) {
 		this.folderTree = folderTree;
-	}
-	
-	public void populateFolderTree() {
-		final List<FileEntity> dummyList = Collections.emptyList();
-		filePathTree.populateNodes(dummyList);
+		folderTree.createRoot();
 	}
 	
 	public String getFileName() {

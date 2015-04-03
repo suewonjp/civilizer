@@ -164,7 +164,7 @@ function showNewDirectoryDialog(target) {
             <p:menuitem id="new-folder" styleClass="fa" onclick="showNewDirectoryDialog()" value="&#xf07c;+ #{msg['label_new_folder']}"/>
             <p:menuitem id="rename"  styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
             <p:menuitem id="move"  styleClass="fa" oncomplete="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"
-            	update="move-file-dialog" actionListener="#{mainController.newFolderTree(fileListBean)}"/>
+            	update="move-file-dialog" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
             <p:menuitem id="delete" styleClass="fa" onclick="confirmDeletingFile()" value="&#xf1f8; #{msg['label_delete']}"/>
 	    </p:menu>
     </div>
