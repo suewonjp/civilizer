@@ -45,7 +45,7 @@ $(document).ready(function() {
 	$(".each-file").click(function () {
 		$(".each-file").removeClass("fa-upload fb-target-dir");
 		var $this = $(this);
-		if ($this.attr("_isFolder") === "true") {
+		if ($this.hasClass("fb-dir")) {
 			$this.addClass("fa-upload fb-target-dir");
 		}
 	});
@@ -86,10 +86,18 @@ function showMoveFileDialog() {
 	var dlg = PF('moveFileDlg');
     dlg.show();
     
+    $("#file-box-form\\:folder-tree .each-file").click(function () {
+		$("#file-box-form\\:folder-tree .each-file").removeClass("fa-upload fb-target-dir");
+		var $this = $(this);
+		$this.addClass("fa-upload fb-target-dir");
+		$("#file-box-form\\:to-path").text($this.attr("_fp"));
+	});
+    
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	var fromFileId = target.attr("_id");
-	var fromFileName = target.text().trim();
+	var fromPath = target.attr("_fp");
+	$("#file-box-form\\:from-path").text(fromPath);
 }
 
 function showRenameFileDialog(fileId, fileName) {
@@ -150,7 +158,6 @@ function showNewDirectoryDialog(target) {
     </p:dialog>
 
 	<p:dialog id="move-file-dialog" header="#{msg['label_move']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
-        <h:outputText id="from-path" value=""/>
         <p:tree id="folder-tree" value="#{fileListBean.folderTree.root}" var="folderPathBean" style="width:100%">
             <p:treeNode dynamic="true">
                 <span class="each-file fa #{folderPathBean.getCssClassName()}" _id="#{folderPathBean.id}" _fp="#{folderPathBean.fullPath}">
@@ -158,6 +165,9 @@ function showNewDirectoryDialog(target) {
              	</span>
             </p:treeNode>
         </p:tree>
+        <br/><h:outputText id="to-path" value=""/><br/>
+        <br/><span class="fa fa-arrow-circle-up fa-2x"></span><br/>
+        <br/><h:outputText id="from-path" value=""/><br/>
         <p:commandButton action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
     

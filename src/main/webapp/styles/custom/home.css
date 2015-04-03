@@ -314,3 +314,14 @@ so this kind of hack has been incorporated
 	line-height:16px;
 	overflow:auto;
 }
+
+#file-box-form\:from-path, #file-box-form\:to-path {
+	font-size: 120%;
+	font-weight:bold;
+	color: lime;
+}
+
+#file-box-form\:to-path {
+	color: aqua;
+}
+
