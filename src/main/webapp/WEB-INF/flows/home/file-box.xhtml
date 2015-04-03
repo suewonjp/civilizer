@@ -70,6 +70,7 @@ $(document).ready(function() {
     	else {
     		// the menu has a target file or folder
     		menu.find("#file-box-form\\:rename").show();
+    		menu.find("#file-box-form\\:move").show();
     		menu.find("#file-box-form\\:delete").show();
     	}
     	menu.data("target-file", target);
@@ -149,7 +150,8 @@ function showNewDirectoryDialog(target) {
     </p:dialog>
 
 	<p:dialog id="move-file-dialog" header="#{msg['label_move']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
-        <p:tree id="target-folder-tree" value="#{fileListBean.folderTree.root}" var="folderPathBean" style="width:100%">
+        <h:outputText id="from-path" value=""/>
+        <p:tree id="folder-tree" value="#{fileListBean.folderTree.root}" var="folderPathBean" style="width:100%">
             <p:treeNode dynamic="true">
                 <span class="each-file fa #{folderPathBean.getCssClassName()}" _id="#{folderPathBean.id}" _fp="#{folderPathBean.fullPath}">
                 	#{folderPathBean.getName()}
@@ -164,7 +166,7 @@ function showNewDirectoryDialog(target) {
             <p:menuitem id="new-folder" styleClass="fa" onclick="showNewDirectoryDialog()" value="&#xf07c;+ #{msg['label_new_folder']}"/>
             <p:menuitem id="rename"  styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
             <p:menuitem id="move"  styleClass="fa" oncomplete="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"
-            	update="move-file-dialog" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
+            	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
             <p:menuitem id="delete" styleClass="fa" onclick="confirmDeletingFile()" value="&#xf1f8; #{msg['label_delete']}"/>
 	    </p:menu>
     </div>
