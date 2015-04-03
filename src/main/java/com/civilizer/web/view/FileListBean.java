@@ -18,6 +18,8 @@ public final class FileListBean implements Serializable {
 	private List<FileEntity> fileEntities = Collections.emptyList();
 
 	private FilePathTree filePathTree;
+
+	private FilePathTree folderTree;
 	
 	private String fileName;
 	
@@ -35,6 +37,10 @@ public final class FileListBean implements Serializable {
 		return filePathTree;
 	}
 	
+	public FilePathTree getFolderTree() {
+		return folderTree;
+	}
+
 	public static boolean directoryEmpty(File dir) {
 		// [NOTE] An empty directory means it has no file and its all sub-directories have no file at all
 		return ! FileUtils.iterateFiles(dir, null, true).hasNext();
@@ -78,8 +84,16 @@ public final class FileListBean implements Serializable {
 	
 	public void setFilePathTree(FilePathTree filePathTree) {
 		filePathTree.populateNodes(fileEntities);
-		
 		this.filePathTree = filePathTree;
+	}
+
+	public void setFolderTree(FilePathTree folderTree) {
+		this.folderTree = folderTree;
+	}
+	
+	public void populateFolderTree() {
+		final List<FileEntity> dummyList = Collections.emptyList();
+		filePathTree.populateNodes(dummyList);
 	}
 	
 	public String getFileName() {

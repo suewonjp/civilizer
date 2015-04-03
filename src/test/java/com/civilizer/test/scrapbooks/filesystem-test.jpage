@@ -17,3 +17,6 @@ FileUtils.deleteQuietly(new File("test/tmp"));
 
 Iterator<File> itr = FileUtils.iterateFiles(new File("test/tmp/tmp2/"), null, true);
 System.out.println(itr.hasNext());
+
+boolean b = new File("test/tmp/tmp2/tmp3/hello-2nd.txt").equals(new File("test/tmp/tmp2/tmp3/hello-2nd.txt"));
+System.out.println("+++++ " + b);

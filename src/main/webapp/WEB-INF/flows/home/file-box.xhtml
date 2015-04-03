@@ -141,14 +141,21 @@ function showNewDirectoryDialog(target) {
 </div>
 
 <h:form id="file-box-form" enctype="multipart/form-data">
-	<p:dialog header="" width="300px" modal="true" closeOnEscape="true" closhowEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false" >
-        <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['label_name']} " />
-        <p:inputText style="min-width:200px" id="rename-file-dlg-name-input" value="#{fileListBean.fileName}" />
-        <br /><br />
+	<p:dialog header="" width="300px" modal="true" closeOnEscape="true" closhowEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false">
+        <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['label_name']} "/>
+        <p:inputText style="min-width:200px" id="rename-file-dlg-name-input" value="#{fileListBean.fileName}"/>
+        <br/><br/>
         <p:commandButton action="rename-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
 
-	<p:dialog header="#{msg['label_move']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false" >
+	<p:dialog id="move-file-dialog" header="#{msg['label_move']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
+        <p:tree id="target-folder-tree" value="#{fileListBean.folderTree.root}" var="folderPathBean" style="width:100%">
+            <p:treeNode dynamic="true">
+                <span class="each-file fa #{folderPathBean.getCssClassName()}" _id="#{folderPathBean.id}" _fp="#{folderPathBean.fullPath}">
+                	#{folderPathBean.getName()}
+             	</span>
+            </p:treeNode>
+        </p:tree>
         <p:commandButton action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
     
@@ -156,13 +163,14 @@ function showNewDirectoryDialog(target) {
 	    <p:menu>
             <p:menuitem id="new-folder" styleClass="fa" onclick="showNewDirectoryDialog()" value="&#xf07c;+ #{msg['label_new_folder']}"/>
             <p:menuitem id="rename"  styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
-            <p:menuitem id="move"  styleClass="fa" onclick="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"/>
+            <p:menuitem id="move"  styleClass="fa" oncomplete="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"
+            	update="move-file-dialog" actionListener="#{mainController.newFolderTree(fileListBean)}"/>
             <p:menuitem id="delete" styleClass="fa" onclick="confirmDeletingFile()" value="&#xf1f8; #{msg['label_delete']}"/>
 	    </p:menu>
     </div>
     
-	<p:panel id="file-box-panel" >
-        <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}" />
+	<p:panel id="file-box-panel">
+        <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}"/>
 
 		<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
 		<p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>

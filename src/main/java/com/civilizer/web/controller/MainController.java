@@ -238,7 +238,15 @@ public final class MainController {
 		output.setFileEntities(fileEntities);
 		final FilePathTree filePathTree = newFilePathTree();
 		output.setFilePathTree(filePathTree);
+		final FilePathTree folderTree = newFilePathTree();
+		output.setFolderTree(folderTree);
 		return output;
+	}
+	
+	// [TODO] a dummy method. should be deleted after the experiment
+	public void newFolderTree(FileListBean fileListBean) {
+		final FilePathTree folderTree = newFilePathTree();
+		fileListBean.setFolderTree(folderTree);
 	}
 	
 	public TagBean newTagBean() {
