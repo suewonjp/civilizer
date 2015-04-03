@@ -25,6 +25,8 @@ public final class FileListBean implements Serializable {
 	
 	private int selectedNodeId;
 
+	private int dstNodeId;
+
 	public List<FileEntity> getFileEntities() {
 		return fileEntities;
 	}
@@ -106,6 +108,14 @@ public final class FileListBean implements Serializable {
 
 	public void setSelectedNodeId(int selectedNodeId) {
 		this.selectedNodeId = selectedNodeId;
+	}
+
+	public int getDstNodeId() {
+		return dstNodeId;
+	}
+
+	public void setDstNodeId(int dstNodeId) {
+		this.dstNodeId = dstNodeId;
 	}
 
 	public String getFilePath(int index, String leafName) {

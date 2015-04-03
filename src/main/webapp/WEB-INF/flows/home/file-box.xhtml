@@ -90,14 +90,17 @@ function showMoveFileDialog() {
 		$("#file-box-form\\:folder-tree .each-file").removeClass("fa-upload fb-target-dir");
 		var $this = $(this);
 		$this.addClass("fa-upload fb-target-dir");
-		$("#file-box-form\\:to-path").text($this.attr("_fp"));
+		$("#file-box-form\\:dst-path").text($this.attr("_fp"));
+		var dstId = $this.attr("_id");
+		$("#file-box-form\\:id-placeholder-for-dst-node").val(dstId);
 	});
     
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
-	var fromFileId = target.attr("_id");
-	var fromPath = target.attr("_fp");
-	$("#file-box-form\\:from-path").text(fromPath);
+	var srcId = target.attr("_id");
+	$("#file-box-form\\:id-placeholder-for-selected-node").val(srcId);
+	var srcPath = target.attr("_fp");
+	$("#file-box-form\\:src-path").text(srcPath);
 }
 
 function showRenameFileDialog(fileId, fileName) {
@@ -165,9 +168,9 @@ function showNewDirectoryDialog(target) {
              	</span>
             </p:treeNode>
         </p:tree>
-        <br/><h:outputText id="to-path" value=""/><br/>
+        <br/><h:outputText id="dst-path" value=""/><br/>
         <br/><span class="fa fa-arrow-circle-up fa-2x"></span><br/>
-        <br/><h:outputText id="from-path" value=""/><br/>
+        <br/><h:outputText id="src-path" value=""/><br/>
         <p:commandButton action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
     
@@ -181,8 +184,10 @@ function showNewDirectoryDialog(target) {
 	    </p:menu>
     </div>
     
+    <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}"/>
+    <h:inputHidden id="id-placeholder-for-dst-node" value="#{fileListBean.dstNodeId}"/>
+    
 	<p:panel id="file-box-panel">
-        <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}"/>
 
 		<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
 		<p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>

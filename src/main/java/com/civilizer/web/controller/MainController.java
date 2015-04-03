@@ -605,6 +605,10 @@ public final class MainController {
 			}
 		}
 	}
+	
+	public void moveFile(FileListBean fileListBean) {
+		yetToBeDeveloped(fileListBean.getSelectedNodeId(),fileListBean.getDstNodeId());
+	}
 
 	public void deleteFile(FileListBean fileListBean) {
 		final int selectedNodeId = fileListBean.getSelectedNodeId();

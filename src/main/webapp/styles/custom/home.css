@@ -315,13 +315,13 @@ so this kind of hack has been incorporated
 	overflow:auto;
 }
 
-#file-box-form\:from-path, #file-box-form\:to-path {
+#file-box-form\:src-path, #file-box-form\:dst-path {
 	font-size: 120%;
 	font-weight:bold;
 	color: lime;
 }
 
-#file-box-form\:to-path {
+#file-box-form\:dst-path {
 	color: aqua;
 }
 
