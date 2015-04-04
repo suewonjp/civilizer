@@ -65,6 +65,10 @@ public class FileEntity implements Serializable {
 		return new Pair<String, String>(parentPath, name);
 	}
 	
+	public String endName() {
+		return splitName().getSecond();
+	}
+	
 	public void replaceNameSegment(String oldIntermediatePath, String newSegment) {
 		/*
 		 * let's say,

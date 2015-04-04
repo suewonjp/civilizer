@@ -86,21 +86,26 @@ function showMoveFileDialog() {
 	var dlg = PF('moveFileDlg');
     dlg.show();
     
-    $("#file-box-form\\:folder-tree .each-file").click(function () {
-		$("#file-box-form\\:folder-tree .each-file").removeClass("fa-upload fb-target-dir");
-		var $this = $(this);
-		$this.addClass("fa-upload fb-target-dir");
-		$("#file-box-form\\:dst-path").text($this.attr("_fp"));
-		var dstId = $this.attr("_id");
-		$("#file-box-form\\:id-placeholder-for-dst-node").val(dstId);
-	});
-    
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	var srcId = target.attr("_id");
 	$("#file-box-form\\:id-placeholder-for-src-node").val(srcId);
 	var srcPath = target.attr("_fp");
 	$("#file-box-form\\:src-path").text(srcPath);
+	var srcIsFolder = target.attr("_isFolder");
+	$("#file-box-form\\:dst-path").text("#{msg['select_destination']}");
+	$("#file-box-form\\:folder-tree .each-file").removeClass("fa-upload fb-target-dir");
+
+	$("#file-box-form\\:folder-tree .each-file").click(function () {
+		var $this = $(this);
+		var dstPath = $this.attr("_fp");
+		if (!srcIsFolder || dstPath.indexOf(srcPath) == -1) {
+			var dstId = $this.attr("_id");
+			$("#file-box-form\\:id-placeholder-for-dst-node").val(dstId);
+			$this.addClass("fa-upload fb-target-dir");
+			$("#file-box-form\\:dst-path").text(dstPath);
+		}
+	});
 }
 
 function showRenameFileDialog() {
