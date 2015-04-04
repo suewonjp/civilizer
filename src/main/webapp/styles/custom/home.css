@@ -144,11 +144,11 @@ so this kind of hack has been incorporated
 }
 
 .warning-color {
-    color: #f00;
+    color: red;
 }
 
 .new-resource-color, .new-resource-color:focus  {
-    color: #ff0;
+    color: yellow;
 }
 
 .button-link
@@ -320,8 +320,3 @@ so this kind of hack has been incorporated
 	font-weight:bold;
 	color: lime;
 }
-
-#file-box-form\:dst-path {
-	color: aqua;
-}
-

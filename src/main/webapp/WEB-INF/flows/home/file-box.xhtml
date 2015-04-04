@@ -86,24 +86,39 @@ function showMoveFileDialog() {
 	var dlg = PF('moveFileDlg');
     dlg.show();
     
+    var sep = ("#{ systemProperties['file.separator'] }");
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	var srcId = target.attr("_id");
 	$("#file-box-form\\:id-placeholder-for-src-node").val(srcId);
 	var srcPath = target.attr("_fp");
 	$("#file-box-form\\:src-path").text(srcPath);
+	var srcName = target.text().trim();
 	var srcIsFolder = target.attr("_isFolder");
-	$("#file-box-form\\:dst-path").text("#{msg['select_destination']}");
-	$("#file-box-form\\:folder-tree .each-file").removeClass("fa-upload fb-target-dir");
+	var dstOutput = $("#file-box-form\\:dst-path");
+	dstOutput.text("#{msg['select_destination']}").removeClass("fa-close").css({color:"aqua"});
+	var treeNodes = $("#file-box-form\\:folder-tree .each-file");
+	treeNodes.removeClass("fa-upload fb-target-dir");
+	var btn = $("#file-box-form\\:ok");
+	btn.prop("disabled", false);
 
 	$("#file-box-form\\:folder-tree .each-file").click(function () {
 		var $this = $(this);
-		var dstPath = $this.attr("_fp");
-		if (!srcIsFolder || dstPath.indexOf(srcPath) == -1) {
+		treeNodes.removeClass("fa-upload fb-target-dir");
+		var dstPath = $this.attr("_fp") + sep + srcName;
+		var canMove = (srcPath !== dstPath) && (!srcIsFolder || dstPath.indexOf(srcPath) != 0);
+		if (canMove) {
 			var dstId = $this.attr("_id");
 			$("#file-box-form\\:id-placeholder-for-dst-node").val(dstId);
 			$this.addClass("fa-upload fb-target-dir");
 			$("#file-box-form\\:dst-path").text(dstPath);
+			dstOutput.removeClass("fa-close").css({color:"aqua"});
+			btn.prop("disabled", false);
+		}
+		else {
+			dstOutput.text(" #{msg['cant_move']}");
+			dstOutput.addClass("fa-close").css({color:"red"});
+			btn.prop("disabled", true);
 		}
 	});
 }
@@ -118,7 +133,6 @@ function showRenameFileDialog() {
     var input = $("#file-box-form\\:rename-file-dlg-name-input");
     input.val(curName);
     input.focus(function() {
-    	console.log($(this));
     	$(this).select();
     });
     
@@ -176,10 +190,10 @@ function showNewDirectoryDialog(target) {
              	</span>
             </p:treeNode>
         </p:tree>
-        <br/><h:outputText id="dst-path" value=""/><br/>
+        <br/><h:outputText styleClass="fa" id="dst-path" value=""/><br/>
         <br/><span class="fa fa-arrow-circle-up fa-2x"></span><br/>
         <br/><h:outputText id="src-path" value=""/><br/>
-        <p:commandButton action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
+        <p:commandButton id="ok" action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
     
     <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">

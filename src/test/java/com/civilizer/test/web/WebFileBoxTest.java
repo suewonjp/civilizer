@@ -277,6 +277,9 @@ public class WebFileBoxTest {
 		
 		FilePathTree filePathTree = new FilePathTree();
 		fileListBean.setFilePathTree(filePathTree);
+		FilePathTree folderTree = new FilePathTree();
+		fileListBean.setFolderTree(folderTree);
+		folderTree.populateNodes(null);
 		
 		for (int j=0; j<2; ++j) {
 			final boolean forFolder = TestUtil.getRandom().nextBoolean();
@@ -289,8 +292,8 @@ public class WebFileBoxTest {
 				continue;
 			}
 			final String oldFilePath = srcPathBean.getFullPath();
-			final int dstNodeId = getRandomFilePathId(filePathTree, true);
-			final FilePathBean dstPathBean = fileListBean.getFilePathBean(dstNodeId);
+			final int dstNodeId = getRandomFilePathId(folderTree, true);
+			final FilePathBean dstPathBean = fileListBean.getFolderPathBean(dstNodeId);
 			assertEquals(true, dstPathBean.isFolder());
 			final String newParentPath = dstPathBean.getFullPath();
 			List<FileEntity> entities = Collections.emptyList();
@@ -376,6 +379,9 @@ public class WebFileBoxTest {
 			
 			filePathTree = new FilePathTree();
 			fileListBean.setFilePathTree(filePathTree);
+			folderTree = new FilePathTree();
+			fileListBean.setFolderTree(folderTree);
+			folderTree.populateNodes(null);
 		}
 		
 		// file structures for test are heavily modified. refresh it.

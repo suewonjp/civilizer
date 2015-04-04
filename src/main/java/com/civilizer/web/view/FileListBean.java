@@ -129,4 +129,8 @@ public final class FileListBean implements Serializable {
 		return filePathTree.getFilePathBeans().get(index);
 	}
 
+	public FilePathBean getFolderPathBean(int index) {
+		return folderTree.getFilePathBeans().get(index);
+	}
+
 }

@@ -612,7 +612,7 @@ public final class MainController {
 		final FilePathBean srcPathBean = fileListBean.getFilePathBean(srcNodeId);
 		final String oldFilePath = srcPathBean.getFullPath();
 		final int dstNodeId = fileListBean.getDstNodeId();
-		final FilePathBean dstPathBean = fileListBean.getFilePathBean(dstNodeId);
+		final FilePathBean dstPathBean = fileListBean.getFolderPathBean(dstNodeId);
 		final String newParentPath = dstPathBean.getFullPath();
 		List<FileEntity> entities = Collections.emptyList();
 		
