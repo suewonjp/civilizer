@@ -23,19 +23,19 @@ $(document).ready(function() {
 	    	// make the upload button visible only when we have a file to upload
 	    	$("#file-box-form\\:upload-button").css("visibility", "visible").effect("shake");
 	    	
-	    	var holderForDestId = $("#file-box-form\\:id-placeholder-for-selected-node");
+	    	var holderForDstId = $("#file-box-form\\:id-placeholder-for-dst-node");
 	    	var dest = $("#file-path-tree .fa-upload");
 	    	var path;
 	    	if (dest.length > 0) {
 	    		// a destination place has been specified
 	    		path = dest.attr("_fp");
-	    		holderForDestId.val(dest.attr("_id"));
+	    		holderForDstId.val(dest.attr("_id"));
 	    		console.log(path);
 	    	}
 	    	else {
 	    		// no destination place has been specified. just send the file in the root directory
 	    		path = "/";
-	    		holderForDestId.val(0);
+	    		holderForDstId.val(0);
 	    	}
 	    	
 	    	$("#upload-destination-info").html("&nbsp;&nbsp;<span class='fa fa-folder-open' style='color:gold; font-weight:bold'>" + path + "</span>");
@@ -98,35 +98,31 @@ function showMoveFileDialog() {
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	var srcId = target.attr("_id");
-	$("#file-box-form\\:id-placeholder-for-selected-node").val(srcId);
+	$("#file-box-form\\:id-placeholder-for-src-node").val(srcId);
 	var srcPath = target.attr("_fp");
 	$("#file-box-form\\:src-path").text(srcPath);
 }
 
-function showRenameFileDialog(fileId, fileName) {
-	var dlg = PF('renameFileDlg');
-    dlg.show();
-    dlg.jq.find("input").focus(function() {
-    	$(this).select();
-    });
-    dlg.jq.find(".ui-dialog-title").text("#{msg['label_rename']}");
-    
+function showRenameFileDialog() {
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
-	var fileId = target.attr("_id");
-	var fileName = target.text().trim();
-    $("#file-box-form\\:id-placeholder-for-selected-node").val(fileId);
-    $("#file-box-form\\:rename-file-dlg-name-input").val(fileName);
+	var srcId = target.attr("_id");
+    $("#file-box-form\\:id-placeholder-for-src-node").val(srcId);
+    
+	var curName = target.text().trim();
+    var input = $("#file-box-form\\:rename-file-dlg-name-input");
+    input.val(curName);
+    input.focus(function() {
+    	console.log($(this));
+    	$(this).select();
+    });
+    
+    var dlg = PF('renameFileDlg');
+    dlg.show();
+    dlg.jq.find(".ui-dialog-title").text("#{msg['label_rename']}");
 }
 
 function showNewDirectoryDialog(target) {
-	var dlg = PF('renameFileDlg');
-    dlg.show();
-    dlg.jq.find("input").focus(function() {
-    	$(this).select();
-    });
-    dlg.jq.find(".ui-dialog-title").text("#{msg['label_new_folder']}");
-    
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	
@@ -141,9 +137,16 @@ function showNewDirectoryDialog(target) {
     else {
     	id = -(++id);
     }
-	$("#file-box-form\\:id-placeholder-for-selected-node").val(id);
+	$("#file-box-form\\:id-placeholder-for-src-node").val(id);
 	
     $("#file-box-form\\:rename-file-dlg-name-input").val("new-directory");
+    
+    var dlg = PF('renameFileDlg');
+    dlg.show();
+    dlg.jq.find("input").focus(function() {
+    	$(this).select();
+    });
+    dlg.jq.find(".ui-dialog-title").text("#{msg['label_new_folder']}");
 }
 //]]>
 </script>
@@ -184,7 +187,7 @@ function showNewDirectoryDialog(target) {
 	    </p:menu>
     </div>
     
-    <h:inputHidden id="id-placeholder-for-selected-node" value="#{fileListBean.selectedNodeId}"/>
+    <h:inputHidden id="id-placeholder-for-src-node" value="#{fileListBean.srcNodeId}"/>
     <h:inputHidden id="id-placeholder-for-dst-node" value="#{fileListBean.dstNodeId}"/>
     
 	<p:panel id="file-box-panel">

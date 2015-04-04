@@ -389,7 +389,7 @@ function confirmDeletingFile() {
     <h:inputHidden id="id-placeholder-for-search" value="#{customParams.panelIdForSearch}" />
     <h:inputHidden id="id-placeholder-for-fragment0" value="#{customParams.fragmentId0}" />
     <h:inputHidden id="id-placeholder-for-fragment1" value="#{customParams.fragmentId1}" />
-    <h:inputHidden id="id-placeholder-for-file" value="#{fileListBean.selectedNodeId}" />
+    <h:inputHidden id="id-placeholder-for-file" value="#{fileListBean.srcNodeId}" />
     
     <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">

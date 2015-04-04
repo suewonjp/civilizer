@@ -9,7 +9,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
-//import com.civilizer.config.AppOptions;
 import com.civilizer.domain.FileEntity;
 
 @SuppressWarnings("serial")
@@ -23,7 +22,7 @@ public final class FileListBean implements Serializable {
 	
 	private String fileName;
 	
-	private int selectedNodeId;
+	private int srcNodeId;
 
 	private int dstNodeId;
 
@@ -102,12 +101,12 @@ public final class FileListBean implements Serializable {
 		this.fileName = fileName;
 	}
 
-	public int getSelectedNodeId() {
-		return selectedNodeId;
+	public int getSrcNodeId() {
+		return srcNodeId;
 	}
 
-	public void setSelectedNodeId(int selectedNodeId) {
-		this.selectedNodeId = selectedNodeId;
+	public void setSrcNodeId(int srcNodeId) {
+		this.srcNodeId = srcNodeId;
 	}
 
 	public int getDstNodeId() {

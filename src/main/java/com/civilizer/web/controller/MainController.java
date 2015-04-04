@@ -519,9 +519,9 @@ public final class MainController {
 	}
 	
 	public void uploadFile(FileUploadBean fileUploadBean, FileListBean fileListBean) {
-		final int selectedNodeId = fileListBean.getSelectedNodeId();
+		final int dstNodeId = fileListBean.getDstNodeId();
 		final String newFileName = fileUploadBean.getFileName();
-		final String filePath = fileListBean.getFilePath(selectedNodeId, newFileName);
+		final String filePath = fileListBean.getFilePath(dstNodeId, newFileName);
 		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		final String fileWritePath = filesHomePath + filePath;
 		if (fileUploadBean.saveFile(fileWritePath)) {
@@ -541,20 +541,20 @@ public final class MainController {
 	}
 
 	public void renameFile(FileListBean fileListBean) {
-		final int selectedNodeId = fileListBean.getSelectedNodeId();
+		final int srcNodeId = fileListBean.getSrcNodeId();
 		final String newName = fileListBean.getFileName();
 		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		
-		if (selectedNodeId < 0) {
-			// [RULE] Create a new directory if *selectedNodeId* is a minus value;
-			// [NOTE] we need to decode *selectedNodeId* before passing it to the next processing
-			if (fileListBean.createNewFolder(-selectedNodeId - 1, newName, filesHomePath) == null) {
+		if (srcNodeId < 0) {
+			// [RULE] Create a new directory if *srcNodeId* is a minus value;
+			// [NOTE] we need to decode *srcNodeId* before passing it to the next processing
+			if (fileListBean.createNewFolder(-srcNodeId - 1, newName, filesHomePath) == null) {
 				ViewUtil.addMessage("Error on Creating a Folder!!!", newName + " : already exists!", FacesMessage.SEVERITY_ERROR);
 			}
 			return;
 		}
 		
-		final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
+		final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
 		
 		final String oldFilePath = filePathBean.getFullPath();
 		List<FileEntity> entities = Collections.emptyList();
@@ -607,12 +607,12 @@ public final class MainController {
 	}
 	
 	public void moveFile(FileListBean fileListBean) {
-		yetToBeDeveloped(fileListBean.getSelectedNodeId(),fileListBean.getDstNodeId());
+		yetToBeDeveloped(fileListBean.getSrcNodeId(),fileListBean.getDstNodeId());
 	}
 
 	public void deleteFile(FileListBean fileListBean) {
-		final int selectedNodeId = fileListBean.getSelectedNodeId();
-		final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
+		final int srcNodeId = fileListBean.getSrcNodeId();
+		final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
 		
 		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
 		final String filePath = filePathBean.getFullPath();

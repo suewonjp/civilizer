@@ -202,10 +202,10 @@ public class WebFileBoxTest {
 		
 		for (int j=0; j<2; ++j) {
 			final boolean forFolder = TestUtil.getRandom().nextBoolean();
-			final int selectedNodeId = getRandomFilePathId(filePathTree, forFolder);
+			final int srcNodeId = getRandomFilePathId(filePathTree, forFolder);
 			final String newName = forFolder ?
 					"renamed-folder"+j : "renamed-file"+j+".txt";
-			final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
+			final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
 			assertEquals(forFolder, filePathBean.isFolder());
 			if (filePathBean.getName().equals("")) {
 				// can't rename the root directory
@@ -279,8 +279,8 @@ public class WebFileBoxTest {
 		
 		for (int j=0; j<2; ++j) {
 			final boolean forFolder = TestUtil.getRandom().nextBoolean();
-			final int selectedNodeId = getRandomFilePathId(filePathTree, forFolder);
-			final FilePathBean filePathBean = fileListBean.getFilePathBean(selectedNodeId);
+			final int srcNodeId = getRandomFilePathId(filePathTree, forFolder);
+			final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
 			if (filePathBean.getName().equals("")) {
 				// can't delete the root directory
 				--j;
