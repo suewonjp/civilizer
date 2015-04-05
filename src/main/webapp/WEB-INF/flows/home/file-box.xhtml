@@ -105,7 +105,12 @@ function showMoveFileDialog() {
 	$("#file-box-form\\:folder-tree .each-file").click(function () {
 		var $this = $(this);
 		treeNodes.removeClass("fa-upload fb-target-dir");
-		var dstPath = $this.attr("_fp") + sep + srcName;
+		var fp = $this.attr("_fp");
+		if (fp === undefined)
+			fp = "";
+		var dstPath = fp + sep + srcName;
+		console.log($this.attr("_fp"));
+		console.log(dstPath);
 		var canMove = (srcPath !== dstPath) && (!srcIsFolder || dstPath.indexOf(srcPath) != 0);
 		if (canMove) {
 			var dstId = $this.attr("_id");
