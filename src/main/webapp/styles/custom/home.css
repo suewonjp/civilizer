@@ -135,9 +135,9 @@ so this kind of hack has been incorporated
 	word-wrap: break-word;
 }
 
-.fragment-content pre {
-	white-space: normal;
-}
+/* .fragment-content pre { */
+/* 	white-space: normal; */
+/* } */
 
 .tag-menu {
     display: none;
