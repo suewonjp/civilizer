@@ -9,14 +9,6 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
-	$("#file-path-tree").on("mouseenter", ".each-file", function() {
-		var target = $(this).find(".file-menu").first();
-    });
-    
-    $("#file-path-tree").on("mouseleave", ".each-file", function() {
-    	$(this).find(".file-menu").first().css("visibility", "hidden");
-    });
-    
 	$("#file-box-form\\:file-selector").change(function () {
 	    var fileName = $(this).val();
 	    if (fileName) {
