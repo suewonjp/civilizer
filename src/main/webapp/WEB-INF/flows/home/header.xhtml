@@ -23,14 +23,18 @@ $(document).ready(function() {
         $("#panel-toggler-0").prop("checked", true);
     }
     
-    var idSpecifiedFromTagPalette = $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio").val();
+    var phTagPanelRadio = $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio");
+    var idSpecifiedFromTagPalette = phTagPanelRadio.val();
     if (idSpecifiedFromTagPalette) {
         $("#panel-toggler-" + idSpecifiedFromTagPalette).prop("checked", true);
+        phTagPanelRadio.val(null);
     }
     
-    var idSpecifiedFromSearch = $("#fragment-group-form\\:id-placeholder-for-search").val();
+    var phSearch = $("#fragment-group-form\\:id-placeholder-for-search");
+    var idSpecifiedFromSearch = phSearch.val();
     if (idSpecifiedFromSearch) {
         $("#panel-toggler-" + idSpecifiedFromSearch).prop("checked", true);
+        phSearch.val(null);
     }
 
     $("#panel-activation-buttons").buttonset("refresh");
