@@ -218,8 +218,14 @@ public final class FragmentDaoImpl implements FragmentDao {
         final List<Fragment> output = new ArrayList<Fragment>(count);
         count = Math.min(count, ids.size()-first);
         Query q = s.getNamedQuery("Fragment.findByIdWithAll");
+        long prevId = -1;
         for (int i = 0; i < count; ++i) {
-            output.add((Fragment) q.setParameter("id", ids.get(i + first)).uniqueResult());
+        	final long id = ids.get(i + first);
+        	if (prevId == id) {
+        		continue;
+        	}
+            output.add((Fragment) q.setParameter("id", id).uniqueResult());
+            prevId = id;
         }
         return output;
 	}
