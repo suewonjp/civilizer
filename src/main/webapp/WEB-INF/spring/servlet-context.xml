@@ -19,8 +19,8 @@
 	<resources location="/" mapping="/resources/**" />
 
 	<!-- Handles HTTP GET requests for files in File Box -->
+	<!-- [NOTE] Spring framework 3.2.8+ is required for spEL to work inside <mvc:resources > as follows -->
 	<resources location="file:#{ systemProperties['civilizer.file_box_home'] }/" mapping="/file-box/**" />
-<!-- 	<resources location="file:/home/bsw/.civilizer/files/" mapping="/file-box/**" /> -->
 
 	<!-- Enable processing of JSF 2 resource requests. For example: /civilizer/app/javax.faces.resource/jsf.js?ln=javax.faces -->
 	<faces:resources />
