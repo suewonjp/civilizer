@@ -9,8 +9,8 @@
     <security:global-method-security secured-annotations="enabled" />
 
 	<security:http auto-config="true">
-        <security:intercept-url pattern="/app/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/app/javax.faces.resource/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+<!--         <security:intercept-url pattern="/app/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
+<!--         <security:intercept-url pattern="/app/javax.faces.resource/**" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
 <!--         <security:intercept-url pattern="/app/authenticated" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
         <security:intercept-url pattern="/app/signin*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/**" access="ROLE_USER" />
