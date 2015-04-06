@@ -44,11 +44,6 @@
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
-		<property name="annotatedPackages">
-		    <list>
-		        <value>com.civilizer.domain</value>
-		    </list>
-		</property>
 	</bean>
 
 </beans>
