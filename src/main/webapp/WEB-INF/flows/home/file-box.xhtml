@@ -8,15 +8,10 @@
     
 <script>
 //<![CDATA[
+var fileSeparator = ("#{ systemProperties['file.separator'] }");
+
 $(document).ready(function() {
-	var sep = ("#{ systemProperties['file.separator'] }");
-	
-	$(".-cvz-file").each(function () {
-		var $this = $(this);
-		var filePath = $this.attr("_cvz_file");
-		var fileName = filePath.slice(filePath.lastIndexOf(sep) + 1);
-		$this.append("<img title="+fileName+" src="+filePath+">");
-	});
+	processFileClasses();
 	
 	$("#file-box-form\\:file-selector").change(function () {
 	    var fileName = $(this).val();
@@ -35,7 +30,7 @@ $(document).ready(function() {
 	    	}
 	    	else {
 	    		// no destination place has been specified. just send the file in the root directory
-	    		path = sep;
+	    		path = fileSeparator;
 	    		holderForDstId.val(0);
 	    	}
 	    	
@@ -83,11 +78,20 @@ $(document).ready(function() {
     });
 }); // end of $(document).ready()
 
+function processFileClasses() {
+	$(".-cvz-file").each(function () {
+		var $this = $(this);
+		var filePath = $this.text();
+		var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
+		filePath = "${request.contextPath}/app/file-box" + filePath;
+		$this.text("").append("<img title="+fileName+" src="+filePath+">");
+	});
+}
+
 function showMoveFileDialog() {
 	var dlg = PF('moveFileDlg');
     dlg.show();
     
-    var sep = ("#{ systemProperties['file.separator'] }");
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	var srcId = target.attr("_id");
@@ -109,7 +113,7 @@ function showMoveFileDialog() {
 		var fp = $this.attr("_fp");
 		if (fp === undefined)
 			fp = "";
-		var dstPath = fp + sep + srcName;
+		var dstPath = fp + fileSeparator + srcName;
 		console.log($this.attr("_fp"));
 		console.log(dstPath);
 		var canMove = (srcPath !== dstPath) && (!srcIsFolder || dstPath.indexOf(srcPath) != 0);
