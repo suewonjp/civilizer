@@ -33,7 +33,7 @@ public class WebFileBoxTest {
     public static void setUpBeforeClass() throws Exception {
 		TestUtil.configure();
 		
-		filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
 		
 		renewTestData();
 	}

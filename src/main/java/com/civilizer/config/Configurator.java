@@ -71,8 +71,8 @@ public final class Configurator {
     }
 	
 	private void postSetupPrivateHome(File privateHome) {
-		final String uploadedFileHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
-		createUnexistingDirectory(new File(uploadedFileHomePath));
+		final String fileBoxHome = System.getProperty(AppOptions.FILE_BOX_HOME);
+		createUnexistingDirectory(new File(fileBoxHome));
 	}
 	
 	private void addAppOptionsToSystemProperties(File privateHome) {
@@ -85,8 +85,8 @@ public final class Configurator {
 		    // make sure the database file prefix is an absolute path
 		    setPathAbsolute(p, AppOptions.DB_FILE_PREFIX, privateHome);
 			
-			// make sure the uploaded file folder path is absolute
-			setPathAbsolute(p, AppOptions.UPLOADED_FILES_HOME, privateHome);
+			// make sure the file box folder path is absolute
+			setPathAbsolute(p, AppOptions.FILE_BOX_HOME, privateHome);
 			
 			// add the application options into the system properties
 			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")

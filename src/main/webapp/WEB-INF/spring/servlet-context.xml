@@ -19,7 +19,7 @@
 	<resources location="/" mapping="/resources/**" />
 
 	<!-- Handles HTTP GET requests for files in File Box -->
-	<resources location="file:#{ systemProperties['civilizer.uploaded_files_home'] }/" mapping="/file-box/**" />
+	<resources location="file:#{ systemProperties['civilizer.file_box_home'] }/" mapping="/file-box/**" />
 <!-- 	<resources location="file:/home/bsw/.civilizer/files/" mapping="/file-box/**" /> -->
 
 	<!-- Enable processing of JSF 2 resource requests. For example: /civilizer/app/javax.faces.resource/jsf.js?ln=javax.faces -->

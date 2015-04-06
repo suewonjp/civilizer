@@ -11,12 +11,12 @@
 $(document).ready(function() {
 	var sep = ("#{ systemProperties['file.separator'] }");
 	
-// 	$(".-cvz-file").each(function () {
-// 		var $this = $(this);
-// 		var filePath = $this.attr("_cvz_file");
-// 		var fileName = filePath.slice(filePath.lastIndexOf());
-// 		$this.append("<img title="+fileName+" src="+filePath+">");
-// 	});
+	$(".-cvz-file").each(function () {
+		var $this = $(this);
+		var filePath = $this.attr("_cvz_file");
+		var fileName = filePath.slice(filePath.lastIndexOf(sep) + 1);
+		$this.append("<img title="+fileName+" src="+filePath+">");
+	});
 	
 	$("#file-box-form\\:file-selector").change(function () {
 	    var fileName = $(this).val();

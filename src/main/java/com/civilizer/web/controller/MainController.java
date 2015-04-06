@@ -522,7 +522,7 @@ public final class MainController {
 		final int dstNodeId = fileListBean.getDstNodeId();
 		final String newFileName = fileUploadBean.getFileName();
 		final String filePath = fileListBean.getFilePath(dstNodeId, newFileName);
-		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
 		final String fileWritePath = filesHomePath + filePath;
 		if (fileUploadBean.saveFile(fileWritePath)) {
 			final FileEntity fe = new FileEntity(filePath);
@@ -543,7 +543,7 @@ public final class MainController {
 	public void renameFile(FileListBean fileListBean) {
 		final int srcNodeId = fileListBean.getSrcNodeId();
 		final String newName = fileListBean.getFileName();
-		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
 		
 		if (srcNodeId < 0) {
 			// [RULE] Create a new directory if *srcNodeId* is a minus value;
@@ -608,7 +608,7 @@ public final class MainController {
 	
 	public void moveFile(FileListBean fileListBean) {
 		final int srcNodeId = fileListBean.getSrcNodeId();
-		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
 		final FilePathBean srcPathBean = fileListBean.getFilePathBean(srcNodeId);
 		final String oldFilePath = srcPathBean.getFullPath();
 		final int dstNodeId = fileListBean.getDstNodeId();
@@ -685,7 +685,7 @@ public final class MainController {
 		final int srcNodeId = fileListBean.getSrcNodeId();
 		final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
 		
-		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
 		final String filePath = filePathBean.getFullPath();
 		List<FileEntity> entities = Collections.emptyList();
 		

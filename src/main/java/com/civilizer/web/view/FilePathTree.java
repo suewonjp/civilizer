@@ -52,7 +52,7 @@ public class FilePathTree implements Serializable {
 	}
 	
 	public void populateNodes(List<FileEntity> fileEntities) {
-		final String filesHomePath = System.getProperty(AppOptions.UPLOADED_FILES_HOME);
+		final String filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
 		Collection<File> dirs = FileUtils.listFilesAndDirs(
 				new File(filesHomePath),  // directory
 				FalseFileFilter.INSTANCE, // exclude all files
