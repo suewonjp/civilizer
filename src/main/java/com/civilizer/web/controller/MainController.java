@@ -521,7 +521,7 @@ public final class MainController {
 	public void uploadFile(FileUploadBean fileUploadBean, FileListBean fileListBean) {
 		final int dstNodeId = fileListBean.getDstNodeId();
 		final String newFileName = fileUploadBean.getFileName();
-		final String filePath = fileListBean.getFilePath(dstNodeId, newFileName);
+		final String filePath = fileListBean.getFullFilePath(dstNodeId, newFileName);
 		final String filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
 		final String fileWritePath = filesHomePath + filePath;
 		if (fileUploadBean.saveFile(fileWritePath)) {

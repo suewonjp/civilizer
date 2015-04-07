@@ -13,39 +13,6 @@ var fileSeparator = ("#{ systemProperties['file.separator'] }");
 $(document).ready(function() {
 	processFileClasses();
 	
-	$("#file-box-form\\:file-selector").change(function () {
-	    var fileName = $(this).val();
-	    if (fileName) {
-	    	// make the upload button visible only when we have a file to upload
-	    	$("#file-box-form\\:upload-button").css("visibility", "visible").effect("shake");
-	    	
-	    	var holderForDstId = $("#file-box-form\\:id-placeholder-for-dst-node");
-	    	var dest = $("#file-path-tree .fa-upload");
-	    	var path;
-	    	if (dest.length > 0) {
-	    		// a destination place has been specified
-	    		path = dest.attr("_fp");
-	    		holderForDstId.val(dest.attr("_id"));
-	    		console.log(path);
-	    	}
-	    	else {
-	    		// no destination place has been specified. just send the file in the root directory
-	    		path = fileSeparator;
-	    		holderForDstId.val(0);
-	    	}
-	    	
-	    	$("#upload-destination-info").html("&nbsp;&nbsp;<span class='fa fa-folder-open' style='color:gold; font-weight:bold'>" + path + "</span>");
-	    }
-	});
-	
-	$(".each-file").click(function () {
-		$(".each-file").removeClass("fa-upload fb-target-dir");
-		var $this = $(this);
-		if ($this.hasClass("fb-dir")) {
-			$this.addClass("fa-upload fb-target-dir");
-		}
-	});
-	
 	$(".each-file, #file-path-tree").bind("contextmenu", function(event) {
     	var menu = $("#file-context-menu");
     	menu.css({ left:event.pageX, top:event.pageY }).show();
@@ -88,9 +55,63 @@ function processFileClasses() {
 	});
 }
 
+function showFileUploadDialog() {
+	var dlg = PF('moveFileDlg');
+    dlg.show();
+    dlg.jq.find(".ui-dialog-title").text("#{msg['label_upload_file']}");
+    
+    $("#file-upload-box").show();
+    $("#file-upload-dlg-ok-btns").children().hide();
+    $("#file-box-form\\:src-path").text("");
+    
+	var menu = $("#file-context-menu");
+	var target = menu.data("target-file");
+	var dstOutput = $("#file-box-form\\:dst-path");
+	dstOutput.text("#{msg['select_destination']}").removeClass("fa-close").css({color:"aqua"});
+	var treeNodes = $("#file-box-form\\:folder-tree .each-file");
+	treeNodes.removeClass("fa-upload fb-target-dir");
+	var dstPath = "";
+	var fileSelector = $("#file-box-form\\:file-selector");
+	fileSelector.val(null);
+	var holderForDstId = $("#file-box-form\\:id-placeholder-for-dst-node");
+	holderForDstId.val(0);
+	
+	fileSelector.change(function () {
+	    var fileToUpload = $(this).val();
+	    if (fileToUpload) {
+	    	if (dstPath == fileSeparator)
+	    		dstPath = "";
+	    	dstPath += fileSeparator + fileToUpload;
+	    	dstOutput.text(dstPath);
+	    	$("#file-box-form\\:ok-btn-upload").show().effect();
+	    }
+	});
+	
+	$("#file-box-form\\:folder-tree .each-file").click(function () {
+		console.log("**** hello");
+		var $this = $(this);
+		treeNodes.removeClass("fa-upload fb-target-dir");
+		var fp = $this.attr("_fp");
+		if (fp === undefined)
+			fp = "";
+		var fileToUpload = fileSelector.val();
+		if (fileToUpload === undefined)
+			fileToUpload = "";
+		dstPath = fp + fileSeparator + fileToUpload;
+		dstOutput.text(dstPath);
+		var dstId = $this.attr("_id");
+		holderForDstId.val(dstId);
+		$this.addClass("fa-upload fb-target-dir");
+	});
+}
+
 function showMoveFileDialog() {
 	var dlg = PF('moveFileDlg');
     dlg.show();
+    dlg.jq.find(".ui-dialog-title").text("#{msg['label_move']}");
+    
+    $("#file-upload-box").hide();
+    $("#file-upload-dlg-ok-btns").children().hide();
     
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
@@ -104,8 +125,7 @@ function showMoveFileDialog() {
 	dstOutput.text("#{msg['select_destination']}").removeClass("fa-close").css({color:"aqua"});
 	var treeNodes = $("#file-box-form\\:folder-tree .each-file");
 	treeNodes.removeClass("fa-upload fb-target-dir");
-	var btn = $("#file-box-form\\:ok");
-	btn.prop("disabled", false);
+	var btn = $("#file-box-form\\:ok-btn-move");
 
 	$("#file-box-form\\:folder-tree .each-file").click(function () {
 		var $this = $(this);
@@ -114,21 +134,19 @@ function showMoveFileDialog() {
 		if (fp === undefined)
 			fp = "";
 		var dstPath = fp + fileSeparator + srcName;
-		console.log($this.attr("_fp"));
-		console.log(dstPath);
 		var canMove = (srcPath !== dstPath) && (!srcIsFolder || dstPath.indexOf(srcPath) != 0);
 		if (canMove) {
 			var dstId = $this.attr("_id");
 			$("#file-box-form\\:id-placeholder-for-dst-node").val(dstId);
 			$this.addClass("fa-upload fb-target-dir");
-			$("#file-box-form\\:dst-path").text(dstPath);
+			dstOutput.text(dstPath);
 			dstOutput.removeClass("fa-close").css({color:"aqua"});
-			btn.prop("disabled", false);
+			btn.show().effect("shake");
 		}
 		else {
 			dstOutput.text(" #{msg['cant_move']}");
 			dstOutput.addClass("fa-close").css({color:"red"});
-			btn.prop("disabled", true);
+			btn.hide();
 		}
 	});
 }
@@ -192,7 +210,7 @@ function showNewDirectoryDialog(target) {
         <p:commandButton action="rename-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
 
-	<p:dialog id="move-file-dialog" header="#{msg['label_move']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
+	<p:dialog header="" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
         <p:tree id="folder-tree" value="#{fileListBean.folderTree.root}" var="folderPathBean" style="width:100%">
             <p:treeNode dynamic="true">
                 <span class="each-file fa #{folderPathBean.getCssClassName()}" _id="#{folderPathBean.id}" _fp="#{folderPathBean.fullPath}">
@@ -203,11 +221,21 @@ function showNewDirectoryDialog(target) {
         <br/><h:outputText styleClass="fa" id="dst-path" value=""/><br/>
         <br/><span class="fa fa-arrow-circle-up fa-2x"></span><br/>
         <br/><h:outputText id="src-path" value=""/><br/>
-        <p:commandButton id="ok" action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
+        <div id="file-upload-box">
+        	<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
+	        <p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
+			<br/>
+        </div>
+        <div id="file-upload-dlg-ok-btns">
+	        <p:commandButton id="ok-btn-move" action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
+	        <p:commandButton id="ok-btn-upload" action="upload-file" value="#{msg['label_ok']}" ajax="false" title="#{msg['label_upload_file']}" icon="ui-icon-check"/>
+        </div>
     </p:dialog>
     
     <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
+            <p:menuitem id="upload" styleClass="fa" oncomplete="showFileUploadDialog()" value="&#xf093;+ #{msg['label_upload_file']}"
+            	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
             <p:menuitem id="new-folder" styleClass="fa" onclick="showNewDirectoryDialog()" value="&#xf07c;+ #{msg['label_new_folder']}"/>
             <p:menuitem id="rename"  styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
             <p:menuitem id="move"  styleClass="fa" oncomplete="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"
@@ -220,17 +248,6 @@ function showNewDirectoryDialog(target) {
     <h:inputHidden id="id-placeholder-for-dst-node" value="#{fileListBean.dstNodeId}"/>
     
 	<p:panel id="file-box-panel">
-
-		<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
-		<p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
-		<br/>
-		
-		<p:commandLink id="upload-button" action="upload-file" ajax="false" title="#{msg['label_upload_file']}">
-			<span class="fa fa-2x fa-upload button-link"></span>
-		</p:commandLink>
-		
-		<span id="upload-destination-info"></span>
-		
 		<div id="file-path-tree">
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>

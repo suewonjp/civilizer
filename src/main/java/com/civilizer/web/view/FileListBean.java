@@ -117,12 +117,12 @@ public final class FileListBean implements Serializable {
 		this.dstNodeId = dstNodeId;
 	}
 
-	public String getFilePath(int index, String leafName) {
-		final FilePathBean filePathBean = getFilePathBean(index);
-		final String intermediatePath = filePathBean.getFullPath();
+	public String getFullFilePath(int folderIndex, String leafName) {
+		final FilePathBean folderPathBean = getFolderPathBean(folderIndex);
+		final String parentPath = folderPathBean.getFullPath();
 		
-		return intermediatePath.equals(File.separator) ?
-				File.separatorChar + leafName : intermediatePath + File.separatorChar + leafName;
+		return parentPath.equals(File.separator) ?
+				File.separatorChar + leafName : parentPath + File.separatorChar + leafName;
 	}
 
 	public FilePathBean getFilePathBean(int index) {
