@@ -107,7 +107,7 @@ public class FilePathTree implements Serializable {
 			root = mapPath2TreeNode.get(pathTree);
 		}
 		else {
-//			mapPath2TreeNode.put(pathTree, root);
+			root.getChildren().clear();
 			root.getChildren().add(mapPath2TreeNode.get(pathTree));
 		}
 		root.setExpanded(true);
