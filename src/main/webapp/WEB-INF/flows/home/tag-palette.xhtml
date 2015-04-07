@@ -31,7 +31,11 @@ $(document).ready(function() {
         $tab.tabs('option', 'active', currentTagGroupTabIndex);
     }
     
-    $(".each-tag").bind("contextmenu", function(event) {
+    setContextMenuForTags();
+}); // end of $(document).ready()
+
+function setContextMenuForTags() {
+	$(".each-tag").bind("contextmenu", function(event) {
     	var menu = $("#tag-context-menu");
     	menu.css({ left:event.pageX, top:event.pageY }).show();
     	menu.data("target-tag", $(event.target).closest(".each-tag"));
@@ -41,7 +45,7 @@ $(document).ready(function() {
     $(document).bind("click", function(event) {
     	$("#tag-context-menu").hide();
     });
-}); // end of $(document).ready()
+}
 
 function showEditTagDialog() {
     var dlg = PF('editTagDlg');
@@ -120,7 +124,7 @@ function showEditTagDialog() {
         </div>
         <div id="tag-palette-tree">
             <p:tree value="#{tagListBean.tagTree.root}" var="tagBean" dynamic="true" style="width:100%">
-            	<p:ajax event="expand" listener="#{tagListBean.tagTree.onNodeExpand}" />
+            	<p:ajax event="expand" listener="#{tagListBean.tagTree.onNodeExpand}" oncomplete="setContextMenuForTags()"/>
             	<p:ajax event="collapse" listener="#{tagListBean.tagTree.onNodeCollapse}" />
                 <c:set var="tag" value="#{tagBean.tag}"/>
                 <p:treeNode>
