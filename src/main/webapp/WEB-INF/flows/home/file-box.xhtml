@@ -76,7 +76,7 @@ function showFileUploadDialog() {
 	var holderForDstId = $("#file-box-form\\:id-placeholder-for-dst-node");
 	holderForDstId.val(0);
 	var okBtn = $("#file-box-form\\:ok").hide().click(function() {
-		document.forms["file-box-form"]["file-box-form:ok-btn-upload"].click();
+		document.forms["file-box-form"]["file-box-form:ok-upload"].click();
 	});
 	
 	fileSelector.change(function () {
@@ -125,7 +125,7 @@ function showMoveFileDialog() {
 	var treeNodes = $("#file-box-form\\:folder-tree .each-file");
 	treeNodes.removeClass("fa-upload fb-target-dir");
 	var okBtn = $("#file-box-form\\:ok").hide().click(function() {
-		document.forms["file-box-form"]["file-box-form:ok-btn-move"].click();
+		document.forms["file-box-form"]["file-box-form:ok-move"].click();
 	});
 
 	$("#file-box-form\\:folder-tree .each-file").click(function () {
@@ -211,7 +211,7 @@ function showNewDirectoryDialog(target) {
         <p:commandButton action="rename-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
 
-	<p:dialog header="" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
+	<p:dialog width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
         <p:tree id="folder-tree" value="#{fileListBean.folderTree.root}" var="folderPathBean" style="width:100%">
             <p:treeNode dynamic="true">
                 <span class="each-file fa #{folderPathBean.getCssClassName()}" _id="#{folderPathBean.id}" _fp="#{folderPathBean.fullPath}">
@@ -228,10 +228,12 @@ function showNewDirectoryDialog(target) {
 			<br/>
         </div>
         <div style="display:none;">
-	        <p:commandButton id="ok-btn-move" action="move-file"/>
-	        <p:commandButton id="ok-btn-upload" action="upload-file"/>
+	        <p:commandButton id="ok-move" action="move-file"/>
+<!-- 	    [NOTE] for the file upload to work, ajax="false" is necessary -->
+<!-- 	    <p:remoteCommand> does not work with file upload for the current version of Primefaces -->
+	        <p:commandButton id="ok-upload" action="upload-file" ajax="false"/>
         </div>
-	    <p:commandButton id="ok" value="#{msg['label_ok']}" ajax="false" icon="ui-icon-check"/>
+	    <p:commandButton id="ok" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
     
     <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">

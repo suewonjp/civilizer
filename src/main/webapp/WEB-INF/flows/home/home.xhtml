@@ -248,8 +248,14 @@ function fragmentCheckBoxesAreChecked(panelId) {
 }
 
 function showError(message) {
-	$('#fragment-group-form\\:error-dlg-msg').text(message);
+	$('#fragment-group-form\\:error-msg').text(message);
 	PF("errorMsgDlg").show();
+}
+
+function showConfirmDlg(message) {
+	var dlg = PF('confirmDlg');
+    dlg.show();
+    dlg.jq.find(".ui-confirm-dialog-message").text(message);
 }
 
 function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
@@ -260,30 +266,13 @@ function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
         }
     }
 	
-	var message = deleting ? "#{msg['confirm_deleting_fragments']}" : "#{msg['confirm_trashing_fragments']}";
-	$('#fragment-group-form\\:confirm-dlg-msg').text(message);
-    
-	var yesBtn = $("#confirm-dlg-yes-btn-group").children();
-    yesBtn.hide();
-    
-    if (deleting) {
-        if (bulk) {
-        	yesBtn.eq(3).show();
-        }
-        else {
-        	yesBtn.eq(1).show();
-        }
-    }
-    else {
-        if (bulk) {
-        	yesBtn.eq(2).show();
-        }
-        else {
-        	yesBtn.eq(0).show();
-        }
-    }
-    
-    PF('singletonConfirmDlg').show();
+    var op = deleting ? "delete" : "trash";
+    var s = bulk ? "s" : "";
+	$("#fragment-group-form\\:ok").click(function() {
+		document.forms["fragment-group-form"]["fragment-group-form:ok-"+ op +"-fragment" + s].click();
+	});
+	
+	showConfirmDlg(deleting ? "#{msg['confirm_deleting_fragments']}" : "#{msg['confirm_trashing_fragments']}");
     
     if (bulk) {
 	    $("#fragment-group-form\\:id-placeholder-for-panel").val(panelId);
@@ -294,21 +283,11 @@ function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
 }
 
 function confirmTrashingTag(tagId, deleting) {
-	var message = deleting ? "#{msg['confirm_deleting_tag']}" : "#{msg['confirm_trashing_fragments_with_tag']}";
-    $('#fragment-group-form\\:confirm-dlg-msg').text(message);
-    
-    var yesBtn = $("#confirm-dlg-yes-btn-group").children();
-    yesBtn.hide();
-    
-    if (deleting) {
-    	yesBtn.eq(5).show();
-    }
-    else {
-    	yesBtn.eq(4).show();
-    }
-    
-    PF('singletonConfirmDlg').show();
-    
+	var op = deleting ? "delete" : "trash";	
+	$("#fragment-group-form\\:ok").click(function() {
+		document.forms["fragment-group-form"]["fragment-group-form:ok-"+ op +"-tag"].click();
+	});
+    showConfirmDlg(deleting ? "#{msg['confirm_deleting_tag']}" : "#{msg['confirm_trashing_fragments_with_tag']}");
     $("#fragment-group-form\\:id-placeholder-for-trashed-tag").val(tagId);
 }
 
@@ -317,35 +296,32 @@ function confirmTrashingTagFromCtxtMenu() {
 	var target = menu.data("target-tag");
 	var tagId = target.attr("_tid");
 	var deleting = target.attr("_frgCount") == 0;
-	
 	confirmTrashingTag(tagId, deleting);
 }
 
 function confirmUnbookmarkingFragment(frgId) {
-	var message = "#{msg['confirm_unbookmarking_fragment']}";
-    $('#fragment-group-form\\:confirm-dlg-msg').text(message);
-	$("#confirm-dlg-yes-btn-group").children().hide();
-	$("#fragment-group-form\\:confirm-dlg-yes-btn-unbookmark-fragment").show();
-	PF('singletonConfirmDlg').show();
+	$("#fragment-group-form\\:ok").click(function() {
+		document.forms["fragment-group-form"]["fragment-group-form:ok-unbookmark-fragment"].click();
+	});
+	showConfirmDlg("#{msg['confirm_unbookmarking_fragment']}");
 	$("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
 }
 
 function confirmUnrelatingFragments(frgId0, frgId1) {
-	var message = "#{msg['confirm_unrelating_fragments']}";
-    $('#fragment-group-form\\:confirm-dlg-msg').text(message);
-    $("#confirm-dlg-yes-btn-group").children().hide();
-    $("#fragment-group-form\\:confirm-dlg-yes-btn-unrelate-fragments").show();
-    PF('singletonConfirmDlg').show();
+	$("#fragment-group-form\\:ok").click(function() {
+		document.forms["fragment-group-form"]["fragment-group-form:ok-unrelate-fragments"].click();
+	});
+    showConfirmDlg("#{msg['confirm_unrelating_fragments']}");
     $("#fragment-group-form\\:id-placeholder-for-fragment0").val(frgId0);
     $("#fragment-group-form\\:id-placeholder-for-fragment1").val(frgId1);
 }
 
 function confirmDeletingFile() {
-	var message = "#{msg['confirm_deleting_files']}";
-    $('#fragment-group-form\\:confirm-dlg-msg').text(message);
-    $("#confirm-dlg-yes-btn-group").children().hide();
-    $("#fragment-group-form\\:confirm-dlg-yes-btn-delete-files").show();
-    PF('singletonConfirmDlg').show();
+    $("#fragment-group-form\\:ok").click(function() {
+		document.forms["fragment-group-form"]["fragment-group-form:ok-delete-files"].click();
+	});
+
+    showConfirmDlg("#{msg['confirm_deleting_files']}");
     
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
@@ -357,7 +333,7 @@ function confirmDeletingFile() {
 </ui:define>
 
 <ui:define name="header">
-    <ui:include src="header.xhtml" />
+    <ui:include src="header.xhtml"/>
 </ui:define>
 
 <ui:define name="content">
@@ -376,65 +352,59 @@ function confirmDeletingFile() {
 </div>
 
 <h:form id="fragment-group-form">
-<!--     <p:log id="log" /> -->
-    <p:growl id="growl" showDetail="true" sticky="false" life="10000" />
-    <p:messages id="messages" globalOnly="true" showDetail="true" closable="true" />
+<!--     <p:log id="log"/> -->
+    <p:growl id="growl" showDetail="true" sticky="false" life="10000"/>
+    <p:messages id="messages" globalOnly="true" showDetail="true" closable="true"/>
     <!-- [DEV] -->
-    <p:messages id="development-messages" globalOnly="false" showDetail="true" closable="true" />
+    <p:messages id="development-messages" globalOnly="false" showDetail="true" closable="true"/>
     
-    <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}" />
-    <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{paramTagBean.tag.id}" />
-    <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}" />
-    <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}" />
-    <h:inputHidden id="id-placeholder-for-search" value="#{customParams.panelIdForSearch}" />
-    <h:inputHidden id="id-placeholder-for-fragment0" value="#{customParams.fragmentId0}" />
-    <h:inputHidden id="id-placeholder-for-fragment1" value="#{customParams.fragmentId1}" />
-    <h:inputHidden id="id-placeholder-for-file" value="#{fileListBean.srcNodeId}" />
+    <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}"/>
+    <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{paramTagBean.tag.id}"/>
+    <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}"/>
+    <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}"/>
+    <h:inputHidden id="id-placeholder-for-search" value="#{customParams.panelIdForSearch}"/>
+    <h:inputHidden id="id-placeholder-for-fragment0" value="#{customParams.fragmentId0}"/>
+    <h:inputHidden id="id-placeholder-for-fragment1" value="#{customParams.fragmentId1}"/>
+    <h:inputHidden id="id-placeholder-for-file" value="#{fileListBean.srcNodeId}"/>
     
     <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
-            <h:outputText id="error-dlg-msg" styleClass="warning-color" value="&nbsp;"/>
+            <h:outputText id="error-msg" styleClass="warning-color" value="&nbsp;"/>
         </f:facet>
-        <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check" onclick="PF('errorMsgDlg').hide();" type="button" />
+        <p:commandButton value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:confirmDialog>
     
-    <p:confirmDialog header="#{msg['are_you_sure']}" width="450px" severity="alert" closeOnEscape="true" widgetVar="singletonConfirmDlg" showEffect="fade" hideEffect="fade">
-        <f:facet name="message">
-            <h:outputText id="confirm-dlg-msg" value="&nbsp;" />
-        </f:facet>
-
-<!-- 	[TODO] refactor the following code so that one button with multiple logic would become a lot more mataintable -->
-		<div id="confirm-dlg-yes-btn-group">
-	        <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" />
-	        <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" />
-	        <p:commandButton id="confirm-dlg-yes-btn-trash-fragments" value="#{msg['label_yes']}" action="trash-fragments"  />
-	        <p:commandButton id="confirm-dlg-yes-btn-delete-fragments" value="#{msg['label_yes']}" action="delete-fragments"  />
-	        <p:commandButton id="confirm-dlg-yes-btn-trash-tag" value="#{msg['label_yes']}" action="trash-tag" />
-	        <p:commandButton id="confirm-dlg-yes-btn-delete-tag" value="#{msg['label_yes']}" action="delete-tag" />
-	        <p:commandButton id="confirm-dlg-yes-btn-unbookmark-fragment" value="#{msg['label_yes']}" action="unbookmark-fragment" />
-	        <p:commandButton id="confirm-dlg-yes-btn-unrelate-fragments" value="#{msg['label_yes']}" action="unrelate-fragments" />
-	        <p:commandButton id="confirm-dlg-yes-btn-delete-files" value="#{msg['label_yes']}" action="delete-file" />
+    <p:confirmDialog header="#{msg['are_you_sure']}" width="450px" severity="alert" closeOnEscape="true" widgetVar="confirmDlg" showEffect="fade" hideEffect="fade">
+		<div style="display:none">
+	        <p:commandButton id="ok-trash-fragment" action="trash-fragment"/>
+	        <p:commandButton id="ok-delete-fragment" action="delete-fragment"/>
+	        <p:commandButton id="ok-trash-fragments" action="trash-fragments"/>
+	        <p:commandButton id="ok-delete-fragments" action="delete-fragments"/>
+	        <p:commandButton id="ok-trash-tag" action="trash-tag"/>
+	        <p:commandButton id="ok-delete-tag" action="delete-tag"/>
+	        <p:commandButton id="ok-unbookmark-fragment" action="unbookmark-fragment"/>
+	        <p:commandButton id="ok-unrelate-fragments" action="unrelate-fragments"/>
+	        <p:commandButton id="ok-delete-files" action="delete-file"/>
 		</div>
-
-        <p:commandButton value="#{msg['label_no']}" onclick="PF('singletonConfirmDlg').hide();" type="button" />
+        <p:commandButton id="ok" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:confirmDialog>
     
-    <p:remoteCommand name="relateFragments" action="relate-fragments" />
-    <p:remoteCommand name="filterByTag" action="filter-by-tag" />
-    <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment" />
+    <p:remoteCommand name="relateFragments" action="relate-fragments"/>
+    <p:remoteCommand name="filterByTag" action="filter-by-tag"/>
+    <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment"/>
     
     <div id="fragment-group">
-        <c:set var="panelId" value="0" />
+        <c:set var="panelId" value="0"/>
 	    <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
             <ui:include src="each-fragment-panel.xhtml"></ui:include>
 	    </div>
 	    
-	    <c:set var="panelId" value="1" />
+	    <c:set var="panelId" value="1"/>
         <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
             <ui:include src="each-fragment-panel.xhtml"></ui:include>
         </div>
         
-        <c:set var="panelId" value="2" />
+        <c:set var="panelId" value="2"/>
         <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
             <ui:include src="each-fragment-panel.xhtml"></ui:include>
         </div>
