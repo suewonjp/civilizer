@@ -34,7 +34,6 @@
 
 <p:panel id="fragment-panel-toolbar-#{panelId}" >
     <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}" />
-    <p:tooltip for="checkbox-for-all-fragments-#{panelId}" value="#{msg['label_check_uncheck_all']}" />
     
     <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}">
         <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>

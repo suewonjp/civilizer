@@ -89,7 +89,7 @@ function showEditTagDialog() {
     <div id="tag-palette-panel">
         <ul>
             <li>
-                <a href="#tag-palette-linear" title="#{msg['label_linear_view']}" >
+                <a href="#tag-palette-flat" title="#{msg['label_flat_view']}" >
                     <span class="fa fa-list fa-2x" ></span>
                 </a>
             </li>
@@ -116,7 +116,7 @@ function showEditTagDialog() {
 		    </p:commandLink>
 		</div>
 	    
-        <div id="tag-palette-linear">
+        <div id="tag-palette-flat">
             <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
                 <c:set var="tag" value="#{tagBean.tag}"/>
                 <ui:include src="each-tag.xhtml" />

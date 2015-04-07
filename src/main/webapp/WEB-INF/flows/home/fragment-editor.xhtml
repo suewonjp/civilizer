@@ -115,7 +115,7 @@ function previewFragment() {
 
 function autocompleteForTypingTags() {
 	var tagSuggestions = [];
-    $("#tag-palette-linear .each-tag").each(function (index, value) {
+    $("#tag-palette-flat .each-tag").each(function (index, value) {
         tagSuggestions.push($(value).find(".each-tag-name").text());
     });
     
