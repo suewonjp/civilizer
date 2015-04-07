@@ -34,7 +34,7 @@
 
 <p:panel id="fragment-panel-toolbar-#{panelId}" >
     <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}" />
-    <p:tooltip for="checkbox-for-all-fragments-#{panelId}" value="#{msg['label_check_uncheck_all_fragments']}" />
+    <p:tooltip for="checkbox-for-all-fragments-#{panelId}" value="#{msg['label_check_uncheck_all']}" />
     
     <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}">
         <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>
@@ -75,7 +75,7 @@
     <p:spacer width="6" />
 
     <p:commandLink oncomplete="showSortOptionDialog('#{panelId}')" >
-        <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort_fragments']}"></span>
+        <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort']}"></span>
     </p:commandLink>
     
     <p:spacer width="6" />
@@ -83,12 +83,12 @@
     <c:choose>
         <c:when test="#{panelContext.fragmentDeletable}">
             <p:commandLink oncomplete="confirmTrashingFragments(null, true, true, '#{panelId}')" >
-                <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete_fragment']}"></span>
+                <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_delete']}"></span>
             </p:commandLink>
         </c:when>
         <c:otherwise>
             <p:commandLink oncomplete="confirmTrashingFragments(null, false, true, '#{panelId}')" >
-                <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash_fragment']}"></span>
+                <span class="fa fa-trash fa-2x button-link" title="#{msg['label_trash']}"></span>
             </p:commandLink>
         </c:otherwise>
     </c:choose>
