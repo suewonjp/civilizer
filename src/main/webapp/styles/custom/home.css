@@ -279,10 +279,6 @@ so this kind of hack has been incorporated
 	margin-top: 20px;
 }
 
-#file-box-form\:upload-button {
-	visibility: hidden;
-}
-
 .fb-file {
 	color: white;
 }
