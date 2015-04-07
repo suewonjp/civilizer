@@ -193,6 +193,10 @@ function showNewDirectoryDialog(target) {
     });
     dlg.jq.find(".ui-dialog-title").text("#{msg['label_new_folder']}");
 }
+
+// function callJSFActionNow() {
+// 	document.forms["file-box-form"]["file-box-form:ok-btn-upload"].click();
+// }
 //]]>
 </script>
 
@@ -224,10 +228,12 @@ function showNewDirectoryDialog(target) {
 	        <p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
 			<br/>
         </div>
+<!-- 	[TODO] refactor the following code so that one button with multiple logic would become a lot more mataintable -->
         <div id="file-upload-dlg-ok-btns">
 	        <p:commandButton id="ok-btn-move" action="move-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
 	        <p:commandButton id="ok-btn-upload" action="upload-file" value="#{msg['label_ok']}" ajax="false" title="#{msg['label_upload_file']}" icon="ui-icon-check"/>
         </div>
+<!-- 	    <p:commandButton id="ok"  onclick="callJSFActionNow();" value="*** #{msg['label_ok']}" ajax="false" icon="ui-icon-check"/> -->
     </p:dialog>
     
     <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">

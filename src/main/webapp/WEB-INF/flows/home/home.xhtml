@@ -403,6 +403,7 @@ function confirmDeletingFile() {
             <h:outputText id="confirm-dlg-msg" value="&nbsp;" />
         </f:facet>
 
+<!-- 	[TODO] refactor the following code so that one button with multiple logic would become a lot more mataintable -->
 		<div id="confirm-dlg-yes-btn-group">
 	        <p:commandButton id="confirm-dlg-yes-btn-trash-fragment" value="#{msg['label_yes']}" action="trash-fragment" />
 	        <p:commandButton id="confirm-dlg-yes-btn-delete-fragment" value="#{msg['label_yes']}" action="delete-fragment" />
