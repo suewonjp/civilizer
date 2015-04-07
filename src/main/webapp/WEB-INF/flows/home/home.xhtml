@@ -85,6 +85,8 @@ $(document).ready(function() {
     }
     
     setUpDragAndDrop();
+    
+    setContextMenuForFragments();
 }); // end of $(document).ready()
 
 function setUpDragAndDrop() {
@@ -328,6 +330,22 @@ function confirmDeletingFile() {
 	var fileId = target.attr("_id");
     $("#fragment-group-form\\:id-placeholder-for-file").val(fileId);
 }
+
+function setContextMenuForFragments() {
+	var menu = $("#frg-context-menu");
+	
+	$(".fragment-header").bind("contextmenu", function(event) {
+    	var target = $(event.target);
+    	if (target.hasClass("fragment-header")) {
+	    	menu.css({ left:event.pageX, top:event.pageY }).show();
+	    	event.preventDefault();
+    	}
+	});
+	
+	$(document).bind("click", function(event) {
+    	menu.hide();
+    });
+}
 //]]>
 </script>
 </ui:define>
@@ -392,6 +410,15 @@ function confirmDeletingFile() {
     <p:remoteCommand name="relateFragments" action="relate-fragments"/>
     <p:remoteCommand name="filterByTag" action="filter-by-tag"/>
     <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment"/>
+    
+    <div id="frg-context-menu" style="display:none; z-index:5000; position:absolute;">
+	    <p:menu>
+            <p:menuitem id="edit" styleClass="fa" onclick="openFragmentEditorForEdit()" value="&#xf07c;+ #{msg['label_edit_fragment']}"/>
+            <p:menuitem id="bookmark" styleClass="fa" onclick="bookmarkFragment()" value="&#xf040; #{msg['label_bookmark_fragment']}"/>
+            <p:menuitem id="trash" styleClass="fa" onclick="confirmTrashingFragments(()" value="&#xf1f8; #{msg['label_trash_fragment']}"/>
+            <p:menuitem id="delete" styleClass="fa" onclick="confirmTrashingFragments(()" value="&#xf1f8; #{msg['label_delete_fragment']}"/>
+	    </p:menu>
+    </div>
     
     <div id="fragment-group">
         <c:set var="panelId" value="0"/>
