@@ -35,15 +35,16 @@ $(document).ready(function() {
 }); // end of $(document).ready()
 
 function setContextMenuForTags() {
+   	var menu = $("#tag-context-menu");
+   	
 	$(".each-tag").bind("contextmenu", function(event) {
-    	var menu = $("#tag-context-menu");
     	menu.css({ left:event.pageX, top:event.pageY }).show();
     	menu.data("target-tag", $(event.target).closest(".each-tag"));
     	event.preventDefault();
     });
 
     $(document).bind("click", function(event) {
-    	$("#tag-context-menu").hide();
+    	menu.hide();
     });
 }
 

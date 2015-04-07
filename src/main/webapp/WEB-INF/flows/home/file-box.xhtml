@@ -13,8 +13,14 @@ var fileSeparator = ("#{ systemProperties['file.separator'] }");
 $(document).ready(function() {
 	processFileClasses();
 	
+	setContextMenuForFiles();
+	
+}); // end of $(document).ready()
+
+function setContextMenuForFiles() {
+    var menu = $("#file-context-menu");
+    
 	$(".each-file, #file-path-tree").bind("contextmenu", function(event) {
-    	var menu = $("#file-context-menu");
     	menu.css({ left:event.pageX, top:event.pageY }).show();
     	var target = $(event.target);
     	if (target.attr("_isFolder") === "false") {
@@ -41,9 +47,9 @@ $(document).ready(function() {
     });
 
     $(document).bind("click", function(event) {
-    	$("#file-context-menu").hide();
+    	menu.hide();
     });
-}); // end of $(document).ready()
+}
 
 function processFileClasses() {
 	$(".-cvz-file").each(function () {
@@ -241,8 +247,8 @@ function showNewDirectoryDialog(target) {
             <p:menuitem id="upload" styleClass="fa" oncomplete="showFileUploadDialog()" value="&#xf093;+ #{msg['label_upload_file']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
             <p:menuitem id="new-folder" styleClass="fa" onclick="showNewDirectoryDialog()" value="&#xf07c;+ #{msg['label_new_folder']}"/>
-            <p:menuitem id="rename"  styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
-            <p:menuitem id="move"  styleClass="fa" oncomplete="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"
+            <p:menuitem id="rename" styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
+            <p:menuitem id="move" styleClass="fa" oncomplete="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
             <p:menuitem id="delete" styleClass="fa" onclick="confirmDeletingFile()" value="&#xf1f8; #{msg['label_delete']}"/>
 	    </p:menu>
