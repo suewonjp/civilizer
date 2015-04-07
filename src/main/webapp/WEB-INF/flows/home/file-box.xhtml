@@ -70,6 +70,7 @@ function showFileUploadDialog() {
 	dstOutput.text("#{msg['select_destination']}").removeClass("fa-close").css({color:"aqua"});
 	var treeNodes = $("#file-box-form\\:folder-tree .each-file");
 	treeNodes.removeClass("fa-upload fb-target-dir");
+	var fp = "";
 	var dstPath = "";
 	var fileSelector = $("#file-box-form\\:file-selector");
 	fileSelector.val(null);
@@ -79,19 +80,16 @@ function showFileUploadDialog() {
 	fileSelector.change(function () {
 	    var fileToUpload = $(this).val();
 	    if (fileToUpload) {
-	    	if (dstPath == fileSeparator)
-	    		dstPath = "";
-	    	dstPath += fileSeparator + fileToUpload;
+	    	dstPath = fp + fileSeparator + fileToUpload;
 	    	dstOutput.text(dstPath);
 	    	$("#file-box-form\\:ok-btn-upload").show().effect();
 	    }
 	});
 	
 	$("#file-box-form\\:folder-tree .each-file").click(function () {
-		console.log("**** hello");
 		var $this = $(this);
 		treeNodes.removeClass("fa-upload fb-target-dir");
-		var fp = $this.attr("_fp");
+		fp = $this.attr("_fp");
 		if (fp === undefined)
 			fp = "";
 		var fileToUpload = fileSelector.val();
