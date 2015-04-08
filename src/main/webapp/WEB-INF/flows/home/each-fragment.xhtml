@@ -8,37 +8,33 @@
     >
 
 <c:set var="fragment" value="#{fragmentBean.fragment}" />
+               
+<h:inputHidden id="fragment-title-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.title}" />
+<h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.content}" />
+<h:inputHidden id="fragment-tagnames-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragmentBean.concatenatedTagNames}" />
+   
 <div class="each-fragment-container">
     <h:panelGrid styleClass="each-fragment" columns="1" border="1">
         <f:facet name="header">
             <div class="fragment-header" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}">
-                <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;"
-                    widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
+                <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
                 <a class="fragment-overlay-trigger" href="${request.contextPath}/app/fragment/#{fragment.id}">
                     \##{fragment.id}
-                </a>
-                &nbsp;&nbsp;
+                </a>&nbsp;&nbsp;
                 <span class="fragment-title" _fid="#{fragment.id}">
                     <h:outputText escape="false" value="#{fragmentBean.title}" />
-                </span>
-                &nbsp;&nbsp;
+                </span>&nbsp;&nbsp;
                 <c:forEach var="tag" items="#{fragment.tags}">
                     <p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
                         <span class="fa fa-tag " ></span>
                         <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
                         <f:param name="tagId" value="#{tag.id}" />
                     </p:commandLink>
-                </c:forEach>
-                &nbsp;&nbsp;
+                </c:forEach>&nbsp;&nbsp;
                 <h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
                     <f:converter converterId="jodaDateTimeConverter" />
                 </h:outputText>
-                
-                <h:inputHidden id="fragment-title-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.title}" />
-                <h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.content}" />
-                <h:inputHidden id="fragment-tagnames-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragmentBean.concatenatedTagNames}" />
-            
-            	</div>
+           	</div>
         </f:facet>
     	<h:outputText value="#{fragmentBean.content}" styleClass="fragment-content" />
     </h:panelGrid> <!--     each-fragment -->
