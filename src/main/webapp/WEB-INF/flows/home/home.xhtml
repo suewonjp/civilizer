@@ -121,30 +121,43 @@ $(document).ready(function() {
 		});
     };
     
-    setUpDragAndDrop();
+    setupDragAndDrop();
     
     setContextMenuForFragments();
 }); // end of $(document).ready()
 
-function setUpDragAndDrop() {
-	var fragmentDeletable = [
-	   Boolean('#{fragmentListBeans[0].panelContextBean.fragmentDeletable}' == 'true'),
-	   Boolean('#{fragmentListBeans[1].panelContextBean.fragmentDeletable}' == 'true'),
-	   Boolean('#{fragmentListBeans[2].panelContextBean.fragmentDeletable}' == 'true'),
-	];
-	var draggableSettings = {
-        cursor:"move",
-        scroll: false,
-        helper: "clone",
-        zIndex: 10000,
-        containment: "document",
-    };
+// [NOTE] this is a default basic setting for all jQuery UI Draggable objects;
+// It should remain as IMMUTABLE
+var baseDraggableSettings = {
+    cursor:"move",
+    cursorAt:{ left:20, top:20 },
+    scroll: false,
+    helper: "clone",
+    zIndex: 10000,
+    containment: "document",
+};
+
+function setupDragAndDrop() {
 	
-	$(".fragment-title").draggable(draggableSettings);
+	setupDraggableForFragmentTitle();
+	setupDraggableForTags();
+	setupDraggableForFiles();
 	
+	setupDndForRelatingFragments();
+	setupDndForFragmentFetchByTagDrop();
+	setupDndForBookmarking();
+	setupDndForTrashing();
+	setupDndForEmbeddingFile();
+}
+
+function setupDraggableForFragmentTitle() {
+	$(".fragment-title").draggable(baseDraggableSettings);
+}
+
+function setupDraggableForTags() {
 	var tagPalettePanel = $("#tag-palette-panel");
 	var overflowOption = tagPalettePanel.css("overflow");
-	$(".each-tag").draggable(draggableSettings)
+	$("#tag-palette-panel .each-tag").draggable(baseDraggableSettings)
 	.on("dragstart", function(event, ui) {
 		// [NOTE] the helper object disappears at the outside of the panel unless doing this
 		tagPalettePanel.css({overflow:"initial"});
@@ -152,9 +165,12 @@ function setUpDragAndDrop() {
 	.on("dragstop", function(event, ui) {
 		tagPalettePanel.css({overflow:overflowOption});
 	});
-	
+}
+
+function setupDraggableForFiles() {
 	var fileBoxPanel = $("#file-box-form\\:file-box-panel");
-	$(".fb-file").draggable(draggableSettings)
+	var overflowOption = fileBoxPanel.css("overflow");
+	$(".fb-file").draggable(baseDraggableSettings)
 	.on("dragstart", function(event, ui) {
 		fileBoxPanel.css({overflow:"initial"});
 	})
@@ -162,11 +178,10 @@ function setUpDragAndDrop() {
 		// [NOTE] the overflow style should be identical between the tag palette and file box
 		fileBoxPanel.css({overflow:overflowOption});
 	});
-    
-    var strongFocus = "ui-state-active";
-    
-    // D&D for relating fragments
-    var droppable = newBaseDroppable(strongFocus, ["fragment-title"]);
+}
+
+function setupDndForRelatingFragments() {
+	var droppable = newBaseDroppable(["fragment-title"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
@@ -182,9 +197,10 @@ function setUpDragAndDrop() {
 //         }
     };
     $(".each-fragment-container").droppable(droppable);
-    
-    // D&D for fetching fragments by a perticular tag
-    droppable = newBaseDroppable(strongFocus, ["each-tag"]);
+}
+
+function setupDndForFragmentFetchByTagDrop() {
+	var droppable = newBaseDroppable(["each-tag"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
@@ -193,9 +209,29 @@ function setUpDragAndDrop() {
         }
     };    
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
-    
-    // D&D for trashing/deleting a fragment
-    droppable = newBaseDroppable(strongFocus, ["fragment-title", "each-tag"]);
+}
+
+function setupDndForBookmarking() {
+	var droppable = newBaseDroppable(["fragment-title"]);
+    droppable.drop = function(event, ui) {
+        var from = ui.draggable;
+        var to = $(event.target);
+        if (from.hasClass("fragment-title")) {
+        	var frgId = from.attr("_fid");
+        	bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
+        }
+    };    
+    $("#bookmark-form\\:bookmark-panel").droppable(droppable);
+}
+
+function setupDndForTrashing() {
+	var fragmentDeletable = [
+   	   Boolean('#{fragmentListBeans[0].panelContextBean.fragmentDeletable}' == 'true'),
+   	   Boolean('#{fragmentListBeans[1].panelContextBean.fragmentDeletable}' == 'true'),
+   	   Boolean('#{fragmentListBeans[2].panelContextBean.fragmentDeletable}' == 'true'),
+   	];
+	
+	var droppable = newBaseDroppable(["fragment-title", "each-tag"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
@@ -210,21 +246,10 @@ function setUpDragAndDrop() {
         }
     };    
     $("#trashcan").droppable(droppable);
+}
 
-    // D&D for bookmarking a fragment
-    droppable = newBaseDroppable(strongFocus, ["fragment-title"]);
-    droppable.drop = function(event, ui) {
-        var from = ui.draggable;
-        var to = $(event.target);
-        if (from.hasClass("fragment-title")) {
-        	var frgId = from.attr("_fid");
-        	bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
-        }
-    };    
-    $("#bookmark-form\\:bookmark-panel").droppable(droppable);
-
-    // D&D for embedding a file
-    droppable = newBaseDroppable("", ["fb-file"]);
+function setupDndForEmbeddingFile() {
+	var droppable = newBaseDroppable("", ["fb-file"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
@@ -236,8 +261,9 @@ function setUpDragAndDrop() {
     $("#fragment-content-editor").droppable(droppable);
 }
 
-function newBaseDroppable(strongFocus, acceptableClasses) {
+function newBaseDroppable(acceptableClasses) {
 	var weakFocus = "ui-state-highlight";
+	var strongFocus = "ui-state-active";
 	var output = {
 		over: function(event, ui) {
 			var from = ui.draggable;
@@ -518,7 +544,7 @@ function trashFragmentFromCtxtMenu(deleting) {
     </p:confirmDialog>
     
     <p:remoteCommand name="relateFragments" action="relate-fragments"/>
-    <p:remoteCommand name="filterByTag" action="filter-by-tag"/>
+    <p:remoteCommand name="filterByTag" action="filter-by-tag" async="true"/>
     <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment"/>
     
     <div id="frg-context-menu" style="display:none; z-index:5000; position:absolute;">

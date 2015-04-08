@@ -48,6 +48,11 @@ function setContextMenuForTags() {
     });
 }
 
+function onExpandComplete() {
+	setContextMenuForTags();
+	setupDraggableForTags();
+}
+
 function showEditTagDialog() {
     var dlg = PF('editTagDlg');
     dlg.show();
@@ -125,7 +130,7 @@ function showEditTagDialog() {
         </div>
         <div id="tag-palette-tree">
             <p:tree value="#{tagListBean.tagTree.root}" var="tagBean" dynamic="true" style="width:100%">
-            	<p:ajax event="expand" listener="#{tagListBean.tagTree.onNodeExpand}" oncomplete="setContextMenuForTags()"/>
+            	<p:ajax event="expand" listener="#{tagListBean.tagTree.onNodeExpand}" oncomplete="onExpandComplete()"/>
             	<p:ajax event="collapse" listener="#{tagListBean.tagTree.onNodeCollapse}" />
                 <c:set var="tag" value="#{tagBean.tag}"/>
                 <p:treeNode>
