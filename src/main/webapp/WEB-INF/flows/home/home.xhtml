@@ -110,18 +110,17 @@ function setUpDragAndDrop() {
         zIndex: 10000,
     };
 	
-	$(".fragment-title").draggable(draggableSettings);
-	
+	$(".fragment-title").draggable(draggableSettings);	
 	$(".each-tag").draggable(draggableSettings);
+	$(".fb-file").draggable(draggableSettings);
     
-    var effectClassOnDrop = "ui-state-active";
+    var strongFocus = "ui-state-active";
     
     // D&D for relating fragments
-    var droppable = newBaseDroppable(effectClassOnDrop, ["fragment-title"]);
+    var droppable = newBaseDroppable(strongFocus, ["fragment-title"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
-        to.removeClass(effectClassOnDrop);
         if (from.hasClass("fragment-title")) {
             var fromId = from.attr("_fid");
             var toId = to.find(".fragment-title").attr("_fid");
@@ -136,11 +135,10 @@ function setUpDragAndDrop() {
     $(".each-fragment-container").droppable(droppable);
     
     // D&D for fetching fragments by a perticular tag
-    droppable = newBaseDroppable(effectClassOnDrop, ["each-tag"]);
+    droppable = newBaseDroppable(strongFocus, ["each-tag"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
-        to.removeClass(effectClassOnDrop);
         if (from.hasClass("each-tag")) {
             fetchFragmentsByTag(from, to);
         }
@@ -148,11 +146,10 @@ function setUpDragAndDrop() {
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
     
     // D&D for trashing/deleting a fragment
-    droppable = newBaseDroppable(effectClassOnDrop, ["fragment-title", "each-tag"]);
+    droppable = newBaseDroppable(strongFocus, ["fragment-title", "each-tag"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
-        to.removeClass(effectClassOnDrop);
         if (from.hasClass("fragment-title")) {
 	        var panelId = findPanel(from);
 	       	var deleting = fragmentDeletable[panelId];
@@ -166,25 +163,62 @@ function setUpDragAndDrop() {
     $("#trashcan").droppable(droppable);
 
     // D&D for bookmarking a fragment
-    droppable = newBaseDroppable(effectClassOnDrop, ["fragment-title"]);
+    droppable = newBaseDroppable(strongFocus, ["fragment-title"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
-        to.removeClass(effectClassOnDrop);
         if (from.hasClass("fragment-title")) {
         	var frgId = from.attr("_fid");
         	bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
         }
     };    
     $("#bookmark-form\\:bookmark-panel").droppable(droppable);
+
+    // D&D for embedding a file
+    droppable = newBaseDroppable(strongFocus, ["fb-file"]);
+    droppable.drop = function(event, ui) {
+        var from = ui.draggable;
+        var to = $(event.target);
+        if (from.hasClass("fb-file")) {
+        	var id = from.attr("_id");
+        }
+    };    
+    $("#fragment-content-editor").droppable(droppable);
 }
 
-function fetchFragmentsByTag(from, to) {
-	var targetPanelId = findPanel(to);
-    $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio").val(targetPanelId);
-    $("#panel-toggler-" + targetPanelId).prop("checked", true);
-    $("#panel-activation-buttons").buttonset("refresh");
-    filterByTag([ {name:"tagId", value:from.attr("_tid")} ]);
+function newBaseDroppable(strongFocus, acceptableClasses) {
+	var weakFocus = "ui-state-highlight";
+	var output = {
+		over: function(event, ui) {
+			var from = ui.draggable;
+            var to = $(event.target);
+			if (hasAnyClass(from, acceptableClasses)) {
+	            to.addClass(strongFocus);
+	            to.removeClass(weakFocus);
+			}
+        },
+        out: function(event, ui) {
+        	var from = ui.draggable;
+            var to = $(event.target);
+            if (hasAnyClass(from, acceptableClasses)) {
+	            to.removeClass(strongFocus);
+	            to.addClass(weakFocus);
+            }
+        },
+        activate: function(event, ui) {
+        	var from = ui.draggable;
+            var to = $(event.target);
+            if (hasAnyClass(from, acceptableClasses)) {
+	            to.addClass(weakFocus);
+			}
+        },
+        deactivate: function(event, ui) {
+            var to = $(event.target);
+            to.removeClass(strongFocus);
+            to.removeClass(weakFocus);
+        },
+	};
+	return output;
 }
 
 function hasAnyClass(obj, classes) {
@@ -196,33 +230,20 @@ function hasAnyClass(obj, classes) {
 	return false;
 }
 
-function newBaseDroppable(effectClassOnDrop, acceptableClasses) {
-	var output = {
-		over: function(event, ui) {
-			var from = ui.draggable;
-            var to = $(event.target);
-			if (hasAnyClass(from, acceptableClasses)) {
-	            to.addClass(effectClassOnDrop);
-			}
-        },
-        out: function(event, ui) {
-            var to = $(event.target);
-            to.removeClass(effectClassOnDrop);
-        },
-        deactivate: function(event, ui) {
-            var to = $(event.target);
-            to.removeClass(effectClassOnDrop);
-        },
-	};
-	return output;
-}
-
 function findPanel(obj) {
 	var panelParent = obj.parents('[id^="fragment-panel-"]');
 	if (panelParent) {
 		return panelParent.attr("_pid");
 	}
 	return -1;
+}
+
+function fetchFragmentsByTag(from, to) {
+	var targetPanelId = findPanel(to);
+    $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio").val(targetPanelId);
+    $("#panel-toggler-" + targetPanelId).prop("checked", true);
+    $("#panel-activation-buttons").buttonset("refresh");
+    filterByTag([ {name:"tagId", value:from.attr("_tid")} ]);
 }
 
 function populateFragmentOverlay(data) {
