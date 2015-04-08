@@ -16,10 +16,6 @@ $(document).ready(function() {
 		onClickFragmentEditorTrigger($editorFrame, $window, e, "#{msg['label_new_fragment']}", true);
     });
 	
-// 	$(".edit-fragment-editor-trigger").click(function (e) {
-// 		onClickFragmentEditorTrigger($editorFrame, $window, e, "#{msg['label_edit']}", false);
-// 	})
-    
     $editorFrame.resizable({
         alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
     });
@@ -79,15 +75,6 @@ function clearFragmentEditor() {
 
 function parseMarkdown(inputText) {
     return markdown.toHTML(inputText);
-}
-
-function openFragmentEditorForEdit_deprecated(panelId, fragmentId, tagNames) {
-    var el = $("#fragment-group-form\\:fragment-title-placeholder-panel"+panelId+"-"+fragmentId);
-    $("#fragment-editor-form\\:title-input").val(el.val());
-    $("#fragment-editor-form\\:tags-input").val(tagNames);
-    $("#fragment-editor-form\\:id-placeholder-for-fragment").val(fragmentId);
-    el = $("#fragment-group-form\\:fragment-content-placeholder-panel"+panelId+"-"+fragmentId);
-    $("#fragment-content-editor").val(el.val());
 }
 
 function openFragmentEditorForEdit(event) {
