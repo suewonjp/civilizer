@@ -264,7 +264,8 @@
 }
 
 .fb-file {
-	color: black;
+	color: maroon;
+	padding-bottom: 1px;
 }
 
 .fb-dir {
