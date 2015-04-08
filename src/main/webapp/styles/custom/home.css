@@ -116,21 +116,6 @@
     display: inline-block;
 }
 
-/* .fragment-menu { */
-/*     display: none; */
-/*     position:relative; */
-/*     float: right; */
-/* } */
-
-/*
-[NOTE] the below code works courtesy of CSS Browser Selector [http://rafael.adm.br/css_browser_selector/]
-On FF, .fragment-menu component appeared a little bit below where it was intended,
-so this kind of hack has been incorporated
-*/
-/* .gecko .fragment-menu { */
-/* 	top: -24px; */
-/* } */
-
 .fragment-content  {
 	word-wrap: break-word;
 }
