@@ -346,6 +346,17 @@ function setContextMenuForFragments() {
     	var target = $(event.target);
     	if (target.hasClass("fragment-header")) {
 	    	menu.css({ left:event.pageX, top:event.pageY }).show();
+	    	menu.data("target-frg", target);
+	    	if (target.attr("_deletable") === "true") {
+	    		menu.find("#fragment-group-form\\:bookmark").hide();
+	    		menu.find("#fragment-group-form\\:trash").hide();
+	    		menu.find("#fragment-group-form\\:delete").show();
+	    	}
+	    	else {
+	    		menu.find("#fragment-group-form\\:bookmark").show();
+	    		menu.find("#fragment-group-form\\:trash").show();
+	    		menu.find("#fragment-group-form\\:delete").hide();
+	    	}
 	    	event.preventDefault();
     	}
 	});
@@ -353,6 +364,22 @@ function setContextMenuForFragments() {
 	$(document).bind("click", function(event) {
     	menu.hide();
     });
+}
+
+function bookmarkFragmentFromCtxtMenu() {
+	var menu = $("#frg-context-menu");
+	var target = menu.data("target-frg");
+	var frgId = target.attr("_fid");
+	bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
+}
+
+function trashFragmentFromCtxtMenu(deleting) {
+	var menu = $("#frg-context-menu");
+	var target = menu.data("target-frg");
+	var frgId = target.attr("_fid");
+	var panelId = findPanel(target);
+	
+	confirmTrashingFragments(frgId, deleting, false, panelId);
 }
 //]]>
 </script>
@@ -421,10 +448,10 @@ function setContextMenuForFragments() {
     
     <div id="frg-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
-            <p:menuitem id="edit" styleClass="fa" onclick="openFragmentEditorForEdit()" value="&#xf040; #{msg['label_edit']}"/>
-            <p:menuitem id="bookmark" styleClass="fa" onclick="bookmarkFragment()" value="&#xf02e; #{msg['label_bookmark']}"/>
-            <p:menuitem id="trash" styleClass="fa" onclick="confirmTrashingFragments(()" value="&#xf1f8; #{msg['label_trash']}"/>
-            <p:menuitem id="delete" styleClass="fa" onclick="confirmTrashingFragments(()" value="&#xf1f8; #{msg['label_delete']}"/>
+            <p:menuitem id="edit" styleClass="fa" onclick="openFragmentEditorForEdit(event)" value="&#xf040; #{msg['label_edit']}"/>
+            <p:menuitem id="bookmark" styleClass="fa" onclick="bookmarkFragmentFromCtxtMenu()" value="&#xf02e; #{msg['label_bookmark']}"/>
+            <p:menuitem id="trash" styleClass="fa" onclick="trashFragmentFromCtxtMenu(false)" value="&#xf1f8; #{msg['label_trash']}"/>
+            <p:menuitem id="delete" styleClass="fa" onclick="trashFragmentFromCtxtMenu(true)" value="&#xf1f8; #{msg['label_delete']}"/>
 	    </p:menu>
     </div>
     
