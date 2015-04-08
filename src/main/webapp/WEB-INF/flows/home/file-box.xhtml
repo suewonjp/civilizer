@@ -51,13 +51,28 @@ function setContextMenuForFiles() {
     });
 }
 
+function isImage(fileExt) {
+	return (fileExt == ".png")
+		|| (fileExt == ".jpg")
+		|| (fileExt == ".gif")
+		|| (fileExt == ".bmp")
+		|| (fileExt == ".tiff")
+		;
+}
+
 function processFileClasses() {
 	$(".-cvz-file").each(function () {
 		var $this = $(this);
 		var filePath = $this.text();
 		var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
+		var fileExt = fileName.slice(fileName.lastIndexOf("."));
 		filePath = "${request.contextPath}/app/file-box" + filePath;
-		$this.text("").append("<img title="+fileName+" src="+filePath+">");
+		if (isImage(fileExt)) {			
+			$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
+		}
+		else {
+			$this.text("").append("<a title='"+fileName+"' href='"+filePath+"'>" + filePath + "</a>");
+		}
 	});
 }
 

@@ -92,6 +92,35 @@ $(document).ready(function() {
     	}
     }
     
+    // [NOTE] original source code can be found at:
+    // http://skfox.com/2008/11/26/jquery-example-inserting-text-with-drag-n-drop/
+    $.fn.insertAtCaret = function (myValue) {
+		return this.each(function(){
+			//IE support
+			if (document.selection) {
+				this.focus();
+				sel = document.selection.createRange();
+				sel.text = myValue;
+				this.focus();
+			}
+			//MOZILLA / NETSCAPE support
+			else if (this.selectionStart || this.selectionStart == '0') {
+				var startPos = this.selectionStart;
+				var endPos = this.selectionEnd;
+				var scrollTop = this.scrollTop;
+				this.value = this.value.substring(0, startPos)+ myValue+ this.value.substring(endPos,this.value.length);
+				this.focus();
+				this.selectionStart = startPos + myValue.length;
+				this.selectionEnd = startPos + myValue.length;
+				this.scrollTop = scrollTop;
+			}
+			else {
+				this.value += myValue;
+				this.focus();
+			}
+		});
+    };
+    
     setUpDragAndDrop();
     
     setContextMenuForFragments();
@@ -108,11 +137,31 @@ function setUpDragAndDrop() {
         scroll: false,
         helper: "clone",
         zIndex: 10000,
+        containment: "document",
     };
 	
-	$(".fragment-title").draggable(draggableSettings);	
-	$(".each-tag").draggable(draggableSettings);
-	$(".fb-file").draggable(draggableSettings);
+	$(".fragment-title").draggable(draggableSettings);
+	
+	var tagPalettePanel = $("#tag-palette-panel");
+	var overflowOption = tagPalettePanel.css("overflow");
+	$(".each-tag").draggable(draggableSettings)
+	.on("dragstart", function(event, ui) {
+		// [NOTE] the helper object disappears at the outside of the panel unless doing this
+		tagPalettePanel.css({overflow:"initial"});
+	})
+	.off("dragstop", function(event, ui) {
+		tagPalettePanel.css({overflow:overflowOption});
+	});
+	
+	var fileBoxPanel = $("#file-box-form\\:file-box-panel");
+	$(".fb-file").draggable(draggableSettings)
+	.on("dragstart", function(event, ui) {
+		fileBoxPanel.css({overflow:"initial"});
+	})
+	.off("dragstop", function(event, ui) {
+		// [NOTE] the overflow style should be identical between the tag palette and file box
+		fileBoxPanel.css({overflow:overflowOption});
+	});
     
     var strongFocus = "ui-state-active";
     
@@ -175,12 +224,13 @@ function setUpDragAndDrop() {
     $("#bookmark-form\\:bookmark-panel").droppable(droppable);
 
     // D&D for embedding a file
-    droppable = newBaseDroppable(strongFocus, ["fb-file"]);
+    droppable = newBaseDroppable("", ["fb-file"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
         if (from.hasClass("fb-file")) {
-        	var id = from.attr("_id");
+        	var encoded = '<span class="-cvz-file">' + from.attr("_fp") + '</span>';
+        	$(this).insertAtCaret(encoded);
         }
     };    
     $("#fragment-content-editor").droppable(droppable);
