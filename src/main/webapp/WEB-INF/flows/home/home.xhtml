@@ -110,19 +110,14 @@ function setUpDragAndDrop() {
         zIndex: 10000,
     };
 	
-	$(".fragment-title").addClass("dnd-source").draggable(draggableSettings);
+	$(".fragment-title").draggable(draggableSettings);
 	
-	$(".each-tag").addClass("dnd-source").draggable(draggableSettings);
+	$(".each-tag").draggable(draggableSettings);
     
     var effectClassOnDrop = "ui-state-active";
     
-    // [TODO] revisiting drag & drop code;
-    // now, unrelated droppables get colorized when dragging around a draggable
-    // it is a minor problem but needs fixing;
-    // refactor code so that coupled droppable/draggable pairs only get colorized
-    
     // D&D for relating fragments
-    var droppable = newBaseDroppable(effectClassOnDrop);
+    var droppable = newBaseDroppable(effectClassOnDrop, ["fragment-title"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
@@ -141,7 +136,7 @@ function setUpDragAndDrop() {
     $(".each-fragment-container").droppable(droppable);
     
     // D&D for fetching fragments by a perticular tag
-    droppable = newBaseDroppable(effectClassOnDrop);
+    droppable = newBaseDroppable(effectClassOnDrop, ["each-tag"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
@@ -153,7 +148,7 @@ function setUpDragAndDrop() {
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
     
     // D&D for trashing/deleting a fragment
-    droppable = newBaseDroppable(effectClassOnDrop);
+    droppable = newBaseDroppable(effectClassOnDrop, ["fragment-title", "each-tag"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
@@ -171,7 +166,7 @@ function setUpDragAndDrop() {
     $("#trashcan").droppable(droppable);
 
     // D&D for bookmarking a fragment
-    droppable = newBaseDroppable(effectClassOnDrop);
+    droppable = newBaseDroppable(effectClassOnDrop, ["fragment-title"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
@@ -192,12 +187,21 @@ function fetchFragmentsByTag(from, to) {
     filterByTag([ {name:"tagId", value:from.attr("_tid")} ]);
 }
 
-function newBaseDroppable(effectClassOnDrop) {
+function hasAnyClass(obj, classes) {
+	for (var i=0; i<classes.length; ++i) {
+		if (obj.hasClass(classes[i])) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function newBaseDroppable(effectClassOnDrop, acceptableClasses) {
 	var output = {
 		over: function(event, ui) {
 			var from = ui.draggable;
-			if (from.hasClass("dnd-source")) {
-	            var to = $(event.target);
+            var to = $(event.target);
+			if (hasAnyClass(from, acceptableClasses)) {
 	            to.addClass(effectClassOnDrop);
 			}
         },
