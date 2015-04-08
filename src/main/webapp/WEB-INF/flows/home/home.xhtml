@@ -149,7 +149,7 @@ function setUpDragAndDrop() {
 		// [NOTE] the helper object disappears at the outside of the panel unless doing this
 		tagPalettePanel.css({overflow:"initial"});
 	})
-	.off("dragstop", function(event, ui) {
+	.on("dragstop", function(event, ui) {
 		tagPalettePanel.css({overflow:overflowOption});
 	});
 	
@@ -158,7 +158,7 @@ function setUpDragAndDrop() {
 	.on("dragstart", function(event, ui) {
 		fileBoxPanel.css({overflow:"initial"});
 	})
-	.off("dragstop", function(event, ui) {
+	.on("dragstop", function(event, ui) {
 		// [NOTE] the overflow style should be identical between the tag palette and file box
 		fileBoxPanel.css({overflow:overflowOption});
 	});
