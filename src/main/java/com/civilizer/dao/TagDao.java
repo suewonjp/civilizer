@@ -25,6 +25,8 @@ public interface TagDao {
     public Tag findById(Long id);
 
     public Tag findById(Long id, boolean withFragments, boolean withChildren);
+    
+    public void populate(Tag target, boolean withFragments, boolean withChildren);
 
     public List<Tag> findParentTags(Long id);
 

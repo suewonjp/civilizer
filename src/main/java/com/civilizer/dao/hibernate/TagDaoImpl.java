@@ -110,6 +110,19 @@ public final class TagDaoImpl implements TagDao {
     }
     
     @Override
+    public void populate(Tag target, boolean withFragments, boolean withChildren) {
+    	final Tag tmp = (Tag) sessionFactory.getCurrentSession().merge(target);
+    	if (withFragments) {
+    		Hibernate.initialize(tmp.getFragments());
+    		target.setFragments(tmp.getFragments());
+    	}
+    	if (withChildren) {
+    		Hibernate.initialize(tmp.getChildren());
+    		target.setChildren(tmp.getChildren());
+    	}
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<Tag> findParentTags(Long id) {
         return sessionFactory.getCurrentSession()

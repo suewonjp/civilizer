@@ -88,13 +88,13 @@ class DaoTest {
 
 	protected Long getAndValidateId(Fragment f) {
 		Long id = f.getId();
-		assertTrue(id != null && id >= 0);
+		assertEquals(true,  id != null && id >= 0);
 		return id;
 	}
 
 	protected Long getAndValidateId(Tag f) {
 		Long id = f.getId();
-		assertTrue(id != null);
+		assertEquals(true,  id != null);
 		return id;
 	}
 
@@ -151,8 +151,8 @@ class DaoTest {
 			Long id = getAndValidateId(t);
 			Tag tag = tagDao.findById(id);
 			assertEquality(tag, t);
-			assertFalse(Hibernate.isInitialized(tag.getChildren()));
-			assertFalse(Hibernate.isInitialized(tag.getFragments()));
+			assertEquals(false,  Hibernate.isInitialized(tag.getChildren()));
+			assertEquals(false,  Hibernate.isInitialized(tag.getFragments()));
 		}
 	}
 	
@@ -190,19 +190,19 @@ class DaoTest {
 			boolean withTags = false, withRelatedOnes = false;
 			Fragment frg = fragmentDao.findById(id, withTags, withRelatedOnes);
 			assertEquality(frg, f);
-			assertFalse(Hibernate.isInitialized(frg.getTags()));
-			assertFalse(Hibernate.isInitialized(frg.getRelatedOnes()));
+			assertEquals(false,  Hibernate.isInitialized(frg.getTags()));
+			assertEquals(false,  Hibernate.isInitialized(frg.getRelatedOnes()));
 			withTags = true;
 			frg = fragmentDao.findById(id, withTags, withRelatedOnes);
-			assertTrue(Hibernate.isInitialized(frg.getTags()));
+			assertEquals(true,  Hibernate.isInitialized(frg.getTags()));
 			for (Tag t : frg.getTags()) {				
-				assertTrue(Hibernate.isInitialized(t));
+				assertEquals(true,  Hibernate.isInitialized(t));
 			}
 			withRelatedOnes = true;
 			frg = fragmentDao.findById(id, withTags, withRelatedOnes);
-			assertTrue(Hibernate.isInitialized(frg.getRelatedOnes()));
+			assertEquals(true,  Hibernate.isInitialized(frg.getRelatedOnes()));
 			for (Fragment r : frg.getRelatedOnes()) {				
-				assertTrue(Hibernate.isInitialized(r));
+				assertEquals(true,  Hibernate.isInitialized(r));
 			}
 		}
 	}
@@ -216,16 +216,23 @@ class DaoTest {
 		    Long id = getAndValidateId(t);
 			Tag tag = tagDao.findById(id, true, false);
 			Collection<Fragment> frgs = tag.getFragments();
-			assertTrue(Hibernate.isInitialized(frgs));
+			assertEquals(true,  Hibernate.isInitialized(frgs));
 			for (Fragment f : frgs) {
-				assertTrue(fragmentNames.contains(f.getTitle()));
+				assertEquals(true,  fragmentNames.contains(f.getTitle()));
 			}
+		}
+
+		for (Tag t : tags) {
+			assertEquals(false, Hibernate.isInitialized(t.getFragments()));
+			tagDao.populate(t, true, false);
+			assertEquals(true, Hibernate.isInitialized(t.getFragments()));
+			assertEquals(false, Hibernate.isInitialized(t.getChildren()));
 		}
 	}
 
 	protected void testFragmentToTagRelationship() {
 		Collection<Tag> tags = tagDao.findAll();
-		assertFalse(tags.isEmpty());
+		assertEquals(false,  tags.isEmpty());
 		Collection<String> tagNames = Tag.getTagNameCollectionFrom(tags);
 		Collection<Fragment> fragments = fragmentDao.findAll(true);
 
@@ -234,10 +241,10 @@ class DaoTest {
 
 			Fragment frgm = fragmentDao.findById(id, true, false);
 			Collection<Tag> relatedTags = frgm.getTags();
-			assertTrue(Hibernate.isInitialized(relatedTags));
+			assertEquals(true,  Hibernate.isInitialized(relatedTags));
 			if (relatedTags.isEmpty() == false) {
 				for (Tag t : relatedTags) {
-					assertTrue(tagNames.contains(t.getTagName()));
+					assertEquals(true,  tagNames.contains(t.getTagName()));
 				}
 			}
 		}
@@ -248,12 +255,17 @@ class DaoTest {
 		Collection<String> tagNames = Tag.getTagNameCollectionFrom(tags);
 
 		for (Tag t : tags) {
+			assertEquals(false, Hibernate.isInitialized(t.getChildren()));
+			tagDao.populate(t, false, true);
+			assertEquals(true, Hibernate.isInitialized(t.getChildren()));
+			assertEquals(false, Hibernate.isInitialized(t.getFragments()));
+			
 			Long id = getAndValidateId(t);
 			Tag tag = tagDao.findById(id, false, true);
 			Collection<Tag> children = tag.getChildren();
-			assertTrue(Hibernate.isInitialized(children));
+			assertEquals(true,  Hibernate.isInitialized(children));
 			for (Tag c : children) {
-				assertTrue(tagNames.contains(c.getTagName()));
+				assertEquals(true,  tagNames.contains(c.getTagName()));
 			}
 			
 			final Set<Long> descendantIds = new HashSet<Long>();
@@ -262,7 +274,7 @@ class DaoTest {
 				final Tag descendant = tagDao.findById(did);
 				final Set<Tag> ancestors = new HashSet<Tag>();
 				findAllAncestorsOfTag(descendant, ancestors);
-				assertTrue(ancestors.contains(tag));
+				assertEquals(true,  ancestors.contains(tag));
 			}
 		}
 	}
@@ -284,10 +296,10 @@ class DaoTest {
 			Long id = getAndValidateId(f);
 			Fragment frgm = fragmentDao.findById(id, false, true);
 			Collection<Fragment> relatedOnes = frgm.getRelatedOnes();
-			assertTrue(Hibernate.isInitialized(relatedOnes));
+			assertEquals(true,  Hibernate.isInitialized(relatedOnes));
 			if (relatedOnes.isEmpty() == false) {
 				for (Fragment r : relatedOnes) {
-					assertTrue(fragmentNames.contains(r.getTitle()));
+					assertEquals(true,  fragmentNames.contains(r.getTitle()));
 				}
 			}
 		}
@@ -340,7 +352,7 @@ class DaoTest {
 			Tag parent = tagDao.findById(temporalTags.get(i - 1).getId(), false, true);
 			Tag child = temporalTags.get(i);
 			Collection<Tag> children = parent.getChildren();
-			assertTrue(Hibernate.isInitialized(children));
+			assertEquals(true,  Hibernate.isInitialized(children));
 			assertEquals(children.size(), 1);
 			for (Tag c : children) {
 				assertEquality(c, child);
@@ -362,21 +374,13 @@ class DaoTest {
 			Fragment to = temporalFragments.get(i);
 			fragmentDao.relateFragments(from.getId(), to.getId());
 		}
-//		for (int i = 1; i < temporalFragments.size(); ++i) {
-//			Fragment from = temporalFragments.get(i - 1);
-//			Fragment to = temporalFragments.get(i);
-//			from.relateTo(to);
-//		}
-//		for (Fragment frg : temporalFragments) {
-//			fragmentDao.save(frg);
-//		}
 		for (int i = 1; i < temporalFragments.size(); ++i) {
 			Fragment from = fragmentDao
 						.findById(temporalFragments.get(i - 1).getId(), false, true);
 			Fragment to = fragmentDao
 					.findById(temporalFragments.get(i).getId(), false, true);
-			assertTrue(from.isRelatedTo(to));
-			assertTrue(to.isRelatedTo(from));
+			assertEquals(true,  from.isRelatedTo(to));
+			assertEquals(true,  to.isRelatedTo(from));
 		}
 	}
 	
@@ -410,7 +414,7 @@ class DaoTest {
 		fragments = fragmentDao.findByTagIds(null, idsEx);
 		assertNull(fragments);
 
-		assertTrue(idsIn.isEmpty());
+		assertEquals(true,  idsIn.isEmpty());
 		fragments = fragmentDao.findByTagIds(idsIn, idsEx);
 		assertNull(fragments);
 		
@@ -419,7 +423,7 @@ class DaoTest {
 		
 		// The inclusive and exclusive filter should not have duplicate IDs!
 		for (Long idIn : idsIn) {
-			assertFalse(idsEx.contains(idIn));
+			assertEquals(false,  idsEx.contains(idIn));
 		}
 		
 		// test with an inclusive filter only
@@ -432,7 +436,7 @@ class DaoTest {
 					break;
 				}
 			}
-			assertTrue(contains);
+			assertEquals(true,  contains);
 		}
 		
 		// test with a duplicate inclusive filter
@@ -450,7 +454,7 @@ class DaoTest {
 					break;
 				}
 			}
-			assertFalse(contains);
+			assertEquals(false,  contains);
 		}
 		
 		// test with a duplicate exclusive filter
@@ -470,38 +474,38 @@ class DaoTest {
 	    // test edge cases
 	    first = 0; count = 0; // zero range
 	    someFragments = fragmentDao.findSomeNonTrashed(first, count, fo, asc);
-	    assertTrue(someFragments.isEmpty());
+	    assertEquals(true,  someFragments.isEmpty());
 	    first = -1; count = 1; // first index is negative
 	    someFragments = fragmentDao.findSomeNonTrashed(first, count, fo, asc);
 	    assertEquals(someFragments.size(), count);
 	    first = -1; count = -1; // first index and count are negative
 	    someFragments = fragmentDao.findSomeNonTrashed(first, count, fo, asc);
-	    assertTrue(someFragments.isEmpty());
+	    assertEquals(true,  someFragments.isEmpty());
 	    first = 1; count = -1; // count is negative
 	    someFragments = fragmentDao.findSomeNonTrashed(first, count, fo, asc);
-	    assertTrue(someFragments.isEmpty());
+	    assertEquals(true,  someFragments.isEmpty());
 	    first = 0; count = allCount + 100; // count exceeds the max. available count
 	    someFragments = fragmentDao.findSomeNonTrashed(first, count, fo, asc);
 	    assertEquals(someFragments.size(), allCount);
 	    first = allCount + 10; count = 1; // first index exceeds the max. available count
 	    someFragments = fragmentDao.findSomeNonTrashed(first, count, fo, asc);
-	    assertTrue(someFragments.isEmpty());
+	    assertEquals(true,  someFragments.isEmpty());
 	    
 	    // test normal cases
 	    count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
-	    assertTrue(1 <= count && count < allCount);
+	    assertEquals(true,  1 <= count && count < allCount);
 	    first = Math.max(0, TestUtil.getRandom().nextInt(count));
-	    assertTrue(0 <= first && first < count);
+	    assertEquals(true,  0 <= first && first < count);
 	    someFragments = fragmentDao.findSomeNonTrashed(first, count, fo, asc);
 	    assertEquals(someFragments.size(), Math.min(count, allCount-first));
 	    count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
-	    assertTrue(1 <= count && count < allCount);
+	    assertEquals(true,  1 <= count && count < allCount);
 	    first = Math.max(0, TestUtil.getRandom().nextInt(count));
-	    assertTrue(0 <= first && first < count);
+	    assertEquals(true,  0 <= first && first < count);
 	    someFragments = fragmentDao.findSomeNonTrashed(first, count, fo, asc);
 	    assertEquals(someFragments.size(), Math.min(count, allCount-first));
 	    for (Fragment f : someFragments) {
-	        assertTrue(allFragments.contains(f));
+	        assertEquals(true,  allFragments.contains(f));
 	    }
 	}
 	
@@ -534,9 +538,9 @@ class DaoTest {
 	    for (int i=0; i<orders.length; ++i) {
 	    	FragmentOrder order = orders[i];
 			count = Math.max(1, TestUtil.getRandom().nextInt(allCount));
-		    assertTrue(1 <= count && count < allCount);
+		    assertEquals(true,  1 <= count && count < allCount);
 		    first = Math.max(0, TestUtil.getRandom().nextInt(count));
-		    assertTrue(0 <= first && first < count);
+		    assertEquals(true,  0 <= first && first < count);
 		    someFragments = fragmentDao.findSomeNonTrashed(first, count, order, asc[i]);
 		    assertEquals(someFragments.size(), Math.min(count, allCount-first));
 		    Comparator<Fragment> cmptr = (Comparator<Fragment>) comparators[i];
@@ -544,7 +548,7 @@ class DaoTest {
 		    	Fragment f0 = someFragments.get(j - 1);
 	            Fragment f1 = someFragments.get(j);
 	            final int r = cmptr.compare(f0, f1);
-	            assertTrue(r <= 0);
+	            assertEquals(true,  r <= 0);
 		    }
 		}
 	}
@@ -558,7 +562,7 @@ class DaoTest {
 		fragmentDao.executeQuery(sqlQuery, true);
 		final Fragment from = fragmentDao.findById(temporalFragments.get(0).getId(), false, true);
 		final Fragment to = fragmentDao.findById(temporalFragments.get(1).getId(), false, true);
-		assertTrue(from.isRelatedTo(to));
+		assertEquals(true,  from.isRelatedTo(to));
 	}
 	
 	protected void testFileEntityQuery() {
@@ -609,7 +613,7 @@ class DaoTest {
 		final File f = fe.toFile(filesHome);
 		assertNotNull(f);
 		if (f.isFile()) {
-			assertTrue(f.delete());
+			assertEquals(true,  f.delete());
 		}
 		assertEquals(false, fe.persisted(filesHome));
 		
@@ -618,7 +622,7 @@ class DaoTest {
 		assertEquals(fe, fileEntityDao.findById(fe.getId()));
 		
 		try {
-			assertTrue(f.createNewFile());
+			assertEquals(true, f.createNewFile());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
