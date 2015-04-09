@@ -39,6 +39,10 @@ class DaoTest {
 		logger.info("GenericXmlApplicationContext initialized OK");
 	}
 	
+	protected static void tearDownAfterClass() throws Exception {
+		ctx.close();
+	}
+	
 	protected void deleteAllTemporalObjects() {
 		for (Tag t : temporalTags) {
 			if (tagDao.findById(t.getId()) != null) {

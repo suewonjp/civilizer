@@ -22,6 +22,7 @@ public class DaoUrlTest extends DaoTest {
     
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
+    	DaoTest.tearDownAfterClass();
     }
 
     @Before

@@ -42,6 +42,7 @@ public class WebFileBoxTest {
 	
 	@AfterClass
     public static void tearDownAfterClass() throws Exception {
+		ctx.close();
 		TestUtil.unconfigure();
     }
 	

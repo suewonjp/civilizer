@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.BeansException;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.civilizer.config.AppOptions;
@@ -92,11 +93,18 @@ public class ConfigTest {
         TestUtil.configure();
         
         GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
-        ctx.load("classpath:datasource-context-h2-url.xml");
-        ctx.refresh();
-        FragmentDao fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
-        assertNotNull(fragmentDao);
-        ctx.close();
+		try {
+			ctx.load("classpath:datasource-context-h2-url.xml");
+			ctx.refresh();
+			FragmentDao fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
+			assertNotNull(fragmentDao);
+		} catch (BeansException e) {
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} finally {
+			ctx.close();
+		}
     }
 
 }
