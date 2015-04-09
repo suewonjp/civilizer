@@ -25,6 +25,8 @@ import com.civilizer.web.view.FilePathTree;
 
 public class WebFileBoxTest {
 	
+	private static GenericXmlApplicationContext ctx;
+	
 	private static FileEntityDao fileEntityDao;
 	
 	static String filesHomePath;
@@ -52,7 +54,7 @@ public class WebFileBoxTest {
 	}
 	
 	private static void renewTestData() {
-		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+		ctx = new GenericXmlApplicationContext();
 		ctx.load("classpath:datasource-context-h2-embedded.xml");
 		ctx.refresh();
 		

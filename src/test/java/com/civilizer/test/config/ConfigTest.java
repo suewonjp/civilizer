@@ -96,6 +96,7 @@ public class ConfigTest {
         ctx.refresh();
         FragmentDao fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
         assertNotNull(fragmentDao);
+        ctx.close();
     }
 
 }
