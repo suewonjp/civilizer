@@ -39,7 +39,9 @@ function setContextMenuForTags() {
    	
 	$(".each-tag").bind("contextmenu", function(event) {
     	menu.css({ left:event.pageX, top:event.pageY }).show();
-    	menu.data("target-tag", $(event.target).closest(".each-tag"));
+    	var target = $(event.target).closest(".each-tag");
+    	menu.data("target-tag", target);
+    	$("#tag-palette-form\\:id-placeholder-for-tag").val(target.attr("_tid"));
     	event.preventDefault();
     });
 
@@ -54,8 +56,6 @@ function onExpandComplete() {
 }
 
 function showEditTagDialog() {
-    var dlg = PF('editTagDlg');
-    dlg.show();
 	var menu = $("#tag-context-menu");
 	var target = menu.data("target-tag");
 	var tagId = target.attr("_tid");
@@ -64,7 +64,28 @@ function showEditTagDialog() {
         // [NOTE] user editable tags have id > 0
         $("#tag-palette-form\\:id-placeholder-for-tag").val(tagId);
     }
-    $("#tag-palette-form\\:edit-tag-dlg-name-input").val(tagName);
+    $("#tag-palette-form\\:rename-tag-dlg-name-input").val(tagName).focus(function() {
+    	$(this).select();
+    });
+    
+    var dlg = PF("renameTagDlg");
+    dlg.show();
+}
+
+function showTagEditor() {
+	var dlg = PF("tagEditor");
+	dlg.show();
+	
+	var menu = $("#tag-context-menu");
+	var target = menu.data("target-tag");
+	var tagId = target.attr("_tid");
+	var tagName = target.find(".each-tag-name").text();
+	
+	var inplace = PF("tagNameInplace");
+	inplace.jq.find(".ui-inplace-display").text(tagName)[0].title="#{msg['click_to_edit']}";
+	inplace.jq.find(".ui-inplace-content input").val(tagName);
+	
+	inplace.hide();
 }
 
 //]]>
@@ -75,21 +96,37 @@ function showEditTagDialog() {
 </div>
 
 <h:form id="tag-palette-form">
-    <p:dialog header="#{msg['label_rename']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="editTagDlg" position="center" draggable="true" resizable="false" >
-        <h:outputLabel for="edit-tag-dlg-name-input" value="#{msg['label_name']} :" />
-        <p:inputText style="min-width:200px" id="edit-tag-dlg-name-input" value="#{paramTagBean.tag.tagName}" />
-        <h:inputHidden id="id-placeholder-for-tag" value="#{paramTagBean.tag.id}" />
-        <br /><br />
-        <p:commandButton action="save-tag" value="#{msg['label_ok']}" icon="ui-icon-check">
-        </p:commandButton>
+    <p:dialog header="#{msg['label_rename']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="renameTagDlg" position="center" draggable="true" resizable="false" >
+        <h:outputLabel for="rename-tag-dlg-name-input" value="#{msg['label_name']} " />
+        <p:inputText style="min-width:200px" id="rename-tag-dlg-name-input" value="#{paramTagBean.tag.tagName}" />
+        <br/><br/>
+        <p:commandButton action="save-tag" value="#{msg['label_ok']}" icon="ui-icon-check"/>
+    </p:dialog>
+
+    <p:dialog id="tag-editor" header="#{msg['label_edit']}" width="600px" modal="false" showEffect="fade" widgetVar="tagEditor" position="center" draggable="true" resizable="false" >
+    	<div class="fa fa-tag">&nbsp;&nbsp;
+	    	<p:inplace widgetVar="tagNameInplace">
+	            <p:inputText style="width:80%" value="#{paramTagBean.tag.tagName}" />
+	        </p:inplace>
+    	</div>
+    	<br/>
+        <div class="fa fa-arrow-down"></div>
+        <p:panel>
+        </p:panel>
+        <p:commandButton action="save-tag" value="#{msg['label_save']}" icon="ui-icon-check"/>
     </p:dialog>
     
     <div id="tag-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
             <p:menuitem styleClass="fa" onclick="showEditTagDialog()" value="&#xf040; #{msg['label_rename']}"/>
+            <p:menuitem styleClass="fa" oncomplete="showTagEditor()" value="&#xf040; #{msg['label_edit']}"
+            	update="tag-editor" actionListener="#{mainController.populateTagBean(paramTagBean)}"/>
+<!--             <p:menuitem styleClass="fa" onclick="showTagEditor()" value="&#xf040; #{msg['label_edit']}"/> -->
             <p:menuitem styleClass="fa" onclick="confirmTrashingTagFromCtxtMenu()" value="&#xf1f8; #{msg['label_trash']}"/>
 	    </p:menu>
     </div>
+    
+    <h:inputHidden id="id-placeholder-for-tag" value="#{paramTagBean.tag.id}" />
     
     <div id="tag-palette-panel">
         <ul>
@@ -125,7 +162,7 @@ function showEditTagDialog() {
             <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
                 <c:set var="tag" value="#{tagBean.tag}"/>
                 <ui:include src="each-tag.xhtml" />
-                <br />
+                <br/>
             </c:forEach>
         </div>
         <div id="tag-palette-tree">

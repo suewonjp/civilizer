@@ -342,7 +342,7 @@ function populateFragmentOverlay(data) {
 }
 
 function showSortOptionDialog(panelId) {
-	PF('sortOptionDlg' + panelId).show();
+	PF("sortOptionDlg" + panelId).show();
 }
 
 function fragmentCheckBoxesAreChecked(panelId) {
@@ -364,7 +364,7 @@ function showError(message) {
 }
 
 function showConfirmDlg(message) {
-	var dlg = PF('confirmDlg');
+	var dlg = PF("confirmDlg");
     dlg.show();
     dlg.jq.find(".ui-confirm-dialog-message").text(message);
 }

@@ -77,7 +77,7 @@ function processFileClasses() {
 }
 
 function showFileUploadDialog() {
-	var dlg = PF('moveFileDlg');
+	var dlg = PF("moveFileDlg");
     dlg.show();
     dlg.jq.find(".ui-dialog-title").text("#{msg['label_upload_file']}");
     
@@ -127,7 +127,7 @@ function showFileUploadDialog() {
 }
 
 function showMoveFileDialog() {
-	var dlg = PF('moveFileDlg');
+	var dlg = PF("moveFileDlg");
     dlg.show();
     dlg.jq.find(".ui-dialog-title").text("#{msg['label_move']}");
     
@@ -180,13 +180,11 @@ function showRenameFileDialog() {
     $("#file-box-form\\:id-placeholder-for-src-node").val(srcId);
     
 	var curName = target.text().trim();
-    var input = $("#file-box-form\\:rename-file-dlg-name-input");
-    input.val(curName);
-    input.focus(function() {
+    $("#file-box-form\\:rename-file-dlg-name-input").val(curName).focus(function() {
     	$(this).select();
     });
     
-    var dlg = PF('renameFileDlg');
+    var dlg = PF("renameFileDlg");
     dlg.show();
     dlg.jq.find(".ui-dialog-title").text("#{msg['label_rename']}");
 }
@@ -210,7 +208,7 @@ function showNewDirectoryDialog(target) {
 	
     $("#file-box-form\\:rename-file-dlg-name-input").val("new-directory");
     
-    var dlg = PF('renameFileDlg');
+    var dlg = PF("renameFileDlg");
     dlg.show();
     dlg.jq.find("input").focus(function() {
     	$(this).select();

@@ -249,7 +249,12 @@ public final class MainController {
 		tagBean.setTag(tag);
 		return tagBean;
 	}
-
+	
+	public void populateTagBean(TagBean tagBean) {
+		// [TODO] replace the stub code with implementation
+		System.out.println("***** " + tagBean.getTag().getId());
+	}
+	
 	public SpecialTagBean newBookmarkTagBean() {
 		final SpecialTagBean tagBean = new SpecialTagBean();
 		
