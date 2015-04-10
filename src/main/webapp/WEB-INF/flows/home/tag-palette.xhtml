@@ -84,7 +84,6 @@ function showTagEditor() {
 	var inplace = PF("tagNameInplace");
 	inplace.jq.find(".ui-inplace-display").text(tagName)[0].title="#{msg['click_to_edit']}";
 	inplace.jq.find(".ui-inplace-content input").val(tagName);
-	
 	inplace.hide();
 }
 
@@ -116,13 +115,27 @@ function showTagEditor() {
 	        	<div class="fa fa-arrow-down"></div>
     		</f:facet>
 	        <p:panel>
+	            <div class="fa fa-tag">
+	                &nbsp;&nbsp;
+	                <p:inplace widgetVar="newParentTagInplace" editor="true"
+	                   emptyLabel="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
+		                <p:inputText style="width:50%" value="#{paramTagBean.newParentTagName}" />
+		            </p:inplace>
+	            </div><br/>
         		<ui:repeat var="parent" value="#{paramTagBean.parentTags}">
-        			<h:outputText value="#{parent.tagName}"/><br/>
+        			<span class="fa fa-tag">&nbsp;&nbsp;#{parent.tagName}</span><br/>
         		</ui:repeat>
 	        </p:panel>
 	        <p:panel>
+	            <div class="fa fa-tag">
+                    &nbsp;&nbsp;
+                    <p:inplace widgetVar="newChildTagInplace" editor="true"
+                       emptyLabel="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
+                        <p:inputText style="width:50%" value="#{paramTagBean.newChildTagName}" />
+                    </p:inplace>
+                </div><br/>
         		<ui:repeat var="child" value="#{paramTagBean.tag.listOfChildren()}">
-        			<h:outputText value="#{child.tagName}"/><br/>
+        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}</span><br/>
         		</ui:repeat>
 	        </p:panel>
     	</h:panelGrid>

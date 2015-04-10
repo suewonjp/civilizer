@@ -15,6 +15,10 @@ public final class TagBean implements Serializable {
     
     private List<Tag> parentTags;
     
+    private String newParentTagName = "";
+
+    private String newChildTagName = "";
+    
     private long fragmentCount = 0;
 
 //	public void clear() {
@@ -40,7 +44,29 @@ public final class TagBean implements Serializable {
 		this.parentTags = parentTags;
 	}
 
-	public long getFragmentCount() {
+	public String getNewParentTagName() {
+        return newParentTagName;
+    }
+
+    public void setNewParentTagName(String newParentTagName) {
+        if (newParentTagName.equals("")) {
+            return;
+        }
+        parentTags.add(new Tag(newParentTagName));
+    }
+
+    public String getNewChildTagName() {
+        return newChildTagName;
+    }
+
+    public void setNewChildTagName(String newChildTagName) {
+        if (newChildTagName.equals("")) {
+            return;
+        }
+        tag.addChild(new Tag(newChildTagName));
+    }
+
+    public long getFragmentCount() {
 		return fragmentCount;
 	}
 
