@@ -232,10 +232,11 @@ public final class FragmentDaoImpl implements FragmentDao {
 	
 	@Override
     public Fragment findById(Long id) {
-        return (Fragment) sessionFactory.getCurrentSession()
-                .getNamedQuery("Fragment.findById")
-                .setParameter("id", id)
-                .uniqueResult();
+//        return (Fragment) sessionFactory.getCurrentSession()
+//                .getNamedQuery("Fragment.findById")
+//                .setParameter("id", id)
+//                .uniqueResult();
+		return (Fragment) sessionFactory.getCurrentSession().get(Fragment.class, id);
     }
 
 	@Override

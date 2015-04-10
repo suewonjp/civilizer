@@ -68,11 +68,11 @@
               + "  where t2f.tagId = 0 "
               + ") "
               ),
-    @NamedQuery(name = "Fragment.findById",
-        query = "select distinct f "
-              + "from Fragment f "
-              + "where f.id = :id "
-              ),
+//    @NamedQuery(name = "Fragment.findById",
+//        query = "select distinct f "
+//              + "from Fragment f "
+//              + "where f.id = :id "
+//              ),
     @NamedQuery(name = "Fragment.findByIdWithAll",
         query = "select distinct f "
               + "from Fragment f "
@@ -225,11 +225,11 @@
               + "  inner join t.children c "
               + "where t.id = :id"
 		      ),
-    @NamedQuery(name = "Tag.findById",
-        query = "select distinct t "
-              + "from Tag t "
-              + "where t.id = :id"
-              ),
+//    @NamedQuery(name = "Tag.findById",
+//        query = "select distinct t "
+//              + "from Tag t "
+//              + "where t.id = :id"
+//              ),
     @NamedQuery(name = "Tag.findByIdWithChildren",
         query = "select distinct t "
               + "from Tag t "
@@ -266,11 +266,11 @@
         	  + "from FileEntity f"
               ),
 
-    @NamedQuery(name = "FileEntity.findById",
-        query = "select distinct fe "
-              + "from FileEntity fe "
-              + "where fe.id = :id"
-              ),
+//    @NamedQuery(name = "FileEntity.findById",
+//        query = "select distinct fe "
+//              + "from FileEntity fe "
+//              + "where fe.id = :id"
+//              ),
 
     @NamedQuery(name = "FileEntity.findByName",
         query = "select distinct fe "
