@@ -110,9 +110,22 @@ function showTagEditor() {
 	        </p:inplace>
     	</div>
     	<br/>
-        <div class="fa fa-arrow-down"></div>
-        <p:panel>
-        </p:panel>
+    	<h:panelGrid columns="2" cellpadding="10">
+    		<f:facet name="header">
+	        	<div class="fa fa-arrow-up"></div>
+	        	<div class="fa fa-arrow-down"></div>
+    		</f:facet>
+	        <p:panel>
+        		<ui:repeat var="parent" value="#{paramTagBean.parentTags}">
+        			<h:outputText value="#{parent.tagName}"/><br/>
+        		</ui:repeat>
+	        </p:panel>
+	        <p:panel>
+        		<ui:repeat var="child" value="#{paramTagBean.tag.listOfChildren()}">
+        			<h:outputText value="#{child.tagName}"/><br/>
+        		</ui:repeat>
+	        </p:panel>
+    	</h:panelGrid>
         <p:commandButton action="save-tag" value="#{msg['label_save']}" icon="ui-icon-check"/>
     </p:dialog>
     

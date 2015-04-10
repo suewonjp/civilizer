@@ -106,6 +106,10 @@ public final class Tag implements Serializable {
         children.add(c);
     }
     
+    public List<Tag> listOfChildren() {
+    	return new ArrayList<>(children);
+    }
+    
     public static String getTagNamesFrom(Collection<Tag> tags) {
     	String result = new String();
     	for (Tag t : tags) {

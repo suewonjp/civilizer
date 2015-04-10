@@ -112,7 +112,7 @@ public final class TagDaoImpl implements TagDao {
     
     @Override
     public void populate(Tag target, boolean withFragments, boolean withChildren) {
-    	final Tag tmp = (Tag) sessionFactory.getCurrentSession().merge(target);
+    	final Tag tmp = (Tag) sessionFactory.getCurrentSession().get(Tag.class, target.getId());
     	if (withFragments) {
     		Hibernate.initialize(tmp.getFragments());
     		target.setFragments(tmp.getFragments());

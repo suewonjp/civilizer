@@ -251,8 +251,9 @@ public final class MainController {
 	}
 	
 	public void populateTagBean(TagBean tagBean) {
-		// [TODO] replace the stub code with implementation
-		System.out.println("***** " + tagBean.getTag().getId());
+		final Tag tag = tagBean.getTag();
+		tagDao.populate(tag, false, true);
+		tagBean.setParentTags(tagDao.findParentTags(tag.getId()));
 	}
 	
 	public SpecialTagBean newBookmarkTagBean() {

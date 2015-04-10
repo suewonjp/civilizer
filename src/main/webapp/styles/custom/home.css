@@ -297,3 +297,22 @@
 	font-weight:bold;
 	color: lime;
 }
+
+#tag-palette-form\:tag-editor th {
+	background-color: black;
+}
+
+#tag-palette-form\:tag-editor .fa-arrow-up {
+	position: relative;
+	left: 20%;
+}
+
+#tag-palette-form\:tag-editor .fa-arrow-down {
+	position: relative;
+	left: 80%;
+}
+
+#tag-palette-form\:tag-editor td {
+	background-color: gray;
+	width: 280px;
+}
