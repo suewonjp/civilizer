@@ -251,6 +251,10 @@ public final class Tag implements Serializable {
     public static boolean isTrashTag(long id) {
     	return  (id == TRASH_TAG_ID);
     }
+
+    public static boolean isTrivialTag(long id) {
+    	return  (id > TRASH_TAG_ID);
+    }
     
     @Override
     public int hashCode() {
