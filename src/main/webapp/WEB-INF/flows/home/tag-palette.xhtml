@@ -117,9 +117,11 @@ function showTagEditor() {
 	        <p:panel>
 	            <div class="fa fa-tag">
 	                &nbsp;&nbsp;
-	                <p:inplace widgetVar="newParentTagInplace" editor="true"
-	                   emptyLabel="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
-		                <p:inputText style="width:50%" value="#{paramTagBean.newParentTagName}" />
+	                <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
+<!-- 		                <p:inputText style="width:50%" value="#{paramTagBean.newParentTagName}" /> -->
+						<p:selectOneListbox value="#{paramTagBean.newParentTagId}">
+					    	<f:selectItems value="#{tagListBean.tags}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
+						</p:selectOneListbox>
 		            </p:inplace>
 	            </div><br/>
         		<ui:repeat var="parent" value="#{paramTagBean.parentTags}">
@@ -129,9 +131,11 @@ function showTagEditor() {
 	        <p:panel>
 	            <div class="fa fa-tag">
                     &nbsp;&nbsp;
-                    <p:inplace widgetVar="newChildTagInplace" editor="true"
-                       emptyLabel="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
-                        <p:inputText style="width:50%" value="#{paramTagBean.newChildTagName}" />
+                    <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
+<!--                         <p:inputText style="width:50%" value="#{paramTagBean.newChildTagName}" /> -->
+						<p:selectOneListbox value="#{paramTagBean.newChildTagName}">
+					    	<f:selectItems value="#{tagListBean.tags}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.tagName}" />
+						</p:selectOneListbox>
                     </p:inplace>
                 </div><br/>
         		<ui:repeat var="child" value="#{paramTagBean.tag.listOfChildren()}">
