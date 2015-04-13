@@ -91,10 +91,6 @@ public final class TagDaoImpl implements TagDao {
     
     @Override
     public Tag findById(Long id) {
-//        return (Tag) sessionFactory.getCurrentSession()
-//                .getNamedQuery("Tag.findById")
-//                .setParameter("id", id)
-//                .uniqueResult();
     	return (Tag) sessionFactory.getCurrentSession().get(Tag.class, id);
     }
 
