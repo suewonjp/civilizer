@@ -447,19 +447,17 @@ public final class MainController {
 		return output;
 	}
 	
-	public void saveTag(TagBean tb, TagListBean tagListBean) {
+	public void saveTag(TagBean tagBean, TagListBean tagListBean) {
 		final TagBean tagToEdit = tagListBean.getTagToEdit();
-		Tag t = tagToEdit.getTag();
-		final String newName = tb.getTag().getTagName();
+		final Tag t = tagToEdit.getTag();
 		final String oldName = t.getTagName();
-		if (oldName.equals(newName) == false) {
-			t.setTagName(newName);
-		}
+		final String newName = tagBean.getTag().getTagName();
+		t.setTagName(newName);
 		
 		try {
-			if (tagListBean.relationshipsTouched()) {
-				// persistence request from the tag editor; relationships would be updated
-				tagDao.saveWithHierarchy(tagToEdit.getTag(), tagListBean.getParentTags(), tagListBean.getChildTags());
+			if (tagListBean.isHierarchyTouched()) {
+				// persistence request from the tag editor; tag hierarchy would be updated
+				tagDao.saveWithHierarchy(t, tagListBean.getParentTags(), tagListBean.getChildTags());
 			}
 			else {
 				// persistence request without updating relationships; e.g. renaming only

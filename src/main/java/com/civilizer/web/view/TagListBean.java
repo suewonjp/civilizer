@@ -23,6 +23,8 @@ public final class TagListBean implements Serializable {
     private long newParentTagId = Tag.TRASH_TAG_ID;
 
     private long newChildTagId = Tag.TRASH_TAG_ID;
+    
+    private boolean hierarchyTouched;
 
     public List<Tag> getTags() {
         return tags;
@@ -70,6 +72,7 @@ public final class TagListBean implements Serializable {
 		if (tag.getChildren().isEmpty() == false) {
 			childTags = new ArrayList<>(tag.getChildren());
 		}
+		hierarchyTouched = false;
 	}
     
     public List<Tag> getParentTags() {
@@ -99,7 +102,7 @@ public final class TagListBean implements Serializable {
 				parentTags = new ArrayList<>();
 			}
 			parentTags.add(tags.get(index));
-			this.newParentTagId = newParentTagId;
+			hierarchyTouched = true;
 		}
 	}
 
@@ -115,6 +118,7 @@ public final class TagListBean implements Serializable {
 			}
 			childTags.add(tags.get(index));
 			this.newChildTagId = newChildTagId;
+			hierarchyTouched = true;
 		}
 	}
 	
@@ -140,8 +144,8 @@ public final class TagListBean implements Serializable {
 		return output;
 	}
 	
-	public boolean relationshipsTouched() {
-		return newParentTagId > Tag.TRASH_TAG_ID && newChildTagId > Tag.TRASH_TAG_ID;
+	public boolean isHierarchyTouched() {
+		return hierarchyTouched;
 	}
 	
 	public List<String> suggest(String input) {
