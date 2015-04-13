@@ -280,32 +280,50 @@ class DaoTest {
 	}
 	
 	protected void testSaveTagWithParents() {
-		final List<Tag> tags = tagDao.findAllWithChildren(false);
-		Collections.shuffle(tags);
-		final List<Tag> parents = tags.subList(0, Math.min(5, tags.size()-1));
+		final List<Tag> tags = tagDao.findAll();
+		Collections.shuffle(tags, TestUtil.getRandom());
 		final Tag tag = tags.get(tags.size()-1);
+		tagDao.populate(tag, false, true);
+		final List<Tag> parents = tags.subList(0, Math.min(5, tags.size()-1));
+		final List<Tag> children = tag.listOfChildren();
 		assertEquals(false, parents.contains(tag));
-		for (Tag p : parents) {
-			p.addChild(tag);
+		
+		if (Collections.disjoint(parents, children) == false) {
+			// [EXCEPTION] parents and children should not have items in common
+			try {
+				tagDao.saveWithHierarchy(tag, parents, children);
+				fail("Failed to catch an expected exception");
+			}
+			catch (IllegalArgumentException e) {}
+			
+			// retry with another configuration;
+			testSaveTagWithParents();
+			return;
 		}
 		
-		tagDao.saveWithParents(tag, parents);
+		// trivial cases
+		tagDao.saveWithHierarchy(tag, parents, children);
 		for (Tag p : parents) {
-			final Tag t = tagDao.findById(p.getId(), false, true);
-			assertEquals(true, t.getChildren().contains(tag));
+			p = tagDao.findById(p.getId(), false, true);
+			assertEquals(true, p.getChildren().contains(tag));
+		}
+		for (Tag c : children) {
+			assertEquals(true, tag.getChildren().contains(c));
 		}
 		
+		// [EXCEPTION] the target tag exists in the parents list
 		parents.add(tag);
 		try {
-			tagDao.saveWithParents(tag, parents);
+			tagDao.saveWithHierarchy(tag, parents, children);
 			fail("Failed to catch an expected exception");
 		}
 		catch (IllegalArgumentException e) {}
 		
+		// [EXCEPTION] the target tag exists in the children list
 		parents.remove(tag);
-		tag.addChild(tag);
+		children.add(tag);
 		try {
-			tagDao.saveWithParents(tag, parents);
+			tagDao.saveWithHierarchy(tag, parents, children);
 			fail("Failed to catch an expected exception");
 		}
 		catch (IllegalArgumentException e) {}

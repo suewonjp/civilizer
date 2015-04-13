@@ -32,7 +32,7 @@ public interface TagDao {
 
     public void save(Tag tag);
 
-    public void saveWithParents(Tag tag, Collection<Tag> parents);
+    public void saveWithHierarchy(Tag tag, Collection<Tag> parents, Collection<Tag> children);
 
     public void delete(Tag tag);
     

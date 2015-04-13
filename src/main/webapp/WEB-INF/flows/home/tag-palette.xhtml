@@ -119,7 +119,7 @@ function showTagEditor() {
 	                &nbsp;&nbsp;
 	                <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
 	                	<p:ajax event="save" update="parent-tags"/>
-						<p:selectOneListbox value="#{tagListBean.newParentTagId}" filter="true" filterMatchMode="contains">
+						<p:selectOneListbox value="#{tagListBean.newParentTagId}" scrollHeight="160" filter="true" filterMatchMode="contains">
 					    	<f:selectItems value="#{tagListBean.listOfSelectableParents()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
 						</p:selectOneListbox>
 		            </p:inplace>
@@ -135,7 +135,7 @@ function showTagEditor() {
                     &nbsp;&nbsp;
                     <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
                     	<p:ajax event="save" update="child-tags"/>
-						<p:selectOneListbox value="#{tagListBean.newChildTagId}" filter="true" filterMatchMode="contains">
+						<p:selectOneListbox value="#{tagListBean.newChildTagId}" scrollHeight="160" filter="true" filterMatchMode="contains">
 					    	<f:selectItems value="#{tagListBean.listOfSelectableChildren()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
 						</p:selectOneListbox>
                     </p:inplace>

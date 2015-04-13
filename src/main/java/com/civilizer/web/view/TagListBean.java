@@ -95,7 +95,7 @@ public final class TagListBean implements Serializable {
 	public void setNewParentTagId(long newParentTagId) {
 		if (Tag.isTrivialTag(newParentTagId)) {
 			final int index = indexOf(newParentTagId);
-			if (parentTags == Collections.<Tag>emptyList()) {
+			if (parentTags.equals(Collections.emptyList())) {
 				parentTags = new ArrayList<>();
 			}
 			parentTags.add(tags.get(index));
@@ -109,7 +109,7 @@ public final class TagListBean implements Serializable {
 	public void setNewChildTagId(long newChildTagId) {
 		if (Tag.isTrivialTag(newChildTagId)) {
 			final int index = indexOf(newChildTagId);
-			if (childTags == Collections.<Tag>emptyList()) {
+			if (childTags.equals(Collections.emptyList())) {
 				childTags = new ArrayList<>();
 			}
 			childTags.add(tags.get(index));
@@ -137,6 +137,14 @@ public final class TagListBean implements Serializable {
 		}
 		return output;
 	}
+	
+//	public void prepareToPersistTagToEdit() {
+//		final Tag tgt = tagToEdit.getTag();
+//		for (Tag tag : parentTags) {
+//			tag.addChild(tgt);
+//		}
+//		tgt.setChildren(new HashSet<Tag>(childTags));
+//	}
 
 	public List<String> suggest(String input) {
     	final List<String> results = new ArrayList<String>();

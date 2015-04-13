@@ -465,13 +465,29 @@ public final class MainController {
 			t = Tag.getTagFromId(t.getId(), tagListBean.getTags());
 			final String oldName = t.getTagName();
 			t.setTagName(newName);
-			try {
-				tagDao.save(t);
-				ViewUtil.addMessage("Renamed", "Tag : " + oldName + " => " + newName, null);
+			final TagBean tagToEdit = tagListBean.getTagToEdit();
+			if (tagToEdit == null) {
+				// persistence request without updating relationships; mostly renaming only
+				try {
+					tagDao.save(t);
+					ViewUtil.addMessage("Updated", "Tag : " + oldName + " => " + newName, null);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					ViewUtil.addMessage("Error on updating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				}
 			}
-			catch (Exception e) {
-				e.printStackTrace();
-				ViewUtil.addMessage("Error on renaming a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			else {
+				// persistence request from the tag editor; relationships would be affected as well as a name
+//				tagListBean.prepareToPersistTagToEdit();
+				try {
+					tagDao.saveWithHierarchy(tagToEdit.getTag(), tagListBean.getParentTags(), tagListBean.getChildTags());
+					ViewUtil.addMessage("Updated", "Tag : " + oldName + " => " + newName, null);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					ViewUtil.addMessage("Error on updating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				}
 			}
 		}
 	}

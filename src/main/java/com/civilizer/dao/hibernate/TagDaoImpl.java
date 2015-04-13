@@ -134,18 +134,46 @@ public final class TagDaoImpl implements TagDao {
     }
     
     @Override
-    public void saveWithParents(Tag tag, Collection<Tag> parents) {
+    public void saveWithHierarchy(Tag tag, Collection<Tag> parents, Collection<Tag> children) {
     	final Session session = sessionFactory.getCurrentSession();
+    	
     	if (parents.contains(tag)) {
     		throw new IllegalArgumentException("The target tag '" + tag.getTagName() +  "' exists in its parents list!");
     	}
-    	if (tag.getChildren().contains(tag)) {
+    	if (children.contains(tag)) {
     		throw new IllegalArgumentException("The target tag '" + tag.getTagName() +  "' exists in its children list!");
     	}
+    	if (Collections.disjoint(parents, children) == false) {
+    		throw new IllegalArgumentException("The parents and children have one or more tags in common!");
+    	}
+    	
+    	// Persist the target tag without its relationships touched;
+    	save(tag);
+    	
+    	tag = (Tag) session.get(Tag.class, tag.getId());
+    	final long tid = tag.getId();
+    	
+    	final String[] qs = {
+    			// delete all existing parent relationships
+    			"delete from tag2tag where child_id = " + tid,
+    			// delete all existing child relationships
+    			"delete from tag2tag where parent_id = " + tid,
+    	};
+    	
+    	session.createSQLQuery(qs[0]).executeUpdate();
+    	session.createSQLQuery(qs[1]).executeUpdate();
+    	
+    	// reconstruct parent relationships
     	for (Tag p : parents) {
-			session.saveOrUpdate(p);
-		}
-    	session.saveOrUpdate(tag);
+    		final String s = "insert into tag2tag(parent_id, child_id) values (" +p.getId()+ ", " +tid+ ")";
+    		session.createSQLQuery(s).executeUpdate();
+    	}
+    	
+    	// reconstruct child relationships
+    	for (Tag c : children) {
+    		final String s = "insert into tag2tag(parent_id, child_id) values (" +tid+ ", " +c.getId()+ ")";
+    		session.createSQLQuery(s).executeUpdate();
+    	}
     }
 
     @Override
