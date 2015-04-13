@@ -232,10 +232,6 @@ public final class FragmentDaoImpl implements FragmentDao {
 	
 	@Override
     public Fragment findById(Long id) {
-//        return (Fragment) sessionFactory.getCurrentSession()
-//                .getNamedQuery("Fragment.findById")
-//                .setParameter("id", id)
-//                .uniqueResult();
 		return (Fragment) sessionFactory.getCurrentSession().get(Fragment.class, id);
     }
 
@@ -277,8 +273,8 @@ public final class FragmentDaoImpl implements FragmentDao {
     public void relateFragments(long id0, long id1) {
     	final Session session = sessionFactory.getCurrentSession();
     	final String[] qs = {
-    			"insert into fragment2fragment(from_id, to_id) values ("+ id0 + ", "+ id1+ ")",
-    			"insert into fragment2fragment(from_id, to_id) values ("+ id1 + ", "+ id0+ ")",
+    			"insert into fragment2fragment(from_id, to_id) values (" +id0+ ", " +id1+ ")",
+    			"insert into fragment2fragment(from_id, to_id) values (" +id1+ ", " +id0+ ")",
     	};
     	session.createSQLQuery(qs[0]).executeUpdate();
     	session.createSQLQuery(qs[1]).executeUpdate();
@@ -288,8 +284,8 @@ public final class FragmentDaoImpl implements FragmentDao {
     public void unrelateFragments(long id0, long id1) {
     	final Session session = sessionFactory.getCurrentSession();
     	final String[] qs = {
-    			"delete from fragment2fragment where from_id = " + id0 + " and to_id = " + id1,
-    			"delete from fragment2fragment where from_id = " + id1 + " and to_id = " + id0,
+    			"delete from fragment2fragment where from_id = " +id0+ " and to_id = " +id1,
+    			"delete from fragment2fragment where from_id = " +id1+ " and to_id = " +id0,
     	};
     	session.createSQLQuery(qs[0]).executeUpdate();
     	session.createSQLQuery(qs[1]).executeUpdate();

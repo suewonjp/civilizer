@@ -479,7 +479,6 @@ public final class MainController {
 			}
 			else {
 				// persistence request from the tag editor; relationships would be affected as well as a name
-//				tagListBean.prepareToPersistTagToEdit();
 				try {
 					tagDao.saveWithHierarchy(tagToEdit.getTag(), tagListBean.getParentTags(), tagListBean.getChildTags());
 					ViewUtil.addMessage("Updated", "Tag : " + oldName + " => " + newName, null);
