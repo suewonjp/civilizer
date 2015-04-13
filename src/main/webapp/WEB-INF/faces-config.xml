@@ -13,7 +13,7 @@
             <var>msg</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>view-options.properties</base-name>
+            <base-name>view-options</base-name>
             <var>cfg</var>
         </resource-bundle>
     </application>
