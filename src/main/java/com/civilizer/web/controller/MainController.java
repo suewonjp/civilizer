@@ -452,6 +452,10 @@ public final class MainController {
 		final Tag t = tagToEdit.getTag();
 		final String oldName = t.getTagName();
 		final String newName = tagBean.getTag().getTagName();
+		if (newName.isEmpty()) {
+			ViewUtil.addMessage("Error on updating a tag!!!", "An empty tag name is not allowed!", FacesMessage.SEVERITY_ERROR);
+			return;
+		}
 		t.setTagName(newName);
 		
 		try {

@@ -117,7 +117,24 @@ public final class TagListBean implements Serializable {
 				childTags = new ArrayList<>();
 			}
 			childTags.add(tags.get(index));
-			this.newChildTagId = newChildTagId;
+			hierarchyTouched = true;
+		}
+	}
+	
+	public void removeParentTag(long tagId) {
+		if (Tag.isTrivialTag(tagId)) {
+			final int index = indexOf(tagId);
+//			System.out.println("before: " + parentTags.size());
+			parentTags.remove(tags.get(index));
+//			System.out.println("after: " + parentTags.size());
+			hierarchyTouched = true;
+		}
+	}
+
+	public void removeChildTag(long tagId) {
+		if (Tag.isTrivialTag(tagId)) {
+			final int index = indexOf(tagId);
+			childTags.remove(tags.get(index));
 			hierarchyTouched = true;
 		}
 	}

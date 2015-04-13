@@ -132,14 +132,16 @@ function showTagEditor() {
 	                &nbsp;&nbsp;
 	                <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
 	                	<p:ajax event="save" update="parent-tags"/>
-						<p:selectOneListbox value="#{tagListBean.newParentTagId}" scrollHeight="160" filter="true" filterMatchMode="contains">
+						<p:selectOneListbox value="#{tagListBean.newParentTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
 					    	<f:selectItems value="#{tagListBean.listOfSelectableParents()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
 						</p:selectOneListbox>
 		            </p:inplace>
 	            </div><br/>
 	            <h:panelGroup id="parent-tags">
 	        		<ui:repeat var="parent" value="#{tagListBean.parentTags}">
-	        			<span class="fa fa-tag">&nbsp;&nbsp;#{parent.tagName}</span><br/>
+	        			<span class="fa fa-tag">&nbsp;&nbsp;#{parent.tagName}&nbsp;&nbsp;</span>
+	        			<p:commandLink update=":tag-palette-form:parent-tags" action="#{tagListBean.removeParentTag(parent.id)}" styleClass="fa fa-minus-circle button-link" />
+	        			<br/>
 	        		</ui:repeat>
 	            </h:panelGroup>
 	        </p:panel>
@@ -148,14 +150,16 @@ function showTagEditor() {
                     &nbsp;&nbsp;
                     <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
                     	<p:ajax event="save" update="child-tags"/>
-						<p:selectOneListbox value="#{tagListBean.newChildTagId}" scrollHeight="160" filter="true" filterMatchMode="contains">
+						<p:selectOneListbox value="#{tagListBean.newChildTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
 					    	<f:selectItems value="#{tagListBean.listOfSelectableChildren()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
 						</p:selectOneListbox>
                     </p:inplace>
                 </div><br/>
                 <h:panelGroup id="child-tags">
 	        		<ui:repeat var="child" value="#{tagListBean.childTags}">
-	        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}</span><br/>
+	        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}&nbsp;&nbsp;</span>
+	        			<p:commandLink update=":tag-palette-form:child-tags" action="#{tagListBean.removeChildTag(child.id)}" styleClass="fa fa-minus-circle button-link" />
+	        			<br/>
 	        		</ui:repeat>
                 </h:panelGroup>
 	        </p:panel>
