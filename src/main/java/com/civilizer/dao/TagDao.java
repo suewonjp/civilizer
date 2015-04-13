@@ -32,6 +32,8 @@ public interface TagDao {
 
     public void save(Tag tag);
 
+    public void saveWithParents(Tag tag, Collection<Tag> parents);
+
     public void delete(Tag tag);
     
 }

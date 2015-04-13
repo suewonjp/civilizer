@@ -279,6 +279,38 @@ class DaoTest {
 		}
 	}
 	
+	protected void testSaveTagWithParents() {
+		final List<Tag> tags = tagDao.findAllWithChildren(false);
+		Collections.shuffle(tags);
+		final List<Tag> parents = tags.subList(0, Math.min(5, tags.size()-1));
+		final Tag tag = tags.get(tags.size()-1);
+		assertEquals(false, parents.contains(tag));
+		for (Tag p : parents) {
+			p.addChild(tag);
+		}
+		
+		tagDao.saveWithParents(tag, parents);
+		for (Tag p : parents) {
+			final Tag t = tagDao.findById(p.getId(), false, true);
+			assertEquals(true, t.getChildren().contains(tag));
+		}
+		
+		parents.add(tag);
+		try {
+			tagDao.saveWithParents(tag, parents);
+			fail("Failed to catch an expected exception");
+		}
+		catch (IllegalArgumentException e) {}
+		
+		parents.remove(tag);
+		tag.addChild(tag);
+		try {
+			tagDao.saveWithParents(tag, parents);
+			fail("Failed to catch an expected exception");
+		}
+		catch (IllegalArgumentException e) {}
+	}
+	
 	private void findAllAncestorsOfTag(Tag tag, Set<Tag> idsInOut) {
 		final List<Tag> parents = tagDao.findParentTags(tag.getId());
 		idsInOut.addAll(parents);

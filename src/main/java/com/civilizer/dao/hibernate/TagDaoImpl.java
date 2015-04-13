@@ -34,7 +34,7 @@ public final class TagDaoImpl implements TagDao {
     
     @Override
     public void executeQuery(String query, boolean sql) {
-    	Session session = sessionFactory.getCurrentSession();
+    	final Session session = sessionFactory.getCurrentSession();
     	Query q = sql ? session.createSQLQuery(query) : session.createQuery(query);
     	q.executeUpdate();
     }
@@ -131,6 +131,21 @@ public final class TagDaoImpl implements TagDao {
     @Override
     public void save(Tag tag) {
         sessionFactory.getCurrentSession().saveOrUpdate(tag);
+    }
+    
+    @Override
+    public void saveWithParents(Tag tag, Collection<Tag> parents) {
+    	final Session session = sessionFactory.getCurrentSession();
+    	if (parents.contains(tag)) {
+    		throw new IllegalArgumentException("The target tag '" + tag.getTagName() +  "' exists in its parents list!");
+    	}
+    	if (tag.getChildren().contains(tag)) {
+    		throw new IllegalArgumentException("The target tag '" + tag.getTagName() +  "' exists in its children list!");
+    	}
+    	for (Tag p : parents) {
+			session.saveOrUpdate(p);
+		}
+    	session.saveOrUpdate(tag);
     }
 
     @Override

@@ -53,6 +53,11 @@ public class DaoEmbeddedTest extends DaoTest {
     }
     
     @Test
+    public void testSaveTagWithParents() {
+    	super.testSaveTagWithParents();
+    }
+    
+    @Test
     public void testTagToFragmentRelationship() {
         super.testTagToFragmentRelationship();
     }
