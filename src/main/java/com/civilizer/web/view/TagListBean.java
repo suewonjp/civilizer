@@ -20,9 +20,9 @@ public final class TagListBean implements Serializable {
 
     private List<Tag> childTags = Collections.emptyList();
     
-    private long newParentTagId;
+    private long newParentTagId = Tag.TRASH_TAG_ID;
 
-    private long newChildTagId;
+    private long newChildTagId = Tag.TRASH_TAG_ID;
 
     public List<Tag> getTags() {
         return tags;
@@ -99,6 +99,7 @@ public final class TagListBean implements Serializable {
 				parentTags = new ArrayList<>();
 			}
 			parentTags.add(tags.get(index));
+			this.newParentTagId = newParentTagId;
 		}
 	}
 
@@ -113,6 +114,7 @@ public final class TagListBean implements Serializable {
 				childTags = new ArrayList<>();
 			}
 			childTags.add(tags.get(index));
+			this.newChildTagId = newChildTagId;
 		}
 	}
 	
@@ -136,6 +138,10 @@ public final class TagListBean implements Serializable {
 			output.remove(tagToEdit.getTag());
 		}
 		return output;
+	}
+	
+	public boolean relationshipsTouched() {
+		return newParentTagId > Tag.TRASH_TAG_ID && newChildTagId > Tag.TRASH_TAG_ID;
 	}
 	
 	public List<String> suggest(String input) {

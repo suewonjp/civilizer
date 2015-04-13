@@ -250,8 +250,10 @@ public final class MainController {
 		return tagBean;
 	}
 
-	public void prepareTagListBeanToEditTag(TagListBean tagListBean, long tagId) {
+	public void prepareTagListBeanToEditTag(TagListBean tagListBean, TagBean tagBean) {
+		final long tagId = tagBean.getTag().getId();
 		tagListBean.setTagToEdit(tagId);
+		tagBean.getTag().setTagName(tagListBean.getTagToEdit().getTag().getTagName());
 		tagListBean.setParentTags(tagDao.findParentTags(tagId));
 	}
 	
@@ -446,48 +448,28 @@ public final class MainController {
 	}
 	
 	public void saveTag(TagBean tb, TagListBean tagListBean) {
-		Tag t = tb.getTag();
-		if (t.getId() == null) {
-			// a new tag
-			try {
-				tagDao.save(t);
-				ViewUtil.addMessage("Created", "Tag : " + t.getTagName(), null);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				ViewUtil.addMessage("Error on creating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-			}
-			
-		}
-		else {
-			// an existing tag
-			final String newName = t.getTagName();
-			t = Tag.getTagFromId(t.getId(), tagListBean.getTags());
-			final String oldName = t.getTagName();
+		final TagBean tagToEdit = tagListBean.getTagToEdit();
+		Tag t = tagToEdit.getTag();
+		final String newName = tb.getTag().getTagName();
+		final String oldName = t.getTagName();
+		if (oldName.equals(newName) == false) {
 			t.setTagName(newName);
-			final TagBean tagToEdit = tagListBean.getTagToEdit();
-			if (tagToEdit == null) {
-				// persistence request without updating relationships; mostly renaming only
-				try {
-					tagDao.save(t);
-					ViewUtil.addMessage("Updated", "Tag : " + oldName + " => " + newName, null);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-					ViewUtil.addMessage("Error on updating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-				}
+		}
+		
+		try {
+			if (tagListBean.relationshipsTouched()) {
+				// persistence request from the tag editor; relationships would be updated
+				tagDao.saveWithHierarchy(tagToEdit.getTag(), tagListBean.getParentTags(), tagListBean.getChildTags());
 			}
 			else {
-				// persistence request from the tag editor; relationships would be affected as well as a name
-				try {
-					tagDao.saveWithHierarchy(tagToEdit.getTag(), tagListBean.getParentTags(), tagListBean.getChildTags());
-					ViewUtil.addMessage("Updated", "Tag : " + oldName + " => " + newName, null);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-					ViewUtil.addMessage("Error on updating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-				}
+				// persistence request without updating relationships; e.g. renaming only
+				tagDao.save(t);
 			}
+			ViewUtil.addMessage("Updated", "Tag : " + oldName + " => " + newName, null);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			ViewUtil.addMessage("Error on updating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	

@@ -55,36 +55,54 @@ function onExpandComplete() {
 	setupDraggableForTags();
 }
 
-function showEditTagDialog() {
-	var menu = $("#tag-context-menu");
-	var target = menu.data("target-tag");
-	var tagId = target.attr("_tid");
-	var tagName = target.find(".each-tag-name").text();
-    if (tagId > 0) {
-        // [NOTE] user editable tags have id > 0
-        $("#tag-palette-form\\:id-placeholder-for-tag").val(tagId);
-    }
-    $("#tag-palette-form\\:rename-tag-dlg-name-input").val(tagName).focus(function() {
-    	$(this).select();
-    });
-    
-    var dlg = PF("renameTagDlg");
-    dlg.show();
-}
-
 function showTagEditor() {
 	var dlg = PF("tagEditor");
 	dlg.show();
 	
 	var menu = $("#tag-context-menu");
 	var target = menu.data("target-tag");
-	var tagId = target.attr("_tid");
 	var tagName = target.find(".each-tag-name").text();
+	if (tagName == "") {
+		tagName = "~unnamed~"
+	}
 	
 	var inplace = PF("tagNameInplace");
-	inplace.jq.find(".ui-inplace-display").text(tagName)[0].title="#{msg['click_to_edit']}";
-	inplace.jq.find(".ui-inplace-content input").val(tagName);
+	var display = inplace.jq.find(".ui-inplace-display");
+	display.text(tagName)[0].title="#{msg['click_to_rename']}";
+	var input = inplace.jq.find(".ui-inplace-content input");
+	input.val(tagName);
 	inplace.hide();
+	
+	function abortInput(val) {
+		input.val(tagName);
+		display.text(tagName);
+	}
+	
+	function commitInput() {
+		var val = input.val();
+		if (! val || val == "") {
+			abortInput(val);
+		}
+		else {
+			display.text(val);
+		}
+		inplace.hide();
+	}
+	
+	dlg.jq.find("#tag-palette-form\\:tag-name-panel").click(function(e) {
+		if (e.target != input[0] && input.is(":visible")) {
+			commitInput();
+		}
+	});
+	
+	input.keypress(function(e) {
+		// [TODO] key check should be in a cross-browser way
+		if (e.keyCode == 13 && input.is(":visible")) {
+			commitInput();
+			e.preventDefault();
+			return false;
+		}
+	});
 }
 
 //]]>
@@ -95,19 +113,14 @@ function showTagEditor() {
 </div>
 
 <h:form id="tag-palette-form">
-    <p:dialog header="#{msg['label_rename']}" width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="renameTagDlg" position="center" draggable="true" resizable="false" >
-        <h:outputLabel for="rename-tag-dlg-name-input" value="#{msg['label_name']} " />
-        <p:inputText style="min-width:200px" id="rename-tag-dlg-name-input" value="#{paramTagBean.tag.tagName}" />
-        <br/><br/>
-        <p:commandButton action="save-tag" value="#{msg['label_ok']}" icon="ui-icon-check"/>
-    </p:dialog>
-
     <p:dialog id="tag-editor" header="#{msg['label_edit']}" width="600px" modal="false" showEffect="fade" widgetVar="tagEditor" position="center" draggable="true" resizable="false" >
-    	<div class="fa fa-tag">&nbsp;&nbsp;
-	    	<p:inplace widgetVar="tagNameInplace">
-	            <p:inputText style="width:80%" value="#{paramTagBean.tag.tagName}" />
-	        </p:inplace>
-    	</div>
+    	<p:panel id="tag-name-panel">
+	    	<div class="fa fa-tag">&nbsp;&nbsp;
+		    	<p:inplace widgetVar="tagNameInplace">
+		            <p:inputText style="width:80%" value="#{paramTagBean.tag.tagName}"/>
+		        </p:inplace>
+	    	</div>
+    	</p:panel>
     	<br/>
     	<h:panelGrid columns="2" cellpadding="10">
     		<f:facet name="header">
@@ -152,9 +165,8 @@ function showTagEditor() {
     
     <div id="tag-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
-            <p:menuitem styleClass="fa" onclick="showEditTagDialog()" value="&#xf040; #{msg['label_rename']}"/>
             <p:menuitem styleClass="fa" oncomplete="showTagEditor()" value="&#xf040; #{msg['label_edit']}"
-            	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean.tag.id)}"/>
+            	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
             <p:menuitem styleClass="fa" onclick="confirmTrashingTagFromCtxtMenu()" value="&#xf1f8; #{msg['label_trash']}"/>
 	    </p:menu>
     </div>
