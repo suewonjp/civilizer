@@ -141,7 +141,7 @@ function showTagEditor() {
                     </p:inplace>
                 </div><br/>
                 <h:panelGroup id="child-tags">
-	        		<ui:repeat var="child" value="#{tagListBean.tagToEdit.tag.listOfChildren()}">
+	        		<ui:repeat var="child" value="#{tagListBean.childTags}">
 	        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}</span><br/>
 	        		</ui:repeat>
                 </h:panelGroup>

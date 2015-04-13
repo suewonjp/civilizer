@@ -14,9 +14,11 @@ public final class TagListBean implements Serializable {
 
     private TagTree tagTree;
     
-    private List<Tag> parentTags = Collections.emptyList();
-    
     private TagBean tagToEdit;
+
+    private List<Tag> parentTags = Collections.emptyList();
+
+    private List<Tag> childTags = Collections.emptyList();
     
     private long newParentTagId;
 
@@ -56,6 +58,19 @@ public final class TagListBean implements Serializable {
         tagTree.populateNodes(tags, tagBeans);
         this.tagTree = tagTree;
     }
+
+	public TagBean getTagToEdit() {
+		return tagToEdit;
+	}
+
+	public void setTagToEdit(long tagId) {
+		final int index = indexOf(tagId);
+		this.tagToEdit = tagBeans.get(index);
+		final Tag tag = tagToEdit.getTag();
+		if (tag.getChildren().isEmpty() == false) {
+			childTags = new ArrayList<>(tag.getChildren());
+		}
+	}
     
     public List<Tag> getParentTags() {
 		return parentTags;
@@ -65,17 +80,12 @@ public final class TagListBean implements Serializable {
 		this.parentTags = parentTags;
 	}
 
-	public TagBean getTagToEdit() {
-		return tagToEdit;
+	public List<Tag> getChildTags() {
+		return childTags;
 	}
 
-	public void setTagToEdit(TagBean tagToEdit) {
-		this.tagToEdit = tagToEdit;
-	}
-
-	public void setTagToEdit(long tagId) {
-		final int index = indexOf(tagId);
-		this.tagToEdit = tagBeans.get(index);
+	public void setChildTags(List<Tag> childTags) {
+		this.childTags = childTags;
 	}
 
 	public long getNewParentTagId() {
@@ -99,7 +109,10 @@ public final class TagListBean implements Serializable {
 	public void setNewChildTagId(long newChildTagId) {
 		if (Tag.isTrivialTag(newChildTagId)) {
 			final int index = indexOf(newChildTagId);
-			tagToEdit.getTag().addChild(tags.get(index));
+			if (childTags == Collections.<Tag>emptyList()) {
+				childTags = new ArrayList<>();
+			}
+			childTags.add(tags.get(index));
 		}
 	}
 	
@@ -116,11 +129,10 @@ public final class TagListBean implements Serializable {
 
 	public List<Tag> listOfSelectableChildren() {
 		final List<Tag> output = new LinkedList<>(tags);
+		for (Tag tag : childTags) {
+			output.remove(tag);
+		}
 		if (tagToEdit != null) {
-			final Set<Tag> children = tagToEdit.getTag().getChildren();
-			for (Tag tag : children) {
-				output.remove(tag);
-			}
 			output.remove(tagToEdit.getTag());
 		}
 		return output;
