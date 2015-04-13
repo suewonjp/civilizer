@@ -118,29 +118,33 @@ function showTagEditor() {
 	            <div class="fa fa-tag">
 	                &nbsp;&nbsp;
 	                <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
-<!-- 		                <p:inputText style="width:50%" value="#{paramTagBean.newParentTagName}" /> -->
-						<p:selectOneListbox value="#{paramTagBean.newParentTagId}">
-					    	<f:selectItems value="#{tagListBean.tags}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
+	                	<p:ajax event="save" update="parent-tags"/>
+						<p:selectOneListbox value="#{tagListBean.newParentTagId}" filter="true" filterMatchMode="contains">
+					    	<f:selectItems value="#{tagListBean.listOfSelectableParents()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
 						</p:selectOneListbox>
 		            </p:inplace>
 	            </div><br/>
-        		<ui:repeat var="parent" value="#{paramTagBean.parentTags}">
-        			<span class="fa fa-tag">&nbsp;&nbsp;#{parent.tagName}</span><br/>
-        		</ui:repeat>
+	            <h:panelGroup id="parent-tags">
+	        		<ui:repeat var="parent" value="#{tagListBean.parentTags}">
+	        			<span class="fa fa-tag">&nbsp;&nbsp;#{parent.tagName}</span><br/>
+	        		</ui:repeat>
+	            </h:panelGroup>
 	        </p:panel>
 	        <p:panel>
 	            <div class="fa fa-tag">
                     &nbsp;&nbsp;
                     <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
-<!--                         <p:inputText style="width:50%" value="#{paramTagBean.newChildTagName}" /> -->
-						<p:selectOneListbox value="#{paramTagBean.newChildTagName}">
-					    	<f:selectItems value="#{tagListBean.tags}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.tagName}" />
+                    	<p:ajax event="save" update="child-tags"/>
+						<p:selectOneListbox value="#{tagListBean.newChildTagId}" filter="true" filterMatchMode="contains">
+					    	<f:selectItems value="#{tagListBean.listOfSelectableChildren()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
 						</p:selectOneListbox>
                     </p:inplace>
                 </div><br/>
-        		<ui:repeat var="child" value="#{paramTagBean.tag.listOfChildren()}">
-        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}</span><br/>
-        		</ui:repeat>
+                <h:panelGroup id="child-tags">
+	        		<ui:repeat var="child" value="#{tagListBean.tagToEdit.tag.listOfChildren()}">
+	        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}</span><br/>
+	        		</ui:repeat>
+                </h:panelGroup>
 	        </p:panel>
     	</h:panelGrid>
         <p:commandButton action="save-tag" value="#{msg['label_save']}" icon="ui-icon-check"/>
@@ -150,8 +154,7 @@ function showTagEditor() {
 	    <p:menu>
             <p:menuitem styleClass="fa" onclick="showEditTagDialog()" value="&#xf040; #{msg['label_rename']}"/>
             <p:menuitem styleClass="fa" oncomplete="showTagEditor()" value="&#xf040; #{msg['label_edit']}"
-            	update="tag-editor" actionListener="#{mainController.populateTagBean(paramTagBean)}"/>
-<!--             <p:menuitem styleClass="fa" onclick="showTagEditor()" value="&#xf040; #{msg['label_edit']}"/> -->
+            	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean.tag.id)}"/>
             <p:menuitem styleClass="fa" onclick="confirmTrashingTagFromCtxtMenu()" value="&#xf1f8; #{msg['label_trash']}"/>
 	    </p:menu>
     </div>

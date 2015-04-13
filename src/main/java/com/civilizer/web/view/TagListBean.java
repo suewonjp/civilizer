@@ -13,6 +13,14 @@ public final class TagListBean implements Serializable {
     private List<TagBean> tagBeans = Collections.emptyList();
 
     private TagTree tagTree;
+    
+    private List<Tag> parentTags = Collections.emptyList();
+    
+    private TagBean tagToEdit;
+    
+    private long newParentTagId;
+
+    private long newChildTagId;
 
     public List<Tag> getTags() {
         return tags;
@@ -49,7 +57,76 @@ public final class TagListBean implements Serializable {
         this.tagTree = tagTree;
     }
     
-    public List<String> suggest(String input) {
+    public List<Tag> getParentTags() {
+		return parentTags;
+	}
+
+	public void setParentTags(List<Tag> parentTags) {
+		this.parentTags = parentTags;
+	}
+
+	public TagBean getTagToEdit() {
+		return tagToEdit;
+	}
+
+	public void setTagToEdit(TagBean tagToEdit) {
+		this.tagToEdit = tagToEdit;
+	}
+
+	public void setTagToEdit(long tagId) {
+		final int index = indexOf(tagId);
+		this.tagToEdit = tagBeans.get(index);
+	}
+
+	public long getNewParentTagId() {
+		return newParentTagId;
+	}
+
+	public void setNewParentTagId(long newParentTagId) {
+		if (Tag.isTrivialTag(newParentTagId)) {
+			final int index = indexOf(newParentTagId);
+			if (parentTags == Collections.<Tag>emptyList()) {
+				parentTags = new ArrayList<>();
+			}
+			parentTags.add(tags.get(index));
+		}
+	}
+
+	public long getNewChildTagId() {
+		return newChildTagId;
+	}
+
+	public void setNewChildTagId(long newChildTagId) {
+		if (Tag.isTrivialTag(newChildTagId)) {
+			final int index = indexOf(newChildTagId);
+			tagToEdit.getTag().addChild(tags.get(index));
+		}
+	}
+	
+	public List<Tag> listOfSelectableParents() {
+		final List<Tag> output = new LinkedList<>(tags);
+		for (Tag tag : parentTags) {
+			output.remove(tag);
+		}
+		if (tagToEdit != null) {
+			output.remove(tagToEdit.getTag());
+		}
+		return output;
+	}
+
+	public List<Tag> listOfSelectableChildren() {
+		final List<Tag> output = new LinkedList<>(tags);
+		if (tagToEdit != null) {
+			final Set<Tag> children = tagToEdit.getTag().getChildren();
+			for (Tag tag : children) {
+				output.remove(tag);
+			}
+			output.remove(tagToEdit.getTag());
+		}
+		return output;
+	}
+
+	public List<String> suggest(String input) {
     	final List<String> results = new ArrayList<String>();
     	
     	if (input == null || input.isEmpty()) {

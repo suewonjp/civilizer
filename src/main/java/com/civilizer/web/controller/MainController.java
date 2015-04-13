@@ -249,11 +249,10 @@ public final class MainController {
 		tagBean.setTag(tag);
 		return tagBean;
 	}
-	
-	public void populateTagBean(TagBean tagBean) {
-		final Tag tag = tagBean.getTag();
-		tagDao.populate(tag, false, true);
-		tagBean.setParentTags(tagDao.findParentTags(tag.getId()));
+
+	public void prepareTagListBeanToEditTag(TagListBean tagListBean, long tagId) {
+		tagListBean.setTagToEdit(tagId);
+		tagListBean.setParentTags(tagDao.findParentTags(tagId));
 	}
 	
 	public SpecialTagBean newBookmarkTagBean() {
