@@ -43,8 +43,7 @@ H2 [Quickstart](http://www.h2database.com/html/quickstart.html "H2 Quickstart")
     Header 1
     ========
 
-    Header 2
-    --------
+    Header 2\r\n    --------
 * * *
 Header 1
 ========
@@ -101,7 +100,7 @@ H2 [Quickstart][id].\r\n\r\n
         With multiple paragraphs.
     *   Bar
 * * *
-*   A list item.
+*   A list item.  
     With multiple paragraphs.
 *   Bar
 '), TIMESTAMP '2014-11-03 19:12:44.752', TIMESTAMP '2014-11-03 19:12:44.752')
@@ -139,8 +138,7 @@ Use the `printf()` function.
     Indent every line of a code block by at least 4 spaces or 1 tab
 
 ### Horizontal Rules
-    Three or more dashes or asterisks:
-    ---
+    Three or more dashes or asterisks:\r\n    ---
     * * *
     - - - -
 ### Manual Line Breaks
@@ -167,6 +165,36 @@ become more robust and efficient than those that do not use CDI features.
 
 '), TIMESTAMP '2015-02-28 22:04:00.000', TIMESTAMP '2015-02-28 22:04:00.000')
 ,(18, 'inline HTML', STRINGDECODE('<b>inline</b> html test'), TIMESTAMP '2015-03-12 20:22:00.000', TIMESTAMP '2015-03-12 20:22:00.000')
+,(19, 'Simple Table', STRINGDECODE('
+    | Left align | Right align | Center align |
+    |:-----------|------------:|:------------:|
+    | This       |        This |     This     
+    | column     |      column |    column    
+    | will       |        will |     will     
+    | be         |          be |      be      
+    | left       |       right |    center    
+    | aligned    |     aligned |   aligned
+
+* * *
+| Left align | Right align | Center align |
+|:-----------|------------:|:------------:|
+| This       |        This |     This     
+| column     |      column |    column    
+| will       |        will |     will     
+| be         |          be |      be      
+| left       |       right |    center    
+| aligned    |     aligned |   aligned
+'), TIMESTAMP '2015-04-14 11:11:00.000', TIMESTAMP '2015-04-14 11:11:00.000')
+,(20, 'Github flavor Table', STRINGDECODE('
+    First Header  | Second Header
+    ------------- | -------------
+    Content Cell  | Content Cell
+    Content Cell  | Content Cell
+* * *
+First Header  | Second Header\r\n------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+'), TIMESTAMP '2015-04-14 11:11:00.000', TIMESTAMP '2015-04-14 11:11:00.000')
 ;
 
 INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES
@@ -183,6 +211,7 @@ INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES
 ,(11, 'inline')
 ,(12, 'reference')
 ,(13, 'etc')
+,(14, 'table')
 ,(100, 'markdown')
 ;
 
@@ -203,6 +232,7 @@ INSERT INTO TAG2TAG(PARENT_ID, CHILD_ID) VALUES
 ,(100, 6)
 ,(100, 7)
 ,(100, 13)
+,(100, 14)
 ,(13, 8)
 ,(12, 4)
 ;
@@ -233,6 +263,8 @@ INSERT INTO TAG2FRAGMENT(TAG_ID, FRAGMENT_ID) VALUES
 ,(-1, 5)
 ,(13, 17)
 ,(13, 18)
+,(14, 19)
+,(14, 20)
 ;
 
 INSERT INTO FRAGMENT2FRAGMENT(FROM_ID, TO_ID) VALUES
