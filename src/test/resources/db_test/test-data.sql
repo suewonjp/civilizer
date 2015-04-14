@@ -165,7 +165,7 @@ become more robust and efficient than those that do not use CDI features.
 
 '), TIMESTAMP '2015-02-28 22:04:00.000', TIMESTAMP '2015-02-28 22:04:00.000')
 ,(18, 'inline HTML', STRINGDECODE('<b>inline</b> html test'), TIMESTAMP '2015-03-12 20:22:00.000', TIMESTAMP '2015-03-12 20:22:00.000')
-,(19, 'Simple Table', STRINGDECODE('
+,(19, 'Github flavor Table', STRINGDECODE('
     | Left align | Right align | Center align |
     |:-----------|------------:|:------------:|
     | This       |        This |     This     
@@ -185,7 +185,7 @@ become more robust and efficient than those that do not use CDI features.
 | left       |       right |    center    
 | aligned    |     aligned |   aligned
 '), TIMESTAMP '2015-04-14 11:11:00.000', TIMESTAMP '2015-04-14 11:11:00.000')
-,(20, 'Github flavor Table', STRINGDECODE('
+,(20, 'Simple Table', STRINGDECODE('
     First Header  | Second Header
     ------------- | -------------
     Content Cell  | Content Cell
