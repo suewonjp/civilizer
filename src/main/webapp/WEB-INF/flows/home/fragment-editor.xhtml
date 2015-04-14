@@ -74,7 +74,8 @@ function clearFragmentEditor() {
 }
 
 function parseMarkdown(inputText) {
-    return markdown.toHTML(inputText);
+    return marked(inputText);
+//     return markdown.toHTML(inputText);
 }
 
 function openFragmentEditorForEdit(event) {
