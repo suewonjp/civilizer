@@ -120,6 +120,13 @@
 	word-wrap: break-word;
 }
 
+.fragment-content table, tr, th, td {
+	border: 1px solid lavender;
+	border-collapse: collapse;
+	width: 1%;
+	white-space: nowrap;
+}
+
 /* .fragment-content pre { */
 /* 	white-space: normal; */
 /* } */
