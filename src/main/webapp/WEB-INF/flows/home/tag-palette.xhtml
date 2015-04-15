@@ -191,7 +191,7 @@ function showTagEditor() {
             </li>
         </ul>
         
-        <h:panelGrid columns="2" styleClass="target-panel-selector" columnClasses="target-panel-selector-col-0, target-panel-selector-col-1" >
+        <h:panelGrid columns="2" id="target-panel-selector" columnClasses="target-panel-selector-col-0, target-panel-selector-col-1" >
 	        <label class="fa fa-file-text" for="panel-radio-for-tag-palette" >&nbsp;&nbsp;#{msg['label_panel']}</label>
 	        <p:selectOneRadio id="panel-radio-for-tag-palette" value="#{customParams.panelIdForTagPalette}">
 	            <f:selectItem itemLabel="0" itemValue="0" />

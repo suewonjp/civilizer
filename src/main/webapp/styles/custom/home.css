@@ -120,11 +120,18 @@
 	word-wrap: break-word;
 }
 
-.fragment-content table, tr, th, td {
+.fragment-content table
+,.fragment-content tr
+,.fragment-content th
+,.fragment-content td {
 	border: 1px solid lavender;
 	border-collapse: collapse;
 	width: 1%;
 	white-space: nowrap;
+}
+
+.fragment-content hr {
+	border:thin solid lightgray;
 }
 
 .tag-menu {
@@ -189,7 +196,7 @@
     background-image: linear-gradient(to bottom, #ffc92b, #ce9a01);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ffc92b, endColorstr=#ce9a01);
 }
 
-.target-panel-selector {
+#tag-palette-form\:target-panel-selector {
 	margin-bottom: -10px;
 	border-style: hidden;
 }
