@@ -66,7 +66,7 @@ function processFileClasses() {
 		var filePath = $this.text();
 		var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
 		var fileExt = fileName.slice(fileName.lastIndexOf("."));
-		filePath = "${request.contextPath}/app/file-box" + filePath;
+		filePath = "file-box" + filePath;
 		if (isImage(fileExt)) {			
 			$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
 		}

@@ -18,7 +18,7 @@
         <f:facet name="header">
             <div class="fragment-header" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}">
                 <p:selectBooleanCheckbox value="#{fragmentBean.checked}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
-                <a class="-cvz-frgm" href="${request.contextPath}/app/fragment/#{fragment.id}">
+                <a class="-cvz-frgm" href="fragment/#{fragment.id}">
                     \##{fragment.id}
                 </a>&nbsp;&nbsp;
                 <span class="fragment-title" _fid="#{fragment.id}">
@@ -44,7 +44,7 @@
     <c:forEach var="rf" items="#{fragment.relatedOnes}">
         <span class="small-fragment-box">
             <span class="fa fa-link">&nbsp;&nbsp;</span>
-            <a class="-cvz-frgm" href="${request.contextPath}/app/fragment/#{rf.id}">\##{rf.id}</a>
+            <a class="-cvz-frgm" href="fragment/#{rf.id}">\##{rf.id}</a>
             &nbsp;&nbsp;
             <h:outputText value="#{rf.title}" />
             &nbsp;&nbsp;

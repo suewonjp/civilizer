@@ -22,7 +22,7 @@
 		<c:forEach var="fragmentBean" items="#{bookmarkTagBean.fragmentBeans}" varStatus="loop">
 		    <c:set var="fragment" value="#{fragmentBean.fragment}" />
 		    <span class="small-fragment-box">
-	            <a class="-cvz-frgm" href="${request.contextPath}/app/fragment/#{fragment.id}">\##{fragment.id}</a>
+	            <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
 	            &nbsp;&nbsp;
 	            <h:outputText value="#{fragment.title}" />
 	        </span>
