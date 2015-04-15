@@ -343,6 +343,7 @@ function populateFragmentOverlay(data) {
         , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
     });
 	
+	$("#fragment-overlay-title").text("");
 	$("#fragment-overlay-content").html(data);
 	
 	$("#fragment-overlay-content .fragment-content").each(function(){
@@ -506,6 +507,7 @@ function trashFragmentFromCtxtMenu(deleting) {
 <div style='display:none' >
     <div id='fragment-overlay' >
         <div id="fragment-overlay-title-bar" >
+        	<span id="fragment-overlay-title"></span>
             <div style="float: right;">
                 <a id="fragment-overlay-close-button" href="#" title="#{msg['label_close']}">
                     <span class="fa fa-close fa-2x warning-color" ></span>

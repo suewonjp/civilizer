@@ -70,11 +70,23 @@
     overflow: hidden;
 }
 
+#fragment-overlay-title {
+	font-weight: bold;
+	font-size:large;
+	color: white;
+	margin-left:50px;
+}
+
 #editor-frame, #fragment-overlay {
     background-color: whitesmoke;
     border-style: solid;
     border-width: 3px;
     border-color: navy;
+}
+
+#fragment-overlay {
+	min-width: 320px;
+	min-height: 160px;
 }
 
 #editor-frame input {
