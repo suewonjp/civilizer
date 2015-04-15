@@ -90,6 +90,10 @@ public final class PanelContextBean implements Serializable {
         return fragmentDeletable;
     }
     
+    public String getContextClassName() {
+    	return searchParams == null ? "" : "fp-search";
+    }
+    
     @Override
     public boolean equals(Object obj) {
     	if (obj != null) {

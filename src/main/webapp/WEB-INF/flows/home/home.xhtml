@@ -20,6 +20,7 @@ $(document).ready(function() {
 		sanitize: false,
 		smartLists: true,
 		smartypants: false,
+// 		highlight: true,
 	});
 	
     $("#fragment-group").on("mouseenter", ".each-fragment-container", function() {
@@ -30,10 +31,20 @@ $(document).ready(function() {
    		$(this).find(".fragment-menu").hide();
    	});
     
+    function unescapeSearchHighlightClass(html) {
+        return html.replace(/&lt;span class=&#39;search-keyword&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
+            return "<span class='search-keyword'>" + RegExp.$1 + "</span>";
+        });
+    }
+    
     $(".fragment-content").each(function(){
     	var $this = $(this);
         var content = $this.text();
-   	    $this.html(parseMarkdown(content));
+		var renderedHtml = parseMarkdown(content);
+        if ($this.hasClass("fp-search")) {
+        	renderedHtml = unescapeSearchHighlightClass(renderedHtml);
+        }
+   	    $this.html(renderedHtml);
    	});
     
     function triggerFragmentOverlay(event) {
