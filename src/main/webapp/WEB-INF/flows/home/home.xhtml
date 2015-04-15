@@ -54,8 +54,8 @@ $(document).ready(function() {
         return false; // stop the link
     }
     
-    $("#fragment-group").find(".fragment-overlay-trigger").on("mouseenter", triggerFragmentOverlay);
-    $("#bookmark-form\\:bookmark-panel").find(".fragment-overlay-trigger").on("mouseenter", triggerFragmentOverlay);
+    $("#fragment-group").find(".-cvz-frgm").on("mouseenter", triggerFragmentOverlay);
+    $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("mouseenter", triggerFragmentOverlay);
     
     function generateClickHandler(panelId) {
     	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
