@@ -158,7 +158,7 @@ function autocompleteForTypingTags() {
              var output = [];
              for (var i=0; i<tagSuggestions.length; ++i) {
             	 var suggestion = tagSuggestions[i];
-                 if (suggestion.indexOf(typed) > -1 && ! alreadyTyped(tags, suggestion)) {
+                 if (suggestion.indexOf(typed) == 0 && ! alreadyTyped(tags, suggestion)) {
                      output.push(suggestion);
                  }
              }
