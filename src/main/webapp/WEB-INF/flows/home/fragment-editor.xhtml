@@ -169,9 +169,10 @@ function autocompleteForTypingTags() {
             // add the selected item
             terms.push(ui.item.value);
             // add placeholder to get the comma-and-space at the end
-            this.value = terms.join(",");
+            this.value = terms.join(", ");
             return false;
         },
+        autoFocus: true,
     });
 }
 //]]>
