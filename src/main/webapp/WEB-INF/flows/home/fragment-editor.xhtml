@@ -29,7 +29,7 @@ $(document).ready(function() {
         previewParser: parseMarkdown
     };
     
-    $("#fragment-content-editor").markItUp(mySettings, extraMarkItUpSettings);
+    $("#fragment-content-editor").markItUp(markItUpSettings, extraMarkItUpSettings);
     
     autocompleteForTypingTags();
 }); // end of $(document).ready()
@@ -60,11 +60,11 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
 function clearFragmentEditor() {
     var el = $("#fragment-editor-form\\:title-input");
     el.val(null);
-    el.watermark("Title");
+    el.watermark("#{msg['label_title']}");
     
     el = $("#fragment-editor-form\\:tags-input");
     el.val(null);
-    el.watermark("Tags");
+    el.watermark("#{msg['how_to_input_tags']}");
     
     $("#fragment-content-editor").val(null);
     
