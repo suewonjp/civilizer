@@ -8,24 +8,20 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.h2.Driver" />
-<!-- 		<property name="url" value="jdbc:h2:file:/Users/bsw/.civilizer/database/civilizer;MODE=Oracle;FILE_LOCK=NO;DB_CLOSE_DELAY=10" /> -->
-<!-- 		<property name="url" value="jdbc:h2:file:db-data/test;MODE=Oracle;FILE_LOCK=NO;DB_CLOSE_DELAY=10" /> -->
-		<property name="url" value="jdbc:h2:file:#{ systemProperties['civilizer.db_file_prefix'] };MODE=Oracle;FILE_LOCK=NO;DB_CLOSE_DELAY=10" />
+		<property name="url" value="jdbc:h2:file:#{systemProperties['civilizer.db_file_prefix']};MODE=Oracle;FILE_LOCK=NO;DB_CLOSE_DELAY=10" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 	</bean>
 
-	<jdbc:initialize-database data-source="dataSource"
-		ignore-failures="DROPS">
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS"
+		enabled="#{systemProperties['civilizer.initialize_db']}">
 		<jdbc:script location="classpath:db/schema.sql" />
 		<jdbc:script location="classpath:db/test-data.sql" />
 	</jdbc:initialize-database>
 
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 

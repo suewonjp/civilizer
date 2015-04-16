@@ -12,7 +12,6 @@ public final class Configurator {
 	private static final String DEFAULT_PRIVATE_HOME_NAME       = ".civilizer";
 	private static final String OPTION_FILE_NAME                = "app-options.properties";
 	
-	@SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(Configurator.class);
 	
 	public Configurator() {
@@ -95,7 +94,9 @@ public final class Configurator {
 			Enumeration<Object> keys = p.keys();
 			while (keys.hasMoreElements()) {
 			    final String k = keys.nextElement().toString();
-			    System.setProperty(k, p.getProperty(k));
+			    final String v = p.getProperty(k);
+			    System.setProperty(k, v);
+			    logger.info("SYS PROP : {}, {}", k, v);
 			}
 		}
 		catch (FileNotFoundException e) {
