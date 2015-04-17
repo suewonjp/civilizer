@@ -46,12 +46,12 @@ public class DomainTextDecorator {
 		
 		final String decoratedText = TextDecorator.highlight(text, sp);
 		assertNotNull(decoratedText);
-		assertTrue(decoratedText.contains(TextDecorator.PREFIX_HTML_TAG_FOR_HIGHLIGHT+"Function"+TextDecorator.POSTFIX_HTML_TAG_FOR_HIGHLIGHT));
-		assertTrue(! decoratedText.contains(TextDecorator.PREFIX_HTML_TAG_FOR_HIGHLIGHT+"function"+TextDecorator.POSTFIX_HTML_TAG_FOR_HIGHLIGHT));
+		assertEquals(true, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+"Function"+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
+		assertEquals(false, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+"function"+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
 		
 		final String tmp = decoratedText
-		        .replace(TextDecorator.PREFIX_HTML_TAG_FOR_HIGHLIGHT, "")
-		        .replace(TextDecorator.POSTFIX_HTML_TAG_FOR_HIGHLIGHT, "");
+		        .replace(TextDecorator.PREFIX_FOR_HIGHLIGHT, "")
+		        .replace(TextDecorator.POSTFIX_FOR_HIGHLIGHT, "");
 		
 		assertEquals(text, tmp);
 	}
@@ -69,12 +69,12 @@ public class DomainTextDecorator {
 		
 		final String decoratedText = TextDecorator.highlight(text, sp);
 		assertNotNull(decoratedText);
-		assertTrue(decoratedText.contains(TextDecorator.PREFIX_HTML_TAG_FOR_HIGHLIGHT+"length"+TextDecorator.POSTFIX_HTML_TAG_FOR_HIGHLIGHT));
-		assertTrue(decoratedText.contains(TextDecorator.PREFIX_HTML_TAG_FOR_HIGHLIGHT+"parentheses"+TextDecorator.POSTFIX_HTML_TAG_FOR_HIGHLIGHT));
+		assertEquals(true, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+"length"+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
+		assertEquals(true, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+"parentheses"+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
 		
 		final String tmp = decoratedText
-		        .replace(TextDecorator.PREFIX_HTML_TAG_FOR_HIGHLIGHT, "")
-		        .replace(TextDecorator.POSTFIX_HTML_TAG_FOR_HIGHLIGHT, "");
+		        .replace(TextDecorator.PREFIX_FOR_HIGHLIGHT, "")
+		        .replace(TextDecorator.POSTFIX_FOR_HIGHLIGHT, "");
 		
 		assertEquals(text, tmp);
 	}

@@ -31,6 +31,11 @@ $(document).ready(function() {
    		$(this).find(".fragment-menu").hide();
    	});
     
+    $(".fragment-title").each(function() {
+    	var $this = $(this);
+    	$this.html(translateCustomMarkupRules($this.html()));
+    });
+    
     $(".fragment-content").each(function() {
     	var $this = $(this);
     	$this.html(translateFragmentContent($this.text()));

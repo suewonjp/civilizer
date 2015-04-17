@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 public final class TextDecorator {
 	
-	public static final String PREFIX_HTML_TAG_FOR_HIGHLIGHT = "<span class='search-keyword'>";
-	public static final String POSTFIX_HTML_TAG_FOR_HIGHLIGHT = "</span>";
+	public static final String PREFIX_FOR_HIGHLIGHT = "{{[sh]";
+	public static final String POSTFIX_FOR_HIGHLIGHT = "}}";
 	
 	private static final RangeComparator rangeComparator = new RangeComparator();
 	
@@ -94,7 +94,7 @@ public final class TextDecorator {
 				continue;
 			}
 			final int ei = r.getSecond();
-			output += input.substring(pi, si) + PREFIX_HTML_TAG_FOR_HIGHLIGHT + input.substring(si, ei) + POSTFIX_HTML_TAG_FOR_HIGHLIGHT;
+			output += input.substring(pi, si) + PREFIX_FOR_HIGHLIGHT + input.substring(si, ei) + POSTFIX_FOR_HIGHLIGHT;
 			pi = ei;
 		}		
 		output += input.substring(pi, input.length());
