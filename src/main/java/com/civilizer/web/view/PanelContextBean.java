@@ -7,8 +7,10 @@ import com.civilizer.domain.SearchParams;
 @SuppressWarnings("serial")
 public final class PanelContextBean implements Serializable {
 	
-	public static final long ALL_VALID_TAGS = -1000;
-	public static final long EMPTY_TAG    = -2000;
+	public static final long ALL_VALID_TAGS       = -1000;
+	public static final long EMPTY_TAG            = -2000;
+	// [TODO] the default number of items per page should be configurable
+	public static final int  DEF_ITEMS_PER_PAGE   = 10;
 	
 	private final SearchParams searchParams;
 	private final long tagId;
@@ -22,7 +24,7 @@ public final class PanelContextBean implements Serializable {
 		this.tagId = ALL_VALID_TAGS;
 		this.panelId = 0;
 		this.curPage = 0;
-		this.itemsPerPage = 10;
+		this.itemsPerPage = DEF_ITEMS_PER_PAGE;
 		this.isLast = false;
 		fragmentDeletable = false;
 		searchParams = null;
@@ -32,7 +34,7 @@ public final class PanelContextBean implements Serializable {
 		this.tagId = tagId;
 		this.panelId = panelId;
 		this.curPage = 0;
-		this.itemsPerPage = 10;
+		this.itemsPerPage = DEF_ITEMS_PER_PAGE;
 		this.isLast = false;
 		fragmentDeletable = false;
 		searchParams = null;
@@ -42,7 +44,7 @@ public final class PanelContextBean implements Serializable {
 		this.tagId = tagId;
 		this.panelId = panelId;
 		this.curPage = curPage;
-		this.itemsPerPage = 10;
+		this.itemsPerPage = DEF_ITEMS_PER_PAGE;
 		this.isLast = false;
 		fragmentDeletable = false;
 		searchParams = null;
