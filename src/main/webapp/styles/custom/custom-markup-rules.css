@@ -1,8 +1,3 @@
-.-cvz-clr-r {
-	color: red;
-	font-weight: bold;
-}
-
 .-cvz-sh {
 	border:1px solid #8bcf54;
     -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;
@@ -12,4 +7,50 @@
 	background-image: -ms-linear-gradient(top, #a9db80, #96c56f);
 	background-image: -o-linear-gradient(top, #a9db80, #96c56f);
 	background-image: linear-gradient(to bottom, #a9db80, #96c56f);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a9db80, endColorstr=#96c56f);
+}
+
+.-cvz-clr-c {
+	color: cyan;
+	font-weight: bold;
+}
+
+.-cvz-clr-b {
+	color: royalblue;
+	font-weight: bold;
+}
+
+.-cvz-clr-r {
+	color: red;
+	font-weight: bold;
+}
+
+.-cvz-clr-g {
+	color: limegreen;
+	font-weight: bold;
+}
+
+.-cvz-clr-y {
+	color: orange;
+	font-weight: bold;
+}
+
+.-cvz-clr-m {
+	color: magenta;
+	font-weight: bold;
+}
+
+.-cvz-clr-v {
+	color: blueviolet;
+	font-weight: bold;
+}
+
+.-cvz-clr-br {
+	color: brown;
+	font-weight: bold;
+}
+
+.-cvz-usb {
+	text-decoration: underline;
+	font-weight: bold;
+	font-style: oblique;
 }
