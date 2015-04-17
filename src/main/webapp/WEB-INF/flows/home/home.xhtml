@@ -144,6 +144,11 @@ $(document).ready(function() {
     setupDragAndDrop();
     
     setContextMenuForFragments();
+    
+    setTimeout(function() {
+    	// timeout for message display
+    	$(".ui-messages-close").trigger("click");
+    }, 15000);
 }); // end of $(document).ready()
 
 function translateCustomMarkupRules(html) {
