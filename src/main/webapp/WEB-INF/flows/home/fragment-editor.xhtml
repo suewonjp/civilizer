@@ -26,7 +26,7 @@ $(document).ready(function() {
     });
 	
     extraMarkItUpSettings = {
-        previewParser: parseMarkdown
+//         previewParser: parseMarkdown
     };
     
     $("#fragment-content-editor").markItUp(markItUpSettings, extraMarkItUpSettings);
@@ -109,7 +109,7 @@ function prepareFragmentContent() {
 
 function previewFragment() {
 	var srcContent = prepareFragmentContent();
-	var renderedHtml = $(parseMarkdown(srcContent));
+	var outputHtml = $(translateFragmentContent(srcContent));
 	
 	$("#fragment-overlay").lightbox_me({
         centered:false
@@ -121,7 +121,7 @@ function previewFragment() {
     });
     
 	$("#fragment-overlay-title").text("#{msg['label_preview']}");
-    $("#fragment-overlay-content").html(renderedHtml);
+    $("#fragment-overlay-content").html(outputHtml);
     
     processFileClasses();
 }

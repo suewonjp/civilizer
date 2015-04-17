@@ -31,37 +31,9 @@ $(document).ready(function() {
    		$(this).find(".fragment-menu").hide();
    	});
     
-    function unescapeSearchHighlight(html) {
-        return html.replace(/&lt;span class=&#39;search-keyword&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
-            return "<span class='search-keyword'>" + RegExp.$1 + "</span>";
-        });
-    }
-
-    function unescapeFileBoxLink(html) {
-        return html.replace(/&lt;span class=&#39;-cvz-file&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
-            return "<span class='-cvz-file'>" + RegExp.$1 + "</span>";
-        });
-    }
-    
-    $(".fragment-content").each(function(){
+    $(".fragment-content").each(function() {
     	var $this = $(this);
-        var content = $this.text();
-        
-        // translate Markdown text into HTML;
-        // [NOTE] HTML code would be sanitized at this time;
-		var renderedHtml = parseMarkdown(content);
-		
-		// we need to take care of a few domain rules from here
-		
-        if ($this.hasClass("fp-search")) {
-        	// for search highlight
-        	renderedHtml = unescapeSearchHighlight(renderedHtml);
-        }
-		
-		// for links to files in the file box
-        renderedHtml = unescapeFileBoxLink(renderedHtml);
-   	    
-        $this.html(renderedHtml);
+    	$this.html(translateFragmentContent($this.text()));
    	});
     
     function triggerFragmentOverlay(event) {
@@ -164,6 +136,34 @@ $(document).ready(function() {
     
     setContextMenuForFragments();
 }); // end of $(document).ready()
+
+function unescapeSearchHighlight(html) {
+    return html.replace(/&lt;span class=&#39;search-keyword&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
+        return "<span class='search-keyword'>" + RegExp.$1 + "</span>";
+    });
+}
+
+function unescapeFileBoxLink(html) {
+    return html.replace(/&lt;span class=&#39;-cvz-file&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
+        return "<span class='-cvz-file'>" + RegExp.$1 + "</span>";
+    });
+}
+
+function translateCustomMarkupRules(html) {
+	// format  =>   {{[keyword] ... text ... }}
+	return html.replace(/\{\{\[(.*)\](.*)\}\}/g, function(match, pos, originalText) {
+        return "<span class='-cvz-" + RegExp.$1 + "'>" + RegExp.$2 + "</span>";
+    });
+}
+
+function translateFragmentContent(content) {
+    // translate Markdown text into HTML;
+    // [NOTE] HTML code would be sanitized at this time;
+	var outputHtml = parseMarkdown(content);
+	
+	// take care of custom style rules
+	return translateCustomMarkupRules(outputHtml);
+}
 
 // [NOTE] this is a default basic setting for all jQuery UI Draggable objects;
 // It should remain as IMMUTABLE
@@ -377,7 +377,7 @@ function populateFragmentOverlay(data) {
 	$("#fragment-overlay-content .fragment-content").each(function(){
         var $this = $(this);
         var content = $this.text();
-        $this.html(parseMarkdown(content));
+		$this.html(translateFragmentContent($this.text()));
     });
 }
 
