@@ -136,6 +136,11 @@ $(document).ready(function() {
 		});
     };
     
+    $("#fragment-overlay").draggable({
+    	handle:"#fragment-overlay-title-bar",
+        cursor:"move",
+    });
+    
     setupDragAndDrop();
     
     setContextMenuForFragments();
