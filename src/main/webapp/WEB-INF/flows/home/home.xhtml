@@ -142,17 +142,17 @@ $(document).ready(function() {
     setContextMenuForFragments();
 }); // end of $(document).ready()
 
-function unescapeSearchHighlight(html) {
-    return html.replace(/&lt;span class=&#39;search-keyword&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
-        return "<span class='search-keyword'>" + RegExp.$1 + "</span>";
-    });
-}
+// function unescapeSearchHighlight(html) {
+//     return html.replace(/&lt;span class=&#39;search-keyword&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
+//         return "<span class='search-keyword'>" + RegExp.$1 + "</span>";
+//     });
+// }
 
-function unescapeFileBoxLink(html) {
-    return html.replace(/&lt;span class=&#39;-cvz-file&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
-        return "<span class='-cvz-file'>" + RegExp.$1 + "</span>";
-    });
-}
+// function unescapeFileBoxLink(html) {
+//     return html.replace(/&lt;span class=&#39;-cvz-file&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
+//         return "<span class='-cvz-file'>" + RegExp.$1 + "</span>";
+//     });
+// }
 
 function translateCustomMarkupRules(html) {
 	// format  =>   {{[keyword] ... text ... }}
@@ -298,7 +298,8 @@ function setupDndForEmbeddingFile() {
         var from = ui.draggable;
         var to = $(event.target);
         if (from.hasClass("fb-file")) {
-        	var encoded = "<span class='-cvz-file'>" + from.attr("_fp") + "</span>";
+        	var encoded = "{{[file]" + from.attr("_fp") + "}}";
+//         	var encoded = "<span class='-cvz-file'>" + from.attr("_fp") + "</span>";
         	$(this).insertAtCaret(encoded);
         }
     };    
@@ -384,6 +385,8 @@ function populateFragmentOverlay(data) {
         var content = $this.text();
 		$this.html(translateFragmentContent($this.text()));
     });
+	
+	processFileClasses();
 }
 
 function showSortOptionDialog(panelId) {

@@ -267,7 +267,7 @@
     width: 16%;
 }
 
-.search-keyword, .fb-file {
+/*.search-keyword,*/ .fb-file {
     border:1px solid #8bcf54;
     -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;
     background-color: #a9db80; background-image: -webkit-gradient(linear, left top, left bottom, from(#a9db80), to(#96c56f));
