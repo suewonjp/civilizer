@@ -20,7 +20,6 @@ $(document).ready(function() {
 		sanitize: true,
 		smartLists: true,
 		smartypants: false,
-// 		highlight: true,
 	});
 	
     $("#fragment-group").on("mouseenter", ".each-fragment-container", function() {
@@ -142,18 +141,6 @@ $(document).ready(function() {
     setContextMenuForFragments();
 }); // end of $(document).ready()
 
-// function unescapeSearchHighlight(html) {
-//     return html.replace(/&lt;span class=&#39;search-keyword&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
-//         return "<span class='search-keyword'>" + RegExp.$1 + "</span>";
-//     });
-// }
-
-// function unescapeFileBoxLink(html) {
-//     return html.replace(/&lt;span class=&#39;-cvz-file&#39;&gt;(.*)&lt;\/span&gt;/g, function(match, pos, originalText) {
-//         return "<span class='-cvz-file'>" + RegExp.$1 + "</span>";
-//     });
-// }
-
 function translateCustomMarkupRules(html) {
 	// format  =>   {{[keyword] ... text ... }}
 	return html.replace(/\{\{\[(.+?)\](.*?)\}\}/g, function(match, pos, originalText) {
@@ -236,9 +223,6 @@ function setupDndForRelatingFragments() {
                 relateFragments([ {name:"from", value:fromId}, {name:"to", value:toId} ]);
             }
         }
-//         else if (from.hasClass("each-tag")) {
-//             fetchFragmentsByTag(from, to);
-//         }
     };
     $(".each-fragment-container").droppable(droppable);
 }
@@ -299,7 +283,6 @@ function setupDndForEmbeddingFile() {
         var to = $(event.target);
         if (from.hasClass("fb-file")) {
         	var encoded = "{{[file]" + from.attr("_fp") + "}}";
-//         	var encoded = "<span class='-cvz-file'>" + from.attr("_fp") + "</span>";
         	$(this).insertAtCaret(encoded);
         }
     };    

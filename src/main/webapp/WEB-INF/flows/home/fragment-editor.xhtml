@@ -75,7 +75,6 @@ function clearFragmentEditor() {
 
 function parseMarkdown(inputText) {
     return marked(inputText);
-//     return markdown.toHTML(inputText);
 }
 
 function openFragmentEditorForEdit(event) {
@@ -110,7 +109,6 @@ function prepareFragmentContent() {
 function previewFragment() {
 	var srcContent = prepareFragmentContent();
 	var outputHtml = translateFragmentContent(srcContent);
-// 	var outputHtml = $(translateFragmentContent(srcContent));
 	
 	$("#fragment-overlay").lightbox_me({
         centered:false
