@@ -156,7 +156,7 @@ $(document).ready(function() {
 
 function translateCustomMarkupRules(html) {
 	// format  =>   {{[keyword] ... text ... }}
-	return html.replace(/\{\{\[(.*)\](.*)\}\}/g, function(match, pos, originalText) {
+	return html.replace(/\{\{\[(.+?)\](.*?)\}\}/g, function(match, pos, originalText) {
         return "<span class='-cvz-" + RegExp.$1 + "'>" + RegExp.$2 + "</span>";
     });
 }
