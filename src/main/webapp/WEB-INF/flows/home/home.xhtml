@@ -446,14 +446,6 @@ function confirmTrashingTagFromCtxtMenu() {
 	confirmTrashingTag(tagId, deleting);
 }
 
-function confirmUnbookmarkingFragment(frgId) {
-	$("#fragment-group-form\\:ok").click(function() {
-		document.forms["fragment-group-form"]["fragment-group-form:ok-unbookmark-fragment"].click();
-	});
-	showConfirmDlg("#{msg['confirm_unbookmarking']}");
-	$("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
-}
-
 function confirmUnrelatingFragments(frgId0, frgId1) {
 	$("#fragment-group-form\\:ok").click(function() {
 		document.forms["fragment-group-form"]["fragment-group-form:ok-unrelate-fragments"].click();

@@ -255,6 +255,10 @@
 	overflow: auto;
 }
 
+.each-bookmark {
+	cursor:default;
+}
+
 #fragment-group-form\:messages, #fragment-group-form\:development-messages {
 	position: relative;
 	top: 40px;

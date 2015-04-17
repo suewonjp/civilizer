@@ -8,8 +8,32 @@
     
 <script>
 //<![CDATA[
-// $(document).ready(function() {
-// }); // end of $(document).ready()
+$(document).ready(function() {
+	setContextMenuForBookmarks();
+}); // end of $(document).ready()
+
+function setContextMenuForBookmarks() {
+	var menu = $("#bookmark-context-menu");
+   	
+	$(".each-bookmark").bind("contextmenu", function(event) {
+    	menu.css({ left:event.pageX, top:event.pageY }).show();
+    	var target = $(event.target).closest(".each-bookmark");
+    	menu.data("target-bookmark", target);
+    	$("#fragment-group-form\\:id-placeholder-for-fragment").val(target.attr("_bid"));
+    	event.preventDefault();
+    });
+
+    $(document).bind("click", function(event) {
+    	menu.hide();
+    });
+}
+
+function confirmUnbookmarkingFragment() {
+	$("#fragment-group-form\\:ok").click(function() {
+		document.forms["fragment-group-form"]["fragment-group-form:ok-unbookmark-fragment"].click();
+	});
+	showConfirmDlg("#{msg['confirm_unbookmarking']}");
+}
 //]]>
 </script>
 
@@ -18,17 +42,19 @@
 </div>
 
 <h:form id="bookmark-form">
+	<div id="bookmark-context-menu" style="display:none; z-index:5000; position:absolute;">
+	    <p:menu>
+            <p:menuitem styleClass="fa" onclick="confirmUnbookmarkingFragment()" value="&#xf00d; #{msg['label_unbookmark']}"/>
+	    </p:menu>
+    </div>
+    
 	<p:panel id="bookmark-panel" >
 		<c:forEach var="fragmentBean" items="#{bookmarkTagBean.fragmentBeans}" varStatus="loop">
 		    <c:set var="fragment" value="#{fragmentBean.fragment}" />
-		    <span class="small-fragment-box">
+		    <span class="small-fragment-box each-bookmark" _bid="#{fragment.id}">
 	            <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
 	            &nbsp;&nbsp;
 	            <h:outputText value="#{fragment.title}" />
-		        <p:commandLink style="text-decoration:none;" oncomplete="confirmUnbookmarkingFragment('#{fragment.id}')" >
-		           <span class="fa fa-close button-link " title="#{msg['label_unbookmark']}"></span>
-	               <f:param name="fragmentId" value="#{fragment.id}" />
-		        </p:commandLink>
 	        </span>
 	        <br/>
 		</c:forEach>
