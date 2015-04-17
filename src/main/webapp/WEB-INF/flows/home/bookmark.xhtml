@@ -25,11 +25,11 @@
 	            <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
 	            &nbsp;&nbsp;
 	            <h:outputText value="#{fragment.title}" />
+		        <p:commandLink style="text-decoration:none;" oncomplete="confirmUnbookmarkingFragment('#{fragment.id}')" >
+		           <span class="fa fa-close button-link " title="#{msg['label_unbookmark']}"></span>
+	               <f:param name="fragmentId" value="#{fragment.id}" />
+		        </p:commandLink>
 	        </span>
-	        <p:commandLink style="text-decoration:none;" oncomplete="confirmUnbookmarkingFragment('#{fragment.id}')" >
-	           <span class="fa fa-close button-link " title="#{msg['label_unbookmark']}"></span>
-               <f:param name="fragmentId" value="#{fragment.id}" />
-	        </p:commandLink>
 	        <br/>
 		</c:forEach>
 	</p:panel>
