@@ -346,3 +346,7 @@
 	background-color: gray;
 	width: 280px;
 }
+
+.ui-draggable-handle {
+	cursor:move;
+}
