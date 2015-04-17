@@ -6,5 +6,6 @@ public final class AppOptions {
 	public static final String DB_FILE_PREFIX           = "civilizer.db_file_prefix";
 	public static final String FILE_BOX_HOME            = "civilizer.file_box_home";
 	public static final String INITIALIZE_DB            = "civilizer.initialize_db";
+	public static final String DEV                      = "civilizer.dev";
 	
 }
