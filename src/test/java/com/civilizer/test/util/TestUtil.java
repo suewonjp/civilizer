@@ -71,6 +71,22 @@ public final class TestUtil {
 
         return new String(s);
     }
+    
+    public static int[] randomIndices(Random r, int minCount, int maxCount) {
+    	minCount = Math.max(Math.min(minCount, maxCount), 1);
+        maxCount = Math.max(minCount, maxCount);
+        List<Integer> tmp = new ArrayList<>(maxCount);
+        for (int i = 0; i < maxCount; i++) {
+        	tmp.add(i);
+		}
+        Collections.shuffle(tmp);
+        final int outputCount = minCount + r.nextInt(maxCount - minCount);
+        int[] output = new int[outputCount];
+        for (int i = 0; i < outputCount; i++) {
+        	output[i] = tmp.get(i);
+		}
+        return output;
+    }
 
     @SuppressWarnings("unchecked")
     public static <T> T cast(Object obj, Class<T> type) {
