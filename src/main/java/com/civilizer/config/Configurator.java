@@ -87,6 +87,11 @@ public final class Configurator {
 			// make sure the file box folder path is absolute
 			setPathAbsolute(p, AppOptions.FILE_BOX_HOME, privateHome);
 			
+			if (p.getProperty(AppOptions.DEV) == null) {
+				// If not specified otherwise, it is a production build
+				p.setProperty(AppOptions.DEV, "false");
+			}
+			
 			// add the application options into the system properties
 			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")
 			// [NOTE] do not use System.setProperties() method to operate the same thing;
