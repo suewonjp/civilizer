@@ -104,7 +104,7 @@ public class SearchTest extends DaoTest {
     public void testMethod_SearchQueryCreator_getPatternFromKeyword() {
       {
           final String word = "\"My keyword\"";
-          final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+          final SearchParams.Keyword kw = new SearchParams.Keyword(word, false);
           assertEquals(false, kw.isWholeWord());
           assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.getPatternFromKeyword(kw);
@@ -112,7 +112,7 @@ public class SearchTest extends DaoTest {
       }
       {
           final String word = "hello/w";
-          final SearchParams.Keyword kw = new SearchParams.Keyword(word);
+          final SearchParams.Keyword kw = new SearchParams.Keyword(word, false);
           assertEquals(true, kw.isWholeWord());
           assertEquals(true, kw.isValid());
           final String pattern = SearchQueryCreator.getPatternFromKeyword(kw);
@@ -448,6 +448,27 @@ public class SearchTest extends DaoTest {
 				assertTrue(fragment.containsTagName(tagName));
 			}
 		}
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSearchWithFragmentId() {
+    	final Pair<Fragment[], Tag[]> pair = createTestData();
+        final Fragment[] fragments = pair.getFirst();
+//        final Tag[] tags = pair.getSecond();
+        
+        {
+        	final int index = TestUtil.getRandom().nextInt(fragments.length);
+        	final long id = fragments[index].getId();
+        	final String searchPhrase = "id:" + id;
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	assertEquals(1, sp.getKeywords().size());
+        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+        	final List<Fragment> results = crit.list();
+        	assertEquals(1, results.size());
+        	assertEquals(new Long(id), results.get(0).getId());
+        	assertEquals(fragments[index], results.get(0));
+        }
     }
     
 }

@@ -14,6 +14,7 @@ public final class SearchParams implements Serializable {
 	public static final int TARGET_TAG         = 1;
 	public static final int TARGET_TITLE       = 2;
 	public static final int TARGET_TEXT        = 3;
+	public static final int TARGET_ID          = 4;
 	
 	private static final TargetDirective[] DIRECTIVES = {
         new TargetDirective("tag:", TARGET_TAG, false), 
@@ -24,10 +25,11 @@ public final class SearchParams implements Serializable {
         new TargetDirective("anytext:", TARGET_TEXT, true),
         new TargetDirective(":", TARGET_DEFAULT, false),    
         new TargetDirective("any:", TARGET_DEFAULT, true),
+        new TargetDirective("id:", TARGET_ID, true),
     };
 	
 	private static final String TARGET_DIRECTIVE_PATTERN =
-	        "(\\b(any|tag|anytag|title|anytitle|text|anytext)\\b)?:";
+	        "(\\b(any|tag|anytag|title|anytitle|text|anytext|id)\\b)?:";
 	
 	public static final class Keyword implements Serializable {
 		private final String word;
@@ -37,8 +39,9 @@ public final class SearchParams implements Serializable {
 		private final boolean endingWith;
 		private final boolean regex;
 		private final boolean inverse;
+		private final boolean id;
 		
-		public Keyword(String src) {
+		public Keyword(String src, boolean isId) {
 			String word = src.trim();
 			boolean caseSensitive = false;
 			boolean wholeWord = false;
@@ -46,7 +49,7 @@ public final class SearchParams implements Serializable {
 			boolean endingWith = false;
 			boolean regex = false;
 			boolean inverse = false;
-			
+			boolean id = isId;
 			final Pattern p = Pattern.compile("(.*)/([cwber-]+)$");
 			final Matcher m = p.matcher(src);
 			
@@ -98,6 +101,7 @@ public final class SearchParams implements Serializable {
 			this.endingWith = endingWith;
 			this.regex = regex;
 			this.inverse = inverse;
+			this.id = id;
 		}
 		
 		public static Pair<String, Character> escapeSqlWildcardCharacters(String word) {
@@ -140,7 +144,7 @@ public final class SearchParams implements Serializable {
 		}
 
 		public boolean isTrivial() {
-            return !regex && !wholeWord && !beginningWith && !endingWith;
+            return !regex && !wholeWord && !beginningWith && !endingWith && !id;
         }
 		
 		public String getWord() {
@@ -170,6 +174,10 @@ public final class SearchParams implements Serializable {
 		public boolean isInverse() {
 			return inverse;
 		}
+		
+		public boolean isId() {
+			return id;
+		}
 	}
 	
 	private static final class TargetDirective implements Serializable {
@@ -198,17 +206,20 @@ public final class SearchParams implements Serializable {
 			
 			if (! src.isEmpty()) {
 				final Pattern p = Pattern.compile("(\"[^\"]+\")|(\\S+)");
+				boolean isId = false;
 				
 				if (src.startsWith(targetDirective.expression)) {
 					// The source string starts with an explicit directive such as 'any:', 'tag:', etc.
 					// We skip the directive and pass the rest of the string.
 					src = src.substring(targetDirective.expression.length());
+					
+					isId = (targetDirective.target == TARGET_ID);
 				}
 				
 				final Matcher m = p.matcher(src);
 				
 				while (m.find()) {
-					final Keyword kw = new Keyword(m.group());
+					final Keyword kw = new Keyword(m.group(), isId);
 					if (kw.isValid()) {
 						words.add(kw);
 					}
@@ -266,7 +277,7 @@ public final class SearchParams implements Serializable {
 	        ranges.add(new Pair<Integer, Integer>(m.start(), m.end()));
 	    }
 
-	    // We should ignore any directive existing inside '' quotes (as-is block)
+	    // We should ignore any directive existing inside double quotes (as-is block)
 	    p = Pattern.compile("(\"([^\"])+\")");
 	    m = p.matcher(src);
 	    while (m.find()) {
@@ -274,7 +285,7 @@ public final class SearchParams implements Serializable {
 	        while (itr.hasNext()) {
 	            Pair<Integer, Integer> range = itr.next();
 	            if (m.start() <= range.getFirst() && range.getSecond() <= m.end()) {
-	                // If this directive is inside '' block (as-is block), it is not intended as a directive.
+	                // If this directive is inside double quotes (as-is block), it is not intended as a directive.
 	                itr.remove();
 	            }
 	        }

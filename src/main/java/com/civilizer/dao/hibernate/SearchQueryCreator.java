@@ -28,7 +28,7 @@ public final class SearchQueryCreator {
     
     private static Junction buildQueryWithKeywords(List<Keyword> words, int target, boolean any) {
     	final String[] targetColumns = {
-    	        null, "TAG_NAME", "TITLE", "CONTENT", "CONTENT"
+    	        null, "TAG_NAME", "TITLE", "CONTENT", "this_.FRAGMENT_ID"
     	};
     	
     	final String column = targetColumns[target];
@@ -44,7 +44,7 @@ public final class SearchQueryCreator {
 			String sql = null;
 			
 			if (w.isTrivial()) {
-                if (w.isCaseSensitive()) {
+				if (w.isCaseSensitive()) {
                     sql = column + " like " + "'" + pattern + "'";
                 }
                 else {
@@ -52,7 +52,10 @@ public final class SearchQueryCreator {
                 }
             }
 			else {
-				if (w.isRegex()) {
+				if (w.isId()) {
+					sql = column + " = " + pattern;
+				}
+				else if (w.isRegex()) {
 					sql = column + " regexp " + "'" + pattern + "'";
 				}
 				else if (w.isWholeWord()) {
@@ -107,7 +110,7 @@ public final class SearchQueryCreator {
     		final List<Keyword> words = keywords.getWords();
     		final boolean any = keywords.isAny();
     		
-			if (target == SearchParams.TARGET_DEFAULT) {
+    		if (target == SearchParams.TARGET_DEFAULT) {
 				Junction disj = Restrictions.disjunction();
 				
 				Junction junc = buildQueryWithKeywords(words, SearchParams.TARGET_TITLE, any);
