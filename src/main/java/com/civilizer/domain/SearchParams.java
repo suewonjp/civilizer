@@ -10,10 +10,10 @@ import java.util.regex.Matcher;
 @SuppressWarnings("serial")
 public final class SearchParams implements Serializable {
 	
-	public static final int TARGET_ALL     = 0;
-	public static final int TARGET_TAG     = 1;
-	public static final int TARGET_TITLE   = 2;
-	public static final int TARGET_TEXT    = 3;
+	public static final int TARGET_DEFAULT     = 0;
+	public static final int TARGET_TAG         = 1;
+	public static final int TARGET_TITLE       = 2;
+	public static final int TARGET_TEXT        = 3;
 	
 	private static final TargetDirective[] DIRECTIVES = {
         new TargetDirective("tag:", TARGET_TAG, false), 
@@ -22,8 +22,8 @@ public final class SearchParams implements Serializable {
         new TargetDirective("anytitle:", TARGET_TITLE, true),
         new TargetDirective("text:", TARGET_TEXT, false),   
         new TargetDirective("anytext:", TARGET_TEXT, true),
-        new TargetDirective(":", TARGET_ALL, false),    
-        new TargetDirective("any:", TARGET_ALL, true),
+        new TargetDirective(":", TARGET_DEFAULT, false),    
+        new TargetDirective("any:", TARGET_DEFAULT, true),
     };
 	
 	private static final String TARGET_DIRECTIVE_PATTERN =
@@ -253,8 +253,12 @@ public final class SearchParams implements Serializable {
 
 	public SearchParams(String src) {
 		src = src.trim();
-	    final List<Pair<Integer, Integer>> ranges = new ArrayList<Pair<Integer, Integer>>();
-	    List<Keywords> keywords = new ArrayList<Keywords>();
+		
+		// Our objective is to populate the following object
+		List<Keywords> keywords = new ArrayList<Keywords>();
+
+		// Match directives
+		final List<Pair<Integer, Integer>> ranges = new ArrayList<Pair<Integer, Integer>>();
 	    Pattern p = Pattern.compile(TARGET_DIRECTIVE_PATTERN);
 	    Matcher m = p.matcher(src);
 	    

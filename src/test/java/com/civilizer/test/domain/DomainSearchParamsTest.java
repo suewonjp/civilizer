@@ -118,35 +118,35 @@ public class DomainSearchParamsTest {
 			final String words = "";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(0, keywords.getWords().size());
-			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(SearchParams.TARGET_DEFAULT, keywords.getTarget());
 			assertEquals(false, keywords.isAny());
 		}
 		{
 			final String words = " \t: \t\n ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(0, keywords.getWords().size());
-			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(SearchParams.TARGET_DEFAULT, keywords.getTarget());
 			assertEquals(false, keywords.isAny());
 		}
 		{
 			final String words = " :  \"\"\t";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(0, keywords.getWords().size());
-			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(SearchParams.TARGET_DEFAULT, keywords.getTarget());
 			assertEquals(false, keywords.isAny());
 		}
 		{
 			final String words = ":word phrase '' \"\" wholeWorld/w";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(4, keywords.getWords().size());
-			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(SearchParams.TARGET_DEFAULT, keywords.getTarget());
 			assertEquals(false, keywords.isAny());
 		}
 		{
 			final String words = "any: 'hello _%' Phrase/c \"quoted phrase\" ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(4, keywords.getWords().size());
-			assertEquals(SearchParams.TARGET_ALL, keywords.getTarget());
+			assertEquals(SearchParams.TARGET_DEFAULT, keywords.getTarget());
 			assertEquals(true, keywords.isAny());
 		}
 		{

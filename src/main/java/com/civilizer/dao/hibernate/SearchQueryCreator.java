@@ -107,7 +107,7 @@ public final class SearchQueryCreator {
     		final List<Keyword> words = keywords.getWords();
     		final boolean any = keywords.isAny();
     		
-			if (target == SearchParams.TARGET_ALL) {
+			if (target == SearchParams.TARGET_DEFAULT) {
 				Junction disj = Restrictions.disjunction();
 				
 				Junction junc = buildQueryWithKeywords(words, SearchParams.TARGET_TITLE, any);
