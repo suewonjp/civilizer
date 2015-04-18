@@ -455,19 +455,41 @@ public class SearchTest extends DaoTest {
     public void testSearchWithFragmentId() {
     	final Pair<Fragment[], Tag[]> pair = createTestData();
         final Fragment[] fragments = pair.getFirst();
-//        final Tag[] tags = pair.getSecond();
         
+        // single id;
         {
         	final int index = TestUtil.getRandom().nextInt(fragments.length);
         	final long id = fragments[index].getId();
-        	final String searchPhrase = "id:" + id;
+//        	final String searchPhrase = "id:" + id;
+        	final String searchPhrase = "id: \"" + id + "\""; // [NOTE] wrapping with double quotes will work
+//        	final String searchPhrase = "id: '" + id + "'"; // [NOTE] wrapping with single quotes will NOT work
         	final SearchParams sp = new SearchParams(searchPhrase);
         	assertEquals(1, sp.getKeywords().size());
+        	assertEquals(1, sp.getKeywords().get(0).getWords().size());
         	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
         	final List<Fragment> results = crit.list();
         	assertEquals(1, results.size());
         	assertEquals(new Long(id), results.get(0).getId());
         	assertEquals(fragments[index], results.get(0));
+        }
+        // multiple ids;
+        {
+        	final int[] indices = TestUtil.randomIndices(TestUtil.getRandom(), 2, fragments.length);
+        	String searchPhrase = "id:";
+        	for (int i : indices) {
+				searchPhrase += fragments[i].getId() + " ";
+			}
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	assertEquals(1, sp.getKeywords().size());
+        	assertEquals(indices.length, sp.getKeywords().get(0).getWords().size());
+        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+        	final List<Fragment> results = crit.list();
+        	assertEquals(indices.length, results.size());
+        	final List<Fragment> list = Arrays.asList(fragments);
+        	for (int i : indices) {
+        		final long id = fragments[i].getId();
+        		assertEquals(true, Fragment.containsId(list, id));
+        	}
         }
     }
     
