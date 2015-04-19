@@ -267,13 +267,13 @@
 	margin-bottom: 5px;
 }
 
-#quick-search-area {
+#quick-search-area-0, #quick-search-area-1, #quick-search-area-2 {
 	margin-left: 12px;
-	width: 60%;
+	width: 100%;
 }
 
-#quick-search-area, input {
-    width: 16%;
+#quick-search-area-0 input, #quick-search-area-1 input, #quick-search-area-2, input {
+    width: 80%;
 }
 
 .fb-file {
