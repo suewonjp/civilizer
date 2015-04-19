@@ -46,7 +46,9 @@
 
 #user-menu-area {
     margin-right: 10px;
-    float: right;
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
 
 #app-title {
@@ -57,12 +59,21 @@
 }
 
 #new-fragment-editor-trigger {
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
 #panel-activation-buttons {
-    position: relative;
+    position: absolute;
+    top: 10px;
     margin-left: 15px;
+    white-space: nowrap;
+}
+
+/* make panel activation buttons disappear when the browser window width gets extremely small */
+@media screen and (max-width: 560px) {
+	#panel-activation-buttons {
+		display: none;
+	}
 }
 
 #editor-title-bar, #fragment-overlay-title-bar {
@@ -268,7 +279,7 @@
 }
 
 #quick-search-area-0, #quick-search-area-1, #quick-search-area-2 {
-	margin-left: 12px;
+	margin-left: 6px;
 	width: 100%;
 }
 
