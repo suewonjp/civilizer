@@ -1,13 +1,14 @@
 #container {
+	min-width: 1200px;
 	width: 100%;
-	margin: 0 auto;
-	border-width: 1;
+/* 	margin: 0 auto; */
+/* 	border-width: 0; */
 }
 
 #header, #footer {
 	width: 100%;
-	margin: 0 auto;
-	border-style: inherit;
+/* 	margin: 0 auto; */
+/* 	border-style: inherit; */
 }
 
 #header {
@@ -19,14 +20,14 @@
 }
 
 #footer {
-	border-style: inherit;
+/* 	border-style: inherit; */
 	clear: both;
 }
 
 #content {
 	width: 81%;
 	margin-left: 0;
-	border-style: inherit;
+/* 	border-style: inherit; */
 	float: left;
 }
 
