@@ -44,36 +44,70 @@
 	background-image: linear-gradient(to bottom, #E6E6E6, #CCCCCC);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E6E6E6, endColorstr=#CCCCCC);
 }
 
-#user-menu-area {
-    margin-right: 10px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-}
-
 #app-title {
     color: aquamarine;
-    font-size: 200%;
+    font-size: x-large;
     font-style: italic;
-    text-decoration: underline;
 }
 
 #new-fragment-editor-trigger {
-    margin-left: 20px;
+	font-size: medium;
+    margin-left: 3px;
 }
 
 #panel-activation-buttons {
-    position: absolute;
-    top: 10px;
-    margin-left: 15px;
+    margin-left: 4px;
+    font-size: x-small;
     white-space: nowrap;
 }
 
-/* make panel activation buttons disappear when the browser window width gets extremely small */
-@media screen and (max-width: 560px) {
-	#panel-activation-buttons {
+#panel-activation-buttons label {
+	top : -3px;
+}
+
+#panel-activation-buttons .ui-button-text {
+	padding : 2px 6px 2px 6px;
+}
+
+/* prevent the header layout from collapsing when the browser window width gets extremely small */
+@media screen and (max-width: 500px) {
+	#app-title {
+		font-size: small;
+	}
+	
+	#new-fragment-editor-trigger {
 		display: none;
 	}
+	
+	#panel-activation-buttons {
+		font-size: xx-small;
+	}
+	
+	#panel-activation-buttons label span:nth-of-type(2) {
+		display: none;
+	}
+}
+
+#quick-search-area {
+	margin-left: 8px;
+	width: 60%;
+	white-space: nowrap;
+}
+
+#quick-search-area, input {
+    width: 16%;
+    min-width: 100px;
+}
+
+#user-menu-area {
+    margin-right: 6px;
+    position: absolute;
+    top: -5px;
+    right: 0px;
+}
+
+#user-menu-area button {
+	width: 42px;
 }
 
 #editor-title-bar, #fragment-overlay-title-bar {
@@ -276,15 +310,6 @@
 	position: relative;
 	top: 40px;
 	margin-bottom: 5px;
-}
-
-#quick-search-area-0, #quick-search-area-1, #quick-search-area-2 {
-	margin-left: 6px;
-	width: 100%;
-}
-
-#quick-search-area-0 input, #quick-search-area-1 input, #quick-search-area-2, input {
-    width: 80%;
 }
 
 .fb-file {

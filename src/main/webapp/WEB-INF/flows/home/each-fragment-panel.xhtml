@@ -93,15 +93,6 @@
     </c:choose>
 </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 
-<span id="quick-search-area-#{panelId}" >
-    <c:set var="scb" value="#{searchContextBeans[panelId]}" />
-    <span id="quick-search-#{panelId}" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
-    <span id="quick-search-box-#{panelId}" >
-        <p:remoteCommand name="quickSearch#{panelId}" action="quick-search-fragments" />
-        <h:inputText value="#{scb.quickSearchText}" onkeyup="kickSearch(event, quickSearch#{panelId}, #{panelId}); return false;"/>
-    </span>
-</span>
-
 <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
     <ui:include src="each-fragment.xhtml" />
 </c:forEach>
