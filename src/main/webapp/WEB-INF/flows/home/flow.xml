@@ -101,11 +101,8 @@
         </transition>
         
         <transition on="search-fragments" to="home">
-            <evaluate expression="mainController.yetToBeDeveloped()" />
-        </transition>
-
-        <transition on="quick-search-fragments" to="home">
             <set name="requestScope.searchContextBean" value="searchContextBeans[requestParameters.panelId]" />
+            <evaluate expression="requestScope.searchContextBean.setQuickSearchText(customParams.quickSearchText)" />
             <evaluate expression="customParams.setPanelIdForSearch(requestParameters.panelId)" />
         </transition>
 

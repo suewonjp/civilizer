@@ -41,8 +41,7 @@
     
     <p:spacer width="6" />
     
-    <p:commandLink action="search-fragments">
-        <f:param name="panelId" value="#{panelId}" />
+    <p:commandLink oncomplete="showSearchDialog('#{panelId}')">
         <span class="fa fa-search fa-2x button-link" title="#{msg['label_search']}"></span>
     </p:commandLink>
     

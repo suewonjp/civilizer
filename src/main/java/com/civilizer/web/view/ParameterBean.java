@@ -11,6 +11,7 @@ public final class ParameterBean implements Serializable {
 	private int panelIdForSearch = 0;
 	private long fragmentId0;
 	private long fragmentId1;
+	private String quickSearchText;
 	
 	ParameterBean() {
 	}
@@ -53,6 +54,14 @@ public final class ParameterBean implements Serializable {
 
 	public void setFragmentId1(long fragmentId1) {
 		this.fragmentId1 = fragmentId1;
+	}
+
+	public String getQuickSearchText() {
+		return quickSearchText;
+	}
+
+	public void setQuickSearchText(String quickSearchText) {
+		this.quickSearchText = quickSearchText;
 	}
 
 }

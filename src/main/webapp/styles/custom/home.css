@@ -88,15 +88,9 @@
 	}
 }
 
-#quick-search-area {
-	margin-left: 8px;
+#search-buttons-at-header {
 	width: 60%;
 	white-space: nowrap;
-}
-
-#quick-search-area, input {
-    width: 16%;
-    min-width: 100px;
 }
 
 #user-menu-area {

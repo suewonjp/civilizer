@@ -515,6 +515,15 @@ function trashFragmentFromCtxtMenu(deleting) {
 	
 	confirmTrashingFragments(frgId, deleting, false, panelId);
 }
+
+function showSearchDialog(panelId) {
+	var dlg = PF("searchDlg");
+	dlg.show();
+	$("#fragment-group-form\\:go-search").click(function() {
+		searchFragments([{name:'panelId',value:panelId}]);
+	});
+}
+
 //]]>
 </script>
 </ui:define>
@@ -579,9 +588,21 @@ function trashFragmentFromCtxtMenu(deleting) {
         <p:commandButton id="ok" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:confirmDialog>
     
+    <p:dialog width="500px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="searchDlg" position="center" draggable="true" resizable="false">
+    	<p:accordionPanel>
+	        <p:tab id="quick-search-ui" title="Quick Search">
+	            <h:inputText value="#{customParams.quickSearchText}"/>
+	        </p:tab>
+	        <p:tab id="assisted-search-ui" title="Assisted Search">
+	        </p:tab>
+	    </p:accordionPanel>
+	    <p:commandButton id="go-search" value="#{msg['label_search']}" icon="ui-icon-check"/>
+    </p:dialog>
+    
     <p:remoteCommand name="relateFragments" action="relate-fragments"/>
     <p:remoteCommand name="filterByTag" action="filter-by-tag" async="true"/>
     <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment"/>
+    <p:remoteCommand name="searchFragments" action="search-fragments" />
     
     <div id="frg-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>

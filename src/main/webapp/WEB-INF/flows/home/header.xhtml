@@ -75,11 +75,11 @@ function onPanelActivationChange() {
     }
 }
 
-function kickSearch(event, remoteCommand, panelId) {
-	if (event.keyCode == 13) {
-		remoteCommand([{name:'panelId',value:panelId}]);
-	}
-}
+// function kickSearch(event, remoteCommand, panelId) {
+// 	if (event.keyCode == 13) {
+// 		remoteCommand([{name:'panelId',value:panelId}]);
+// 	}
+// }
 //]]>
 </script>
 
@@ -108,31 +108,21 @@ function kickSearch(event, remoteCommand, panelId) {
 </h:form>
 
 <h:form prependId="false" style="display:inline; margin:0; padding:0;">
-    <span id="quick-search-area" >
-        <c:set var="scb" value="#{searchContextBeans[0]}" />
-        <span id="quick-search-0" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
-        <span id="quick-search-box-0" >
-            <p:remoteCommand name="quickSearch0" action="quick-search-fragments" />
-            <h:inputText value="#{scb.quickSearchText}" onkeyup="kickSearch(event, quickSearch0, 0); return false;"/>
-        </span>
+    <span id="search-buttons-at-header" >
+        <p:commandLink oncomplete="showSearchDialog(0)" styleClass="button-link">
+        	<span class="fa fa-search fa-1x ui-panel ui-widget-content ui-corner-all" />
+        </p:commandLink>
+        <p:spacer width="5" />
+        
+        <p:commandLink oncomplete="showSearchDialog(1)" styleClass="button-link">
+        	<span class="fa fa-search fa-1x ui-panel ui-widget-content ui-corner-all" />
+        </p:commandLink>
         
         <p:spacer width="5" />
         
-        <c:set var="scb" value="#{searchContextBeans[1]}" />
-        <span id="quick-search-1" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
-        <span id="quick-search-box-1" >
-            <p:remoteCommand name="quickSearch1" action="quick-search-fragments" />
-            <h:inputText value="#{scb.quickSearchText}" onkeyup="kickSearch(event, quickSearch1, 1); return false;"/>
-        </span>
-        
-        <p:spacer width="5" />
-        
-        <c:set var="scb" value="#{searchContextBeans[2]}" />
-        <span id="quick-search-2" class="fa fa-search fa-1x ui-panel ui-widget ui-widget-content ui-corner-all" />
-        <span id="quick-search-box-2" >
-            <p:remoteCommand name="quickSearch2" action="quick-search-fragments" />
-            <h:inputText value="#{scb.quickSearchText}" onkeyup="kickSearch(event, quickSearch0, 2); return false;"/>
-        </span>
+        <p:commandLink oncomplete="showSearchDialog(2)" styleClass="button-link">
+        	<span class="fa fa-search fa-1x ui-panel ui-widget-content ui-corner-all" />
+        </p:commandLink>
     </span>
 </h:form>
 
