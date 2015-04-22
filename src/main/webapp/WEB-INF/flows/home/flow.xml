@@ -14,7 +14,6 @@
         <evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
         <evaluate expression="mainController.newTagBean()" result="flowScope.paramTagBean"/>
         <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
-        <evaluate expression="mainController.newSearchContextBeans()" result="flowScope.searchContextBeans"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">
@@ -101,7 +100,7 @@
         </transition>
         
         <transition on="search-fragments" to="home">
-            <set name="requestScope.searchContextBean" value="searchContextBeans[requestParameters.panelId]" />
+            <evaluate expression="mainController.newSearchContextBean(requestParameters.panelId)" result="requestScope.searchContextBean"/>
             <evaluate expression="requestScope.searchContextBean.setQuickSearchText(customParams.quickSearchText)" />
             <evaluate expression="customParams.setPanelIdForSearch(requestParameters.panelId)" />
         </transition>

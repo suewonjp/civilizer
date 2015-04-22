@@ -289,9 +289,8 @@ public final class MainController {
 		return new PanelContextBean(panelId, tagId, curPage);
 	}
 	
-	public SearchContextBean[] newSearchContextBeans() {
-		SearchContextBean[] output = { new SearchContextBean(0), new SearchContextBean(1), new SearchContextBean(2) };
-		return output;
+	public SearchContextBean newSearchContextBean(int panelId) {
+	    return new SearchContextBean(panelId);
 	}
 
 	public SearchContextBean getSearchContextBean(List<SearchContextBean> beans, int panelId) {
