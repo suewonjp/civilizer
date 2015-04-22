@@ -289,8 +289,8 @@ public final class MainController {
 		return new PanelContextBean(panelId, tagId, curPage);
 	}
 	
-	public SearchContextBean newSearchContextBean(int panelId) {
-	    return new SearchContextBean(panelId);
+	public SearchContextBean newSearchContextBean() {
+	    return new SearchContextBean();
 	}
 
 	public void bookmarkFragment(Long fragmentId) {

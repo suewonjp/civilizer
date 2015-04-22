@@ -8,14 +8,17 @@ import com.civilizer.domain.SearchParams;
 public final class SearchContextBean implements Serializable {
 	
 	private String quickSearchText = "";
-	private final int panelId;
+	private int panelId = -1;
 	
-	public SearchContextBean(int panelId) {
-		this.panelId = panelId;
+	public SearchContextBean() {
 	}
 
 	public int getPanelId() {
 		return panelId;
+	}
+	
+	public void setPanelId(int panelId) {
+	    this.panelId = panelId;
 	}
 	
 	public String getQuickSearchText() {

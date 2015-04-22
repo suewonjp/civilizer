@@ -567,7 +567,7 @@ function showSearchDialog(panelId) {
     <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{paramTagBean.tag.id}"/>
     <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}"/>
     <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}"/>
-    <h:inputHidden id="id-placeholder-for-search" value="#{customParams.panelIdForSearch}"/>
+    <h:inputHidden id="id-placeholder-for-search" value="#{searchContextBean.panelId}"/>
     <h:inputHidden id="id-placeholder-for-fragment0" value="#{customParams.fragmentId0}"/>
     <h:inputHidden id="id-placeholder-for-fragment1" value="#{customParams.fragmentId1}"/>
     <h:inputHidden id="id-placeholder-for-file" value="#{fileListBean.srcNodeId}"/>
@@ -597,7 +597,7 @@ function showSearchDialog(panelId) {
     <p:dialog header="#{msg['label_search']}" width="500px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="searchDlg" position="center" draggable="true" resizable="false">
     	<p:accordionPanel id="search-panel">
 	        <p:tab title="#{msg['label_quick_search']}">
-	            <p:inputText id="quick-search-input" style="width:80%" value="#{customParams.quickSearchText}"/>
+	            <p:inputText id="quick-search-input" style="width:80%" value="#{searchContextBean.quickSearchText}"/>
 	        </p:tab>
 	        <p:tab id="assisted-search-ui" title="#{msg['label_assisted_search']}">
 	        </p:tab>
