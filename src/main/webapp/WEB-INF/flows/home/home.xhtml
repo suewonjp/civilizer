@@ -597,7 +597,7 @@ function showSearchDialog(panelId) {
     <p:dialog header="#{msg['label_search']}" width="500px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="searchDlg" position="center" draggable="true" resizable="false">
     	<p:accordionPanel id="search-panel">
 	        <p:tab title="#{msg['label_quick_search']}">
-	            <p:inputText id="quick-search-input" style="width:80%" value="#{searchContextBean.quickSearchText}"/>
+	            <p:inputText id="quick-search-input" style="width:80%" value="#{searchContextBean.quickSearchPhrase}"/>
 	        </p:tab>
 	        <p:tab title="#{msg['label_normal_search']}">
 	            <div>

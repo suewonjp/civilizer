@@ -7,7 +7,7 @@ import com.civilizer.domain.SearchParams;
 @SuppressWarnings("serial")
 public final class SearchContextBean implements Serializable {
 	
-	private String quickSearchText = "";
+	private String quickSearchPhrase = "";
 	private String tagKeywords = "";
 	private String titleKeywords = "";
 	private String contentKeywords = "";
@@ -17,9 +17,6 @@ public final class SearchContextBean implements Serializable {
 	private boolean anyContent;
 	private int panelId = -1;
 	
-	public SearchContextBean() {
-	}
-
 	public int getPanelId() {
 		return panelId;
 	}
@@ -28,12 +25,12 @@ public final class SearchContextBean implements Serializable {
 	    this.panelId = panelId;
 	}
 	
-	public String getQuickSearchText() {
-		return quickSearchText;
+	public String getQuickSearchPhrase() {
+		return quickSearchPhrase;
 	}
 	
-	public void setQuickSearchText(String quickSearchText) {
-		this.quickSearchText = quickSearchText;
+	public void setQuickSearchPhrase(String phrase) {
+		this.quickSearchPhrase = phrase;
 	}
 
     public String getTagKeywords() {
@@ -93,11 +90,14 @@ public final class SearchContextBean implements Serializable {
     }
     
     public SearchParams buildSearchParams() {
-        if (! quickSearchText.isEmpty()) {
-            return new SearchParams(quickSearchText);
+        if (! quickSearchPhrase.isEmpty()) {
+            return new SearchParams(quickSearchPhrase);
         }
+        
         // [TODO] build search parameters from the various data collected with the view layer
-        return null;
+        StringBuilder sb = new StringBuilder();
+        
+        return new SearchParams(sb.toString());
     }
 
 }
