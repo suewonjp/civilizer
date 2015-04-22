@@ -599,7 +599,26 @@ function showSearchDialog(panelId) {
 	        <p:tab title="#{msg['label_quick_search']}">
 	            <p:inputText id="quick-search-input" style="width:80%" value="#{searchContextBean.quickSearchText}"/>
 	        </p:tab>
-	        <p:tab id="assisted-search-ui" title="#{msg['label_assisted_search']}">
+	        <p:tab title="#{msg['label_normal_search']}">
+	            <div>
+		            <label class="fa fa-tag"> Tag </label>
+		            <p:inputText id="tag-keywords" style="width:50%" value="#{searchContextBean.tagKeywords}"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTag}" itemLabel="Any"/>
+	            </div>
+	            <div>
+		            <label class="fa fa-tag"> Title </label>
+		            <p:inputText id="title-keywords" style="width:50%" value="#{searchContextBean.titleKeywords}"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTitle}" itemLabel="Any"/>
+	            </div>
+	            <div>
+		            <label class="fa fa-tag"> Content </label>
+		            <p:inputText id="content-keywords" style="width:50%" value="#{searchContextBean.contentKeywords}"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyContent}" itemLabel="Any"/>
+	            </div>
+	            <div>
+		            <label class="fa fa-tag"> ID </label>
+		            <p:inputText id="id-keywords" style="width:50%" value="#{searchContextBean.idKeywords}"/>
+	            </div>
 	        </p:tab>
 	    </p:accordionPanel>
 	    <p:commandButton id="go-search" value="#{msg['label_search']}" icon="ui-icon-check"/>

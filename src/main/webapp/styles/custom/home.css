@@ -382,3 +382,12 @@
 .ui-draggable-handle {
 	cursor:move;
 }
+
+#fragment-group-form\:search-panel label {
+    width: 70px;
+}
+
+#fragment-group-form\:search-panel .ui-chkbox {
+	margin-left: 6px;
+	vertical-align: sub;
+}
