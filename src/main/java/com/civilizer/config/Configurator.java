@@ -91,6 +91,11 @@ public final class Configurator {
 				// If not specified otherwise, it is a production build
 				p.setProperty(AppOptions.DEV, "false");
 			}
+
+			if (p.getProperty(AppOptions.INITIALIZE_DB) == null) {
+			    // If not specified otherwise, disable DB initialization
+			    p.setProperty(AppOptions.INITIALIZE_DB, "false");
+			}
 			
 			// add the application options into the system properties
 			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")
