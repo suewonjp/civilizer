@@ -603,20 +603,20 @@ function showSearchDialog(panelId) {
 	            <div>
 		            <label class="fa fa-tag"> Tag </label>
 		            <p:inputText id="tag-keywords" style="width:50%" value="#{searchContextBean.tagKeywords}"/>
-		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTag}" itemLabel="Any"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTag}" itemLabel="#{msg['label_any']}"/>
 	            </div>
 	            <div>
-		            <label class="fa fa-tag"> Title </label>
+		            <label class="fa fa-header"> Title </label>
 		            <p:inputText id="title-keywords" style="width:50%" value="#{searchContextBean.titleKeywords}"/>
-		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTitle}" itemLabel="Any"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTitle}" itemLabel="#{msg['label_any']}"/>
 	            </div>
 	            <div>
-		            <label class="fa fa-tag"> Content </label>
+		            <label class="fa fa-file-text-o"> Content </label>
 		            <p:inputText id="content-keywords" style="width:50%" value="#{searchContextBean.contentKeywords}"/>
-		            <p:selectBooleanCheckbox value="#{searchContextBean.anyContent}" itemLabel="Any"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyContent}" itemLabel="#{msg['label_any']}"/>
 	            </div>
 	            <div>
-		            <label class="fa fa-tag"> ID </label>
+		            <label class="fa fa-sort-numeric-asc"> ID </label>
 		            <p:inputText id="id-keywords" style="width:50%" value="#{searchContextBean.idKeywords}"/>
 	            </div>
 	        </p:tab>
