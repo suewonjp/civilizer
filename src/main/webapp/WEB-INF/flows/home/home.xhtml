@@ -596,10 +596,10 @@ function showSearchDialog(panelId) {
     
     <p:dialog header="#{msg['label_search']}" width="500px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="searchDlg" position="center" draggable="true" resizable="false">
     	<p:accordionPanel id="search-panel">
-	        <p:tab title="Quick Search">
+	        <p:tab title="#{msg['label_quick_search']}">
 	            <p:inputText id="quick-search-input" style="width:80%" value="#{customParams.quickSearchText}"/>
 	        </p:tab>
-	        <p:tab id="assisted-search-ui" title="Assisted Search">
+	        <p:tab id="assisted-search-ui" title="#{msg['label_assisted_search']}">
 	        </p:tab>
 	    </p:accordionPanel>
 	    <p:commandButton id="go-search" value="#{msg['label_search']}" icon="ui-icon-check"/>
