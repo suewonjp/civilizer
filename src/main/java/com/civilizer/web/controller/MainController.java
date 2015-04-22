@@ -293,10 +293,6 @@ public final class MainController {
 	    return new SearchContextBean(panelId);
 	}
 
-	public SearchContextBean getSearchContextBean(List<SearchContextBean> beans, int panelId) {
-		return beans.get(panelId);
-	}
-	
 	public void bookmarkFragment(Long fragmentId) {
 	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 	    frg.addTag(getBookmarkTag());
