@@ -9,13 +9,10 @@ import org.slf4j.LoggerFactory;
 
 public final class Configurator {
 	
-	private static final String DEFAULT_PRIVATE_HOME_NAME       = ".civilizer";
-	private static final String OPTION_FILE_NAME                = "app-options.properties";
-	
     private final Logger logger = LoggerFactory.getLogger(Configurator.class);
 	
 	public Configurator() {
-	    final File privateHome = detectPrivateHome(DEFAULT_PRIVATE_HOME_NAME);
+	    final File privateHome = detectPrivateHome(AppOptions.DEF_PRIVATE_HOME);
         preSetupPrivateHome(privateHome);
 		addAppOptionsToSystemProperties(privateHome);
 		postSetupPrivateHome(privateHome);
@@ -52,7 +49,7 @@ public final class Configurator {
 	private void preSetupPrivateHome(File privateHome) {
 	    createUnexistingDirectory(privateHome);
 	    
-	    final String tgtOptionFilePath = privateHome.getAbsolutePath() + File.separatorChar + OPTION_FILE_NAME;
+	    final String tgtOptionFilePath = privateHome.getAbsolutePath() + File.separatorChar + AppOptions.OPTION_FILE_NAME;
 	    final File tgtOptionFile = new File(tgtOptionFilePath);
 	    if (tgtOptionFile.exists()) {
 	    	mergeAppOptions();
@@ -60,7 +57,7 @@ public final class Configurator {
 	    else {
 	        // copy the default application option file unless it exists
 	        final File defaultOptionFile = 
-	                new File (getClass().getClassLoader().getResource(OPTION_FILE_NAME).getFile());
+	                new File (getClass().getClassLoader().getResource(AppOptions.OPTION_FILE_NAME).getFile());
 	        try {
                 FileUtils.copyFile(defaultOptionFile, tgtOptionFile);
             } catch (IOException e) {
@@ -78,23 +75,21 @@ public final class Configurator {
 		try {
 		    // load options from the application option file
 		    final Properties p = new Properties();
-		    final String optionFilePath = privateHome.getAbsolutePath() + File.separatorChar + OPTION_FILE_NAME;
+		    final String optionFilePath = privateHome.getAbsolutePath() + File.separatorChar + AppOptions.OPTION_FILE_NAME;
 		    p.load(new FileInputStream(optionFilePath));
 			
 		    // make sure the database file prefix is an absolute path
-		    setPathAbsolute(p, AppOptions.DB_FILE_PREFIX, privateHome);
+		    setPathAbsolute(p, AppOptions.DB_FILE_PREFIX, privateHome, AppOptions.DEF_DB_FILE_PREFIX);
 			
 			// make sure the file box folder path is absolute
-			setPathAbsolute(p, AppOptions.FILE_BOX_HOME, privateHome);
+			setPathAbsolute(p, AppOptions.FILE_BOX_HOME, privateHome, AppOptions.DEF_FILE_BOX_HOME);
 			
 			if (p.getProperty(AppOptions.DEV) == null) {
-				// If not specified otherwise, it is a production build
-				p.setProperty(AppOptions.DEV, "false");
+				p.setProperty(AppOptions.DEV, AppOptions.DEF_DEV);
 			}
 
 			if (p.getProperty(AppOptions.INITIALIZE_DB) == null) {
-			    // If not specified otherwise, disable DB initialization
-			    p.setProperty(AppOptions.INITIALIZE_DB, "false");
+			    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
 			}
 			
 			// add the application options into the system properties
@@ -117,8 +112,12 @@ public final class Configurator {
         }
 	}
 	
-	private void setPathAbsolute(Properties p, String key, File privateHome) {
-		final String srcPath = p.getProperty(key);
+	private void setPathAbsolute(Properties p, String key, File privateHome, String defValue) {
+		String srcPath = p.getProperty(key);
+		if (srcPath == null) {
+			logger.error("????? The key \"%s\" is NOT found! Use the default value of \"%s\"", key, defValue);
+			srcPath = defValue;
+		}
 		String absPath = null;
 		if (new File(srcPath).isAbsolute()) {
 		    // already absolute path
