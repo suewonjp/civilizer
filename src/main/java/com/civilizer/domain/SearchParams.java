@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import org.hamcrest.core.IsInstanceOf;
+
 // [TODO] adding rules regarding pagination and ordering
 
 @SuppressWarnings("serial")
@@ -135,8 +137,21 @@ public final class SearchParams implements Serializable {
 			return new Pair<String, Character>(word, escapeChar);
 		}
 		
-		private static boolean checkValidity(String word) {
-			return ! word.isEmpty();
+		private boolean checkValidity(String word) {
+			boolean ok = true;
+			if (word.isEmpty()) {
+				ok = false;
+			}
+			else {
+				if (isId()) {
+					try {
+						Long.parseLong(word);
+					} catch (NumberFormatException e) {
+						ok = false;
+					}
+				}
+			}
+			return ok;
 		}
 		
 		public boolean isValid() {
@@ -317,7 +332,8 @@ public final class SearchParams implements Serializable {
 	}
 
 	public List<Keywords> getKeywords() {
-		return keywords;
+		return keywords == null ?
+				Collections.<Keywords>emptyList() : keywords;
 	}
 	
 	public boolean hasTarget(int target) {
