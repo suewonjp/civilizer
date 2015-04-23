@@ -7,13 +7,18 @@
     xmlns:p="http://primefaces.org/ui"
     >
     
-<span class="each-tag" _tid="#{tag.id}" _frgCount="#{tagBean.fragmentCount}"> 
-	<p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
-		<span class="fa fa-tag " ></span>
-		<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
-		<f:param name="tagId" value="#{tag.id}" />
-		<f:param name="panelId" value="0" />
-	</p:commandLink>
+<span class="each-tag tag-button" _tid="#{tag.id}" _frgCount="#{tagBean.fragmentCount}" title="#{tagBean.fragmentCount} #{msg['label_fragments']}"
+	onclick="fetchFragmentsByTag($(this), null)"> 
+	<span class="fa fa-tag" ></span>
+	<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 </span>
+<!-- <span class="each-tag" _tid="#{tag.id}" _frgCount="#{tagBean.fragmentCount}">  -->
+<!-- 	<p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}"> -->
+<!-- 		<span class="fa fa-tag " ></span> -->
+<!-- 		<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText> -->
+<!-- 		<f:param name="tagId" value="#{tag.id}" /> -->
+<!-- 		<f:param name="panelId" value="0" /> -->
+<!-- 	</p:commandLink> -->
+<!-- </span> -->
 
 </ui:composition>

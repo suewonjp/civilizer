@@ -301,8 +301,8 @@ function setupDndForEmbeddingFile() {
 }
 
 function newBaseDroppable(acceptableClasses) {
-	var weakFocus = "ui-state-highlight";
-	var strongFocus = "ui-state-active";
+	var weakFocus = "ui-weak-focus";
+	var strongFocus = "ui-strong-focus";
 	var output = {
 		over: function(event, ui) {
 			var from = ui.draggable;
@@ -346,6 +346,9 @@ function hasAnyClass(obj, classes) {
 }
 
 function findPanel(obj) {
+	if (!obj) {
+		return -1;
+	}
 	var pid = obj.attr("_pid");
 	if (pid) {
 		return pid;
@@ -359,6 +362,11 @@ function findPanel(obj) {
 
 function fetchFragmentsByTag(from, to) {
 	var targetPanelId = findPanel(to);
+	if (targetPanelId < 0) {
+		if ($("#panel-toggler-1").prop("checked") == false) targetPanelId = 1;
+		else if ($("#panel-toggler-2").prop("checked") == false) targetPanelId = 2;
+		else targetPanelId = 0;
+	}
     $("#fragment-group-form\\:id-placeholder-for-panel").val(targetPanelId);
     $("#panel-toggler-" + targetPanelId).prop("checked", true);
     $("#panel-activation-buttons").buttonset("refresh");
