@@ -22,14 +22,6 @@ $(document).ready(function() {
 		smartypants: false,
 	});
 	
-    $("#fragment-group").on("mouseenter", ".each-fragment-container", function() {
-   		$(this).find(".fragment-menu").show();
-   	});
-    
-    $("#fragment-group").on("mouseleave", ".each-fragment-container", function() {
-   		$(this).find(".fragment-menu").hide();
-   	});
-    
     $(".fragment-title").each(function() {
     	var $this = $(this);
     	$this.html(translateCustomMarkupRules($this.html()));
