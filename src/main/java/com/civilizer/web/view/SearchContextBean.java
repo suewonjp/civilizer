@@ -7,15 +7,19 @@ import com.civilizer.domain.SearchParams;
 @SuppressWarnings("serial")
 public final class SearchContextBean implements Serializable {
 	
-	private String quickSearchPhrase = "";
-	private String tagKeywords = "";
-	private String titleKeywords = "";
-	private String contentKeywords = "";
-	private String idKeywords = "";
+	private String quickSearchPhrase;
+	private String tagKeywords;
+	private String titleKeywords;
+	private String contentKeywords;
+	private String idKeywords;
 	private boolean anyTag;
 	private boolean anyTitle;
 	private boolean anyContent;
 	private int panelId = -1;
+	
+	public SearchContextBean() {
+		reset();
+	}
 	
 	public int getPanelId() {
 		return panelId;
@@ -90,14 +94,52 @@ public final class SearchContextBean implements Serializable {
     }
     
     public SearchParams buildSearchParams() {
-        if (! quickSearchPhrase.isEmpty()) {
-            return new SearchParams(quickSearchPhrase);
+        SearchParams output = null;
+        
+        if (quickSearchPhrase.isEmpty()) {
+        	final StringBuilder sb = new StringBuilder();
+            
+            if (tagKeywords.isEmpty() == false) {
+            	if (anyTag) {
+                	sb.append("any");
+                }
+            	sb.append("tag:").append(tagKeywords).append(' ');
+            }
+            if (titleKeywords.isEmpty() == false) {
+            	if (anyTitle) {
+            		sb.append("any");
+            	}
+            	sb.append("title:").append(titleKeywords).append(' ');
+            }
+            if (contentKeywords.isEmpty() == false) {
+            	if (anyContent) {
+            		sb.append("any");
+            	}
+            	sb.append("text:").append(contentKeywords).append(' ');
+            }
+            if (idKeywords.isEmpty() == false) {
+            	sb.append("id:").append(idKeywords).append(' ');
+            }
+            
+            output = new SearchParams(sb.toString());
+        }
+        else {
+        	output = new SearchParams(quickSearchPhrase);
         }
         
-        // [TODO] build search parameters from the various data collected with the view layer
-        StringBuilder sb = new StringBuilder();
-        
-        return new SearchParams(sb.toString());
+        reset();
+        return output;
+    }
+    
+    private void reset() {
+    	quickSearchPhrase = "";
+    	tagKeywords = "";
+    	titleKeywords = "";
+    	contentKeywords = "";
+    	idKeywords = "";
+    	anyTag = false;
+    	anyTitle = false;
+    	anyContent = false;
     }
 
 }

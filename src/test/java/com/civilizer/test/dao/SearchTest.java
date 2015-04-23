@@ -456,14 +456,6 @@ public class SearchTest extends DaoTest {
     	final Pair<Fragment[], Tag[]> pair = createTestData();
         final Fragment[] fragments = pair.getFirst();
         
-        // exceptions;
-        {
-        	final String searchPhrase = "id: 0xfff invalid 32h 0"; // [NOTE] only acceptable input is only the final
-        	final SearchParams sp = new SearchParams(searchPhrase);
-        	assertEquals(1, sp.getKeywords().size());
-        	assertEquals(1, sp.getKeywords().get(0).getWords().size());
-        	assertEquals("0", sp.getKeywords().get(0).getWords().get(0).getWord());
-        }
         // single id;
         {
         	final int index = TestUtil.getRandom().nextInt(fragments.length);

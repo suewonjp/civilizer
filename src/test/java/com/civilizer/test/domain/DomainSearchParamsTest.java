@@ -188,9 +188,9 @@ public class DomainSearchParamsTest {
 			assertEquals(true, keywords.isAny());
 		}
 		{
-			final String words = "id:1 3 5 9 11";
+			final String words = "id:1 3 5 9 11 013";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-			assertEquals(5, keywords.getWords().size());
+			assertEquals(6, keywords.getWords().size());
 			assertEquals(SearchParams.TARGET_ID, keywords.getTarget());
 			assertEquals(true, keywords.isAny());
 			for (SearchParams.Keyword kw : keywords.getWords()) {
@@ -198,6 +198,14 @@ public class DomainSearchParamsTest {
 				assertEquals(true, kw.isId());
 			}
 		}
+		// check against invalid id search;
+        {
+        	final String searchPhrase = "id: 0xfff invalid 32h 0"; // [NOTE] only the final input is acceptable here
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	assertEquals(1, sp.getKeywords().size());
+        	assertEquals(1, sp.getKeywords().get(0).getWords().size());
+        	assertEquals("0", sp.getKeywords().get(0).getWords().get(0).getWord());
+        }
 	}
 	
 	@Test

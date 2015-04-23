@@ -5,8 +5,6 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import org.hamcrest.core.IsInstanceOf;
-
 // [TODO] adding rules regarding pagination and ordering
 
 @SuppressWarnings("serial")
