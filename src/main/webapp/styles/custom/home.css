@@ -187,6 +187,14 @@
 	white-space: nowrap;
 }
 
+.fragment-content pre {
+	background-color: whitesmoke;
+}
+
+.fragment-content blockquote {
+	border: 1px solid slategray;
+}
+
 .fragment-content hr {
 	border:thin solid lightgray;
 }
