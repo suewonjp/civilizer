@@ -36,11 +36,13 @@ $(document).ready(function() {
     	var href=$(this).attr('href');
         $.get(href, "", populateFragmentOverlay);
         
+        event.preventDefault();
+        
         return false; // stop the link
     }
     
-    $("#fragment-group").find(".-cvz-frgm").on("mouseenter", triggerFragmentOverlay);
-    $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("mouseenter", triggerFragmentOverlay);
+    $("#fragment-group").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
+    $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     
     function generateClickHandler(panelId) {
     	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
