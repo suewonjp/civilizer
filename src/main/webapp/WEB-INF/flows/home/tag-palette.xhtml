@@ -191,14 +191,14 @@ function showTagEditor() {
             </li>
         </ul>
         
-        <h:panelGrid columns="2" id="target-panel-selector" columnClasses="target-panel-selector-col-0, target-panel-selector-col-1" >
-	        <label class="fa fa-file-text" for="panel-radio-for-tag-palette" >&nbsp;&nbsp;#{msg['label_panel']}</label>
-	        <p:selectOneRadio id="panel-radio-for-tag-palette" value="#{customParams.panelIdForTagPalette}">
-	            <f:selectItem itemLabel="0" itemValue="0" />
-	            <f:selectItem itemLabel="1" itemValue="1" />
-	            <f:selectItem itemLabel="2" itemValue="2" />
-	        </p:selectOneRadio>
-	    </h:panelGrid>
+<!--         <h:panelGrid columns="2" id="target-panel-selector" columnClasses="target-panel-selector-col-0, target-panel-selector-col-1" > -->
+<!-- 	        <label class="fa fa-file-text" for="panel-radio-for-tag-palette" >&nbsp;&nbsp;#{msg['label_panel']}</label> -->
+<!-- 	        <p:selectOneRadio id="panel-radio-for-tag-palette" value="#{customParams.panelIdForTagPalette}"> -->
+<!-- 	            <f:selectItem itemLabel="0" itemValue="0" /> -->
+<!-- 	            <f:selectItem itemLabel="1" itemValue="1" /> -->
+<!-- 	            <f:selectItem itemLabel="2" itemValue="2" /> -->
+<!-- 	        </p:selectOneRadio> -->
+<!-- 	    </h:panelGrid> -->
 	    
 	    <div id="trashcan">
 		    <p:commandLink action="filter-by-tag" title="#{msg['go_to_trashcan']}">

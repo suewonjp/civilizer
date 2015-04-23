@@ -28,8 +28,9 @@
         </on-entry>
         
         <transition on="filter-by-tag" to="home">
+<!--                 expression="mainController.newPanelContextBean(customParams.panelIdForTagPalette, requestParameters.tagId, 0)" -->
             <evaluate
-                expression="mainController.newPanelContextBean(customParams.panelIdForTagPalette, requestParameters.tagId, 0)"
+                expression="mainController.newPanelContextBean(requestParameters.panelId, requestParameters.tagId, 0)"
                 result="requestScope.panelContextBean"/>
         </transition>
         

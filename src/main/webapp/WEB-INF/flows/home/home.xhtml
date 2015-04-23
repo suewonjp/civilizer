@@ -247,6 +247,7 @@ function setupDndForFragmentFetchByTagDrop() {
         }
     };    
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
+    $("#panel-activation-buttons label").droppable(droppable);
 }
 
 function setupDndForBookmarking() {
@@ -345,8 +346,12 @@ function hasAnyClass(obj, classes) {
 }
 
 function findPanel(obj) {
+	var pid = obj.attr("_pid");
+	if (pid) {
+		return pid;
+	}
 	var panelParent = obj.parents('[id^="fragment-panel-"]');
-	if (panelParent) {
+	if (panelParent.length > 0) {
 		return panelParent.attr("_pid");
 	}
 	return -1;
@@ -357,7 +362,7 @@ function fetchFragmentsByTag(from, to) {
     $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio").val(targetPanelId);
     $("#panel-toggler-" + targetPanelId).prop("checked", true);
     $("#panel-activation-buttons").buttonset("refresh");
-    filterByTag([ {name:"tagId", value:from.attr("_tid")} ]);
+    filterByTag([ {name:"tagId", value:from.attr("_tid")}, {name:"panelId", value:targetPanelId} ]);
 }
 
 function populateFragmentOverlay(data) {
