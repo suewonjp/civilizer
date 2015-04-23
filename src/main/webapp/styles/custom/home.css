@@ -261,20 +261,6 @@
     background-image: linear-gradient(to bottom, #ffc92b, #ce9a01);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ffc92b, endColorstr=#ce9a01);
 }
 
-/* #tag-palette-form\:target-panel-selector { */
-/* 	margin-bottom: -10px; */
-/* 	border-style: hidden; */
-/* } */
-
-/* .target-panel-selector-col-0 { */
-/* 	width: 40%; */
-/* 	padding-bottom: 20px; */
-/* } */
-
-/* .target-panel-selector-col-1 { */
-/* 	width: 60%; */
-/* } */
-
 #trashcan {
 	margin-left: 15px;
 	margin-bottom: 0px;
