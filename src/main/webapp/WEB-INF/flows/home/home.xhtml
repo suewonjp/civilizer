@@ -359,7 +359,7 @@ function findPanel(obj) {
 
 function fetchFragmentsByTag(from, to) {
 	var targetPanelId = findPanel(to);
-    $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio").val(targetPanelId);
+    $("#fragment-group-form\\:id-placeholder-for-panel").val(targetPanelId);
     $("#panel-toggler-" + targetPanelId).prop("checked", true);
     $("#panel-activation-buttons").buttonset("refresh");
     filterByTag([ {name:"tagId", value:from.attr("_tid")}, {name:"panelId", value:targetPanelId} ]);
@@ -571,7 +571,6 @@ function showSearchDialog(panelId) {
     <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}"/>
     <h:inputHidden id="id-placeholder-for-trashed-tag" value="#{paramTagBean.tag.id}"/>
     <h:inputHidden id="id-placeholder-for-panel" value="#{customParams.panelId}"/>
-    <h:inputHidden id="id-placeholder-for-tag-palette-panel-radio" value="#{customParams.panelIdForTagPalette}"/>
     <h:inputHidden id="id-placeholder-for-search" value="#{searchContextBean.panelId}"/>
     <h:inputHidden id="id-placeholder-for-fragment0" value="#{customParams.fragmentId0}"/>
     <h:inputHidden id="id-placeholder-for-fragment1" value="#{customParams.fragmentId1}"/>

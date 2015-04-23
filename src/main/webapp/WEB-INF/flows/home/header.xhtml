@@ -23,11 +23,11 @@ $(document).ready(function() {
         $("#panel-toggler-0").prop("checked", true);
     }
     
-    var phTagPanelRadio = $("#fragment-group-form\\:id-placeholder-for-tag-palette-panel-radio");
-    var idSpecifiedFromTagPalette = phTagPanelRadio.val();
-    if (idSpecifiedFromTagPalette) {
-        $("#panel-toggler-" + idSpecifiedFromTagPalette).prop("checked", true);
-        phTagPanelRadio.val(null);
+    var phPanel = $("#fragment-group-form\\:id-placeholder-for-panel");
+    var idSpecified = phPanel.val();
+    if (idSpecified) {
+        $("#panel-toggler-" + idSpecified).prop("checked", true);
+        phPanel.val(null);
     }
     
     var phSearch = $("#fragment-group-form\\:id-placeholder-for-search");
