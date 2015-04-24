@@ -12,8 +12,9 @@
             <div class="fragment-header">
                 <h:outputText value="##{fragment.id}" style="color:navy;"/>
                 &nbsp;&nbsp;
-                <h:outputText value="#{fragment.title} " />
-                &nbsp;&nbsp;
+                <span class="fragment-title" _fid="#{fragment.id}">
+	                <h:outputText value="#{fragment.title} " />
+                </span>&nbsp;&nbsp;
                 <c:forEach var="tag" items="#{fragment.tags}">
 	                <span class="tag-box">
 	                    <span class="fa fa-tag " >&nbsp;</span>
