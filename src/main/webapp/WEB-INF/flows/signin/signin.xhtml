@@ -8,29 +8,16 @@
     template="/WEB-INF/layouts/standard.xhtml">
 
 <ui:define name="entry-point-scripts">
+
+<script src="resources/js/signin.js"></script>
+
 <script>
 //<![CDATA[
-$(document).ready(function() {
-});
-
-$(window).load(function() {
-	var msgBox = $("#signin-form-messages");
-    if (msgBox.has("div").length) {
-    	$("#signin-form-panel").width("80%");
-	    PF("spot").show();
-    }
-});
-
-$(window).unload(function() {
-	history.pushState({}, "", "${request.contextPath}/app/home");
-});
-
-$(window).on("popstate", function(event) {
-    history.pushState({}, "", "${request.contextPath}/app/home");
-});
-
+// $(document).ready(function() {
+// });
 //]]>
 </script>
+
 </ui:define>
 
 <ui:define name="content">
