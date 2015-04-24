@@ -5,7 +5,7 @@
 <script>
 //<![CDATA[
 
-$(document).ready(function() {
+function setupFragmentEditor() {
 	var $window = $(window);
 	var $editorFrame = $("#editor-frame");
 	
@@ -27,9 +27,7 @@ $(document).ready(function() {
     };
     
     $("#fragment-content-editor").markItUp(markItUpSettings, extraMarkItUpSettings);
-    
-    autocompleteForTypingTags();
-}); // end of $(document).ready()
+}
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {
 	var editorHeight = Math.max($editorFrame.height(), 696);

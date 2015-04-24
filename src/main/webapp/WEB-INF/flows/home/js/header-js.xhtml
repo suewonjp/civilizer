@@ -5,12 +5,6 @@
 <script>
 //<![CDATA[
 
-$(document).ready(function() {
-	setupPanelActivationButtons();
-    
-    onPanelActivationChange();
-}); // end of $(document).ready()
-
 function setupPanelActivationButtons() {
 	$("#panel-activation-buttons").buttonset();
 
@@ -40,6 +34,8 @@ function setupPanelActivationButtons() {
     }
 
     $("#panel-activation-buttons").buttonset("refresh");
+    
+    onPanelActivationChange();
 }
 
 function onPanelActivationChange() {

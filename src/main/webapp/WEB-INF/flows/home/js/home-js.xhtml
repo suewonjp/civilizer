@@ -4,27 +4,6 @@
     
 <script>
 //<![CDATA[
-           
-$(document).ready(function() {
-	setupParser();
-	
-	translateFragments();
-    
-    setupFragmentOverlay();
-    
-    setupFragmentCheckboxes();
-    
-    setupDragAndDrop();
-    
-    setContextMenuForFragments();
-    
-    makeObjectsInsertableToTextArea();
-    
-    setTimeout(function() {
-    	// timeout for message display if any
-    	$(".ui-messages-close").trigger("click");
-    }, 15000);
-}); // end of $(document).ready()
 
 function setupParser() {
 	// prepare *Marked* (a Markdown parser) library; see https://github.com/chjj/marked
