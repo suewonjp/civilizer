@@ -9,7 +9,13 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
-    var currentTagGroupTabIndex = "0";
+	setupTabViewsForTagPalette();
+    
+    setContextMenuForTags();
+}); // end of $(document).ready()
+
+function setupTabViewsForTagPalette() {
+	var currentTagGroupTabIndex = "0";
 
     $tab = $( "#tag-palette-panel" ).tabs({
          activate : function (e, ui) {
@@ -22,9 +28,7 @@ $(document).ready(function() {
         currentTagGroupTabIndex = sessionStorage.getItem('tag-palette-tab-index');
         $tab.tabs('option', 'active', currentTagGroupTabIndex);
     }
-    
-    setContextMenuForTags();
-}); // end of $(document).ready()
+}
 
 function setContextMenuForTags() {
    	var menu = $("#tag-context-menu");

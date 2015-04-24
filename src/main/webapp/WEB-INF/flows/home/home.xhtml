@@ -11,6 +11,28 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
+	setupParser();
+	
+	translateFragments();
+    
+    setupFragmentOverlay();
+    
+    setupFragmentCheckboxes();
+    
+    setupDragAndDrop();
+    
+    setContextMenuForFragments();
+    
+    makeObjectsInsertableToTextArea();
+    
+    setTimeout(function() {
+    	// timeout for message display if any
+    	$(".ui-messages-close").trigger("click");
+    }, 15000);
+}); // end of $(document).ready()
+
+function setupParser() {
+	// prepare *Marked* (a Markdown parser) library; see https://github.com/chjj/marked
 	marked.setOptions({
 		renderer: new marked.Renderer(),
 		gfm: true,
@@ -21,18 +43,53 @@ $(document).ready(function() {
 		smartLists: true,
 		smartypants: false,
 	});
-	
+}
+
+function translateFragments() {
+	// apply Civilizer's custom markup rules to fragment titles;
     $(".fragment-title").each(function() {
     	var $this = $(this);
     	$this.html(translateCustomMarkupRules($this.html()));
     });
     
+    // translate Markdown formatted fragment contents into HTML format
     $(".fragment-content").each(function() {
     	var $this = $(this);
     	$this.html(translateFragmentContent($this.text()));
    	});
-    
-    function triggerFragmentOverlay(event) {
+}
+
+function populateFragmentOverlay(data) {
+	// show the fragment overlay as a popup
+	$("#fragment-overlay").lightbox_me({
+        centered:false
+        , showOverlay:false
+        , lightboxSpeed:"fast"
+        , closeSelector:"#fragment-overlay-close-button"
+        , closeEsc:true
+        , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
+    });
+	
+	$("#fragment-overlay-title").text("");
+	$("#fragment-overlay-content").html(data);
+	
+	// translate Markdown formatted fragment contents into HTML format
+	$("#fragment-overlay-content .fragment-content").each(function(){
+        var $this = $(this);
+        var content = $this.text();
+		$this.html(translateFragmentContent($this.text()));
+    });
+	
+	// translate file box elements into HTML links
+	processFileClasses();
+	
+	// make titles on the overlay window also draggable/droppable (maybe too overhead?)
+	setupDraggableForFragmentTitle();
+	setupDndForRelatingFragments();
+}
+
+function setupFragmentOverlay() {
+	function triggerFragmentOverlay(event) {
     	var href=$(this).attr('href');
         $.get(href, "", populateFragmentOverlay);
         
@@ -44,7 +101,14 @@ $(document).ready(function() {
     $("#fragment-group").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     
-    function generateClickHandler(panelId) {
+    $("#fragment-overlay").draggable({
+    	handle:"#fragment-overlay-title-bar",
+        cursor:"move",
+    });
+}
+
+function setupFragmentCheckboxes() {
+	function generateClickHandler(panelId) {
     	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
         if (fragmentCount > 0) {
             var fragmentCheckboxSlaves = [];    
@@ -100,8 +164,10 @@ $(document).ready(function() {
     		cb[0].title = "#{msg['label_check_uncheck_all']}";
     	}
     }
-    
-    // [NOTE] original source code can be found at:
+}
+
+function makeObjectsInsertableToTextArea() {
+	// [NOTE] original source code can be found at:
     // http://skfox.com/2008/11/26/jquery-example-inserting-text-with-drag-n-drop/
     $.fn.insertAtCaret = function (myValue) {
 		return this.each(function(){
@@ -129,21 +195,7 @@ $(document).ready(function() {
 			}
 		});
     };
-    
-    $("#fragment-overlay").draggable({
-    	handle:"#fragment-overlay-title-bar",
-        cursor:"move",
-    });
-    
-    setupDragAndDrop();
-    
-    setContextMenuForFragments();
-    
-    setTimeout(function() {
-    	// timeout for message display
-    	$(".ui-messages-close").trigger("click");
-    }, 15000);
-}); // end of $(document).ready()
+}
 
 function translateCustomMarkupRules(html) {
 	// format  =>   {{[keyword] ... text ... }}
@@ -173,7 +225,6 @@ var baseDraggableSettings = {
 };
 
 function setupDragAndDrop() {
-	
 	setupDraggableForFragmentTitle();
 	setupDraggableForTags();
 	setupDraggableForFiles();
@@ -365,32 +416,6 @@ function fetchFragmentsByTag(from, to) {
     $("#panel-toggler-" + targetPanelId).prop("checked", true);
     $("#panel-activation-buttons").buttonset("refresh");
     filterByTag([ {name:"tagId", value:from.attr("_tid")}, {name:"panelId", value:targetPanelId} ]);
-}
-
-function populateFragmentOverlay(data) {
-	$("#fragment-overlay").lightbox_me({
-        centered:false
-        , showOverlay:false
-        , lightboxSpeed:"fast"
-        , closeSelector:"#fragment-overlay-close-button"
-        , closeEsc:true
-        , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
-    });
-	
-	$("#fragment-overlay-title").text("");
-	$("#fragment-overlay-content").html(data);
-	
-	$("#fragment-overlay-content .fragment-content").each(function(){
-        var $this = $(this);
-        var content = $this.text();
-		$this.html(translateFragmentContent($this.text()));
-    });
-	
-	processFileClasses();
-	
-	// make titles on the overlay window also draggable/droppable
-	setupDraggableForFragmentTitle();
-	setupDndForRelatingFragments();
 }
 
 function showSortOptionDialog(panelId) {

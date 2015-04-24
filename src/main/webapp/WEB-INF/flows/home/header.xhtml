@@ -10,7 +10,13 @@
 <script>
 //<![CDATA[
 $(document).ready(function() {
-    $("#panel-activation-buttons").buttonset();
+	setupPanelActivationButtons();
+    
+    onPanelActivationChange();
+}); // end of $(document).ready()
+
+function setupPanelActivationButtons() {
+	$("#panel-activation-buttons").buttonset();
 
     var activeCount = 0;
     for (var i = 0; i < 3; i++) {
@@ -38,9 +44,7 @@ $(document).ready(function() {
     }
 
     $("#panel-activation-buttons").buttonset("refresh");
-    
-    onPanelActivationChange();
-}); // end of $(document).ready()
+}
 
 function onPanelActivationChange() {
     var panels = [ $("#fragment-panel-0"), $("#fragment-panel-1"), $("#fragment-panel-2") ];
