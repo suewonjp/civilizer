@@ -30,14 +30,22 @@ public final class Configurator {
 	}
 	
 	private File detectPrivateHome(String defaultPrivateHomeName) {
-	    final String defaultPrivateHomePath = getDefaultPrivateHomePath(defaultPrivateHomeName);
+		// We use default private home path unless a path is provided at runtime
+
+		final String defaultPrivateHomePath = getDefaultPrivateHomePath(defaultPrivateHomeName);
         final String privateHomePathByRuntimeArg = System.getProperty(AppOptions.PRIVATE_HOME_PATH);
         
-        // We use default private home path unless a path is provided at runtime
-        final String privateHomePath = (privateHomePathByRuntimeArg == null) ?
-                defaultPrivateHomePath : privateHomePathByRuntimeArg;
+        if (privateHomePathByRuntimeArg != null) {
+        	final File f = new File(privateHomePathByRuntimeArg);
+        	if (! f.isAbsolute()) {
+        		// if the private home path is relative, the final path gets determined by the context of the current user working directory.
+        		// it might get troublesome unless it is intended by the user explicitly
+        		logger.warn("The specified home path \"%s\" is not absolute! it's error-prone!", privateHomePathByRuntimeArg);
+        	}
+        	return f;
+        }
         
-        return new File(privateHomePath);
+        return new File(defaultPrivateHomePath);
 	}
 	
 	private void mergeAppOptions() {
@@ -71,12 +79,26 @@ public final class Configurator {
 		createUnexistingDirectory(new File(fileBoxHome));
 	}
 	
+	private void overrideOptionValue(String k, Properties p) {
+    	final String v = System.getProperty(k);
+    	if (v != null && ! v.isEmpty()) {
+    		p.setProperty(k, v);
+    	}
+	}
+	
 	private void addAppOptionsToSystemProperties(File privateHome) {
 		try {
 		    // load options from the application option file
 		    final Properties p = new Properties();
 		    final String optionFilePath = privateHome.getAbsolutePath() + File.separatorChar + AppOptions.OPTION_FILE_NAME;
 		    p.load(new FileInputStream(optionFilePath));
+		    
+		    final boolean override =
+		    		p.getProperty(AppOptions.OVERRIDE_OPTION_FILE) == "true" || System.getProperty(AppOptions.OVERRIDE_OPTION_FILE) == "true";
+		    if (override) {
+		    	overrideOptionValue(AppOptions.DB_FILE_PREFIX, p);
+		    	overrideOptionValue(AppOptions.FILE_BOX_HOME, p);
+		    }
 			
 		    // make sure the database file prefix is an absolute path
 		    setPathAbsolute(p, AppOptions.DB_FILE_PREFIX, privateHome, AppOptions.DEF_DB_FILE_PREFIX);
@@ -125,7 +147,12 @@ public final class Configurator {
 		}
 		else {
 		    // relative path
-			absPath = privateHome.getAbsolutePath() + File.separatorChar + srcPath;
+			if (srcPath.startsWith("~")) {
+				absPath = System.getProperty("user.home") + srcPath.substring(1);
+			}
+			else {
+				absPath = privateHome.getAbsolutePath() + File.separatorChar + srcPath;
+			}
 		}
 		p.setProperty(key, absPath);
 	}

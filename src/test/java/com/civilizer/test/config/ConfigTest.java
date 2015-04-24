@@ -52,6 +52,7 @@ public class ConfigTest {
     
     @Before
     public void setUp() throws Exception {
+    	System.out.println("---------------------");
     }
     
     @After
@@ -86,6 +87,62 @@ public class ConfigTest {
     	assertEquals(true, f.isDirectory());
     	
     	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
+    }
+    
+    @Test
+    public void testRelativeFilePathRules() {
+    	final String homePath = System.getProperty("user.dir") + "/test/private-home";
+    	System.setProperty(AppOptions.PRIVATE_HOME_PATH, homePath);
+    	System.setProperty(AppOptions.OVERRIDE_OPTION_FILE, "true");
+    	System.setProperty(AppOptions.DB_FILE_PREFIX, "db/file/prefix");
+    	System.setProperty(AppOptions.FILE_BOX_HOME, "file/box/home");
+    	new Configurator();
+    	
+    	assertEquals("true", System.getProperty(AppOptions.OVERRIDE_OPTION_FILE));
+    	assertEquals(homePath+File.separator+"db/file/prefix", System.getProperty(AppOptions.DB_FILE_PREFIX));
+    	assertEquals(homePath+File.separator+"file/box/home", System.getProperty(AppOptions.FILE_BOX_HOME));
+    	
+    	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
+    	System.clearProperty(AppOptions.DB_FILE_PREFIX);
+    	System.clearProperty(AppOptions.FILE_BOX_HOME);
+    }
+
+    @Test
+    public void testAbsoluteFilePathRules() {
+    	final String homePath = System.getProperty("user.dir") + "/test/private-home";
+    	final String userHomePath = System.getProperty("user.home");
+    	System.setProperty(AppOptions.PRIVATE_HOME_PATH, homePath);
+    	System.setProperty(AppOptions.OVERRIDE_OPTION_FILE, "true");
+    	System.setProperty(AppOptions.DB_FILE_PREFIX, userHomePath + "/db/file/prefix");
+    	System.setProperty(AppOptions.FILE_BOX_HOME, userHomePath + "/file/box/home");
+    	new Configurator();
+    	
+    	assertEquals("true", System.getProperty(AppOptions.OVERRIDE_OPTION_FILE));
+    	assertEquals(userHomePath + "/db/file/prefix", System.getProperty(AppOptions.DB_FILE_PREFIX));
+    	assertEquals(userHomePath + "/file/box/home", System.getProperty(AppOptions.FILE_BOX_HOME));
+    	
+    	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
+    	System.clearProperty(AppOptions.DB_FILE_PREFIX);
+    	System.clearProperty(AppOptions.FILE_BOX_HOME);
+    }
+
+    @Test
+    public void testHomeAliasFilePathRules() {
+    	final String homePath = System.getProperty("user.dir") + "/test/private-home";
+    	final String userHomePath = System.getProperty("user.home");
+    	System.setProperty(AppOptions.PRIVATE_HOME_PATH, homePath);
+    	System.setProperty(AppOptions.OVERRIDE_OPTION_FILE, "true");
+    	System.setProperty(AppOptions.DB_FILE_PREFIX, "~/db/file/prefix");
+    	System.setProperty(AppOptions.FILE_BOX_HOME, "~/file/box/home");
+    	new Configurator();
+    	
+    	assertEquals("true", System.getProperty(AppOptions.OVERRIDE_OPTION_FILE));
+    	assertEquals(userHomePath + "/db/file/prefix", System.getProperty(AppOptions.DB_FILE_PREFIX));
+    	assertEquals(userHomePath + "/file/box/home", System.getProperty(AppOptions.FILE_BOX_HOME));
+    	
+    	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
+    	System.clearProperty(AppOptions.DB_FILE_PREFIX);
+    	System.clearProperty(AppOptions.FILE_BOX_HOME);
     }
     
     @Test
