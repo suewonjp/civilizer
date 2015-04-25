@@ -282,6 +282,7 @@
 }
 
 #bookmark-form\:bookmark-panel, #tag-palette-panel, #file-box-form\:file-box-panel {
+	max-height: 480px;
 	margin-bottom: 20px;
 	overflow: auto;
 }
