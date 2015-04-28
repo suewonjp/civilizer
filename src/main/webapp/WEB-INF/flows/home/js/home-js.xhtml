@@ -204,6 +204,7 @@ function setupDragAndDrop() {
 	setupDraggableForFiles();
 	
 	setupDndForRelatingFragments();
+	setupDndForSingleFragmentFetch();
 	setupDndForFragmentFetchByTagDrop();
 	setupDndForBookmarking();
 	setupDndForTrashing();
@@ -254,6 +255,19 @@ function setupDndForRelatingFragments() {
         }
     };
     $(".fragment-header").droppable(droppable);
+}
+
+function setupDndForSingleFragmentFetch() {
+	var droppable = newBaseDroppable(["fragment-title"]);
+    droppable.drop = function(event, ui) {
+        var from = ui.draggable;
+        var to = $(event.target);
+        if (from.hasClass("fragment-title")) {
+            var fromId = from.attr("_fid");
+        }
+    };
+    $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
+    $("#panel-activation-buttons label").droppable(droppable);
 }
 
 function setupDndForFragmentFetchByTagDrop() {
@@ -533,7 +547,6 @@ function showSearchDialog(panelId) {
 		searchFragments([{name:'panelId',value:panelId}]);
 	});
 	$("#fragment-group-form\\:search-panel\\:quick-search-input").keyup(function(event) {
-		console.log(event.keyCode);
 		if (event.keyCode == 13) {
 			searchFragments([{name:'panelId',value:panelId}]);
 		}
