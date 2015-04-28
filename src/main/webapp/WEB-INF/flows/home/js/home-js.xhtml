@@ -57,9 +57,10 @@ function populateFragmentOverlay(data) {
 	// translate file box elements into HTML links
 	processFileClasses();
 	
-	// make titles on the overlay window also draggable/droppable (maybe too overhead?)
+	// make titles on the overlay window also draggable/droppable
 	setupDraggableForFragmentTitle();
-	setupDndForRelatingFragments();
+// 	setupDndForRelatingFragments();
+// 	setupDndForFragmentFetch();
 }
 
 function setupFragmentOverlay() {
@@ -191,11 +192,11 @@ function translateFragmentContent(content) {
 // It should remain as IMMUTABLE
 var baseDraggableSettings = {
     cursor:"move",
-    cursorAt:{ left:20, top:20 },
     scroll: false,
     helper: "clone",
     zIndex: 10000,
     containment: "document",
+    appendTo: "body",
 };
 
 function setupDragAndDrop() {
@@ -204,8 +205,8 @@ function setupDragAndDrop() {
 	setupDraggableForFiles();
 	
 	setupDndForRelatingFragments();
-	setupDndForSingleFragmentFetch();
-	setupDndForFragmentFetchByTagDrop();
+	setupDndForFragmentFetch();
+// 	setupDndForFragmentFetchByTagDrop();
 	setupDndForBookmarking();
 	setupDndForTrashing();
 	setupDndForEmbeddingFile();
@@ -257,31 +258,34 @@ function setupDndForRelatingFragments() {
     $(".fragment-header").droppable(droppable);
 }
 
-function setupDndForSingleFragmentFetch() {
-	var droppable = newBaseDroppable(["fragment-title"]);
-    droppable.drop = function(event, ui) {
-        var from = ui.draggable;
-        var to = $(event.target);
-        if (from.hasClass("fragment-title")) {
-            var fromId = from.attr("_fid");
-        }
-    };
-    $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
-    $("#panel-activation-buttons label").droppable(droppable);
-}
-
-function setupDndForFragmentFetchByTagDrop() {
-	var droppable = newBaseDroppable(["each-tag"]);
+function setupDndForFragmentFetch() {
+	var droppable = newBaseDroppable(["fragment-title", "each-tag"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
         if (from.hasClass("each-tag")) {
             fetchFragmentsByTag(from, to);
         }
-    };    
+        else if (from.hasClass("fragment-title")) {
+            fetchFragments(findPanel(to), [from.attr("_fid")]);
+        }
+    };
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
     $("#panel-activation-buttons label").droppable(droppable);
 }
+
+// function setupDndForFragmentFetchByTagDrop() {
+// 	var droppable = newBaseDroppable(["each-tag"]);
+//     droppable.drop = function(event, ui) {
+//         var from = ui.draggable;
+//         var to = $(event.target);
+//         if (from.hasClass("each-tag")) {
+//             fetchFragmentsByTag(from, to);
+//         }
+//     };    
+//     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
+//     $("#panel-activation-buttons label").droppable(droppable);
+// }
 
 function setupDndForBookmarking() {
 	var droppable = newBaseDroppable(["fragment-title"]);
@@ -551,6 +555,15 @@ function showSearchDialog(panelId) {
 			searchFragments([{name:'panelId',value:panelId}]);
 		}
 	});
+}
+
+function fetchFragments(panelId, fragmentIds) {
+	var ids = "id:";
+	for (var i=0; i<fragmentIds.length; ++i) {
+		ids += fragmentIds[i] + " ";
+	}
+	$("#fragment-group-form\\:search-panel\\:quick-search-input").val(ids);
+	searchFragments([{name:'panelId',value:panelId}]);
 }
 
 //]]>
