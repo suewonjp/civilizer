@@ -20,3 +20,15 @@ System.out.println(itr.hasNext());
 
 boolean b = new File("test/tmp/tmp2/tmp3/hello-2nd.txt").equals(new File("test/tmp/tmp2/tmp3/hello-2nd.txt"));
 System.out.println("+++++ " + b);
+
+Runtime r = Runtime.getRuntime();
+Process p = r.exec("uname -a");
+p.waitFor();
+BufferedReader b = new BufferedReader(new InputStreamReader(p.getInputStream()));
+String line = "";
+
+while ((line = b.readLine()) != null) {
+  System.out.println(line);
+}
+
+b.close();
