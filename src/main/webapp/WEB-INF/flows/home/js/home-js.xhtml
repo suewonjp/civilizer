@@ -171,17 +171,28 @@ function makeObjectsInsertableToTextArea() {
 
 function translateCustomMarkupRules(html) {
 	// format  =>   {{[keyword] ... text ... }}
-	var patt = /\{\{\[(.+?)\](.*)\}\}/g;
-	return html.replace(patt, function(match, pos, originalText) {
-		var cg1 = RegExp.$1;
-		var cg2 = RegExp.$2;
-		while (patt.test(cg2)) {
-			cg2 = cg2.replace(patt, function(match_, pos_, originalText_) {
-				return "<span class='-cvz-" + RegExp.$1 + "'>" + RegExp.$2 + "</span>";
-			});
-		}
-        return "<span class='-cvz-" + cg1 + "'>" + cg2 + "</span>";
-    });
+	var found = false;
+	html = html.replace(/\{\{\[(.+?)\]/g, function(match, pos, originalText) {
+		found = true;
+		return "<span class='-cvz-" + RegExp.$1 + "'>"; 
+	});
+	if (found) {
+		html = html.replace(/\}\}/g, function(match, pos, originalText) {
+			return "</span>"; 
+		});
+	}
+	return html;
+// 	var patt = /\{\{\[(.+?)\](.*?)\}\}/g;
+// 	return html.replace(patt, function(match, pos, originalText) {
+// 		var cg1 = RegExp.$1;
+// 		var cg2 = RegExp.$2;
+// 		while (patt.test(cg2)) {
+// 			cg2 = cg2.replace(patt, function(match_, pos_, originalText_) {
+// 				return "<span class='-cvz-" + RegExp.$1 + "'>" + RegExp.$2 + "</span>";
+// 			});
+// 		}
+//         return "<span class='-cvz-" + cg1 + "'>" + cg2 + "</span>";
+//     });
 }
 
 function translateFragmentContent(content) {
