@@ -50,19 +50,24 @@ function isImage(fileExt) {
 		;
 }
 
-function processFileClasses() {
-	$(".-cvz-file").each(function () {
+function processFileClasses(parent) {
+	parent.find(".-cvz-file").each(function () {
 		var $this = $(this);
 		var fileId = $this.text();
 		var filePath = $("#-cvz-file-" + fileId).attr("_fp");
-		var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
-		var fileExt = fileName.slice(fileName.lastIndexOf("."));
-		filePath = "file-box" + filePath;
-		if (isImage(fileExt)) {
-			$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
+		if (filePath) {
+			var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
+			var fileExt = fileName.slice(fileName.lastIndexOf("."));
+			filePath = "file-box" + filePath;
+			if (isImage(fileExt)) {
+				$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
+			}
+			else {
+				$this.text("").append("<a title='"+fileName+"' href='"+filePath+"'>" + filePath + "</a>");
+			}
 		}
-		else {
-			$this.text("").append("<a title='"+fileName+"' href='"+filePath+"'>" + filePath + "</a>");
+		else { // the file does not exist on the file system for whatever reasons...
+			$this.text("").append("<span>").addClass("-cvz-error fa fa-warning").text("  #{msg['file_not_found']} : " + fileId);
 		}
 	});
 }

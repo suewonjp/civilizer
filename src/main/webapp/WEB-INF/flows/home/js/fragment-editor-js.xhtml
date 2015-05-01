@@ -115,9 +115,31 @@ function previewFragment() {
     });
     
 	$("#fragment-overlay-title").text("#{msg['label_preview']}");
-    $("#fragment-overlay-content").html(outputHtml);
+	var content = $("#fragment-overlay-content");
+    content.html(outputHtml);
     
-    processFileClasses();
+    processFileClasses(content);
+	
+//     $(".-cvz-file").each(function () {
+// 		var $this = $(this);
+// 		var fileId = $this.text();
+// 		console.log(fileId);
+// 		var filePath = $("#-cvz-file-" + fileId).attr("_fp");
+// 		if (filePath) {
+// 			var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
+// 			var fileExt = fileName.slice(fileName.lastIndexOf("."));
+// 			filePath = "file-box" + filePath;
+// 			if (isImage(fileExt)) {
+// 				$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
+// 			}
+// 			else {
+// 				$this.text("").append("<a title='"+fileName+"' href='"+filePath+"'>" + filePath + "</a>");
+// 			}
+// 		}
+// 		else { // the file does not exist on the file system for whatever reasons...
+// 			$this.text("").append("<span>").addClass("-cvz-error fa fa-warning").text("#{msg['file_not_found']} : " + fileId);
+// 		}
+// 	});
 }
 
 function autocompleteForTypingTags() {

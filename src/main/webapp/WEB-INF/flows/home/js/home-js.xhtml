@@ -52,10 +52,9 @@ function populateFragmentOverlay(data) {
         var $this = $(this);
         var content = $this.text();
 		$this.html(translateFragmentContent($this.text()));
+		// translate file box elements into HTML links
+		processFileClasses($this);
     });
-	
-	// translate file box elements into HTML links
-	processFileClasses();
 	
 	// make titles on the overlay window also draggable/droppable
 	setupDraggableForFragmentTitle();
