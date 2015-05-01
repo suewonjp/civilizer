@@ -46,7 +46,7 @@ function isImage(fileExt) {
 		|| (fileExt == ".jpg")
 		|| (fileExt == ".gif")
 		|| (fileExt == ".bmp")
-		|| (fileExt == ".tiff")
+		|| (fileExt == ".ico")
 		;
 }
 
@@ -58,7 +58,7 @@ function processFileClasses() {
 		var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
 		var fileExt = fileName.slice(fileName.lastIndexOf("."));
 		filePath = "file-box" + filePath;
-		if (isImage(fileExt)) {		
+		if (isImage(fileExt)) {
 			$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
 		}
 		else {

@@ -587,13 +587,27 @@ InlineLexer.prototype.output = function(src) {
       out += this.renderer.link(href, null, text);
       continue;
     }
+    
+    function isImage(postfix) {
+    	var fileExt = postfix.slice(0, 4);
+    	return (fileExt == ".png")
+    		|| (fileExt == ".jpg")
+    		|| (fileExt == ".gif")
+    		|| (fileExt == ".bmp")
+    		|| (fileExt == ".ico")
+    		;
+    }
 
     // url (gfm)
     if (!this.inLink && (cap = this.rules.url.exec(src))) {
       src = src.substring(cap[0].length);
       text = escape(cap[1]);
       href = text;
-      out += this.renderer.link(href, null, text);
+      var postfix = href.substring(href.lastIndexOf("."));
+      if (isImage(postfix))
+	      out += this.renderer.image(href, null, text);
+      else
+    	  out += this.renderer.link(href, null, text);
       continue;
     }
 
