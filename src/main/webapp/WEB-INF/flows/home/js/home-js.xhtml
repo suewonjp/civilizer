@@ -21,16 +21,22 @@ function setupParser() {
 
 function translateFragments() {
 	// apply Civilizer's custom markup rules to fragment titles;
-    $(".fragment-title").each(function() {
+    $("#fragment-group .fragment-title").each(function() {
     	var $this = $(this);
     	$this.html(translateCustomMarkupRules($this.html()));
     });
     
     // translate Markdown formatted fragment contents into HTML format
-    $(".fragment-content").each(function() {
+    $("#fragment-group .fragment-content").each(function() {
     	var $this = $(this);
     	$this.html(translateFragmentContent($this.text()));
    	});
+    
+    // add a tooltip message of updated time to a clock icon
+    $("#fragment-group .fragment-header .fa-clock-o").each(function() {
+    	var $this = $(this);
+    	$this[0].title = $this.prev("span").text();
+    });
 }
 
 function populateFragmentOverlay(data) {
@@ -46,6 +52,11 @@ function populateFragmentOverlay(data) {
 	
 	$("#fragment-overlay-title").text("");
 	$("#fragment-overlay-content").html(data);
+	
+	$("#fragment-overlay-content .fragment-header .fa-clock-o").each(function() {
+    	var $this = $(this);
+    	$this[0].title = $this.prev("span").text();
+    });
 	
 	// translate Markdown formatted fragment contents into HTML format
 	$("#fragment-overlay-content .fragment-content").each(function(){

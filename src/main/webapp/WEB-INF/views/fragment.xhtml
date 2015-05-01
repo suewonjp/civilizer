@@ -15,16 +15,16 @@
                 <span class="fragment-title" _fid="#{fragment.id}">
 	                <h:outputText value="#{fragment.title} " />
                 </span>&nbsp;&nbsp;
+                <h:outputText style="display:none" value="#{fragment.updateDatetime}">
+                    <f:converter converterId="jodaDateTimeConverter" />
+                </h:outputText>
+                <span class="fa fa-clock-o"></span>&nbsp;&nbsp;
                 <c:forEach var="tag" items="#{fragment.tags}">
 	                <span class="tag-box">
 	                    <span class="fa fa-tag " >&nbsp;</span>
 	                    <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 	                </span>
                 </c:forEach>
-                &nbsp;&nbsp;
-                <h:outputText style="font-weight:lighter;" value="#{fragment.updateDatetime}">
-                    <f:converter converterId="jodaDateTimeConverter" />
-                </h:outputText>
             </div>
         </f:facet>
         <h:outputText value="#{fragment.content}" styleClass="fragment-content" />
