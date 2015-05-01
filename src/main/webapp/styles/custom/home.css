@@ -263,11 +263,16 @@
 	margin-bottom: 0px;
 }
 
-#bookmark-title, #tag-palette-title, #file-box-title {
+.sidebar-title {
 	font-size: 150%;
     font-style: bold;
-/*     margin-top: 10px; */
-/*     margin-bottom: 10px; */
+}
+
+#bookmark-title, #tag-palette-title, #file-box-title {
+/* 	font-size: 150%; */
+/*     font-style: bold; */
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #bookmark-title {
@@ -275,11 +280,11 @@
 }
 
 #tag-palette-title {
-    color: lime;
+    color: green;
 }
 
 #file-box-title {
-    color: salmon;
+    color: brown;
 }
 
 #bookmark-form\:bookmark-panel, #tag-palette-form\:tag-palette-container, #file-box-form\:file-box-panel {

@@ -6,9 +6,9 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui">
     
-<!-- <div> -->
-<!--     <span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span> -->
-<!-- </div> -->
+<div class="sidebar-title">
+    <span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span>
+</div>
 
 <h:form id="tag-palette-form">
     <p:dialog id="tag-editor" header="#{msg['label_edit']}" width="600px" modal="false" showEffect="fade" widgetVar="tagEditor" position="center" draggable="true" resizable="false" >
@@ -76,9 +76,9 @@
     <h:inputHidden id="id-placeholder-for-tag" value="#{paramTagBean.tag.id}" />
     
     <p:panel id="tag-palette-container" toggleable="true">
-	    <f:facet name="header">
-			<span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span>
-		</f:facet>
+<!-- 	    <f:facet name="header"> -->
+<!-- 			<span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span> -->
+<!-- 		</f:facet> -->
 	    <div id="tag-palette-panel">
 	        <ul>
 	            <li>
