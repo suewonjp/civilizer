@@ -214,7 +214,6 @@ function setupDragAndDrop() {
 	
 	setupDndForRelatingFragments();
 	setupDndForFragmentFetch();
-// 	setupDndForFragmentFetchByTagDrop();
 	setupDndForBookmarking();
 	setupDndForTrashing();
 	setupDndForEmbeddingFile();
@@ -281,19 +280,6 @@ function setupDndForFragmentFetch() {
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
     $("#panel-activation-buttons label").droppable(droppable);
 }
-
-// function setupDndForFragmentFetchByTagDrop() {
-// 	var droppable = newBaseDroppable(["each-tag"]);
-//     droppable.drop = function(event, ui) {
-//         var from = ui.draggable;
-//         var to = $(event.target);
-//         if (from.hasClass("each-tag")) {
-//             fetchFragmentsByTag(from, to);
-//         }
-//     };    
-//     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
-//     $("#panel-activation-buttons label").droppable(droppable);
-// }
 
 function setupDndForBookmarking() {
 	var droppable = newBaseDroppable(["fragment-title"]);
