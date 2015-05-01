@@ -8,9 +8,6 @@
     
 <div class="sidebar-title">
     <span id="bookmark-title" class="fa fa-bookmark" >&nbsp;&nbsp;#{msg['label_bookmarks']}&nbsp;&nbsp;</span>
-    <a href="#" onclick="PF('bookmarkPanel').toggle()">
-	    <span class="fa fa-plus-square"></span>
-	</a>
 </div>
 
 <h:form id="bookmark-form">
@@ -21,9 +18,6 @@
     </div>
     
 	<p:panel id="bookmark-panel" toggleable="true" widgetVar="bookmarkPanel">
-<!-- 		<f:facet name="header"> -->
-<!-- 			<span id="bookmark-title" class="fa fa-bookmark" >&nbsp;&nbsp;#{msg['label_bookmarks']}</span> -->
-<!-- 		</f:facet> -->
 		<c:forEach var="fragmentBean" items="#{bookmarkTagBean.fragmentBeans}" varStatus="loop">
 		    <c:set var="fragment" value="#{fragmentBean.fragment}" />
 		    <span class="small-fragment-box each-bookmark" _bid="#{fragment.id}">

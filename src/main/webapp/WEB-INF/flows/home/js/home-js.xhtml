@@ -570,6 +570,37 @@ function fetchFragments(panelId, fragmentIds) {
 	searchFragments([{name:'panelId',value:panelId}]);
 }
 
+function addToggler(target, toggleHandler) {
+	var collapseIcon = "fa-minus-square";
+	var expandIcon = "fa-plus-square";
+	var link = $("<a>").attr("href", "#");
+	var icon = $("<span>").addClass("fa " + collapseIcon);
+	link.prepend(icon).click(function (event) {
+		toggleHandler();
+		if (icon.hasClass(collapseIcon)) {
+			icon.removeClass(collapseIcon).addClass(expandIcon);
+		}
+		else {
+			icon.removeClass(expandIcon).addClass(collapseIcon);
+		}
+		event.preventDefault();
+	});
+	
+	target.before(link);
+}
+
+function makeSidebarTitleToggleable() {
+	addToggler($("#bookmark-title"), function() {
+		PF('bookmarkPanel').toggle();
+	});
+	addToggler($("#tag-palette-title"), function() {
+		PF('tagPalettePanel').toggle();
+	});
+	addToggler($("#file-box-title"), function() {
+		PF('fileBoxPanel').toggle();
+	});
+}
+
 //]]>
 </script>
 
