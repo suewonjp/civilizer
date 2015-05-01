@@ -10,6 +10,8 @@ public class FilePathBean implements Serializable {
 	
 	private String fullPath = "";
 	
+	private long fileEntityId = -1;
+	
 	private int id = -1;
 	
 	private boolean folder;
@@ -23,6 +25,12 @@ public class FilePathBean implements Serializable {
 	public FilePathBean(String name, String fullPath) { 
 		this.name = name;
 		this.fullPath = fullPath;
+	}
+
+	public FilePathBean(String name, String fullPath, long fileEntityId) {
+	    this.name = name;
+	    this.fullPath = fullPath;
+	    this.fileEntityId = fileEntityId;
 	}
 
 	public String getName() {
@@ -57,7 +65,15 @@ public class FilePathBean implements Serializable {
 		this.fullPath = fp;
 	}
 
-	public boolean isFolder() {
+	public long getFileEntityId() {
+        return fileEntityId;
+    }
+
+    public void setFileEntityId(long fileEntityId) {
+        this.fileEntityId = fileEntityId;
+    }
+
+    public boolean isFolder() {
 		return folder;
 	}
 	
@@ -73,6 +89,17 @@ public class FilePathBean implements Serializable {
 			output += "fa-question-circle fb-broken ";
 		}
 		return output;
+	}
+	
+	public String getHtmlId() {
+	    String postfix = "";
+	    if (fileEntityId == -1) { // this object represents a folder
+	        postfix = "_" + id;
+	    }
+	    else { // this object represents a FileEntity
+	        postfix = "-" + fileEntityId;
+	    }
+	    return "-cvz-file" + postfix;
 	}
 
 	public void check(String filesHomePath) {

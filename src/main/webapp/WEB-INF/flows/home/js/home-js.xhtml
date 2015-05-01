@@ -338,7 +338,9 @@ function setupDndForEmbeddingFile() {
         var from = ui.draggable;
         var to = $(event.target);
         if (from.hasClass("fb-file")) {
-        	var encoded = "{{[file]" + from.attr("_fp") + "}}";
+        	var ids = from.attr("id");
+        	var id = ids.substr(ids.lastIndexOf("-") + 1);
+        	var encoded = "{{[file]" + id + "}}";
         	$(this).insertAtCaret(encoded);
         }
     };    

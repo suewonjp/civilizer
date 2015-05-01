@@ -53,11 +53,12 @@ function isImage(fileExt) {
 function processFileClasses() {
 	$(".-cvz-file").each(function () {
 		var $this = $(this);
-		var filePath = $this.text();
+		var fileId = $this.text();
+		var filePath = $("#-cvz-file-" + fileId).attr("_fp");
 		var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
 		var fileExt = fileName.slice(fileName.lastIndexOf("."));
 		filePath = "file-box" + filePath;
-		if (isImage(fileExt)) {			
+		if (isImage(fileExt)) {		
 			$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
 		}
 		else {

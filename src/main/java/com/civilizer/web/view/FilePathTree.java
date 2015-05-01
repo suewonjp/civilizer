@@ -46,7 +46,9 @@ public class FilePathTree implements Serializable {
 			return false;
 		}
 		else {
-			parent.addChild(new DefaultTreeNode<FilePathBean>(new FilePathBean(splitPath.getSecond(), fileEntity.getFileName())));
+			parent.addChild(
+		        new DefaultTreeNode<FilePathBean>(
+			        new FilePathBean(splitPath.getSecond(), fileEntity.getFileName(), fileEntity.getId())));
 			return true;
 		}
 	}
