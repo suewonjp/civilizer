@@ -22,11 +22,7 @@ function setupFragmentEditor() {
     	, cursor:"move"
     });
 	
-    extraMarkItUpSettings = {
-//         previewParser: parseMarkdown
-    };
-    
-    $("#fragment-content-editor").markItUp(markItUpSettings, extraMarkItUpSettings);
+    $("#fragment-content-editor").markItUp(markItUpSettings, {});
 }
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {
@@ -119,27 +115,6 @@ function previewFragment() {
     content.html(outputHtml);
     
     processFileClasses(content);
-	
-//     $(".-cvz-file").each(function () {
-// 		var $this = $(this);
-// 		var fileId = $this.text();
-// 		console.log(fileId);
-// 		var filePath = $("#-cvz-file-" + fileId).attr("_fp");
-// 		if (filePath) {
-// 			var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
-// 			var fileExt = fileName.slice(fileName.lastIndexOf("."));
-// 			filePath = "file-box" + filePath;
-// 			if (isImage(fileExt)) {
-// 				$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
-// 			}
-// 			else {
-// 				$this.text("").append("<a title='"+fileName+"' href='"+filePath+"'>" + filePath + "</a>");
-// 			}
-// 		}
-// 		else { // the file does not exist on the file system for whatever reasons...
-// 			$this.text("").append("<span>").addClass("-cvz-error fa fa-warning").text("#{msg['file_not_found']} : " + fileId);
-// 		}
-// 	});
 }
 
 function autocompleteForTypingTags() {
