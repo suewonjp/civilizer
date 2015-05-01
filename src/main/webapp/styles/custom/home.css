@@ -266,8 +266,8 @@
 #bookmark-title, #tag-palette-title, #file-box-title {
 	font-size: 150%;
     font-style: bold;
-    margin-top: 10px;
-    margin-bottom: 10px;
+/*     margin-top: 10px; */
+/*     margin-bottom: 10px; */
 }
 
 #bookmark-title {
@@ -275,16 +275,17 @@
 }
 
 #tag-palette-title {
-    color: green;
+    color: lime;
 }
 
 #file-box-title {
-    color: brown;
+    color: salmon;
 }
 
-#bookmark-form\:bookmark-panel, #tag-palette-panel, #file-box-form\:file-box-panel {
+#bookmark-form\:bookmark-panel, #tag-palette-form\:tag-palette-container, #file-box-form\:file-box-panel {
 	max-height: 480px;
 	margin-bottom: 20px;
+	overflow: inherit;
 	overflow: auto;
 }
 

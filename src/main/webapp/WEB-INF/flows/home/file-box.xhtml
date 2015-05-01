@@ -6,9 +6,9 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui">
     
-<div>
-    <span id="file-box-title" class="fa fa-file" >&nbsp;&nbsp;#{msg['label_filebox']}</span>
-</div>
+<!-- <div> -->
+<!--     <span id="file-box-title" class="fa fa-file" >&nbsp;&nbsp;#{msg['label_filebox']}</span> -->
+<!-- </div> -->
 
 <h:form id="file-box-form" enctype="multipart/form-data">
 	<p:dialog header="" width="300px" modal="true" closeOnEscape="true" closhowEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false">
@@ -58,7 +58,10 @@
     <h:inputHidden id="id-placeholder-for-src-node" value="#{fileListBean.srcNodeId}"/>
     <h:inputHidden id="id-placeholder-for-dst-node" value="#{fileListBean.dstNodeId}"/>
     
-	<p:panel id="file-box-panel">
+	<p:panel id="file-box-panel" toggleable="true">
+		<f:facet name="header">
+			<span id="file-box-title" class="fa fa-file" >&nbsp;&nbsp;#{msg['label_filebox']}</span>
+		</f:facet>
 		<div id="file-path-tree">
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>

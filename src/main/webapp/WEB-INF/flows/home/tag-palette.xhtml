@@ -6,9 +6,9 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui">
     
-<div>
-    <span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span>
-</div>
+<!-- <div> -->
+<!--     <span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span> -->
+<!-- </div> -->
 
 <h:form id="tag-palette-form">
     <p:dialog id="tag-editor" header="#{msg['label_edit']}" width="600px" modal="false" showEffect="fade" widgetVar="tagEditor" position="center" draggable="true" resizable="false" >
@@ -75,44 +75,49 @@
     
     <h:inputHidden id="id-placeholder-for-tag" value="#{paramTagBean.tag.id}" />
     
-    <div id="tag-palette-panel">
-        <ul>
-            <li>
-                <a href="#tag-palette-flat" title="#{msg['label_flat_view']}" >
-                    <span class="fa fa-list fa-2x" ></span>
-                </a>
-            </li>
-            <li>
-                <a href="#tag-palette-tree" title="#{msg['label_tree_view']}" >
-                    <span class="fa fa-tree fa-2x" ></span>
-                </a>
-            </li>
-        </ul>
-        
-	    <div id="trashcan">
-		    <p:commandLink onclick="fetchFragmentsByTag($(this).find('span'), null); event.preventDefault();"  title="#{msg['go_to_trashcan']}">
-		        <span class="fa fa-trash fa-2x button-link" _tid="0" style="color:lightgray"></span>
-		    </p:commandLink>
-		</div>
-	    
-        <div id="tag-palette-flat">
-            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
-                <c:set var="tag" value="#{tagBean.tag}"/>
-                <ui:include src="each-tag.xhtml" />
-                <br/>
-            </c:forEach>
-        </div>
-        <div id="tag-palette-tree">
-            <p:tree value="#{tagListBean.tagTree.root}" var="tagBean" dynamic="true" style="width:100%">
-            	<p:ajax event="expand" listener="#{tagListBean.tagTree.onNodeExpand}" oncomplete="onExpandComplete()"/>
-            	<p:ajax event="collapse" listener="#{tagListBean.tagTree.onNodeCollapse}" />
-                <c:set var="tag" value="#{tagBean.tag}"/>
-                <p:treeNode>
-                    <ui:include src="each-tag.xhtml" />
-                </p:treeNode>
-            </p:tree>
-        </div>
-    </div>
+    <p:panel id="tag-palette-container" toggleable="true">
+	    <f:facet name="header">
+			<span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span>
+		</f:facet>
+	    <div id="tag-palette-panel">
+	        <ul>
+	            <li>
+	                <a href="#tag-palette-flat" title="#{msg['label_flat_view']}" >
+	                    <span class="fa fa-list" ></span>
+	                </a>
+	            </li>
+	            <li>
+	                <a href="#tag-palette-tree" title="#{msg['label_tree_view']}" >
+	                    <span class="fa fa-tree" ></span>
+	                </a>
+	            </li>
+	        </ul>
+	        
+		    <div id="trashcan">
+			    <p:commandLink onclick="fetchFragmentsByTag($(this).find('span'), null); event.preventDefault();"  title="#{msg['go_to_trashcan']}">
+			        <span class="fa fa-trash fa-2x button-link" _tid="0" style="color:lightgray"></span>
+			    </p:commandLink>
+			</div>
+		    
+	        <div id="tag-palette-flat">
+	            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
+	                <c:set var="tag" value="#{tagBean.tag}"/>
+	                <ui:include src="each-tag.xhtml" />
+	                <br/>
+	            </c:forEach>
+	        </div>
+	        <div id="tag-palette-tree">
+	            <p:tree value="#{tagListBean.tagTree.root}" var="tagBean" dynamic="true" style="width:100%">
+	            	<p:ajax event="expand" listener="#{tagListBean.tagTree.onNodeExpand}" oncomplete="onExpandComplete()"/>
+	            	<p:ajax event="collapse" listener="#{tagListBean.tagTree.onNodeCollapse}" />
+	                <c:set var="tag" value="#{tagBean.tag}"/>
+	                <p:treeNode>
+	                    <ui:include src="each-tag.xhtml" />
+	                </p:treeNode>
+	            </p:tree>
+	        </div>
+	    </div>
+    </p:panel>
 </h:form>
 
 </ui:composition>
