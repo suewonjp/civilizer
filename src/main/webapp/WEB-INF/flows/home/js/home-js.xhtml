@@ -19,6 +19,10 @@ function setupParser() {
 	});
 }
 
+function formatDatetime(src) {
+	return src + "; " + moment(src, "YYYY-MM-DD HH-mm", $("html").attr("lang")).fromNow();
+}
+
 function translateFragments() {
 	// apply Civilizer's custom markup rules to fragment titles;
     $("#fragment-group .fragment-title").each(function() {
@@ -35,7 +39,7 @@ function translateFragments() {
     // add a tooltip message of updated time to a clock icon
     $("#fragment-group .fragment-header .fa-clock-o").each(function() {
     	var $this = $(this);
-    	$this[0].title = $this.prev("span").text();
+    	$this[0].title = formatDatetime($this.prev("span").text());
     });
 }
 
@@ -55,7 +59,7 @@ function populateFragmentOverlay(data) {
 	
 	$("#fragment-overlay-content .fragment-header .fa-clock-o").each(function() {
     	var $this = $(this);
-    	$this[0].title = $this.prev("span").text();
+    	$this[0].title = formatDatetime($this.prev("span").text());
     });
 	
 	// translate Markdown formatted fragment contents into HTML format
