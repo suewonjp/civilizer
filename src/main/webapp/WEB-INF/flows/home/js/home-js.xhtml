@@ -592,12 +592,13 @@ function addToggler(target, toggleHandler) {
 	var icon = $("<span>").addClass("fa " + collapseIcon);
 	link.prepend(icon).click(function (event) {
 		toggleHandler();
-		if (icon.hasClass(collapseIcon)) {
-			icon.removeClass(collapseIcon).addClass(expandIcon);
-		}
-		else {
-			icon.removeClass(expandIcon).addClass(collapseIcon);
-		}
+// 		if (icon.hasClass(collapseIcon)) {
+// 			icon.removeClass(collapseIcon).addClass(expandIcon);
+// 		}
+// 		else {
+// 			icon.removeClass(expandIcon).addClass(collapseIcon);
+// 		}
+		icon.toggleClass(collapseIcon + " " + expandIcon);
 		event.preventDefault();
 	});
 	
@@ -614,6 +615,17 @@ function makeSidebarTitleToggleable() {
 	addToggler($("#file-box-title"), function() {
 		PF('fileBoxPanel').toggle();
 	});
+}
+
+function onChangeFragmentCheckbox(fid, pid) {
+	var checked = fragmentCheckBoxesAreChecked(pid);
+	var tgt = $("#fragment-group-form\\:fragment-panel-toolbar-" + pid).find(".fa-trash");
+	if (checked) {
+		tgt.show();
+	}
+	else {
+		tgt.hide();
+	}
 }
 
 //]]>

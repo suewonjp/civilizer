@@ -163,6 +163,7 @@
     position: fixed;
     top: 94%;
     z-index: 2000;
+    font-size: x-small;
 }
 
 .fragment-header {
