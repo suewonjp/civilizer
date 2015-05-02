@@ -8,12 +8,14 @@ import javax.faces.convert.FacesConverter;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import com.civilizer.web.view.ViewUtil;
+
 @FacesConverter("jodaDateTimeConverter")
 public final class JodaDateTimeConverter implements Converter
 //    , JsonDeserializer<DateTime>, JsonSerializer<DateTime>
 {
 
-	private static final String PATTERN = "yyyy-MM-dd HH-mm";
+	private static final String PATTERN = ViewUtil.getResourceBundleString("date_time_format");
 	
 	@Override
 	public Object getAsObject(FacesContext ctx, UIComponent component, String value) {

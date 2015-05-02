@@ -20,7 +20,7 @@ function setupParser() {
 }
 
 function formatDatetime(src) {
-	return src + "; " + moment(src, "YYYY-MM-DD HH-mm", $("html").attr("lang")).fromNow();
+	return moment(src, "#{msg['date_time_format']}", $("html").attr("lang")).fromNow() + "; " + src;
 }
 
 function translateFragments() {
