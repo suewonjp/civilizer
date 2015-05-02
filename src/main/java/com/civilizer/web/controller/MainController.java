@@ -147,14 +147,17 @@ public final class MainController {
         		scb.buildSearchParams() : pcb.getSearchParams();
         		
         List<Fragment> fragments = Collections.emptyList();
+        long allCount = 0;
         if (sp != null) {
         	// Fetch the fragments by the search parameters
         	// [TODO] pagination and ordering when fetching fragments by search
         	fragments = fragmentDao.findBySearchParams(sp);
+        	allCount = fragmentDao.countAll(false);
         }
         else if (tagId == PanelContextBean.ALL_VALID_TAGS) {
         	// Fetch the fragments regardless of tags
         	fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder, asc);
+        	allCount = fragmentDao.countAll(false);
         }
         else if (tagId == PanelContextBean.EMPTY_TAG) {
         	fragments = Collections.emptyList();
@@ -162,16 +165,19 @@ public final class MainController {
         else if (tagId == Tag.TRASH_TAG_ID) {
         	// Fetch the trashed fragments
             fragments = fragmentDao.findSomeByTagId(tagId, first, count + 1, frgOrder, asc);
+            allCount = fragmentDao.countByTagAndItsDescendants(tagId, true, tagDao);
         }
         else {
         	// Fetch the fragments with the specified tag (non-trashed)
             fragments = fragmentDao.findSomeNonTrashedByTagId(tagId, first, count + 1, frgOrder, asc, tagDao);
+            allCount = fragmentDao.countByTagAndItsDescendants(tagId, false, tagDao);
         }
         
         // [NOTE] The content of fragments should be IMMUTABLE form here!
         
         final boolean isLastPage = fragments.size() <= count;
         final boolean givenTagIsTrashTag = Tag.isTrashTag(tagId);
+        flb.setTotalCount(allCount);
         flb.setPanelContextBean(new PanelContextBean(pcb.getPanelId(), tagId, curPage, count, isLastPage, givenTagIsTrashTag, sp));
 //        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         

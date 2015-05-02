@@ -10,6 +10,8 @@ public final class FragmentListBean implements Serializable {
     
     private PanelContextBean panelContextBean;
     
+    private long totalCount = 0;
+    
     private int orderOption = 0;
     
     private boolean orderAsc = false;
@@ -28,6 +30,14 @@ public final class FragmentListBean implements Serializable {
 
 	public void setPanelContextBean(PanelContextBean panelContextBean) {
 		this.panelContextBean = panelContextBean;
+	}
+
+	public long getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(long totalCount) {
+		this.totalCount = totalCount;
 	}
 
 	public FragmentBean getFragmentBeanAt(int index) {

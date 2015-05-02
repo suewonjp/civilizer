@@ -92,6 +92,8 @@
     </c:choose>
 </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 
+<h:outputText styleClass="fa fa-file-text-o" style="font-weight:bold;color:darkgray" value=" #{msg['label_total']} : #{fragmentListBean.totalCount}"/>
+
 <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
     <ui:include src="each-fragment.xhtml" />
 </c:forEach>
