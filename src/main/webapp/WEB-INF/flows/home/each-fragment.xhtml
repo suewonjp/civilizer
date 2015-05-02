@@ -16,7 +16,7 @@
 <div class="each-fragment-container">
     <h:panelGrid styleClass="each-fragment" columns="1" border="1">
         <f:facet name="header">
-            <div class="fragment-header" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}">
+            <div class="fragment-header" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}" title="#{msg['rclick_for_menu']}">
                 <p:selectBooleanCheckbox onchange="onChangeFragmentCheckbox('#{fragment.id}', '#{panelId}')" value="#{fragmentBean.checked}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
                 <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
                 <span class="fragment-title" _fid="#{fragment.id}">

@@ -7,8 +7,8 @@
     xmlns:p="http://primefaces.org/ui"
     >
     
-<span class="each-tag tag-button" _tid="#{tag.id}" _frgCount="#{tagBean.fragmentCount}" title="#{tagBean.fragmentCount} #{msg['label_fragments']}"
-	onclick="fetchFragmentsByTag($(this), null)"> 
+<span class="each-tag tag-button" _tid="#{tag.id}" _frgCount="#{tagBean.fragmentCount}"
+	title="#{tagBean.fragmentCount} #{msg['label_fragments']}; #{msg['rclick_for_menu']}" onclick="fetchFragmentsByTag($(this), null)"> 
 	<span class="fa fa-tag" ></span>
 	<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 </span>

@@ -62,7 +62,8 @@
 		<div id="file-path-tree">
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>
-                    <span id="#{filePathBean.getHtmlId()}" class="each-file fa #{filePathBean.getCssClassName()}" _id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{filePathBean.isFolder()}">
+                    <span id="#{filePathBean.getHtmlId()}" class="each-file fa #{filePathBean.getCssClassName()}" title="#{msg['rclick_for_menu']}"
+                    	_id="#{filePathBean.id}" _fp="#{filePathBean.fullPath}" _isFolder="#{filePathBean.isFolder()}">
                     	#{filePathBean.getName()}
 	                </span>
                 </p:treeNode>
