@@ -56,8 +56,13 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
 
 function clearFragmentEditor() {
     $("#fragment-content-editor").val(null);    
-    $("#fragment-editor-form\\:id-placeholder-for-fragment").val(null);    
-    $("#fragment-overlay").trigger("close");
+    $("#fragment-editor-form\\:id-placeholder-for-fragment").val(null);
+    
+    // If the preview pop-up is open, close it
+    var frgOverlay = $("#fragment-overlay");
+    if (frgOverlay.find(".fragment-header").length == 0) {
+        frgOverlay.trigger("close");
+    }
     
     // [NOTE] without the following code,
     // jQuery UI Autocomplete object won't disapper even after its parent is closed
