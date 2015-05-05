@@ -171,6 +171,10 @@ public final class Fragment implements Serializable {
     	return Tag.containsName(getTags(), tagName);
     }
     
+    public String concatenatedTagNames() {
+        return Tag.getTagNamesFrom(tags);
+    }
+    
     public static boolean containsId(Collection<Fragment> fragments, long id) {
     	if (fragments == null || fragments.isEmpty()) {
     		return false;

@@ -9,7 +9,7 @@
     
     <h:panelGrid bgcolor="whitesmoke" columns="1" border="0">
         <f:facet name="header">
-            <div class="fragment-header">
+            <div class="fragment-header" _fid="#{fragment.id}">
                 <h:outputText value="##{fragment.id}" style="color:navy;"/>
                 &nbsp;&nbsp;
                 <span class="fragment-title" _fid="#{fragment.id}">
@@ -25,6 +25,9 @@
 	                    <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
 	                </span>
                 </c:forEach>
+                <h:outputText style="display:none" styleClass="-cvz-data-title" value="#{fragment.title}"/>
+                <h:outputText style="display:none" styleClass="-cvz-data-tags" value="${fragment.concatenatedTagNames()}"/>
+                <h:outputText style="display:none" styleClass="-cvz-data-content" value="#{fragment.content}"/>
             </div>
         </f:facet>
         <h:outputText value="#{fragment.content}" styleClass="fragment-content" />

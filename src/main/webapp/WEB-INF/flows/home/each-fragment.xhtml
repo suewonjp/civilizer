@@ -9,9 +9,9 @@
 
 <c:set var="fragment" value="#{fragmentBean.fragment}" />
                
-<h:inputHidden id="fragment-title-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.title}" />
-<h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.content}" />
-<h:inputHidden id="fragment-tagnames-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragmentBean.concatenatedTagNames}" />
+<!-- <h:inputHidden id="fragment-title-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.title}" /> -->
+<!-- <h:inputHidden id="fragment-content-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragment.content}" /> -->
+<!-- <h:inputHidden id="fragment-tagnames-placeholder-panel#{panelId}-#{fragment.id}" value="#{fragmentBean.concatenatedTagNames}" /> -->
    
 <div class="each-fragment-container">
     <h:panelGrid styleClass="each-fragment" columns="1" border="1">
@@ -34,6 +34,9 @@
                         <f:param name="panelId" value="#{panelId}" />
                     </p:commandLink>
                 </c:forEach>
+                <h:outputText style="display:none" styleClass="-cvz-data-title" value="#{fragment.title}"/>
+				<h:outputText style="display:none" styleClass="-cvz-data-tags" value="#{fragmentBean.concatenatedTagNames}"/>
+				<h:outputText style="display:none" styleClass="-cvz-data-content" value="#{fragment.content}"/>
            	</div>
         </f:facet>
     	<h:outputText value="#{fragmentBean.content}" styleClass="fragment-content #{panelContext.getContextClassName()}"/>
