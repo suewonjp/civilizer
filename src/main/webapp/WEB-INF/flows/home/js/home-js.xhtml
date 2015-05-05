@@ -566,12 +566,33 @@ function trashFragmentFromCtxtMenu(deleting) {
 function showSearchDialog(panelId) {
 	var dlg = PF("searchDlg");
 	dlg.show();
+	
 	$("#fragment-group-form\\:go-search").click(function() {
-		searchFragments([{name:'panelId',value:panelId}]);
+	    var activeTabId = $("#fragment-group-form\\:search-panel_active").val();
+		var hasSomeToSearch = false;
+		if (activeTabId == 1) {
+			$("#fragment-group-form\\:search-panel\\:t1").find("input[type='text']").each(function() {
+				if ($(this).val().trim()) {
+					hasSomeToSearch = true;
+					return false;
+				}
+				return true;
+			});
+		}
+		else {
+			if ($("#fragment-group-form\\:search-panel\\:quick-search-input").val().trim()) {
+				hasSomeToSearch = true;
+			}
+		}
+		if (hasSomeToSearch) {
+			searchFragments([{name:'panelId',value:panelId}]);
+		}
 	});
 	$("#fragment-group-form\\:search-panel\\:quick-search-input").keyup(function(event) {
 		if (event.keyCode == 13) {
-			searchFragments([{name:'panelId',value:panelId}]);
+			if ($(this).val().trim()) {
+	            searchFragments([{name:'panelId',value:panelId}]);
+			}
 		}
 	});
 }

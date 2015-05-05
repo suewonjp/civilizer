@@ -78,10 +78,10 @@
     
     <p:dialog header="#{msg['label_search']}" width="500px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="searchDlg" position="center" draggable="true" resizable="false">
     	<p:accordionPanel id="search-panel">
-	        <p:tab title="#{msg['label_quick_search']}">
+	        <p:tab id="t0" title="#{msg['label_quick_search']}">
 	            <p:inputText id="quick-search-input" style="width:80%" value="#{searchContextBean.quickSearchPhrase}"/>
 	        </p:tab>
-	        <p:tab title="#{msg['label_normal_search']}">
+	        <p:tab id="t1" title="#{msg['label_normal_search']}">
 	            <div>
 		            <label class="fa fa-tag"> Tag </label>
 		            <p:inputText id="tag-keywords" style="width:50%" value="#{searchContextBean.tagKeywords}"/>
