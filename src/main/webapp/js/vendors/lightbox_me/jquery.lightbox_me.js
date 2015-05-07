@@ -135,7 +135,7 @@
                 $(window).unbind('resize', setOverlayHeight);
                 $(window).unbind('resize', setSelfPosition);
                 $(window).unbind('scroll', setSelfPosition);
-                $(window).unbind('keyup.lightbox_me');
+//                $(window).unbind('keyup.lightbox_me');
                 opts.onClose();
             }
 
