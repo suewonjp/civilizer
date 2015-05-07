@@ -21,8 +21,35 @@ function setupFragmentEditor() {
     	handle:"#editor-title-bar"
     	, cursor:"move"
     });
+    
+    $("#editor-title-bar").dblclick(function() {
+    	toggleFragmentEditor($editorFrame, $(this));
+    });
 	
     $("#fragment-content-editor").markItUp(markItUpSettings, {});
+}
+
+function toggleFragmentEditor(frame, bar) {
+	var target = bar.next();
+	var ph = frame.data("prev-h");
+	frame.data("prev-h", frame.height());
+	if (target.is(":visible")) {
+		var w = frame.width();
+		if (frame.hasClass("ui-resizable"))
+			frame.resizable("disable");
+		target.hide();
+		frame.width(w);
+		frame.data("min-h", frame.css("min-height"));
+		frame.css("min-height", bar.height());
+		frame.height(bar.height());
+	}
+	else {
+		if (frame.hasClass("ui-resizable"))
+			frame.resizable("enable");
+		target.show();
+		frame.height(ph);
+		frame.css("min-height", frame.data("min-h"));
+	}
 }
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {
@@ -37,6 +64,8 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
         el = $("#fragment-editor-form\\:tags-input");
         el.val(null);
         el.watermark("#{msg['how_to_input_tags']}");
+        
+        $("#fragment-content-editor").val(null);
     }
     
     $editorFrame.lightbox_me({
@@ -48,6 +77,11 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
         , modalCSS:{ position:"absolute", top:top, left:"30%" }
         , onClose:clearFragmentEditor
     });
+    
+    var titleBar = $("#editor-title-bar");
+    if (titleBar.next().is(":visible") == false) {
+    	toggleFragmentEditor($editorFrame, titleBar);
+    }
     
     $("#editor-title").text(title);
     

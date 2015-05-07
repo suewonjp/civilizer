@@ -45,7 +45,8 @@ function translateFragments() {
 
 function populateFragmentOverlay(data) {
 	// show the fragment overlay as a popup
-	$("#fragment-overlay").lightbox_me({
+	var overlayFrame = $("#fragment-overlay");
+	overlayFrame.lightbox_me({
         centered:false
         , showOverlay:false
         , lightboxSpeed:"fast"
@@ -53,6 +54,11 @@ function populateFragmentOverlay(data) {
         , closeEsc:true
         , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
     });
+	
+	var titleBar = $("#fragment-overlay-title-bar");
+	if (titleBar.next().is(":visible") == false) {
+    	toggleFragmentEditor(overlayFrame, titleBar);
+    }
 	
 	$("#fragment-overlay-title").text("");
 	$("#fragment-overlay-content").html(data);
@@ -93,6 +99,10 @@ function setupFragmentOverlay() {
     $("#fragment-overlay").draggable({
     	handle:"#fragment-overlay-title-bar",
         cursor:"move",
+    });
+    
+	$("#fragment-overlay-title-bar").dblclick(function() {
+    	toggleFragmentEditor($("#fragment-overlay"), $(this));
     });
 }
 
