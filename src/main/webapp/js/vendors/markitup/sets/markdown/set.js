@@ -13,6 +13,7 @@
 markItUpSettings = {
 	previewParserPath:	'',
 	onShiftEnter:		{keepDefault:false, openWith:'\n\n'},
+	onTab:    		{keepDefault:false, multiline:true, openWith:'\t'},
 	resizeHandle: false,
 	markupSet: [
 		{name:'First Level Heading', key:'1', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '=') } },
@@ -34,7 +35,7 @@ markItUpSettings = {
 		{name:'Picture', key:'P', replaceWith:'![[![Alternative text]!]]([![Url:!:http://]!] "[![Title]!]")'},
 		{name:'Link', key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
 		{separator:'---------------'},	
-		{name:'Quotes', openWith:'> ', closeWith:'  ', multiline:true},
+		{name:'Quotes', key:'Q', openWith:'> ', closeWith:'  ', multiline:true},
         {name:'Code Block / Code', multiline:true, openWith:'(!(\t|!|`)!)', closeWith:'(!(`)!)'},
 		{separator:'---------------'},
 //		{name:'Preview', call:'preview', className:"preview"}
