@@ -152,7 +152,7 @@ public final class MainController {
         	// Fetch the fragments by the search parameters
         	// [TODO] pagination and ordering when fetching fragments by search
         	fragments = fragmentDao.findBySearchParams(sp);
-        	allCount = fragmentDao.countAll(false);
+        	allCount = fragments.size();
         }
         else if (tagId == PanelContextBean.ALL_VALID_TAGS) {
         	// Fetch the fragments regardless of tags
