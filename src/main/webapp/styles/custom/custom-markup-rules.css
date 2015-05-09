@@ -9,6 +9,10 @@
 	background-image: linear-gradient(to bottom, #a9db80, #96c56f);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a9db80, endColorstr=#96c56f);
 }
 
+.-cvz-st {
+	text-decoration: line-through;
+}
+
 .-cvz-clr-c {
 	color: cyan;
 	font-weight: bold;

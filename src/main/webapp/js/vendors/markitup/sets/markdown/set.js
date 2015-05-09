@@ -24,6 +24,7 @@ markItUpSettings = {
 		{separator:'---------------' },		
 		{name:'Bold', key:'B', openWith:'**', closeWith:'**', multiline:true},
 		{name:'Italic', key:'I', openWith:'_', closeWith:'_', multiline:true},
+		{name:'Strike through', key:'S', openWith:'{{[st]', closeWith:'}}', multiline:true},
 		{separator:'---------------' },
 		{name:'Bulleted List', openWith:'- ', multiline:true },
 		{name:'Numeric List', multiline:true, openWith:function(markItUp) {
