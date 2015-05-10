@@ -24,6 +24,16 @@ public final class TextDecorator {
         }
 	}
 	
+	private static String escapeRegexMetaCharacters(String input) {
+//		final String[] meta = { "(", "[", "{", "\\",  "^",  "$", "|", ")", "]", "}", "?", "*", "+", "." };
+//		final String[] escaped = { "\\(", "\\[", "\\{", "\\\\",  "\\^",  "\\$", "\\|", "\\)", "\\]", "\\}", "\\?", "\\*", "\\+", "\\." };
+//		for (int i=0; i<meta.length; ++i) {
+//			input = input.replace(meta[i], escaped[i]);
+//		}
+//		return input;
+		return "\\Q" + input + "\\E";
+	}
+	
 	private static void match(List<Pair<Integer, Integer>> output, String input, SearchParams sp, boolean caseSensitive) {
 		// Create a pattern from the search parameters
 		Set<String> keywordSet = new HashSet<String>();
@@ -55,9 +65,10 @@ public final class TextDecorator {
 		String[] keywords = keywordSet.toArray(new String[keywordCount]);
 		final int c = keywordCount - 1;
 		for (int i=0; i<c; ++i) {
-			regex += keywords[i] + "|";
+			regex += escapeRegexMetaCharacters(keywords[i]) + "|";
+//			regex += keywords[i] + "|";
 		}
-		regex += keywords[keywords.length - 1];
+		regex += escapeRegexMetaCharacters(keywords[keywords.length - 1]);
 		final Pattern p = Pattern.compile(regex);
 		
 		// Apply regular expression with the pattern
@@ -90,7 +101,7 @@ public final class TextDecorator {
 			if (si < pi) {
 				// The range overlaps the previous range;
 				// This case may be very rare, but we cannot guarantee it won't happen;
-				// We just ignore it because a proper styling doesn't come up
+				// Just ignore it for now;
 				continue;
 			}
 			final int ei = r.getSecond();

@@ -78,5 +78,26 @@ public class DomainTextDecoratorTest {
 		
 		assertEquals(text, tmp);
 	}
+	
+	@Test
+	public void testHighlightKeywordsWithRegexMetaCharacters() {
+		final String text = "( [ { \\ ^ $ | ) ] } ? * + .";
+		final String[] metas = { "(", "[", "{", "\\",  "^",  "$", "|", ")", "]", "}", "?", "*", "+", "." };
+		for (String meta : metas) {
+			final SearchParams sp = new SearchParams(meta);
+			assertEquals(1, sp.getKeywords().size());
+			assertEquals(1, sp.getKeywords().get(0).getWords().size());
+			
+			final String decoratedText = TextDecorator.highlight(text, sp);
+			assertNotNull(decoratedText);
+			assertEquals(true, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+meta+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
+			
+			final String tmp = decoratedText
+					.replace(TextDecorator.PREFIX_FOR_HIGHLIGHT, "")
+					.replace(TextDecorator.POSTFIX_FOR_HIGHLIGHT, "");
+			
+			assertEquals(text, tmp);
+		}
+	}
 
 }
