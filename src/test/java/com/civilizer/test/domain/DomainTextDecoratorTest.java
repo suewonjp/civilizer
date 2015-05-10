@@ -10,10 +10,10 @@ import com.civilizer.domain.SearchParams;
 import com.civilizer.domain.TextDecorator;
 import com.civilizer.test.util.TestUtil;
 
-public class DomainTextDecorator {
+public class DomainTextDecoratorTest {
 	
 	@SuppressWarnings("unused")
-	private static Log logger = TestUtil.newLogger(DomainTextDecorator.class);
+	private static Log logger = TestUtil.newLogger(DomainTextDecoratorTest.class);
 
 	@Before
 	public void setUp() throws Exception {
