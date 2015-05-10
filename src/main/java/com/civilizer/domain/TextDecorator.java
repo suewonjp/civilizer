@@ -25,12 +25,6 @@ public final class TextDecorator {
 	}
 	
 	private static String escapeRegexMetaCharacters(String input) {
-//		final String[] meta = { "(", "[", "{", "\\",  "^",  "$", "|", ")", "]", "}", "?", "*", "+", "." };
-//		final String[] escaped = { "\\(", "\\[", "\\{", "\\\\",  "\\^",  "\\$", "\\|", "\\)", "\\]", "\\}", "\\?", "\\*", "\\+", "\\." };
-//		for (int i=0; i<meta.length; ++i) {
-//			input = input.replace(meta[i], escaped[i]);
-//		}
-//		return input;
 		return "\\Q" + input + "\\E";
 	}
 	
@@ -66,7 +60,6 @@ public final class TextDecorator {
 		final int c = keywordCount - 1;
 		for (int i=0; i<c; ++i) {
 			regex += escapeRegexMetaCharacters(keywords[i]) + "|";
-//			regex += keywords[i] + "|";
 		}
 		regex += escapeRegexMetaCharacters(keywords[keywords.length - 1]);
 		final Pattern p = Pattern.compile(regex);
@@ -82,6 +75,25 @@ public final class TextDecorator {
 		}
 	}
 	
+	private static void matchUrls(List<Pair<Integer, Integer>> output, String input) {
+		final Pattern p = Pattern.compile("https?://\\S+");
+		final Matcher m = p.matcher(input.toLowerCase());
+		
+		// Populate the output ranges
+		while (m.find()) {
+			output.add(new Pair<Integer, Integer>(m.start(), m.end()));
+		}
+	}
+	
+	private static boolean rangeIsInsideUrl(Pair<Integer, Integer> range, List<Pair<Integer, Integer>> urlMatchRanges) {
+		for (Pair<Integer, Integer> ur : urlMatchRanges) {
+			if (ur.getFirst() <= range.getFirst() && range.getSecond() <= ur.getSecond()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static String highlight(String input, SearchParams sp) {
 		final List<Pair<Integer, Integer>> ranges = new ArrayList<Pair<Integer, Integer>>();
 		
@@ -90,6 +102,9 @@ public final class TextDecorator {
 		match(ranges, input, sp, false);
 		match(ranges, input, sp, true);
 		
+		List<Pair<Integer, Integer>> urlMatchRanges = new ArrayList<Pair<Integer,Integer>>();
+		matchUrls(urlMatchRanges, input);
+		
 		// Sort the ranges;
 		// If not doing this, the resultant styling may get ugly
 		Collections.sort(ranges, rangeComparator);
@@ -97,6 +112,10 @@ public final class TextDecorator {
 		String output = "";
 		int pi = 0; // the end of the previous range
 		for (Pair<Integer, Integer> r : ranges) {
+			if (rangeIsInsideUrl(r, urlMatchRanges)) {
+				// Ignore if the search phrase exists inside some URL patterns
+				continue;
+			}
 			final int si = r.getFirst();
 			if (si < pi) {
 				// The range overlaps the previous range;

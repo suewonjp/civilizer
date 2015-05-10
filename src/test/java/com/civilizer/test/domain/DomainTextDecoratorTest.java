@@ -99,5 +99,19 @@ public class DomainTextDecoratorTest {
 			assertEquals(text, tmp);
 		}
 	}
+	
+	@Test
+	public void testHighlightWithUrls() {
+		final String text = "http://bsw.com/hello/world";
+		final String searchKeywords = "bsw hello world";
+		final SearchParams sp = new SearchParams(searchKeywords);
+		assertEquals(1, sp.getKeywords().size());
+		assertEquals(3, sp.getKeywords().get(0).getWords().size());
+		
+		final String decoratedText = TextDecorator.highlight(text, sp);
+		assertNotNull(decoratedText);
+		System.out.println("++++++ " + decoratedText);
+		assertEquals(text, decoratedText);
+	}
 
 }
