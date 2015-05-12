@@ -140,9 +140,6 @@ function prepareFragmentContent() {
 }
 
 function previewFragment() {
-	var srcContent = prepareFragmentContent();
-	var outputHtml = translateFragmentContent(srcContent);
-	
 	$("#fragment-overlay").lightbox_me({
         centered:false
         , showOverlay:false
@@ -153,10 +150,10 @@ function previewFragment() {
     });
     
 	$("#fragment-overlay-title").text("#{msg['label_preview']}");
-	var content = $("#fragment-overlay-content");
-    content.html(outputHtml);
-    
-    processFileClasses(content);
+	
+	var srcContent = prepareFragmentContent();
+    var outputHtml = translateFragmentContent(srcContent);
+    postprocessFragmentContent($("#fragment-overlay-content").html(outputHtml));
 }
 
 function autocompleteForTypingTags() {

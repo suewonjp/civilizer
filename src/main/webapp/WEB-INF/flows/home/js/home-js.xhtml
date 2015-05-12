@@ -23,6 +23,21 @@ function formatDatetime(src) {
 	return moment(src, "#{msg['date_time_format']}", $("html").attr("lang")).fromNow() + "; " + src;
 }
 
+function setupFragmentLinks(content) {
+	content.find("span.-cvz-frgm").each(function() {
+        var $this = $(this);
+        var txt = $this.text();
+        var patt = /\s*(\d+)\s+(.*)/g;
+        if (txt.match(patt)) {
+        	console.log(RegExp.$1);
+        	console.log(RegExp.$2);
+        	var newEl = $("<a class='-cvz-frgm' href='fragment/" + RegExp.$1 + "'>" + RegExp.$2 + "</a>");
+        	console.log(newEl);
+            $this.replaceWith(newEl);
+        }
+    });
+}
+
 function translateFragments() {
 	// apply Civilizer's custom markup rules to fragment titles;
     $("#fragment-group .fragment-title").each(function() {
@@ -34,7 +49,8 @@ function translateFragments() {
     $("#fragment-group .fragment-content").each(function() {
     	var $this = $(this);
     	$this.html(translateFragmentContent($this.text()));
-   	});
+    	postprocessFragmentContent($this);
+    });
     
     // add a tooltip message of updated time to a clock icon
     $("#fragment-group .fragment-header .fa-clock-o").each(function() {
@@ -71,10 +87,8 @@ function populateFragmentOverlay(data) {
 	// translate Markdown formatted fragment contents into HTML format
 	$("#fragment-overlay-content .fragment-content").each(function(){
         var $this = $(this);
-        var content = $this.text();
 		$this.html(translateFragmentContent($this.text()));
-		// translate file box elements into HTML links
-		processFileClasses($this);
+		postprocessFragmentContent($this);
     });
 	
 	// make titles on the overlay window also draggable/droppable
@@ -92,8 +106,8 @@ function setupFragmentOverlay() {
         
         return false; // stop the link
     }
-    
-    $("#fragment-group").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
+	
+	$("#fragment-group").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     
     $("#fragment-overlay").draggable({
@@ -229,6 +243,13 @@ function translateFragmentContent(content) {
 	
 	// take care of custom style rules
 	return translateCustomMarkupRules(outputHtml);
+}
+
+function postprocessFragmentContent(content) {
+	setupFragmentLinks(content);
+	
+    // translate file box elements into HTML links
+    processFileClasses(content);
 }
 
 // [NOTE] this is a default basic setting for all jQuery UI Draggable objects;
