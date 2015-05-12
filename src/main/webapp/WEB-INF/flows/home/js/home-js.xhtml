@@ -23,21 +23,6 @@ function formatDatetime(src) {
 	return moment(src, "#{msg['date_time_format']}", $("html").attr("lang")).fromNow() + "; " + src;
 }
 
-function setupFragmentLinks(content) {
-	content.find("span.-cvz-frgm").each(function() {
-        var $this = $(this);
-        var txt = $this.text();
-        var patt = /\s*(\d+)\s+(.*)/g;
-        if (txt.match(patt)) {
-        	console.log(RegExp.$1);
-        	console.log(RegExp.$2);
-        	var newEl = $("<a class='-cvz-frgm' href='fragment/" + RegExp.$1 + "'>" + RegExp.$2 + "</a>");
-        	console.log(newEl);
-            $this.replaceWith(newEl);
-        }
-    });
-}
-
 function translateFragments() {
 	// apply Civilizer's custom markup rules to fragment titles;
     $("#fragment-group .fragment-title").each(function() {
@@ -245,10 +230,40 @@ function translateFragmentContent(content) {
 	return translateCustomMarkupRules(outputHtml);
 }
 
+function setupFragmentLinks(content) {
+    content.find("span.-cvz-frgm").each(function() {
+        var $this = $(this);
+        var txt = $this.text();
+        var patt = /\s*(\d+)\s+(.*)/g;
+        if (txt.match(patt)) {
+            var newTag = $("<a class='-cvz-frgm' href='fragment/" + RegExp.$1 + "'>" + RegExp.$2 + "</a>");
+            $this.replaceWith(newTag);
+        }
+    });
+}
+
+function processEmbeddedFragments(content) {
+	content.find(".-cvz-frgm-embed").each(function() {
+		var $this = $(this);
+        $.get("fragment/"+$this.text().trim(), "", function(data) {
+        	var content = $(data).find(".fragment-content").text();
+        	$this.html(translateFragmentContent(content));
+            postprocessFragmentContent($this);
+        });
+	})
+}
+
 function postprocessFragmentContent(content) {
+	// translate embedded fragemnts
+	// Rule - {{[frgm-embed]...}}
+	processEmbeddedFragments(content);
+	
+	// translate fragemnt links
+	// Rule - {{[frgm]...}}
 	setupFragmentLinks(content);
 	
     // translate file box elements into HTML links
+    // Rule - {{[file]...}}
     processFileClasses(content);
 }
 

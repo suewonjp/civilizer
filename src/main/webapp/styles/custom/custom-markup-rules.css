@@ -65,3 +65,7 @@
 	font-weight: bold;
 	font-style: oblique;
 }
+
+.-cvz-frgm-embed {
+	display: block;
+}
