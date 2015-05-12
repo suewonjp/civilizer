@@ -107,19 +107,19 @@
 
         <transition on="prev-fragment-page" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(requestParameters.panelId, requestParameters.curTagId, requestParameters.curPage-1)"
+                expression="mainController.newPanelContextBean(flowScope.fragmentListBeans[requestParameters.panelId].panelContextBean, -1)"
                 result="requestScope.panelContextBean"/>
         </transition>
 
         <transition on="next-fragment-page" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(requestParameters.panelId, requestParameters.curTagId, requestParameters.curPage+1)"
+                expression="mainController.newPanelContextBean(flowScope.fragmentListBeans[requestParameters.panelId].panelContextBean, 1)"
                 result="requestScope.panelContextBean"/>
         </transition>
 
         <transition on="sort-fragments" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(requestParameters.panelId, requestParameters.curTagId, requestParameters.curPage)"
+                expression="mainController.newPanelContextBean(flowScope.fragmentListBeans[requestParameters.panelId].panelContextBean, 0)"
                 result="requestScope.panelContextBean"/>
         </transition>
 

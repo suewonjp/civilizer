@@ -11,7 +11,6 @@
 <c:set var="fragmentListBean" value="#{fragmentListBeans[panelId]}"/>
 <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
 <c:set var="curTagId" value="#{panelContext.tagId}" />
-<c:set var="curPage" value="#{panelContext.curPage}" />
 
 <p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" closeOnEscape="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
     <div id="fragment-sort-option-container" >
@@ -27,8 +26,6 @@
     <br />
     <p:commandButton action="sort-fragments" value="#{msg['label_go_sort']}" icon="ui-icon-check">
         <f:param name="panelId" value="#{panelId}"/>
-        <f:param name="curTagId" value="#{curTagId}"/>
-        <f:param name="curPage" value="#{curPage}"/>
     </p:commandButton>
 </p:dialog>
 
@@ -49,8 +46,6 @@
     
     <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page">
         <f:param name="panelId" value="#{panelId}"/>
-        <f:param name="curTagId" value="#{curTagId}"/>
-        <f:param name="curPage" value="#{curPage}"/>
         <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_go_to_prev_page']}"></span>
     </p:commandLink>
     
@@ -58,8 +53,6 @@
     
     <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page">
         <f:param name="panelId" value="#{panelId}"/>
-        <f:param name="curTagId" value="#{curTagId}"/>
-        <f:param name="curPage" value="#{curPage}"/>
         <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_go_to_next_page']}"></span>
     </p:commandLink>
     

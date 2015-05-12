@@ -224,6 +224,19 @@ public final class Fragment implements Serializable {
         Collections.sort(fragments, cmptr);
     }
 
+    public static List<Fragment> paginate(
+            List<Fragment> fragments
+            , int first
+            , int count
+            , FragmentOrder order
+            , boolean ascending
+            ) {
+        Fragment.sort(fragments, order, ascending);
+        final int fromIndex = first;
+        final int toIndex = Math.min(fragments.size(), first + count);
+        return fragments.subList(fromIndex, toIndex);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 43;

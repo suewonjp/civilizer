@@ -144,15 +144,15 @@ public final class MainController {
         final boolean asc = flb.isOrderAsc();
         
         final SearchParams sp = (scb != null) ?
-        		scb.buildSearchParams() : pcb.getSearchParams();
+        		scb.buildSearchParams() : oldPcb.getSearchParams();
         		
         List<Fragment> fragments = Collections.emptyList();
         long allCount = 0;
         if (sp != null) {
         	// Fetch the fragments by the search parameters
-        	// [TODO] pagination and ordering when fetching fragments by search
         	fragments = fragmentDao.findBySearchParams(sp);
         	allCount = fragments.size();
+        	fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
         }
         else if (tagId == PanelContextBean.ALL_VALID_TAGS) {
         	// Fetch the fragments regardless of tags
@@ -293,6 +293,10 @@ public final class MainController {
 
 	public PanelContextBean newPanelContextBean(int panelId, long tagId, int curPage) {
 		return new PanelContextBean(panelId, tagId, curPage);
+	}
+
+	public PanelContextBean newPanelContextBean(PanelContextBean oldPcb, int pageOffset) {
+	    return new PanelContextBean(oldPcb.getPanelId(), oldPcb.getTagId(), oldPcb.getCurPage() + pageOffset);
 	}
 	
 	public SearchContextBean newSearchContextBean() {
