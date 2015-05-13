@@ -132,8 +132,13 @@ public final class MainController {
         if (pcb == null) {
         	pcb = oldPcb;
         }
-        
-        final long tagId = pcb.getTagId();
+
+        SearchParams sp = oldPcb.getSearchParams();                
+        long tagId = pcb.getTagId();
+        if (scb != null) {
+            sp = scb.buildSearchParams();
+            tagId = PanelContextBean.EMPTY_TAG;
+        }
         int curPage = pcb.getCurPage();
         if (paramPcb != null) {
             curPage = Math.max(0, oldPcb.isLastPage() ? (paramPcb.getCurPage() - 1) : paramPcb.getCurPage());
@@ -143,9 +148,6 @@ public final class MainController {
         final FragmentOrder frgOrder = FragmentOrder.values()[flb.getOrderOption()];
         final boolean asc = flb.isOrderAsc();
         
-        SearchParams sp = (scb != null) ?
-        		scb.buildSearchParams() : oldPcb.getSearchParams();
-        		
         List<Fragment> fragments = Collections.emptyList();
         long allCount = 0;
         if (tagId == PanelContextBean.ALL_VALID_TAGS) {
@@ -158,22 +160,20 @@ public final class MainController {
             fragments = fragmentDao.findSomeByTagId(tagId, first, count + 1, frgOrder, asc);
             allCount = fragmentDao.countByTagAndItsDescendants(tagId, true, tagDao);
         }
-        else if (sp != null) {
-        	// Fetch the fragments by the search parameters
-        	fragments = fragmentDao.findBySearchParams(sp);
-        	allCount = fragments.size();
-        	if (allCount == 0)
-        	    sp = null;
-        	else
-        	    fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
-        }
-        else if (tagId == PanelContextBean.EMPTY_TAG) {
-        	fragments = Collections.emptyList();
-        }
-        else {
+        else if (tagId != PanelContextBean.EMPTY_TAG) {
         	// Fetch the fragments with the specified tag (non-trashed)
-            fragments = fragmentDao.findSomeNonTrashedByTagId(tagId, first, count + 1, frgOrder, asc, tagDao);
-            allCount = fragmentDao.countByTagAndItsDescendants(tagId, false, tagDao);
+        	fragments = fragmentDao.findSomeNonTrashedByTagId(tagId, first, count + 1, frgOrder, asc, tagDao);
+        	allCount = fragmentDao.countByTagAndItsDescendants(tagId, false, tagDao);
+        }
+        else if (sp != null) {
+            // Fetch the fragments by the search parameters
+            fragments = fragmentDao.findBySearchParams(sp);
+            allCount = fragments.size();
+            if (allCount == 0)
+                sp = null;
+            else
+                fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
+            tagId = PanelContextBean.EMPTY_TAG;
         }
         
         // [NOTE] The content of fragments should be IMMUTABLE form here!
