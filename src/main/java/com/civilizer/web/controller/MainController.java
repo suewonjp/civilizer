@@ -143,29 +143,32 @@ public final class MainController {
         final FragmentOrder frgOrder = FragmentOrder.values()[flb.getOrderOption()];
         final boolean asc = flb.isOrderAsc();
         
-        final SearchParams sp = (scb != null) ?
+        SearchParams sp = (scb != null) ?
         		scb.buildSearchParams() : oldPcb.getSearchParams();
         		
         List<Fragment> fragments = Collections.emptyList();
         long allCount = 0;
-        if (sp != null) {
+        if (tagId == PanelContextBean.ALL_VALID_TAGS) {
+            // Fetch all the fragments
+            fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder, asc);
+            allCount = fragmentDao.countAll(false);
+        }
+        else if (tagId == Tag.TRASH_TAG_ID) {
+            // Fetch the trashed fragments
+            fragments = fragmentDao.findSomeByTagId(tagId, first, count + 1, frgOrder, asc);
+            allCount = fragmentDao.countByTagAndItsDescendants(tagId, true, tagDao);
+        }
+        else if (sp != null) {
         	// Fetch the fragments by the search parameters
         	fragments = fragmentDao.findBySearchParams(sp);
         	allCount = fragments.size();
-        	fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
-        }
-        else if (tagId == PanelContextBean.ALL_VALID_TAGS) {
-        	// Fetch the fragments regardless of tags
-        	fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder, asc);
-        	allCount = fragmentDao.countAll(false);
+        	if (allCount == 0)
+        	    sp = null;
+        	else
+        	    fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
         }
         else if (tagId == PanelContextBean.EMPTY_TAG) {
         	fragments = Collections.emptyList();
-        }
-        else if (tagId == Tag.TRASH_TAG_ID) {
-        	// Fetch the trashed fragments
-            fragments = fragmentDao.findSomeByTagId(tagId, first, count + 1, frgOrder, asc);
-            allCount = fragmentDao.countByTagAndItsDescendants(tagId, true, tagDao);
         }
         else {
         	// Fetch the fragments with the specified tag (non-trashed)
