@@ -211,6 +211,12 @@ public final class FragmentDaoImpl implements FragmentDao {
         final List<Long> ids = s.getNamedQuery(namedQueries[order.ordinal()])
                 .setParameterList("tagIds", tagIds)
                 .list();
+        
+        // remove duplicate items;
+        final Set<Long> tmpSet = new LinkedHashSet<Long>(ids);
+        ids.clear();
+        ids.addAll(tmpSet);
+        
         if (asc) {
             // default sort direction is descending
             Collections.reverse(ids);
@@ -218,14 +224,9 @@ public final class FragmentDaoImpl implements FragmentDao {
         final List<Fragment> output = new ArrayList<Fragment>(count);
         count = Math.min(count, ids.size()-first);
         Query q = s.getNamedQuery("Fragment.findByIdWithAll");
-        long prevId = -1;
         for (int i = 0; i < count; ++i) {
         	final long id = ids.get(i + first);
-        	if (prevId == id) {
-        		continue;
-        	}
             output.add((Fragment) q.setParameter("id", id).uniqueResult());
-            prevId = id;
         }
         return output;
 	}
