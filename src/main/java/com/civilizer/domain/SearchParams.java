@@ -214,25 +214,34 @@ public final class SearchParams implements Serializable {
 			src = src.trim();
 			List<Keyword> words = new ArrayList<Keyword>();
 			final TargetDirective targetDirective = parseTarget(src);
-			int target = targetDirective.target;
-			boolean any = targetDirective.any;
+			final int target = targetDirective.target;
+			final boolean any = targetDirective.any;
 			
 			if (! src.isEmpty()) {
 				final Pattern p = Pattern.compile("(\"[^\"]+\")|(\\S+)");
 				boolean isId = false;
+				boolean isTag = false;
 				
 				if (src.startsWith(targetDirective.expression)) {
 					// The source string starts with an explicit directive such as 'any:', 'tag:', etc.
 					// We skip the directive and pass the rest of the string.
 					src = src.substring(targetDirective.expression.length());
 					
-					isId = (targetDirective.target == TARGET_ID);
+					isId = (target == TARGET_ID);
+					isTag = (target == TARGET_TAG);
 				}
 				
 				final Matcher m = p.matcher(src);
 				
 				while (m.find()) {
-					final Keyword kw = new Keyword(m.group(), isId);
+				    String w = m.group();
+				    if (isTag) {
+				        // in case of tags, (as a rule) commas can be attached with keywords;
+				        // we trim the commas here
+				        w = trimComma(w);
+				        if (w == null) continue;
+				    }
+					final Keyword kw = new Keyword(w, isId);
 					if (kw.isValid()) {
 						words.add(kw);
 					}
@@ -246,6 +255,16 @@ public final class SearchParams implements Serializable {
 			this.words = words;
 			this.target = target;
 			this.any = any;
+		}
+		
+		private static String trimComma(String input) {
+		    String[] tmp = input.split(",");
+		    for (String s : tmp) {
+                s = s.trim();
+                if (s.isEmpty()) continue;
+                return s;
+            }
+		    return null;
 		}
 		
 		private static TargetDirective parseTarget(String src) {

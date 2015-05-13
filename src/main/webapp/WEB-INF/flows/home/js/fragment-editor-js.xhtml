@@ -170,26 +170,27 @@ function autocompleteForTypingTags() {
     	return false;
     }
     
-    $("#fragment-editor-form\\:tags-input").autocomplete({
+    $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords").autocomplete({
         source: function(req, res) {
-             var tags = split(req.term);
-             if (tags.length && tags[tags.length-1] == "") {
-                  tags.pop();
-             }
-             var typed = tags[tags.length-1];
-             tags.pop();
-             var prefix = "";
-             for (var i=0; i<tags.length; ++i) {
-                 prefix += tags[i] + ",";
-             }
-             var output = [];
-             for (var i=0; i<tagSuggestions.length; ++i) {
-            	 var suggestion = tagSuggestions[i];
-                 if (suggestion.indexOf(typed) == 0 && ! alreadyTyped(tags, suggestion)) {
-                     output.push(suggestion);
-                 }
-             }
-             res(output);
+            var tags = split(req.term);
+            if (tags.length && tags[tags.length-1] == "") {
+                tags.pop();
+            }
+            var typed = tags[tags.length-1];
+            tags.pop();
+            var prefix = "";
+            for (var i=0; i<tags.length; ++i) {
+                prefix += tags[i] + ",";
+            }
+            var output = [];
+            for (var i=0; i<tagSuggestions.length; ++i) {
+                var suggestion = tagSuggestions[i];
+                if (suggestion.indexOf(typed) == 0 && ! alreadyTyped(tags, suggestion)) {
+                    output.push(suggestion);
+                }
+            }
+        	console.log(output);
+            res(output);
         },
         focus: function () {
             // prevent value inserted on focus

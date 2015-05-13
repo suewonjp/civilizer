@@ -615,6 +615,8 @@ function showSearchDialog(panelId) {
 	var dlg = PF("searchDlg");
 	dlg.show();
 	
+	$("#fragment-group-form\\:search-panel\\:tag-keywords").watermark("#{msg['how_to_input_tags']}");
+	
 	$("#fragment-group-form\\:go-search").click(function() {
 	    var activeTabId = $("#fragment-group-form\\:search-panel_active").val();
 		var hasSomeToSearch = false;
