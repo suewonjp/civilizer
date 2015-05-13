@@ -400,3 +400,7 @@
 .ui-strong-focus {
 	box-shadow: 10px 10px 30px 20px red inset;
 }
+
+#fragment-group-form\:search-panel input {
+	width: 60%;
+}

@@ -84,22 +84,22 @@
 	        <p:tab id="t1" title="#{msg['label_normal_search']}">
 	            <div>
 		            <label class="fa fa-tag"> #{msg['label_tag']} </label>
-		            <p:inputText id="tag-keywords" style="width:50%" value="#{searchContextBean.tagKeywords}"/>
+		            <p:inputText id="tag-keywords" autocomplete="false" value="#{searchContextBean.tagKeywords}"/>
 		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTag}" itemLabel="#{msg['label_any']}"/>
 	            </div>
 	            <div>
 		            <label class="fa fa-header"> #{msg['label_title']} </label>
-		            <p:inputText id="title-keywords" style="width:50%" value="#{searchContextBean.titleKeywords}"/>
+		            <p:inputText id="title-keywords" value="#{searchContextBean.titleKeywords}"/>
 		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTitle}" itemLabel="#{msg['label_any']}"/>
 	            </div>
 	            <div>
 		            <label class="fa fa-file-text-o"> #{msg['label_content']} </label>
-		            <p:inputText id="content-keywords" style="width:50%" value="#{searchContextBean.contentKeywords}"/>
+		            <p:inputText id="content-keywords" value="#{searchContextBean.contentKeywords}"/>
 		            <p:selectBooleanCheckbox value="#{searchContextBean.anyContent}" itemLabel="#{msg['label_any']}"/>
 	            </div>
 	            <div>
 		            <label class="fa fa-sort-numeric-asc"> #{msg['label_id']} </label>
-		            <p:inputText id="id-keywords" style="width:50%" value="#{searchContextBean.idKeywords}"/>
+		            <p:inputText id="id-keywords" value="#{searchContextBean.idKeywords}"/>
 	            </div>
 	        </p:tab>
 	    </p:accordionPanel>
