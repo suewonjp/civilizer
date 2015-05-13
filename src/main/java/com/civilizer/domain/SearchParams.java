@@ -80,6 +80,12 @@ public final class SearchParams implements Serializable {
 					// [RULE] .../- => inverse; the query returns data not matching the pattern.
 					inverse = true;
 				}
+				if (suffix.indexOf('d') != -1) {
+				    // [TODO]
+				    // [RULE] .../d => descendant tags; this suffix only applies to tag keywords;
+				    // the query includes a given tag and all its descendant tags.
+				    // so 
+				}
 			}
 			
 			if (word.startsWith("\"") && word.endsWith("\"")) {
