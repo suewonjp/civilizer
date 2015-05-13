@@ -108,6 +108,7 @@ public class DomainTagTest {
         Collection<String> nameList = buildTagNameList(tags);
         String expected = new String();
         for (String s : nameList) {
+            assertEquals(0, Tag.validateName(s));
         	expected += s + ",";
         }
         assertEquals(expected, actual);
@@ -267,6 +268,22 @@ public class DomainTagTest {
 	        }
 	    }
 	}
+	
+	@Test
+    public void testTagNameValidation() {
+	    {
+            Tag t = new Tag("\"tag name with quots\"");
+            assertEquals('\"', Tag.validateName(t.getTagName()));
+        }
+	    {
+	        Tag t = new Tag("tag name / with slashes");
+	        assertEquals('/', Tag.validateName(t.getTagName()));
+	    }
+	    {
+	        Tag t = new Tag(",tag name with commas");
+	        assertEquals(',', Tag.validateName(t.getTagName()));
+	    }
+    }
 	
 //	@Test
 //	public void testConvertToAndFromJsonFormat() {

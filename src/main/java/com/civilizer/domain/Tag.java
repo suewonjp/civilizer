@@ -110,6 +110,16 @@ public final class Tag implements Serializable {
     	return new ArrayList<>(children);
     }
     
+    public static char validateName(String name) {
+        final char[] invalidChar = { '\"', '/', ',' };
+        for (char c : invalidChar) {
+            if (name.indexOf(c) != -1) {
+                return c;
+            }
+        }
+        return (char)0;
+    }
+    
     public static String getTagNamesFrom(Collection<Tag> tags) {
     	String result = new String();
     	for (Tag t : tags) {
