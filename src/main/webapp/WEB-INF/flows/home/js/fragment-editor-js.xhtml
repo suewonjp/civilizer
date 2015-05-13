@@ -115,15 +115,12 @@ function openFragmentEditorForEdit(event) {
     
 	$("#fragment-editor-form\\:id-placeholder-for-fragment").val(fragmentId);
     
-//     var el = $("#fragment-group-form\\:fragment-title-placeholder-panel"+panelId+"-"+fragmentId);
     var el = target.find(".-cvz-data-title");
     $("#fragment-editor-form\\:title-input").val(el.text());
     
-//     el = $("#fragment-group-form\\:fragment-tagnames-placeholder-panel"+panelId+"-"+fragmentId);
     el = target.find(".-cvz-data-tags");
     $("#fragment-editor-form\\:tags-input").val(el.text());
     
-//     el = $("#fragment-group-form\\:fragment-content-placeholder-panel"+panelId+"-"+fragmentId);
     el = target.find(".-cvz-data-content");
     $("#fragment-content-editor").val(el.text());
     
