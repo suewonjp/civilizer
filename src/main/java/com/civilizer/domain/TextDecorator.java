@@ -31,23 +31,24 @@ public final class TextDecorator {
 	private static void match(List<Pair<Integer, Integer>> output, String input, SearchParams sp, boolean caseSensitive) {
 		// Create a pattern from the search parameters
 		Set<String> keywordSet = new HashSet<String>();
-		if (caseSensitive) {
-			for (SearchParams.Keywords keywords : sp.getKeywords()) {
-				for (SearchParams.Keyword kw : keywords.getWords()) {
-					if (kw.isCaseSensitive()) {
-						keywordSet.add(kw.getWord());
-					}
-				}
-			}
-		}
-		else {
-			for (SearchParams.Keywords keywords : sp.getKeywords()) {
-				for (SearchParams.Keyword kw : keywords.getWords()) {
-					if (! kw.isCaseSensitive()) {
-						keywordSet.add(kw.getWord().toLowerCase());
-					}
-				}
-			}
+
+		for (SearchParams.Keywords keywords : sp.getKeywords()) {
+		    for (SearchParams.Keyword kw : keywords.getWords()) {
+		        final String w = kw.getWord();
+		        if (kw.isId() || kw.isInverse()) {
+		            continue;
+		        }
+		        if (caseSensitive) {
+		            if (kw.isCaseSensitive()) {
+						keywordSet.add(w);
+		            }
+		        }
+		        else {
+		            if (! kw.isCaseSensitive()) {
+		                keywordSet.add(w.toLowerCase());
+		            }
+		        }
+		    }
 		}
 		
 		final int keywordCount = keywordSet.size();
