@@ -96,6 +96,14 @@ public final class PanelContextBean implements Serializable {
     	return searchParams == null ? "" : "fp-search";
     }
     
+    public int firstItemOfCurPage() {
+        return curPage * itemsPerPage;
+    }
+
+    public int lastItemOfCurPage(int maxItems) {
+        return Math.min(maxItems, (curPage + 1) * itemsPerPage - 1);
+    }
+    
     @Override
     public boolean equals(Object obj) {
     	if (obj != null) {

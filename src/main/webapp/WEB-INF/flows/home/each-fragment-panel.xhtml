@@ -85,7 +85,11 @@
     </c:choose>
 </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 
-<h:outputText styleClass="fa fa-file-text-o" style="font-weight:bold;color:darkgray" value=" #{msg['label_total']} : #{fragmentListBean.totalCount}"/>
+<c:set var="tc" value="#{fragmentListBean.totalCount}" />
+<c:set var="first" value="#{panelContext.firstItemOfCurPage()}" />
+<c:set var="last" value="#{panelContext.lastItemOfCurPage(tc)} " />
+<h:outputText styleClass="fa fa-file-text-o" style="font-weight:bold;color:darkgray" 
+    value=" #{msg['label_total']} : #{tc} [#{first} - #{last}]"/>
 
 <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
     <ui:include src="each-fragment.xhtml" />
