@@ -212,7 +212,8 @@
 						for (j = levels.length -1; j >= 0; j--) {
 							t += levels[j]+"-";
 						}
-						li = $('<li class="markItUpButton markItUpButton'+t+(i)+' '+(button.className||'')+'"><a href="" '+key+' title="'+title+'">'+(button.name||'')+'</a></li>')
+						li = $('<li class="markItUpButton markItUpButton'+t+(i)+' '+(button.className||'')+'"><a href="" '+key+' title="'+title+'"/></li>')
+//						li = $('<li class="markItUpButton markItUpButton'+t+(i)+' '+(button.className||'')+'"><a href="" '+key+' title="'+title+'">'+(button.name||'')+'</a></li>')
 						.bind("contextmenu.markItUp", function() { // prevent contextmenu on mac and allow ctrl+click
 							return false;
 						}).bind('click.markItUp', function(e) {
@@ -234,6 +235,10 @@
 						}).bind('mouseleave.markItUp', function() {
 								$('> ul', this).hide();
 						}).appendTo(ul);
+						if (button.faIcon) {
+							var span = $("<span>").addClass("fa " + button.faIcon);
+							li.find("a").prepend(span);
+						}
 						if (button.dropMenu) {
 							levels.push(i);
 							$(li).addClass('markItUpDropMenu').append(dropMenus(button.dropMenu));

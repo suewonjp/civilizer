@@ -111,7 +111,7 @@
 .markItUpHeader ul a {
 	display:block;
 	width:16px; height:16px;
-	text-indent:-10000px;
+/* 	text-indent:-10000px; */
 	background-repeat:no-repeat;
 	padding:3px;
 	margin:0px;
@@ -129,19 +129,19 @@
 	background-color:#3C769D;
 }
 /***************************************************************************************/
-.html .markItUpEditor {
-	background-image:url(images/bg-editor-html.png);
-}
-.markdown .markItUpEditor {
-	background-image:url(images/bg-editor-markdown.png);
-}
-.textile .markItUpEditor {
-	background-image:url(images/bg-editor-textile.png);
-}
-.bbcode .markItUpEditor {
-	background-image:url(images/bg-editor-bbcode.png);
-}
-.wiki .markItUpEditor,
-.dotclear .markItUpEditor {
-	background-image:url(images/bg-editor-wiki.png);
-}
+/* .html .markItUpEditor { */
+/* 	background-image:url(images/bg-editor-html.png); */
+/* } */
+/* .markdown .markItUpEditor { */
+/* 	background-image:url(images/bg-editor-markdown.png); */
+/* } */
+/* .textile .markItUpEditor { */
+/* 	background-image:url(images/bg-editor-textile.png); */
+/* } */
+/* .bbcode .markItUpEditor { */
+/* 	background-image:url(images/bg-editor-bbcode.png); */
+/* } */
+/* .wiki .markItUpEditor, */
+/* .dotclear .markItUpEditor { */
+/* 	background-image:url(images/bg-editor-wiki.png); */
+/* } */
