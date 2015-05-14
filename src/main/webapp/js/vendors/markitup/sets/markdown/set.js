@@ -33,12 +33,15 @@ markItUpSettings = {
 			return markItUp.line+'. ';
 		}},
 		{separator:'---------------' },
-		{name:'Picture', key:'P', replaceWith:'![[![Alternative text]!]]([![Url:!:http://]!] "[![Title]!]")'},
-		{name:'Link', key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
+		{name:'Picture', replaceWith:'![[![Alternative text]!]]([![Url:!:http://]!] "[![Title]!]")'},
+		{name:'Link', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
 		{separator:'---------------'},	
 		{name:'Quotes', key:'Q', openWith:'> ', closeWith:'  ', multiline:true},
-        {name:'Code Block / Code', multiline:true, openWith:'(!(\t|!|`)!)', closeWith:'(!(`)!)'},
+        {name:'Code Block / Code', multiline:true, openWith:'    '},
+//        {name:'Code Block / Code', multiline:true, openWith:'(!(\t|!|`)!)', closeWith:'(!(`)!)'},
 		{separator:'---------------'},
+		{name:'Indent (Move Right)', key:'R', openWith:' ', multiline:true, faIcon:'fa-indent fa-lg'},
+		{name:'Dedent (Move Left)', key:'L', swapFrom:/^[ \t]/, swapTo:'', multiline:true, faIcon:'fa-dedent fa-lg'},
 //		{name:'Preview', call:'preview', className:"preview"}
 			{name:'Colors', dropMenu:[
 			    {name:'Cyan', multiline:true, openWith:'{{[clr-c]', closeWith:'}}'},

@@ -299,6 +299,8 @@
 				var openBlockWith 		= prepare(clicked.openBlockWith);
 				var closeBlockWith 		= prepare(clicked.closeBlockWith);
 				var multiline 			= clicked.multiline;
+				var swapFrom 		    = clicked.swapFrom;
+				var swapTo 			    = clicked.swapTo;
 				
 				if (replaceWith !== "") {
 					block = openWith + replaceWith + closeWith;
@@ -315,6 +317,9 @@
 					
 					for (var l = 0; l < lines.length; l++) {
 						line = lines[l];
+						if (swapFrom) {
+							line = line.replace(swapFrom, swapTo);
+						}
 						var trailingSpaces;
 						if (trailingSpaces = line.match(/ *$/)) {
 							blocks.push(openWith + line.replace(/ *$/g, '') + closeWith + trailingSpaces);

@@ -30,6 +30,9 @@
 .markItUp .markItUpButton9 a {
 	background-image:url(images/stroke.png);
 }
+.markItUp .markItUpButton10 {
+  font-size: 1.15em;
+}
 
 .markItUp .markItUpButton11 a {
 	background-image:url(images/list-bullet.png);
@@ -52,28 +55,28 @@
 	background-image:url(images/code.png);
 }
 
-.markItUp .markItUpButton17-1 a	{
+.markItUp .markItUpButton19-1 a	{
 	background-color:cyan;
 }
-.markItUp .markItUpButton17-2 a	{
+.markItUp .markItUpButton19-2 a	{
 	background-color:royalblue;
 }
-.markItUp .markItUpButton17-3 a {
+.markItUp .markItUpButton19-3 a {
 	background-color: red;
 }
-.markItUp .markItUpButton17-4 a {
+.markItUp .markItUpButton19-4 a {
 	background-color: limegreen;
 }
-.markItUp .markItUpButton17-5 a {
+.markItUp .markItUpButton19-5 a {
 	background-color: orange;
 }
-.markItUp .markItUpButton17-6 a {
+.markItUp .markItUpButton19-6 a {
 	background-color: magenta;
 }
-.markItUp .markItUpButton17-7 a {
+.markItUp .markItUpButton19-7 a {
 	background-color: blueviolet;
 }
-.markItUp .markItUpButton17-8 a {
+.markItUp .markItUpButton19-8 a {
 	background-color: brown;
 }
 
