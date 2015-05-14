@@ -124,7 +124,7 @@
 }
 
 #editor-frame, #fragment-overlay {
-    background-color: whitesmoke;
+    background-color: white;
     border-style: solid;
     border-width: 3px;
     border-color: navy;
@@ -197,15 +197,15 @@
 	white-space: nowrap;
 }
 
-.fragment-content pre {
+.fragment-content pre, #fragment-overlay-content pre {
 	background-color: whitesmoke;
 }
 
-.fragment-content blockquote {
+.fragment-content blockquote, #fragment-overlay-content blockquote {
 	border: 1px solid slategray;
 }
 
-.fragment-content hr {
+.fragment-content hr, #fragment-overlay-content hr {
 	border:thin solid lightgray;
 }
 
