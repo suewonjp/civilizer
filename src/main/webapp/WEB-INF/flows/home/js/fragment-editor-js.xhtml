@@ -14,7 +14,9 @@ function setupFragmentEditor() {
     });
 	
     $editorFrame.resizable({
-        alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor"
+        alsoResize: "#markItUpFragment-content-editor, #fragment-content-editor",
+        minWidth: 581,
+        minHeight: 234,
     });
 	
 	$editorFrame.draggable({
