@@ -209,6 +209,14 @@
 	border:thin solid lightgray;
 }
 
+.fragment-content li li, #fragment-overlay-content li li {
+	list-style-type: square;
+}
+
+.fragment-content li li　li, #fragment-overlay-content li li li {
+	list-style-type: disc;
+}
+
 .warning-color {
     color: red;
 }
