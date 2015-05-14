@@ -42,6 +42,9 @@
 	background-image: -ms-linear-gradient(top, #E6E6E6, #CCCCCC);
 	background-image: -o-linear-gradient(top, #E6E6E6, #CCCCCC);
 	background-image: linear-gradient(to bottom, #E6E6E6, #CCCCCC);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E6E6E6, endColorstr=#CCCCCC);
+}
+
+.small-fragment-box {
 	overflow: hidden;
 }
 
@@ -177,6 +180,7 @@
 
 .fragment-header .fa-clock-o {
 	cursor:default;
+	margin-left: 5px;
 }
 
 .fragment-content  {
