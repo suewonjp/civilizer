@@ -18,7 +18,7 @@
 }
 .markItUpContainer  {
 	border:1px solid #3C769D;	
-	background:#FFF url(images/bg-container.png) repeat-x top left;
+/* 	background:#FFF url(images/bg-container.png) repeat-x top left; */
 	padding:5px 5px 2px 5px;
 	font:11px Verdana, Arial, Helvetica, sans-serif;
 }
@@ -28,7 +28,7 @@
 	border:3px solid #3C769D;
 	width:643px;
 	height:320px;
-	background:#FFF url(images/bg-editor.png) no-repeat;
+/* 	background:#FFF url(images/bg-editor.png) no-repeat; */
 	clear:both;
 	line-height:18px;
 	overflow:auto;
