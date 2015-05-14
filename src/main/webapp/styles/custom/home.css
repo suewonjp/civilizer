@@ -243,6 +243,10 @@
     color: black;
 }
 
+#tag-palette-flat .each-tag {
+	display: inline-block;
+}
+
 .tag-button, .tag-box, .file-button {
     margin: 2px 1px 1px 1px;
     border:1px solid #ffc826;
