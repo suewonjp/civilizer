@@ -18,7 +18,6 @@
 }
 .markItUpContainer  {
 	border:1px solid #3C769D;	
-/* 	background:#FFF url(images/bg-container.png) repeat-x top left; */
 	padding:5px 5px 2px 5px;
 	font:11px Verdana, Arial, Helvetica, sans-serif;
 }
@@ -28,7 +27,6 @@
 	border:3px solid #3C769D;
 	width:643px;
 	height:320px;
-/* 	background:#FFF url(images/bg-editor.png) no-repeat; */
 	clear:both;
 	line-height:18px;
 	overflow:auto;
@@ -128,20 +126,3 @@
 	color:#FFF;
 	background-color:#3C769D;
 }
-/***************************************************************************************/
-/* .html .markItUpEditor { */
-/* 	background-image:url(images/bg-editor-html.png); */
-/* } */
-/* .markdown .markItUpEditor { */
-/* 	background-image:url(images/bg-editor-markdown.png); */
-/* } */
-/* .textile .markItUpEditor { */
-/* 	background-image:url(images/bg-editor-textile.png); */
-/* } */
-/* .bbcode .markItUpEditor { */
-/* 	background-image:url(images/bg-editor-bbcode.png); */
-/* } */
-/* .wiki .markItUpEditor, */
-/* .dotclear .markItUpEditor { */
-/* 	background-image:url(images/bg-editor-wiki.png); */
-/* } */

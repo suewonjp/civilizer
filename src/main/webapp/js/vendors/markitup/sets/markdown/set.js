@@ -15,7 +15,6 @@ markItUpSettings = {
 	onShiftEnter:		{keepDefault:false, openWith:'\n\n'},
 	onTab:    		    {keepDefault:false, multiline:true, openWith:'    '},
 	onShiftTab:    		{keepDefault:false, multiline:true, swapFrom:/(^    )|(^\t)/, swapTo:'' },
-//	resizeHandle: false,
 	markupSet: [
 		{name:'First Level Heading', key:'1', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '=') } },
 		{name:'Second Level Heading', key:'2', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '-') } },
@@ -45,7 +44,6 @@ markItUpSettings = {
 		{separator:'---------------'},
 		{name:'Indent (Move Right)', key:'R', openWith:' ', multiline:true, faIcon:'fa-indent fa-lg'},
 		{name:'Dedent (Move Left)', key:'L', swapFrom:/^[ \t]/, swapTo:'', multiline:true, faIcon:'fa-dedent fa-lg'},
-//		{name:'Preview', call:'preview', className:"preview"}
 			{name:'Colors', dropMenu:[
 			    {name:'Cyan', multiline:true, openWith:'{{[clr-c]', closeWith:'}}'},
 			    {name:'Blue', multiline:true, openWith:'{{[clr-b]', closeWith:'}}'},
