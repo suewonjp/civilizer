@@ -133,23 +133,28 @@ public final class MainController {
         	pcb = oldPcb;
         }
 
+        int curPage = pcb.getCurPage();
+        if (paramPcb != null) {
+        	// the current page has been updated by going forward or forward
+        	curPage = Math.max(0,
+        			oldPcb.isLastPage() ? (paramPcb.getCurPage() - 1) : paramPcb.getCurPage());
+        }
         SearchParams sp = oldPcb.getSearchParams();                
         long tagId = pcb.getTagId();
         if (scb != null) {
+        	// a new KEYWORD SEARCH has been kicked;
             sp = scb.buildSearchParams();
+            // this branch has the highest priority of all so it forces to overwrite a few key variables like so:
             tagId = PanelContextBean.EMPTY_TAG;
-        }
-        int curPage = pcb.getCurPage();
-        if (paramPcb != null) {
-            curPage = Math.max(0, oldPcb.isLastPage() ? (paramPcb.getCurPage() - 1) : paramPcb.getCurPage());
+            curPage = 0;
         }
         final int count = pcb.getItemsPerPage();
         final int first = curPage * count;
         final FragmentOrder frgOrder = FragmentOrder.values()[flb.getOrderOption()];
         final boolean asc = flb.isOrderAsc();
         
-        List<Fragment> fragments = Collections.emptyList();
-        long allCount = 0;
+        List<Fragment> fragments = Collections.emptyList(); // resultant fragments
+        long allCount = 0; // the number of fragments at maximum
         if (tagId == PanelContextBean.ALL_VALID_TAGS) {
             // Fetch all the fragments
             fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder, asc);
@@ -170,7 +175,7 @@ public final class MainController {
             fragments = fragmentDao.findBySearchParams(sp);
             allCount = fragments.size();
             if (allCount == 0)
-                sp = null;
+                sp = null; // no search hit so no need to record any info to the context;
             else
                 fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
             tagId = PanelContextBean.EMPTY_TAG;
@@ -181,6 +186,7 @@ public final class MainController {
         final boolean isLastPage = fragments.size() <= count;
         final boolean givenTagIsTrashTag = Tag.isTrashTag(tagId);
         flb.setTotalCount(allCount);
+        // Record the panel context; it will be referred at the next page update
         flb.setPanelContextBean(new PanelContextBean(pcb.getPanelId(), tagId, curPage, count, isLastPage, givenTagIsTrashTag, sp));
 //        ViewUtil.addMessage("pcb", flb.getPanelContextBean());
         
