@@ -52,6 +52,7 @@
 					onShiftEnter:			{},
 					onCtrlEnter:			{},
 					onTab:					{},
+					onShiftTab:				{},
 					markupSet:			[	{ /* set */ } ]
 				};
 		$.extend(options, settings, extraSettings);
@@ -366,37 +367,43 @@
 				}			
 				$.extend(hash, { line:1 });
 
-				if ((ctrlKey === true && shiftKey === true)) {
-					lines = selection.split(/\r?\n/);
-					for (j = 0, n = lines.length, i = 0; i < n; i++) {
-						if ($.trim(lines[i]) !== '') {
-							$.extend(hash, { line:++j, selection:lines[i] } );
-							lines[i] = build(lines[i]).block;
-						} else {
-							lines[i] = "";
-						}
-					}
-
-					string = { block:lines.join('\n')};
-					start = caretPosition;
-					len = string.block.length + ((browser.opera) ? n-1 : 0);
-				} else if (ctrlKey === true) {
-					string = build(selection);
-					start = caretPosition + string.openWith.length;
-					len = string.block.length - string.openWith.length - string.closeWith.length;
-					len = len - (string.block.match(/ $/) ? 1 : 0);
-					len -= fixIeBug(string.block);
-				} else if (shiftKey === true) {
-					string = build(selection);
-					start = caretPosition;
-					len = string.block.length;
-					len -= fixIeBug(string.block);
-				} else {
-					string = build(selection);
-					start = caretPosition + string.block.length ;
-					len = 0;
-					start -= fixIeBug(string.block);
-				}
+//				if ((ctrlKey === true && shiftKey === true)) {
+//					lines = selection.split(/\r?\n/);
+//					for (j = 0, n = lines.length, i = 0; i < n; i++) {
+//						if ($.trim(lines[i]) !== '') {
+//							$.extend(hash, { line:++j, selection:lines[i] } );
+//							lines[i] = build(lines[i]).block;
+//						} else {
+//							lines[i] = "";
+//						}
+//					}
+//
+//					string = { block:lines.join('\n')};
+//					start = caretPosition;
+//					len = string.block.length + ((browser.opera) ? n-1 : 0);
+//				} else if (ctrlKey === true) {
+//					string = build(selection);
+//					start = caretPosition + string.openWith.length;
+//					len = string.block.length - string.openWith.length - string.closeWith.length;
+//					len = len - (string.block.match(/ $/) ? 1 : 0);
+//					len -= fixIeBug(string.block);
+//				} else if (shiftKey === true) {
+//					string = build(selection);
+//					start = caretPosition;
+//					len = string.block.length;
+//					len -= fixIeBug(string.block);
+//				} else {
+//					string = build(selection);
+//					start = caretPosition + string.block.length ;
+//					len = 0;
+//					start -= fixIeBug(string.block);				
+//				}
+				
+				string = build(selection);
+				start = caretPosition;
+				len = string.block.length;
+				len -= fixIeBug(string.block);
+				
 				if ((selection === '' && string.replaceWith === '')) {
 					caretOffset += fixOperaBug(string.block);
 					
@@ -627,7 +634,8 @@
 						}
 					}
 					if (e.keyCode === 9) { // Tab key
-						if (shiftKey == true || ctrlKey == true || altKey == true) {
+						if (ctrlKey == true || altKey == true) {
+//						if (shiftKey == true || ctrlKey == true || altKey == true) {
 							return false; 
 						}
 						if (caretOffset !== -1) {
@@ -637,7 +645,7 @@
 							caretOffset = -1;
 							return false;
 						} else {
-							markup(options.onTab);
+							markup(shiftKey ? options.onShiftTab : options.onTab);
 							return options.onTab.keepDefault;
 						}
 					}
