@@ -15,7 +15,7 @@ markItUpSettings = {
 	onShiftEnter:		{keepDefault:false, openWith:'\n\n'},
 	onTab:    		    {keepDefault:false, multiline:true, openWith:'    '},
 	onShiftTab:    		{keepDefault:false, multiline:true, swapFrom:/(^    )|(^\t)/, swapTo:'' },
-	resizeHandle: false,
+//	resizeHandle: false,
 	markupSet: [
 		{name:'First Level Heading', key:'1', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '=') } },
 		{name:'Second Level Heading', key:'2', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '-') } },
