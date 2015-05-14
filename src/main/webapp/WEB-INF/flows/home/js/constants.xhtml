@@ -1,0 +1,44 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+<script>
+//<![CDATA[
+
+var SYSPROP = {
+	fileSep:("#{systemProperties['file.separator']}")
+};
+
+var MSG = {
+	confirm_unbookmarking:"#{msg['confirm_unbookmarking']}",
+	click_to_rename:"#{msg['click_to_rename']}",
+	file_not_found:"#{msg['file_not_found']}",
+	label_upload_file:"#{msg['label_upload_file']}",
+	select_destination:"#{msg['select_destination']}",
+	label_move:"#{msg['label_move']}",
+	cant_move:"#{msg['cant_move']}",
+	label_rename:"#{msg['label_rename']}",
+	label_new_folder:"#{msg['label_new_folder']}",
+	label_new_fragment:"#{msg['label_new_fragment']}",
+	label_title:"#{msg['label_title']}",
+	how_to_input_tags:"#{msg['how_to_input_tags']}",
+	label_edit:"#{msg['label_edit']}",
+	label_preview:"#{msg['label_preview']}",
+	date_time_format:"#{msg['date_time_format']}",
+	label_check_uncheck_all:"#{msg['label_check_uncheck_all']}",
+	no_item_is_selected:"#{msg['no_item_is_selected']}",
+	confirm_deleting:"#{msg['confirm_deleting']}",
+	confirm_trashing:"#{msg['confirm_trashing']}",
+	confirm_unrelating:"#{msg['confirm_unrelating']}",
+};
+
+var FRAGMENT_DELETABLE = [
+    Boolean('#{fragmentListBeans[0].panelContextBean.fragmentDeletable}' == 'true'),
+    Boolean('#{fragmentListBeans[1].panelContextBean.fragmentDeletable}' == 'true'),
+    Boolean('#{fragmentListBeans[2].panelContextBean.fragmentDeletable}' == 'true'),
+];
+
+//]]>
+</script>
+
+</ui:composition>

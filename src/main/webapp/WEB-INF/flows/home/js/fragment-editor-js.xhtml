@@ -10,7 +10,7 @@ function setupFragmentEditor() {
 	var $editorFrame = $("#editor-frame");
 	
 	$("#new-fragment-editor-trigger, .new-fragment-editor-trigger-on-toolbar").click(function (e) {
-		onClickFragmentEditorTrigger($editorFrame, $window, e, "#{msg['label_new_fragment']}", true);
+		onClickFragmentEditorTrigger($editorFrame, $window, e, MSG.label_new_fragment, true);
     });
 	
     $editorFrame.resizable({
@@ -61,11 +61,11 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
     if (forNewFragment) {
     	var el = $("#fragment-editor-form\\:title-input");
         el.val(null);
-        el.watermark("#{msg['label_title']}");
+        el.watermark(MSG.label_title);
         
         el = $("#fragment-editor-form\\:tags-input");
         el.val(null);
-        el.watermark("#{msg['how_to_input_tags']}");
+        el.watermark(MSG.how_to_input_tags);
         
         $("#fragment-content-editor").val(null);
     }
@@ -128,7 +128,7 @@ function openFragmentEditorForEdit(event) {
     
     var $window = $(window);
 	var $editorFrame = $("#editor-frame");
-    onClickFragmentEditorTrigger($editorFrame, $window, event, "#{msg['label_edit']}", false);
+    onClickFragmentEditorTrigger($editorFrame, $window, event, MSG.label_edit, false);
 }
 
 function prepareFragmentContent() {
@@ -148,7 +148,7 @@ function previewFragment() {
         , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
     });
     
-	$("#fragment-overlay-title").text("#{msg['label_preview']}");
+	$("#fragment-overlay-title").text(MSG.label_preview);
 	
 	var srcContent = prepareFragmentContent();
     var outputHtml = translateFragmentContent(srcContent);

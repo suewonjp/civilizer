@@ -55,7 +55,7 @@ function showTagEditor() {
 	
 	var inplace = PF("tagNameInplace");
 	var display = inplace.jq.find(".ui-inplace-display");
-	display.text(tagName)[0].title="#{msg['click_to_rename']}";
+	display.text(tagName)[0].title=MSG.click_to_rename;
 	var input = inplace.jq.find(".ui-inplace-content input");
 	input.val(tagName);
 	inplace.hide();

@@ -5,7 +5,7 @@
 <script>
 //<![CDATA[
       
-var fileSeparator = ("#{ systemProperties['file.separator'] }");
+var fileSeparator = SYSPROP.fileSep;
 
 function setContextMenuForFiles() {
     var menu = $("#file-context-menu");
@@ -67,7 +67,7 @@ function processFileClasses(parent) {
 			}
 		}
 		else { // the file does not exist on the file system for whatever reasons...
-			$this.text("").append("<span>").addClass("-cvz-error fa fa-warning").text("  #{msg['file_not_found']} : " + fileId);
+			$this.text("").append("<span>").addClass("-cvz-error fa fa-warning").text("  " + MSG.file_not_found + " : " + fileId);
 		}
 	});
 }
@@ -75,7 +75,7 @@ function processFileClasses(parent) {
 function showFileUploadDialog() {
 	var dlg = PF("moveFileDlg");
     dlg.show();
-    dlg.jq.find(".ui-dialog-title").text("#{msg['label_upload_file']}");
+    dlg.jq.find(".ui-dialog-title").text(MSG.label_upload_file);
     
     $("#file-upload-box").show();
     $("#file-box-form\\:src-path").text("");
@@ -83,7 +83,7 @@ function showFileUploadDialog() {
 	var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	var dstOutput = $("#file-box-form\\:dst-path");
-	dstOutput.text("#{msg['select_destination']}").removeClass("fa-close").css({color:"aqua"});
+	dstOutput.text(MSG.select_destination).removeClass("fa-close").css({color:"aqua"});
 	var treeNodes = $("#file-box-form\\:folder-tree .each-file");
 	treeNodes.removeClass("fa-upload fb-target-dir");
 	var fp = "";
@@ -125,7 +125,7 @@ function showFileUploadDialog() {
 function showMoveFileDialog() {
 	var dlg = PF("moveFileDlg");
     dlg.show();
-    dlg.jq.find(".ui-dialog-title").text("#{msg['label_move']}");
+    dlg.jq.find(".ui-dialog-title").text(MSG.label_move);
     
     $("#file-upload-box").hide();
     
@@ -138,7 +138,7 @@ function showMoveFileDialog() {
 	var srcName = target.text().trim();
 	var srcIsFolder = target.attr("_isFolder");
 	var dstOutput = $("#file-box-form\\:dst-path");
-	dstOutput.text("#{msg['select_destination']}").removeClass("fa-close").css({color:"aqua"});
+	dstOutput.text(MSG.select_destination).removeClass("fa-close").css({color:"aqua"});
 	var treeNodes = $("#file-box-form\\:folder-tree .each-file");
 	treeNodes.removeClass("fa-upload fb-target-dir");
 	var okBtn = $("#file-box-form\\:ok").hide().click(function() {
@@ -162,7 +162,7 @@ function showMoveFileDialog() {
 			okBtn.show().effect("shake");
 		}
 		else {
-			dstOutput.text(" #{msg['cant_move']}");
+			dstOutput.text(" " + MSG.cant_move);
 			dstOutput.addClass("fa-close").css({color:"red"});
 			okBtn.hide();
 		}
@@ -182,7 +182,7 @@ function showRenameFileDialog() {
     
     var dlg = PF("renameFileDlg");
     dlg.show();
-    dlg.jq.find(".ui-dialog-title").text("#{msg['label_rename']}");
+    dlg.jq.find(".ui-dialog-title").text(MSG.label_rename);
 }
 
 function showNewDirectoryDialog(target) {
@@ -209,7 +209,7 @@ function showNewDirectoryDialog(target) {
     dlg.jq.find("input").focus(function() {
     	$(this).select();
     });
-    dlg.jq.find(".ui-dialog-title").text("#{msg['label_new_folder']}");
+    dlg.jq.find(".ui-dialog-title").text(MSG.label_new_folder);
 }
 
 //]]>
