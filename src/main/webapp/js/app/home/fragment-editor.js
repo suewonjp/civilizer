@@ -184,7 +184,6 @@ function autocompleteForTypingTags() {
                     output.push(suggestion);
                 }
             }
-        	console.log(output);
             res(output);
         },
         focus: function () {
