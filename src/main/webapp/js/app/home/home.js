@@ -322,7 +322,8 @@ function setupDndForRelatingFragments() {
             var fromId = from.attr("_fid");
             var toId = to.find(".fragment-title").attr("_fid");
             if (fromId != toId) {
-                relateFragments([ {name:"from", value:fromId}, {name:"to", value:toId} ]);
+            	confirmRelatingFragments(fromId, toId);
+//                relateFragments([ {name:"from", value:fromId}, {name:"to", value:toId} ]);
             }
         }
     };
@@ -553,6 +554,15 @@ function confirmTrashingTagFromCtxtMenu() {
 	var tagId = target.attr("_tid");
 	var deleting = target.attr("_frgCount") == 0;
 	confirmTrashingTag(tagId, deleting);
+}
+
+function confirmRelatingFragments(fromId, toId) {
+	$("#fragment-group-form\\:ok").click(function() {
+		relateFragments([ {name:"from", value:fromId}, {name:"to", value:toId} ]);
+	});
+	var subMsg = "\n#"+fromId + "   " + getFragmentTitle(fromId) +
+		"\n       <=>\n\n#"+toId + "   " + getFragmentTitle(toId);
+	showConfirmDlg(MSG.confirm_relating, subMsg);
 }
 
 function confirmUnrelatingFragments(frgId0, frgId1) {
