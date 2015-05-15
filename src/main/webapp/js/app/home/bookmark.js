@@ -19,5 +19,6 @@ function confirmUnbookmarkingFragment() {
 		document.forms["fragment-group-form"]["fragment-group-form:ok-unbookmark-fragment"].click();
 	});
 	var target = $("#bookmark-context-menu").data("target-bookmark");
-	showConfirmDlg(MSG.confirm_unbookmarking, target ? target.text() : "");
+	var subMsg = "\n#"+target.attr("_bid") + "  " + target.attr("_ft");
+	showConfirmDlg(MSG.confirm_unbookmarking, subMsg, "fa-close", "orange");
 }

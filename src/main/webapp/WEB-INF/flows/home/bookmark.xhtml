@@ -20,7 +20,7 @@
 	<p:panel id="bookmark-panel" toggleable="true" widgetVar="bookmarkPanel">
 		<c:forEach var="fragmentBean" items="#{bookmarkTagBean.fragmentBeans}" varStatus="loop">
 		    <c:set var="fragment" value="#{fragmentBean.fragment}" />
-		    <span class="small-fragment-box each-bookmark" _bid="#{fragment.id}" title="#{msg['rclick_for_menu']}">
+		    <span class="small-fragment-box each-bookmark" _bid="#{fragment.id}" _ft="#{fragment.title}" title="#{msg['rclick_for_menu']}">
 	            <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
 	            &nbsp;&nbsp;
 	            <h:outputText value="#{fragment.title}" />
