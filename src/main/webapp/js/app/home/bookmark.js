@@ -18,5 +18,6 @@ function confirmUnbookmarkingFragment() {
 	$("#fragment-group-form\\:ok").click(function() {
 		document.forms["fragment-group-form"]["fragment-group-form:ok-unbookmark-fragment"].click();
 	});
-	showConfirmDlg(MSG.confirm_unbookmarking);
+	var target = $("#bookmark-context-menu").data("target-bookmark");
+	showConfirmDlg(MSG.confirm_unbookmarking, target ? target.text() : "");
 }

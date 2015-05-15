@@ -481,15 +481,35 @@ function fragmentCheckBoxesAreChecked(panelId) {
     return false;
 }
 
+function getFragmentTitle(frgId) {
+	var title = $("#fragment-group").find(".fragment-title[_fid=" + frgId + "]");
+	return (title.length > 0) ? title.text() : "";
+}
+
+function getTagName(tagId) {
+	var tag = $("#tag-palette-flat").find(".each-tag[_tid=" + tagId + "]");
+	return (tag.length > 0) ? tag.find(".each-tag-name").text() : "";
+}
+
+function getFilePath(fileId) {
+	var file = $("#file-path-tree").find(".each-file[_id=" + fileId + "]");
+	return (file.length > 0) ? file.attr("_fp") : "";
+}
+
 function showError(message) {
 	$('#fragment-group-form\\:error-msg').text(message);
 	PF("errorMsgDlg").show();
 }
 
-function showConfirmDlg(message) {
+function showConfirmDlg(mainMsg, subMsg) {
 	var dlg = PF("confirmDlg");
+	var msg = dlg.jq.find(".ui-confirm-dialog-message");
+    msg.text(mainMsg).next().remove();
+    if (subMsg) {
+    	var p = $("<p style='color:aqua;white-space:pre'>").text(subMsg);
+    	msg.after(p);
+    }
     dlg.show();
-    dlg.jq.find(".ui-confirm-dialog-message").text(message);
 }
 
 function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
@@ -506,7 +526,8 @@ function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
 		document.forms["fragment-group-form"]["fragment-group-form:ok-"+ op +"-fragment" + s].click();
 	});
 	
-	showConfirmDlg(deleting ? MSG.confirm_deleting : MSG.confirm_trashing);
+	var subMsg = "\n#" + frgId + "\n\n" + getFragmentTitle(frgId);
+	showConfirmDlg(deleting ? MSG.confirm_deleting : MSG.confirm_trashing, subMsg);
     
     if (bulk) {
 	    $("#fragment-group-form\\:id-placeholder-for-panel").val(panelId);
@@ -521,7 +542,8 @@ function confirmTrashingTag(tagId, deleting) {
 	$("#fragment-group-form\\:ok").click(function() {
 		document.forms["fragment-group-form"]["fragment-group-form:ok-"+ op +"-tag"].click();
 	});
-    showConfirmDlg(deleting ? MSG.confirm_deleting : MSG.confirm_trashing);
+	var subMsg = "\n#" + tagId + "\n\n" + getTagName(tagId);
+    showConfirmDlg(deleting ? MSG.confirm_deleting : MSG.confirm_trashing, subMsg);
     $("#fragment-group-form\\:id-placeholder-for-trashed-tag").val(tagId);
 }
 
@@ -537,7 +559,10 @@ function confirmUnrelatingFragments(frgId0, frgId1) {
 	$("#fragment-group-form\\:ok").click(function() {
 		document.forms["fragment-group-form"]["fragment-group-form:ok-unrelate-fragments"].click();
 	});
-    showConfirmDlg(MSG.confirm_unrelating);
+	var subMsg = "\n#"+frgId0 + "   " + getFragmentTitle(frgId0) +
+		"\n       <" + String.fromCharCode(0x2260) +
+		">\n\n#"+frgId1 + "   " + getFragmentTitle(frgId1);
+    showConfirmDlg(MSG.confirm_unrelating, subMsg);
     $("#fragment-group-form\\:id-placeholder-for-fragment0").val(frgId0);
     $("#fragment-group-form\\:id-placeholder-for-fragment1").val(frgId1);
 }
@@ -546,13 +571,14 @@ function confirmDeletingFile() {
     $("#fragment-group-form\\:ok").click(function() {
 		document.forms["fragment-group-form"]["fragment-group-form:ok-delete-files"].click();
 	});
-
-    showConfirmDlg(MSG.confirm_deleting);
-    
+  
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	var fileId = target.attr("_id");
     $("#fragment-group-form\\:id-placeholder-for-file").val(fileId);
+
+    var subMsg = "\n" + getFilePath(fileId);
+    showConfirmDlg(MSG.confirm_deleting, subMsg);
 }
 
 function setContextMenuForFragments() {
