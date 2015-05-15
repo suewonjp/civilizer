@@ -1,10 +1,3 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-<script>
-//<![CDATA[
-
 function setupParser() {
 	// prepare *Marked* (a Markdown parser) library; see https://github.com/chjj/marked
 	marked.setOptions({
@@ -692,8 +685,3 @@ function onChangeFragmentCheckbox(fid, pid) {
 		tgt.hide();
 	}
 }
-
-//]]>
-</script>
-
-</ui:composition>

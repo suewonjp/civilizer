@@ -1,12 +1,3 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-<script>
-//<![CDATA[
-      
-var fileSeparator = SYSPROP.fileSep;
-
 function setContextMenuForFiles() {
     var menu = $("#file-context-menu");
     
@@ -56,7 +47,7 @@ function processFileClasses(parent) {
 		var fileId = $this.text();
 		var filePath = $("#-cvz-file-" + fileId).attr("_fp");
 		if (filePath) {
-			var fileName = filePath.slice(filePath.lastIndexOf(fileSeparator) + 1);
+			var fileName = filePath.slice(filePath.lastIndexOf(SYSPROP.fileSep) + 1);
 			var fileExt = fileName.slice(fileName.lastIndexOf("."));
 			filePath = "file-box" + filePath;
 			if (isImage(fileExt)) {
@@ -99,7 +90,7 @@ function showFileUploadDialog() {
 	fileSelector.change(function () {
 	    var fileToUpload = $(this).val();
 	    if (fileToUpload) {
-	    	dstPath = fp + fileSeparator + fileToUpload;
+	    	dstPath = fp + SYSPROP.fileSep + fileToUpload;
 	    	dstOutput.text(dstPath);
 	    	okBtn.show().effect("shake");
 	    }
@@ -114,7 +105,7 @@ function showFileUploadDialog() {
 		var fileToUpload = fileSelector.val();
 		if (fileToUpload === undefined)
 			fileToUpload = "";
-		dstPath = fp + fileSeparator + fileToUpload;
+		dstPath = fp + SYSPROP.fileSep + fileToUpload;
 		dstOutput.text(dstPath);
 		var dstId = $this.attr("_id");
 		holderForDstId.val(dstId);
@@ -151,7 +142,7 @@ function showMoveFileDialog() {
 		var fp = $this.attr("_fp");
 		if (fp === undefined)
 			fp = "";
-		var dstPath = fp + fileSeparator + srcName;
+		var dstPath = fp + SYSPROP.fileSep + srcName;
 		var canMove = (srcPath !== dstPath) && (!srcIsFolder || dstPath.indexOf(srcPath) != 0);
 		if (canMove) {
 			var dstId = $this.attr("_id");
@@ -211,8 +202,3 @@ function showNewDirectoryDialog(target) {
     });
     dlg.jq.find(".ui-dialog-title").text(MSG.label_new_folder);
 }
-
-//]]>
-</script>
-
-</ui:composition>

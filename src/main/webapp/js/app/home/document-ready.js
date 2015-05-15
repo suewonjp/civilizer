@@ -1,10 +1,3 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-<script>
-//<![CDATA[
-      
 $(document).ready(function() {
 	makeObjectsInsertableToTextArea();
 
@@ -40,8 +33,3 @@ $(document).ready(function() {
     	$(".ui-messages-close").trigger("click");
     }, 15000);
 });
-
-//]]>
-</script>
-
-</ui:composition>

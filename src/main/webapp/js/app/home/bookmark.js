@@ -1,10 +1,3 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-<script>
-//<![CDATA[
-
 function setContextMenuForBookmarks() {
 	var menu = $("#bookmark-context-menu");
    	
@@ -27,8 +20,3 @@ function confirmUnbookmarkingFragment() {
 	});
 	showConfirmDlg(MSG.confirm_unbookmarking);
 }
-
-//]]>
-</script>
-
-</ui:composition>

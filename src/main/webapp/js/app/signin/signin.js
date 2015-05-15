@@ -1,10 +1,7 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-<script>
-//<![CDATA[
-           
+$(document).ready(function() {
+	$("#container").show();
+});
+
 var $window = $(window);
 
 $window.load(function() {
@@ -13,8 +10,6 @@ $window.load(function() {
     	$("#signin-form-panel").width("80%");
 	    PF("spot").show();
     }
-    
-    $("#container").show();
     
     $("#j_username").focus();
 });
@@ -26,8 +21,3 @@ function pushState() {
 $window.unload(pushState());
 
 $window.on("popstate", pushState);
-
-//]]>
-</script>
-
-</ui:composition>
