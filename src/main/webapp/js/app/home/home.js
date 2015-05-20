@@ -13,7 +13,7 @@ function setupParser() {
 }
 
 function formatDatetime(src) {
-	return moment(src, MSG.date_time_format, $("html").attr("lang")).fromNow() + "; " + src;
+	return moment(src, MSG.date_time_format_js, $("html").attr("lang")).fromNow() + "; " + src;
 }
 
 function translateFragments() {
