@@ -413,8 +413,10 @@ public final class MainController {
 	    else {
 	    	// It is an existing fragment...
 	    	final String content = frg.getContent();
+	    	final String title = frg.getTitle();
 	    	frg = fragmentDao.findById(frg.getId());
 	    	frg.setContent(content);
+	    	frg.setTitle(title);
 	    }
 	    frg.setUpdateDatetime(dt);
 
