@@ -1,4 +1,4 @@
-.fragment-content, #fragment-overlay-content  {
+.fragment-content {
     word-wrap: break-word;
     background-color: white;
 }
@@ -14,22 +14,22 @@
     white-space: nowrap;
 }
 
-.fragment-content pre, #fragment-overlay-content pre {
+.fragment-content pre {
     background-color: whitesmoke;
 }
 
-.fragment-content blockquote, #fragment-overlay-content blockquote {
+.fragment-content blockquote {
     border: 1px solid slategray;
 }
 
-.fragment-content hr, #fragment-overlay-content hr {
+.fragment-content hr {
     border:thin solid lightgray;
 }
 
-.fragment-content li li, #fragment-overlay-content li li {
+.fragment-content li li {
     list-style-type: square;
 }
 
-.fragment-content li li　li, #fragment-overlay-content li li li {
+.fragment-content li li　li {
     list-style-type: circle;
 }
