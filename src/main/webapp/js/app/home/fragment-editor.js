@@ -13,7 +13,7 @@ function setupFragmentEditor() {
     });
 	
 	$editorFrame.draggable({
-    	handle:"#editor-title-bar"
+    	handle:"#editor-title-bar, #editor-button-bar"
     	, cursor:"move"
     });
     
