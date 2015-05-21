@@ -144,7 +144,7 @@ function previewFragment() {
 	$("#fragment-overlay-title").text(MSG.label_preview);
 	
 	var srcContent = prepareFragmentContent();
-    var outputHtml = translateFragmentContent(srcContent);
+    var outputHtml = $("<span class='fragment-content'>").wrapInner(translateFragmentContent(srcContent));
     postprocessFragmentContent($("#fragment-overlay-content").html(outputHtml));
 }
 

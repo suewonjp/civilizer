@@ -1,15 +1,12 @@
 .fragment-content, #fragment-overlay-content  {
     word-wrap: break-word;
+    background-color: white;
 }
 
 .fragment-content table
 ,.fragment-content tr
 ,.fragment-content th
 ,.fragment-content td
-,#fragment-overlay-content table
-,#fragment-overlay-content tr
-,#fragment-overlay-content th
-,#fragment-overlay-content td
 {
     border: 1px solid lavender;
     border-collapse: collapse;
