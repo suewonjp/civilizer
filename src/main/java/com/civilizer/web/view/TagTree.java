@@ -22,11 +22,12 @@ public final class TagTree implements Serializable {
     	this.tagBeans = tagBeans;
     	
     	// These tags have no parent
-    	Collection<Tag> topParentTags = Tag.getTopParentTags(tags);
+//    	Collection<Tag> topParentTags = Tag.getTopParentTags(tags);
     	
     	root =  new org.primefaces.model.DefaultTreeNode(null, null);
     	
-    	for (Tag t : topParentTags) {
+//    	for (Tag t : topParentTags) {
+    	for (Tag t : tags) {
     		final int index = Tag.getIndexOf(t.getId(), tags);
     		final org.primefaces.model.TreeNode parentNode = new org.primefaces.model.DefaultTreeNode(tagBeans.get(index), root);
     		if (t.getChildren().isEmpty() == false) {
