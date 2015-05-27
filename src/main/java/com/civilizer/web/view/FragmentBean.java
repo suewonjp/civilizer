@@ -2,16 +2,10 @@ package com.civilizer.web.view;
 
 import java.io.Serializable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.civilizer.domain.Fragment;
 
 @SuppressWarnings("serial")
 public final class FragmentBean implements Serializable {
-    
-    @SuppressWarnings("unused")
-    private final Logger logger = LoggerFactory.getLogger(FragmentBean.class);
     
     private Fragment fragment;
     

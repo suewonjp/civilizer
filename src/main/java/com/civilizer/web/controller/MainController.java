@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -43,8 +43,8 @@ public final class MainController {
 	private static final int    MAX_FRAGMENT_PANELS = 3;
 	private static final String REQUEST_PARAM_LOCALE = "locale";
     
-    @SuppressWarnings("unused")
-	private final Logger logger = LoggerFactory.getLogger(MainController.class);
+//    @SuppressWarnings("unused")
+//	private final Logger logger = LoggerFactory.getLogger(MainController.class);
     
 //    private final Gson gson = new GsonBuilder().registerTypeAdapter(DateTime.class, new JodaDateTimeConverter()).create();
     

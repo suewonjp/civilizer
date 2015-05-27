@@ -10,8 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,9 +27,6 @@ public class SigninController {
     private static final String REQUEST_PARAM_AUTH_FAILED = "failed";
 //    private static final String USER_IS_AUTHENTICATED = "yes";
 //    private static final String USER_IS_NOT_AUTHENTICATED = "no";
-    
-	@SuppressWarnings("unused")
-    private final Logger logger = LoggerFactory.getLogger(SigninController.class);
     
     public AuthenticationBean newAuthenticationBean() {
         return new AuthenticationBean();

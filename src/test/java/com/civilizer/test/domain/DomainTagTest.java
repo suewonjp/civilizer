@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,9 +11,6 @@ import com.civilizer.domain.*;
 import com.civilizer.test.util.TestUtil;
 
 public class DomainTagTest {
-	
-	@SuppressWarnings("unused")
-	private static Log logger = TestUtil.newLogger(DomainFragmentTest.class);
 	
 	private List<Tag> tags = new ArrayList<Tag>();
 	

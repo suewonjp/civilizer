@@ -6,18 +6,13 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
-import org.apache.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.civilizer.domain.*;
-import com.civilizer.test.util.TestUtil;
 
 public class DomainFragmentTest {
 	
-	@SuppressWarnings("unused")
-	private static Log logger = TestUtil.newLogger(DomainFragmentTest.class);
-
 	private List<Fragment> fragments = new ArrayList<Fragment>();
 	
 	private static Collection<String> buildFragmentTitleList(Collection<Fragment> fragments) {

@@ -2,19 +2,14 @@ package com.civilizer.test.domain;
 
 import static org.junit.Assert.*;
 
-import org.apache.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.civilizer.domain.SearchParams;
 import com.civilizer.domain.TextDecorator;
-import com.civilizer.test.util.TestUtil;
 
 public class DomainTextDecoratorTest {
 	
-	@SuppressWarnings("unused")
-	private static Log logger = TestUtil.newLogger(DomainTextDecoratorTest.class);
-
 	@Before
 	public void setUp() throws Exception {
 	}
