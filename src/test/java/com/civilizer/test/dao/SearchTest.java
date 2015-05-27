@@ -27,6 +27,11 @@ public class SearchTest extends DaoTest {
                 );
     }
     
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    	DaoTest.tearDownAfterClass();
+    }
+    
     @Before
     public void setUp() throws Exception {
         super.setUp();
