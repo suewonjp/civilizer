@@ -86,6 +86,16 @@ public final class Configurator {
     	}
 	}
 	
+	private void setUnspecifiedOptionsWithDefaultValues(Properties p) {
+		if (p.getProperty(AppOptions.DEV) == null) {
+			p.setProperty(AppOptions.DEV, AppOptions.DEF_DEV);
+		}
+
+		if (p.getProperty(AppOptions.INITIALIZE_DB) == null) {
+		    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
+		}
+	}
+	
 	private void addAppOptionsToSystemProperties(File privateHome) {
 		try {
 		    // load options from the application option file
@@ -96,6 +106,7 @@ public final class Configurator {
 		    final boolean override =
 		    		p.getProperty(AppOptions.OVERRIDE_OPTION_FILE) == "true" || System.getProperty(AppOptions.OVERRIDE_OPTION_FILE) == "true";
 		    if (override) {
+		    	// override some options with the corresponding system properties if any
 		    	overrideOptionValue(AppOptions.DB_FILE_PREFIX, p);
 		    	overrideOptionValue(AppOptions.FILE_BOX_HOME, p);
 		    }
@@ -106,13 +117,7 @@ public final class Configurator {
 			// make sure the file box folder path is absolute
 			setPathAbsolute(p, AppOptions.FILE_BOX_HOME, privateHome, AppOptions.DEF_FILE_BOX_HOME);
 			
-			if (p.getProperty(AppOptions.DEV) == null) {
-				p.setProperty(AppOptions.DEV, AppOptions.DEF_DEV);
-			}
-
-			if (p.getProperty(AppOptions.INITIALIZE_DB) == null) {
-			    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
-			}
+			setUnspecifiedOptionsWithDefaultValues(p);
 			
 			// add the application options into the system properties
 			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")
