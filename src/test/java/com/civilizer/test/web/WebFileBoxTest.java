@@ -318,8 +318,8 @@ public class WebFileBoxTest {
 					continue;
 				}
 				
-				System.out.println("***** " + oldDir);
-				System.out.println("***** " + newDir);
+//				System.out.println("***** " + oldDir);
+//				System.out.println("***** " + newDir);
 				
 				try {
 					FileUtils.moveDirectory(oldDir, newDir);
@@ -347,8 +347,8 @@ public class WebFileBoxTest {
 					continue;
 				}
 				
-				System.out.println("***** " + oldFile);
-				System.out.println("***** " + newFile);
+//				System.out.println("***** " + oldFile);
+//				System.out.println("***** " + newFile);
 				
 				try {
 					FileUtils.moveFile(oldFile, newFile);
@@ -376,7 +376,7 @@ public class WebFileBoxTest {
 				else {
 					fe.setFileName(newParentPath + "/" + fe.endName());
 				}
-				System.out.println("----- " + fe);
+//				System.out.println("----- " + fe);
 				fileEntityDao.save(fe);
 			}
 			

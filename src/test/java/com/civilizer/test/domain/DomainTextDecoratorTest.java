@@ -110,7 +110,7 @@ public class DomainTextDecoratorTest {
 		
 		final String decoratedText = TextDecorator.highlight(text, sp);
 		assertNotNull(decoratedText);
-		System.out.println("++++++ " + decoratedText);
+//		System.out.println("++++++ " + decoratedText);
 		assertEquals(text, decoratedText);
 	}
 

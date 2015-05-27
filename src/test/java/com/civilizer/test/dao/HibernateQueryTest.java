@@ -104,7 +104,7 @@ public class HibernateQueryTest extends DaoTest {
 		for (int i=0; i<fragments1.size(); ++i) {
             Fragment f0 = fragments0.get(i);
             Fragment f1 = fragments1.get(i);
-            logger.info("i="+i+", id0="+f0.getId()+",id1="+f1.getId());
+//            logger.info("i="+i+", id0="+f0.getId()+",id1="+f1.getId());
             assertEquals(f0, f1);
 		}
 		
