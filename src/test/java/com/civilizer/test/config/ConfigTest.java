@@ -52,7 +52,7 @@ public class ConfigTest {
     
     @Before
     public void setUp() throws Exception {
-    	System.out.println("---------------------");
+//    	System.out.println("---------------------");
     }
     
     @After

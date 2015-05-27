@@ -36,7 +36,7 @@ class DaoTest {
 		ctx = new GenericXmlApplicationContext();
 		ctx.load(dataSourceContextPath);
 		ctx.refresh();
-		logger.info("GenericXmlApplicationContext initialized OK");
+//		logger.info("GenericXmlApplicationContext initialized OK");
 	}
 	
 	protected static void tearDownAfterClass() throws Exception {
@@ -123,7 +123,7 @@ class DaoTest {
 		// make sure all test files exist on the file system
 		TestUtil.touchTestFilesForFileBox(fileEntityDao);
 		
-		logger.info("all DAOs initialized OK");
+//		logger.info("all DAOs initialized OK");
 	}
 
 	protected void tearDown() throws Exception {

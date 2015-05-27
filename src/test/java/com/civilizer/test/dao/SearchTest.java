@@ -69,7 +69,7 @@ public class SearchTest extends DaoTest {
 			final Criteria crit = session.createCriteria(Tag.class);
 			crit.add(Restrictions.like("tagName", "%tag%"));
 			final List<Tag> results = crit.list();
-			logger.info(results);
+//			logger.info(results);
 			assertEquals(4, results.size());
 			assertTrue(results.contains(tags[0]));
 			assertTrue(results.contains(tags[1]));
@@ -80,7 +80,7 @@ public class SearchTest extends DaoTest {
     		final Criteria crit = session.createCriteria(Tag.class);
     		crit.add(Restrictions.like("tagName", "_tag"));
     		final List<Tag> results = crit.list();
-    		logger.info(results);
+//            logger.info(results);
     		assertEquals(1, results.size());
     		assertTrue(results.contains(tags[1]));
     	}
@@ -88,7 +88,7 @@ public class SearchTest extends DaoTest {
     		final Criteria crit = session.createCriteria(Tag.class);
     		crit.add(Restrictions.sqlRestriction("TAG_NAME like 'my tag'"));
     		final List<Tag> results = crit.list();
-    		logger.info(results);
+//    		logger.info(results);
     		assertEquals(1, results.size());
     		assertTrue(results.contains(tags[5]));
     	}
@@ -96,7 +96,7 @@ public class SearchTest extends DaoTest {
     		final Criteria crit = session.createCriteria(Tag.class);
     		crit.add(Restrictions.ilike("tagName", "tag%"));
     		final List<Tag> results = crit.list();
-    		logger.info(results);
+//    		logger.info(results);
     		assertEquals(4, results.size());
     		assertTrue(results.contains(tags[0]));
     		assertTrue(results.contains(tags[2]));
