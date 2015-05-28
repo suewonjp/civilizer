@@ -16,8 +16,8 @@
 		<property name="password" value="" />
 	</bean>
 
-	<jdbc:initialize-database data-source="dataSource"
-		ignore-failures="DROPS">
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:db_test/drop.sql" />
 		<jdbc:script location="classpath:db_test/schema.sql" />
 		<jdbc:script location="classpath:db_test/test-data.sql" />
 	</jdbc:initialize-database>

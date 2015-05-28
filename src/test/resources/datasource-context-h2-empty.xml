@@ -8,9 +8,11 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-    <jdbc:embedded-database id="dataSource" type="H2">
+    <jdbc:embedded-database id="dataSource" type="H2"/>
+
+	<jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="classpath:db_test/schema.sql" />
-    </jdbc:embedded-database>
+	</jdbc:initialize-database>
     
     <bean id="transactionManager"
         class="org.springframework.orm.hibernate3.HibernateTransactionManager">

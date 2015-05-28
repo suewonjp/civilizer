@@ -6,9 +6,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.hibernate.Hibernate;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import com.civilizer.dao.*;
 import com.civilizer.domain.*;
@@ -42,6 +47,18 @@ class DaoTest {
 	protected static void tearDownAfterClass() throws Exception {
 		ctx.close();
 	}
+    
+    protected static void runSqlScript(String ...scripts) {
+    	final DataSource dataSource = ctx.getBean("dataSource", DataSource.class);
+		assertNotNull(dataSource);
+		final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		for (String s : scripts) {
+			final ClassPathResource script = new  ClassPathResource(s);
+			assertNotNull(script);
+			populator.addScript(script);
+		}
+		DatabasePopulatorUtils.execute(populator, dataSource);
+    }
 	
 	protected void deleteAllTemporalObjects() {
 		for (Tag t : temporalTags) {

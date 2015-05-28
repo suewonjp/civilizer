@@ -9,6 +9,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<jdbc:embedded-database id="dataSource" type="H2">
+		<jdbc:script location="classpath:db_test/drop.sql" />
 		<jdbc:script location="classpath:db_test/schema.sql" />
 		<jdbc:script location="classpath:db_test/test-data.sql" />
 	</jdbc:embedded-database>

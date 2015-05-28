@@ -2,14 +2,8 @@ package com.civilizer.test.dao;
 
 import static org.junit.Assert.*;
 
-import java.util.Collection;
-
-import javax.sql.DataSource;
-
+import java.util.*;
 import org.junit.*;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import com.civilizer.domain.Tag;
 
@@ -28,16 +22,6 @@ public class DataSourceInitializerTest extends DaoTest {
     public void tearDown() throws Exception {
         super.tearDown();
         DaoTest.tearDownAfterClass();
-    }
-    
-    static void runSqlScript(String scriptPath) {
-    	final DataSource dataSource = ctx.getBean("dataSource", DataSource.class);
-		assertNotNull(dataSource);
-		final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		final ClassPathResource script = new  ClassPathResource(scriptPath);
-		assertNotNull(script);
-		populator.addScript(script);
-		DatabasePopulatorUtils.execute(populator, dataSource);
     }
 
 	@Test

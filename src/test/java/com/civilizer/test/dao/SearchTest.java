@@ -25,6 +25,7 @@ public class SearchTest extends DaoTest {
                 "classpath:datasource-context-h2-empty.xml"
                 , SearchTest.class
                 );
+        runSqlScript("db_test/drop.sql", "db_test/schema.sql");
     }
     
     @AfterClass
