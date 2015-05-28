@@ -90,6 +90,10 @@ public final class Configurator {
 		if (p.getProperty(AppOptions.DEV) == null) {
 			p.setProperty(AppOptions.DEV, AppOptions.DEF_DEV);
 		}
+		else if (p.getProperty(AppOptions.DEV).toLowerCase().equals("true")) {
+		    // [NOTE] 'database initialization' is available only for a development build
+		    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
+		}
 
 		if (p.getProperty(AppOptions.INITIALIZE_DB) == null) {
 		    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
