@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import com.civilizer.config.AppOptions;
+import com.civilizer.dao.DataSourceInitializer;
+
 public class DataSourceInitializerTest extends DaoTest {
 
 	@Before
@@ -41,6 +44,26 @@ public class DataSourceInitializerTest extends DaoTest {
 		
 		runSqlScript("db_test/test-data.sql");		
 		assertEquals(false, fragmentDao.findAll(true).isEmpty());
+	}
+	
+	@Test
+    public void testInjectDataSourceInitializer() {
+	    final DataSourceInitializer dsi = ctx.getBean("dataSourceInitializer", DataSourceInitializer.class);
+	    assertNotNull(dsi);
+	    assertNotNull(dsi.getDataSource());
+	    assertEquals(false, dsi.getInitializingScripts().isEmpty());
+    }
+
+	@Test
+	public void testKickInitializingDataSource() throws Exception {
+	    tearDown();
+	    
+	    final String option = AppOptions.INITIALIZE_DB;
+	    System.setProperty(option, "true");
+	    
+	    setUp();
+	    
+	    System.clearProperty(option);
 	}
 
 }
