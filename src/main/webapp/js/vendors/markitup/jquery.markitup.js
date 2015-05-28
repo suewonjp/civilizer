@@ -471,16 +471,18 @@
 						if (ctrlKey == true || altKey == true) {
 							return false; 
 						}
-						if (caretOffset !== -1) {
-							get();
-							caretOffset = $$.val().length - caretOffset;
-							set(caretOffset, 0);
-							caretOffset = -1;
-							return false;
-						} else {
-							markup(shiftKey ? options.onShiftTab : options.onTab);
-							return options.onTab.keepDefault;
-						}
+//						if (caretOffset !== -1) {
+//							get();
+//							caretOffset = $$.val().length - caretOffset;
+//							set(caretOffset, 0);
+//							caretOffset = -1;
+//							return false;
+//						} else {
+//							markup(shiftKey ? options.onShiftTab : options.onTab);
+//							return options.onTab.keepDefault;
+//						}
+						markup(shiftKey ? options.onShiftTab : options.onTab);
+						return options.onTab.keepDefault;
 					}
 				}
 			}
