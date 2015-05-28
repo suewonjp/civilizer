@@ -2,10 +2,7 @@ package com.civilizer.test.dao;
 
 import static org.junit.Assert.*;
 
-import java.util.*;
 import org.junit.*;
-
-import com.civilizer.domain.Tag;
 
 public class DataSourceInitializerTest extends DaoTest {
 
@@ -31,8 +28,19 @@ public class DataSourceInitializerTest extends DaoTest {
 		
 		runSqlScript("db_test/test-data.sql");
 		
-		Collection<Tag> tags = tagDao.findAllWithChildren(true);
-		assertEquals(false, tags.isEmpty());
+		assertEquals(false, tagDao.findAllWithChildren(true).isEmpty());
+	}
+
+	@Test
+	public void testOverwriteData() {
+		runSqlScript("db_test/test-data.sql");		
+		assertEquals(false, fragmentDao.findAll(true).isEmpty());
+
+		runSqlScript("db_test/drop.sql", "db_test/schema.sql");
+		assertEquals(true, fragmentDao.findAll(true).isEmpty());
+		
+		runSqlScript("db_test/test-data.sql");		
+		assertEquals(false, fragmentDao.findAll(true).isEmpty());
 	}
 
 }
