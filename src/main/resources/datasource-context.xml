@@ -15,8 +15,8 @@
 		<property name="password" value="" />
 	</bean>
 
-	<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS"
-		enabled="#{systemProperties['civilizer.initialize_db']}">
+	<jdbc:initialize-database data-source="dataSource" enabled="#{systemProperties['civilizer.initialize_db']}">
+		<jdbc:script location="classpath:db/drop.sql" />
 		<jdbc:script location="classpath:db/schema.sql" />
 		<jdbc:script location="classpath:db/test-data.sql" />
 	</jdbc:initialize-database>
