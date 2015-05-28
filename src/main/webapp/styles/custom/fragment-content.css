@@ -18,8 +18,20 @@
     background-color: whitesmoke;
 }
 
+.fragment-content p {
+    margin: 0 0 0 0;
+}
+
 .fragment-content blockquote {
     border: 1px solid slategray;
+    margin: 3px 10px 3px 10px;
+    padding-left: 6px;
+}
+
+.fragment-content blockquote blockquote {
+    border: 1px solid lavender;
+    margin: 6px 18px 3px 18px;
+    padding-left: 6px;
 }
 
 .fragment-content hr {
