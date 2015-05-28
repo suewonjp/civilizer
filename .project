@@ -40,21 +40,12 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1432768900687</id>
+			<id>1432774033386</id>
 			<name></name>
 			<type>14</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-true-false-test</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1432768900690</id>
-			<name></name>
-			<type>10</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-true-false-target</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
