@@ -24,6 +24,19 @@ public final class Configurator {
         addAppOptionsToSystemProperties(privateHome);
         postSetupPrivateHome(privateHome);
 	}
+    
+	private static boolean equals(Properties p, String optionKey, String optionValue, boolean caseSensitive) {
+	    String v = p.getProperty(optionKey);
+	    if (v == null)
+	        return false;
+	    if (caseSensitive)
+	        v = v.toLowerCase();
+	    return v.equals(optionValue);
+	}
+
+    public static boolean equals(String optionKey, String optionValue, boolean caseSensitive) {
+        return equals(System.getProperties(), optionKey, optionValue, caseSensitive);
+    }
 	
 	public static String getDefaultPrivateHomePath(String defaultPrivateHomeName) {
 	    return System.getProperty("user.home") + File.separatorChar + defaultPrivateHomeName;
@@ -90,14 +103,17 @@ public final class Configurator {
 		if (p.getProperty(AppOptions.DEV) == null) {
 			p.setProperty(AppOptions.DEV, AppOptions.DEF_DEV);
 		}
-		else if (p.getProperty(AppOptions.DEV).toLowerCase().equals("true")) {
-		    // [NOTE] 'database initialization' is available only for a development build
-		    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
-		}
 
 		if (p.getProperty(AppOptions.INITIALIZE_DB) == null) {
 		    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
 		}
+	}
+	
+	private void setDependentOptions(Properties p) {
+	    if (! equals(p, AppOptions.DEV, "true", false)) {
+            // [NOTE] 'database initialization' is available only for a development build
+            p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
+        }
 	}
 	
 	private void addAppOptionsToSystemProperties(File privateHome) {
@@ -108,7 +124,7 @@ public final class Configurator {
 		    p.load(new FileInputStream(optionFilePath));
 		    
 		    final boolean override =
-		    		p.getProperty(AppOptions.OVERRIDE_OPTION_FILE) == "true" || System.getProperty(AppOptions.OVERRIDE_OPTION_FILE) == "true";
+		            equals(p, AppOptions.OVERRIDE_OPTION_FILE, "true", false) || equals(AppOptions.OVERRIDE_OPTION_FILE, "true", false);
 		    if (override) {
 		    	// override some options with the corresponding system properties if any
 		    	overrideOptionValue(AppOptions.DB_FILE_PREFIX, p);
@@ -122,6 +138,8 @@ public final class Configurator {
 			setPathAbsolute(p, AppOptions.FILE_BOX_HOME, privateHome, AppOptions.DEF_FILE_BOX_HOME);
 			
 			setUnspecifiedOptionsWithDefaultValues(p);
+			
+			setDependentOptions(p);
 			
 			// add the application options into the system properties
 			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")
