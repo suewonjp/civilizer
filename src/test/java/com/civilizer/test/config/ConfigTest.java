@@ -163,5 +163,33 @@ public class ConfigTest {
 			ctx.close();
 		}
     }
+    
+    @Test
+    public void testMethod_Configurator_equals() {
+        final String option = "Whatever Option";
+        assertEquals(false, Configurator.equals(option, "true", true));
+        System.setProperty(option, "TRUE");
+        assertEquals(true, Configurator.equals(option, "true", true));
+        System.setProperty(option, "True");
+        assertEquals(true, Configurator.equals(option, "true", true));
+        System.setProperty(option, "false");
+        assertEquals(false, Configurator.equals(option, "true", true));
+        System.clearProperty(option);
+    }
+
+    @Test
+    public void testMethod_Configurator_isTrue() {
+        final String option = "Boolean Option";
+        assertEquals(false, Configurator.isTrue(option));
+        System.setProperty(option, "TRUE");
+        assertEquals(true, Configurator.isTrue(option));
+        System.setProperty(option, "true");
+        assertEquals(true, Configurator.isTrue(option));
+        System.setProperty(option, "yes");
+        assertEquals(true, Configurator.isTrue(option));
+        System.setProperty(option, "ON");
+        assertEquals(true, Configurator.isTrue(option));
+        System.clearProperty(option);
+    }
 
 }

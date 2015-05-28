@@ -34,8 +34,20 @@ public final class Configurator {
 	    return v.equals(optionValue);
 	}
 
+	private static boolean isTrue(Properties p, String optionKey) {
+	    String v = p.getProperty(optionKey);
+	    if (v == null)
+	        return false;
+        v = v.toLowerCase();
+	    return v.equals("true") || v.equals("yes") || v.equals("on");
+	}
+
     public static boolean equals(String optionKey, String optionValue, boolean caseSensitive) {
         return equals(System.getProperties(), optionKey, optionValue, caseSensitive);
+    }
+
+    public static boolean isTrue(String optionKey) {
+        return isTrue(System.getProperties(), optionKey);
     }
 	
 	public static String getDefaultPrivateHomePath(String defaultPrivateHomeName) {
@@ -109,9 +121,9 @@ public final class Configurator {
 		}
 	}
 	
-	private void setDependentOptions(Properties p) {
-	    if (! equals(p, AppOptions.DEV, "true", false)) {
-            // [NOTE] 'database initialization' is available only for a development build
+	private void setConstrainedOptions(Properties p) {
+	    if (! isTrue(p, AppOptions.DEV)) {
+            // [NOTE] 'database initialization' is available only for a development mode
             p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
         }
 	}
@@ -124,7 +136,7 @@ public final class Configurator {
 		    p.load(new FileInputStream(optionFilePath));
 		    
 		    final boolean override =
-		            equals(p, AppOptions.OVERRIDE_OPTION_FILE, "true", false) || equals(AppOptions.OVERRIDE_OPTION_FILE, "true", false);
+		            isTrue(p, AppOptions.OVERRIDE_OPTION_FILE) || isTrue(AppOptions.OVERRIDE_OPTION_FILE);
 		    if (override) {
 		    	// override some options with the corresponding system properties if any
 		    	overrideOptionValue(AppOptions.DB_FILE_PREFIX, p);
@@ -139,7 +151,9 @@ public final class Configurator {
 			
 			setUnspecifiedOptionsWithDefaultValues(p);
 			
-			setDependentOptions(p);
+			// as a rule, some options are constrained with another option's value.
+			// they may be reset under some condition no matter how they have been set by the user.
+			setConstrainedOptions(p);
 			
 			// add the application options into the system properties
 			// and then, we can access the options via SpEL (i.g. "#{systemProperties['key']}")
