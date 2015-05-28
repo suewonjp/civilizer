@@ -8,7 +8,7 @@ import java.util.*;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
@@ -21,7 +21,7 @@ import com.civilizer.test.util.TestUtil;
 
 class DaoTest {
 
-	protected static Log logger;
+	protected static Logger logger;
 	protected static GenericXmlApplicationContext ctx;
 	private static int counter = 0;
 

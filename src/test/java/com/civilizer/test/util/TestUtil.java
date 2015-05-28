@@ -8,9 +8,9 @@ import java.net.URL;
 import java.util.*;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
@@ -19,10 +19,10 @@ import com.civilizer.domain.FileEntity;
 
 public final class TestUtil {
 
-    private static final Log log = newLogger();
+    private static final Logger logger = newLogger();
     private static final Random random = newRandomGenerator();
     
-    private static Log newLogger() {
+    private static Logger newLogger() {
     	String log4jPropName = "log4j-test.properties";
     	URL url = ClassLoader.getSystemClassLoader().getResource(log4jPropName);
     	assertNotNull(url);
@@ -32,6 +32,12 @@ public final class TestUtil {
 
     	return newLogger(TestUtil.class);
     }
+
+    public static Logger newLogger(Class<?> clazz) {
+        Logger output = LoggerFactory.getLogger(clazz);
+        assertNotNull(output);      
+        return output;
+    }
     
     private static Random newRandomGenerator() {
 		Calendar cal = Calendar.getInstance();
@@ -40,19 +46,13 @@ public final class TestUtil {
         long seed = cal.getTimeInMillis();
 //        seed = 1428894470142L;
         
-        log.info("random seed = " + seed);
+        logger.info("random seed = " + seed);
 
         Random random = new Random(seed);
         assertNotNull(random);
 
         return random;
 	}
-    
-    public static Log newLogger(Class<?> clazz) {
-    	Log output = LogFactory.getLog(clazz);
-        assertNotNull(output);    	
-    	return output;
-    }
 
     public static Random getRandom() {
         assertNotNull(random);
