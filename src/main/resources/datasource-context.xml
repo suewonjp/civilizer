@@ -14,12 +14,17 @@
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 	</bean>
-
-	<jdbc:initialize-database data-source="dataSource" enabled="#{systemProperties['civilizer.initialize_db']}">
-		<jdbc:script location="classpath:db/drop.sql" />
-		<jdbc:script location="classpath:db/schema.sql" />
-		<jdbc:script location="classpath:db/test-data.sql" />
-	</jdbc:initialize-database>
+    
+    <bean id="dataSourceInitializer" class="com.civilizer.dao.DataSourceInitializer">
+        <property name="dataSource" ref="dataSource" />
+        <property name="initializingScripts">
+            <list>
+               <value>db/drop.sql</value>
+               <value>db/schema.sql</value>
+               <value>db/test-data.sql</value>
+            </list>
+        </property>
+    </bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
