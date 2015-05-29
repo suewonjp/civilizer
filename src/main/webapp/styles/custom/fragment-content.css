@@ -18,6 +18,10 @@
     background-color: whitesmoke;
 }
 
+.fragment-content blockquote p {
+	margin: 0px 0px 0px 0px;
+}
+
 .fragment-content blockquote {
     border: 1px solid slategray;
     margin: 3px 10px 10px 10px;
