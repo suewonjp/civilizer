@@ -140,6 +140,8 @@ function previewFragment() {
         , closeEsc:true
         , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
     });
+	
+	$("#fragmen-overlay-back-button").hide();
     
 	$("#fragment-overlay-title").text(MSG.label_preview);
 	
