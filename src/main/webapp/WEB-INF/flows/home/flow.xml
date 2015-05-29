@@ -73,6 +73,7 @@
             <evaluate expression="paramFragmentBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
+            <evaluate expression="mainController.newPanelContextBean(0, -1000, 0)" result="requestScope.panelContextBean"/>
         </transition>
 
         <transition on="save-tag" to="home">
