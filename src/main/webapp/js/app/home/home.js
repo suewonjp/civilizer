@@ -38,6 +38,19 @@ function translateFragments() {
 }
 
 function populateFragmentOverlay(data) {
+	// Set up a link to the previous fragment if any.
+	var content = $("#fragment-overlay-content");
+	var prevHdr = content.find(".fragment-header");
+	var backBtn = $("#fragmen-overlay-back-button");
+	if (prevHdr.length > 0) {
+		backBtn.show();
+		backBtn.attr("href", "fragment/"+prevHdr.attr("_fid"))
+			.off("click").on("click", triggerFragmentOverlay);
+	}
+	else {
+		backBtn.hide();
+	}
+	
 	// show the fragment overlay as a popup
 	var overlayFrame = $("#fragment-overlay");
 	overlayFrame.lightbox_me({
@@ -55,7 +68,8 @@ function populateFragmentOverlay(data) {
     }
 	
 	$("#fragment-overlay-title").text("");
-	$("#fragment-overlay-content").html(data);
+	
+	content.html(data);
 	
 	$("#fragment-overlay-content .fragment-header .fa-clock-o").each(function() {
     	var $this = $(this);
@@ -75,16 +89,16 @@ function populateFragmentOverlay(data) {
 	setContextMenuForFragments();
 }
 
-function setupFragmentOverlay() {
-	function triggerFragmentOverlay(event) {
-    	var href=$(this).attr('href');
-        $.get(href, "", populateFragmentOverlay);
-        
-        event.preventDefault();
-        
-        return false; // stop the link
-    }
+function triggerFragmentOverlay(event) {
+	var href=$(this).attr('href');
+	$.get(href, "", populateFragmentOverlay);
 	
+	event.preventDefault();
+	
+	return false; // stop the link
+}
+
+function setupFragmentOverlay() {
 	$("#fragment-group").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     
@@ -233,6 +247,8 @@ function setupFragmentLinks(content) {
             $this.replaceWith(newTag);
         }
     });
+    
+    content.find("a.-cvz-frgm").on("click", triggerFragmentOverlay);
 }
 
 function processEmbeddedFragments(content) {
