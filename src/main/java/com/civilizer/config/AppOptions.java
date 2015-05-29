@@ -13,6 +13,7 @@ public final class AppOptions {
 	// options for development purposes
 	public static final String INITIALIZE_DB                      = "civilizer.initialize_db";
 	public static final String DEV                                = "civilizer.dev";
+	public static final String SANITIZE_HTML                      = "civilizer.sanitize_html";
 	                                                              
 	// default values for each option
 	public static final String DEF_PRIVATE_HOME                   = ".civilizer";
@@ -21,5 +22,6 @@ public final class AppOptions {
 	public static final String DEF_OVERRIDE_OPTION_FILE           = "false";	                                                              
 	public static final String DEF_DEV        			          = "false";
 	public static final String DEF_INITIALIZE_DB                  = "false";
+	public static final String DEF_SANITIZE_HTML                  = "true";
 	
 }

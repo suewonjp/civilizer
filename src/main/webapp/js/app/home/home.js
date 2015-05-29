@@ -4,9 +4,9 @@ function setupParser() {
 		renderer: new marked.Renderer(),
 		gfm: true,
 		tables: true,
-		breaks: true,
+		breaks: false,
 		pedantic: false,
-		sanitize: true,
+		sanitize: SYSPROP.sanitizeHtml,
 		smartLists: true,
 		smartypants: false,
 	});

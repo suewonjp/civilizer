@@ -119,6 +119,10 @@ public final class Configurator {
 		if (p.getProperty(AppOptions.INITIALIZE_DB) == null) {
 		    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
 		}
+
+		if (p.getProperty(AppOptions.SANITIZE_HTML) == null) {
+		    p.setProperty(AppOptions.SANITIZE_HTML, AppOptions.DEF_SANITIZE_HTML);
+		}
 	}
 	
 	private void setConstrainedOptions(Properties p) {

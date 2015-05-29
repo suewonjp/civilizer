@@ -6,7 +6,8 @@
 //<![CDATA[
 
 var SYSPROP = {
-	fileSep:("#{systemProperties['file.separator']}")
+	fileSep:("#{systemProperties['file.separator']}"),
+	sanitizeHtml:Boolean("#{systemProperties['civilizer.sanitize_html']}" == "true"),
 };
 
 var MSG = {
