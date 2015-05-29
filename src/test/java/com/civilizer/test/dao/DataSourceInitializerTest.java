@@ -36,7 +36,7 @@ public class DataSourceInitializerTest extends DaoTest {
 
 	@Test
 	public void testOverwriteData() {
-		runSqlScript("db_test/test-data.sql");		
+		runSqlScript("db_test/test-data.sql");
 		assertEquals(false, fragmentDao.findAll(true).isEmpty());
 
 		runSqlScript("db_test/drop.sql", "db_test/schema.sql");
@@ -56,6 +56,7 @@ public class DataSourceInitializerTest extends DaoTest {
 
 	@Test
 	public void testKickInitializingDataSource() throws Exception {
+	    System.out.println("----- emulate database reset by the user");
 	    tearDown();
 	    
 	    final String option = AppOptions.INITIALIZE_DB;
@@ -64,6 +65,20 @@ public class DataSourceInitializerTest extends DaoTest {
 	    setUp();
 	    
 	    System.clearProperty(option);
+	}
+
+	@Test
+	public void testFirstRunOfApp() throws Exception {
+	    System.out.println("----- emulate the 1st run of the app");
+	    tearDown();
+        
+	    final String option = "civilizer.no_schema";
+        System.setProperty(option, "true");
+        
+        setUp();
+        
+        System.clearProperty(option);
+	 
 	}
 
 }
