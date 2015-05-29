@@ -38,19 +38,6 @@ function translateFragments() {
 }
 
 function populateFragmentOverlay(data) {
-	// Set up a link to the previous fragment if any.
-	var content = $("#fragment-overlay-content");
-	var prevHdr = content.find(".fragment-header");
-	var backBtn = $("#fragmen-overlay-back-button");
-	if (prevHdr.length > 0) {
-		backBtn.show();
-		backBtn.attr("href", "fragment/"+prevHdr.attr("_fid"))
-			.off("click").on("click", triggerFragmentOverlay);
-	}
-	else {
-		backBtn.hide();
-	}
-	
 	// show the fragment overlay as a popup
 	var overlayFrame = $("#fragment-overlay");
 	overlayFrame.lightbox_me({
@@ -69,7 +56,20 @@ function populateFragmentOverlay(data) {
 	
 	$("#fragment-overlay-title").text("");
 	
-	content.html(data);
+	// Set up a link to the previous fragment if any.
+	var overlayContent = $("#fragment-overlay-content");
+	var prevHdr = overlayContent.find(".fragment-header");
+	var backBtn = $("#fragmen-overlay-back-button");
+	if (prevHdr.length > 0) {
+		backBtn.show();
+		backBtn.attr("href", "fragment/"+prevHdr.attr("_fid"))
+			.off("click").on("click", triggerFragmentOverlay);
+	}
+	else {
+		backBtn.hide();
+	}
+	
+	overlayContent.html(data);
 	
 	$("#fragment-overlay-content .fragment-header .fa-clock-o").each(function() {
     	var $this = $(this);
@@ -77,11 +77,14 @@ function populateFragmentOverlay(data) {
     });
 	
 	// translate Markdown formatted fragment contents into HTML format
-	$("#fragment-overlay-content .fragment-content").each(function(){
+//	$("#fragment-overlay-content .fragment-content").each(function(){
+	overlayContent.find(".fragment-content").each(function(){
         var $this = $(this);
 		$this.html(translateFragmentContent($this.text()));
 		postprocessFragmentContent($this);
     });
+	
+	overlayContent.find(".related-fragment-container a.-cvz-frgm").on("click", triggerFragmentOverlay);
 	
 	// make titles on the overlay window also draggable/droppable
 	setupDraggableForFragmentTitle();
