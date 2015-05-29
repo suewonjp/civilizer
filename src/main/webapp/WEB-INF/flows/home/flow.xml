@@ -40,17 +40,20 @@
 
         <transition on="unbookmark-fragment" to="home">
             <evaluate expression="mainController.unbookmarkFragment(paramFragmentBean.fragment.id)" />
+            <evaluate expression="paramFragmentBean.clear()" />
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
         
         <transition on="trash-fragment" to="home">
             <evaluate expression="mainController.trashFragment(paramFragmentBean)" />
+            <evaluate expression="paramFragmentBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="delete-fragment" to="home">
             <evaluate expression="mainController.deleteFragment(paramFragmentBean)" />
+            <evaluate expression="paramFragmentBean.clear()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
