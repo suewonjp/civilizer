@@ -18,13 +18,9 @@
     background-color: whitesmoke;
 }
 
-.fragment-content p {
-    margin: 0 0 0 0;
-}
-
 .fragment-content blockquote {
     border: 1px solid slategray;
-    margin: 3px 10px 3px 10px;
+    margin: 3px 10px 10px 10px;
     padding-left: 6px;
 }
 
