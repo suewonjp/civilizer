@@ -104,6 +104,10 @@ public final class PanelContextBean implements Serializable {
         return Math.min(maxItems, (curPage + 1) * itemsPerPage - 1);
     }
     
+    public int totalPages(int maxItems) {
+        return (maxItems + itemsPerPage - 1)/itemsPerPage;
+    }
+    
     @Override
     public boolean equals(Object obj) {
     	if (obj != null) {

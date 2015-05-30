@@ -88,8 +88,10 @@
 <c:set var="tc" value="#{fragmentListBean.totalCount}" />
 <c:set var="first" value="#{panelContext.firstItemOfCurPage()}" />
 <c:set var="last" value="#{panelContext.lastItemOfCurPage(tc)} " />
-<h:outputText styleClass="fa fa-file-text-o" style="font-weight:bold;color:darkgray" 
-    value=" #{msg['label_total']} : #{tc} [#{first} - #{last}]"/>
+<c:set var="curPage" value="#{panelContext.curPage+1} " />
+<c:set var="totalPages" value="#{panelContext.totalPages(tc)} " />
+<h:outputText styleClass="fa fa-file-text-o" style="font-weight:bold;color:darkgray;white-space:pre" 
+    value=" #{msg['label_total']} : #{tc} [#{first} - #{last}]      #{msg['label_page']} : #{curPage} / #{totalPages}"/>
 
 <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
     <ui:include src="each-fragment.xhtml" />
