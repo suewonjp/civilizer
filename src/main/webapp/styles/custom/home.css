@@ -144,7 +144,6 @@
 
 #fragment-overlay {
 	min-width: 320px;
-	min-height: 160px;
 	max-width: 640px;
 	max-height: 480px;
 	overflow: auto;

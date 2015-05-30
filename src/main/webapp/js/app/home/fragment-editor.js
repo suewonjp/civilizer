@@ -26,24 +26,15 @@ function setupFragmentEditor() {
 
 function toggleFragmentEditor(frame, bar) {
 	var target = bar.next();
-	var ph = frame.data("prev-h");
-	frame.data("prev-h", frame.height());
 	if (target.is(":visible")) {
-		var w = frame.width();
 		if (frame.hasClass("ui-resizable"))
 			frame.resizable("disable");
 		target.hide();
-		frame.width(w);
-		frame.data("min-h", frame.css("min-height"));
-		frame.css("min-height", bar.height());
-		frame.height(bar.height());
 	}
 	else {
 		if (frame.hasClass("ui-resizable"))
 			frame.resizable("enable");
 		target.show();
-		frame.height(ph);
-		frame.css("min-height", frame.data("min-h"));
 	}
 }
 
