@@ -714,14 +714,15 @@ function showSearchDialog(panelId, qsPhrase) {
 	});
 }
 
-//function searchWithHelpFromLastSearch(event, panelId, widget) {
-//	if (event.keyCode == 13) {
-//		var sp = $(widget).val().trim();
-//		if (sp) {
-//            searchFragments([{name:'panelId',value:panelId}]);
-//		}
-//	}
-//}
+function searchWithHelpFromLastSearch(event, panelId, widget) {
+	if (event.keyCode == 13) {
+		var qsPhrase = $(widget).val().trim();
+		if (qsPhrase) {
+			$("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
+            searchFragments([{name:'panelId',value:panelId}]);
+		}
+	}
+}
 
 function fetchFragments(panelId, fragmentIds) {
 	var ids = "id:";
