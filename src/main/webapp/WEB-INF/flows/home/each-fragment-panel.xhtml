@@ -92,6 +92,12 @@
 <c:set var="totalPages" value="#{panelContext.totalPages(tc)} " />
 <h:outputText styleClass="fa fa-file-text-o" style="font-weight:bold;color:darkgray;white-space:pre" 
     value=" #{msg['label_total']} : #{tc} [#{first} - #{last}]      #{msg['label_page']} : #{curPage} / #{totalPages}"/>
+<c:if test="#{not empty panelContext.searchParams}">
+    <div id="last-search-phrase-#{panelId}">
+	    <span class="fa fa-search"></span>
+	    <p:inputText value="#{panelContext.searchParams.searchPhrase}" onkeyup="searchWithHelpFromLastSearch(event, '#{panelId}', this)"/>
+    </div>
+</c:if>
 
 <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
     <ui:include src="each-fragment.xhtml" />

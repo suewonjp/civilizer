@@ -299,6 +299,7 @@ public final class SearchParams implements Serializable {
 	}
 	
 	private final List<Keywords> keywords;
+	private String searchPhrase;
 
 	public SearchParams(String src) {
 		src = src.trim();
@@ -352,12 +353,21 @@ public final class SearchParams implements Serializable {
 	    }
 	    
 	    this.keywords = keywords;
+	    this.searchPhrase = src;
 	}
 
 	public List<Keywords> getKeywords() {
 		return keywords == null ?
 				Collections.<Keywords>emptyList() : keywords;
 	}
+
+    public String getSearchPhrase() {
+        return searchPhrase;
+    }
+    
+    public void setSearchPhrase(String s) {
+        searchPhrase = s;
+    }
 	
 	public boolean hasTarget(int target) {
 		boolean hasIt = false;

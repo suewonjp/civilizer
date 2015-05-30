@@ -704,6 +704,16 @@ function showSearchDialog(panelId) {
 	});
 }
 
+function searchWithHelpFromLastSearch(event, panelId, widget) {
+	if (event.keyCode == 13) {
+		var sp = $(widget).val().trim();
+		if (sp) {
+//			$("#fragment-group-form\\:placeholder-for-search-phrase").val(sp);
+            searchFragments([{name:'panelId',value:panelId}]);
+		}
+	}
+}
+
 function fetchFragments(panelId, fragmentIds) {
 	var ids = "id:";
 	for (var i=0; i<fragmentIds.length; ++i) {
