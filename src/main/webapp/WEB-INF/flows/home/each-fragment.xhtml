@@ -10,7 +10,7 @@
 <c:set var="fragment" value="#{fragmentBean.fragment}" />
                
 <!-- <div class="each-fragment-container"> -->
-    <h:panelGrid styleClass="each-fragment" columns="1" border="1">
+    <h:panelGrid styleClass="each-fragment" columns="1" border="#{withOverlay ? 0 : 1}">
         <f:facet name="header">
             <div class="fragment-header" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}" title="#{msg['rclick_for_menu']}">
 	            <c:choose>
