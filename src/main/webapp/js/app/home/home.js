@@ -671,6 +671,7 @@ function trashFragmentFromCtxtMenu(deleting) {
 function showSearchDialog(panelId, qsPhrase) {
 	var dlg = PF("searchDlg");
 	dlg.show();
+	dlg.jq.find(".ui-dialog-title").text(MSG.label_search+" ~~~> "+MSG.label_panel+" "+panelId);
 	
 	var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
 	
@@ -680,6 +681,7 @@ function showSearchDialog(panelId, qsPhrase) {
 	    var activeTabId = $("#fragment-group-form\\:search-panel_active").val();
 		var hasSomeToSearch = false;
 		if (activeTabId == 1) {
+			// Normal search tab is focused
 			$("#fragment-group-form\\:search-panel\\:t1").find("input[type='text']").each(function() {
 				if ($(this).val().trim()) {
 					hasSomeToSearch = true;
@@ -687,9 +689,14 @@ function showSearchDialog(panelId, qsPhrase) {
 				}
 				return true;
 			});
+			if (hasSomeToSearch) {
+				// the quick search input has higher priority so we need to clear it
+				qsInput.val(null);
+			}
 		}
 		else {
-			if ($("#fragment-group-form\\:search-panel\\:quick-search-input").val().trim()) {
+			// Quick search tab is focused
+			if (qsInput.val().trim()) {
 				hasSomeToSearch = true;
 			}
 		}
@@ -698,6 +705,7 @@ function showSearchDialog(panelId, qsPhrase) {
 		}
 	});
 	qsInput.keyup(function(event) {
+		// Quick search tab responds to the enter key
 		if (event.keyCode == 13) {
 			if ($(this).val().trim()) {
 	            searchFragments([{name:'panelId',value:panelId}]);
