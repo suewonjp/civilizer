@@ -7,47 +7,6 @@
     xmlns:p="http://primefaces.org/ui"
     >
     
-<!-- <h:panelGrid columns="1" border="0"> -->
-<!--     <f:facet name="header"> -->
-<!--         <div class="fragment-header" _fid="#{fragment.id}" style="padding-top:10px"> -->
-<!--             <h:outputText value="##{fragment.id}" style="color:navy;"/> -->
-<!--             &nbsp;&nbsp; -->
-<!--             <span class="fragment-title" _fid="#{fragment.id}"> -->
-<!--              <h:outputText value="#{fragment.title} " /> -->
-<!--             </span>&nbsp;&nbsp; -->
-<!--             <h:outputText style="display:none" value="#{fragment.updateDatetime}"> -->
-<!--                 <f:converter converterId="jodaDateTimeConverter" /> -->
-<!--             </h:outputText> -->
-<!--             <span class="fa fa-clock-o"></span>&nbsp;&nbsp; -->
-<!--             <c:forEach var="tag" items="#{fragment.tags}"> -->
-<!--              <span class="tag-box"> -->
-<!--                  <span class="fa fa-tag " >&nbsp;</span> -->
-<!--                  <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText> -->
-<!--              </span> -->
-<!--             </c:forEach> -->
-<!--             <h:outputText style="display:none" styleClass="-cvz-data-title" value="#{fragment.title}"/> -->
-<!--             <h:outputText style="display:none" styleClass="-cvz-data-tags" value="${fragment.concatenatedTagNames()}"/> -->
-<!--             <h:outputText style="display:none" styleClass="-cvz-data-content" value="#{fragment.content}"/> -->
-<!--         </div> -->
-<!--     </f:facet> -->
-<!--     <h:outputText value="#{fragment.content}" styleClass="fragment-content" /> -->
-<!-- </h:panelGrid> -->
-    
-<!-- <div class="related-fragment-container"> -->
-<!--     <c:forEach var="rf" items="#{fragment.relatedOnes}"> -->
-<!--         <span class="small-fragment-box"> -->
-<!--             <span class="fa fa-link">&nbsp;&nbsp;</span> -->
-<!--             <a class="-cvz-frgm" href="fragment/#{rf.id}">\##{rf.id}</a> -->
-<!--             &nbsp;&nbsp; -->
-<!--             <h:outputText value="#{rf.title}" /> -->
-<!--             &nbsp;&nbsp; -->
-<!--             <p:commandLink style="text-decoration:none; color:brown;" oncomplete="confirmUnrelatingFragments('#{fragment.id}', '#{rf.id}')" > -->
-<!--                <span class="fa fa-close button-link " title="#{msg['clear_relationship']}"></span> -->
-<!--             </p:commandLink> -->
-<!--         </span> -->
-<!--     </c:forEach> -->
-<!-- </div> -->
-
 <c:set var="withOverlay" value="true" />
 <c:set var="panelId" value="2" />
 <ui:include src="/WEB-INF/flows/home/each-fragment.xhtml" />
