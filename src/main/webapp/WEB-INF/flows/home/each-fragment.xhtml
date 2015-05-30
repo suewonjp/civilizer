@@ -54,21 +54,21 @@
         <h:outputText style="display:none" styleClass="-cvz-data-content" value="#{fragment.content}"/>
     </div>
     </f:facet>
-<h:outputText value="#{fragmentBean.content}" styleClass="fragment-content #{panelContext.getContextClassName()}"/>
+    <h:outputText value="#{fragmentBean.content}" styleClass="fragment-content #{panelContext.getContextClassName()}"/>
 </h:panelGrid>
 
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragment.relatedOnes}">
-    <span class="small-fragment-box">
-        <span class="fa fa-link">&nbsp;&nbsp;</span>
-        <a class="-cvz-frgm" href="fragment/#{rf.id}">\##{rf.id}</a>
-        &nbsp;&nbsp;
-        <h:outputText value="#{rf.title}"/>
-        &nbsp;&nbsp;
-        <p:commandLink style="text-decoration:none; color:brown;" oncomplete="confirmUnrelatingFragments('#{fragment.id}', '#{rf.id}')" >
-        <span class="fa fa-close button-link " title="#{msg['clear_relationship']}"></span>
-        </p:commandLink>
-    </span>
+        <span class="small-fragment-box">
+            <span class="fa fa-link">&nbsp;&nbsp;</span>
+            <a class="-cvz-frgm" href="fragment/#{rf.id}">\##{rf.id}</a>
+            &nbsp;&nbsp;
+            <h:outputText value="#{rf.title}"/>
+            &nbsp;&nbsp;
+            <p:commandLink style="text-decoration:none; color:brown;" oncomplete="confirmUnrelatingFragments('#{fragment.id}', '#{rf.id}')" >
+                <span class="fa fa-close button-link " title="#{msg['clear_relationship']}"></span>
+            </p:commandLink>
+        </span>
     </c:forEach>
 </div>
 
