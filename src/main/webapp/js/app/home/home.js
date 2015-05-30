@@ -668,9 +668,11 @@ function trashFragmentFromCtxtMenu(deleting) {
 	confirmTrashingFragments(frgId, deleting, false, panelId);
 }
 
-function showSearchDialog(panelId) {
+function showSearchDialog(panelId, qsPhrase) {
 	var dlg = PF("searchDlg");
 	dlg.show();
+	
+	var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
 	
 	$("#fragment-group-form\\:search-panel\\:tag-keywords").watermark(MSG.how_to_input_tags);
 	
@@ -695,7 +697,7 @@ function showSearchDialog(panelId) {
 			searchFragments([{name:'panelId',value:panelId}]);
 		}
 	});
-	$("#fragment-group-form\\:search-panel\\:quick-search-input").keyup(function(event) {
+	qsInput.keyup(function(event) {
 		if (event.keyCode == 13) {
 			if ($(this).val().trim()) {
 	            searchFragments([{name:'panelId',value:panelId}]);
@@ -704,15 +706,14 @@ function showSearchDialog(panelId) {
 	});
 }
 
-function searchWithHelpFromLastSearch(event, panelId, widget) {
-	if (event.keyCode == 13) {
-		var sp = $(widget).val().trim();
-		if (sp) {
-//			$("#fragment-group-form\\:placeholder-for-search-phrase").val(sp);
-            searchFragments([{name:'panelId',value:panelId}]);
-		}
-	}
-}
+//function searchWithHelpFromLastSearch(event, panelId, widget) {
+//	if (event.keyCode == 13) {
+//		var sp = $(widget).val().trim();
+//		if (sp) {
+//            searchFragments([{name:'panelId',value:panelId}]);
+//		}
+//	}
+//}
 
 function fetchFragments(panelId, fragmentIds) {
 	var ids = "id:";

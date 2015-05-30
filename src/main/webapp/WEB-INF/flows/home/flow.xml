@@ -107,8 +107,6 @@
         <transition on="search-fragments" to="home">
             <set name="requestScope.searchContextBean" value="flowScope.searchContextBean" />
             <evaluate expression="requestScope.searchContextBean.setPanelId(requestParameters.panelId)" />
-            <evaluate expression="mainController.yetToBeDeveloped(flowScope.searchContextBean.panelId)" />
-            <evaluate expression="mainController.yetToBeDeveloped(flowScope.searchContextBean.quickSearchPhrase)" />
         </transition>
 
         <transition on="prev-fragment-page" to="home">
