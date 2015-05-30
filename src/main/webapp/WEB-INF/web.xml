@@ -85,4 +85,8 @@
         <servlet-name>appServlet</servlet-name>
         <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
+    
+    <session-config>
+        <session-timeout>3000</session-timeout>
+    </session-config>
 </web-app>
