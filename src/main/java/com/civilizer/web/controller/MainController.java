@@ -194,21 +194,22 @@ public final class MainController {
         final int c = Math.min(count, fragments.size());
        	for (int i=0; i<c; ++i) {
        		Fragment f = fragments.get(i);
-        	FragmentBean fb = new FragmentBean();
-        	fb.setFragment(f);
-        	
-        	String title = f.getTitle();
-        	String content = f.getContent();
-        	if (sp != null) {
-        	    title = TextDecorator.highlight(title, sp);
-        	    content = TextDecorator.highlight(content, sp);
-        	}
-        	fb.setTitle(title);
-        	fb.setContent(content);
-        	
-        	final String tagNames = Tag.getTagNamesFrom(f.getTags());
-        	fb.setConcatenatedTagNames(tagNames);
-        	fragmentBeans.add(fb);
+//        	FragmentBean fb = new FragmentBean();
+//        	fb.setFragment(f);
+//        	
+//        	String title = f.getTitle();
+//        	String content = f.getContent();
+//        	if (sp != null) {
+//        	    title = TextDecorator.highlight(title, sp);
+//        	    content = TextDecorator.highlight(content, sp);
+//        	}
+//        	fb.setTitle(title);
+//        	fb.setContent(content);
+//        	
+//        	final String tagNames = Tag.getTagNamesFrom(f.getTags());
+//        	fb.setConcatenatedTagNames(tagNames);
+//        	fragmentBeans.add(fb);
+        	fragmentBeans.add(newFragmentBean(f, sp));
         }
        	if (fragmentBeans.isEmpty()) {
        		fragmentBeans = Collections.emptyList();
@@ -218,6 +219,25 @@ public final class MainController {
         return flb;
     }
 
+	public FragmentBean newFragmentBean(Fragment f, SearchParams sp) {
+	    FragmentBean fb = new FragmentBean();
+        fb.setFragment(f);
+        
+        String title = f.getTitle();
+        String content = f.getContent();
+        if (sp != null) {
+            title = TextDecorator.highlight(title, sp);
+            content = TextDecorator.highlight(content, sp);
+        }
+        fb.setTitle(title);
+        fb.setContent(content);
+        
+        final String tagNames = Tag.getTagNamesFrom(f.getTags());
+        fb.setConcatenatedTagNames(tagNames);
+        
+        return fb;
+	}
+	
 	public FragmentBean newFragmentBean() {
 	    final FragmentBean fragmentBean = new FragmentBean();
 	    final Fragment frg = new Fragment();
@@ -742,8 +762,10 @@ public final class MainController {
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
     public String onRequestForFragment(ModelMap model, @PathVariable Long fragmentId) {
     	final Fragment frg = fragmentDao.findById(fragmentId, true, true);
-    	model.addAttribute("fragment", frg);
-        return "fragment";
+    	final FragmentBean fb = newFragmentBean(frg, null);
+    	model.addAttribute("fragmentBean", fb);
+//    	model.addAttribute("fragment", frg);
+    	return "fragment";
     }
 
     @RequestMapping(value = "/locale/{locale}", method = { RequestMethod.GET })

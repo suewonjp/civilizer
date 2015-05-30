@@ -9,12 +9,19 @@
 
 <c:set var="fragment" value="#{fragmentBean.fragment}" />
                
-<div class="each-fragment-container">
+<!-- <div class="each-fragment-container"> -->
     <h:panelGrid styleClass="each-fragment" columns="1" border="1">
         <f:facet name="header">
             <div class="fragment-header" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}" title="#{msg['rclick_for_menu']}">
-                <p:selectBooleanCheckbox onchange="onChangeFragmentCheckbox('#{fragment.id}', '#{panelId}')" value="#{fragmentBean.checked}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
-                <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
+	            <c:choose>
+		            <c:when test="#{withOverlay}">
+		                <h:outputText value="##{fragment.id}" style="color:navy;"/>
+		            </c:when>
+		            <c:otherwise>
+		                <p:selectBooleanCheckbox onchange="onChangeFragmentCheckbox('#{fragment.id}', '#{panelId}')" value="#{fragmentBean.checked}" itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}" />
+		                <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
+		            </c:otherwise>
+	            </c:choose>
                 <span class="fragment-title" _fid="#{fragment.id}">
                     <h:outputText escape="false" value="#{fragmentBean.title}" />
                 </span>
@@ -22,14 +29,26 @@
                     <f:converter converterId="jodaDateTimeConverter" />
                 </h:outputText>
                 <span class="fa fa-clock-o"></span>&nbsp;&nbsp;
-                <c:forEach var="tag" items="#{fragment.tags}">
-                    <p:commandLink action="filter-by-tag" styleClass="tag-button" title="#{tagBean.fragmentCount} #{msg['label_fragments']}">
-                        <span class="fa fa-tag " ></span>
-                        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
-                        <f:param name="tagId" value="#{tag.id}" />
-                        <f:param name="panelId" value="#{panelId}" />
-                    </p:commandLink>
-                </c:forEach>
+                <c:choose>
+                    <c:when test="#{withOverlay}">
+			            <c:forEach var="tag" items="#{fragment.tags}">
+				             <span class="tag-box" title="">
+				                 <span class="fa fa-tag " >&nbsp;</span>
+				                 <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
+				             </span>
+			            </c:forEach>                
+                    </c:when>
+                    <c:otherwise>
+		                <c:forEach var="tag" items="#{fragment.tags}">
+		                    <p:commandLink action="filter-by-tag" styleClass="tag-button" title="">
+		                        <span class="fa fa-tag " ></span>
+		                        <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>
+		                        <f:param name="tagId" value="#{tag.id}" />
+		                        <f:param name="panelId" value="#{panelId}" />
+		                    </p:commandLink>
+		                </c:forEach>
+                    </c:otherwise>
+                </c:choose>
                 <h:outputText style="display:none" styleClass="-cvz-data-title" value="#{fragment.title}"/>
 				<h:outputText style="display:none" styleClass="-cvz-data-tags" value="#{fragmentBean.concatenatedTagNames}"/>
 				<h:outputText style="display:none" styleClass="-cvz-data-content" value="#{fragment.content}"/>
@@ -37,7 +56,7 @@
         </f:facet>
     	<h:outputText value="#{fragmentBean.content}" styleClass="fragment-content #{panelContext.getContextClassName()}"/>
     </h:panelGrid> <!--     each-fragment -->
-</div> <!-- each-fragment-container -->
+<!-- </div> -->
 
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragment.relatedOnes}">
