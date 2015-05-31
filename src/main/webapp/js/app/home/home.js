@@ -27,6 +27,12 @@ function formatDatetime(src) {
 	return moment(src, MSG.date_time_format_js, $("html").attr("lang")).fromNow() + "; " + src;
 }
 
+function formatTooltipForTags(tag) {
+    var tid = tag.attr("_tid");
+    var fc = $("#tag-palette-flat").find("[_tid="+tid+"]").attr("_frgCount");
+    tag[0].title = fc + " " + MSG.label_fragments + "; " + MSG.rclick_for_menu;
+}
+
 function translateFragments() {
     var fg = $("#fragment-group");
     
@@ -47,6 +53,10 @@ function translateFragments() {
     fg.find(".fragment-header").find(".fa-clock-o").each(function() {
     	var $this = $(this);
     	$this[0].title = formatDatetime($this.prev("span").text());
+    });
+    
+    fg.find(".each-tag").each(function() {
+        formatTooltipForTags($(this));
     });
 }
 
@@ -105,7 +115,7 @@ function populateFragmentOverlay(data) {
 	
 	setContextMenuForTags();
 	
-	overlayContent.find(".each-tag").draggable(baseDraggableSettings);
+	overlayContent.find(".each-tag").draggable(baseDraggableSettings).each(function() {formatTooltipForTags($(this))});
 }
 
 function triggerFragmentOverlay(event) {
