@@ -1,0 +1,45 @@
+.each-fragment-container, .each-fragment {
+    overflow-x: auto;
+    clear: both;
+}
+
+.each-fragment-container table {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.related-fragment-container {
+    margin-left: 2%;
+}
+
+.small-fragment-box, .fragment-title {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    height: 15px;
+    border:1px solid #cacaca; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif;
+    padding: 1px 3px 1px 1px; text-decoration:none; display:inline-block;
+    font-weight:bold; color: #000;
+    background-color: #E6E6E6; background-image: -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#CCCCCC));
+    background-image: -webkit-linear-gradient(top, #E6E6E6, #CCCCCC);
+    background-image: -moz-linear-gradient(top, #E6E6E6, #CCCCCC);
+    background-image: -ms-linear-gradient(top, #E6E6E6, #CCCCCC);
+    background-image: -o-linear-gradient(top, #E6E6E6, #CCCCCC);
+    background-image: linear-gradient(to bottom, #E6E6E6, #CCCCCC);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E6E6E6, endColorstr=#CCCCCC);
+}
+
+.small-fragment-box {
+    overflow: hidden;
+}
+
+.fragment-header {
+    white-space: nowrap;
+    max-height: 22px;
+    height: 22px;
+    width: 100%;
+    display: inline-block;
+}
+
+.fragment-header .fa-clock-o {
+    cursor:default;
+    margin-left: 5px;
+}

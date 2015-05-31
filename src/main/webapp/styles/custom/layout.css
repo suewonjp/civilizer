@@ -31,3 +31,9 @@
 	width: 18%;
 	float: right;
 }
+
+#app-title {
+    color: aquamarine;
+    font-size: x-large;
+    font-style: italic;
+}
