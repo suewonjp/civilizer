@@ -661,11 +661,13 @@ function setContextMenuForFragments() {
 	    		menu.find("#fragment-group-form\\:bookmark").hide();
 	    		menu.find("#fragment-group-form\\:trash").hide();
 	    		menu.find("#fragment-group-form\\:delete").show();
+	    		menu.find("#fragment-group-form\\:untrash").show();
 	    	}
 	    	else {
 	    		menu.find("#fragment-group-form\\:bookmark").show();
 	    		menu.find("#fragment-group-form\\:trash").show();
 	    		menu.find("#fragment-group-form\\:delete").hide();
+	    		menu.find("#fragment-group-form\\:untrash").hide();
 	    	}
 	    	event.preventDefault();
     	}
@@ -690,6 +692,10 @@ function trashFragmentFromCtxtMenu(deleting) {
 	var panelId = findPanel(target);
 	
 	confirmTrashingFragments(frgId, deleting, false, panelId);
+}
+
+function untrashFragmentFromCtxtMenu() {
+    
 }
 
 function showSearchDialog(panelId, qsPhrase) {
