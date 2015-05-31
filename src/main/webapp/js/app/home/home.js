@@ -27,10 +27,13 @@ function formatDatetime(src) {
 	return moment(src, MSG.date_time_format_js, $("html").attr("lang")).fromNow() + "; " + src;
 }
 
-function formatTooltipForTags(tag) {
-    var tid = tag.attr("_tid");
-    var fc = $("#tag-palette-flat").find("[_tid="+tid+"]").attr("_frgCount");
-    tag[0].title = fc + " " + MSG.label_fragments + "; " + MSG.rclick_for_menu;
+function formatTagsOnFragmentHeader(tgtTag) {
+    var tid = tgtTag.attr("_tid");
+    var srcTag = $("#tag-palette-flat").find("[_tid="+tid+"]");
+    var fc = srcTag.attr("_frgCount");
+    tgtTag[0].title = fc + " " + MSG.label_fragments + "; " + MSG.rclick_for_menu;
+    if (srcTag.hasClass("special-tag"))
+    	tgtTag.addClass("special-tag");
 }
 
 function translateFragments() {
@@ -56,7 +59,7 @@ function translateFragments() {
     });
     
     fg.find(".each-tag").each(function() {
-        formatTooltipForTags($(this));
+    	formatTagsOnFragmentHeader($(this));
     });
 }
 
@@ -115,7 +118,8 @@ function populateFragmentOverlay(data) {
 	
 	setContextMenuForTags();
 	
-	overlayContent.find(".each-tag").draggable(baseDraggableSettings).each(function() {formatTooltipForTags($(this))});
+	overlayContent.find(".each-tag").draggable(baseDraggableSettings)
+	.each(function() {formatTagsOnFragmentHeader($(this))});
 }
 
 function triggerFragmentOverlay(event) {

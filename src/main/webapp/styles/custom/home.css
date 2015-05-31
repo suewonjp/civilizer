@@ -243,6 +243,14 @@
     color: black;
 }
 
+.trivial-tag .each-tag-name {
+    color: black;
+}
+
+.special-tag .each-tag-name, .special-tag .fa {
+    color: blueviolet;
+}
+
 #tag-palette-flat .each-tag {
 	display: inline-block;
 }

@@ -33,5 +33,9 @@ public final class TagBean implements Serializable {
 	public void setFragmentCount(long fragmentCount) {
 		this.fragmentCount = fragmentCount;
 	}
+	
+	public String typeName() {
+	    return Tag.isTrivialTag(tag.getId()) ? "trivial-tag" : "special-tag";
+	}
     
 }

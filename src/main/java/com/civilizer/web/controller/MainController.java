@@ -231,16 +231,17 @@ public final class MainController {
 	}
 	
 	public TagListBean newTagListBean() {
+		boolean includeTrashed = true;
+		final List<Tag> tags = tagDao.findAllWithChildren(includeTrashed);
 		final TagListBean tagListBean = new TagListBean();
-		final List<Tag> tags = tagDao.findAllWithChildren(false);
 	    tagListBean.setTags(tags);
 	    final int tc = tags.size();
 	    final List<TagBean> tagBeans = new ArrayList<TagBean>();
-	    final boolean includeTrashed = false;
 	    for (int i = 0; i < tc; i++) {
 	    	TagBean tb = new TagBean();
 	    	final Tag t = tags.get(i);
 	    	tb.setTag(t);
+	    	includeTrashed = (t.getId() == Tag.TRASH_TAG_ID);
 	    	final long fc = fragmentDao.countByTagAndItsDescendants(t.getId(), includeTrashed, tagDao);
 	    	tb.setFragmentCount(fc);
 	    	tagBeans.add(tb);
