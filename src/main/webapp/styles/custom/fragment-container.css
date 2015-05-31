@@ -47,5 +47,6 @@
     cursor:default;
 	margin-left: 20px;
 	overflow:visible;
-	color:lavender;
+	color:lightcyan;
+	font-weight: bold;
 }
