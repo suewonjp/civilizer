@@ -69,9 +69,7 @@ public final class TagListBean implements Serializable {
 		final int index = indexOf(tagId);
 		this.tagToEdit = tagBeans.get(index);
 		final Tag tag = tagToEdit.getTag();
-		if (tag.getChildren().isEmpty() == false) {
-			childTags = new ArrayList<>(tag.getChildren());
-		}
+		childTags = new ArrayList<>(tag.getChildren());
 		hierarchyTouched = false;
 	}
     
@@ -80,7 +78,7 @@ public final class TagListBean implements Serializable {
 	}
 
 	public void setParentTags(List<Tag> parentTags) {
-		this.parentTags = (parentTags == null) ? Collections.<Tag>emptyList() : parentTags;
+		this.parentTags = parentTags;
 	}
 
 	public List<Tag> getChildTags() {
@@ -88,7 +86,7 @@ public final class TagListBean implements Serializable {
 	}
 
 	public void setChildTags(List<Tag> childTags) {
-		this.childTags = (childTags == null) ? Collections.<Tag>emptyList() : childTags;
+		this.childTags = childTags;
 	}
 
 	public long getNewParentTagId() {
