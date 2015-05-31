@@ -763,7 +763,7 @@ function fetchFragments(panelId, fragmentIds) {
 	searchFragments([{name:'panelId',value:panelId}]);
 }
 
-function addToggler(target, toggleHandler) {
+function addToggler(target, hideByDefault, toggleHandler) {
 	var collapseIcon = "fa-minus-square";
 	var expandIcon = "fa-plus-square";
 	var link = $("<a>").attr("href", "#");
@@ -781,16 +781,19 @@ function addToggler(target, toggleHandler) {
 	});
 	
 	target.before(link);
+	
+	if (hideByDefault)
+	    toggleHandler();
 }
 
 function makeSidebarTitleToggleable() {
-	addToggler($("#bookmark-title"), function() {
+	addToggler($("#bookmark-title"), true, function() {
 		PF('bookmarkPanel').toggle();
 	});
-	addToggler($("#tag-palette-title"), function() {
+	addToggler($("#tag-palette-title"), false, function() {
 		PF('tagPalettePanel').toggle();
 	});
-	addToggler($("#file-box-title"), function() {
+	addToggler($("#file-box-title"), true, function() {
 		PF('fileBoxPanel').toggle();
 	});
 }
