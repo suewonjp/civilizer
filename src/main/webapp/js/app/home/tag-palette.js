@@ -84,3 +84,17 @@ function showTagEditor() {
 		}
 	});
 }
+
+function showTagInfo() {
+    var dlg = PF("tagInfoDlg");
+    dlg.show();
+    
+    var menu = $("#tag-context-menu");
+    var target = menu.data("target-tag");
+    var tagName = target.find(".each-tag-name").text();
+    if (tagName == "") {
+        tagName = "~unnamed~"
+    }
+    
+    dlg.jq.find("._tag-name").text(" "+tagName);
+}

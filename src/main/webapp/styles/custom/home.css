@@ -366,21 +366,25 @@
 	color: lime;
 }
 
-#tag-palette-form\:tag-editor th {
+#tag-palette-form\:tag-editor th
+, #tag-palette-form\:tag-info th {
 	background-color: black;
 }
 
-#tag-palette-form\:tag-editor .fa-arrow-up {
+#tag-palette-form\:tag-editor .fa-arrow-up
+, #tag-palette-form\:tag-info .fa-arrow-up  {
 	position: relative;
 	left: 20%;
 }
 
-#tag-palette-form\:tag-editor .fa-arrow-down {
+#tag-palette-form\:tag-editor .fa-arrow-down
+, #tag-palette-form\:tag-info .fa-arrow-down {
 	position: relative;
 	left: 80%;
 }
 
-#tag-palette-form\:tag-editor td {
+#tag-palette-form\:tag-editor td
+, #tag-palette-form\:tag-info td {
 	background-color: gray;
 	width: 280px;
 }

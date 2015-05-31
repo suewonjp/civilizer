@@ -272,9 +272,17 @@ public final class MainController {
 
 	public void prepareTagListBeanToEditTag(TagListBean tagListBean, TagBean tagBean) {
 		final long tagId = tagBean.getTag().getId();
-		tagListBean.setTagToEdit(tagId);
-		tagBean.getTag().setTagName(tagListBean.getTagToEdit().getTag().getTagName());
-		tagListBean.setParentTags(tagDao.findParentTags(tagId));
+		if (tagId <= 0) {
+		    final String name = Tag.SPECIAL_TAG_NAMES[-(int)tagId];
+		    tagBean.getTag().setTagName(name);
+		    tagListBean.setParentTags(null);
+		    tagListBean.setChildTags(null);
+		}
+		else {
+    		tagListBean.setTagToEdit(tagId);
+    		tagBean.getTag().setTagName(tagListBean.getTagToEdit().getTag().getTagName());
+    		tagListBean.setParentTags(tagDao.findParentTags(tagId));
+		}
 	}
 	
 	public SpecialTagBean newBookmarkTagBean() {

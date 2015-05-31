@@ -64,12 +64,43 @@
     	</h:panelGrid>
         <p:commandButton action="save-tag" value="#{msg['label_save']}" icon="ui-icon-check"/>
     </p:dialog>
+
+    <p:dialog id="tag-info" widgetVar="tagInfoDlg" header="#{msg['label_info']}" closeOnEscape="true" width="600px" modal="false" showEffect="fade" position="center" draggable="true" resizable="false" >
+    	<p:panel>
+	    	<span class="fa fa-tag _tag-name"></span>
+    	</p:panel>
+    	<br/>
+    	<h:panelGrid columns="2" cellpadding="10">
+    		<f:facet name="header">
+	        	<div class="fa fa-arrow-up"></div>
+	        	<div class="fa fa-arrow-down"></div>
+    		</f:facet>
+	        <p:panel>
+	            <h:panelGroup>
+	        		<ui:repeat var="parent" value="#{tagListBean.parentTags}">
+	        			<span class="fa fa-tag">&nbsp;&nbsp;#{parent.tagName}&nbsp;&nbsp;</span>
+	        			<br/>
+	        		</ui:repeat>
+	            </h:panelGroup>
+	        </p:panel>
+	        <p:panel>
+                <h:panelGroup>
+	        		<ui:repeat var="child" value="#{tagListBean.childTags}">
+	        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}&nbsp;&nbsp;</span>
+	        			<br/>
+	        		</ui:repeat>
+                </h:panelGroup>
+	        </p:panel>
+    	</h:panelGrid>
+    </p:dialog>
     
     <div id="tag-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
             <p:menuitem styleClass="fa" oncomplete="showTagEditor()" value="&#xf040; #{msg['label_edit']}"
             	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
             <p:menuitem styleClass="fa" onclick="confirmTrashingTagFromCtxtMenu()" value="&#xf1f8; #{msg['label_trash']}"/>
+            <p:menuitem styleClass="fa" oncomplete="showTagInfo()" value="&#xf05a; #{msg['label_info']}"
+            	update="tag-info" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
 	    </p:menu>
     </div>
     
