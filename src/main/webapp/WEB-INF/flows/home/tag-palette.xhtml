@@ -96,10 +96,10 @@
     
     <div id="tag-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
-            <p:menuitem styleClass="fa" oncomplete="showTagEditor()" value="&#xf040; #{msg['label_edit']}"
+            <p:menuitem id="edit" styleClass="fa" oncomplete="showTagEditor()" value="&#xf040; #{msg['label_edit']}"
             	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
-            <p:menuitem styleClass="fa" onclick="confirmTrashingTagFromCtxtMenu()" value="&#xf1f8; #{msg['label_trash']}"/>
-            <p:menuitem styleClass="fa" oncomplete="showTagInfo()" value="&#xf05a; #{msg['label_info']}"
+            <p:menuitem id="trash" styleClass="fa" onclick="confirmTrashingTagFromCtxtMenu()" value="&#xf1f8; #{msg['label_trash']}"/>
+            <p:menuitem id="info" styleClass="fa" oncomplete="showTagInfo()" value="&#xf05a; #{msg['label_info']}"
             	update="tag-info" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
 	    </p:menu>
     </div>

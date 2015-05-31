@@ -21,7 +21,17 @@ function setContextMenuForTags() {
     	menu.css({ left:event.pageX, top:event.pageY }).show();
     	var target = $(event.target).closest(".each-tag");
     	menu.data("target-tag", target);
-    	$("#tag-palette-form\\:id-placeholder-for-tag").val(target.attr("_tid"));
+    	var tid = target.attr("_tid");
+    	if (tid <=0) {
+    	    // special tags; not modifiable
+    	    $("#tag-palette-form\\:edit").hide();
+    	    $("#tag-palette-form\\:trash").hide();
+    	}
+    	else {
+    	    $("#tag-palette-form\\:edit").show();
+    	    $("#tag-palette-form\\:trash").show();
+    	}
+    	$("#tag-palette-form\\:id-placeholder-for-tag").val(tid);
     	event.preventDefault();
     });
 
