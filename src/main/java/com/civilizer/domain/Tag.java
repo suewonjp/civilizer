@@ -23,6 +23,7 @@ import org.hibernate.annotations.CascadeType;
 @Table(name = "TAG")
 public final class Tag implements Serializable {
 	
+    // [RULE] tag names are separable only with commas
 	public static final String TAG_NAME_DELIMITER = ",";
 
 	public static final String[] SPECIAL_TAG_NAMES = {
@@ -30,6 +31,7 @@ public final class Tag implements Serializable {
 		"#bookmark",
 	};
 	
+	// [RULE] all special tags have predefined id numbers which are zero or minus
 	public static final int TRASH_TAG_ID = 0;
 	public static final int BOOKMARK_TAG_ID = -1;
 
@@ -256,6 +258,15 @@ public final class Tag implements Serializable {
 			}
 		}
     	return false;
+    }
+
+    public static int getSpecialTagId(String name) {
+        for (int i=0; i<SPECIAL_TAG_NAMES.length; ++i) {
+            if (SPECIAL_TAG_NAMES[i].equals(name)) {
+                return -i;
+            }
+        }
+        return Integer.MAX_VALUE;
     }
     
     public static boolean isTrashTag(long id) {

@@ -57,35 +57,16 @@ public final class MainController {
 	@Autowired
 	private FileEntityDao fileEntityDao;
 	
-	// [TODO] refactor code to maintain special tags
-	private Tag trashcanTag;
-
-	private Tag bookmarkTag;
-
 	private Tag getTrashcanTag() {
-		if (trashcanTag != null) {
-			return trashcanTag;
-		}
-		trashcanTag = tagDao.findById((long) Tag.TRASH_TAG_ID);
-		return trashcanTag;
+		return tagDao.findById((long) Tag.TRASH_TAG_ID);
 	}
 
 	private Tag getBookmarkTag() {
-		if (bookmarkTag != null) {
-			return bookmarkTag;
-		}
-		bookmarkTag = tagDao.findById((long) Tag.BOOKMARK_TAG_ID);
-		return bookmarkTag;
+		return tagDao.findById((long) Tag.BOOKMARK_TAG_ID);
 	}
 	
 	private Tag getSpecialTag(String name) {
-		if (name.equals(Tag.SPECIAL_TAG_NAMES[Tag.TRASH_TAG_ID])) {
-			return getTrashcanTag();
-		}
-		else if (name.equals(Tag.SPECIAL_TAG_NAMES[-Tag.BOOKMARK_TAG_ID])) {
-			return getBookmarkTag();
-		}
-		return null;
+		return tagDao.findById((long) Tag.getSpecialTagId(name));
 	}
 	
 	// [DEV]
@@ -293,6 +274,7 @@ public final class MainController {
 		tagBean.setTag(tag);
 		
 		final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), false);
+		Fragment.sort(fragments, FragmentOrder.TITLE, true);
 		final List<FragmentBean> fbs = new ArrayList<FragmentBean>();
 		for (Fragment fragment : fragments) {
 			final FragmentBean fb = new FragmentBean();
@@ -453,7 +435,7 @@ public final class MainController {
 		final Set<Tag> output = new HashSet<Tag>();
 		for (String name : names) {
 			Tag t = Tag.isSpecialTag(name) ?
-					getSpecialTag(name) : Tag.getTagFromName(name, existingTags);
+			        getSpecialTag(name) : Tag.getTagFromName(name, existingTags);
 			
 			boolean weHaveNewTag = false;
 			if (t == null) {
