@@ -649,8 +649,11 @@ function confirmDeletingFile() {
 function setContextMenuForFragments() {
 	var menu = $("#frg-context-menu");
 	
-	$(".fragment-header").bind("contextmenu", function(event) {
+	$(".fragment-header, .rcllick-hint").bind("contextmenu", function(event) {
     	var target = $(event.target);
+    	if (target.hasClass("rclick-hint")) {
+    		target = target.closest(".fragment-header");    		
+    	}
     	if (target.hasClass("fragment-header")) {
 	    	menu.css({ left:event.pageX, top:event.pageY }).show();
 	    	menu.data("target-frg", target);

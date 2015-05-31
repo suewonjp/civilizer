@@ -59,7 +59,7 @@
     <h:inputHidden id="id-placeholder-for-dst-node" value="#{fileListBean.dstNodeId}"/>
     
 	<p:panel id="file-box-panel" toggleable="true" widgetVar="fileBoxPanel">
-		<div id="file-path-tree">
+		<div id="file-path-tree" title="#{msg['rclick_for_menu']}">
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>
                     <span id="#{filePathBean.getHtmlId()}" class="each-file fa #{filePathBean.getCssClassName()}" title="#{msg['rclick_for_menu']}"

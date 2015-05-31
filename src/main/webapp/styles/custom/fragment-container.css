@@ -43,3 +43,9 @@
     cursor:default;
     margin-left: 5px;
 }
+.fragment-header .rclick-hint {
+    cursor:default;
+	margin-left: 20px;
+	overflow:hidden;
+	color:lavender;
+}
