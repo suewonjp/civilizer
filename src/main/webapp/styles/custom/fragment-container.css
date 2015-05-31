@@ -46,6 +46,6 @@
 .fragment-header .rclick-hint {
     cursor:default;
 	margin-left: 20px;
-	overflow:hidden;
+	overflow:visible;
 	color:lavender;
 }

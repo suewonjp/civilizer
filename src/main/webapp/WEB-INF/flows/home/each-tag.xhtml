@@ -7,7 +7,7 @@
     xmlns:p="http://primefaces.org/ui"
     >
     
-<span class="each-tag tag-button #{tagBean.typeName()}"
+<span class="each-tag tag-button #{tagBean.typeName()} notxtslct"
     _tid="#{tag.id}" _frgCount="#{tagBean.fragmentCount}"
 	title="#{tagBean.fragmentCount} #{msg['label_fragments']}; #{msg['rclick_for_menu']}"
 	onclick="fetchFragmentsByTag($(this), null)"> 

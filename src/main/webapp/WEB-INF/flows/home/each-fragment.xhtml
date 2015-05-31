@@ -11,7 +11,7 @@
 
 <h:panelGrid styleClass="each-fragment" columns="1" border="#{withOverlay ? 0 : 1}">
     <f:facet name="header">
-    <div class="fragment-header" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}">
+    <div class="fragment-header notxtslct" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}">
         <c:choose>
             <c:when test="#{withOverlay}">
                 <h:outputText value="##{fragment.id}" style="color:navy;"/>
@@ -47,7 +47,7 @@
 
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragment.relatedOnes}">
-        <span class="small-fragment-box">
+        <span class="small-fragment-box notxtslct">
             <span class="fa fa-link">&nbsp;&nbsp;</span>
             <a class="-cvz-frgm" href="fragment/#{rf.id}">\##{rf.id}</a>
             &nbsp;&nbsp;
