@@ -1,3 +1,14 @@
+// [NOTE] this is a default basic setting for all jQuery UI Draggable objects;
+// It should remain as IMMUTABLE
+var baseDraggableSettings = {
+    cursor:"move",
+    scroll: false,
+    helper: "clone",
+    zIndex: 10000,
+    containment: "document",
+    appendTo: "body",
+};
+
 function setupParser() {
 	// prepare *Marked* (a Markdown parser) library; see https://github.com/chjj/marked
 	marked.setOptions({
@@ -17,21 +28,23 @@ function formatDatetime(src) {
 }
 
 function translateFragments() {
+    var fg = $("#fragment-group");
+    
 	// apply Civilizer's custom markup rules to fragment titles;
-    $("#fragment-group .fragment-title").each(function() {
+    fg.find(".fragment-title").each(function() {
     	var $this = $(this);
     	$this.html(translateCustomMarkupRules($this.html()));
     });
     
     // translate Markdown formatted fragment contents into HTML format
-    $("#fragment-group .fragment-content").each(function() {
+    fg.find(".fragment-content").each(function() {
     	var $this = $(this);
     	$this.html(translateFragmentContent($this.text()));
     	postprocessFragmentContent($this);
     });
     
     // add a tooltip message of updated time to a clock icon
-    $("#fragment-group .fragment-header .fa-clock-o").each(function() {
+    fg.find(".fragment-header").find(".fa-clock-o").each(function() {
     	var $this = $(this);
     	$this[0].title = formatDatetime($this.prev("span").text());
     });
@@ -77,7 +90,6 @@ function populateFragmentOverlay(data) {
     });
 	
 	// translate Markdown formatted fragment contents into HTML format
-//	$("#fragment-overlay-content .fragment-content").each(function(){
 	overlayContent.find(".fragment-content").each(function(){
         var $this = $(this);
 		$this.html(translateFragmentContent($this.text()));
@@ -90,6 +102,10 @@ function populateFragmentOverlay(data) {
 	setupDraggableForFragmentTitle();
 	
 	setContextMenuForFragments();
+	
+	setContextMenuForTags();
+	
+	overlayContent.find(".each-tag").draggable(baseDraggableSettings);
 }
 
 function triggerFragmentOverlay(event) {
@@ -279,17 +295,6 @@ function postprocessFragmentContent(content) {
     processFileClasses(content);
 }
 
-// [NOTE] this is a default basic setting for all jQuery UI Draggable objects;
-// It should remain as IMMUTABLE
-var baseDraggableSettings = {
-    cursor:"move",
-    scroll: false,
-    helper: "clone",
-    zIndex: 10000,
-    containment: "document",
-    appendTo: "body",
-};
-
 function setupDragAndDrop() {
 	setupDraggableForFragmentTitle();
 	setupDraggableForTags();
@@ -317,6 +322,8 @@ function setupDraggableForTags() {
 	.on("dragstop", function(event, ui) {
 		tagPalettePanel.css({overflow:overflowOption});
 	});
+	
+	$("#fragment-group .each-tag").draggable(baseDraggableSettings);
 }
 
 function setupDraggableForFiles() {
