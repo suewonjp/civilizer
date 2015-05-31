@@ -104,7 +104,7 @@ public class DomainTagTest {
         Collection<String> nameList = buildTagNameList(tags);
         String expected = new String();
         for (String s : nameList) {
-            assertEquals(0, Tag.validateName(s));
+            assertEquals(0, Tag.findInvalidCharFromName(s));
         	expected += s + ",";
         }
         assertEquals(expected, actual);
@@ -269,15 +269,15 @@ public class DomainTagTest {
     public void testTagNameValidation() {
 	    {
             Tag t = new Tag("\"tag name with quots\"");
-            assertEquals('\"', Tag.validateName(t.getTagName()));
+            assertEquals('\"', Tag.findInvalidCharFromName(t.getTagName()));
         }
 	    {
 	        Tag t = new Tag("tag name / with slashes");
-	        assertEquals('/', Tag.validateName(t.getTagName()));
+	        assertEquals('/', Tag.findInvalidCharFromName(t.getTagName()));
 	    }
 	    {
 	        Tag t = new Tag(",tag name with commas");
-	        assertEquals(',', Tag.validateName(t.getTagName()));
+	        assertEquals(',', Tag.findInvalidCharFromName(t.getTagName()));
 	    }
     }
 	

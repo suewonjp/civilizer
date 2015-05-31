@@ -439,7 +439,7 @@ public final class MainController {
 			
 			boolean weHaveNewTag = false;
 			if (t == null) {
-			    final char invalidCharacter = Tag.validateName(name);
+			    final char invalidCharacter = Tag.findInvalidCharFromName(name);
 			    if (invalidCharacter != 0) {
 			        final String msg = String.format("'%s' contains a disallowed character : %s", name, invalidCharacter);
 			        ViewUtil.addMessage("Error on saving a new tag!!!", msg, FacesMessage.SEVERITY_ERROR);
