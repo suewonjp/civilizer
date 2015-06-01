@@ -29,6 +29,7 @@ function toggleFragmentEditor(frame, bar) {
 	if (target.is(":visible")) {
 		if (frame.hasClass("ui-resizable"))
 			frame.resizable("disable");
+//		bar.width(frame.width());
 		target.hide();
 	}
 	else {
@@ -123,7 +124,8 @@ function prepareFragmentContent() {
 }
 
 function previewFragment() {
-	$("#fragment-overlay").lightbox_me({
+	var overlayFrame = $("#fragment-overlay");
+	overlayFrame.lightbox_me({
         centered:false
         , showOverlay:false
         , lightboxSpeed:"fast"
@@ -139,6 +141,11 @@ function previewFragment() {
 	var srcContent = prepareFragmentContent();
     var outputHtml = $("<span class='fragment-content'>").wrapInner(translateFragmentContent(srcContent));
     postprocessFragmentContent($("#fragment-overlay-content").html(outputHtml));
+    
+    var titleBar = $("#fragment-overlay-title-bar");
+    if (titleBar.next().is(":visible") == false) {
+    	toggleFragmentEditor(overlayFrame, titleBar);
+    }
 }
 
 function autocompleteForTypingTags() {

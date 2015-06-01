@@ -8,28 +8,31 @@
 
 <div style='display:none'>
     <div id='editor-frame'>
-        <h:form id="fragment-editor-form">
-            <div id="editor-title-bar">
-                <span id="editor-title"></span>
-                <div style="float: right;">
-	                <a id="editor-frame-close-button" href="#" title="#{msg['label_close']}">
-	                    <span class="fa fa-close fa-2x warning-color" ></span>
-	                </a>
-                </div>
+    <h:form id="fragment-editor-form">
+        <div id="editor-title-bar">
+            <span id="editor-title"></span>
+            <div style="float: right;">
+             <a id="editor-frame-close-button" href="#" title="#{msg['label_close']}">
+                 <span class="fa fa-close fa-2x warning-color" ></span>
+             </a>
             </div>
-            <div>
-	            <p:inputText id="title-input" value="#{paramFragmentBean.fragment.title}" autocomplete="false" onkeypress="if (event.keyCode == 13) { event.preventDefault(); }"/>
-	            <div id="editor-tags"></div>
-	            <p:inputText id="tags-input" value="#{paramFragmentBean.concatenatedTagNames}" autocomplete="false" onkeypress="if (event.keyCode == 13) { event.preventDefault(); }"/>
-	            <textarea id="fragment-content-editor" ></textarea>
-	            <h:inputHidden id="content-placeholder" value="#{paramFragmentBean.fragment.content}"/>
-	            <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}"/>
-	            <div id="editor-button-bar">
-		            <p:commandButton onclick="previewFragment();" value="#{msg['label_preview']}" style="margin-left:10px;"/>
-		            <p:commandButton onclick="prepareFragmentContent();" value="#{msg['label_save']}" action="save-fragment"/>
-	            </div>
+        </div>
+        <div>
+            <p:inputText id="title-input" value="#{paramFragmentBean.fragment.title}"
+                onkeypress="if(event.keyCode==13){event.preventDefault();}" autocomplete="false" />
+            <p:inputText id="tags-input" value="#{paramFragmentBean.concatenatedTagNames}"
+                onkeypress="if(event.keyCode==13){event.preventDefault();}" autocomplete="false" />
+            <textarea id="fragment-content-editor" ></textarea>
+            <h:inputHidden id="content-placeholder" value="#{paramFragmentBean.fragment.content}"/>
+            <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}"/>
+            <div id="editor-button-bar">
+                <p:commandButton onclick="previewFragment();" value="#{msg['label_preview']}"
+                    style="margin-left:10px;"/>
+                <p:commandButton onclick="prepareFragmentContent();" value="#{msg['label_save']}"
+                    action="save-fragment"/>
             </div>
-        </h:form>
+        </div>
+    </h:form>
     </div>
 </div>
 

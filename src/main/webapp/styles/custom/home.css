@@ -77,6 +77,10 @@
     overflow: hidden;
 }
 
+#editor-title-bar {
+    min-width: 300px;
+}
+
 #editor-button-bar {
 	height:46px;
 	background-color:gainsboro;
@@ -103,11 +107,15 @@
     z-index: 100;
 }
 
-#fragment-overlay {
+#fragment-overlay-content {
 	min-width: 320px;
 	max-width: 640px;
 	max-height: 480px;
 	overflow: auto;
+}
+
+#fragment-overlay {
+	overflow: hidden;
 }
 
 #editor-frame input {
