@@ -39,7 +39,7 @@ markItUpSettings = {
 		{name:'Fragment Link', key:'F', openWith:'{{[frgm][![Fragment ID]!] ', closeWith:'}}', placeHolder:'Your text to link here...', faIcon:'fa-link fa-lg' },
 		{separator:'---------------'},	
 		{name:'Quotes', key:'Q', openWith:'> ', closeWith:'  ', multiline:true},
-        {name:'Code Block / Code', multiline:true, openWith:'    '},
+        {name:'Code', multiline:true, openWith:'`', closeWith:'`'},
 //        {name:'Code Block / Code', multiline:true, openWith:'(!(\t|!|`)!)', closeWith:'(!(`)!)'},
 		{separator:'---------------'},
 		{name:'Indent (Move Right)', key:'R', openWith:' ', multiline:true, faIcon:'fa-indent fa-lg'},
