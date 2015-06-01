@@ -29,7 +29,6 @@ function toggleFragmentEditor(frame, bar) {
 	if (target.is(":visible")) {
 		if (frame.hasClass("ui-resizable"))
 			frame.resizable("disable");
-//		bar.width(frame.width());
 		target.hide();
 	}
 	else {
@@ -103,7 +102,8 @@ function openFragmentEditorForEdit(event) {
 	$("#fragment-editor-form\\:id-placeholder-for-fragment").val(fragmentId);
     
     var el = target.find(".-cvz-data-title");
-    $("#fragment-editor-form\\:title-input").val(el.text());
+    $("#fragment-editor-form\\:title-input").val(
+            el.text().replace(/&lt;/g, '<').replace(/&gt;/g, '>'));
     
     el = target.find(".-cvz-data-tags");
     $("#fragment-editor-form\\:tags-input").val(el.text());
@@ -120,6 +120,9 @@ function prepareFragmentContent() {
     var $editor = $("#fragment-content-editor");
     var srcContent = $editor.val();
     $("#fragment-editor-form\\:content-placeholder").val(srcContent);
+    var titleInput = $("#fragment-editor-form\\:title-input");
+    var title = titleInput.val().replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    titleInput.val(title);
     return srcContent;
 }
 
