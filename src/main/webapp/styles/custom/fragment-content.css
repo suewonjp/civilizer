@@ -11,13 +11,11 @@
     border: 1px solid lavender;
     border-collapse: collapse;
     width: 1%;
-/*     white-space: nowrap; */
+    white-space: nowrap;
 }
 
 .fragment-content pre {
     background-color: whitesmoke;
-    white-space: pre-wrap;
-    word-break: break-all;
 }
 
 .fragment-content blockquote p {
