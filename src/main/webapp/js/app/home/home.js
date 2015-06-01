@@ -763,13 +763,13 @@ function fetchFragments(panelId, fragmentIds) {
 	searchFragments([{name:'panelId',value:panelId}]);
 }
 
-function addToggler(target, hideByDefault, toggleHandler) {
+function addToggler(target, toggler) {
 	var collapseIcon = "fa-minus-square";
 	var expandIcon = "fa-plus-square";
 	var link = $("<a>").attr("href", "#");
 	var icon = $("<span>").addClass("fa " + collapseIcon);
 	link.prepend(icon).click(function (event) {
-		toggleHandler();
+		toggler();
 // 		if (icon.hasClass(collapseIcon)) {
 // 			icon.removeClass(collapseIcon).addClass(expandIcon);
 // 		}
@@ -778,24 +778,35 @@ function addToggler(target, hideByDefault, toggleHandler) {
 // 		}
 		icon.toggleClass(collapseIcon + " " + expandIcon);
 		event.preventDefault();
-	});
-	
+	});	
 	target.before(link);
-	
-	if (hideByDefault)
-	    toggleHandler();
+	return link;
 }
 
 function makeSidebarTitleToggleable() {
-	addToggler($("#bookmark-title"), true, function() {
-		PF('bookmarkPanel').toggle();
+    var bookmarkPanel = PF('bookmarkPanel');
+    var tagPalettePanel = PF('tagPalettePanel');
+    var fileBoxPanel = PF('fileBoxPanel');
+    
+	var bmLink = addToggler($("#bookmark-title"), function() {
+		bookmarkPanel.toggle();
+		sessionStorage.setItem("bookmarkOpen", bookmarkPanel.cfg.collapsed ? "no":"yes");
 	});
-	addToggler($("#tag-palette-title"), false, function() {
-		PF('tagPalettePanel').toggle();
+	var tpLink = addToggler($("#tag-palette-title"), function() {
+	    tagPalettePanel.toggle();
+	    sessionStorage.setItem("tagPaletteOpen", tagPalettePanel.cfg.collapsed ? "no":"yes");
 	});
-	addToggler($("#file-box-title"), true, function() {
-		PF('fileBoxPanel').toggle();
+	var fbLink = addToggler($("#file-box-title"), function() {
+	    fileBoxPanel.toggle();
+	    sessionStorage.setItem("fileBoxOpen", fileBoxPanel.cfg.collapsed ? "no":"yes");
 	});
+	
+	if (sessionStorage.getItem("bookmarkOpen") === "no")
+	    bmLink.trigger("click");
+	if (sessionStorage.getItem("tagPaletteOpen") === "no")
+	    tpLink.trigger("click");
+	if (sessionStorage.getItem("fileBoxOpen") === "no")
+	    fbLink.trigger("click");
 }
 
 function onChangeFragmentCheckbox(fid, pid) {
