@@ -52,11 +52,17 @@ function translateFragments() {
     	postprocessFragmentContent($this);
     });
     
-    // add a tooltip message of updated time to a clock icon
-    fg.find(".fragment-header").find(".fa-clock-o").each(function() {
+    // add a tooltip message of updated and created time
+    fg.find(".fragment-header .fa-clock-o, .fragment-header .fa-birthday-cake").each(function() {
     	var $this = $(this);
     	$this[0].title = formatDatetime($this.prev("span").text());
     });
+//
+//    // add a tooltip message of creation time to a birthday cake icon
+//    fg.find(".fragment-header").find(".fa-birthday-cake").each(function() {
+//        var $this = $(this);
+//        $this[0].title = formatDatetime($this.prev("span").text());
+//    });
     
     fg.find(".each-tag").each(function() {
     	formatTagsOnFragmentHeader($(this));
@@ -97,7 +103,8 @@ function populateFragmentOverlay(data) {
 	
 	overlayContent.html(data);
 	
-	$("#fragment-overlay-content .fragment-header .fa-clock-o").each(function() {
+	$("#fragment-overlay-content .fragment-header .fa-clock-o, #fragment-overlay-content .fragment-header .fa-birthday-cake")
+	.each(function() {
     	var $this = $(this);
     	$this[0].title = formatDatetime($this.prev("span").text());
     });

@@ -28,7 +28,11 @@
         <h:outputText style="display:none" value="#{fragment.updateDatetime}">
             <f:converter converterId="jodaDateTimeConverter"/>
         </h:outputText>
-        <span class="fa fa-clock-o"></span>&nbsp;&nbsp;
+        <span class="fa fa-clock-o"></span>&nbsp;
+        <h:outputText style="display:none" value="#{fragment.creationDatetime}">
+            <f:converter converterId="jodaDateTimeConverter"/>
+        </h:outputText>
+        <span class="fa fa-birthday-cake"></span>&nbsp;&nbsp;
         <c:forEach var="tag" items="#{fragment.tags}">
             <span class="each-tag tag-button" _tid="#{tag.id}" onclick="fetchFragmentsByTag($(this), $(this))"
                 title="#{msg['rclick_for_menu']}">
