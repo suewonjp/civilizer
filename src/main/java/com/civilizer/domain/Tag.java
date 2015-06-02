@@ -114,7 +114,7 @@ public final class Tag implements Serializable {
     
     public static char findInvalidCharFromName(String name) {
         // [RULE] these characters are not accepted to be used in tag names
-        final char[] invalidChar = { '\"', '/', ',' };
+        final char[] invalidChar = { '\"', '/', ',', '\\' };
         for (char c : invalidChar) {
             if (name.indexOf(c) != -1) {
                 return c;

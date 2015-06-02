@@ -279,6 +279,10 @@ public class DomainTagTest {
 	        Tag t = new Tag(",tag name with commas");
 	        assertEquals(',', Tag.findInvalidCharFromName(t.getTagName()));
 	    }
+	    {
+	        Tag t = new Tag("tag name \\ with backslashes");
+	        assertEquals('\\', Tag.findInvalidCharFromName(t.getTagName()));
+	    }
     }
 	
 //	@Test
