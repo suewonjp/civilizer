@@ -842,12 +842,14 @@ function onChangeFragmentCheckbox(fid, pid) {
 	}
 }
 
-//function onClickGoSort(event, panelId) {
-//    var dlg = PF("sortOptionDlg" + panelId)
-//    var cbCurPageOnly = dlg.jq.find("#cb-curpageonly"+panelId);
-//    if (cbCurPageOnly.prop("checked")) {
-//        event.preventDefault();
-//        event.stopPropagation();
-//        return false;
-//    }
-//}
+function onClickGoSort(panelId) {
+    var dlg = PF("sortOptionDlg" + panelId)
+    var cbCurPageOnly = dlg.jq.find("#cb-curpageonly"+panelId);
+    if (cbCurPageOnly.prop("checked")) {
+        // [TODO] sort fragments of the current page
+        dlg.hide();
+    }
+    else {
+        document.forms["fragment-group-form"]["fragment-group-form:go-sort-action"+panelId].click()
+    }
+}
