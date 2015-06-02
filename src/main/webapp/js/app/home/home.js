@@ -77,7 +77,7 @@ function populateFragmentOverlay(data) {
 	
 	var titleBar = $("#fragment-overlay-title-bar");
 	if (titleBar.next().is(":visible") == false) {
-    	toggleFragmentEditor(overlayFrame, titleBar);
+    	toggleWindow(overlayFrame, titleBar);
     }
 	
 	$("#fragment-overlay-title").text("");
@@ -142,7 +142,7 @@ function setupFragmentOverlay() {
     });
     
 	$("#fragment-overlay-title-bar").dblclick(function() {
-    	toggleFragmentEditor($("#fragment-overlay"), $(this));
+    	toggleWindow($("#fragment-overlay"), $(this));
     });
 }
 

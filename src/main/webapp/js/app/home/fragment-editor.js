@@ -18,24 +18,10 @@ function setupFragmentEditor() {
     });
     
     $("#editor-title-bar").dblclick(function() {
-    	toggleFragmentEditor($editorFrame, $(this));
+    	toggleWindow($editorFrame, $(this));
     });
 	
     $("#fragment-content-editor").markItUp(markItUpSettings, {});
-}
-
-function toggleFragmentEditor(frame, bar) {
-	var target = bar.next();
-	if (target.is(":visible")) {
-		if (frame.hasClass("ui-resizable"))
-			frame.resizable("disable");
-		target.hide();
-	}
-	else {
-		if (frame.hasClass("ui-resizable"))
-			frame.resizable("enable");
-		target.show();
-	}
 }
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {
@@ -66,7 +52,7 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
     
     var titleBar = $("#editor-title-bar");
     if (titleBar.next().is(":visible") == false) {
-    	toggleFragmentEditor($editorFrame, titleBar);
+    	toggleWindow($editorFrame, titleBar);
     }
     
     $("#editor-title").text(title);
@@ -143,7 +129,7 @@ function previewFragment() {
     
     var titleBar = $("#fragment-overlay-title-bar");
     if (titleBar.next().is(":visible") == false) {
-    	toggleFragmentEditor(overlayFrame, titleBar);
+    	toggleWindow(overlayFrame, titleBar);
     }
 }
 

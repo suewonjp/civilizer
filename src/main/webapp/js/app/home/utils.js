@@ -52,6 +52,20 @@ function addToggler(target, toggler) {
     return link;
 }
 
+function toggleWindow(frame, bar) {
+    var target = bar.next();
+    if (target.is(":visible")) {
+        if (frame.hasClass("ui-resizable"))
+            frame.resizable("disable");
+        target.hide();
+    }
+    else {
+        if (frame.hasClass("ui-resizable"))
+            frame.resizable("enable");
+        target.show();
+    }
+}
+
 function parseMarkdown(inputText) {
     return marked(inputText);
 }
