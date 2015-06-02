@@ -347,8 +347,29 @@ public final class MainController {
 		}
 	}
 
+	private void restoreFragment(Long fragmentId) {
+	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
+	    final Tag trashcanTag = getTrashcanTag();
+	    if (! frg.containsTagId(trashcanTag.getId())) {
+	        return;
+	    }
+	    frg.removeTag(trashcanTag);
+	    try {
+	        fragmentDao.save(frg);
+	        ViewUtil.addMessage("Restored", "Fragment #" + frg.getId(), null);
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	        ViewUtil.addMessage("Error on restorng a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+	    }
+	}
+
 	public void trashFragment(FragmentBean fb) {
 		trashFragment(fb.getFragment().getId());
+	}
+
+	public void restoreFragment(FragmentBean fb) {
+	    restoreFragment(fb.getFragment().getId());
 	}
 
 	private void trashFragments(List<Long> fragmentIds) {

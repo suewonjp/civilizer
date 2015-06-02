@@ -594,6 +594,17 @@ function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
     }
 }
 
+function confirmRestoringFragments(frgId) {
+    $("#fragment-group-form\\:ok").click(function() {
+        document.forms["fragment-group-form"]["fragment-group-form:ok-restore-fragment"].click();
+    });
+    
+    var subMsg = "\n#" + frgId + "  " + getFragmentTitle(frgId);
+    showConfirmDlg(MSG.confirm_restoring, subMsg, "fa-recycle", "orange");
+    
+    $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
+}
+
 function confirmTrashingTag(tagId, deleting) {
 	var op = deleting ? "delete" : "trash";	
 	$("#fragment-group-form\\:ok").click(function() {
@@ -661,13 +672,13 @@ function setContextMenuForFragments() {
 	    		menu.find("#fragment-group-form\\:bookmark").hide();
 	    		menu.find("#fragment-group-form\\:trash").hide();
 	    		menu.find("#fragment-group-form\\:delete").show();
-	    		menu.find("#fragment-group-form\\:untrash").show();
+	    		menu.find("#fragment-group-form\\:restore").show();
 	    	}
 	    	else {
 	    		menu.find("#fragment-group-form\\:bookmark").show();
 	    		menu.find("#fragment-group-form\\:trash").show();
 	    		menu.find("#fragment-group-form\\:delete").hide();
-	    		menu.find("#fragment-group-form\\:untrash").hide();
+	    		menu.find("#fragment-group-form\\:restore").hide();
 	    	}
 	    	event.preventDefault();
     	}
@@ -694,8 +705,12 @@ function trashFragmentFromCtxtMenu(deleting) {
 	confirmTrashingFragments(frgId, deleting, false, panelId);
 }
 
-function untrashFragmentFromCtxtMenu() {
+function restoreFragmentFromCtxtMenu() {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
     
+    confirmRestoringFragments(frgId);
 }
 
 function showSearchDialog(panelId, qsPhrase) {

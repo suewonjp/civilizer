@@ -51,6 +51,13 @@
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
+        <transition on="restore-fragment" to="home">
+            <evaluate expression="mainController.restoreFragment(paramFragmentBean)" />
+            <evaluate expression="paramFragmentBean.clear()" />
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
+        </transition>
+
         <transition on="delete-fragment" to="home">
             <evaluate expression="mainController.deleteFragment(paramFragmentBean)" />
             <evaluate expression="paramFragmentBean.clear()" />
