@@ -523,7 +523,7 @@ function fragmentCheckBoxesAreChecked(panelId) {
 
 function getFragmentTitle(frgId) {
 	var title = $("#fragment-group").find(".fragment-title[_fid=" + frgId + "]");
-	return (title.length > 0) ? title.text() : "";
+	return (title.length > 0) ? title.eq(0).text() : "";
 }
 
 function getTagName(tagId) {
