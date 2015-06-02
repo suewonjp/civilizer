@@ -12,6 +12,7 @@
 <c:set var="panelContext" value="#{fragmentListBean.panelContextBean}" />
 <c:set var="curTagId" value="#{panelContext.tagId}" />
 <c:set var="lastSearchPhrase" value="#{empty panelContext.searchParams ? '' : panelContext.searchParams.searchPhrase}" />
+<c:set var="tc" value="#{fragmentListBean.totalCount}" />
 
 <p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" closeOnEscape="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
     <div id="fragment-sort-option-container" >
@@ -67,7 +68,7 @@
     
     <p:spacer width="6" />
 
-    <p:commandLink oncomplete="showSortOptionDialog('#{panelId}')" >
+    <p:commandLink rendered="#{tc > 0}" oncomplete="showSortOptionDialog('#{panelId}')" >
         <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort']}"></span>
     </p:commandLink>
     
@@ -87,7 +88,6 @@
     </c:choose>
 </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 
-<c:set var="tc" value="#{fragmentListBean.totalCount}" />
 <c:set var="first" value="#{panelContext.firstItemOfCurPage()}" />
 <c:set var="last" value="#{panelContext.lastItemOfCurPage(tc)} " />
 <c:set var="curPage" value="#{panelContext.curPage+1} " />
