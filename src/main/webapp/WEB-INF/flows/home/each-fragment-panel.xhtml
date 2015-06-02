@@ -23,7 +23,8 @@
         </p:selectOneListbox>
     </div>
     <br /><br />
-    <p:selectBooleanButton value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" />
+    <!-- Using FontAwesome icons named "fa-sort-amount-asc", "fa-sort-amount-desc" -->
+    <p:inputSwitch value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" />
     <br />
     <p:commandButton action="sort-fragments" value="#{msg['label_go_sort']}" icon="ui-icon-check">
         <f:param name="panelId" value="#{panelId}"/>

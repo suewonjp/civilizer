@@ -45,13 +45,13 @@
     
     <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
-            <p:menuitem id="upload" styleClass="fa" oncomplete="showFileUploadDialog()" value="&#xf093;+ #{msg['label_upload_file']}"
+            <p:menuitem id="upload" styleClass="fa" oncomplete="showFileUploadDialog()" icon="fa fa-upload" value="+ #{msg['label_upload_file']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
-            <p:menuitem id="new-folder" styleClass="fa" onclick="showNewDirectoryDialog()" value="&#xf07c;+ #{msg['label_new_folder']}"/>
-            <p:menuitem id="rename" styleClass="fa" onclick="showRenameFileDialog()" value="&#xf040; #{msg['label_rename']}"/>
-            <p:menuitem id="move" styleClass="fa" oncomplete="showMoveFileDialog()" value="&#xf0c5; #{msg['label_move']}"
+            <p:menuitem id="new-folder" styleClass="fa" onclick="showNewDirectoryDialog()" icon="fa fa-folder-open-o" value="+ #{msg['label_new_folder']}"/>
+            <p:menuitem id="rename" styleClass="fa" onclick="showRenameFileDialog()" icon="fa fa-pencil" value="#{msg['label_rename']}"/>
+            <p:menuitem id="move" styleClass="fa" oncomplete="showMoveFileDialog()" icon="fa fa-files-o" value="#{msg['label_move']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
-            <p:menuitem id="delete" styleClass="fa" onclick="confirmDeletingFile()" value="&#xf1f8; #{msg['label_delete']}"/>
+            <p:menuitem id="delete" styleClass="fa" onclick="confirmDeletingFile()" icon="fa fa-trash" value="#{msg['label_delete']}"/>
 	    </p:menu>
     </div>
     

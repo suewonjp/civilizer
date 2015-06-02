@@ -121,11 +121,11 @@
     
     <div id="frg-context-menu" style="display:none; z-index:5000; position:absolute;">
 	    <p:menu>
-            <p:menuitem id="edit" styleClass="fa" onclick="openFragmentEditorForEdit(event)" value="&#xf040; #{msg['label_edit']}"/>
-            <p:menuitem id="bookmark" styleClass="fa" onclick="bookmarkFragmentFromCtxtMenu()" value="&#xf02e; #{msg['label_bookmark']}"/>
-            <p:menuitem id="trash" styleClass="fa" onclick="trashFragmentFromCtxtMenu(false)" value="&#xf1f8; #{msg['label_trash']}"/>
-            <p:menuitem id="delete" styleClass="fa" onclick="trashFragmentFromCtxtMenu(true)" value="&#xf1f8; #{msg['label_delete']}"/>
-            <p:menuitem id="restore" styleClass="fa" onclick="restoreFragmentFromCtxtMenu()" value="&#xf1b8; #{msg['label_restore']}"/>
+            <p:menuitem id="edit" styleClass="fa" onclick="openFragmentEditorForEdit(event)" icon="fa fa-edit" value="#{msg['label_edit']}"/>
+            <p:menuitem id="bookmark" styleClass="fa" onclick="bookmarkFragmentFromCtxtMenu()" icon="fa fa-bookmark" value="#{msg['label_bookmark']}"/>
+            <p:menuitem id="trash" styleClass="fa" onclick="trashFragmentFromCtxtMenu(false)" icon="fa fa-trash" value="#{msg['label_trash']}"/>
+            <p:menuitem id="delete" styleClass="fa" onclick="trashFragmentFromCtxtMenu(true)" icon="fa fa-trash" value="#{msg['label_delete']}"/>
+            <p:menuitem id="restore" styleClass="fa" onclick="restoreFragmentFromCtxtMenu()" icon="fa fa-recycle" value="#{msg['label_restore']}"/>
 	    </p:menu>
     </div>
     
