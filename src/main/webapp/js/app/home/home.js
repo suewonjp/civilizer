@@ -57,12 +57,6 @@ function translateFragments() {
     	var $this = $(this);
     	$this[0].title = formatDatetime($this.prev("span").text());
     });
-//
-//    // add a tooltip message of creation time to a birthday cake icon
-//    fg.find(".fragment-header").find(".fa-birthday-cake").each(function() {
-//        var $this = $(this);
-//        $this[0].title = formatDatetime($this.prev("span").text());
-//    });
     
     fg.find(".each-tag").each(function() {
     	formatTagsOnFragmentHeader($(this));
@@ -270,7 +264,6 @@ function translateCustomMarkupRules(html) {
 
 function translateFragmentContent(content) {
     // translate Markdown text into HTML;
-    // [NOTE] HTML code would be sanitized at this time;
 	var outputHtml = parseMarkdown(content);
 	
 	// take care of custom style rules
@@ -792,12 +785,6 @@ function addToggler(target, toggler) {
 	var icon = $("<span>").addClass("fa " + collapseIcon);
 	link.prepend(icon).click(function (event) {
 		toggler();
-// 		if (icon.hasClass(collapseIcon)) {
-// 			icon.removeClass(collapseIcon).addClass(expandIcon);
-// 		}
-// 		else {
-// 			icon.removeClass(expandIcon).addClass(collapseIcon);
-// 		}
 		icon.toggleClass(collapseIcon + " " + expandIcon);
 		event.preventDefault();
 	});	
