@@ -187,17 +187,17 @@ function setupFragmentCheckboxes() {
     var panelId;
     
     panelId = 0;
-    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelId)
+    fragmentCheckboxMaster = PrimeFaces.widgets["fragmentCheckboxMaster"+panelId];
     if (fragmentCheckboxMaster) {
     	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
     panelId = 1;
-    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelId)
+    fragmentCheckboxMaster = PrimeFaces.widgets["fragmentCheckboxMaster"+panelId];
     if (fragmentCheckboxMaster) {
     	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
     panelId = 2;
-    fragmentCheckboxMaster = PF("fragmentCheckboxMaster" + panelId)
+    fragmentCheckboxMaster = PrimeFaces.widgets["fragmentCheckboxMaster"+panelId];
     if (fragmentCheckboxMaster) {
     	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
     }
@@ -841,3 +841,13 @@ function onChangeFragmentCheckbox(fid, pid) {
 		tgt.hide();
 	}
 }
+
+//function onClickGoSort(event, panelId) {
+//    var dlg = PF("sortOptionDlg" + panelId)
+//    var cbCurPageOnly = dlg.jq.find("#cb-curpageonly"+panelId);
+//    if (cbCurPageOnly.prop("checked")) {
+//        event.preventDefault();
+//        event.stopPropagation();
+//        return false;
+//    }
+//}
