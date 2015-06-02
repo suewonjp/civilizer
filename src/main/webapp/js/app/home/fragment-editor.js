@@ -89,10 +89,6 @@ function clearFragmentEditor() {
     $("#fragment-editor-form\\:tags-input").autocomplete("widget").hide();
 }
 
-function parseMarkdown(inputText) {
-    return marked(inputText);
-}
-
 function openFragmentEditorForEdit(event) {
 	var menu = $("#frg-context-menu");
 	var target = menu.data("target-frg");

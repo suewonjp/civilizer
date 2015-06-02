@@ -32,15 +32,6 @@ function setContextMenuForFiles() {
     });
 }
 
-function isImage(fileExt) {
-	return (fileExt == ".png")
-		|| (fileExt == ".jpg")
-		|| (fileExt == ".gif")
-		|| (fileExt == ".bmp")
-		|| (fileExt == ".ico")
-		;
-}
-
 function processFileClasses(parent) {
 	parent.find(".-cvz-file").each(function () {
 		var $this = $(this);
