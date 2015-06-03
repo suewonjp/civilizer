@@ -265,11 +265,21 @@
     color: brown;
 }
 
-#bookmark-form\:bookmark-panel, #tag-palette-form\:tag-palette-container, #file-box-form\:file-box-panel {
+#bookmark-form\:bookmark-panel, #file-box-form\:file-box-panel {
 	max-height: 480px;
 	margin-bottom: 20px;
-	overflow: inherit;
 	overflow: auto;
+}
+
+#tag-palette-form\:tag-palette-container {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+#tag-palette-flat, #tag-palette-tree {
+    padding: 0px 0px 0px 8px;
+    max-height: 480px;
+    overflow: auto;
 }
 
 .each-bookmark {

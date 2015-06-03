@@ -125,13 +125,12 @@
 			    <p:commandLink onclick="fetchFragmentsByTag($(this).find('span'), null); event.preventDefault();"  title="#{msg['go_to_trashcan']}">
 			        <span class="fa fa-trash fa-2x button-link" _tid="0" style="color:lightgray"></span>
 			    </p:commandLink>
-			</div>
+			</div><br/>
 		    
 	        <div id="tag-palette-flat">
 	            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
 	                <c:set var="tag" value="#{tagBean.tag}"/>
 	                <ui:include src="each-tag.xhtml" />
-<!-- 	                <br/> -->
 	            </c:forEach>
 	        </div>
 	        <div id="tag-palette-tree">
