@@ -25,11 +25,11 @@
         <span class="fragment-title" _fid="#{fragment.id}">
             <h:outputText escape="false" value="#{fragmentBean.title}"/>
         </span>
-        <h:outputText style="display:none" value="#{fragment.updateDatetime}">
+        <h:outputText styleClass="-cvz-data-ut" style="display:none" value="#{fragment.updateDatetime}">
             <f:converter converterId="jodaDateTimeConverter"/>
         </h:outputText>
         <span class="fa fa-clock-o"></span>&nbsp;
-        <h:outputText style="display:none" value="#{fragment.creationDatetime}">
+        <h:outputText styleClass="-cvz-data-ct" style="display:none" value="#{fragment.creationDatetime}">
             <f:converter converterId="jodaDateTimeConverter"/>
         </h:outputText>
         <span class="fa fa-birthday-cake"></span>&nbsp;&nbsp;

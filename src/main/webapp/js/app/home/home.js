@@ -786,23 +786,36 @@ function onChangeFragmentCheckbox(fid, pid) {
 
 function sortFragments(fragments, panelId) {
     var optIdx = PF("frgSortOpt"+panelId).jq.find(".ui-state-highlight").index();
+    var sign = PF("orderAsc"+panelId).input[0].checked*2 - 1;
+    var fmt = MSG.date_time_format_js;
+    var locale = $("html").attr("lang");
     switch (optIdx) {
-    case 0: // sort by udpated time
+    case 0: // sort by updated time
+        fragments.sort(function(a, b) {
+            var aa = moment($(a).find(".-cvz-data-ut").text(), fmt, locale);
+            var bb = moment($(b).find(".-cvz-data-ut").text(), fmt, locale);
+            return sign*aa.diff(bb, "minutes");
+        });
         break;
     case 1: // sort by created time
+        fragments.sort(function(a, b) {
+            var aa = moment($(a).find(".-cvz-data-ct").text(), fmt, locale);
+            var bb = moment($(b).find(".-cvz-data-ct").text(), fmt, locale);
+            return sign*aa.diff(bb, "minutes");
+        });
         break;
     case 2: // sort by title
         fragments.sort(function(a, b) {
             var aa = $(a).find(".-cvz-data-title").text().toLowerCase();
             var bb = $(b).find(".-cvz-data-title").text().toLowerCase();
-            return (aa < bb) ? -1 : ((aa > bb) ? 1 : 0);
+            return sign*((aa < bb) ? -1 : ((aa > bb) ? 1 : 0));
         });
         break;
     case 3: // sort by id
         fragments.sort(function(a, b) {
-            var aa = $(a).find(".fragment-header").attr("_fid");
-            var bb = $(b).find(".fragment-header").attr("_fid");
-            return aa - bb;
+            var aa = parseInt($(a).find(".fragment-header").attr("_fid"), 10);
+            var bb = parseInt($(b).find(".fragment-header").attr("_fid"), 10);
+            return sign*(aa - bb);
         });
         break;
     default:

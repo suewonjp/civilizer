@@ -25,7 +25,7 @@
     </div>
     <br/><br/>
     <!-- Using FontAwesome icons named "fa-sort-amount-asc", "fa-sort-amount-desc" -->
-    <p:inputSwitch value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" />
+    <p:inputSwitch widgetVar="orderAsc#{panelId}" value="#{fragmentListBean.orderAsc}" styleClass="fa" onLabel="&#xf160;" offLabel="&#xf161;" />
     <br/>
     <input id="cb-curpageonly#{panelId}" type="checkbox"/>
     <span>#{msg['cur_page_only']}</span>
