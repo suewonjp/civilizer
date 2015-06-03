@@ -136,10 +136,10 @@ function setupFragmentOverlay() {
 	$("#fragment-group").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     
-    $("#fragment-overlay").draggable({
-    	handle:"#fragment-overlay-title-bar",
-        cursor:"move",
-    });
+//    $("#fragment-overlay").draggable({
+//    	handle:"#fragment-overlay-title-bar",
+//        cursor:"move",
+//    });
     
 	$("#fragment-overlay-title-bar").dblclick(function() {
     	toggleWindow($("#fragment-overlay"), $(this));
