@@ -15,12 +15,12 @@
 <c:set var="tc" value="#{fragmentListBean.totalCount}" />
 
 <p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" closeOnEscape="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
-    <div id="fragment-sort-option-container" >
-        <p:selectOneListbox value="#{fragmentListBean.orderOption}">
-            <f:selectItem itemLabel="#{msg['label_updated_time']}" itemValue="0" />
-            <f:selectItem itemLabel="#{msg['label_created_time']}" itemValue="1" />
-            <f:selectItem itemLabel="#{msg['label_title']}" itemValue="2" />
-            <f:selectItem itemLabel="#{msg['label_id']}" itemValue="3" />
+    <div id="fragment-sort-option-container#{panelId}">
+        <p:selectOneListbox widgetVar="frgSortOpt#{panelId}" value="#{fragmentListBean.orderOption}">
+            <f:selectItem itemLabel="#{msg['label_updated_time']}" itemValue="0"/>
+            <f:selectItem itemLabel="#{msg['label_created_time']}" itemValue="1"/>
+            <f:selectItem itemLabel="#{msg['label_title']}" itemValue="2"/>
+            <f:selectItem itemLabel="#{msg['label_id']}" itemValue="3"/>
         </p:selectOneListbox>
     </div>
     <br/><br/>
@@ -117,6 +117,4 @@
     </div>
 </c:forEach>
 
-<br/><br/><br/><br/>
-    
 </ui:composition>

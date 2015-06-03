@@ -181,7 +181,10 @@
     text-decoration: none;
 }
 
-#fragment-sort-option-container {
+#fragment-sort-option-container0 
+, #fragment-sort-option-container1 
+, #fragment-sort-option-container2 
+{
     height:100px;
     max-height:100px;
     display:inline-block;

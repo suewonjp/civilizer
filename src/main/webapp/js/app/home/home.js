@@ -784,11 +784,38 @@ function onChangeFragmentCheckbox(fid, pid) {
 	}
 }
 
+function sortFragments(fragments, panelId) {
+    var optIdx = PF("frgSortOpt"+panelId).jq.find(".ui-state-highlight").index();
+    switch (optIdx) {
+    case 0: // sort by udpated time
+        break;
+    case 1: // sort by created time
+        break;
+    case 2: // sort by title
+        fragments.sort(function(a, b) {
+            var aa = $(a).find(".-cvz-data-title").text().toLowerCase();
+            var bb = $(b).find(".-cvz-data-title").text().toLowerCase();
+            return (aa < bb) ? -1 : ((aa > bb) ? 1 : 0);
+        });
+        break;
+    case 3: // sort by id
+        fragments.sort(function(a, b) {
+            var aa = $(a).find(".fragment-header").attr("_fid");
+            var bb = $(b).find(".fragment-header").attr("_fid");
+            return aa - bb;
+        });
+        break;
+    default:
+        break;
+    }
+    fragments.detach().appendTo("#fragment-panel-"+panelId);
+}
+
 function onClickGoSort(panelId) {
     var dlg = PF("sortOptionDlg" + panelId)
     var cbCurPageOnly = dlg.jq.find("#cb-curpageonly"+panelId);
     if (cbCurPageOnly.prop("checked")) {
-        // [TODO] sort fragments of the current page
+        sortFragments($("#fragment-panel-"+panelId+" .each-fragment-container"), panelId);
         dlg.hide();
     }
     else {
