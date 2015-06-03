@@ -271,10 +271,19 @@ function unsanitizeHtml(content) {
     content.find(".-cvz-html").each(function() {
         var $this = $(this);
         var res = $this.text()
-            .replace(/&lt;/g, "<")
-            .replace(/&gt;/g, ">")
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;/g, "'");
+            .replace(/<(\/?)(.+)>/g, function(match, cg1, cg2, pos, originalText) {
+//                var cg1 = RegExp.$1;
+//                var cg2 = RegExp.$2;
+                if (cg2.indexOf("html") == 0
+                   || cg2.indexOf("head") == 0
+                   || cg2.indexOf("body") == 0
+                   || cg2.indexOf("link") == 0
+                   || cg2.indexOf("script") == 0
+                   )
+                    // these tags should be sanitized for safety
+                    return "&lt;"+cg1+cg2+"&gt";
+                return match;
+            });
         $this.text(null).html(res);
     });
 }
