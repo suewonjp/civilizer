@@ -17,7 +17,7 @@ function setupParser() {
 		tables: true,
 		breaks: false,
 		pedantic: false,
-		sanitize: SYSPROP.sanitizeHtml,
+		sanitize: true,
 		smartLists: true,
 		smartypants: false,
 	});
@@ -207,17 +207,20 @@ function setupFragmentCheckboxes() {
 
 function translateCustomMarkupRules(html) {
 	// format  =>   {{[keyword] ... text ... }}
-	var found = false;
-	html = html.replace(/\{\{\[(.+?)\]/g, function(match, pos, originalText) {
-		found = true;
-		return "<span class='-cvz-" + RegExp.$1 + "'>"; 
-	});
-	if (found) {
-		html = html.replace(/\}\}/g, function(match, pos, originalText) {
-			return "</span>"; 
-		});
-	}
-	return html;
+	return html
+    	.replace(/\{\{\{\[(.+?)\]/g, function(match, pos, originalText) {
+    	    return "<div class='-cvz-" + RegExp.$1 + "'>"; 
+    	})
+    	.replace(/\}\}\}/g, function(match, pos, originalText) {
+    	    return "</div>";
+    	})
+    	.replace(/\{\{\[(.+?)\]/g, function(match, pos, originalText) {
+    		return "<span class='-cvz-" + RegExp.$1 + "'>"; 
+    	})
+    	.replace(/\}\}/g, function(match, pos, originalText) {
+    		return "</span>";
+    	})
+    	;
 // 	var patt = /\{\{\[(.+?)\](.*?)\}\}/g;
 // 	return html.replace(patt, function(match, pos, originalText) {
 // 		var cg1 = RegExp.$1;
@@ -264,6 +267,18 @@ function processEmbeddedFragments(content) {
 	})
 }
 
+function unsanitizeHtml(content) {
+    content.find(".-cvz-html").each(function() {
+        var $this = $(this);
+        var res = $this.text()
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'");
+        $this.text(null).html(res);
+    });
+}
+
 function postprocessFragmentContent(content) {
 	// translate embedded fragemnts
 	// Rule - {{[frgm-embed]...}}
@@ -276,6 +291,10 @@ function postprocessFragmentContent(content) {
     // translate file box elements into HTML links
     // Rule - {{[file]...}}
     processFileClasses(content);
+    
+    // unsanitize HTML code if any
+    // Rule - {{[html]...}}
+    unsanitizeHtml(content);
 }
 
 function setupDragAndDrop() {
