@@ -45,21 +45,5 @@ public final class FragmentSelectionBean implements Serializable {
     public boolean contains(long id) {
         return fragmentIds.contains(id);
     }
-    
-//    public static List<FragmentBean> selectFragmentBeans(Collection<FragmentBean> srcList, Collection<Long> selectionIds) {
-//        List<FragmentBean> output = new ArrayList<>();
-//        for (long id : selectionIds) {
-//            for (FragmentBean fb : srcList) {
-//                if (fb.getFragment().getId() == id) {
-//                    output.add(fb);
-//                }
-//            }
-//        }
-//        return output;
-//    }
-//    
-//    public List<FragmentBean> selectFragmentBeans(Collection<FragmentBean> srcList) {
-//        return selectFragmentBeans(srcList, fragmentIds);
-//    }
 
 }
