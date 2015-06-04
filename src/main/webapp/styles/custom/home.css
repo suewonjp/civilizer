@@ -3,15 +3,14 @@
 }
 
 #fragment-group {
-	margin-top: 15px;
-	margin-left: 2px;
+	margin: 15px 0px 0px 2px;
 }
 
 #fragment-panel-0, #fragment-panel-1, #fragment-panel-2 {
     width: 30%;
     max-height: 1200px;
     float: left;
-    margin-right: 30px;
+    margin: 0px 30px 60px 0px;
     overflow: auto;
 }
 
