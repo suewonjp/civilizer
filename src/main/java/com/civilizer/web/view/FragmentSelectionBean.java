@@ -8,10 +8,12 @@ public final class FragmentSelectionBean implements Serializable {
     
     private List<Long> fragmentIds = Collections.emptyList();
 
+    private List<String> fragmentTitles = Collections.emptyList();
+    
     public List<Long> getFragmentIds() {
         return fragmentIds;
     }
-
+    
     public void setFragmentIds(List<Long> fragmentIds) {
         this.fragmentIds = fragmentIds;
     }
@@ -25,6 +27,14 @@ public final class FragmentSelectionBean implements Serializable {
     
     public void removeFragmentId(long id) {
         fragmentIds.remove(id);
+    }
+    
+    public List<String> getFragmentTitles() {
+        return fragmentTitles;
+    }
+
+    public void setFragmentTitles(List<String> fragmentTitles) {
+        this.fragmentTitles = fragmentTitles;
     }
     
     public boolean contains(long id) {

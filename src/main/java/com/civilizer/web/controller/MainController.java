@@ -269,24 +269,43 @@ public final class MainController {
 		}
 	}
 	
-	public SpecialTagBean newBookmarkTagBean() {
-		final SpecialTagBean tagBean = new SpecialTagBean();
+	public FragmentSelectionBean newBookmarkTagBean() {
+		final FragmentSelectionBean output = new FragmentSelectionBean();
 		
 		final Tag tag = getBookmarkTag();
-		tagBean.setTag(tag);
 		
 		final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), false);
 		Fragment.sort(fragments, FragmentOrder.TITLE, true);
-		final List<FragmentBean> fbs = new ArrayList<FragmentBean>();
+		final List<Long> ids = new ArrayList<>();
+		final List<String> titles = new ArrayList<>();
 		for (Fragment fragment : fragments) {
-			final FragmentBean fb = new FragmentBean();
-			fb.setFragment(fragment);
-			fbs.add(fb);
+			ids.add(fragment.getId());
+			titles.add(fragment.getTitle());
 		}
-		tagBean.setFragmentBeans(fbs);
+		output.setFragmentIds(ids);
+		output.setFragmentTitles(titles);
 		
-		return tagBean;
+		return output;
 	}
+
+//	public SpecialTagBean newBookmarkTagBean() {
+//	    final SpecialTagBean tagBean = new SpecialTagBean();
+//	    
+//	    final Tag tag = getBookmarkTag();
+//	    tagBean.setTag(tag);
+//	    
+//	    final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), false);
+//	    Fragment.sort(fragments, FragmentOrder.TITLE, true);
+//	    final List<FragmentBean> fbs = new ArrayList<FragmentBean>();
+//	    for (Fragment fragment : fragments) {
+//	        final FragmentBean fb = new FragmentBean();
+//	        fb.setFragment(fragment);
+//	        fbs.add(fb);
+//	    }
+//	    tagBean.setFragmentBeans(fbs);
+//	    
+//	    return tagBean;
+//	}
 	
 	private TagTree newTagTree() {
 		final TagTree tagTree = new TagTree();

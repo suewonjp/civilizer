@@ -17,13 +17,25 @@
 	    </p:menu>
     </div>
     
+<!-- 	<p:panel id="bookmark-panel" toggleable="true" widgetVar="bookmarkPanel"> -->
+<!-- 		<c:forEach var="fragmentBean" items="#{bookmarkTagBean.fragmentBeans}" varStatus="loop"> -->
+<!-- 		    <c:set var="fragment" value="#{fragmentBean.fragment}" /> -->
+<!-- 		    <span class="small-fragment-box each-bookmark notxtslct" _bid="#{fragment.id}" _ft="#{fragment.title}" title="#{msg['rclick_for_menu']}"> -->
+<!-- 	            <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a> -->
+<!-- 	            &nbsp; -->
+<!-- 	            <h:outputText value="#{fragment.title}" /> -->
+<!-- 	        </span> -->
+<!-- 	        <br/> -->
+<!-- 		</c:forEach> -->
+<!-- 	</p:panel> -->
+
 	<p:panel id="bookmark-panel" toggleable="true" widgetVar="bookmarkPanel">
-		<c:forEach var="fragmentBean" items="#{bookmarkTagBean.fragmentBeans}" varStatus="loop">
-		    <c:set var="fragment" value="#{fragmentBean.fragment}" />
-		    <span class="small-fragment-box each-bookmark notxtslct" _bid="#{fragment.id}" _ft="#{fragment.title}" title="#{msg['rclick_for_menu']}">
-	            <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
+		<c:forEach var="frgId" items="#{bookmarkTagBean.fragmentIds}" varStatus="loop">
+		    <c:set var="frgTitle" value="#{bookmarkTagBean.fragmentTitles[loop.index]}" />
+		    <span class="small-fragment-box each-bookmark notxtslct" _bid="#{frgId}" _ft="#{frgTitle}" title="#{msg['rclick_for_menu']}">
+	            <a class="-cvz-frgm" href="fragment/#{frgId}">\##{frgId}</a>
 	            &nbsp;
-	            <h:outputText value="#{fragment.title}" />
+	            <h:outputText value="#{frgTitle}" />
 	        </span>
 	        <br/>
 		</c:forEach>
