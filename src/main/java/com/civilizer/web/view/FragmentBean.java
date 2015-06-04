@@ -28,12 +28,11 @@ public final class FragmentBean implements Serializable {
 	}
 
 	public void setChecked(boolean checked) {
-	    final long id = fragment.getId();
 	    if (fragmentSelectionBean != null) {
 	        if (checked)
-	            fragmentSelectionBean.addFragmentId(id);
+	            fragmentSelectionBean.addFragment(fragment);
 	        else
-	            fragmentSelectionBean.removeFragmentId(id);
+	            fragmentSelectionBean.removeFragment(fragment);
 	    }
 	}
 

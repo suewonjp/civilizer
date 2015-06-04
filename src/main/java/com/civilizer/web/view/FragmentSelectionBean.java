@@ -3,6 +3,8 @@ package com.civilizer.web.view;
 import java.io.Serializable;
 import java.util.*;
 
+import com.civilizer.domain.Fragment;
+
 @SuppressWarnings("serial")
 public final class FragmentSelectionBean implements Serializable {
     
@@ -18,23 +20,26 @@ public final class FragmentSelectionBean implements Serializable {
         this.fragmentIds = fragmentIds;
     }
     
-    public void addFragmentId(long id) {
-        if (fragmentIds.equals(Collections.emptyList())) {
-            fragmentIds = new ArrayList<>();
-        }
-        fragmentIds.add(id);
-    }
-    
-    public void removeFragmentId(long id) {
-        fragmentIds.remove(id);
-    }
-    
     public List<String> getFragmentTitles() {
         return fragmentTitles;
     }
 
     public void setFragmentTitles(List<String> fragmentTitles) {
         this.fragmentTitles = fragmentTitles;
+    }
+    
+    public void addFragment(Fragment fragment) {
+        if (fragmentIds.equals(Collections.emptyList())) {
+            fragmentIds = new ArrayList<>();
+            fragmentTitles = new ArrayList<>();
+        }
+        fragmentIds.add(fragment.getId());
+        fragmentTitles.add(fragment.getTitle());
+    }
+    
+    public void removeFragment(Fragment fragment) {
+        fragmentIds.remove(fragment.getId());
+        fragmentTitles.remove(fragment.getTitle());
     }
     
     public boolean contains(long id) {
