@@ -44,6 +44,15 @@ public final class FragmentListBean implements Serializable {
     	return fragmentBeans.get(index);
     }
 
+	public FragmentBean getFragmentBeanById(long id) {
+	    for (FragmentBean fb : fragmentBeans) {
+            if (fb.getFragment().getId() == id) {
+                return fb;
+            }
+        }
+	    return null;
+	}
+
 	public boolean hasFragments() {
 		return !fragmentBeans.isEmpty();
 	}

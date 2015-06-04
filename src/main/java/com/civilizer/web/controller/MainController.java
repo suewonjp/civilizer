@@ -101,14 +101,15 @@ public final class MainController {
 					pcb : null;
 			final SearchContextBean sc = (scb != null && scb.getPanelId() == i) ?
 					scb : null;
-			populateFragmentListBean(flbs.get(i), pc, sc);
+			populateFragmentListBean(flbs.get(i), pc, sc, rc);
 		}
 	}
 
-	private FragmentListBean populateFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb, SearchContextBean scb) {
+	private FragmentListBean populateFragmentListBean(FragmentListBean existingFlb, PanelContextBean pcb, SearchContextBean scb, RequestContext rc) {
         final FragmentListBean flb = existingFlb;
         final PanelContextBean oldPcb = flb.getPanelContextBean();
         final PanelContextBean paramPcb = pcb;
+        final FragmentSelectionBean fsb = (FragmentSelectionBean) rc.getFlowScope().get("fragmentSelectionBean");
         
         if (pcb == null) {
         	pcb = oldPcb;
@@ -175,7 +176,7 @@ public final class MainController {
         final int c = Math.min(count, fragments.size());
        	for (int i=0; i<c; ++i) {
        		Fragment f = fragments.get(i);
-        	fragmentBeans.add(newFragmentBean(f, sp));
+        	fragmentBeans.add(newFragmentBean(f, sp, fsb));
         }
        	if (fragmentBeans.isEmpty()) {
        		fragmentBeans = Collections.emptyList();
@@ -185,9 +186,10 @@ public final class MainController {
         return flb;
     }
 
-	public FragmentBean newFragmentBean(Fragment f, SearchParams sp) {
+	private FragmentBean newFragmentBean(Fragment f, SearchParams sp, FragmentSelectionBean fsb) {
 	    FragmentBean fb = new FragmentBean();
         fb.setFragment(f);
+        fb.setFragmentSelectionBean(fsb);
         
         String title = f.getTitle();
         String content = f.getContent();
@@ -306,6 +308,10 @@ public final class MainController {
 	
 	public SearchContextBean newSearchContextBean() {
 	    return new SearchContextBean();
+	}
+	
+	public FragmentSelectionBean newFragmentSelectionBean() {
+	    return new FragmentSelectionBean();
 	}
 
 	public void bookmarkFragment(Long fragmentId) {
@@ -759,7 +765,7 @@ public final class MainController {
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
     public String onRequestForFragment(ModelMap model, @PathVariable Long fragmentId) {
     	final Fragment frg = fragmentDao.findById(fragmentId, true, true);
-    	final FragmentBean fb = newFragmentBean(frg, null);
+    	final FragmentBean fb = newFragmentBean(frg, null, null);
     	model.addAttribute("fragmentBean", fb);
     	return "fragment";
     }

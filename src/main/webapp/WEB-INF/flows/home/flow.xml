@@ -15,6 +15,7 @@
         <evaluate expression="mainController.newTagBean()" result="flowScope.paramTagBean"/>
         <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         <evaluate expression="mainController.newSearchContextBean()" result="flowScope.searchContextBean"/>
+        <evaluate expression="mainController.newFragmentSelectionBean()" result="flowScope.fragmentSelectionBean"/>
     </on-start>
     
     <view-state id="home" view="home.xhtml">

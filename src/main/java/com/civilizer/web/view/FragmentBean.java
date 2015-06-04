@@ -2,6 +2,8 @@ package com.civilizer.web.view;
 
 import java.io.Serializable;
 
+import javax.persistence.Transient;
+
 import com.civilizer.domain.Fragment;
 
 @SuppressWarnings("serial")
@@ -15,14 +17,24 @@ public final class FragmentBean implements Serializable {
     
     private String concatenatedTagNames;
     
-    private boolean checked = false;
+    @Transient
+    private FragmentSelectionBean fragmentSelectionBean;
     
     public boolean isChecked() {
-		return checked;
+        if (fragmentSelectionBean != null) {
+            return fragmentSelectionBean.contains(fragment.getId());
+        }
+        return false;
 	}
 
 	public void setChecked(boolean checked) {
-		this.checked = checked;
+	    final long id = fragment.getId();
+	    if (fragmentSelectionBean != null) {
+	        if (checked)
+	            fragmentSelectionBean.addFragmentId(id);
+	        else
+	            fragmentSelectionBean.removeFragmentId(id);
+	    }
 	}
 
     public Fragment getFragment() {
@@ -56,7 +68,11 @@ public final class FragmentBean implements Serializable {
 	public void setConcatenatedTagNames(String concatenatedTagNames) {
 		this.concatenatedTagNames = concatenatedTagNames;
 	}
-
+	
+	public void setFragmentSelectionBean(FragmentSelectionBean fsb) {
+	    fragmentSelectionBean = fsb;
+	}
+	
 	public void clear() {
         setConcatenatedTagNames("");
         if (fragment != null) {
