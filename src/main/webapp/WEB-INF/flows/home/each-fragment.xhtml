@@ -18,7 +18,9 @@
             </c:when>
             <c:otherwise>
                 <p:selectBooleanCheckbox onchange="onChangeFragmentCheckbox('#{fragment.id}', '#{panelId}')" value="#{fragmentBean.checked}" 
-                    itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}"/>
+                    itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}">
+                    <p:ajax update=":selection-box-form:selection-box-panel" />
+                </p:selectBooleanCheckbox>
                 <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
             </c:otherwise>
         </c:choose>

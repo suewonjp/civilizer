@@ -248,7 +248,7 @@
     font-style: bold;
 }
 
-#bookmark-title, #tag-palette-title, #file-box-title {
+#bookmark-title, #tag-palette-title, #selection-box-title, #file-box-title {
     margin: 10px 10px 10px 10px;
 }
 
@@ -260,11 +260,15 @@
     color: green;
 }
 
+#selection-box-title {
+    color: coral;
+}
+
 #file-box-title {
     color: brown;
 }
 
-#bookmark-form\:bookmark-panel, #file-box-form\:file-box-panel {
+#bookmark-form\:bookmark-panel, #selection-box-form\:selection-box-panel, #file-box-form\:file-box-panel {
 	max-height: 480px;
 	margin-bottom: 20px;
 	overflow: auto;
@@ -281,7 +285,7 @@
     overflow: auto;
 }
 
-.each-bookmark {
+.each-bookmark, .each-selected-frg {
 	cursor:default;
 }
 

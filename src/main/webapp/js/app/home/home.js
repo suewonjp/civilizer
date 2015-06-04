@@ -135,6 +135,7 @@ function triggerFragmentOverlay(event) {
 function setupFragmentOverlay() {
 	$("#fragment-group").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
+    $("#selection-box-form\\:selection-box-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
     
 //    $("#fragment-overlay").draggable({
 //    	handle:"#fragment-overlay-title-bar",
@@ -779,14 +780,19 @@ function makeSidebarTitleToggleable() {
     var bookmarkPanel = PF('bookmarkPanel');
     var tagPalettePanel = PF('tagPalettePanel');
     var fileBoxPanel = PF('fileBoxPanel');
-    
-	var bmLink = addToggler($("#bookmark-title"), function() {
+    var selectionBoxPanel = PF('selectionBoxPanel');
+
+    var bmLink = addToggler($("#bookmark-title"), function() {
 		bookmarkPanel.toggle();
 		sessionStorage.setItem("bookmarkOpen", bookmarkPanel.cfg.collapsed ? "no":"yes");
 	});
 	var tpLink = addToggler($("#tag-palette-title"), function() {
 	    tagPalettePanel.toggle();
 	    sessionStorage.setItem("tagPaletteOpen", tagPalettePanel.cfg.collapsed ? "no":"yes");
+	});
+	var sbLink = addToggler($("#selection-box-title"), function() {
+	    selectionBoxPanel.toggle();
+	    sessionStorage.setItem("selectionBoxOpen", selectionBoxPanel.cfg.collapsed ? "no":"yes");
 	});
 	var fbLink = addToggler($("#file-box-title"), function() {
 	    fileBoxPanel.toggle();
@@ -797,6 +803,8 @@ function makeSidebarTitleToggleable() {
 	    bmLink.trigger("click");
 	if (sessionStorage.getItem("tagPaletteOpen") === "no")
 	    tpLink.trigger("click");
+	if (sessionStorage.getItem("selectionBoxPanel") === "no")
+	    sbLink.trigger("click");
 	if (sessionStorage.getItem("fileBoxOpen") === "no")
 	    fbLink.trigger("click");
 }
