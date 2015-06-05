@@ -389,16 +389,6 @@ public final class MainController {
 	    fsb.clear();
 	}
 	
-//	public void trashFragments(FragmentListBean flb) {
-//		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
-//		for (FragmentBean fb : fragmentBeans) {
-//			if (!fb.isChecked()) {
-//				continue;
-//			}
-//			trashFragment(fb.getFragment().getId());
-//		}
-//	}
-
 	private void deleteFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId);
 		try {
@@ -414,16 +404,6 @@ public final class MainController {
 	public void deleteFragment(FragmentBean fb) {
 		deleteFragment(fb.getFragment().getId());
 	}
-	
-//	public void deleteFragments(FragmentListBean flb) {
-//		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
-//		for (FragmentBean fb : fragmentBeans) {
-//			if (!fb.isChecked()) {
-//				continue;
-//			}
-//			deleteFragment(fb.getFragment().getId());
-//		}
-//	}
 	
 	public void emptyTrash() {
         final Tag tag = getTrashcanTag();

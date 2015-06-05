@@ -222,17 +222,6 @@ function translateCustomMarkupRules(html) {
     		return "</span>";
     	})
     	;
-// 	var patt = /\{\{\[(.+?)\](.*?)\}\}/g;
-// 	return html.replace(patt, function(match, pos, originalText) {
-// 		var cg1 = RegExp.$1;
-// 		var cg2 = RegExp.$2;
-// 		while (patt.test(cg2)) {
-// 			cg2 = cg2.replace(patt, function(match_, pos_, originalText_) {
-// 				return "<span class='-cvz-" + RegExp.$1 + "'>" + RegExp.$2 + "</span>";
-// 			});
-// 		}
-//         return "<span class='-cvz-" + cg1 + "'>" + cg2 + "</span>";
-//     });
 }
 
 function translateFragmentContent(content) {
@@ -406,7 +395,6 @@ function setupDndForTrashing() {
 	       	var deleting = FRAGMENT_DELETABLE[panelId];
         	var frgId = from.attr("_fid");
         	confirmTrashingFragments(frgId, deleting);
-//        	confirmTrashingFragments(frgId, deleting, false, null);
         }
         else if (from.hasClass("each-tag")) {
         	confirmTrashingTag(from.attr("_tid"), Boolean(from.attr("_frgCount") == 0));
@@ -507,19 +495,6 @@ function showSortOptionDialog(panelId) {
 	PF("sortOptionDlg" + panelId).show();
 }
 
-//function fragmentCheckBoxesAreChecked(panelId) {
-//	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
-//    if (fragmentCount > 0) {
-//        for (var j=0; j<fragmentCount; ++j) {
-//            var cb = PF("fragmentCheckboxSlave" + panelId + "_" + j);
-//            if (cb.isChecked()) {
-//            	return true;
-//            }
-//        }
-//    }
-//    return false;
-//}
-
 function getFragmentTitle(frgId) {
 	var title = $("#fragment-group").find(".fragment-title[_fid=" + frgId + "]");
 	return (title.length > 0) ? title.eq(0).text() : "";
@@ -599,36 +574,6 @@ function confirmTrashingFragments(frgId, deleting) {
     
     $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
 }
-
-//function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
-//    if (bulk) {
-//        if (fragmentCheckBoxesAreChecked(panelId) == false) {
-//            showError(MSG.no_item_is_selected);
-//            return;
-//        }
-//    }
-//    
-//    var op = deleting ? "delete" : "trash";
-//    var s = bulk ? "s" : "";
-//    $("#fragment-group-form\\:ok").click(function() {
-//        document.forms["fragment-group-form"]["fragment-group-form:ok-"+ op +"-fragment" + s].click();
-//    });
-//    
-//    var mainMsg;
-//    if (deleting)
-//        mainMsg = $("<span style='color:orangered'>"+MSG.confirm_deleting+"</span>");
-//    else
-//        mainMsg = MSG.confirm_trashing;	
-//    var subMsg = "\n#" + frgId + "  " + getFragmentTitle(frgId);
-//    showConfirmDlg(mainMsg, subMsg, "fa-trash", "orangered");
-//    
-//    if (bulk) {
-//        $("#fragment-group-form\\:id-placeholder-for-panel").val(panelId);
-//    }
-//    else {
-//        $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
-//    }
-//}
 
 function confirmRestoringFragments(frgId) {
     $("#fragment-group-form\\:ok").click(function() {
@@ -736,9 +681,7 @@ function trashFragmentFromCtxtMenu(deleting) {
 	var menu = $("#frg-context-menu");
 	var target = menu.data("target-frg");
 	var frgId = target.attr("_fid");
-//	var panelId = findPanel(target);
-//	
-//	confirmTrashingFragments(frgId, deleting, false, panelId);
+
 	confirmTrashingFragments(frgId, deleting);
 }
 
@@ -847,17 +790,6 @@ function makeSidebarTitleToggleable() {
 	if (sessionStorage.getItem("fileBoxOpen") === "no")
 	    fbLink.trigger("click");
 }
-
-//function onChangeFragmentCheckbox(fid, pid) {
-//	var checked = fragmentCheckBoxesAreChecked(pid);
-//	var tgt = $("#fragment-group-form\\:fragment-panel-toolbar-" + pid).find(".fa-trash");
-//	if (checked) {
-//		tgt.show();
-//	}
-//	else {
-//		tgt.hide();
-//	}
-//}
 
 function sortFragments(fragments, panelId) {
     var optIdx = PF("frgSortOpt"+panelId).jq.find(".ui-state-highlight").index();

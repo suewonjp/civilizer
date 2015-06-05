@@ -85,19 +85,6 @@
             <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_empty_trash']}"></span>
         </p:commandLink>
     </c:if>
-    
-<!--     <c:choose> -->
-<!--         <c:when test="#{panelContext.fragmentDeletable}"> -->
-<!--             <p:commandLink oncomplete="confirmTrashingFragments(null, true, true, '#{panelId}')" > -->
-<!--                 <span class="fa fa-trash fa-2x button-link warning-color" style="display:none" title="#{msg['label_delete']}"></span> -->
-<!--             </p:commandLink> -->
-<!--         </c:when> -->
-<!--         <c:otherwise> -->
-<!--             <p:commandLink oncomplete="confirmTrashingFragments(null, false, true, '#{panelId}')" > -->
-<!--                 <span class="fa fa-trash fa-2x button-link" style="display:none" title="#{msg['label_trash']}"></span> -->
-<!--             </p:commandLink> -->
-<!--         </c:otherwise> -->
-<!--     </c:choose> -->
 </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 
 <c:set var="first" value="#{panelContext.firstItemOfCurPage()}" />
