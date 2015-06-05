@@ -65,14 +65,19 @@
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
-        <transition on="trash-fragments" to="home">
-            <evaluate expression="mainController.trashFragments(fragmentListBeans[customParams.panelId])" />
-            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
-            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
-        </transition>
+<!--         <transition on="trash-fragments" to="home"> -->
+<!--             <evaluate expression="mainController.trashFragments(fragmentListBeans[customParams.panelId])" /> -->
+<!--             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/> -->
+<!--             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/> -->
+<!--         </transition> -->
 
-        <transition on="delete-fragments" to="home">
-            <evaluate expression="mainController.deleteFragments(fragmentListBeans[customParams.panelId])" />
+<!--         <transition on="delete-fragments" to="home"> -->
+<!--             <evaluate expression="mainController.deleteFragments(fragmentListBeans[customParams.panelId])" /> -->
+<!--             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/> -->
+<!--         </transition> -->
+
+        <transition on="empty-trash" to="home">
+            <evaluate expression="mainController.emptyTrash()" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 

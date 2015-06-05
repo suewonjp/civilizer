@@ -420,6 +420,21 @@ public final class MainController {
 		}
 	}
 	
+	public void emptyTrash() {
+        final Tag tag = getTrashcanTag();
+        final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), true);
+        try {
+            for (Fragment frg : fragments) {
+                fragmentDao.delete(frg);
+            }
+            ViewUtil.addMessage("Trash emptied", "", null);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            ViewUtil.addMessage("Error on emptying trash!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }            
+	}
+	
 	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
 		final String tagNames = fb.getConcatenatedTagNames();
 		final Set<Tag> tags = saveTagsWhenSavingFragment(tagListBean, tagNames);
