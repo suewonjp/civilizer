@@ -65,6 +65,12 @@
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
 
+        <transition on="trash-fragments" to="home">
+            <evaluate expression="mainController.trashFragments(flowScope.fragmentSelectionBean)" />
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
+            <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
+        </transition>
+        
 <!--         <transition on="trash-fragments" to="home"> -->
 <!--             <evaluate expression="mainController.trashFragments(fragmentListBeans[customParams.panelId])" /> -->
 <!--             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/> -->

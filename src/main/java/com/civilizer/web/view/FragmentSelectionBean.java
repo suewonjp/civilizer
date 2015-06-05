@@ -33,13 +33,21 @@ public final class FragmentSelectionBean implements Serializable {
             fragmentIds = new ArrayList<>();
             fragmentTitles = new ArrayList<>();
         }
-        fragmentIds.add(fragment.getId());
-        fragmentTitles.add(fragment.getTitle());
+        final long id = fragment.getId();
+        if (! fragmentIds.contains(id)) {
+            fragmentIds.add(fragment.getId());
+            fragmentTitles.add(fragment.getTitle());
+        }
     }
-    
+            
     public void removeFragment(Fragment fragment) {
         fragmentIds.remove(fragment.getId());
         fragmentTitles.remove(fragment.getTitle());
+    }
+    
+    public void clear() {
+        fragmentIds.clear();
+        fragmentTitles.clear();
     }
     
     public boolean contains(long id) {

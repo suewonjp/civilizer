@@ -507,18 +507,18 @@ function showSortOptionDialog(panelId) {
 	PF("sortOptionDlg" + panelId).show();
 }
 
-function fragmentCheckBoxesAreChecked(panelId) {
-	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
-    if (fragmentCount > 0) {
-        for (var j=0; j<fragmentCount; ++j) {
-            var cb = PF("fragmentCheckboxSlave" + panelId + "_" + j);
-            if (cb.isChecked()) {
-            	return true;
-            }
-        }
-    }
-    return false;
-}
+//function fragmentCheckBoxesAreChecked(panelId) {
+//	var fragmentCount = $("#fragment-panel-" + panelId + " .each-fragment-container").length;
+//    if (fragmentCount > 0) {
+//        for (var j=0; j<fragmentCount; ++j) {
+//            var cb = PF("fragmentCheckboxSlave" + panelId + "_" + j);
+//            if (cb.isChecked()) {
+//            	return true;
+//            }
+//        }
+//    }
+//    return false;
+//}
 
 function getFragmentTitle(frgId) {
 	var title = $("#fragment-group").find(".fragment-title[_fid=" + frgId + "]");
@@ -848,16 +848,16 @@ function makeSidebarTitleToggleable() {
 	    fbLink.trigger("click");
 }
 
-function onChangeFragmentCheckbox(fid, pid) {
-	var checked = fragmentCheckBoxesAreChecked(pid);
-	var tgt = $("#fragment-group-form\\:fragment-panel-toolbar-" + pid).find(".fa-trash");
-	if (checked) {
-		tgt.show();
-	}
-	else {
-		tgt.hide();
-	}
-}
+//function onChangeFragmentCheckbox(fid, pid) {
+//	var checked = fragmentCheckBoxesAreChecked(pid);
+//	var tgt = $("#fragment-group-form\\:fragment-panel-toolbar-" + pid).find(".fa-trash");
+//	if (checked) {
+//		tgt.show();
+//	}
+//	else {
+//		tgt.hide();
+//	}
+//}
 
 function sortFragments(fragments, panelId) {
     var optIdx = PF("frgSortOpt"+panelId).jq.find(".ui-state-highlight").index();

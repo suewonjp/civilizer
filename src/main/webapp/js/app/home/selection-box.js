@@ -1,3 +1,7 @@
+function onAjaxCompleteForSelectionBox() {
+    setContextMenuForSelections();
+}
+
 function setContextMenuForSelections() {
     var menu = $("#selection-box-context-menu");
     
@@ -35,7 +39,12 @@ function confirmRelatingSelectedFragments() {
 }
 
 function confirmTrashingSelectedFragments() {
+    $("#fragment-group-form\\:ok").click(function() {
+        document.forms["fragment-group-form"]["fragment-group-form:ok-trash-fragments"].click();
+    });
     
+    var mainMsg = MSG.confirm_trashing; 
+    showConfirmDlg(mainMsg, null, "fa-trash", "orangered");
 }
 
 function selectOrUnselectFragment() {

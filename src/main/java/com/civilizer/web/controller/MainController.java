@@ -384,15 +384,20 @@ public final class MainController {
 		}
 	}
 
-	public void trashFragments(FragmentListBean flb) {
-		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
-		for (FragmentBean fb : fragmentBeans) {
-			if (!fb.isChecked()) {
-				continue;
-			}
-			trashFragment(fb.getFragment().getId());
-		}
+	public void trashFragments(FragmentSelectionBean fsb) {
+	    trashFragments(fsb.getFragmentIds());
+	    fsb.clear();
 	}
+	
+//	public void trashFragments(FragmentListBean flb) {
+//		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
+//		for (FragmentBean fb : fragmentBeans) {
+//			if (!fb.isChecked()) {
+//				continue;
+//			}
+//			trashFragment(fb.getFragment().getId());
+//		}
+//	}
 
 	private void deleteFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId);
@@ -410,15 +415,15 @@ public final class MainController {
 		deleteFragment(fb.getFragment().getId());
 	}
 	
-	public void deleteFragments(FragmentListBean flb) {
-		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
-		for (FragmentBean fb : fragmentBeans) {
-			if (!fb.isChecked()) {
-				continue;
-			}
-			deleteFragment(fb.getFragment().getId());
-		}
-	}
+//	public void deleteFragments(FragmentListBean flb) {
+//		final Collection<FragmentBean> fragmentBeans = flb.getFragmentBeans();
+//		for (FragmentBean fb : fragmentBeans) {
+//			if (!fb.isChecked()) {
+//				continue;
+//			}
+//			deleteFragment(fb.getFragment().getId());
+//		}
+//	}
 	
 	public void emptyTrash() {
         final Tag tag = getTrashcanTag();
