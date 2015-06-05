@@ -542,8 +542,13 @@ function showError(message) {
 function showConfirmDlg(mainMsg, subMsg, icon, color) {
 	var dlg = PF("confirmDlg");
 	var msg = dlg.jq.find(".ui-confirm-dialog-message");
-    msg.text(mainMsg).next().remove();
-    
+	if (mainMsg instanceof jQuery) {
+	    msg.empty().append(mainMsg).next().remove();
+	}
+	else {
+	    msg.empty().text(mainMsg).next().remove();
+	}
+	
     if (! color)
 		color = "aqua";
     
@@ -567,6 +572,16 @@ function showConfirmDlg(mainMsg, subMsg, icon, color) {
     dlg.show();
 }
 
+function confirmEmptyingTrash() {
+    $("#fragment-group-form\\:ok").click(function() {
+        document.forms["fragment-group-form"]["fragment-group-form:ok-empty-trash"].click();
+    });
+    
+    var mainMsg = $("<span style='color:orangered'>"+MSG.confirm_emptying_trash+"</span>");
+    
+    showConfirmDlg(mainMsg, null, "fa-trash", "orangered");
+}
+
 function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
 	if (bulk) {
         if (fragmentCheckBoxesAreChecked(panelId) == false) {
@@ -581,8 +596,13 @@ function confirmTrashingFragments(frgId, deleting, bulk, panelId) {
 		document.forms["fragment-group-form"]["fragment-group-form:ok-"+ op +"-fragment" + s].click();
 	});
 	
+	var mainMsg;
+	if (deleting)
+	    mainMsg = $("<span style='color:orangered'>"+MSG.confirm_deleting+"</span>");
+	else
+	    mainMsg = MSG.confirm_trashing;	
 	var subMsg = "\n#" + frgId + "  " + getFragmentTitle(frgId);
-	showConfirmDlg(deleting ? MSG.confirm_deleting : MSG.confirm_trashing, subMsg, "fa-trash", "orangered");
+	showConfirmDlg(mainMsg, subMsg, "fa-trash", "orangered");
     
     if (bulk) {
 	    $("#fragment-group-form\\:id-placeholder-for-panel").val(panelId);

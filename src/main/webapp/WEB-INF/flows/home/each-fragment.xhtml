@@ -17,7 +17,8 @@
                 <h:outputText value="##{fragment.id}" style="color:navy;"/>
             </c:when>
             <c:otherwise>
-                <p:selectBooleanCheckbox onchange="onChangeFragmentCheckbox('#{fragment.id}', '#{panelId}')" value="#{fragmentBean.checked}" 
+<!--                 <p:selectBooleanCheckbox onchange="onChangeFragmentCheckbox('#{fragment.id}', '#{panelId}')" value="#{fragmentBean.checked}"  -->
+                <p:selectBooleanCheckbox rendered="#{!panelContext.fragmentDeletable}" value="#{fragmentBean.checked}" 
                     itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}">
                     <p:ajax update=":selection-box-form:selection-box-panel" />
                 </p:selectBooleanCheckbox>

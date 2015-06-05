@@ -39,7 +39,7 @@
 </p:dialog>
 
 <p:panel id="fragment-panel-toolbar-#{panelId}" >
-    <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments()}" itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}" />
+    <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments() and !panelContext.fragmentDeletable}" itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}" />
     
     <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}">
         <span class="fa fa-plus-square fa-2x new-resource-color button-link"></span>
@@ -80,18 +80,24 @@
     
     <p:spacer width="6" />
     
-    <c:choose>
-        <c:when test="#{panelContext.fragmentDeletable}">
-            <p:commandLink oncomplete="confirmTrashingFragments(null, true, true, '#{panelId}')" >
-                <span class="fa fa-trash fa-2x button-link warning-color" style="display:none" title="#{msg['label_delete']}"></span>
-            </p:commandLink>
-        </c:when>
-        <c:otherwise>
-            <p:commandLink oncomplete="confirmTrashingFragments(null, false, true, '#{panelId}')" >
-                <span class="fa fa-trash fa-2x button-link" style="display:none" title="#{msg['label_trash']}"></span>
-            </p:commandLink>
-        </c:otherwise>
-    </c:choose>
+    <c:if test="#{panelContext.fragmentDeletable}">
+        <p:commandLink oncomplete="confirmEmptyingTrash()">
+            <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_empty_trash']}"></span>
+        </p:commandLink>
+    </c:if>
+    
+<!--     <c:choose> -->
+<!--         <c:when test="#{panelContext.fragmentDeletable}"> -->
+<!--             <p:commandLink oncomplete="confirmTrashingFragments(null, true, true, '#{panelId}')" > -->
+<!--                 <span class="fa fa-trash fa-2x button-link warning-color" style="display:none" title="#{msg['label_delete']}"></span> -->
+<!--             </p:commandLink> -->
+<!--         </c:when> -->
+<!--         <c:otherwise> -->
+<!--             <p:commandLink oncomplete="confirmTrashingFragments(null, false, true, '#{panelId}')" > -->
+<!--                 <span class="fa fa-trash fa-2x button-link" style="display:none" title="#{msg['label_trash']}"></span> -->
+<!--             </p:commandLink> -->
+<!--         </c:otherwise> -->
+<!--     </c:choose> -->
 </p:panel> <!-- id="fragment-panel-toolbar-#{panelId}" -->
 
 <c:set var="first" value="#{panelContext.firstItemOfCurPage()}" />
