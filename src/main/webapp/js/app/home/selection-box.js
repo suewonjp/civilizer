@@ -1,5 +1,7 @@
 function onAjaxCompleteForSelectionBox() {
     setContextMenuForSelections();
+    
+    setupFragmentOverlayTrigger($("#selection-box-form\\:selection-box-panel"));
 }
 
 function setContextMenuForSelections() {

@@ -132,10 +132,14 @@ function triggerFragmentOverlay(event) {
 	return false; // stop the link
 }
 
+function setupFragmentOverlayTrigger(parent) {
+    $(parent).find(".-cvz-frgm").on("click", triggerFragmentOverlay);
+}
+
 function setupFragmentOverlay() {
-	$("#fragment-group").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
-    $("#bookmark-form\\:bookmark-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
-    $("#selection-box-form\\:selection-box-panel").find(".-cvz-frgm").on("click", triggerFragmentOverlay);
+    setupFragmentOverlayTrigger($("#fragment-group"));
+    setupFragmentOverlayTrigger($("#bookmark-form\\:bookmark-panel"));
+    setupFragmentOverlayTrigger($("#selection-box-form\\:selection-box-panel"));
     
 //    $("#fragment-overlay").draggable({
 //    	handle:"#fragment-overlay-title-bar",
