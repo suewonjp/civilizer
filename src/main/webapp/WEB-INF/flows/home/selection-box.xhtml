@@ -11,16 +11,27 @@
 </div>
 
 <h:form id="selection-box-form">
+    <div id="selection-box-context-menu" style="display:none; z-index:5000; position:absolute;">
+        <p:menu>
+            <p:menuitem id="bookmark" styleClass="fa" onclick="confirmBookmarkingSelectedFragments()" icon="fa fa-bookmark" value="#{msg['label_bookmark']}"/>
+            <p:menuitem id="relate" styleClass="fa" onclick="confirmRelatingSelectedFragments()" icon="fa fa-link" value="#{msg['label_relate']}"/>
+            <p:menuitem id="trash" styleClass="fa" onclick="confirmTrashingSelectedFragments()" icon="fa fa-trash" value="#{msg['label_trash']}"/>
+            <p:menuitem id="select_unselect" styleClass="fa" onclick="selectOrUnselectFragment()" icon="fa fa-check" value="#{msg['label_select_unselect']}"/>
+        </p:menu>
+    </div>
+    
     <p:panel id="selection-box-panel" toggleable="true" widgetVar="selectionBoxPanel">
-        <c:forEach var="frgId" items="#{fragmentSelectionBean.fragmentIds}" varStatus="loop">
-            <c:set var="frgTitle" value="#{fragmentSelectionBean.fragmentTitles[loop.index]}" />
-            <span class="small-fragment-box each-selected-frg notxtslct" _bid="#{frgId}" _ft="#{frgTitle}" title="#{msg['rclick_for_menu']}">
-                <a class="-cvz-frgm" href="fragment/#{frgId}">\##{frgId}</a>
-                &nbsp;
-                <h:outputText value="#{frgTitle}" />
-            </span>
-            <br/>
-        </c:forEach>
+        <div title="#{msg['rclick_for_menu']}">
+            <c:forEach var="frgId" items="#{fragmentSelectionBean.fragmentIds}" varStatus="loop">
+                <c:set var="frgTitle" value="#{fragmentSelectionBean.fragmentTitles[loop.index]}" />
+                <span class="small-fragment-box each-selected-frg notxtslct" _fid="#{frgId}" _ft="#{frgTitle}" title="#{msg['rclick_for_menu']}">
+                    <a class="-cvz-frgm" href="fragment/#{frgId}">\##{frgId}</a>
+                    &nbsp;
+                    <h:outputText value="#{frgTitle}" />
+                </span>
+                <br/>
+            </c:forEach>
+        </div>
     </p:panel>
 </h:form>
 

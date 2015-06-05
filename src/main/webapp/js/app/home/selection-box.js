@@ -1,0 +1,51 @@
+function setContextMenuForSelections() {
+    var menu = $("#selection-box-context-menu");
+    
+    $(".each-selected-frg, #selection-box-form\\:selection-box-panel").bind("contextmenu", function(event) {
+        menu.css({ left:event.pageX, top:event.pageY }).show();
+        var target = $(event.target).closest(".each-selected-frg");
+        if (isNaN(parseInt(target.attr("_fid")))) {
+            menu.find("#selection-box-form\\:bookmark").show();
+            menu.find("#selection-box-form\\:relate").show();
+            menu.find("#selection-box-form\\:trash").show();
+            menu.find("#selection-box-form\\:select_unselect").hide();
+        }
+        else {
+            menu.find("#selection-box-form\\:bookmark").hide();
+            menu.find("#selection-box-form\\:relate").hide();
+            menu.find("#selection-box-form\\:trash").hide();
+            menu.find("#selection-box-form\\:select_unselect").show();
+        }
+            
+        menu.data("target-fragment", target);
+        event.preventDefault();
+    });
+
+    $(document).bind("click", function(event) {
+        menu.hide();
+    });
+}
+
+function confirmBookmarkingSelectedFragments() {
+    
+}
+
+function confirmRelatingSelectedFragments() {
+    
+}
+
+function confirmTrashingSelectedFragments() {
+    
+}
+
+function selectOrUnselectFragment() {
+    var target = $("#selection-box-context-menu").data("target-fragment");
+    if (target.hasClass("middle-line")) {
+        // mark as selected
+        target.removeClass("middle-line");
+    }
+    else {
+        // mark as unselected
+        target.addClass("middle-line");
+    }
+}

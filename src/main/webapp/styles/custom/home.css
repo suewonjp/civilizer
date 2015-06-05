@@ -403,3 +403,8 @@
     user-select: none;
     cursor: default;
 }
+
+.middle-line {
+    text-decoration: line-through;
+    font-weight: lighter;
+}

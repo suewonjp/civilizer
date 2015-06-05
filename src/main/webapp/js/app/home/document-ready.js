@@ -22,6 +22,7 @@ $(document).ready(function() {
 	setContextMenuForFragments();
     setContextMenuForBookmarks();
     setContextMenuForTags();
+    setContextMenuForSelections();
 	setContextMenuForFiles();
 	
 	makeSidebarTitleToggleable();
