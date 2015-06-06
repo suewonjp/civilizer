@@ -70,6 +70,10 @@
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
+
+        <transition on="unselect-all-fragments" to="home">
+            <evaluate expression="flowScope.fragmentSelectionBean.clear()"/>
+        </transition>
         
         <transition on="empty-trash" to="home">
             <evaluate expression="mainController.emptyTrash()" />

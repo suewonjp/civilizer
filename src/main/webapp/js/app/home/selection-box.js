@@ -14,6 +14,7 @@ function setContextMenuForSelections() {
             menu.find("#selection-box-form\\:bookmark").show();
             showOrHide(menu.find("#selection-box-form\\:relate"), fragments.length > 1);
             menu.find("#selection-box-form\\:trash").show();
+            menu.find("#selection-box-form\\:unselect").show();
             menu.find("#selection-box-form\\:select_unselect").hide();
             if (fragments.length > 0)
                 showPopup(menu, event);
@@ -22,6 +23,7 @@ function setContextMenuForSelections() {
             menu.find("#selection-box-form\\:bookmark").hide();
             menu.find("#selection-box-form\\:relate").hide();
             menu.find("#selection-box-form\\:trash").hide();
+            menu.find("#selection-box-form\\:unselect").hide();
             menu.find("#selection-box-form\\:select_unselect").show();
             showPopup(menu, event);
         }
@@ -88,6 +90,10 @@ function confirmTrashingSelectedFragments() {
     var mainMsg = MSG.confirm_trashing;
     var subMsg = getSelectedFragments().join("\n");
     showConfirmDlg(mainMsg, subMsg, "fa-trash", "orangered");
+}
+
+function confirmUnselectingSelectedFragments() {
+    document.forms["fragment-group-form"]["fragment-group-form:ok-unselect-all-fragments"].click();
 }
 
 function selectOrUnselectFragment() {
