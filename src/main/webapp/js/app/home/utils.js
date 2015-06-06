@@ -96,3 +96,7 @@ function showPopup(target, event) {
     target.css({ left:x, top:y }).show();
 }
 
+function showOrHide(target, letItShow) {
+    letItShow ? target.show() : target.hide();
+}
+
