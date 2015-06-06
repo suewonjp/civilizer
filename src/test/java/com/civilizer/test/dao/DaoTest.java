@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
@@ -449,6 +450,16 @@ class DaoTest {
 			assertEquals(true,  from.isRelatedTo(to));
 			assertEquals(true,  to.isRelatedTo(from));
 		}
+		// Reinsert existing rows should not throw exceptions
+		try {
+            for (int i = 1; i < temporalFragments.size(); ++i) {
+                Fragment from = temporalFragments.get(i - 1);
+                Fragment to = temporalFragments.get(i);
+                fragmentDao.relateFragments(from.getId(), to.getId());
+            }
+        } catch (HibernateException e) {
+            fail("failed in relating an existing relationship");
+        }
 	}
 	
 	protected void testFindFragmentsByTagIds() {
