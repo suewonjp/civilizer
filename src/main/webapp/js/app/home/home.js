@@ -651,7 +651,7 @@ function setContextMenuForFragments() {
     		target = target.closest(".fragment-header");    		
     	}
     	if (target.hasClass("fragment-header")) {
-	    	menu.css({ left:event.pageX, top:event.pageY }).show();
+    	    showPopup(menu, event);
 	    	menu.data("target-frg", target);
 	    	if (target.attr("_deletable") === "true") {
 	    		menu.find("#fragment-group-form\\:bookmark").hide();

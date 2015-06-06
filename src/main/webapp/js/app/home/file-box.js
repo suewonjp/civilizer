@@ -2,7 +2,7 @@ function setContextMenuForFiles() {
     var menu = $("#file-context-menu");
     
 	$(".each-file, #file-path-tree").bind("contextmenu", function(event) {
-    	menu.css({ left:event.pageX, top:event.pageY }).show();
+	    showPopup(menu, event);
     	var target = $(event.target);
     	if (target.attr("_isFolder") === "false") {
     		menu.find("#file-box-form\\:new-folder").hide();

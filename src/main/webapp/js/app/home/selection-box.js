@@ -8,7 +8,7 @@ function setContextMenuForSelections() {
     var menu = $("#selection-box-context-menu");
     
     $(".each-selected-frg, #selection-box-form\\:selection-box-panel").bind("contextmenu", function(event) {
-        menu.css({ left:event.pageX, top:event.pageY }).show();
+        showPopup(menu, event);
         var target = $(event.target).closest(".each-selected-frg");
         if (isNaN(parseInt(target.attr("_fid")))) {
             menu.find("#selection-box-form\\:bookmark").show();

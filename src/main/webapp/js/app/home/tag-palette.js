@@ -18,7 +18,7 @@ function setContextMenuForTags() {
    	var menu = $("#tag-context-menu");
    	
 	$(".each-tag").bind("contextmenu", function(event) {
-    	menu.css({ left:event.pageX, top:event.pageY }).show();
+	    showPopup(menu, event);
     	var target = $(event.target).closest(".each-tag");
     	menu.data("target-tag", target);
     	var tid = target.attr("_tid");

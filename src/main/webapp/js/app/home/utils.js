@@ -70,3 +70,29 @@ function parseMarkdown(inputText) {
     return marked(inputText);
 }
 
+function getViewportSize() {
+    var pageWidth = window.innerWidth,
+        pageHeight = window.innerHeight;
+
+    if (typeof pageWidth != "number"){
+        if (document.compatMode == "CSS1Compat"){
+            pageWidth = document.documentElement.clientWidth;
+            pageHeight = document.documentElement.clientHeight;
+        } else {
+            pageWidth = document.body.clientWidth;
+            pageHeight = document.body.clientHeight;
+        }
+    }
+    
+    return {width:pageWidth, height:pageHeight};
+}
+
+function showPopup(target, event) {
+    var x = event.pageX, y = event.pageY;
+    var tx = target.width(), ty = target.height();
+    var size = getViewportSize();
+    x -= Math.max(x + tx - size.width, 0);
+    y -= Math.max(y + ty - size.height, 0);
+    target.css({ left:x, top:y }).show();
+}
+

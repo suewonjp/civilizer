@@ -2,7 +2,7 @@ function setContextMenuForBookmarks() {
 	var menu = $("#bookmark-context-menu");
    	
 	$(".each-bookmark").bind("contextmenu", function(event) {
-    	menu.css({ left:event.pageX, top:event.pageY }).show();
+	    showPopup(menu, event);
     	var target = $(event.target).closest(".each-bookmark");
     	menu.data("target-bookmark", target);
     	$("#fragment-group-form\\:id-placeholder-for-fragment").val(target.attr("_bid"));
