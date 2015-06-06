@@ -79,7 +79,7 @@
 	        <p:commandButton id="ok-trash-tag" action="trash-tag"/>
 	        <p:commandButton id="ok-delete-tag" action="delete-tag"/>
 	        <p:commandButton id="ok-unbookmark-fragment" action="unbookmark-fragment"/>
-	        <p:commandButton id="ok-relate-fragments" action="relate-fragments"/>
+	        <p:commandButton id="ok-relate-fragment-pair" action="relate-fragment-pair"/>
 	        <p:commandButton id="ok-unrelate-fragments" action="unrelate-fragments"/>
 	        <p:commandButton id="ok-delete-files" action="delete-file"/>
 		</div>
@@ -116,7 +116,7 @@
 	    <p:commandButton id="go-search" value="#{msg['label_search']}" icon="ui-icon-check"/>
     </p:dialog>
     
-    <p:remoteCommand name="relateFragments" action="relate-fragments"/>
+    <p:remoteCommand name="relateFragments" action="relate-fragment-pair"/>
     <p:remoteCommand name="filterByTag" action="filter-by-tag" async="true"/>
     <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment"/>
     <p:remoteCommand name="searchFragments" action="search-fragments" />
