@@ -108,9 +108,9 @@
             <evaluate expression="mainController.relateFragments(requestParameters.from, requestParameters.to)" />
         </transition>
 
-<!--         <transition on="relate-fragments" to="home"> -->
-<!--             <evaluate expression="mainController.relateFragments(flowScope.fragmentSelectionBean, requestParameters.unselected)" /> -->
-<!--         </transition> -->
+        <transition on="relate-fragments" to="home">
+            <evaluate expression="mainController.relateFragments(flowScope.fragmentSelectionBean, requestParameters.unselected)" />
+        </transition>
 
         <transition on="unrelate-fragments" to="home">
             <evaluate expression="mainController.unrelateFragments(customParams.fragmentId0, customParams.fragmentId1)" />

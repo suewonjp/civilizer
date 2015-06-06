@@ -569,6 +569,34 @@ public final class MainController {
 		}
 	}
 
+	public void relateFragments(FragmentSelectionBean fsb, String unselected) {
+        final String[] tmp = StringUtils.split(unselected);
+        final long[] excIds = new long[tmp.length]; // ids to be excluded
+        for (int i=0; i<tmp.length; ++i) {
+            excIds[i] = Integer.parseInt(tmp[i]);
+        }
+        final List<Long> ids = new ArrayList<>();
+        for (Long id : fsb.getFragmentIds()) {
+            if (ArrayUtils.indexOf(excIds, id) >= 0)
+                continue;
+            ids.add(id);
+        }
+	    try {
+	        final int idc = ids.size();
+	        for (int i=0; i<idc-1; ++i) {
+	            for (int j=i+1; j<idc; ++j) {
+	                long fromId = ids.get(i), toId = ids.get(j);
+	                fragmentDao.relateFragments(fromId, toId);
+	                ViewUtil.addMessage("Related", "Fragments : " + fromId + " <==> " + toId, null);
+	            }
+	        }
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	        ViewUtil.addMessage("Error on relating fragments!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+	    }
+	}
+
 	public void unrelateFragments(int fromId, int toId) {
 		try {
 			fragmentDao.unrelateFragments(fromId, toId);

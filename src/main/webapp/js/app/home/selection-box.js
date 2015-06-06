@@ -65,7 +65,10 @@ function kickOperationForSelectedFragments(tgtId) {
 }
 
 function confirmRelatingSelectedFragments() {
-    
+    kickOperationForSelectedFragments("ok-relate-fragments");
+    var mainMsg = MSG.confirm_relating;
+    var subMsg = listSelectedFragments();
+    showConfirmDlg(mainMsg, subMsg, "fa-link", "aqua");
 }
 
 function confirmTrashingSelectedFragments() {
