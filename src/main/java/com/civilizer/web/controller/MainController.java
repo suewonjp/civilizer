@@ -9,6 +9,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -384,8 +386,19 @@ public final class MainController {
 		}
 	}
 
-	public void trashFragments(FragmentSelectionBean fsb) {
-	    trashFragments(fsb.getFragmentIds());
+	public void trashFragments(FragmentSelectionBean fsb, String unselected) {
+	    final String[] tmp = StringUtils.split(unselected);
+	    final long[] excIds = new long[tmp.length]; // ids to be excluded
+	    for (int i=0; i<tmp.length; ++i) {
+            excIds[i] = Integer.parseInt(tmp[i]);
+        }
+	    final List<Long> ids = new ArrayList<>();
+	    for (Long id : fsb.getFragmentIds()) {
+	        if (ArrayUtils.indexOf(excIds, id) >= 0)
+	            continue;
+            ids.add(id);
+        }
+	    trashFragments(ids);
 	    fsb.clear();
 	}
 	

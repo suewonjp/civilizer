@@ -66,7 +66,7 @@
         </transition>
 
         <transition on="trash-fragments" to="home">
-            <evaluate expression="mainController.trashFragments(flowScope.fragmentSelectionBean)" />
+            <evaluate expression="mainController.trashFragments(flowScope.fragmentSelectionBean, requestParameters.unselected)" />
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>

@@ -45,13 +45,26 @@ function listSelectedFragments() {
     return output;
 }
 
+function listUnselectedFragments() {
+    var output = "";
+    $("#selection-box-form\\:selection-box-panel").find(".each-selected-frg").each(function() {
+        var $this = $(this);
+        if (! $this.hasClass("middle-line"))
+            return;
+        output += $this.attr("_fid") + " ";
+    });
+    return output;
+}
+
 function confirmRelatingSelectedFragments() {
     
 }
 
 function confirmTrashingSelectedFragments() {
+    var tgtId = "fragment-group-form:ok-trash-fragments";
     $("#fragment-group-form\\:ok").click(function() {
-        document.forms["fragment-group-form"]["fragment-group-form:ok-trash-fragments"].click();
+        PrimeFaces.addSubmitParam(tgtId, {unselected:listUnselectedFragments()});
+        document.forms["fragment-group-form"][tgtId].click();
     });
     
     var mainMsg = MSG.confirm_trashing;
