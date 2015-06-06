@@ -56,17 +56,20 @@ function listUnselectedFragments() {
     return output;
 }
 
+function kickOperationForSelectedFragments(tgtId) {
+    var fullId = "fragment-group-form:" + tgtId;
+    $("#fragment-group-form\\:ok").click(function() {
+        PrimeFaces.addSubmitParam(fullId, {unselected:listUnselectedFragments()});
+        document.forms["fragment-group-form"][fullId].click();
+    });
+}
+
 function confirmRelatingSelectedFragments() {
     
 }
 
 function confirmTrashingSelectedFragments() {
-    var tgtId = "fragment-group-form:ok-trash-fragments";
-    $("#fragment-group-form\\:ok").click(function() {
-        PrimeFaces.addSubmitParam(tgtId, {unselected:listUnselectedFragments()});
-        document.forms["fragment-group-form"][tgtId].click();
-    });
-    
+    kickOperationForSelectedFragments("ok-trash-fragments");
     var mainMsg = MSG.confirm_trashing;
     var subMsg = listSelectedFragments();
     showConfirmDlg(mainMsg, subMsg, "fa-trash", "orangered");
