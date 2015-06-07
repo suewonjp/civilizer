@@ -501,6 +501,9 @@ function showSortOptionDialog(panelId) {
 
 function getFragmentTitle(frgId) {
 	var title = $("#fragment-group").find(".fragment-title[_fid=" + frgId + "]");
+	if (!title || title.length == 0) {
+	    title = $("#fragment-overlay-content").find(".fragment-title");
+	}
 	return (title.length > 0) ? title.eq(0).text() : "";
 }
 
