@@ -53,3 +53,7 @@
 .fragment-content ol ol ol {
     list-style-type: lower-alpha;
 }
+
+.fragment-content li > p {
+    margin: 0px 0px 0px 0px;
+}
