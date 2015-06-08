@@ -123,34 +123,6 @@ public class FileEntity implements Serializable {
 		
 		return output;
 	}
-	
-//	public void addToPathTree(TreeNode<Object> root) {
-//		final String[] names = fileName.split("/");
-//		
-//		if (names.length == 1) {
-//			root.addChild(new DefaultTreeNode<Object>(this));
-//		}
-//		else if (names.length > 1) {
-//			TreeNode<Object> prev = root.findDescendantWith(names[0]);
-//			
-//			if (prev == null) {
-//				prev = root.addChild(new DefaultTreeNode<Object>(names[0]));
-//			}
-//			
-//			// this file is located under some folders 
-//			for (int i=1; i<names.length-1; ++i) {
-//				TreeNode<Object> parent = root.findDescendantWith(names[i - 1]);
-//				prev = root.findDescendantWith(names[i]);
-//				if (prev == null) {
-//					// these nodes represent intermediate paths (folders) and contain string values
-//					prev = parent.addChild(new DefaultTreeNode<Object>(names[i]));
-//				}
-//			}
-//			
-//			// this node represents a file name below any folder except the root folder;
-//			prev.addChild(new DefaultTreeNode<Object>(this));
-//		}
-//	}
 
 	@Override
     public int hashCode() {

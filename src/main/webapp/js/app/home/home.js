@@ -141,11 +141,6 @@ function setupFragmentOverlay() {
     setupFragmentOverlayTrigger($("#bookmark-form\\:bookmark-panel"));
     setupFragmentOverlayTrigger($("#selection-box-form\\:selection-box-panel"));
     
-//    $("#fragment-overlay").draggable({
-//    	handle:"#fragment-overlay-title-bar",
-//        cursor:"move",
-//    });
-    
 	$("#fragment-overlay-title-bar").dblclick(function() {
     	toggleWindow($("#fragment-overlay"), $(this));
     });
