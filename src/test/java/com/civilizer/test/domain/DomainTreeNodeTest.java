@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.civilizer.domain.TreeNode;
-import com.civilizer.domain.DefaultTreeNode;
+import com.civilizer.utils.DefaultTreeNode;
+import com.civilizer.utils.TreeNode;
 
 public class DomainTreeNodeTest {
 

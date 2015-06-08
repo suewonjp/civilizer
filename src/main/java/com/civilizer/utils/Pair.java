@@ -1,4 +1,4 @@
-package com.civilizer.domain;
+package com.civilizer.utils;
 
 public final class Pair<A, B> {
 	

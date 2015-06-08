@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import com.civilizer.utils.Pair;
+
 // [TODO] adding rules regarding pagination and ordering
 
 @SuppressWarnings("serial")

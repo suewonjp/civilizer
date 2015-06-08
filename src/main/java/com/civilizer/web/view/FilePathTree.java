@@ -9,10 +9,10 @@ import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import com.civilizer.config.AppOptions;
-import com.civilizer.domain.DefaultTreeNode;
 import com.civilizer.domain.FileEntity;
-import com.civilizer.domain.Pair;
-import com.civilizer.domain.TreeNode;
+import com.civilizer.utils.DefaultTreeNode;
+import com.civilizer.utils.Pair;
+import com.civilizer.utils.TreeNode;
 
 @SuppressWarnings("serial")
 public class FilePathTree implements Serializable {

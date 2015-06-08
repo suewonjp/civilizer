@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.civilizer.utils.Pair;
+
 public final class TextDecorator {
 	
 	public static final String PREFIX_FOR_HIGHLIGHT = "{{[sh]";

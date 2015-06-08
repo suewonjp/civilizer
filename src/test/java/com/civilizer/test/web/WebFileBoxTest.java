@@ -15,10 +15,10 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.civilizer.config.AppOptions;
 import com.civilizer.dao.FileEntityDao;
-import com.civilizer.domain.DefaultTreeNode;
 import com.civilizer.domain.FileEntity;
-import com.civilizer.domain.TreeNode;
 import com.civilizer.test.util.TestUtil;
+import com.civilizer.utils.DefaultTreeNode;
+import com.civilizer.utils.TreeNode;
 import com.civilizer.web.view.FileListBean;
 import com.civilizer.web.view.FilePathBean;
 import com.civilizer.web.view.FilePathTree;

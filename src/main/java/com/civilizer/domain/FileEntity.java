@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
 
+import com.civilizer.utils.Pair;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "FILE")

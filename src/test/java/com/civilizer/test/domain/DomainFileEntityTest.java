@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.civilizer.domain.FileEntity;
-import com.civilizer.domain.Pair;
 import com.civilizer.test.util.TestUtil;
+import com.civilizer.utils.Pair;
 
 public class DomainFileEntityTest {
 

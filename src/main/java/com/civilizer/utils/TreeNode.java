@@ -1,4 +1,4 @@
-package com.civilizer.domain;
+package com.civilizer.utils;
 
 import java.util.*;
 

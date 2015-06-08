@@ -8,9 +8,9 @@ import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.Restrictions;
 
 import com.civilizer.domain.Fragment;
-import com.civilizer.domain.Pair;
 import com.civilizer.domain.SearchParams;
 import com.civilizer.domain.SearchParams.Keyword;
+import com.civilizer.utils.Pair;
 
 public final class SearchQueryCreator {
 	
