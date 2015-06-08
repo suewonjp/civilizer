@@ -6,7 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.civilizer.test.util.TestUtil;
+import com.civilizer.test.helper.TestUtil;
 
 public class DaoUrlTest extends DaoTest {
     

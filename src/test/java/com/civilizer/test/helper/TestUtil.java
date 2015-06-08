@@ -1,4 +1,4 @@
-package com.civilizer.test.util;
+package com.civilizer.test.helper;
 
 import static org.junit.Assert.*;
 

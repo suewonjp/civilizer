@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.civilizer.domain.SearchParams;
-import com.civilizer.test.util.TestUtil;
+import com.civilizer.test.helper.TestUtil;
 import com.civilizer.web.view.SearchContextBean;
 
 public class SearchContextBeanTest {

@@ -19,7 +19,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 
 import com.civilizer.domain.*;
-import com.civilizer.test.util.TestUtil;
+import com.civilizer.test.helper.TestUtil;
 
 public class HibernateQueryTest extends DaoTest {
 	

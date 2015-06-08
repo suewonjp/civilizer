@@ -13,7 +13,7 @@ import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 import com.civilizer.dao.hibernate.SearchQueryCreator;
 import com.civilizer.domain.*;
-import com.civilizer.test.util.TestUtil;
+import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.Pair;
 
 public class SearchTest extends DaoTest {

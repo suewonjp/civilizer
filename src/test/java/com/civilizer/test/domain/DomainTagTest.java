@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.civilizer.domain.*;
-import com.civilizer.test.util.TestUtil;
+import com.civilizer.test.helper.TestUtil;
 
 public class DomainTagTest {
 	

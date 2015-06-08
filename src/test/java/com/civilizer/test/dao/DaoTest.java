@@ -18,7 +18,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import com.civilizer.dao.*;
 import com.civilizer.domain.*;
-import com.civilizer.test.util.TestUtil;
+import com.civilizer.test.helper.TestUtil;
 
 class DaoTest {
 

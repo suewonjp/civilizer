@@ -18,7 +18,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
 import com.civilizer.dao.FragmentDao;
-import com.civilizer.test.util.TestUtil;
+import com.civilizer.test.helper.TestUtil;
 
 public class ConfigTest {
     
