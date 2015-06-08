@@ -1,4 +1,4 @@
-package com.civilizer.test.domain;
+package com.civilizer.test.utils;
 
 import static org.junit.Assert.*;
 
