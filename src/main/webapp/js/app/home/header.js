@@ -14,24 +14,17 @@ function setupPanelActivationButtons() {
     
     var phPanel = $("#fragment-group-form\\:id-placeholder-for-panel");
     var idSpecified = phPanel.val();
-    if (idSpecified) {
+    if (idSpecified > -1) {
         $("#panel-toggler-" + idSpecified).prop("checked", true);
         phPanel.val(null);
-    }
-    
-    var phSearch = $("#fragment-group-form\\:id-placeholder-for-search");
-    var idSpecifiedFromSearch = phSearch.val();
-    if (idSpecifiedFromSearch) {
-        $("#panel-toggler-" + idSpecifiedFromSearch).prop("checked", true);
-        phSearch.val(null);
     }
 
     $("#panel-activation-buttons").buttonset("refresh");
     
-    onPanelActivationChange();
+    onPanelActivationChange(false);
 }
 
-function onPanelActivationChange() {
+function onPanelActivationChange(explicit) {
     var panels = [ $("#fragment-panel-0"), $("#fragment-panel-1"), $("#fragment-panel-2") ];
     var activeCount = 0;
     
@@ -47,6 +40,8 @@ function onPanelActivationChange() {
         else {
             panels[i].hide();
             sessionStorage.setItem('panel-' + i, 'off');
+            if (explicit)
+                document.forms["panel-button-form"]["panel-button-form:id-cleaner"].click();
         }
     }
     

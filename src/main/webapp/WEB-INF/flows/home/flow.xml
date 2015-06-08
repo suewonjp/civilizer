@@ -123,6 +123,7 @@
         <transition on="search-fragments" to="home">
             <set name="requestScope.searchContextBean" value="flowScope.searchContextBean" />
             <evaluate expression="requestScope.searchContextBean.setPanelId(requestParameters.panelId)" />
+            <evaluate expression="customParams.setPanelId(requestParameters.panelId)" />
         </transition>
 
         <transition on="prev-fragment-page" to="home">

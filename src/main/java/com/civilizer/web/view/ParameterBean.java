@@ -36,5 +36,9 @@ public final class ParameterBean implements Serializable {
 	public void setFragmentId1(long fragmentId1) {
 		this.fragmentId1 = fragmentId1;
 	}
+	
+	public void clearPanelId() {
+	    panelId = -1;
+	}
 
 }
