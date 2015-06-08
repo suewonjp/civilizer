@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.civilizer.utils.DefaultTreeNode;
 import com.civilizer.utils.TreeNode;
 
-public class DomainTreeNodeTest {
+public class TreeNodeTest {
 
 	@Before
 	public void setUp() throws Exception {
