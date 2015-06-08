@@ -7,6 +7,8 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.civilizer.utils.FsUtil;
+
 public final class Configurator {
 	
     private final Logger logger = LoggerFactory.getLogger(Configurator.class);
@@ -80,7 +82,7 @@ public final class Configurator {
 	}
 	
 	private void preSetupPrivateHome(File privateHome) {
-	    createUnexistingDirectory(privateHome);
+	    FsUtil.createUnexistingDirectory(privateHome);
 	    
 	    final String tgtOptionFilePath = privateHome.getAbsolutePath() + File.separatorChar + AppOptions.OPTION_FILE_NAME;
 	    final File tgtOptionFile = new File(tgtOptionFilePath);
@@ -101,7 +103,7 @@ public final class Configurator {
 	
 	private void postSetupPrivateHome(File privateHome) {
 		final String fileBoxHome = System.getProperty(AppOptions.FILE_BOX_HOME);
-		createUnexistingDirectory(new File(fileBoxHome));
+		FsUtil.createUnexistingDirectory(new File(fileBoxHome));
 	}
 	
 	private void overrideOptionValue(String k, Properties p) {
@@ -181,27 +183,8 @@ public final class Configurator {
 			logger.error("????? The key \"%s\" is NOT found! Use the default value of \"%s\"", key, defValue);
 			srcPath = defValue;
 		}
-		String absPath = null;
-		if (new File(srcPath).isAbsolute()) {
-		    // already absolute path
-			absPath = srcPath;
-		}
-		else {
-		    // relative path
-			if (srcPath.startsWith("~")) {
-				absPath = System.getProperty("user.home") + srcPath.substring(1);
-			}
-			else {
-				absPath = privateHome.getAbsolutePath() + File.separatorChar + srcPath;
-			}
-		}
+		String absPath = FsUtil.getAbsolutePath(srcPath, privateHome);
 		p.setProperty(key, absPath);
-	}
-	
-	private void createUnexistingDirectory(File dir) {
-		if (! dir.isDirectory()) {
-            dir.mkdir();
-        }
 	}
 	
 }
