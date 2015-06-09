@@ -21,8 +21,9 @@ import com.civilizer.utils.FsUtil;
 public final class UserDetailsService
     implements org.springframework.security.core.userdetails.UserDetailsService {
     
-    public static final int ENCRYPTION_STRENTH = 11;
-    public static final String CREDENTIAL_FILE = "cvz.pc";
+    public static final int ENCRYPTION_STRENGTH     = 11;
+    public static final String CREDENTIAL_FILE      = "cvz.pc";
+    private static final String HASHED_DEFAULT_PW   = "$2a$10$w.Jjtx0mrjH4E.DxQEmBZu.D1oCBKy26utS8KCOSn0fmq1xs2GXiK";
     
     private static UserDetails createUserDetails(String username, String passwordCode) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
@@ -32,7 +33,7 @@ public final class UserDetailsService
 
     private static UserDetails getDefaultCredential(String username) {
         if (username.equals("owner")) {
-            return createUserDetails(username, "$2a$10$w.Jjtx0mrjH4E.DxQEmBZu.D1oCBKy26utS8KCOSn0fmq1xs2GXiK");
+            return createUserDetails(username, HASHED_DEFAULT_PW);
         }
         return null;
     }
@@ -51,7 +52,7 @@ public final class UserDetailsService
     }
     
     public static void saveCustomCredential(String username, String password) throws IOException {
-        final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(ENCRYPTION_STRENTH);
+        final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(ENCRYPTION_STRENGTH);
         final List<String> lines = new ArrayList<>();
         lines.add(encoder.encode(username));
         lines.add(encoder.encode(password));

@@ -7,6 +7,8 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.civilizer.security.UserDetailsService;
 import com.civilizer.test.helper.TestUtil;
@@ -23,6 +25,11 @@ public class SecurityTest {
     public void setUp() throws Exception {
         TestUtil.configure();
     }
+    
+    private static boolean matches(String raw, String encoded) {
+        return new BCryptPasswordEncoder(UserDetailsService.ENCRYPTION_STRENGTH)
+            .matches(raw, encoded);
+    }
 
     @Test
     public void testDefaultCredential() throws Exception {
@@ -38,7 +45,7 @@ public class SecurityTest {
     
     @Test
     public void testCustomCredential() {
-        for (int i=0; i<1; ++i) {
+        for (int i=0; i<3; ++i) {
             final String username = TestUtil.randomString(TestUtil.getRandom(), 1, 32);
             final String password = TestUtil.randomString(TestUtil.getRandom(), 8, 32);
             try {
@@ -48,9 +55,11 @@ public class SecurityTest {
                 e.printStackTrace();
             }
             
-            UserDetailsService uds = new UserDetailsService();
+            final UserDetailsService uds = new UserDetailsService();
             try {
-                uds.loadUserByUsername(username);
+                UserDetails ud = uds.loadUserByUsername(username);
+                assertEquals(username, ud.getUsername());
+                assertEquals(true, matches(password, ud.getPassword()));
             } catch (BadCredentialsException e) {
                 fail("custom authentication does not work correclty!");
             }
