@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import java.io.File;
-
 import com.civilizer.utils.FsUtil;
 
 public class FsUtilTest {
