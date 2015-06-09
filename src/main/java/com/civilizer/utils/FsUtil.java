@@ -10,7 +10,7 @@ public final class FsUtil {
         return FilenameUtils.separatorsToSystem(path);
     }
     
-    public static String getAbsolutePath(String srcPath, File basePath) {
+    public static String getAbsolutePath(String srcPath, String basePath) {
         srcPath = toNativePath(srcPath);
         String absPath = null;
         if (new File(srcPath).isAbsolute()) {
@@ -23,7 +23,7 @@ public final class FsUtil {
                 absPath = System.getProperty("user.home") + srcPath.substring(1);
             }
             else {
-                absPath = FilenameUtils.normalize(basePath.getAbsolutePath() + File.separator + srcPath);
+                absPath = FilenameUtils.normalize(basePath + File.separator + srcPath);
             }
         }
         return absPath;

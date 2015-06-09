@@ -16,35 +16,35 @@ public class FsUtilTest {
 
     @Test
     public void testMethod_getAbsolutePath() {
-        final File baseFolder = new File(FsUtil.toNativePath("/base/path"));
+        final String baesPath = FsUtil.toNativePath("/base/path");
         {
             final String srcPath = FsUtil.toNativePath("/foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baseFolder);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
             assertEquals(FsUtil.toNativePath("/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("~/foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baseFolder);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
             assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("./foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baseFolder);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
             assertEquals(FsUtil.toNativePath("/base/path/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("../foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baseFolder);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
             assertEquals(FsUtil.toNativePath("/base/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("../../foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baseFolder);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
             assertEquals(FsUtil.toNativePath("/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baseFolder);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
             assertEquals(FsUtil.toNativePath("/base/path/foo/bar"), absPath);
         }
     }

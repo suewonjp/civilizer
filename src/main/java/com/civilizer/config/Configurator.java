@@ -183,7 +183,7 @@ public final class Configurator {
 			logger.error("????? The key \"%s\" is NOT found! Use the default value of \"%s\"", key, defValue);
 			srcPath = defValue;
 		}
-		String absPath = FsUtil.getAbsolutePath(srcPath, privateHome);
+		String absPath = FsUtil.getAbsolutePath(srcPath, privateHome.getAbsolutePath());
 		p.setProperty(key, absPath);
 	}
 	
