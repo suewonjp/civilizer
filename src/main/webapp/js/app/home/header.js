@@ -58,3 +58,8 @@ function onPanelActivationChange(explicit) {
         panels[i].css({ width: w });
     }
 }
+
+function showProfileDialog(event) {
+    alert("yet to be implemented");
+    event.preventDefault();
+}
