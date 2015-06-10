@@ -60,6 +60,6 @@ function onPanelActivationChange(explicit) {
 }
 
 function showProfileDialog(event) {
-    alert("yet to be implemented");
-    event.preventDefault();
+    var dlg = PF("userProfileDlg");
+    dlg.show();
 }

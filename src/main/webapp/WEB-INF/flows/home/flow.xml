@@ -169,6 +169,10 @@
 			<evaluate expression="mainController.deleteFile(fileListBean)" />
 			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
 		</transition>
+        
+        <transition on="save-user-profile" to="home" >
+            <evaluate expression="mainController.saveUserProfile()" />
+        </transition>
     </view-state>
     
     <end-state id="exit" />

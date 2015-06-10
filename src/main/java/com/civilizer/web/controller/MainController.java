@@ -803,6 +803,10 @@ public final class MainController {
 		}
 	}
 	
+	public void saveUserProfile() {
+	    yetToBeDeveloped("");
+	}
+	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
     public String onRequestForFragment(ModelMap model, @PathVariable Long fragmentId) {
     	final Fragment frg = fragmentDao.findById(fragmentId, true, true);

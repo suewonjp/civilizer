@@ -58,10 +58,22 @@
 <h:form id="user-menu-form">
     <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
     <p:menu id="user-menu" overlay="true" triggerEvent="mouseenter" trigger="user-menu-trigger" my="right top" at="right bottom">
-        <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" ajax="false" />
+        <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" ajax="true" />
         <p:separator />
         <p:menuitem value="#{msg['sign_out']}" ajax="false" icon="fa fa-sign-out" url="/app/signout"/>
     </p:menu>
+    
+    <p:dialog widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="420px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+<!--         <p:panel> -->
+<!--             <div class="fa fa-user">&nbsp;&nbsp; -->
+<!--                 <p:inplace widgetVar="userName"> -->
+<!--                     <p:inputText style="width:80%" value="#{customParams.userName}"/> -->
+<!--                 </p:inplace> -->
+<!--             </div> -->
+<!--         </p:panel> -->
+        
+        <p:commandButton action="save-user-profile" value="#{msg['label_save']}" icon="ui-icon-check"/>
+    </p:dialog>
 </h:form>
 </div>
 
