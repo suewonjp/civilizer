@@ -28,10 +28,6 @@ public class SigninController {
 //    private static final String USER_IS_AUTHENTICATED = "yes";
 //    private static final String USER_IS_NOT_AUTHENTICATED = "no";
     
-    public AuthenticationBean newAuthenticationBean() {
-        return new AuthenticationBean();
-    }
-    
     public boolean isAuthenticated() {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	Object principal = auth.getPrincipal();
@@ -47,7 +43,7 @@ public class SigninController {
         }
     }
     
-    public String handleSignin(AuthenticationBean authBean) throws ServletException, IOException {
+    public String handleSignin() throws ServletException, IOException {
         final ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         final ServletRequest req = (ServletRequest) context.getRequest();
         final ServletResponse res = (ServletResponse) context.getResponse();
