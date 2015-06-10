@@ -77,14 +77,17 @@
             <input type="checkbox" name="enable_password_change" onchange="togglePasswordChange(this)"/>
         </p:panel>
 
-        <h:panelGrid id="password-input" style="display:none" columns="2" cellpadding="5">
-            <p:outputLabel for="pwd1" value="#{msg['label_password']}"/>
-            <p:password id="pwd1" value="#{userProfileBean.password0}" feedback="false" match="pwd2" required="true"/>
-            <p:outputLabel for="pwd2" value="#{msg['label_confirm_password']}"/>
-            <p:password id="pwd2" value="#{userProfileBean.password1}" feedback="false" required="true"/>
-        </h:panelGrid>
+        <div id="new-password-box">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="pwd1" value="#{msg['label_password']}"/>
+                <p:password id="pwd1" value="#{userProfileBean.password}" feedback="false" match="pwd2" required="true"/>
+                <p:outputLabel for="pwd2" value="#{msg['label_confirm_password']}"/>
+                <p:password id="pwd2" feedback="false" required="true"/>
+            </h:panelGrid>
+            <p:messages id="msg" showSummary="false" showDetail="true" autoUpdate="true" />
+        </div>
         
-        <p:commandButton action="save-user-profile" value="#{msg['label_save']}" icon="ui-icon-check"/>
+        <p:commandButton onclick="onClickSaveUserProfile()" action="save-user-profile" value="#{msg['label_save']}" icon="ui-icon-check"/>
     </p:dialog>
 </h:form>
 </div>

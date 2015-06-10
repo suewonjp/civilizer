@@ -18,8 +18,7 @@ public class UserProfileBean implements Serializable {
     
     private Locale locale;
     private String userName;
-    private String password0;
-    private String password1;
+    private String password;
 
     @PostConstruct
     public void init() {
@@ -55,20 +54,12 @@ public class UserProfileBean implements Serializable {
         this.userName = userName;
     }
 
-    public String getPassword0() {
-        return password0;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword0(String password0) {
-        this.password0 = password0;
-    }
-
-    public String getPassword1() {
-        return password1;
-    }
-
-    public void setPassword1(String password1) {
-        this.password1 = password1;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

@@ -804,7 +804,8 @@ public final class MainController {
 	}
 	
 	public void saveUserProfile() {
-	    yetToBeDeveloped("");
+	    UserProfileBean upb = ViewUtil.findBean("userProfileBean");
+	    yetToBeDeveloped(upb.getUserName(), upb.getPassword());
 	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })

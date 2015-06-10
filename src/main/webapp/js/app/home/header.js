@@ -61,9 +61,24 @@ function onPanelActivationChange(explicit) {
 
 function showProfileDialog(event) {
     var dlg = PF("userProfileDlg");
+    var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);
+    togglePasswordChange(changePwCb);
     dlg.show();
 }
 
 function togglePasswordChange(widget) {
-    showOrHide($("#user-menu-form\\:password-input"), $(widget).prop("checked"));
+    var checked = $(widget).prop("checked");
+    showOrHide($("#new-password-box"), checked);
+    var dlg = PF("userProfileDlg");
+    dlg.jq.find(".ui-messages").hide();
 }
+
+function onClickSaveUserProfile() {
+    var dlg = PF("userProfileDlg");
+    var pwd1 = $("#user-menu-form\\:pwd1");
+    var pwd2 = $("#user-menu-form\\:pwd2");
+    if (pwd1.val().trim() && pwd1.val() === pwd2.val()) {
+        // [TODO] hash the password
+    }
+}
+
