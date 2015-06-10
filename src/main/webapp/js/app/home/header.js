@@ -63,3 +63,7 @@ function showProfileDialog(event) {
     var dlg = PF("userProfileDlg");
     dlg.show();
 }
+
+function togglePasswordChange(widget) {
+    showOrHide($("#user-menu-form\\:password-input"), $(widget).prop("checked"));
+}

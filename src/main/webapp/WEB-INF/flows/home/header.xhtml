@@ -63,14 +63,26 @@
         <p:menuitem value="#{msg['sign_out']}" ajax="false" icon="fa fa-sign-out" url="/app/signout"/>
     </p:menu>
     
-    <p:dialog widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="420px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
-<!--         <p:panel> -->
-<!--             <div class="fa fa-user">&nbsp;&nbsp; -->
-<!--                 <p:inplace widgetVar="userName"> -->
-<!--                     <p:inputText style="width:80%" value="#{customParams.userName}"/> -->
-<!--                 </p:inplace> -->
-<!--             </div> -->
-<!--         </p:panel> -->
+    <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+        <p:panel>
+            <div class="fa fa-user">&nbsp;&nbsp;
+                <p:inplace widgetVar="userName">
+                    <p:inputText style="width:80%" value="#{userProfileBean.userName}"/>
+                </p:inplace>
+            </div>
+        </p:panel>
+        
+        <p:panel>
+            <label for="enable_password_change">#{msg['change_password']}</label>
+            <input type="checkbox" name="enable_password_change" onchange="togglePasswordChange(this)"/>
+        </p:panel>
+
+        <h:panelGrid id="password-input" style="display:none" columns="2" cellpadding="5">
+            <p:outputLabel for="pwd1" value="#{msg['label_password']}"/>
+            <p:password id="pwd1" value="#{userProfileBean.password0}" feedback="false" match="pwd2" required="true"/>
+            <p:outputLabel for="pwd2" value="#{msg['label_confirm_password']}"/>
+            <p:password id="pwd2" value="#{userProfileBean.password1}" feedback="false" required="true"/>
+        </h:panelGrid>
         
         <p:commandButton action="save-user-profile" value="#{msg['label_save']}" icon="ui-icon-check"/>
     </p:dialog>

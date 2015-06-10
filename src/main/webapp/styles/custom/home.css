@@ -68,6 +68,14 @@
 	width: 42px;
 }
 
+#user-menu-form\:pwd1, #user-menu-form\:pwd2 {
+    width: 100%;
+}
+
+#user-menu-form\:user-profile-dlg .ui-panel {
+    margin: 5px 0px 5px 0px;
+}
+
 #editor-title-bar, #fragment-overlay-title-bar {
     clear: both;
     display: block;
