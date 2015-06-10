@@ -2,9 +2,12 @@ package com.civilizer.web.view;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public final class ViewUtil {
 	
@@ -40,4 +43,10 @@ public final class ViewUtil {
     	final ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_RESOURCE_BASE_NAME, locale);
     	return bundle.getString(key);
 	}
+    
+    public static boolean isAuthenticated() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = auth.getPrincipal();
+        return principal instanceof UserDetails;
+    }
 }

@@ -10,9 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.webflow.core.collection.ParameterMap;
@@ -29,9 +26,7 @@ public class SigninController {
 //    private static final String USER_IS_NOT_AUTHENTICATED = "no";
     
     public boolean isAuthenticated() {
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	Object principal = auth.getPrincipal();
-    	return principal instanceof UserDetails;
+        return ViewUtil.isAuthenticated();
     }
     
     public void onEntry(RequestContext rc) {
