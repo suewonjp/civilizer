@@ -35,8 +35,8 @@ public final class ViewUtil {
 	}
 	
 	public static String getResourceBundleString(String key) {
-		final LocaleBean localeBean = ViewUtil.findBean("localeBean");
-    	final Locale locale = localeBean.getLocale();
+		final UserProfileBean userProfileBean = ViewUtil.findBean("userProfileBean");
+    	final Locale locale = userProfileBean.getLocale();
     	final ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_RESOURCE_BASE_NAME, locale);
     	return bundle.getString(key);
 	}

@@ -1,8 +1,7 @@
 package com.civilizer.web.view;
 
-import java.io.Serializable;
 import java.util.Locale;
-
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -11,8 +10,8 @@ import javax.faces.context.FacesContext;
 @SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
-public final class LocaleBean implements Serializable {
-	
+public class UserProfileBean implements Serializable {
+    
     private Locale locale;
 
     @PostConstruct
@@ -26,8 +25,8 @@ public final class LocaleBean implements Serializable {
     }
     
     public void setLocale(Locale l) {
-    	locale = l;
-    	FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+        locale = l;
+        FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
     }
 
     public String getLanguage() {
@@ -36,7 +35,7 @@ public final class LocaleBean implements Serializable {
     
     @Override
     public String toString() {
-    	return locale.toString();
+        return locale.toString();
     }
 
 }
