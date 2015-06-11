@@ -43,7 +43,7 @@
 	    <p:commandButton id="ok" value="#{msg['label_ok']}" icon="ui-icon-check"/>
     </p:dialog>
     
-    <div id="file-context-menu" style="display:none; z-index:5000; position:absolute;">
+    <div id="file-context-menu" style="display:none; z-index:5000; position:fixed;">
 	    <p:menu>
             <p:menuitem id="upload" oncomplete="showFileUploadDialog()" icon="fa fa-upload" value="+ #{msg['label_upload_file']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>

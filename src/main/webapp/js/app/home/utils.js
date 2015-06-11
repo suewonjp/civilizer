@@ -88,7 +88,7 @@ function getViewportSize() {
 }
 
 function showPopup(target, event) {
-    var x = event.pageX, y = event.pageY;
+    var x = event.clientX, y = event.clientY;
     var tx = target.width(), ty = target.height();
     var size = getViewportSize();
     x -= Math.max(x + tx - size.width, 0);

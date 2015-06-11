@@ -94,7 +94,7 @@
     	</h:panelGrid>
     </p:dialog>
     
-    <div id="tag-context-menu" style="display:none; z-index:5000; position:absolute;">
+    <div id="tag-context-menu" style="display:none; z-index:5000; position:fixed;">
 	    <p:menu>
             <p:menuitem id="edit" oncomplete="showTagEditor()" icon="fa fa-edit" value="#{msg['label_edit']}"
             	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>

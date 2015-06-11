@@ -122,7 +122,7 @@
     <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment"/>
     <p:remoteCommand name="searchFragments" action="search-fragments" />
     
-    <div id="frg-context-menu" style="display:none; z-index:5000; position:absolute;">
+    <div id="frg-context-menu" style="display:none; z-index:5000; position:fixed;">
 	    <p:menu>
             <p:menuitem id="edit" onclick="openFragmentEditorForEdit(event)" icon="fa fa-edit" value="#{msg['label_edit']}"/>
             <p:menuitem id="bookmark" onclick="bookmarkFragmentFromCtxtMenu()" icon="fa fa-bookmark" value="#{msg['label_bookmark']}"/>
