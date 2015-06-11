@@ -24,9 +24,6 @@ public class UserProfileBean implements Serializable {
 
     @PostConstruct
     public void init() {
-//        FacesContext.getCurrentInstance().getViewRoot().setLocale(Locale.JAPAN);
-//        locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-        
         retrieveCurAuth();
     }
     
