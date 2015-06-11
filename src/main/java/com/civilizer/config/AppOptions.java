@@ -9,6 +9,7 @@ public final class AppOptions {
 	public static final String DB_FILE_PREFIX                     = "civilizer.db_file_prefix";
 	public static final String FILE_BOX_HOME                      = "civilizer.file_box_home";
 	public static final String OVERRIDE_OPTION_FILE               = "civilizer.override_option_file";
+	public static final String LOCALE                             = "civilizer.locale";
 
 	// options for development purposes
 	public static final String INITIALIZE_DB                      = "civilizer.initialize_db";
@@ -21,5 +22,6 @@ public final class AppOptions {
 	public static final String DEF_OVERRIDE_OPTION_FILE           = "false";	                                                              
 	public static final String DEF_DEV        			          = "false";
 	public static final String DEF_INITIALIZE_DB                  = "false";
+	public static final String DEF_LOCALE                         = "en";
 	
 }

@@ -6,12 +6,13 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.civilizer.config.AppOptions;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -24,6 +25,8 @@ public class UserProfileBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        locale = new Locale(System.getProperty(AppOptions.LOCALE));
+        
         retrieveCurAuth();
     }
     
@@ -37,14 +40,6 @@ public class UserProfileBean implements Serializable {
     }
 
     public Locale getLocale() {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        UIViewRoot r = fc.getViewRoot();
-        if (r == null) {
-            locale = new Locale("en");
-        }
-        else {
-            locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-        }
         return locale;
     }
     
