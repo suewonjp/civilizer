@@ -6,6 +6,7 @@
     start-state="home">
     
     <var name="customParams" class="com.civilizer.web.view.ParameterBean"/>
+    <var name="userProfileBean" class="com.civilizer.web.view.UserProfileBean"/>
     
     <on-start>
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>

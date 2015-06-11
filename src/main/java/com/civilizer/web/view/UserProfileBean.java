@@ -23,8 +23,12 @@ public class UserProfileBean implements Serializable {
     @PostConstruct
     public void init() {
 //        FacesContext.getCurrentInstance().getViewRoot().setLocale(Locale.JAPAN);
-        locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+//        locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         
+        retrieveCurAuth();
+    }
+    
+    public void retrieveCurAuth() {
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         final Object principal = auth.getPrincipal();
         if (principal instanceof UserDetails) {
@@ -34,6 +38,7 @@ public class UserProfileBean implements Serializable {
     }
 
     public Locale getLocale() {
+        locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         return locale;
     }
     
