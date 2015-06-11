@@ -100,3 +100,42 @@ function showOrHide(target, letItShow) {
     letItShow ? target.show() : target.hide();
 }
 
+function initPfInplaceWidget(pfInplace, text, jqOuterBox) {
+    var display = pfInplace.jq.find(".ui-inplace-display");
+    display.text(text)[0].title=MSG.click_to_rename;
+    var input = pfInplace.jq.find(".ui-inplace-content input");
+    input.val(text);
+    pfInplace.hide();
+    
+    function abortInput(val) {
+        input.val(tagName);
+        display.text(tagName);
+    }
+    
+    function commitInput() {
+        var val = input.val();
+        if (! val || val == "") {
+            abortInput(val);
+        }
+        else {
+            display.text(val);
+        }
+        pfInplace.hide();
+    }
+    
+    jqOuterBox.click(function(e) {
+        if (e.target != input[0] && input.is(":visible")) {
+            commitInput();
+        }
+    });
+    
+    input.keypress(function(e) {
+        // [TODO] key check should be in a cross-browser way
+        if (e.keyCode == 13 && input.is(":visible")) {
+            commitInput();
+            e.preventDefault();
+            return false;
+        }
+    });
+}
+

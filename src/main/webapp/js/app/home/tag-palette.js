@@ -56,43 +56,7 @@ function showTagEditor() {
 		tagName = "~unnamed~"
 	}
 	
-	var inplace = PF("tagNameInplace");
-	var display = inplace.jq.find(".ui-inplace-display");
-	display.text(tagName)[0].title=MSG.click_to_rename;
-	var input = inplace.jq.find(".ui-inplace-content input");
-	input.val(tagName);
-	inplace.hide();
-	
-	function abortInput(val) {
-		input.val(tagName);
-		display.text(tagName);
-	}
-	
-	function commitInput() {
-		var val = input.val();
-		if (! val || val == "") {
-			abortInput(val);
-		}
-		else {
-			display.text(val);
-		}
-		inplace.hide();
-	}
-	
-	dlg.jq.find("#tag-palette-form\\:tag-name-panel").click(function(e) {
-		if (e.target != input[0] && input.is(":visible")) {
-			commitInput();
-		}
-	});
-	
-	input.keypress(function(e) {
-		// [TODO] key check should be in a cross-browser way
-		if (e.keyCode == 13 && input.is(":visible")) {
-			commitInput();
-			e.preventDefault();
-			return false;
-		}
-	});
+	initPfInplaceWidget(PF("tagNameInplace"), tagName, dlg.jq.find("#tag-palette-form\\:tag-name-panel"));
 }
 
 function showTagInfo() {
