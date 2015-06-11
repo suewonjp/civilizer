@@ -171,10 +171,22 @@
 			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
 		</transition>
         
-        <transition on="save-user-profile" to="home" >
-            <evaluate expression="mainController.saveUserProfile()" />
+        <transition on="update-user-profile" to="save-user-profile" >
+<!--             <evaluate expression="mainController.saveUserProfile()" /> -->
         </transition>
     </view-state>
+    
+<!--     <action-state id="save-user-profile"> -->
+<!--         <evaluate expression="mainController.saveUserProfile()" /> -->
+<!--         <transition on="yes" to="signout" /> -->
+<!--         <transition on="no" to="exit" /> -->
+<!--     </action-state> -->
+    
+    <decision-state id="save-user-profile">
+        <if test="mainController.saveUserProfile()" then="signout" else="exit" />
+    </decision-state>    
+    
+    <end-state id="signout" view="externalRedirect:/signout"/>
     
     <end-state id="exit" />
              

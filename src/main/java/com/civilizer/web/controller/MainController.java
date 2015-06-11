@@ -33,6 +33,7 @@ import com.civilizer.domain.FragmentOrder;
 import com.civilizer.domain.SearchParams;
 import com.civilizer.domain.Tag;
 import com.civilizer.domain.TextDecorator;
+import com.civilizer.security.UserDetailsService;
 import com.civilizer.web.view.*;
 
 @Controller
@@ -803,9 +804,17 @@ public final class MainController {
 		}
 	}
 	
-	public void saveUserProfile() {
+	public boolean saveUserProfile() {
 	    UserProfileBean upb = ViewUtil.findBean("userProfileBean");
-	    yetToBeDeveloped(upb.getUserName(), upb.getPassword());
+	    boolean ok = false;
+	    try {
+            UserDetailsService.saveCustomCredential(upb.getUserName(), upb.getPassword());
+            ok = true;
+        } catch (IOException e) {
+            ViewUtil.addMessage("Error on Saving User Profile!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+            e.printStackTrace();
+        }
+	    return ok;
 	}
 	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })

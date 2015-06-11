@@ -4,6 +4,8 @@
     xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
     start-state="isAuthenticated">
+
+    <var name="userProfileBean" class="com.civilizer.web.view.UserProfileBean"/>
     
     <decision-state id="isAuthenticated">
 	    <if test="signinController.isAuthenticated()" then="exit" else="signin" />

@@ -2,9 +2,11 @@ package com.civilizer.web.view;
 
 import java.util.Locale;
 import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.springframework.security.core.Authentication;
@@ -38,7 +40,14 @@ public class UserProfileBean implements Serializable {
     }
 
     public Locale getLocale() {
-        locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        FacesContext fc = FacesContext.getCurrentInstance();
+        UIViewRoot r = fc.getViewRoot();
+        if (r == null) {
+            locale = new Locale("en");
+        }
+        else {
+            locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        }
         return locale;
     }
     
