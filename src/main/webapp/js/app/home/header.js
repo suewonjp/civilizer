@@ -63,6 +63,8 @@ function showProfileDialog(event) {
     var dlg = PF("userProfileDlg");
     var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);
     togglePasswordChange(changePwCb);
+    var inplace = PF("userName");
+    initPfInplaceWidget(inplace, inplace.jq.next("span").text(), dlg.jq.find("div.ui-panel").eq(0));
     dlg.show();
 }
 
