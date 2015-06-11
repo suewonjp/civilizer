@@ -16,14 +16,12 @@
 <h:form prependId="false">
     <p:panel id="signin-form-panel" header="Welcome!">
         <p:messages id="signin-form-messages" />
-        <h:panelGrid columns="3" cellpadding="5">
+        <h:panelGrid columns="2" cellpadding="5">
             <p:outputLabel for="j_username" value="#{msg['label_username']}" />
             <p:inputText id="j_username" />
-            <p:message for="j_username" />
  
             <p:outputLabel for="j_password" value="#{msg['label_password']}" />
             <p:password id="j_password" />
-            <p:message for="j_password" />
         </h:panelGrid>
 
         <label id="signin-form-remember-me-label" for="_spring_security_remember_me">#{msg['label_remember_me']}</label>
