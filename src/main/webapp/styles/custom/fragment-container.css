@@ -33,6 +33,10 @@
     overflow: hidden;
 }
 
+.small-fragment-box:hover {
+    color: green;
+}
+
 .fragment-header {
     white-space: nowrap;
     max-height: 26px;

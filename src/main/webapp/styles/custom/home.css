@@ -303,6 +303,10 @@
 	margin-bottom: 5px;
 }
 
+.each-file:hover {
+    color:gray;
+}
+
 .ui-autocomplete {
 	z-index:10000;
 }
