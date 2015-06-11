@@ -46,9 +46,10 @@ public final class UserDetailsService
     }
     
     public static File getCredentialFile() {
-        final String homePath = System.getProperty(AppOptions.PRIVATE_HOME_PATH); 
+        final String homePath = System.getProperty(AppOptions.PRIVATE_HOME_PATH);
         final String credFilePath = FsUtil.getAbsolutePath(CREDENTIAL_FILE, homePath);
-        return new File(credFilePath);
+        return credFilePath == null
+                ? null : new File(credFilePath);
     }
     
     public static void saveCustomCredential(String username, String password) throws IOException {
@@ -65,7 +66,7 @@ public final class UserDetailsService
         final Logger logger = LoggerFactory.getLogger(UserDetailsService.class);
         final File credentialFile = getCredentialFile();
         UserDetails output = null;
-        boolean customCredential = credentialFile.isFile();
+        boolean customCredential = credentialFile != null && credentialFile.isFile();
         
         if (customCredential) {
             try {

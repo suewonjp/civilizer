@@ -11,21 +11,30 @@ public final class FsUtil {
     }
     
     public static String getAbsolutePath(String srcPath, String basePath) {
+        if (srcPath == null || basePath == null) {
+            return null;
+        }
+        
+        basePath = toNativePath(basePath);
         srcPath = toNativePath(srcPath);
         String absPath = null;
-        if (new File(srcPath).isAbsolute()) {
-            // already absolute path
-            absPath = srcPath;
-        }
-        else {
-            // relative path
-            if (srcPath.startsWith("~/") || srcPath.startsWith("~\\")) {
-                absPath = System.getProperty("user.home") + srcPath.substring(1);
+        
+        if (new File(basePath).isAbsolute()) {
+            if (new File(srcPath).isAbsolute()) {
+                // already absolute path
+                absPath = srcPath;
             }
             else {
-                absPath = FilenameUtils.normalize(basePath + File.separator + srcPath);
+                // relative path
+                if (srcPath.startsWith("~/") || srcPath.startsWith("~\\")) {
+                    absPath = System.getProperty("user.home") + srcPath.substring(1);
+                }
+                else {
+                    absPath = FilenameUtils.normalize(basePath + File.separator + srcPath);
+                }
             }
         }
+            
         return absPath;
     }
     
