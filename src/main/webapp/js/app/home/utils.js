@@ -100,7 +100,7 @@ function showOrHide(target, letItShow) {
     letItShow ? target.show() : target.hide();
 }
 
-function initPfInplaceWidget(pfInplace, text, jqOuterBox) {
+function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {
     var display = pfInplace.jq.find(".ui-inplace-display");
     display.text(text)[0].title=MSG.click_to_rename;
     var input = pfInplace.jq.find(".ui-inplace-content input");
@@ -108,19 +108,21 @@ function initPfInplaceWidget(pfInplace, text, jqOuterBox) {
     pfInplace.hide();
     
     function abortInput(val) {
-        input.val(tagName);
-        display.text(tagName);
+        input.val(text);
+        display.text(text);
     }
     
     function commitInput() {
-        var val = input.val();
-        if (! val || val == "") {
-            abortInput(val);
-        }
-        else {
+        var val = input.val().trim();
+        if (val) {
             display.text(val);
         }
+        else {
+            abortInput(val);
+        }
         pfInplace.hide();
+        if ($.isFunction(onCommit))
+            onCommit();
     }
     
     jqOuterBox.click(function(e) {
