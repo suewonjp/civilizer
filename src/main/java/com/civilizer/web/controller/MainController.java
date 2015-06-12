@@ -159,10 +159,9 @@ public final class MainController {
             // Fetch the fragments by the search parameters
             fragments = fragmentDao.findBySearchParams(sp);
             allCount = fragments.size();
-            if (allCount == 0)
-                sp = null; // no search hit so no need to record any info to the context;
-            else
+            if (allCount > 0) {
                 fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
+            }
             tagId = PanelContextBean.EMPTY_TAG;
         }
         
