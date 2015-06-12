@@ -59,12 +59,33 @@ function onPanelActivationChange(explicit) {
     }
 }
 
+function toggleUserProfileDlgSaveBtn() {
+    var dlg = PF("userProfileDlg");
+    var inplace = PF("userName");
+    var saveBtn = PF("userProfileDlgSave");
+    (inplace.jq.data("modified") || dlg.jq.find("input[name='enable_password_change']").prop("checked"))
+    ? saveBtn.enable() : saveBtn.disable();
+}
+
 function showProfileDialog(event) {
     var dlg = PF("userProfileDlg");
     var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);
     togglePasswordChange(changePwCb);
     var inplace = PF("userName");
-    initPfInplaceWidget(inplace, inplace.jq.next("span").text(), dlg.jq.find("div.ui-panel").eq(0));
+    
+    function onInplaceCommit(val, text) {
+        inplace.jq.data("modified", val !== text);
+        toggleUserProfileDlgSaveBtn();
+    }
+    
+    initPfInplaceWidget(
+            inplace
+            , inplace.jq.next("span").text()
+            , dlg.jq.find("div.ui-panel").eq(0)
+            , onInplaceCommit
+    );    
+    onInplaceCommit("", "");
+    
     dlg.show();
 }
 
@@ -73,6 +94,7 @@ function togglePasswordChange(widget) {
     showOrHide($("#new-password-box"), checked);
     var dlg = PF("userProfileDlg");
     dlg.jq.find(".ui-messages").hide();
+    toggleUserProfileDlgSaveBtn();
 }
 
 function onClickSaveUserProfile() {

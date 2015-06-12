@@ -116,13 +116,13 @@ function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {
         var val = input.val().trim();
         if (val) {
             display.text(val);
+            if ($.isFunction(onCommit))
+                onCommit(val, text);
         }
         else {
             abortInput(val);
         }
         pfInplace.hide();
-        if ($.isFunction(onCommit))
-            onCommit();
     }
     
     jqOuterBox.click(function(e) {
@@ -140,4 +140,8 @@ function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {
         }
     });
 }
+
+//function boolToSign(b) {
+//    return b * 2 - 1;
+//}
 
