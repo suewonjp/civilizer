@@ -71,6 +71,8 @@ function showProfileDialog(event) {
     var dlg = PF("userProfileDlg");
     var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);
     togglePasswordChange(changePwCb);
+    $("#user-menu-form\\:pwd1").val(null);
+    $("#user-menu-form\\:pwd2").val(null);
     var inplace = PF("userName");
     
     function onInplaceCommit(val, text) {
