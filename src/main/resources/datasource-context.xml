@@ -21,7 +21,6 @@
             <list>
                <value>db/drop.sql</value>
                <value>db/schema.sql</value>
-               <value>db/test-data.sql</value>
             </list>
         </property>
     </bean>
