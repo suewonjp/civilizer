@@ -27,11 +27,11 @@ public class DataSourceInitializerTest extends DaoTest {
 	@Test
 	public void testRunSqlScriptProgrammatically() {
 		assertEquals(0, fragmentDao.countAll(true));
-		assertEquals(true, tagDao.findAllWithChildren(true).isEmpty());
+		assertEquals(true, tagDao.findAllWithChildren(false).isEmpty());
 		
 		runSqlScript("db_test/test-data.sql");
 		
-		assertEquals(false, tagDao.findAllWithChildren(true).isEmpty());
+		assertEquals(false, tagDao.findAllWithChildren(false).isEmpty());
 	}
 
 	@Test

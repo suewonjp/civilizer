@@ -1,7 +1,3 @@
-INSERT INTO GLOBAL_SETTING(SETTING_NAME, SETTING_VALUE) VALUES
-('database.version', '1')
-;
-
 INSERT INTO FRAGMENT(FRAGMENT_ID, TITLE, CONTENT, CREATION_DATETIME, UPDATE_DATETIME) VALUES
 
 (1, 'bold', STRINGDECODE('
@@ -198,9 +194,7 @@ Content Cell  | Content Cell
 ;
 
 INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES
-(0, '#trash')
-,(-1, '#bookmark')
-,(1, 'emphasis')
+(1, 'emphasis')
 ,(2, 'blockquotes')
 ,(3, 'links')
 ,(4, 'images')
