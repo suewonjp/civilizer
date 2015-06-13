@@ -14,7 +14,7 @@ public final class Configurator {
     private final Logger logger = LoggerFactory.getLogger(Configurator.class);
 	
 	public Configurator() {
-	    final File privateHome = detectPrivateHome(AppOptions.DEF_PRIVATE_HOME);
+	    final File privateHome = detectPrivateHome(AppOptions.DEF_PRIVATE_HOME_PATH);
         preSetupPrivateHome(privateHome);
 		addAppOptionsToSystemProperties(privateHome);
 		postSetupPrivateHome(privateHome);
@@ -124,6 +124,10 @@ public final class Configurator {
 
 		if (p.getProperty(AppOptions.LOCALE) == null) {
 		    p.setProperty(AppOptions.LOCALE, AppOptions.DEF_LOCALE);
+		}
+
+		if (p.getProperty(AppOptions.DATA_SCRIPTS) == null) {
+		    p.setProperty(AppOptions.DATA_SCRIPTS, AppOptions.DEF_DATA_SCRIPTS);
 		}
 	}
 	

@@ -20,7 +20,6 @@
 	        <list>
 	           <value>db_test/drop.sql</value>
 	           <value>db_test/schema.sql</value>
-	           <value>db_test/test-data.sql</value>
 	        </list>
         </property>
     </bean>

@@ -8,6 +8,7 @@ import java.util.*;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -72,19 +73,37 @@ public class DataSourceInitializer implements InitializingBean {
         
         final boolean firstRun = (schemaExists == false);
         final boolean forcedByUser = Configurator.isTrue(AppOptions.INITIALIZE_DB);
+        // [NOTE] the DB will get reset/initialized under either of the following conditions
+        //      1. the application runs for the 1st time
+        //          - more specifically, it runs for a new private home
+        //      2. the user has set INITIALIZE_DB property true
+        //          - to set it true, the user also needs to set DEV property true. 
         final boolean kickInitializing = firstRun || forcedByUser;
         
         if (kickInitializing) {
+            // the DB will get reset/initialized;
+            // this will overwrite any existing data
             if (firstRun)
                 logger.info("the app seems running for the 1st time");
             else if (forcedByUser)
                 logger.info("the user has requested database reset");
-            logger.info("intializing (reseting) database...");
+            logger.info("initializing (reseting) database...");
+            
+            // gather scripts specified via the data source context XML file
             final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
             for (String s : initializingScripts) {
-                final ClassPathResource script = new  ClassPathResource(s);
+                final ClassPathResource script = new  ClassPathResource(s.trim());
                 populator.addScript(script);
             }
+            
+            // gather scripts specified via system properties
+            final String[] dataScripts = StringUtils.split(System.getProperty(AppOptions.DATA_SCRIPTS), ",");
+            for (String s : dataScripts) {
+                final ClassPathResource script = new  ClassPathResource(s.trim());
+                populator.addScript(script);
+            }
+            
+            // execute the gathered scripts
             DatabasePopulatorUtils.execute(populator, dataSource);
         }
     }

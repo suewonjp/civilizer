@@ -56,7 +56,7 @@ public class DataSourceInitializerTest extends DaoTest {
 
 	@Test
 	public void testKickInitializingDataSource() throws Exception {
-	    System.out.println("----- emulate database reset by the user");
+	    // emulate database reset by the user
 	    tearDown();
 	    
 	    final String option = AppOptions.INITIALIZE_DB;
@@ -69,7 +69,7 @@ public class DataSourceInitializerTest extends DaoTest {
 
 	@Test
 	public void testFirstRunOfApp() throws Exception {
-	    System.out.println("----- emulate the 1st run of the app");
+	    // emulate the 1st run of the application
 	    tearDown();
         
 	    final String option = "civilizer.no_schema";
@@ -78,7 +78,27 @@ public class DataSourceInitializerTest extends DaoTest {
         setUp();
         
         System.clearProperty(option);
-	 
 	}
+	
+	@Test
+    public void testDataScriptsViaSystemProperty() throws Exception {
+	    // make sure DATA_SCRIPTS have no effect without database reset
+        tearDown();        
+        System.setProperty(AppOptions.DATA_SCRIPTS, ",db_test/test-data.sql,");
+        setUp();
+        assertEquals(true, fragmentDao.findAll(true).isEmpty());
+        
+        // make sure DATA_SCRIPTS work as expected
+        tearDown();
+        System.setProperty("civilizer.no_schema", "true");
+//        System.setProperty(AppOptions.INITIALIZE_DB, "true");
+        System.setProperty(AppOptions.DATA_SCRIPTS, ",db_test/test-data.sql,");
+        setUp();
+        assertEquals(false, fragmentDao.findAll(true).isEmpty());
+        
+        System.clearProperty("civilizer.no_schema");
+        System.clearProperty(AppOptions.DATA_SCRIPTS);
+        System.clearProperty(AppOptions.INITIALIZE_DB);
+    }
 
 }
