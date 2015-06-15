@@ -157,6 +157,14 @@
     font-size: x-small;
 }
 
+#frg-reso-slider0
+, #frg-reso-slider1
+, #frg-reso-slider2
+{
+    width:120px;
+    display:inline-block;
+}
+
 #last-search-phrase-0
 , #last-search-phrase-1
 , #last-search-phrase-2

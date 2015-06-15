@@ -9,6 +9,8 @@ $(document).ready(function() {
     
     setupFragmentCheckboxes();
     
+    setupFragmentResolutionSliders();
+    
     setupDragAndDrop();
     
 	setupPanelActivationButtons();

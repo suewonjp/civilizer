@@ -80,6 +80,8 @@
     
     <p:spacer width="6" />
     
+    <div id="frg-reso-slider#{panelId}" style="#{tc > 0 ? 'display:inline-block' : 'display:none'}"></div>
+    
     <c:if test="#{panelContext.fragmentDeletable}">
         <p:commandLink oncomplete="confirmEmptyingTrash()">
             <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_empty_trash']}"></span>
