@@ -216,14 +216,23 @@ function setupFragmentResolutionSliders() {
 }
 
 function translateCustomMarkupRules(html) {
-	// format  =>   {{[keyword] ... text ... }}
 	return html
+    	// {([keyword] ... text ... )} --- translated to a <span>
+	    // used for one special purpose; highlighting search phrase
+        .replace(/\{\(\[(.+?)\]/g, function(match, pos, originalText) {
+            return "<span class='-cvz-" + RegExp.$1 + "'>"; 
+        })
+        .replace(/\)\}/g, function(match, pos, originalText) {
+            return "</span>";
+        })
+        // {{{[keyword] ... text ... }}} --- translated to a <div> block
     	.replace(/\{\{\{\[(.+?)\]/g, function(match, pos, originalText) {
     	    return "<div class='-cvz-" + RegExp.$1 + "'>"; 
     	})
     	.replace(/\}\}\}/g, function(match, pos, originalText) {
     	    return "</div>";
     	})
+        // {{[keyword] ... text ... }} --- translated to a <span>
     	.replace(/\{\{\[(.+?)\]/g, function(match, pos, originalText) {
     		return "<span class='-cvz-" + RegExp.$1 + "'>"; 
     	})
