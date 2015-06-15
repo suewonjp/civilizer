@@ -206,12 +206,18 @@ function setupFragmentCheckboxes() {
 }
 
 function setupFragmentResolutionSliders() {
+    $("#fragment-group .fragment-header").dblclick(function() {
+        var tgt = $(this).closest(".each-fragment").find(".fragment-content");
+        showOrHide(tgt, !tgt.is(":visible"));
+    });
+    
     var settings = {
         max:10, min:0, value:10,
         change:function(event, ui) {
 //            console.log(ui.value);
         }
     };
+    
     $("#frg-reso-slider0, #frg-reso-slider1, #frg-reso-slider2").slider(settings);
 }
 
