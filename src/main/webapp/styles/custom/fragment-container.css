@@ -43,12 +43,14 @@
     height: 26px;
     width: 100%;
     display: inline-block;
+    overflow-y: hidden;
 }
 
 .fragment-header .fa-clock-o {
     cursor:default;
     margin-left: 5px;
 }
+
 .fragment-header .rclick-hint {
     cursor:default;
 	margin-left: 20px;
