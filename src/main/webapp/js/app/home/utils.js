@@ -7,6 +7,15 @@ function isImage(fileExt) {
         ;
 }
 
+function hasAnyClass(obj, classes) {
+    for (var i=0; i<classes.length; ++i) {
+        if (obj.hasClass(classes[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function makeObjectsInsertableToTextArea() {
     // [NOTE] original source code can be found at:
     // http://skfox.com/2008/11/26/jquery-example-inserting-text-with-drag-n-drop/

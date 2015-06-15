@@ -463,15 +463,6 @@ function newBaseDroppable(acceptableClasses) {
 	return output;
 }
 
-function hasAnyClass(obj, classes) {
-	for (var i=0; i<classes.length; ++i) {
-		if (obj.hasClass(classes[i])) {
-			return true;
-		}
-	}
-	return false;
-}
-
 function findPanel(obj) {
 	if (!obj) {
 		return -1;
