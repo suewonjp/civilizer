@@ -1,6 +1,7 @@
 package com.civilizer.web.view;
 
 import java.io.Serializable;
+import java.util.*;
 
 import javax.persistence.Transient;
 
@@ -16,6 +17,8 @@ public final class FragmentBean implements Serializable {
     private String content;
     
     private String concatenatedTagNames;
+    
+    private List<Fragment> relatedOnes = Collections.emptyList();
     
     @Transient
     private FragmentSelectionBean fragmentSelectionBean;
@@ -72,6 +75,14 @@ public final class FragmentBean implements Serializable {
 	    fragmentSelectionBean = fsb;
 	}
 	
+    public List<Fragment> getRelatedOnes() {
+        return relatedOnes;
+    }
+
+    public void setRelatedOnes(List<Fragment> relatedOnes) {
+        this.relatedOnes = relatedOnes;
+    }
+	
 	public void clear() {
         setConcatenatedTagNames("");
         if (fragment != null) {
@@ -87,4 +98,5 @@ public final class FragmentBean implements Serializable {
                 + "}"
                 ;
     }
+    
 }

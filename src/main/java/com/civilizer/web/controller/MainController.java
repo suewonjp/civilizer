@@ -191,6 +191,13 @@ public final class MainController {
 	private FragmentBean newFragmentBean(Fragment f, SearchParams sp, FragmentSelectionBean fsb) {
 	    FragmentBean fb = new FragmentBean();
         fb.setFragment(f);
+        
+        // [NOTE] due to some weird bug, accessing Fragment.relatedOnes directly from the view does't work;
+        // (the bug appears after relating many pairs of fragments and JSF simply denies retrieving some items from the collection)
+        // the solution is accessing a fresh new copy of Fragment.relatedOnes;
+        fb.setRelatedOnes(new ArrayList<Fragment>(f.getRelatedOnes()));
+        f.setRelatedOnes(Collections.<Fragment>emptySet()); // the original copy is unnecessary.
+        
         fb.setFragmentSelectionBean(fsb);
         
         String title = f.getTitle();
