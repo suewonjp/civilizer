@@ -289,17 +289,6 @@ public final class FragmentDaoImpl implements FragmentDao {
         }
     }
     
-//    @Override
-//    public void relateFragments(List<Long> ids) {
-//        final int idc = ids.size();
-//        for (int i=0; i<idc-1; ++i) {
-//            for (int j=i+1; j<idc; ++j) {
-//                long fromId = ids.get(i), toId = ids.get(j);
-//                relateFragments(fromId, toId);
-//            }
-//        }
-//    }
-
     @Override
     public void unrelateFragments(long id0, long id1) {
     	final Session session = sessionFactory.getCurrentSession();

@@ -116,19 +116,6 @@ public final class Fragment implements Serializable {
     public void setRelatedOnes(Set<Fragment> relatedOnes) {
         this.relatedOnes = relatedOnes;
     }
-    
-//    public void _relateTo(Fragment frg) {
-//    	if (relatedOnes.equals(Collections.emptySet())) {
-//    		relatedOnes = new HashSet<Fragment>();
-//    	}
-//    	relatedOnes.add(frg);
-//    }
-//    
-//    public void relateTo(Fragment frg) {
-//    	_relateTo(frg);
-//    	frg._relateTo(this);
-//    }
-    
     public boolean isRelatedTo(Fragment frg) {
     	return relatedOnes.contains(frg);
     }
@@ -269,10 +256,6 @@ public final class Fragment implements Serializable {
     public String toString() {
         return    "id: " + id
                 + ", title: "+ title
-//                + ", content: "+ content
-//                + ", tag count: "+ (Hibernate.isInitialized(tags) ? tags.size() : 0)
-//                + ", created at: "+ creationDatetime
-//                + ", updated at: "+ updateDatetime
                 ;
     }
 

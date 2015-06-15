@@ -97,11 +97,6 @@ public class DaoEmbeddedTest extends DaoTest {
         super.testRelateFragments();
     }
     
-//    @Test
-//    public void testRelateMultiplePairsOfFragments() {
-//        super.testRelateMultiplePairsOfFragments();
-//    }
-    
     @Test
     public void testFindFragmentsByTagIds() {
         super.testFindFragmentsByTagIds();

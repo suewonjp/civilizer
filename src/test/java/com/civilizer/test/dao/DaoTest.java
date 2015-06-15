@@ -462,29 +462,6 @@ class DaoTest {
         }
 	}
 	
-//	protected void testRelateMultiplePairsOfFragments() {
-//	    final int pairCount = 3 + TestUtil.getRandom().nextInt(3);
-//        for (int i = 0; i < pairCount; ++i) {
-//            testPersistNewFragment();
-//        }
-//        final List<Long> ids = new ArrayList<>(pairCount);
-//        for (int i = 0; i < pairCount; i++) {
-//            ids.add(temporalFragments.get(i).getId());
-//        }
-//        assertEquals(pairCount, ids.size());
-//        fragmentDao.relateFragments(ids);
-//        final int idc = ids.size();
-//        for (int i=0; i<idc-1; ++i) {
-//            for (int j=i+1; j<idc; ++j) {
-//                final long fromId = ids.get(i), toId = ids.get(j);
-//                final Fragment from = fragmentDao.findById(fromId, false, true);
-//                final Fragment to = fragmentDao.findById(toId, false, true);
-//                assertEquals(true, from.isRelatedTo(to));
-//                assertEquals(true, to.isRelatedTo(from));
-//            }
-//        }
-//	}
-	
 	protected void testFindFragmentsByTagIds() {
 		Collection<Tag> tags = tagDao.findAll();
 		
