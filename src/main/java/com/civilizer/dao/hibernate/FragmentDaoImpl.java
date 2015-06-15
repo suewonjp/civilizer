@@ -274,14 +274,31 @@ public final class FragmentDaoImpl implements FragmentDao {
     public void relateFragments(long id0, long id1) {
     	final Session session = sessionFactory.getCurrentSession();
     	final String[] qs = {
-    			"merge into fragment2fragment(from_id, to_id) key(from_id, to_id) values (" +id0+ ", " +id1+ ")",
-    			"merge into fragment2fragment(from_id, to_id) key(from_id, to_id) values (" +id1+ ", " +id0+ ")",
-//    			"insert into fragment2fragment(from_id, to_id) values (" +id0+ ", " +id1+ ")",
-//    			"insert into fragment2fragment(from_id, to_id) values (" +id1+ ", " +id0+ ")",
+    	        // [NOTE] this is a H2 specific method; incompatible with other DBMS vendors
+    	        String.format("merge into fragment2fragment(from_id, to_id) key(from_id, to_id) values (%d,%d)", id0, id1),
+    	        String.format("merge into fragment2fragment(from_id, to_id) key(from_id, to_id) values (%d,%d)", id1, id0),
+    	        
+    	        // seemingly more compatible method;
+//    			String.format("delete from fragment2fragment where from_id=%d and to_id=%d", id0, id1),
+//    			String.format("delete from fragment2fragment where from_id=%d and to_id=%d", id1, id0),
+//    			String.format("insert into fragment2fragment(from_id, to_id) values (%d,%d)", id0, id1),
+//    			String.format("insert into fragment2fragment(from_id, to_id) values (%d,%d)", id1, id0),
     	};
-    	session.createSQLQuery(qs[0]).executeUpdate();
-    	session.createSQLQuery(qs[1]).executeUpdate();
+    	for (String q : qs) {
+    	    session.createSQLQuery(q).executeUpdate();
+        }
     }
+    
+//    @Override
+//    public void relateFragments(List<Long> ids) {
+//        final int idc = ids.size();
+//        for (int i=0; i<idc-1; ++i) {
+//            for (int j=i+1; j<idc; ++j) {
+//                long fromId = ids.get(i), toId = ids.get(j);
+//                relateFragments(fromId, toId);
+//            }
+//        }
+//    }
 
     @Override
     public void unrelateFragments(long id0, long id1) {
