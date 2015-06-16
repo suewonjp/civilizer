@@ -207,7 +207,7 @@ function setupFragmentCheckboxes() {
 
 function setupFragmentResolutionSliders() {
     $("#fragment-group .fragment-header").dblclick(function() {
-        var tgt = $(this).closest(".each-fragment").find(".fragment-content");
+        var tgt = $(this).closest(".each-fragment").find("tbody");
         showOrHide(tgt, !tgt.is(":visible"));
     });
     
@@ -215,13 +215,19 @@ function setupFragmentResolutionSliders() {
         max:10, min:0, value:10,
         change:function(event, ui) {
             var allClasses = "frg-content-reso0 frg-content-reso1 frg-content-reso2 frg-content-reso3";
+            var pid = $(this).attr("_pid");
+            var panel = $("#fragment-panel-"+pid);
+            var tbody = panel.find(".each-fragment tbody").show();
             var reso = 3;
-            if (ui.value < 2) reso = 0;
+            
+            if (ui.value < 2) {
+                reso = 0;
+                tbody.hide();
+            }
             else if (ui.value < 5) reso = 1;
             else if (ui.value < 9) reso = 2;
-            var pid = $(this).attr("_pid");
-            $("#fragment-panel-"+pid+" .fragment-content")
-            .removeClass(allClasses).addClass("frg-content-reso"+reso);
+            
+            panel.find(".fragment-content").removeClass(allClasses).addClass("frg-content-reso"+reso);
         }
     };
     
