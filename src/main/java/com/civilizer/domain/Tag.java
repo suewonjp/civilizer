@@ -29,11 +29,13 @@ public final class Tag implements Serializable {
 	public static final String[] SPECIAL_TAG_NAMES = {
 		"#trash",
 		"#bookmark",
+		"#untagged",
 	};
 	
 	// [RULE] all special tags have predefined id numbers which are zero or minus
 	public static final int TRASH_TAG_ID = 0;
 	public static final int BOOKMARK_TAG_ID = -1;
+	public static final int UNTAGGED_TAG_ID = -2;
 
     private Long id;
     private String tagName = "";
@@ -268,6 +270,10 @@ public final class Tag implements Serializable {
             }
         }
         return Integer.MAX_VALUE;
+    }
+    
+    public static String getSpecialTagName(long id) {
+        return SPECIAL_TAG_NAMES[Math.abs((int) id)];
     }
     
     public static boolean isTrashTag(long id) {

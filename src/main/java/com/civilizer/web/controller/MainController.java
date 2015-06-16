@@ -67,6 +67,10 @@ public final class MainController {
 	private Tag getBookmarkTag() {
 		return tagDao.findById((long) Tag.BOOKMARK_TAG_ID);
 	}
+
+	private Tag getUntaggedTag() {
+	    return tagDao.findById((long) Tag.UNTAGGED_TAG_ID);
+	}
 	
 	private Tag getSpecialTag(String name) {
 		return tagDao.findById((long) Tag.getSpecialTagId(name));
@@ -509,6 +513,27 @@ public final class MainController {
 
 			output.add(t);
 		}
+		
+		final Tag untaggedTag = getUntaggedTag();
+		if (output.isEmpty()) {
+		    // no tag attached; simply tag it as #untagged
+		    ViewUtil.addMessage("No tag assigned", " - it has been tagged as "+untaggedTag.getTagName(), null);
+		    output.add(untaggedTag);
+		}
+		else if (output.contains(untaggedTag)) {
+		    // detach the tag of #untagged if the fragment has another (non-special) tag;
+		    boolean shouldDetach = false;
+		    for (Tag tag : output) {
+                if (Tag.isTrivialTag(tag.getId())) {
+                    shouldDetach = true;
+                    break;
+                }
+            }
+		    if (shouldDetach) {
+		        output.remove(untaggedTag);
+		    }
+		}
+		
 		return output;
 	}
 	

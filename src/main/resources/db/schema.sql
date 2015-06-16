@@ -74,6 +74,7 @@ INSERT INTO GLOBAL_SETTING(SETTING_NAME, SETTING_VALUE) VALUES
 INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES
 (0, '#trash')
 ,(-1, '#bookmark')
+,(-2, '#untagged')
 ;
 
 
