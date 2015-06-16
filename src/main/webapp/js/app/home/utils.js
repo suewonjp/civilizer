@@ -116,20 +116,17 @@ function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {
     input.val(text);
     pfInplace.hide();
     
-    function abortInput(val) {
-        input.val(text);
-        display.text(text);
-    }
-    
     function commitInput() {
         var val = input.val().trim();
         if (val) {
+            input.val(val);
             display.text(val);
             if ($.isFunction(onCommit))
                 onCommit(val, text);
         }
         else {
-            abortInput(val);
+            input.val(text);
+            display.text(text);
         }
         pfInplace.hide();
     }

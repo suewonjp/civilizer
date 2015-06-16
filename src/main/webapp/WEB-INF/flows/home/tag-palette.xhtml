@@ -62,7 +62,8 @@
                 </h:panelGroup>
 	        </p:panel>
     	</h:panelGrid>
-        <p:commandButton action="save-tag" value="#{msg['label_save']}" icon="ui-icon-check"/>
+        <input type="hidden" name="isNewTag" value="false" class="ui-submit-param" />
+        <p:commandButton widgetVar="tagEditorSaveBtn" action="save-tag" value="#{msg['label_save']}" icon="ui-icon-check"/>
     </p:dialog>
 
     <p:dialog id="tag-info" widgetVar="tagInfoDlg" header="#{msg['label_info']}" closeOnEscape="true" width="600px" modal="false" showEffect="fade" position="center" draggable="true" resizable="false" >
@@ -96,7 +97,7 @@
     
     <div id="tag-context-menu" style="display:none; z-index:5000; position:fixed;">
 	    <p:menu>
-            <p:menuitem id="edit" oncomplete="showTagEditor()" icon="fa fa-edit" value="#{msg['label_edit']}"
+            <p:menuitem id="edit" oncomplete="showTagEditorForEditing()" icon="fa fa-edit" value="#{msg['label_edit']}"
             	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
             <p:menuitem id="trash" onclick="confirmTrashingTagFromCtxtMenu()" icon="fa fa-trash" value="#{msg['label_trash']}"/>
             <p:menuitem id="info" oncomplete="showTagInfo()" icon="fa fa-info-circle" value="#{msg['label_info']}"
@@ -128,7 +129,7 @@
 			</div>
 
 		    <div id="new-tag-button">
-			    <p:commandLink onclick="" title="#{msg['label_new_tag']}">
+			    <p:commandLink onclick="showTagEditorForCreating()" title="#{msg['label_new_tag']}">
 			        <span class="fa fa-tag fa-2x button-link">+</span>
 			    </p:commandLink>
 			</div>

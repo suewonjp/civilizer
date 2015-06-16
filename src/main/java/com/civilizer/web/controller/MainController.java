@@ -270,7 +270,7 @@ public final class MainController {
 	public void prepareTagListBeanToEditTag(TagListBean tagListBean, TagBean tagBean) {
 		final long tagId = tagBean.getTag().getId();
 		if (tagId <= 0) {
-		    final String name = Tag.SPECIAL_TAG_NAMES[-(int)tagId];
+		    final String name = Tag.getSpecialTagName(tagId);
 		    tagBean.getTag().setTagName(name);
 		    tagListBean.setParentTags(null);
 		    tagListBean.setChildTags(null);
@@ -537,14 +537,23 @@ public final class MainController {
 		return output;
 	}
 	
-	public void saveTag(TagBean tagBean, TagListBean tagListBean) {
-		final TagBean tagToEdit = tagListBean.getTagToEdit();
-		final Tag t = tagToEdit.getTag();
-		final String oldName = t.getTagName();
-		final String newName = tagBean.getTag().getTagName();
-		if (newName.isEmpty()) {
-			ViewUtil.addMessage("Error on updating a tag!!!", "An empty tag name is not allowed!", FacesMessage.SEVERITY_ERROR);
-			return;
+	public void saveTag(TagBean tagBean, TagListBean tagListBean, boolean isNewTag) {
+		final String newName = tagBean.getTag().getTagName();        
+        if (newName.isEmpty()) {
+            ViewUtil.addMessage("Error on creating/updating a tag!!!", "An empty tag name is not allowed!", FacesMessage.SEVERITY_ERROR);
+            return;
+        }
+		
+        Tag t = null;
+        String oldName = null;
+
+        if (isNewTag) {
+		    t = new Tag();
+		}
+		else {
+		    final TagBean tagToEdit = tagListBean.getTagToEdit();
+		    t = tagToEdit.getTag();
+		    oldName = t.getTagName();
 		}
 		t.setTagName(newName);
 		
@@ -557,11 +566,14 @@ public final class MainController {
 				// persistence request without updating relationships; e.g. renaming only
 				tagDao.save(t);
 			}
-			ViewUtil.addMessage("Updated", "Tag : " + oldName + " => " + newName, null);
+			if (isNewTag)
+			    ViewUtil.addMessage("Created", "Tag : " + newName, null);
+			else
+			    ViewUtil.addMessage("Updated", "Tag : " + oldName + " => " + newName, null);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			ViewUtil.addMessage("Error on updating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			ViewUtil.addMessage("Error on creating/updating a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	

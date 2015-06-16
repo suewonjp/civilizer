@@ -45,18 +45,46 @@ function onExpandComplete() {
 	setupDraggableForTags();
 }
 
-function showTagEditor() {
+function showTagEditorForCreating() {
+    var saveBtn = PF("tagEditorSaveBtn");
+    saveBtn.disable();
+    var inplace = PF("tagNameInplace");
+    inplace.hide();
+    var input = inplace.jq.find(".ui-inplace-content input");
+    inplace.jq.find(".ui-inplace-display").text(MSG.name_required);
+    input.val("").off("change").on("change", function() {
+            if ($(this).val().trim())
+                saveBtn.enable();
+            else
+                saveBtn.disable();
+        })
+        .off("keypress.newTagName").on("keypress.newTagName", function(e) {
+            if (e.keyCode == 13)
+                $(this).change();
+        });
+    var dlg = PF("tagEditor");
+    dlg.jq.find("input[name=isNewTag]").val(true);
+    dlg.show();
+}
+
+function showTagEditorForEditing() {
 	var dlg = PF("tagEditor");
-	dlg.show();
 	
 	var menu = $("#tag-context-menu");
 	var target = menu.data("target-tag");
 	var tagName = target.find(".each-tag-name").text();
 	if (tagName == "") {
-		tagName = "~unnamed~"
+		tagName = "???";
 	}
 	
-	initPfInplaceWidget(PF("tagNameInplace"), tagName, dlg.jq.find("#tag-palette-form\\:tag-name-panel"));
+	initPfInplaceWidget(
+	        PF("tagNameInplace")
+	        , tagName
+	        , dlg.jq.find("#tag-palette-form\\:tag-name-panel")
+	);
+
+	dlg.jq.find("input[name=isNewTag]").val(false);
+	dlg.show();
 }
 
 function showTagInfo() {
@@ -67,7 +95,7 @@ function showTagInfo() {
     var target = menu.data("target-tag");
     var tagName = target.find(".each-tag-name").text();
     if (tagName == "") {
-        tagName = "~unnamed~"
+        tagName = "???";
     }
     
     dlg.jq.find("._tag-name").text(" "+tagName);
