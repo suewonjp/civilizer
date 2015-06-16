@@ -99,12 +99,3 @@ function togglePasswordChange(widget) {
     toggleUserProfileDlgSaveBtn();
 }
 
-function onClickSaveUserProfile() {
-    var dlg = PF("userProfileDlg");
-    var pwd1 = $("#user-menu-form\\:pwd1");
-    var pwd2 = $("#user-menu-form\\:pwd2");
-    if (pwd1.val().trim() && pwd1.val() === pwd2.val()) {
-        // [TODO] hash the password
-    }
-}
-
