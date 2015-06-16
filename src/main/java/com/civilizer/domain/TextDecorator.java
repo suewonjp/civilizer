@@ -8,8 +8,8 @@ import com.civilizer.utils.Pair;
 
 public final class TextDecorator {
 	
-	public static final String PREFIX_FOR_HIGHLIGHT = "{([sh]";
-	public static final String POSTFIX_FOR_HIGHLIGHT = ")}";
+	public static final String PREFIX_FOR_HIGHLIGHT = "{([sh] ";
+	public static final String POSTFIX_FOR_HIGHLIGHT = " )}";
 	
 	private static final RangeComparator rangeComparator = new RangeComparator();
 	

@@ -35,7 +35,7 @@ function setContextMenuForFiles() {
 function processFileClasses(parent) {
 	parent.find(".-cvz-file").each(function () {
 		var $this = $(this);
-		var fileId = $this.text();
+		var fileId = $this.text().trim();
 		var filePath = $("#-cvz-file-" + fileId).attr("_fp");
 		if (filePath) {
 			var fileName = filePath.slice(filePath.lastIndexOf(SYSPROP.fileSep) + 1);
