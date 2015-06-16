@@ -122,10 +122,16 @@
 	        </ul>
 	        
 		    <div id="trashcan">
-			    <p:commandLink onclick="fetchFragmentsByTag($(this).find('span'), null); event.preventDefault();"  title="#{msg['go_to_trashcan']}">
-			        <span class="fa fa-trash fa-2x button-link" _tid="0" style="color:lightgray"></span>
+			    <p:commandLink onclick="fetchFragmentsByTag($(this).find('span'), null); event.preventDefault();" title="#{msg['go_to_trashcan']}">
+			        <span class="fa fa-trash fa-2x button-link" _tid="0"></span>
 			    </p:commandLink>
-			</div><br/>
+			</div>
+
+		    <div id="new-tag-button">
+			    <p:commandLink onclick="" title="#{msg['label_new_tag']}">
+			        <span class="fa fa-tag fa-2x button-link">+</span>
+			    </p:commandLink>
+			</div>
 		    
 	        <div id="tag-palette-flat">
 	            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">

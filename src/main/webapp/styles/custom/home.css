@@ -255,9 +255,26 @@
     cursor:pointer;
 }
 
+#trashcan, #new-tag-button {
+    margin: 10px 0px 10px 15px;
+	display:inline-block;
+	font-size:x-small;
+}
+
 #trashcan {
-	margin-left: 15px;
-	margin-bottom: 0px;
+	width: 50%;
+}
+
+#trashcan span {
+	color:lightgray;
+}
+
+#new-tag-button {
+    float:right;
+}
+
+#new-tag-button span {
+	color:yellow;
 }
 
 .sidebar-title {
