@@ -31,6 +31,8 @@ $(document).ready(function() {
 	
 	$("#container").show();
 	
+	disableAutoSubmitOnEnterForForms($("#tag-palette-form"));
+	
 	setTimeout(function() {
     	// timeout for message display if any
     	$(".ui-messages-close").trigger("click");

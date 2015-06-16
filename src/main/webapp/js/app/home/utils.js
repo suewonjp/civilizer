@@ -150,6 +150,14 @@ function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {
     });
 }
 
+function disableAutoSubmitOnEnterForForms(jqForms) {
+    jqForms.off('keypress.disableAutoSubmitOnEnter').on('keypress.disableAutoSubmitOnEnter', function(event) {
+        if (event.which === $.ui.keyCode.ENTER && $(event.target).is(':input:not(:button,:submit,:reset)')) {
+            event.preventDefault();
+        }
+    });
+}
+
 //function boolToSign(b) {
 //    return b * 2 - 1;
 //}
