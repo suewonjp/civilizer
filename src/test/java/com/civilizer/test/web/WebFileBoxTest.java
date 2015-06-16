@@ -230,6 +230,9 @@ public class WebFileBoxTest {
 					FileUtils.moveDirectory(oldDir, newDir);
 				} catch (IOException e) {
 					e.printStackTrace();
+					fail(String.format(
+					        "moving a folder %s to %s failed!",
+					        oldDir.getAbsolutePath(), newDir.getAbsolutePath()));
 				}
 				
 				entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
@@ -247,6 +250,9 @@ public class WebFileBoxTest {
 					FileUtils.moveFile(oldFile, newFile);
 				} catch (IOException e) {
 					e.printStackTrace();
+                    fail(String.format(
+                            "moving a file %s to %s failed!",
+                            oldFile.getAbsolutePath(), newFile.getAbsolutePath()));
 				}
 				assertEquals(false, oldFile.isFile());
 				assertEquals(true, newFile.isFile());
@@ -329,6 +335,9 @@ public class WebFileBoxTest {
 					continue;
 				} catch (IOException e) {
 					e.printStackTrace();
+                    fail(String.format(
+                            "moving a folder %s to %s failed!",
+                            oldDir.getAbsolutePath(), newDir.getAbsolutePath()));
 				}
 				
 				assertEquals(false, oldDir.isDirectory());
@@ -358,6 +367,9 @@ public class WebFileBoxTest {
 					continue;
 				} catch (IOException e) {
 					e.printStackTrace();
+                    fail(String.format(
+                            "moving a folder %s to %s failed!",
+                            oldFile.getAbsolutePath(), newFile.getAbsolutePath()));
 				}
 				assertEquals(false, oldFile.isFile());
 				assertEquals(true, newFile.isFile());
@@ -428,12 +440,8 @@ public class WebFileBoxTest {
 			
 			for (FileEntity fe : entities) {
 				final String pathOnFileSystem = filesHomePath + fe.getFileName();
-				try {
-					assertEquals(false, new File(pathOnFileSystem).exists());
-					fileEntityDao.delete(fe);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				assertEquals(false, new File(pathOnFileSystem).exists());
+				fileEntityDao.delete(fe);
 			}
 			
 			filePathTree = new FilePathTree();

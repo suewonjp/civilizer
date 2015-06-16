@@ -692,6 +692,7 @@ public final class MainController {
 			} catch (IOException e) {
 				e.printStackTrace();
 				ViewUtil.addMessage("Error on Renaming a Folder!!!", oldFilePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				return;
 			}
 			
 			entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
@@ -707,6 +708,7 @@ public final class MainController {
 			} catch (IOException e) {
 				e.printStackTrace();
 				ViewUtil.addMessage("Error on Renaming a File!!!", oldFilePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				return;
 			}
 			
 			FileEntity entity = fileEntityDao.findByName(oldFilePath);
@@ -757,6 +759,7 @@ public final class MainController {
 			} catch (IOException e) {
 				e.printStackTrace();
 				ViewUtil.addMessage("Error on Moving a Folder!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				return;
 			}
 			
 			entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
@@ -776,6 +779,7 @@ public final class MainController {
 			} catch (IOException e) {
 				e.printStackTrace();
 				ViewUtil.addMessage("Error on Moving a File!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				return;
 			}
 			
 			FileEntity entity = fileEntityDao.findByName(oldFilePath);
@@ -825,13 +829,8 @@ public final class MainController {
 		FileUtils.deleteQuietly(filePathBean.toFile(filesHomePath));
 		
 		for (FileEntity fe : entities) {
-			try {
-				fileEntityDao.delete(fe);
-				ViewUtil.addMessage("Files Deleted", fe.getFileName(), null);
-			} catch (Exception e) {
-				e.printStackTrace();
-				ViewUtil.addMessage("Error on Deleting Files!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-			}
+			fileEntityDao.delete(fe);
+			ViewUtil.addMessage("Files Deleted", fe.getFileName(), null);
 		}
 	}
 	
