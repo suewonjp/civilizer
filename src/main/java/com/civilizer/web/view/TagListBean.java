@@ -142,6 +142,9 @@ public final class TagListBean implements Serializable {
 		for (Tag tag : parentTags) {
 			output.remove(tag);
 		}
+		for (Tag tag : childTags) {
+		    output.remove(tag);
+		}
 		if (tagToEdit != null) {
 			output.remove(tagToEdit.getTag());
 		}
@@ -150,8 +153,11 @@ public final class TagListBean implements Serializable {
 
 	public List<Tag> listOfSelectableChildren() {
 		final List<Tag> output = new LinkedList<>(tags);
+		for (Tag tag : parentTags) {
+		    output.remove(tag);
+		}
 		for (Tag tag : childTags) {
-			output.remove(tag);
+		    output.remove(tag);
 		}
 		if (tagToEdit != null) {
 			output.remove(tagToEdit.getTag());
