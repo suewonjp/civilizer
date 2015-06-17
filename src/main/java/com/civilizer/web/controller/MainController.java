@@ -427,7 +427,7 @@ public final class MainController {
         }            
 	}
 	
-	public void saveFragment(FragmentBean fb, TagListBean tagListBean) {
+	public void saveFragment(FragmentBean fb, TagListBean tagListBean, Long relatedFrgId) {
 		final String tagNames = fb.getConcatenatedTagNames();
 		final Set<Tag> tags = saveTagsWhenSavingFragment(tagListBean, tagNames);
 	    
@@ -459,7 +459,12 @@ public final class MainController {
         catch (Exception e) {
         	e.printStackTrace();
 			ViewUtil.addMessage("Error on saving a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+			return;
 		}
+        
+        if (relatedFrgId != null) {
+            relateFragments(relatedFrgId, frg.getId());
+        }
 	}
 	
 	private Set<Tag> saveTagsWhenSavingFragment(TagListBean tagListBean, String tagNames) {
@@ -577,7 +582,7 @@ public final class MainController {
         }
 	}
 	
-	public void relateFragments(int fromId, int toId) {
+	public void relateFragments(long fromId, long toId) {
 		try {
 			fragmentDao.relateFragments(fromId, toId);
 			ViewUtil.addMessage("Related", "Fragments : " + fromId + " <==> " + toId, null);
@@ -616,7 +621,7 @@ public final class MainController {
 	    }
 	}
 
-	public void unrelateFragments(int fromId, int toId) {
+	public void unrelateFragments(long fromId, long toId) {
 		try {
 			fragmentDao.unrelateFragments(fromId, toId);
 			ViewUtil.addMessage("Unrelated", "Fragments : " + fromId + " <" + Character.toString((char) 0x2260) + "> " + toId, null);

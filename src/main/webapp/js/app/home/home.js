@@ -682,12 +682,14 @@ function setContextMenuForFragments() {
 	    		menu.find("#fragment-group-form\\:trash").hide();
 	    		menu.find("#fragment-group-form\\:delete").show();
 	    		menu.find("#fragment-group-form\\:restore").show();
+	    		menu.find("#fragment-group-form\\:relateNew").hide();
 	    	}
 	    	else {
 	    		menu.find("#fragment-group-form\\:bookmark").show();
 	    		menu.find("#fragment-group-form\\:trash").show();
 	    		menu.find("#fragment-group-form\\:delete").hide();
 	    		menu.find("#fragment-group-form\\:restore").hide();
+	    		menu.find("#fragment-group-form\\:relateNew").show();
 	    	}
 	    	event.preventDefault();
     	}

@@ -155,9 +155,10 @@ function disableAutoSubmitOnEnterForForms(jqForms) {
     });
 }
 
-function addSubmitParam(jqForms, params) {
+function addSubmitParam(jqForms, params, clearBeforeAdding) {
     for (var key in params) {
-//        jqForms.find("input[type=hidden][name=key]").remove();
+        if (clearBeforeAdding)
+            jqForms.find("input[type=hidden][name='"+key+"']").remove();
         jqForms.append("<input class='ui-submit-param' type='hidden' name='"+key+"' value='"+params[key]+"'/>");
     }
 }

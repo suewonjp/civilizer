@@ -98,6 +98,17 @@ function openFragmentEditorForEdit(event) {
     onClickFragmentEditorTrigger($editorFrame, $window, event, MSG.label_edit, false);
 }
 
+function openFragmentEditorToRelate(event) {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
+    addSubmitParam($("#fragment-editor-form"), {relatedFrgId:frgId}, true);
+    var $window = $(window);
+    var $editorFrame = $("#editor-frame");
+    var title = MSG.label_new_fragment+" ( <=> #"+frgId+" )";
+    onClickFragmentEditorTrigger($editorFrame, $window, event, title, true);
+}
+
 function prepareFragmentContent() {
     var $editor = $("#fragment-content-editor");
     var srcContent = $editor.val();
