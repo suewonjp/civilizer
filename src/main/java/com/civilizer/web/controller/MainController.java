@@ -46,11 +46,6 @@ public final class MainController {
 	private static final int    MAX_FRAGMENT_PANELS = 3;
 	private static final String REQUEST_PARAM_LOCALE = "locale";
     
-//    @SuppressWarnings("unused")
-//	private final Logger logger = LoggerFactory.getLogger(MainController.class);
-    
-//    private final Gson gson = new GsonBuilder().registerTypeAdapter(DateTime.class, new JodaDateTimeConverter()).create();
-    
 	@Autowired
 	private FragmentDao fragmentDao;
 

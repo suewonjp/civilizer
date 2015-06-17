@@ -284,17 +284,5 @@ public class DomainTagTest {
 	        assertEquals('\\', Tag.findInvalidCharFromName(t.getTagName()));
 	    }
     }
-	
-//	@Test
-//	public void testConvertToAndFromJsonFormat() {
-//		final GsonBuilder builder = new GsonBuilder()
-//	       .registerTypeAdapter(DateTime.class, new JodaDateTimeConverter());
-//	    final Gson gson = builder.create();
-//		final String jsonString = gson.toJson(tags.get(0));
-//		assertNotNull(jsonString);
-////		logger.info(jsonString);
-//		Tag frg = gson.fromJson(jsonString, Tag.class);
-//		assertEquals(tags.get(0), frg);
-//	}
 
 }

@@ -122,16 +122,4 @@ public class DomainFragmentTest {
         }
 	}
 	
-//	@Test
-//	public void testConvertToAndFromJsonFormat() {
-//		final GsonBuilder builder = new GsonBuilder()
-//	       .registerTypeAdapter(DateTime.class, new JodaDateTimeConverter());
-//	    final Gson gson = builder.create();
-//		final String jsonString = gson.toJson(fragments.get(0));
-//		assertNotNull(jsonString);
-////		logger.info(jsonString);
-//		Fragment frg = gson.fromJson(jsonString, Fragment.class);
-//		assertEquals(fragments.get(0), frg);
-//	}
-	
 }
