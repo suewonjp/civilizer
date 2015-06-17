@@ -18,10 +18,8 @@
             </div>
         </div>
         <div>
-            <p:inputText id="title-input" value="#{paramFragmentBean.fragment.title}"
-                onkeypress="if(event.keyCode==13){event.preventDefault();}" autocomplete="false" />
-            <p:inputText id="tags-input" value="#{paramFragmentBean.concatenatedTagNames}"
-                onkeypress="if(event.keyCode==13){event.preventDefault();}" autocomplete="false" />
+            <p:inputText id="title-input" value="#{paramFragmentBean.fragment.title}" autocomplete="false" />
+            <p:inputText id="tags-input" value="#{paramFragmentBean.concatenatedTagNames}" autocomplete="false" />
             <textarea id="fragment-content-editor" ></textarea>
             <h:inputHidden id="content-placeholder" value="#{paramFragmentBean.fragment.content}"/>
             <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}"/>

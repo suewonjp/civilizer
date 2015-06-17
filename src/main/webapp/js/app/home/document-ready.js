@@ -31,6 +31,7 @@ $(document).ready(function() {
 	
 	$("#container").show();
 	
+	disableAutoSubmitOnEnterForForms($("#fragment-editor-form"));
 	disableAutoSubmitOnEnterForForms($("#tag-palette-form"));
 	
 	setTimeout(function() {
