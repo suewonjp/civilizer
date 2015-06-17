@@ -39,10 +39,6 @@ public class FileEntityDaoImpl implements FileEntityDao {
 
 	@Override
 	public FileEntity findById(Long id) {
-//		return (FileEntity) sessionFactory.getCurrentSession()
-//                .getNamedQuery("FileEntity.findById")
-//                .setParameter("id", id)
-//                .uniqueResult();
 		return (FileEntity) sessionFactory.getCurrentSession().get(FileEntity.class, id);
 	}
 	

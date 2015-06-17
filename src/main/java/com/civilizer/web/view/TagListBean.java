@@ -168,32 +168,5 @@ public final class TagListBean implements Serializable {
 	public boolean isHierarchyTouched() {
 		return hierarchyTouched;
 	}
-	
-//	public List<String> suggest(String input) {
-//    	final List<String> results = new ArrayList<String>();
-//    	
-//    	if (input == null || input.isEmpty()) {
-//    		// the drop down button has been pressed
-//    		for (Tag t : tags) {
-//    			results.add(t.getTagName());
-//    		}
-//    		return results;
-//    	}
-//    	
-//		List<String> tmp = Tag.getTagNameCollectionFrom(input);
-//		if (tmp.isEmpty()) {
-//			return Collections.emptyList();
-//		}
-//		
-//		final String typed = tmp.get(tmp.size() - 1);
-//		for (Tag t : tags) {
-//			final String tagName = t.getTagName();
-//			if (tagName.startsWith(typed)) {
-//				results.add(tagName);
-//			}
-//    	}
-//		
-//    	return results;
-//    }
     
 }

@@ -48,17 +48,6 @@ function getSelectedFragments() {
     return output;
 }
 
-//function getSelectedFragments() {
-//    var output = "";
-//    $("#selection-box-form\\:selection-box-panel").find(".each-selected-frg").each(function() {
-//        var $this = $(this);
-//        if ($this.hasClass("middle-line"))
-//            return;
-//        output += "\n#" + $this.attr("_fid") + "  " + $this.attr("_ft") + "\n";
-//    });
-//    return output;
-//}
-
 function listUnselectedFragments() {
     var output = "";
     $("#selection-box-form\\:selection-box-panel").find(".each-selected-frg").each(function() {
