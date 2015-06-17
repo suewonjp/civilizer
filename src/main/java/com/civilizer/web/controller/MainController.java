@@ -383,14 +383,6 @@ public final class MainController {
 	    }
 	}
 
-//	public void trashFragment(FragmentBean fb) {
-//		trashFragment(fb.getFragment().getId());
-//	}
-//
-//	public void restoreFragment(FragmentBean fb) {
-//	    restoreFragment(fb.getFragment().getId());
-//	}
-
 	private void trashFragments(List<Long> fragmentIds) {
 		for (Long id : fragmentIds) {
 			trashFragment(id);
@@ -425,10 +417,6 @@ public final class MainController {
 		}
 	}
 
-//	public void deleteFragment(FragmentBean fb) {
-//		deleteFragment(fb.getFragment().getId());
-//	}
-	
 	public void emptyTrash() {
         final Tag tag = getTrashcanTag();
         final List<Fragment> fragments = fragmentDao.findByTagId(tag.getId(), true);
@@ -577,37 +565,12 @@ public final class MainController {
 		}
 	}
 	
-//	public void trashTag(TagBean tb) {
-//		final Tag t = tb.getTag();
-//		final Long id = t.getId();
-//		if (id != null) {
-//			final List<Long> fids = fragmentDao.findIdsByTagId(id);
-//			trashFragments(fids);
-//		}
-//	}
-//
-//	public void deleteTag(TagBean tb) {
-//		Tag t = tb.getTag();
-//		final Long id = t.getId();
-//		if (id != null) {
-//			t = tagDao.findById(id);
-//			try {
-//				tagDao.delete(t);
-//				ViewUtil.addMessage("Deleted", "Tag : " + t.getTagName(), null);
-//			}
-//			catch (Exception e) {
-//				e.printStackTrace();
-//				ViewUtil.addMessage("Error on deleting a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-//			}
-//		}
-//	}
-
-	public void trashTag(long id) {
+	public void trashTag(Long id) {
         final List<Long> fids = fragmentDao.findIdsByTagId(id);
         trashFragments(fids);
 	}
 	
-	public void deleteTag(long id) {
+	public void deleteTag(Long id) {
         final Tag t = tagDao.findById(id);
         try {
             tagDao.delete(t);

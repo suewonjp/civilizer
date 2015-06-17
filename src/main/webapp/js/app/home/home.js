@@ -603,8 +603,6 @@ function confirmTrashingFragments(frgId, deleting) {
 	    mainMsg = MSG.confirm_trashing;	
 	var subMsg = "\n#" + frgId + "  " + getFragmentTitle(frgId);
 	showConfirmDlg(mainMsg, subMsg, "fa-trash", "orangered");
-    
-//    $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
 }
 
 function confirmRestoringFragments(frgId) {
@@ -615,8 +613,6 @@ function confirmRestoringFragments(frgId) {
     
     var subMsg = "\n#" + frgId + "  " + getFragmentTitle(frgId);
     showConfirmDlg(MSG.confirm_restoring, subMsg, "fa-recycle", "orange");
-    
-//    $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
 }
 
 function confirmTrashingTag(tagId, deleting) {
@@ -627,7 +623,6 @@ function confirmTrashingTag(tagId, deleting) {
 	});
 	var subMsg = "\n#" + tagId + "  " + getTagName(tagId);
     showConfirmDlg(deleting ? MSG.confirm_deleting : MSG.confirm_trashing, subMsg, "fa-trash", "orangered");
-//    $("#fragment-group-form\\:id-placeholder-for-trashed-tag").val(tagId);
 }
 
 function confirmTrashingTagFromCtxtMenu() {
@@ -655,8 +650,6 @@ function confirmUnrelatingFragments(frgId0, frgId1) {
 	var subMsg = "\n#"+frgId0 + "   " + getFragmentTitle(frgId0) +
 		"\n#"+frgId1 + "   " + getFragmentTitle(frgId1);
     showConfirmDlg(MSG.confirm_unrelating, subMsg, "fa-unlink", "orange");
-//    $("#fragment-group-form\\:id-placeholder-for-fragment0").val(frgId0);
-//    $("#fragment-group-form\\:id-placeholder-for-fragment1").val(frgId1);
 }
 
 function confirmDeletingFile() {
