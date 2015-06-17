@@ -784,7 +784,7 @@ function showSearchDialog(panelId, qsPhrase) {
 	});
 	qsInput.keyup(function(event) {
 		// Quick search tab responds to the enter key
-		if (event.keyCode == 13) {
+		if (event.which == $.ui.keyCode.ENTER) {
 			if ($(this).val().trim()) {
 	            searchFragments([{name:'panelId',value:panelId}]);
 			}
@@ -793,7 +793,7 @@ function showSearchDialog(panelId, qsPhrase) {
 }
 
 function searchWithHelpFromLastSearch(event, panelId, widget) {
-	if (event.keyCode == 13) {
+	if (event.which == $.ui.keyCode.ENTER) {
 		var qsPhrase = $(widget).val().trim();
 		if (qsPhrase) {
 			$("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);

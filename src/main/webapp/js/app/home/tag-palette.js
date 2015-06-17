@@ -59,8 +59,7 @@ function showTagEditorForCreating() {
                 saveBtn.disable();
         })
         .off("keypress.newTagName").on("keypress.newTagName", function(e) {
-            if (e.keyCode == 13)
-                $(this).change();
+            if (e.which == $.ui.keyCode.ENTER) $(this).change();
         });
     var dlg = PF("tagEditor");
     dlg.jq.find("input[name=isNewTag]").val(true);
