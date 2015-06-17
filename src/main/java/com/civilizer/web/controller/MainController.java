@@ -353,7 +353,7 @@ public final class MainController {
 		}
 	}
 
-	private void trashFragment(Long fragmentId) {
+	public void trashFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 		frg.addTag(getTrashcanTag());
 		try {
@@ -366,7 +366,7 @@ public final class MainController {
 		}
 	}
 
-	private void restoreFragment(Long fragmentId) {
+	public void restoreFragment(Long fragmentId) {
 	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 	    final Tag trashcanTag = getTrashcanTag();
 	    if (! frg.containsTagId(trashcanTag.getId())) {
@@ -383,13 +383,13 @@ public final class MainController {
 	    }
 	}
 
-	public void trashFragment(FragmentBean fb) {
-		trashFragment(fb.getFragment().getId());
-	}
-
-	public void restoreFragment(FragmentBean fb) {
-	    restoreFragment(fb.getFragment().getId());
-	}
+//	public void trashFragment(FragmentBean fb) {
+//		trashFragment(fb.getFragment().getId());
+//	}
+//
+//	public void restoreFragment(FragmentBean fb) {
+//	    restoreFragment(fb.getFragment().getId());
+//	}
 
 	private void trashFragments(List<Long> fragmentIds) {
 		for (Long id : fragmentIds) {
@@ -413,7 +413,7 @@ public final class MainController {
 	    fsb.clear();
 	}
 	
-	private void deleteFragment(Long fragmentId) {
+	public void deleteFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId);
 		try {
 			fragmentDao.delete(frg);
@@ -425,9 +425,9 @@ public final class MainController {
 		}
 	}
 
-	public void deleteFragment(FragmentBean fb) {
-		deleteFragment(fb.getFragment().getId());
-	}
+//	public void deleteFragment(FragmentBean fb) {
+//		deleteFragment(fb.getFragment().getId());
+//	}
 	
 	public void emptyTrash() {
         final Tag tag = getTrashcanTag();
@@ -577,29 +577,46 @@ public final class MainController {
 		}
 	}
 	
-	public void trashTag(TagBean tb) {
-		final Tag t = tb.getTag();
-		final Long id = t.getId();
-		if (id != null) {
-			final List<Long> fids = fragmentDao.findIdsByTagId(id);
-			trashFragments(fids);
-		}
-	}
+//	public void trashTag(TagBean tb) {
+//		final Tag t = tb.getTag();
+//		final Long id = t.getId();
+//		if (id != null) {
+//			final List<Long> fids = fragmentDao.findIdsByTagId(id);
+//			trashFragments(fids);
+//		}
+//	}
+//
+//	public void deleteTag(TagBean tb) {
+//		Tag t = tb.getTag();
+//		final Long id = t.getId();
+//		if (id != null) {
+//			t = tagDao.findById(id);
+//			try {
+//				tagDao.delete(t);
+//				ViewUtil.addMessage("Deleted", "Tag : " + t.getTagName(), null);
+//			}
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				ViewUtil.addMessage("Error on deleting a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+//			}
+//		}
+//	}
 
-	public void deleteTag(TagBean tb) {
-		Tag t = tb.getTag();
-		final Long id = t.getId();
-		if (id != null) {
-			t = tagDao.findById(id);
-			try {
-				tagDao.delete(t);
-				ViewUtil.addMessage("Deleted", "Tag : " + t.getTagName(), null);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				ViewUtil.addMessage("Error on deleting a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-			}
-		}
+	public void trashTag(long id) {
+        final List<Long> fids = fragmentDao.findIdsByTagId(id);
+        trashFragments(fids);
+	}
+	
+	public void deleteTag(long id) {
+        final Tag t = tagDao.findById(id);
+        try {
+            tagDao.delete(t);
+            ViewUtil.addMessage("Deleted", "Tag : " + t.getTagName(), null);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            ViewUtil.addMessage("Error on deleting a tag!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }
 	}
 	
 	public void relateFragments(int fromId, int toId) {

@@ -592,6 +592,7 @@ function confirmEmptyingTrash() {
 function confirmTrashingFragments(frgId, deleting) {
     var op = deleting ? "delete" : "trash";
 	$("#fragment-group-form\\:ok").click(function() {
+	    addSubmitParam($("#fragment-group-form"), {fragmentId:frgId});
 		document.forms["fragment-group-form"]["fragment-group-form:ok-"+ op +"-fragment"].click();
 	});
 	
@@ -603,28 +604,30 @@ function confirmTrashingFragments(frgId, deleting) {
 	var subMsg = "\n#" + frgId + "  " + getFragmentTitle(frgId);
 	showConfirmDlg(mainMsg, subMsg, "fa-trash", "orangered");
     
-    $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
+//    $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
 }
 
 function confirmRestoringFragments(frgId) {
     $("#fragment-group-form\\:ok").click(function() {
+        addSubmitParam($("#fragment-group-form"), {fragmentId:frgId});
         document.forms["fragment-group-form"]["fragment-group-form:ok-restore-fragment"].click();
     });
     
     var subMsg = "\n#" + frgId + "  " + getFragmentTitle(frgId);
     showConfirmDlg(MSG.confirm_restoring, subMsg, "fa-recycle", "orange");
     
-    $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
+//    $("#fragment-group-form\\:id-placeholder-for-fragment").val(frgId);
 }
 
 function confirmTrashingTag(tagId, deleting) {
 	var op = deleting ? "delete" : "trash";	
 	$("#fragment-group-form\\:ok").click(function() {
+        addSubmitParam($("#fragment-group-form"), {tagId:tagId});
 		document.forms["fragment-group-form"]["fragment-group-form:ok-"+ op +"-tag"].click();
 	});
 	var subMsg = "\n#" + tagId + "  " + getTagName(tagId);
     showConfirmDlg(deleting ? MSG.confirm_deleting : MSG.confirm_trashing, subMsg, "fa-trash", "orangered");
-    $("#fragment-group-form\\:id-placeholder-for-trashed-tag").val(tagId);
+//    $("#fragment-group-form\\:id-placeholder-for-trashed-tag").val(tagId);
 }
 
 function confirmTrashingTagFromCtxtMenu() {
@@ -646,13 +649,14 @@ function confirmRelatingFragments(fromId, toId) {
 
 function confirmUnrelatingFragments(frgId0, frgId1) {
 	$("#fragment-group-form\\:ok").click(function() {
+	    addSubmitParam($("#fragment-group-form"), {frgId0:frgId0,frgId1:frgId1})
 		document.forms["fragment-group-form"]["fragment-group-form:ok-unrelate-fragments"].click();
 	});
 	var subMsg = "\n#"+frgId0 + "   " + getFragmentTitle(frgId0) +
 		"\n#"+frgId1 + "   " + getFragmentTitle(frgId1);
     showConfirmDlg(MSG.confirm_unrelating, subMsg, "fa-unlink", "orange");
-    $("#fragment-group-form\\:id-placeholder-for-fragment0").val(frgId0);
-    $("#fragment-group-form\\:id-placeholder-for-fragment1").val(frgId1);
+//    $("#fragment-group-form\\:id-placeholder-for-fragment0").val(frgId0);
+//    $("#fragment-group-form\\:id-placeholder-for-fragment1").val(frgId1);
 }
 
 function confirmDeletingFile() {

@@ -155,6 +155,13 @@ function disableAutoSubmitOnEnterForForms(jqForms) {
     });
 }
 
+function addSubmitParam(jqForms, params) {
+    for (var key in params) {
+//        jqForms.find("input[type=hidden][name=key]").remove();
+        jqForms.append("<input class='ui-submit-param' type='hidden' name='"+key+"' value='"+params[key]+"'/>");
+    }
+}
+
 //function boolToSign(b) {
 //    return b * 2 - 1;
 //}

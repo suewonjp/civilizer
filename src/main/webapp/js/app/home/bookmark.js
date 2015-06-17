@@ -5,7 +5,7 @@ function setContextMenuForBookmarks() {
 	    showPopup(menu, event);
     	var target = $(event.target).closest(".each-bookmark");
     	menu.data("target-bookmark", target);
-    	$("#fragment-group-form\\:id-placeholder-for-fragment").val(target.attr("_bid"));
+//    	$("#fragment-group-form\\:id-placeholder-for-fragment").val(target.attr("_bid"));
     	event.preventDefault();
     });
 
@@ -15,10 +15,12 @@ function setContextMenuForBookmarks() {
 }
 
 function confirmUnbookmarkingFragment() {
-	$("#fragment-group-form\\:ok").click(function() {
-		document.forms["fragment-group-form"]["fragment-group-form:ok-unbookmark-fragment"].click();
-	});
 	var target = $("#bookmark-context-menu").data("target-bookmark");
-	var subMsg = "\n#"+target.attr("_bid") + "  " + target.attr("_ft");
+	var fid = target.attr("_bid");
+	var subMsg = "\n#"+fid + "  " + target.attr("_ft");
+	$("#fragment-group-form\\:ok").click(function() {
+	    addSubmitParam($("#fragment-group-form"), {fragmentId:fid});
+	    document.forms["fragment-group-form"]["fragment-group-form:ok-unbookmark-fragment"].click();
+	});
 	showConfirmDlg(MSG.confirm_unbookmarking, subMsg, "fa-close", "orange");
 }
