@@ -71,10 +71,9 @@ function listUnselectedFragments() {
 }
 
 function kickOperationForSelectedFragments(tgtId) {
-    var fullId = "fragment-group-form:" + tgtId;
     $("#fragment-group-form\\:ok").click(function() {
-        PrimeFaces.addSubmitParam(fullId, {unselected:listUnselectedFragments()});
-        document.forms["fragment-group-form"][fullId].click();
+        addSubmitParam($("#fragment-group-form"), {unselected:listUnselectedFragments()});
+        document.forms["fragment-group-form"]["fragment-group-form:"+tgtId].click();
     });
 }
 
