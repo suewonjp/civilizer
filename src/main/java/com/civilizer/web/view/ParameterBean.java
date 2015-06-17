@@ -7,8 +7,6 @@ import java.io.Serializable;
 public final class ParameterBean implements Serializable {
 	
 	private int panelId = 0;
-	private long fragmentId0;
-	private long fragmentId1;
 	
 	ParameterBean() {
 	}
@@ -21,22 +19,6 @@ public final class ParameterBean implements Serializable {
 		this.panelId = panelId;
 	}
 
-	public long getFragmentId0() {
-		return fragmentId0;
-	}
-
-	public void setFragmentId0(long fragmentId0) {
-		this.fragmentId0 = fragmentId0;
-	}
-
-	public long getFragmentId1() {
-		return fragmentId1;
-	}
-
-	public void setFragmentId1(long fragmentId1) {
-		this.fragmentId1 = fragmentId1;
-	}
-	
 	public void clearPanelId() {
 	    panelId = -1;
 	}
