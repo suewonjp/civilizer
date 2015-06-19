@@ -210,7 +210,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>ui-darkness</artifactId>
+			<artifactId>all-themes</artifactId>
 			<version>1.0.9</version>
 		</dependency>
 
