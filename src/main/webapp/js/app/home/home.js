@@ -72,7 +72,7 @@ function populateFragmentOverlay(data) {
         , lightboxSpeed:"fast"
         , closeSelector:"#fragment-overlay-close-button"
         , closeEsc:true
-        , modalCSS:{ position:"fixed", bottom: '2%', right: '2%' }
+        , modalCSS:{ position:"fixed", bottom: '34px', right: '2%' }
     });
 	
 	var titleBar = $("#fragment-overlay-title-bar");

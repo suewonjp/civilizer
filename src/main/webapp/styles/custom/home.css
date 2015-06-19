@@ -152,7 +152,8 @@
 , #fragment-group-form\:fragment-panel-toolbar-2
 {
     position: fixed;
-    top: 94%;
+    bottom: 0%;
+    max-height:28px;
     z-index: 2000;
     font-size: x-small;
 }

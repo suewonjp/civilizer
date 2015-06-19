@@ -16,6 +16,7 @@
 
 .fragment-content pre {
     background-color: whitesmoke;
+    white-space: pre-wrap;
 }
 
 .fragment-content blockquote p {
