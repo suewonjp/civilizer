@@ -54,44 +54,49 @@
     </span>
 </h:form>
 
-<div id="user-menu-area">
 <h:form id="user-menu-form">
-    <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
-    <p:menu id="user-menu" overlay="true" triggerEvent="mouseenter" trigger="user-menu-trigger" my="right top" at="right bottom">
-        <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" ajax="true" icon="fa fa-edit"/>
-        <p:separator />
-        <p:menuitem value="#{msg['sign_out']}" ajax="false" icon="fa fa-sign-out" url="/app/signout"/>
-    </p:menu>
+    <p:themeSwitcher id="theme-switcher">
+        <f:selectItem itemLabel="#{msg['theme']}" itemValue=""/>
+        <f:selectItems value="#{userProfileBean.themes}"/>
+    </p:themeSwitcher>
     
-    <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
-        <p:panel>
-            <div class="fa fa-user">&nbsp;&nbsp;
-                <p:inplace widgetVar="userName">
-                    <p:inputText style="width:80%" value="#{userProfileBean.userName}"/>
-                </p:inplace>
-                <h:outputText style="display:none" value="#{userProfileBean.userName}"/>
+    <div id="user-menu-area">        
+        <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
+        <p:menu id="user-menu" overlay="true" triggerEvent="mouseenter" trigger="user-menu-trigger" my="right top" at="right bottom">
+            <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" ajax="true" icon="fa fa-edit"/>
+            <p:separator />
+            <p:menuitem value="#{msg['sign_out']}" ajax="false" icon="fa fa-sign-out" url="/app/signout"/>
+        </p:menu>
+        
+        <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+            <p:panel>
+                <div class="fa fa-user">&nbsp;&nbsp;
+                    <p:inplace widgetVar="userName">
+                        <p:inputText style="width:80%" value="#{userProfileBean.userName}"/>
+                    </p:inplace>
+                    <h:outputText style="display:none" value="#{userProfileBean.userName}"/>
+                </div>
+            </p:panel>
+            
+            <p:panel>
+                <label for="enable_password_change">#{msg['change_password']}</label>
+                <input type="checkbox" name="enable_password_change" onchange="togglePasswordChange(this)"/>
+            </p:panel>
+    
+            <div id="new-password-box">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="pwd1" value="#{msg['label_password']}"/>
+                    <p:password id="pwd1" value="#{userProfileBean.password}" feedback="false" match="pwd2" required="true"/>
+                    <p:outputLabel for="pwd2" value="#{msg['label_confirm_password']}"/>
+                    <p:password id="pwd2" feedback="false" required="true"/>
+                </h:panelGrid>
+                <p:messages id="msg" showSummary="false" showDetail="true" autoUpdate="true" />
             </div>
-        </p:panel>
-        
-        <p:panel>
-            <label for="enable_password_change">#{msg['change_password']}</label>
-            <input type="checkbox" name="enable_password_change" onchange="togglePasswordChange(this)"/>
-        </p:panel>
-
-        <div id="new-password-box">
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:outputLabel for="pwd1" value="#{msg['label_password']}"/>
-                <p:password id="pwd1" value="#{userProfileBean.password}" feedback="false" match="pwd2" required="true"/>
-                <p:outputLabel for="pwd2" value="#{msg['label_confirm_password']}"/>
-                <p:password id="pwd2" feedback="false" required="true"/>
-            </h:panelGrid>
-            <p:messages id="msg" showSummary="false" showDetail="true" autoUpdate="true" />
-        </div>
-        
-        <p:commandButton widgetVar="userProfileDlgSave" disabled="true" action="update-user-profile" value="#{msg['label_save']}" icon="ui-icon-check"/>
-    </p:dialog>
+            
+            <p:commandButton widgetVar="userProfileDlgSave" disabled="true" action="update-user-profile" value="#{msg['label_save']}" icon="ui-icon-check"/>
+        </p:dialog>
+    </div>
 </h:form>
-</div>
 
 <ui:include src="/WEB-INF/flows/home/fragment-editor.xhtml" />
 

@@ -52,6 +52,12 @@
 	}
 }
 
+@media screen and (max-width: 600px) {
+	#user-menu-form\:theme-switcher {
+	   visibility: hidden;
+	}
+}
+
 #search-buttons-at-header {
 	width: 60%;
 	white-space: nowrap;
@@ -62,6 +68,14 @@
     position: absolute;
     top: -5px;
     right: 0px;
+}
+
+#user-menu-form\:theme-switcher {
+	display:inline;
+	position: absolute;
+	top: 6px;
+	right: 54px;
+	max-width:110px;
 }
 
 #user-menu-form\:user-menu-trigger {
