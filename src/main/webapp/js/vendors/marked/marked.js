@@ -589,26 +589,12 @@ InlineLexer.prototype.output = function(src) {
       continue;
     }
     
-    function isImage(postfix) {
-    	var fileExt = postfix.slice(0, 4);
-    	return (fileExt == ".png")
-    		|| (fileExt == ".jpg")
-    		|| (fileExt == ".gif")
-    		|| (fileExt == ".bmp")
-    		|| (fileExt == ".ico")
-    		;
-    }
-
     // url (gfm)
     if (!this.inLink && (cap = this.rules.url.exec(src))) {
       src = src.substring(cap[0].length);
       text = escape(cap[1]);
       href = text;
-      var postfix = href.substring(href.lastIndexOf("."));
-      if (isImage(postfix))
-	      out += this.renderer.image(href, null, text);
-      else
-    	  out += this.renderer.link(href, null, text);
+      out += this.renderer.link(href, null, text);
       continue;
     }
 

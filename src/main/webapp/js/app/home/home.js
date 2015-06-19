@@ -347,6 +347,14 @@ function postprocessFragmentContent(content) {
 	// Rule - {{[frgm]...}}
 	setupFragmentLinks(content);
 	
+	// convert links to images into <img> tags
+	content.find("a").each(function() {
+	    var $this = $(this);
+	    var href = $this.attr("href");
+	    if (isImage(href.substring(href.lastIndexOf("."))))
+	        $this.replaceWith("<img src='"+href+"'>");
+	});
+	
     // translate file box elements into HTML links
     // Rule - {{[file]...}}
     processFileClasses(content);
