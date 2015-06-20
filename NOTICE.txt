@@ -2,24 +2,18 @@ This product includes software developed by Pivotal Software, Inc.
     http://projects.spring.io/spring-framework/
     http://projects.spring.io/spring-security/
     
-This product includes software developed by Red Hat, Inc. 
-    http://hibernate.org
-    
 This product includes software developed by PrimeTek. 
     http://www.primefaces.org
+    
+This product includes software developed by Red Hat, Inc. 
+    http://hibernate.org
+
+This product includes software developed by H2 Group. 
+    http://h2database.com/html/main.html
 
 This product includes software developed by Apache Software Foundation. 
     https://commons.apache.org
     http://logging.apache.org/log4j
-
-This product includes software developed by Joda.org. 
-    http://www.joda.org/joda-time/
-
-This product includes software developed by QOS.ch. 
-    http://www.slf4j.org
-
-This product includes software developed by JUnit. 
-    http://junit.org
 
 This product includes software developed by The jQuery Foundation. 
     https://jquery.com
@@ -27,6 +21,9 @@ This product includes software developed by The jQuery Foundation.
 
 This product includes software developed by Dave Gandy. 
     http://fortawesome.github.io/Font-Awesome/
+
+This product includes software developed by JUnit. 
+    http://junit.org
 
 This product includes software developed by Christopher Jeffrey. 
     https://github.com/chjj/marked
@@ -37,14 +34,21 @@ This product includes software developed by Jay Salvat.
 This product includes software developed by Buck Wilson. 
     http://buckwilson.me/lightboxme/
 
-This product includes software developed by Todd Northrop.
-    http://jquery-watermark.googlecode.com/
+This product includes software developed by Joda.org. 
+    http://www.joda.org/joda-time/
+
+This product includes software developed by QOS.ch. 
+    http://www.slf4j.org
 
 This product includes software developed by Tim Wood, Iskren Chernev, Moment.js contributors.
     http://momentjs.com
 
+This product includes software developed by Todd Northrop.
+    http://jquery-watermark.googlecode.com/
+
 This product includes software developed by The Blueprint Community.
     http://www.blueprintcss.org
-    
-And this product has been inspired by software developed by Daisuke Morita.
+
+
+This product has been inspired by software developed by Daisuke Morita.
     http://piggydb.net/
