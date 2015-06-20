@@ -99,3 +99,18 @@ function togglePasswordChange(widget) {
     toggleUserProfileDlgSaveBtn();
 }
 
+function setCurrentTheme() {
+    var theme = sessionStorage.getItem("theme");
+    if (theme) {
+        PrimeFaces.changeTheme(theme);
+    }
+}
+
+function onChangeTheme(switcher) {
+    var theme = switcher.getSelectedValue();
+    console.log(theme);
+    if (theme) {
+        sessionStorage.setItem("theme", theme);
+    }
+}
+

@@ -29,6 +29,8 @@ $(document).ready(function() {
 	
 	makeSidebarTitleToggleable();
 	
+	setCurrentTheme();
+	
 	$("#container").show();
 	
 	disableAutoSubmitOnEnterForForms($("#fragment-editor-form"));

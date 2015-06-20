@@ -55,7 +55,7 @@
 </h:form>
 
 <h:form id="user-menu-form">
-    <p:themeSwitcher id="theme-switcher">
+    <p:themeSwitcher widgetVar="themeSwitcher" id="theme-switcher" onchange="onChangeTheme(PF('themeSwitcher'))">
         <f:selectItem itemLabel="#{msg['theme']}" itemValue=""/>
         <f:selectItems value="#{userProfileBean.themes}"/>
     </p:themeSwitcher>
