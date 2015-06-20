@@ -172,6 +172,8 @@
 		</transition>
         
         <transition on="update-user-profile" to="save-user-profile" />
+
+        <transition on="signout-from-home" to="signout" />
     </view-state>
     
     <decision-state id="save-user-profile">

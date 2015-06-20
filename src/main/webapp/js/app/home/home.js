@@ -697,6 +697,14 @@ function confirmDeletingFile() {
     showConfirmDlg(MSG.confirm_deleting, subMsg, "fa-trash", "orangered");
 }
 
+function confirmSignout() {
+    $("#fragment-group-form\\:ok").click(function() {
+        document.forms["fragment-group-form"]["fragment-group-form:ok-signout"].click();
+    });
+  
+    showConfirmDlg(MSG.confirm_signout, null, "fa-sign-out", "orangered");
+}
+
 function setContextMenuForFragments() {
 	var menu = $("#frg-context-menu");
 	

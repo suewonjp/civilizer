@@ -63,9 +63,10 @@
     <div id="user-menu-area">        
         <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
         <p:menu id="user-menu" overlay="true" triggerEvent="mouseenter" trigger="user-menu-trigger" my="right top" at="right bottom">
-            <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" ajax="true" icon="fa fa-edit"/>
+            <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" icon="fa fa-edit"/>
             <p:separator />
-            <p:menuitem value="#{msg['sign_out']}" ajax="false" icon="fa fa-sign-out" url="/app/signout"/>
+            <p:menuitem value="#{msg['sign_out']}" onclick="confirmSignout()" icon="fa fa-sign-out"/>
+<!--             <p:menuitem value="#{msg['sign_out']}" ajax="false" icon="fa fa-sign-out" url="/app/signout"/> -->
         </p:menu>
         
         <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
