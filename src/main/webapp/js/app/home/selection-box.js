@@ -2,6 +2,8 @@ function onAjaxCompleteForSelectionBox() {
     setContextMenuForSelections();
     
     setupFragmentOverlayTrigger($("#selection-box-form\\:selection-box-panel"));
+    
+    initTogglerIcon($("#selection-box-title"));
 }
 
 function setContextMenuForSelections() {

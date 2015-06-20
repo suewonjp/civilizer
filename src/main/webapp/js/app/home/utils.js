@@ -61,6 +61,12 @@ function addToggler(target, toggler) {
     return link;
 }
 
+function initTogglerIcon(target) {
+    var collapseIcon = "fa-minus-square";
+    var expandIcon = "fa-plus-square";
+    target.prev("a").find("span").removeClass(expandIcon).addClass(collapseIcon);
+}
+
 function toggleWindow(frame, bar) {
     var target = bar.next();
     if (target.is(":visible")) {
