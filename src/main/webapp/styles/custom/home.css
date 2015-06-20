@@ -17,6 +17,11 @@
 #new-fragment-editor-trigger {
 	font-size: medium;
     margin-left: 3px;
+    color:yellow;
+}
+
+#new-fragment-editor-trigger:hover {
+    color:gold;
 }
 
 #panel-activation-buttons {
@@ -61,6 +66,10 @@
 #search-buttons-at-header {
 	width: 60%;
 	white-space: nowrap;
+}
+
+#search-buttons-at-header span:hover {
+    color:limegreen
 }
 
 #user-menu-area {
@@ -199,9 +208,13 @@
     color: red;
 }
 
-.new-resource-color, .new-resource-color:focus  {
-    color: yellow;
+.new-fragment-editor-trigger-on-toolbar span {
+    color:gold;
 }
+
+/* .new-resource-color, .new-resource-color:focus  { */
+/*     color: gold; */
+/* } */
 
 .button-link
 , #fragment-group-form\:fragment-panel-toolbar-0 a 
@@ -284,11 +297,19 @@
 	color:lightgray;
 }
 
+#trashcan span:hover {
+    color:beige;
+}
+
 #new-tag-button {
     float:right;
 }
 
 #new-tag-button span {
+	color:gold;
+}
+
+#new-tag-button span:hover {
 	color:yellow;
 }
 
@@ -358,7 +379,7 @@
 
 .fb-file {
     color: maroon;
-    padding-bottom: 1px;
+    padding: 1px 0px 1px 0px;
     border:1px solid #8bcf54;
     -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;
     background-color: #a9db80; background-image: -webkit-gradient(linear, left top, left bottom, from(#a9db80), to(#96c56f));
