@@ -27,7 +27,7 @@ Civilizer has a full text search functionality to help you access right data at 
 
 > [NOTICE] Civilizer has been inspired by Piggydb (http://piggydb.net/) developed by Daisuke Morita.    
 > Basic concepts have been coming from Piggydb and it was a implementation reference for Civilizer.  
-> Nevertheless, what to focus and design/implementation details differ. 
+> Nevertheless, what to focus on and design/implementation details differ. 
  
 * * *
 ### Installation
