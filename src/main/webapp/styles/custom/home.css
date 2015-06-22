@@ -301,24 +301,8 @@
 	width: 50%;
 }
 
-#trashcan span {
-	color:lightgray;
-}
-
-#trashcan span:hover {
-    color:beige;
-}
-
 #new-tag-button {
     float:right;
-}
-
-#new-tag-button span {
-	color:gold;
-}
-
-#new-tag-button span:hover {
-	color:yellow;
 }
 
 .sidebar-title {
