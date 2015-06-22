@@ -57,8 +57,8 @@
 	}
 }
 
-@media screen and (max-width: 600px) {
-	#user-menu-form\:theme-switcher {
+@media screen and (max-width: 650px) {
+	#user-menu-form\:theme-switcher, #theme-icon {
 	   visibility: hidden;
 	}
 }
@@ -85,6 +85,14 @@
 	top: 6px;
 	right: 54px;
 	max-width:110px;
+}
+
+#theme-icon {
+	display:inline;
+	position: absolute;
+	top: 6px;
+	right: 170px;
+	color:cornsilk;
 }
 
 #user-menu-form\:user-menu-trigger {
@@ -178,6 +186,7 @@
     max-height:28px;
     z-index: 2000;
     font-size: x-small;
+    border: 2px solid black;
 }
 
 #frg-reso-slider0

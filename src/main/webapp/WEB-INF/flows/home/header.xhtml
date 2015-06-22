@@ -55,11 +55,13 @@
 </h:form>
 
 <h:form id="user-menu-form">
+    <span id="theme-icon" class="fa fa-paint-brush fa-2x"></span>
+    
     <p:themeSwitcher widgetVar="themeSwitcher" id="theme-switcher" onchange="onChangeTheme()">
         <f:selectItems value="#{userProfileBean.themes}" var="theme" itemLabel="#{theme}" itemValue="#{theme}"/>
     </p:themeSwitcher>
     
-    <div id="user-menu-area">        
+    <div id="user-menu-area">
         <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
         <p:menu id="user-menu" overlay="true" triggerEvent="mouseenter" trigger="user-menu-trigger" my="right top" at="right bottom">
             <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" icon="fa fa-edit"/>
