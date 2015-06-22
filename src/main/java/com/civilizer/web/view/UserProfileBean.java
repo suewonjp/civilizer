@@ -35,7 +35,6 @@ public final class UserProfileBean implements Serializable {
             "cupertino",
             "cruze",
             "dark-hive",
-            "delta",
             "dot-luv",
             "eggplant",
             "excite-bike",
