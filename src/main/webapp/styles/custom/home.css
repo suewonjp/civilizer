@@ -130,7 +130,7 @@
 }
 
 #editor-frame, #fragment-overlay {
-    background-color: white;
+    background-color: oldlace;
     border-style: solid;
     border-width: 3px;
     border-color: navy;
@@ -154,7 +154,6 @@
 }
 
 #editor-title {
-    color: #ff0;
     font-size: 140%;
     font-style: bold;
     position: relative;
@@ -400,6 +399,10 @@
 
 .fb-broken {
 	color: red;
+}
+
+.markItUp {
+    border:0;
 }
 
 .markItUpEditor {
