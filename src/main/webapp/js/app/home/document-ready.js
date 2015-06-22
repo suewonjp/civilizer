@@ -29,7 +29,7 @@ $(document).ready(function() {
 	
 	makeSidebarTitleToggleable();
 	
-	setCurrentTheme();
+	setCurrentTheme("ui-darkness");
 	
 	$("#container").show();
 	
@@ -41,3 +41,8 @@ $(document).ready(function() {
     	$(".ui-messages-close").trigger("click");
     }, 15000);
 });
+
+$(window).load(function() {
+    applyCurrentThemeToThemeSwitcher();
+});
+

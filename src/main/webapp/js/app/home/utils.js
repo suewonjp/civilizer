@@ -169,6 +169,17 @@ function addSubmitParam(jqForms, params, clearBeforeAdding) {
     }
 }
 
+function selectItemOnPfListbox(value, pfListbox) {
+    for (var i=0; i<pfListbox.options.length; ++i) {
+        var option = pfListbox.options.eq(i);
+        if (option.text() === value) {
+            var item = pfListbox.items.eq(i);
+            pfListbox.selectItem(item);
+            return;
+        }
+    }
+}
+
 //function boolToSign(b) {
 //    return b * 2 - 1;
 //}

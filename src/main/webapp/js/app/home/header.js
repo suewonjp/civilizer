@@ -99,16 +99,25 @@ function togglePasswordChange(widget) {
     toggleUserProfileDlgSaveBtn();
 }
 
-function setCurrentTheme() {
+function setCurrentTheme(defaultTheme) {
+    var theme = sessionStorage.getItem("theme");
+    if (! theme) {
+        theme = defaultTheme;
+        sessionStorage.setItem("theme", theme);
+    }
+    PrimeFaces.changeTheme(theme);
+}
+
+function applyCurrentThemeToThemeSwitcher() {
     var theme = sessionStorage.getItem("theme");
     if (theme) {
-        PrimeFaces.changeTheme(theme);
+        selectItemOnPfListbox(theme, PF('themeSwitcher'));
     }
 }
 
-function onChangeTheme(switcher) {
+function onChangeTheme() {
+    var switcher = PF('themeSwitcher');
     var theme = switcher.getSelectedValue();
-    console.log(theme);
     if (theme) {
         sessionStorage.setItem("theme", theme);
     }

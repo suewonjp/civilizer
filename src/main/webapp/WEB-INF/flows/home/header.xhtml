@@ -55,9 +55,8 @@
 </h:form>
 
 <h:form id="user-menu-form">
-    <p:themeSwitcher widgetVar="themeSwitcher" id="theme-switcher" onchange="onChangeTheme(PF('themeSwitcher'))">
-        <f:selectItem itemLabel="#{msg['theme']}" itemValue=""/>
-        <f:selectItems value="#{userProfileBean.themes}"/>
+    <p:themeSwitcher widgetVar="themeSwitcher" id="theme-switcher" onchange="onChangeTheme()">
+        <f:selectItems value="#{userProfileBean.themes}" var="theme" itemLabel="#{theme}" itemValue="#{theme}"/>
     </p:themeSwitcher>
     
     <div id="user-menu-area">        
@@ -66,7 +65,6 @@
             <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" icon="fa fa-edit"/>
             <p:separator />
             <p:menuitem value="#{msg['sign_out']}" onclick="confirmSignout()" icon="fa fa-sign-out"/>
-<!--             <p:menuitem value="#{msg['sign_out']}" ajax="false" icon="fa fa-sign-out" url="/app/signout"/> -->
         </p:menu>
         
         <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
