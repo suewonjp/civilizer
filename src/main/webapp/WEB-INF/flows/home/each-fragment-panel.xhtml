@@ -38,7 +38,7 @@
     </div>
 </p:dialog>
 
-<p:panel id="fragment-panel-toolbar-#{panelId}" >
+<p:panel id="fragment-panel-toolbar-#{panelId}" styleClass="ui-state-active">
     <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments() and !panelContext.fragmentDeletable}" itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}" />
     
     <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}">

@@ -326,6 +326,10 @@
     font-style: bold;
 }
 
+.toggle-icon {
+    color:silver;
+}
+
 #bookmark-title, #tag-palette-title, #selection-box-title, #file-box-title {
     margin: 10px 10px 10px 10px;
 }

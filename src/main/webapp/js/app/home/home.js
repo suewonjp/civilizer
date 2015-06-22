@@ -832,20 +832,21 @@ function makeSidebarTitleToggleable() {
     var tagPalettePanel = PF('tagPalettePanel');
     var fileBoxPanel = PF('fileBoxPanel');
     var selectionBoxPanel = PF('selectionBoxPanel');
+    var iconClass="toggle-icon";
 
-    var bmLink = addToggler($("#bookmark-title"), function() {
+    var bmLink = addToggler($("#bookmark-title"), iconClass, function() {
 		bookmarkPanel.toggle();
 		sessionStorage.setItem("bookmarkOpen", bookmarkPanel.cfg.collapsed ? "no":"yes");
 	});
-	var tpLink = addToggler($("#tag-palette-title"), function() {
+	var tpLink = addToggler($("#tag-palette-title"), iconClass, function() {
 	    tagPalettePanel.toggle();
 	    sessionStorage.setItem("tagPaletteOpen", tagPalettePanel.cfg.collapsed ? "no":"yes");
 	});
-	var sbLink = addToggler($("#selection-box-title"), function() {
+	var sbLink = addToggler($("#selection-box-title"), iconClass, function() {
 	    selectionBoxPanel.toggle();
 	    sessionStorage.setItem("selectionBoxOpen", selectionBoxPanel.cfg.collapsed ? "no":"yes");
 	});
-	var fbLink = addToggler($("#file-box-title"), function() {
+	var fbLink = addToggler($("#file-box-title"), iconClass, function() {
 	    fileBoxPanel.toggle();
 	    sessionStorage.setItem("fileBoxOpen", fileBoxPanel.cfg.collapsed ? "no":"yes");
 	});

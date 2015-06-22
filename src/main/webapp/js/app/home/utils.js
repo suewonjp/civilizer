@@ -47,11 +47,11 @@ function makeObjectsInsertableToTextArea() {
     };
 }
 
-function addToggler(target, toggler) {
+function addToggler(target, iconClass, toggler) {
     var collapseIcon = "fa-minus-square";
     var expandIcon = "fa-plus-square";
     var link = $("<a>").attr("href", "#");
-    var icon = $("<span>").addClass("fa " + collapseIcon);
+    var icon = $("<span>").addClass(iconClass + " fa " + collapseIcon);
     link.prepend(icon).click(function (event) {
         toggler();
         icon.toggleClass(collapseIcon + " " + expandIcon);
