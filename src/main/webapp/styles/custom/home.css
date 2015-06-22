@@ -40,8 +40,8 @@
 
 /* prevent the header layout from collapsing when the browser window width gets extremely small */
 @media screen and (max-width: 500px) {
-	#app-title {
-		font-size: small;
+	#refresh-link {
+		font-size: xx-small;
 	}
 	
 	#new-fragment-editor-trigger {
@@ -110,7 +110,6 @@
 #editor-title-bar, #fragment-overlay-title-bar {
     clear: both;
     display: block;
-    background-color: #7d7171;
     height: 24px;
     overflow: hidden;
 }
@@ -127,7 +126,6 @@
 #fragment-overlay-title {
 	font-weight: bold;
 	font-size:large;
-	color: white;
 	margin-left:50px;
 }
 
@@ -138,13 +136,20 @@
 }
 
 #editor-frame, #fragment-overlay {
-    background-color: oldlace;
     border-style: solid;
     border-width: 3px;
     border-color: navy;
     z-index: 100;
 }
 
+#editor-frame {
+    background-color: oldlace;
+}
+
+#fragment-overlay {
+    background-color: white;
+}
+    
 #fragment-overlay-content {
 	min-width: 320px;
 	max-width: 640px;
@@ -219,10 +224,6 @@
 .new-fragment-editor-trigger-on-toolbar span {
     color:gold;
 }
-
-/* .new-resource-color, .new-resource-color:focus  { */
-/*     color: gold; */
-/* } */
 
 .button-link
 , #fragment-group-form\:fragment-panel-toolbar-0 a 

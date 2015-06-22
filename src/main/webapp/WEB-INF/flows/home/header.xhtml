@@ -15,18 +15,18 @@
     <span id="panel-activation-buttons" >
         <input type="checkbox" id="panel-toggler-0" style="display:none;" onchange="onPanelActivationChange(true);"/>
         <label for="panel-toggler-0" _pid="0" title="#{msg['toggle_panel']}">
-            <span class="fa fa-file-text"></span>
-            <span> #{msg['label_panel']} 0</span>
+            <span class="fa fa-desktop"></span>
+            <span> 0</span>
         </label>
         <input type="checkbox" id="panel-toggler-1" style="display:none;" onchange="onPanelActivationChange(true);"/>
         <label for="panel-toggler-1" _pid="1" title="#{msg['toggle_panel']}">
-            <span class="fa fa-file-text"></span>
-            <span> #{msg['label_panel']} 1</span>
+            <span class="fa fa-desktop"></span>
+            <span> 1</span>
         </label>
         <input type="checkbox" id="panel-toggler-2" style="display:none;" onchange="onPanelActivationChange(true);"/>
         <label for="panel-toggler-2" _pid="2" title="#{msg['toggle_panel']}">
-            <span class="fa fa-file-text"></span>
-            <span> #{msg['label_panel']} 2</span>
+            <span class="fa fa-desktop"></span>
+            <span> 2</span>
         </label>
     </span>
     
@@ -37,18 +37,18 @@
 
 <h:form prependId="false" style="display:inline; margin:0; padding:0;">
     <span id="search-buttons-at-header" >
-        <p:commandLink oncomplete="showSearchDialog(0, null)" styleClass="button-link">
+        <p:commandLink oncomplete="showSearchDialog(0, null)" styleClass="button-link" title="#{msg['label_search']}">
         	<span class="fa fa-search fa-1x ui-panel ui-widget-content ui-corner-all" />
         </p:commandLink>
         <p:spacer width="5" />
         
-        <p:commandLink oncomplete="showSearchDialog(1, null)" styleClass="button-link">
+        <p:commandLink oncomplete="showSearchDialog(1, null)" styleClass="button-link" title="#{msg['label_search']}">
         	<span class="fa fa-search fa-1x ui-panel ui-widget-content ui-corner-all" />
         </p:commandLink>
         
         <p:spacer width="5" />
         
-        <p:commandLink oncomplete="showSearchDialog(2, null)" styleClass="button-link">
+        <p:commandLink oncomplete="showSearchDialog(2, null)" styleClass="button-link" title="#{msg['label_search']}">
         	<span class="fa fa-search fa-1x ui-panel ui-widget-content ui-corner-all" />
         </p:commandLink>
     </span>
