@@ -306,6 +306,23 @@ function setupFragmentLinks(content) {
     content.find("a.-cvz-frgm").on("click", triggerFragmentOverlay);
 }
 
+function setupTagLinks(content) {
+    content.find("span.-cvz-tag").each(function() {
+        var $this = $(this);
+        var tagId = $this.text().trim();
+        if (tagId) {
+            var srcTag = $("#tag-palette-flat").find("[_tid="+tagId+"]");
+            var newElem = $("<a href='#' class='-cvz-tag tag-button each-tag' _tid='"+tagId+"'>" + srcTag.find(".each-tag-name").text() + "</a>");
+            $this.replaceWith(newElem);
+        }
+    });
+    
+    content.find("a.-cvz-tag").on("click", function(e) {
+        fetchFragmentsByTag($(this), null);
+        return false;
+    });
+}
+
 function processEmbeddedFragments(content) {
 	content.find(".-cvz-frgm-embed").each(function() {
 		var $this = $(this);
@@ -346,6 +363,10 @@ function postprocessFragmentContent(content) {
 	// translate fragemnt links
 	// Rule - {{[frgm]...}}
 	setupFragmentLinks(content);
+
+	// translate tag links
+	// Rule - {{[tag]...}}
+	setupTagLinks(content);
 	
 	// convert links to images into <img> tags
 	content.find("a").each(function() {
@@ -373,7 +394,7 @@ function setupDragAndDrop() {
 	setupDndForFragmentFetch();
 	setupDndForBookmarking();
 	setupDndForTrashing();
-	setupDndForEmbeddingFile();
+	setupDndToDropDataToFrgEditor();
 }
 
 function setupDraggableForFragmentTitle() {
@@ -471,16 +492,21 @@ function setupDndForTrashing() {
     $("#trashcan").droppable(droppable);
 }
 
-function setupDndForEmbeddingFile() {
-	var droppable = newBaseDroppable("", ["fb-file"]);
+function setupDndToDropDataToFrgEditor() {
+    var droppable = newBaseDroppable(["each-tag", "fb-file"]);
     droppable.drop = function(event, ui) {
         var from = ui.draggable;
         var to = $(event.target);
-        if (from.hasClass("fb-file")) {
-        	var ids = from.attr("id");
-        	var id = ids.substr(ids.lastIndexOf("-") + 1);
-        	var encoded = "{{[file] " + id + " }}";
-        	$(this).insertAtCaret(encoded);
+        if (from.hasClass("each-tag")) {
+            var id = from.attr("_tid");
+            var encoded = "{{[tag] " + id + " }}";
+            $(this).insertAtCaret(encoded);
+        }
+        else if (from.hasClass("fb-file")) {
+            var ids = from.attr("id");
+            var id = ids.substr(ids.lastIndexOf("-") + 1);
+            var encoded = "{{[file] " + id + " }}";
+            $(this).insertAtCaret(encoded);
         }
     };    
     $("#fragment-content-editor").droppable(droppable);

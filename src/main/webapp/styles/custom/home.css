@@ -249,6 +249,10 @@
     color: #ff830e;
 }
 
+.each-tag .fa-tag {
+    color:white;
+}
+
 .each-tag-name {
     text-align: left;
     color: black;
@@ -271,7 +275,7 @@
     border:1px solid #ffc826;
     -webkit-box-shadow: #B4B5B5 1px 1px 1px  ;-moz-box-shadow: #B4B5B5 1px 1px 1px ; box-shadow: #B4B5B5 1px 1px 1px;
     -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:10px;font-family:arial, helvetica, sans-serif;
-    padding: 1px 1px 1px 1px; text-decoration:none; display:inline;font-weight:lighter; color: #FFFFFF;
+    padding: 1px 1px 1px 1px; text-decoration:none; display:inline;font-weight:lighter; color: black;
 /*     text-shadow: -1px -1px 0 rgba(0,0,0,0.3); */
     background-color: #ffd65e; background-image: -webkit-gradient(linear, left top, left bottom, from(#ffd65e), to(#febf04));
     background-image: -webkit-linear-gradient(top, #ffd65e, #febf04);
