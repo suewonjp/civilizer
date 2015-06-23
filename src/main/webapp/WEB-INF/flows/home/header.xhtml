@@ -64,10 +64,24 @@
     <div id="user-menu-area">
         <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
         <p:menu id="user-menu" overlay="true" triggerEvent="mouseenter" trigger="user-menu-trigger" my="right top" at="right bottom">
-            <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog(event)" icon="fa fa-edit"/>
+            <p:menuitem value="#{msg['about_app']}" onclick="showAboutDialog()" icon="fa fa-university"/>
+            <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog()" icon="fa fa-edit"/>
             <p:separator />
             <p:menuitem value="#{msg['sign_out']}" onclick="confirmSignout()" icon="fa fa-sign-out"/>
         </p:menu>
+        
+        <p:dialog id="about-dlg" widgetVar="aboutDlg" header="#{msg['about_app']}" width="320px" closeOnEscape="true" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+            <span class="fa fa-university fa-2x ui-panel">#{msg['application_name']}</span>
+            <p:panel>
+                <p>#{msg['label_version']} 0.5.0</p>
+                <p>Created by Suewon Bahng</p>
+                <span class="fa fa-bug warning-color"></span><span> #{msg['report_bug']} </span>
+                <p style="color:blue">suewonjp@gmail.com</p>
+                <hr/>
+                <p>Copyright &copy; 2014-2015 Suewon Bahng</p>
+                <p>The Apache License, Version 2.0</p>
+            </p:panel>        
+        </p:dialog>
         
         <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
             <p:panel>

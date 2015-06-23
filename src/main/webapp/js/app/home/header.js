@@ -67,7 +67,12 @@ function toggleUserProfileDlgSaveBtn() {
     ? saveBtn.enable() : saveBtn.disable();
 }
 
-function showProfileDialog(event) {
+function showAboutDialog() {
+    var dlg = PF("aboutDlg");
+    dlg.show();
+}
+
+function showProfileDialog() {
     var dlg = PF("userProfileDlg");
     var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);
     togglePasswordChange(changePwCb);

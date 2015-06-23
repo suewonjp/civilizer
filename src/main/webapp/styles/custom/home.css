@@ -103,7 +103,8 @@
     width: 100%;
 }
 
-#user-menu-form\:user-profile-dlg .ui-panel {
+#user-menu-form\:user-profile-dlg .ui-panel
+, #user-menu-form\:about-dlg .ui-panel {
     margin: 5px 0px 5px 0px;
 }
 
