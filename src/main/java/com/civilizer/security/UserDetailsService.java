@@ -22,7 +22,7 @@ public final class UserDetailsService
     implements org.springframework.security.core.userdetails.UserDetailsService {
     
     public static final int ENCRYPTION_STRENGTH     = 11;
-    public static final String CREDENTIAL_FILE      = "cvz.pc";
+    public static final String CREDENTIAL_FILE      = ".cvz.pc";
     private static final String HASHED_DEFAULT_PW   = "$2a$10$w.Jjtx0mrjH4E.DxQEmBZu.D1oCBKy26utS8KCOSn0fmq1xs2GXiK";
     
     private static UserDetails createUserDetails(String username, String passwordCode) {
