@@ -19,6 +19,10 @@
             <base-name>view-options</base-name>
             <var>cfg</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>core</base-name>
+            <var>core</var>
+        </resource-bundle>
     </application>
 
 </faces-config>
