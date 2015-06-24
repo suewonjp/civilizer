@@ -89,6 +89,7 @@ Supported browsers: (note that old versions may not work correctly)
 
 - Civilizer is currently in ALPHA status.
 - Layout may not be rendered correctly by some untested browsers.
+- Localization is yet to be done.
 - Civilizer is currently provided as a PRIVATE EDITION only.
     - The edition does not support access by multiple users.
     - DONT'T apply neither of the following usages with a PRIVATE edition of Civilizer:
@@ -98,13 +99,22 @@ Supported browsers: (note that old versions may not work correctly)
         - In that sense, the private edition has limited security features only and future versions also might remain the same.
         - We hope that sometime in the future, we will be able to develop a Group or Enterprise edition to help many users share/manage data under greatly enhanced security provided.
 * * *
-### Development
+### Compile/Test
 If you want to compile/test Civilizer on your own, you need the followings:
 - JDK 1.7 or above
 - Maven (https://maven.apache.org/)
-- Eclipse IDE
-    - Spring Tool Suite is recommended (https://spring.io/tools)
+- Eclipse IDE (Optional)
+    - Spring Tool Suite (https://spring.io/tools) is recommended for an IDE
 
+Using Maven, you can execute commands as follows at the root directory of the source package:  
+- To compile the binary and perform unit tests:  
+        mvn test
+- To build a package into .WAR file:
+        mvn clean package
+- To compile the binary and load the application onto a Jetty server on the fly:  
+        mvn jetty:run
+  - Access the application with URL http://localhost:8080/civilizer/app/home
+  - Press Ctrl-C to stop the server
 * * *
 ### Copyright/License/Disclaimer
 
