@@ -71,6 +71,15 @@ public final class MainController {
 		return tagDao.findById((long) Tag.getSpecialTagId(name));
 	}
 	
+	private void removeTag(Fragment frg, Tag tag) {
+	    frg.removeTag(tag);
+	    if (frg.getTags().isEmpty()) {
+	        // [NOTE] As a rule, untagged fragments are not allowed;
+	        // So we encounter such a tag, get it tagged with the '#untagged' tag
+	        frg.addTag(getUntaggedTag());
+	    }
+	}
+	
 	// [DEV]
 	public void yetToBeDeveloped(Object ... param) {
 		String params = "";
@@ -337,7 +346,8 @@ public final class MainController {
 
 	public void unbookmarkFragment(Long fragmentId) {
 	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
-	    frg.removeTag(getBookmarkTag());
+	    removeTag(frg, getBookmarkTag());
+//	    frg.removeTag(getBookmarkTag());
 	    try {
 			fragmentDao.save(frg);
 			ViewUtil.addMessage("Unbookmarked", "Fragment #" + frg.getId(), null);
@@ -367,7 +377,8 @@ public final class MainController {
 	    if (! frg.containsTagId(trashcanTag.getId())) {
 	        return;
 	    }
-	    frg.removeTag(trashcanTag);
+	    removeTag(frg, trashcanTag);
+//	    frg.removeTag(trashcanTag);
 	    try {
 	        fragmentDao.save(frg);
 	        ViewUtil.addMessage("Restored", "Fragment #" + frg.getId(), null);
