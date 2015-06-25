@@ -70,16 +70,17 @@ function showFileUploadDialog() {
 	treeNodes.removeClass("fa-upload fb-target-dir");
 	var fp = "";
 	var dstPath = "";
-	var fileSelector = $("#file-box-form\\:file-selector");
-	fileSelector.val(null);
+	var fileUpload= PF('fileUpload');
+	var fileInput = fileUpload.input.val("");
+	fileUpload.display.text("");
 	var holderForDstId = $("#file-box-form\\:id-placeholder-for-dst-node");
 	holderForDstId.val(0);
 	var okBtn = $("#file-box-form\\:ok").hide().click(function() {
 		document.forms["file-box-form"]["file-box-form:ok-upload"].click();
 	});
 	
-	fileSelector.change(function () {
-	    var fileToUpload = $(this).val();
+	fileInput.change(function () {
+	    var fileToUpload = fileUpload.display.text();
 	    if (fileToUpload) {
 	    	dstPath = fp + SYSPROP.fileSep + fileToUpload;
 	    	dstOutput.text(dstPath);
@@ -93,7 +94,7 @@ function showFileUploadDialog() {
 		fp = $this.attr("_fp");
 		if (fp === undefined)
 			fp = "";
-		var fileToUpload = fileSelector.val();
+		var fileToUpload = fileInput.val();
 		if (fileToUpload === undefined)
 			fileToUpload = "";
 		dstPath = fp + SYSPROP.fileSep + fileToUpload;

@@ -19,6 +19,13 @@
     </p:dialog>
 
 	<p:dialog width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
+        <div id="file-upload-box">
+        	<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
+	        <p:fileUpload widgetVar="fileUpload" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
+        </div>
+        <br/><h:outputText id="src-path" value=""/><br/>
+        <br/><span class="fa fa-arrow-circle-down fa-2x"></span><br/>
+        <br/><h:outputText id="dst-path" value=""/><br/><br/>
         <p:tree id="folder-tree" value="#{fileListBean.folderTree.root}" var="folderPathBean" style="width:100%">
             <p:treeNode dynamic="true">
                 <span class="each-file fa #{folderPathBean.getCssClassName()}" _id="#{folderPathBean.id}" _fp="#{folderPathBean.fullPath}">
@@ -26,14 +33,6 @@
              	</span>
             </p:treeNode>
         </p:tree>
-        <br/><h:outputText id="dst-path" value=""/><br/>
-        <br/><span class="fa fa-arrow-circle-up fa-2x"></span><br/>
-        <br/><h:outputText id="src-path" value=""/><br/>
-        <div id="file-upload-box">
-        	<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
-	        <p:fileUpload id="file-selector" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
-			<br/>
-        </div>
         <div style="display:none;">
 	        <p:commandButton id="ok-move" action="move-file"/>
 <!-- 	    [NOTE] for the file upload to work, ajax="false" is necessary -->
