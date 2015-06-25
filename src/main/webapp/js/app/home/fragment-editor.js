@@ -25,7 +25,7 @@ function setupFragmentEditor() {
 }
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {
-	var editorHeight = Math.max($editorFrame.height(), 696);
+	var editorHeight = Math.max($editorFrame.height(), 596);
     var top = ($window.height() - editorHeight) / 2 + $window.scrollTop() + "px";
     
     if (forNewFragment) {

@@ -140,7 +140,7 @@
     border-style: solid;
     border-width: 3px;
     border-color: navy;
-    z-index: 100;
+    z-index: 2005;
 }
 
 #editor-frame {
@@ -190,7 +190,7 @@
     position: fixed;
     bottom: 0%;
     max-height:28px;
-    z-index: 2000;
+    z-index: 2010;
     font-size: x-small;
     border: 2px solid black;
 }
