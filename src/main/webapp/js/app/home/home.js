@@ -261,22 +261,22 @@ function translateCustomMarkupRules(html) {
 	return html
     	// {([keyword] ... text ... )} --- translated to a <span>
 	    // used for one special purpose; highlighting search phrase
-        .replace(/\{\(\[(.+?)\] /g, function(match, pos, originalText) {
-            return "<span class='-cvz-" + RegExp.$1 + "'>"; 
+        .replace(/\{\(\[(.+?)\] /g, function(match, p1, pos, originalText) {
+            return "<span class='-cvz-" + p1 + "'>"; 
         })
         .replace(/ \)\}/g, function(match, pos, originalText) {
             return "</span>";
         })
         // {{{[keyword] ... text ... }}} --- translated to a <div> block
-    	.replace(/\{\{\{\[(.+?)\]/g, function(match, pos, originalText) {
-    	    return "<div class='-cvz-" + RegExp.$1 + "'>"; 
+    	.replace(/\{\{\{\[(.+?)\]/g, function(match, p1, pos, originalText) {
+    	    return "<div class='-cvz-" + p1 + "'>"; 
     	})
     	.replace(/\}\}\}/g, function(match, pos, originalText) {
     	    return "</div>";
     	})
         // {{[keyword] ... text ... }} --- translated to a <span>
-    	.replace(/\{\{\[(.+?)\]/g, function(match, pos, originalText) {
-    		return "<span class='-cvz-" + RegExp.$1 + "'>"; 
+    	.replace(/\{\{\[(.+?)\]/g, function(match, p1, pos, originalText) {
+    		return "<span class='-cvz-" + p1 + "'>"; 
     	})
     	.replace(/\}\}/g, function(match, pos, originalText) {
     		return "</span>";
