@@ -698,7 +698,7 @@ public final class MainController {
 				return;
 			}
 			
-			entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
+			entities = fileEntityDao.findByNamePattern(oldFilePath+File.separator+'%');
 		}
 		else {
 			final File oldFile = filePathBean.toFile(filesHomePath);
@@ -752,7 +752,7 @@ public final class MainController {
 				ViewUtil.addMessage("No Effect!!!", fe.getFileName() + " :: The source and destination are identical", FacesMessage.SEVERITY_WARN);
 				return;
 			}
-			if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath())) {
+			if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath()+File.separator)) {
 				ViewUtil.addMessage("Error on Moving a Folder!!!", fe.getFileName() + " :: The source is a subdirectory of the destination", FacesMessage.SEVERITY_ERROR);
 				return;
 			}
@@ -765,7 +765,7 @@ public final class MainController {
 				return;
 			}
 			
-			entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
+			entities = fileEntityDao.findByNamePattern(oldFilePath+File.separator+'%');
 		}
 		else {
 			final File oldFile = srcPathBean.toFile(filesHomePath);
@@ -819,7 +819,7 @@ public final class MainController {
 		List<FileEntity> entities = Collections.emptyList();
 		
 		if (filePathBean.isFolder()) {
-			entities = fileEntityDao.findByNamePattern(filePath + '%');
+			entities = fileEntityDao.findByNamePattern(filePath+File.separator+'%');
 		}
 		else {
 			FileEntity entity = fileEntityDao.findByName(filePath);

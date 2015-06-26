@@ -235,7 +235,7 @@ public class WebFileBoxTest {
 					        oldDir.getAbsolutePath(), newDir.getAbsolutePath()));
 				}
 				
-				entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
+				entities = fileEntityDao.findByNamePattern(oldFilePath+File.separator+'%');
 			}
 			else {
 				final File oldFile = filePathBean.toFile(filesHomePath);
@@ -318,7 +318,7 @@ public class WebFileBoxTest {
 					continue;
 				}
 				
-				if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath())) {
+				if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath()+File.separator)) {
 					// the source is a subdirectory of the destination
 					--j;
 					continue;
@@ -343,7 +343,7 @@ public class WebFileBoxTest {
 				assertEquals(false, oldDir.isDirectory());
 				assertEquals(true, newDir.isDirectory());
 				
-				entities = fileEntityDao.findByNamePattern(oldFilePath + '%');
+				entities = fileEntityDao.findByNamePattern(oldFilePath+File.separator+'%');
 			}
 			else {
 				final File oldFile = srcPathBean.toFile(filesHomePath);
@@ -426,7 +426,7 @@ public class WebFileBoxTest {
 			List<FileEntity> entities = Collections.emptyList();
 			
 			if (filePathBean.isFolder()) {
-				entities = fileEntityDao.findByNamePattern(filePath + '%');
+				entities = fileEntityDao.findByNamePattern(filePath+File.separator+'%');
 			}
 			else {
 				FileEntity entity = fileEntityDao.findByName(filePath);

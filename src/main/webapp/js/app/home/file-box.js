@@ -135,7 +135,8 @@ function showMoveFileDialog() {
 		if (fp === undefined)
 			fp = "";
 		var dstPath = fp + SYSPROP.fileSep + srcName;
-		var canMove = (srcPath !== dstPath) && (!srcIsFolder || dstPath.indexOf(srcPath) != 0);
+		var canMove = (srcPath !== dstPath) &&
+		    (!srcIsFolder || !parentChildFolders(srcPath, dstPath));
 		if (canMove) {
 			var dstId = $this.attr("_id");
 			$("#file-box-form\\:id-placeholder-for-dst-node").val(dstId);
@@ -146,7 +147,7 @@ function showMoveFileDialog() {
 		}
 		else {
 			dstOutput.text(" " + MSG.cant_move);
-			dstOutput.addClass("fa-close").css({color:"red"});
+			dstOutput.addClass("fa fa-close").css({color:"red"});
 			okBtn.hide();
 		}
 	});

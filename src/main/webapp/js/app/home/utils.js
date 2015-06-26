@@ -180,6 +180,15 @@ function selectItemOnPfListbox(value, pfListbox) {
     }
 }
 
+function parentChildFolders(parent, child) {
+    // let parent = '/folder 0/folder 1'
+    // let child = '/folder 0/folder 1/folder 2'
+    // then, this function will return true
+    var iii = child.indexOf(parent);
+    return (iii != 0) ?
+          false : (child.charAt(parent.length) === SYSPROP.fileSep ? true : false);  
+}
+
 //function boolToSign(b) {
 //    return b * 2 - 1;
 //}
