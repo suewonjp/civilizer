@@ -82,8 +82,8 @@ Supported browsers: (note that old versions may not work correctly)
 - Chrome
 - Opera
 - Internet Explorer
-    - 11
-    - 8/9/10 (? - not tested yet)
+    - 9/10/11
+    - ** Civilizer doesn't support IE 8 or earlier versions **
 * * *
 ### Limitations
 
@@ -96,8 +96,9 @@ Supported browsers: (note that old versions may not work correctly)
         - Install and run the application on a public domain machine where anonymous internet users can access.
         - Use the application over a public WIFI network or other insecure networks.
     - The main goal of the PRIVATE edition is helping A SINGLE USER manage his/her PRIVATE PERSONAL DATA under some relatively SECURED PRIVATE NETWORK ENVIRONMENT (e.g. home network).
-        - In that sense, the private edition has limited security features only and future versions also might remain the same.
-        - We hope that sometime in the future, we will be able to develop a Group or Enterprise edition to help many users share/manage data under greatly enhanced security provided.
+        - In that sense, the private edition has limited security features
+        - future versions also might remain the same.
+    - We hope that sometime in the future, we will be able to develop a **Group or Enterprise Edition** to help many users share/manage data under greatly enhanced security provided.
 * * *
 ### Compile/Test
 If you want to compile/test Civilizer on your own, you need the followings:
