@@ -137,32 +137,25 @@ public final class TagListBean implements Serializable {
 		}
 	}
 	
-	public List<Tag> listOfSelectableParents() {
-		final List<Tag> output = new LinkedList<>(tags);
-		for (Tag tag : parentTags) {
-			output.remove(tag);
-		}
-		for (Tag tag : childTags) {
-		    output.remove(tag);
-		}
-		if (tagToEdit != null) {
-			output.remove(tagToEdit.getTag());
-		}
-		return output;
-	}
-
-	public List<Tag> listOfSelectableChildren() {
-		final List<Tag> output = new LinkedList<>(tags);
-		for (Tag tag : parentTags) {
-		    output.remove(tag);
-		}
-		for (Tag tag : childTags) {
-		    output.remove(tag);
-		}
-		if (tagToEdit != null) {
-			output.remove(tagToEdit.getTag());
-		}
-		return output;
+	public List<Tag> listLinkableTags() {
+	    final List<Tag> output = new LinkedList<>(tags);
+	    for (Tag tag : parentTags) {
+	        output.remove(tag);
+	    }
+	    for (Tag tag : childTags) {
+	        output.remove(tag);
+	    }
+	    if (tagToEdit != null) {
+	        output.remove(tagToEdit.getTag());
+	    }
+	    Iterator<Tag> itr = output.iterator();
+	    while (itr.hasNext()) {
+	        final Tag tag = itr.next();
+	        if (Tag.isSpecialTag(tag.getTagName())) {
+	            itr.remove();
+	        }
+	    }
+	    return output;
 	}
 	
 	public boolean isHierarchyTouched() {

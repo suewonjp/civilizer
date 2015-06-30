@@ -31,7 +31,7 @@
 	                <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
 	                	<p:ajax event="save" update="parent-tags"/>
 						<p:selectOneListbox value="#{tagListBean.newParentTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
-					    	<f:selectItems value="#{tagListBean.listOfSelectableParents()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
+					    	<f:selectItems value="#{tagListBean.listLinkableTags()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
 						</p:selectOneListbox>
 		            </p:inplace>
 	            </div><br/>
@@ -49,7 +49,7 @@
                     <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
                     	<p:ajax event="save" update="child-tags"/>
 						<p:selectOneListbox value="#{tagListBean.newChildTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
-					    	<f:selectItems value="#{tagListBean.listOfSelectableChildren()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
+					    	<f:selectItems value="#{tagListBean.listLinkableTags()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
 						</p:selectOneListbox>
                     </p:inplace>
                 </div><br/>
