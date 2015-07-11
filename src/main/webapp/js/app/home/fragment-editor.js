@@ -27,9 +27,9 @@ function setupFragmentEditor() {
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {
 	var editorHeight = Math.max($editorFrame.height(), 596);
     var top = ($window.height() - editorHeight) / 2 + $window.scrollTop() + "px";
-    
+    var titleInput = $("#fragment-editor-form\\:title-input");
     if (forNewFragment) {
-    	var el = $("#fragment-editor-form\\:title-input");
+    	var el = titleInput;
         el.val(null);
         el.watermark(MSG.label_title);
         
@@ -49,6 +49,8 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
         , modalCSS:{ position:"absolute", top:top, left:"30%" }
         , onClose:clearFragmentEditor
     });
+    
+    titleInput.focus();
     
     var titleBar = $("#editor-title-bar");
     if (titleBar.next().is(":visible") == false) {
