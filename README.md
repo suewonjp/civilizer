@@ -55,6 +55,7 @@ You need to install the following softwares on your system prior to running Civi
     - Jetty Runner (http://eclipse.org/jetty/documentation/current/runner.html)
 
 The most simplest way is using Jetty Runner:
+
 1. First, make sure you have installed JRE 7 or above on your system
 1. Download a latest copy of Jetty Runner
     - go to http://search.maven.org/#artifactdetails%7Corg.eclipse.jetty%7Cjetty-runner%7C9.3.0.v20150612%7Cjar
