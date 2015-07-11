@@ -48,7 +48,7 @@ Supported platforms:
     
 You need to install the following softwares on your system prior to running Civilizer
 - Java Runtime Environment (JRE)
-    - note that JRE 7 or above is needed
+    - Note that JRE 7 or above is needed
 - Java Servlet containers (web servers based on Java Servlet technology)
     - Tomcat (http://tomcat.apache.org)
     - Jetty (http://www.eclipse.org/jetty/)
@@ -67,14 +67,14 @@ The most simplest way is using Jetty Runner:
 1. Access Civilizer with the following URL:
     - http://localhost:12345/civilizer/app/home
         - If you have started Civilizer from another machine, you should specify the domain name or IP address of that machine other than localhost;
-            - Read limitations section carefully before you run Civilizer from another machine over a network.
+            - Read limitations section below carefully before you run Civilizer from another machine over a network.
 1. When you first access the URL, the application will guide you to its authentication page.
     - Initial credential is as follows:
         - username:owner
         - password:owner
 1. After authenticated, you can reach the home page of the application.
     - You may change username or password by accessing 'Change Profile' menu 
-        - hover your mouse over the man icon located at the top-right corner of the home page
+        - hover your mouse over the person icon located at the top-right corner of the home page
 
 Supported browsers: (note that old versions may not work correctly)
 - Firefox
@@ -83,17 +83,17 @@ Supported browsers: (note that old versions may not work correctly)
 - Opera
 - Internet Explorer
     - 9/10/11
-    - ** Civilizer doesn't support IE 8 or earlier versions **
+    - ** Civilizer doesn't support IE 8 or earlier versions of IE **
 * * *
 ### Limitations
 
-- Civilizer is currently in ALPHA status.
+- Civilizer is currently in **ALPHA** status.
 - Layout may not be rendered correctly by some untested browsers.
 - Localization is yet to be done.
-- Civilizer is currently provided as a PRIVATE EDITION only.
+- Civilizer is currently provided as a **PRIVATE EDITION** only.
     - The edition does not support access by multiple users.
     - DONT'T apply neither of the following usages with a PRIVATE edition of Civilizer:
-        - Install and run the application on a public domain machine where anonymous internet users can access.
+        - Install and run the application on a public domain machine where anonymous Internet users can access.
         - Use the application over a public WIFI network or other insecure networks.
     - The main goal of the PRIVATE edition is helping A SINGLE USER manage his/her PRIVATE PERSONAL DATA under some relatively SECURED PRIVATE NETWORK ENVIRONMENT (e.g. home network).
         - In that sense, the private edition has limited security features
