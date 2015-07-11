@@ -22,7 +22,7 @@ public final class AppOptions {
 	public static final String DEF_FILE_BOX_HOME                  = "files";
 	public static final String DEF_OVERRIDE_OPTION_FILE           = "false";	                                                              
 	public static final String DEF_LOCALE                         = "en";
-	public static final String DEF_DATA_SCRIPTS                   = "";
+	public static final String DEF_DATA_SCRIPTS                   = "db/startup-data.sql";
 	public static final String DEF_INITIALIZE_DB                  = "false";
 	public static final String DEF_DEV        			          = "false";
 	

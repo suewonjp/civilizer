@@ -1,24 +1,40 @@
 BEGIN {
-    RS=";\n";
-    }
+    output = 0;
+}
 
+# Skip comments
 $1 ~ /--/ { next; }
 
+# This particular data is supposed to be inserted from another script
 $0 ~ /INSERT INTO PUBLIC.GLOBAL_SETTING/ { next; }
 
-$0 ~ /INSERT INTO PUBLIC.TAG\(/ { 
-    gsub(/\(-2, '#untagged'\),\n/, ""); 
-    gsub(/\(-1, '#bookmark'\),\n/, ""); 
-    gsub(/\(0, '#trash'\),\n/, ""); 
-    printf "%s;\n", $0; 
-    next;
-    }
+# These data too
+/\(-2, '#untagged'\),/ { next; }
+/\(-1, '#bookmark'\),/ { next; }
+/\(0, '#trash'\),/ { next; }
     
-$0 ~ /INSERT INTO/ {
-#$1 ~ /INSERT/ && $2 ~ /INTO/ {
-   printf "%s;\n", $0; 
+# Inserting data begins
+$0 ~ /^INSERT INTO/ {
+    output = 1;
+}
+
+# Inserting data ends
+$0 ~ /;$/ {
+    if (output)
+        printf "%s\n\n", $0;
+    output = 0;
+}
+
+# Print out statements only when necessary
+{
+    if (output)
+        print;
+    else
+        next;
+
 }
 
 END {
-    }
+}
+   
 

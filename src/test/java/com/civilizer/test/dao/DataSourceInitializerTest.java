@@ -87,14 +87,18 @@ public class DataSourceInitializerTest extends DaoTest {
         System.setProperty(AppOptions.DATA_SCRIPTS, ",db_test/test-data.sql,");
         setUp();
         assertEquals(true, fragmentDao.findAll(true).isEmpty());
-        
-        // make sure DATA_SCRIPTS work as expected
+
         tearDown();
         System.setProperty("civilizer.no_schema", "true");
 //        System.setProperty(AppOptions.INITIALIZE_DB, "true");
         System.setProperty(AppOptions.DATA_SCRIPTS, ",db_test/test-data.sql,");
         setUp();
         assertEquals(false, fragmentDao.findAll(true).isEmpty());
+
+        tearDown();
+        System.setProperty(AppOptions.DATA_SCRIPTS, "");
+        setUp();
+        assertEquals(true, fragmentDao.findAll(true).isEmpty());
         
         System.clearProperty("civilizer.no_schema");
         System.clearProperty(AppOptions.DATA_SCRIPTS);
