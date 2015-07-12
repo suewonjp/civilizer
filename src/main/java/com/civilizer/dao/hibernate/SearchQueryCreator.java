@@ -122,7 +122,7 @@ public final class SearchQueryCreator {
 				rootJunction.add(disj);
 			}
 			else if (target == SearchParams.TARGET_TAG) {
-				Junction junc = buildQueryWithKeywords(words, target, any);
+				Junction junc = buildQueryWithKeywords(words, target, true);
 				tagCrit.add(junc);
 			}
 			else {

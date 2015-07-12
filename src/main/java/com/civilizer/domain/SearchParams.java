@@ -367,15 +367,13 @@ public final class SearchParams implements Serializable {
         return searchPhrase;
     }
 	
-	public boolean hasTarget(int target) {
-		boolean hasIt = false;
+	public Keywords getKeywords(int target) {
 		for (Keywords words : keywords) {
 			if (words.getTarget() == target) {
-				hasIt = true;
-				break;
+				return words;
 			}
 		}
-		return hasIt;
+		return null;
 	}
 
 }

@@ -17,6 +17,7 @@ import com.civilizer.dao.TagDao;
 import com.civilizer.domain.Fragment;
 import com.civilizer.domain.FragmentOrder;
 import com.civilizer.domain.SearchParams;
+import com.civilizer.domain.SearchParams.Keyword;
 
 @Repository("fragmentDao")
 @Transactional
@@ -267,6 +268,26 @@ public final class FragmentDaoImpl implements FragmentDao {
     		Hibernate.initialize(fragment.getTags());
     		Hibernate.initialize(fragment.getRelatedOnes());
 		}
+    	
+    	final SearchParams.Keywords keywords = sp.getKeywords(SearchParams.TARGET_TAG);
+    	if (keywords != null) {
+    	    if (! keywords.isAny() && keywords.getWords().size() > 1) {
+    	        // if the query has multiple tag keywords, we take care of that.
+    	        // e.g. tag: tag0 tag1 => we filter out results containing tag0 and tag1 simultaneously.
+    	        final List<Keyword> words = keywords.getWords();
+    	        final Iterator<Fragment> itr = output.iterator();
+    	        while (itr.hasNext()) {
+    	            final Fragment frg = itr.next();
+    	            for (Keyword keyword : words) {
+                        if (! frg.containsTagName(keyword.getWord())) {
+                            itr.remove();
+                            break;
+                        }
+                    }
+    	        }
+    	    }
+    	}
+    	
     	return output;
     }
     
