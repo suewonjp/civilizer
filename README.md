@@ -90,7 +90,8 @@ Supported browsers: (note that old versions may not work correctly)
 - Opera
 - Internet Explorer
     - 9/10/11
-    - ***Civilizer doesn't support IE 8 or earlier versions of IE***    
+    - ***Civilizer doesn't support IE 8 or earlier versions of IE***
+    
 * * *
 ### Limitations
 
