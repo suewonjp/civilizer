@@ -1,6 +1,7 @@
 ### Introduction
 
 Civilizer is a web application that helps you efficiently manage your data/knowledge/idea including:
+
 - knowledge/expertise for your job
 - temporary memo/notes
 - schedule/plan
@@ -13,6 +14,7 @@ Civilizer is a web application that helps you efficiently manage your data/knowl
 - humors and etc.
 
 Civilizer can keep your data in various forms including:
+
 - text
     - authored in Markdown with a dedicated editor
     - eventually rendered in HTML
@@ -21,6 +23,7 @@ Civilizer can keep your data in various forms including:
 - files
 
 It can help you efficiently organize/structure your data by:
+
 - tagging your data
 - relating similar/contrary data with one another
 - bookmarking data you access frequently
@@ -36,6 +39,7 @@ Civilizer has a full text search functionality to greatly help you access right 
 ### Installation
 
 Supported platforms:
+
 - Linux
     - Ubuntu/Linux Mint
     - Other Distros (? - not tested yet)
@@ -47,6 +51,7 @@ Supported platforms:
     - 10 (? - not tested yet)
     
 You need to install the following softwares on your system prior to running Civilizer
+
 - Java Runtime Environment (JRE)
     - Note that JRE 7 or above is needed
 - Java Servlet containers (web servers based on Java Servlet technology)
@@ -78,13 +83,14 @@ The most simplest way is using Jetty Runner:
         - hover your mouse over the person icon located at the top-right corner of the home page
 
 Supported browsers: (note that old versions may not work correctly)
+
 - Firefox
 - Safari
 - Chrome
 - Opera
 - Internet Explorer
     - 9/10/11
-    - ** Civilizer doesn't support IE 8 or earlier versions of IE **
+    - ***Civilizer doesn't support IE 8 or earlier versions of IE***    
 * * *
 ### Limitations
 
@@ -100,15 +106,18 @@ Supported browsers: (note that old versions may not work correctly)
         - In that sense, the private edition has limited security features
         - future versions also might remain the same.
     - We hope that sometime in the future, we will be able to develop a **Group or Enterprise Edition** to help many users share/manage data under greatly enhanced security provided.
+    
 * * *
 ### Compile/Test
 If you want to compile/test Civilizer on your own, you need the followings:
+
 - JDK 1.7 or above
 - Maven (https://maven.apache.org/)
 - Eclipse IDE (Optional)
     - Spring Tool Suite (https://spring.io/tools) is recommended for an IDE
 
 Using Maven, you can execute commands as follows at the root directory of the source package:  
+
 - To compile the binary and perform unit tests:  
         mvn test
 - To build a package into .WAR file:
@@ -117,6 +126,7 @@ Using Maven, you can execute commands as follows at the root directory of the so
         mvn jetty:run
   - Access the application with URL http://localhost:8080/civilizer/app/home
   - Press Ctrl-C to stop the server
+
 * * *
 ### Copyright/License/Disclaimer
 
