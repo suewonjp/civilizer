@@ -73,6 +73,7 @@ function toggleWindow(frame, bar) {
         if (frame.hasClass("ui-resizable"))
             frame.resizable("disable");
         target.hide();
+        frame.css({width:"auto", height:"auto"});
     }
     else {
         if (frame.hasClass("ui-resizable"))

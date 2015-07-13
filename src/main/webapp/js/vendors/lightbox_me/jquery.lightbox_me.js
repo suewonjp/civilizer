@@ -64,11 +64,12 @@
                //
             if (opts.showOverlay) {
                 $overlay.fadeIn(opts.overlaySpeed, function() {
-                    setSelfPosition();
-                    $self[opts.appearEffect](opts.lightboxSpeed, function() { setOverlayHeight(); setSelfPosition(); opts.onLoad()});
+//                    setSelfPosition();
+                    $self[opts.appearEffect](opts.lightboxSpeed, function() { setOverlayHeight(); /*setSelfPosition();*/ opts.onLoad()});
                 });
             } else {
-                setSelfPosition();
+//                setSelfPosition();
+                $self.css(opts.modalCSS);
                 $self[opts.appearEffect](opts.lightboxSpeed, function() { opts.onLoad()});
             }
 
@@ -85,8 +86,9 @@
             ---------------------------------------------------- */
 
             $(window).resize(setOverlayHeight)
-                     .resize(setSelfPosition)
-                     .scroll(setSelfPosition);
+//                     .resize(setSelfPosition)
+//                     .scroll(setSelfPosition)
+                     ;
 
             $(window).bind('keyup.lightbox_me', observeKeyPress);
 
@@ -97,7 +99,7 @@
                 closeLightbox(); e.preventDefault();
             });
             $self.bind('close', closeLightbox);
-            $self.bind('reposition', setSelfPosition);
+//            $self.bind('reposition', setSelfPosition);
 
 
 
@@ -130,11 +132,11 @@
 				        // clean up events.
                 $self.undelegate(opts.closeSelector, "click");
                 $self.unbind('close', closeLightbox);
-                $self.unbind('repositon', setSelfPosition);
+//                $self.unbind('reposition', setSelfPosition);
                 
                 $(window).unbind('resize', setOverlayHeight);
-                $(window).unbind('resize', setSelfPosition);
-                $(window).unbind('scroll', setSelfPosition);
+//                $(window).unbind('resize', setSelfPosition);
+//                $(window).unbind('scroll', setSelfPosition);
 //                $(window).unbind('keyup.lightbox_me');
                 opts.onClose();
             }
@@ -164,37 +166,37 @@
                     : if $self is taller than the window, then make it absolutely positioned
                     : otherwise fixed
             */
-            function setSelfPosition() {
-                var s = $self[0].style;
-
-                // reset CSS so width is re-calculated for margin-left CSS
-//                $self.css({left: '50%', marginLeft: ($self.outerWidth() / 2) * -1,  zIndex: (opts.zIndex + 3) });
-
-
-                /* we have to get a little fancy when dealing with height, because lightbox_me
-                    is just so fancy.
-                 */
-
-                // if the height of $self is bigger than the window and self isn't already position absolute
-                if (($self.height() + 80  >= $(window).height()) && ($self.css('position') != 'absolute')) {
-
-                    // we are going to make it positioned where the user can see it, but they can still scroll
-                    // so the top offset is based on the user's scroll position.
-                    var topOffset = $(document).scrollTop() + 40;
-                    $self.css({position: 'absolute', top: topOffset + 'px', marginTop: 0})
-                } else if ($self.height()+ 80  < $(window).height()) {
-                    //if the height is less than the window height, then we're gonna make this thing position: fixed.
-                    if (opts.centered) {
-                        $self.css({ position: 'fixed', top: '50%', marginTop: ($self.outerHeight() / 2) * -1})
-                    } else {
-//                        $self.css({ position: 'fixed'}).css(opts.modalCSS);
-                        $self.css(opts.modalCSS);
-                    }
-                    if (opts.preventScroll) {
-                        $('body').css('overflow', 'hidden');
-                    }
-                }
-            }
+//            function setSelfPosition() {
+//                var s = $self[0].style;
+//
+//                // reset CSS so width is re-calculated for margin-left CSS
+////                $self.css({left: '50%', marginLeft: ($self.outerWidth() / 2) * -1,  zIndex: (opts.zIndex + 3) });
+//
+//
+//                /* we have to get a little fancy when dealing with height, because lightbox_me
+//                    is just so fancy.
+//                 */
+//
+//                // if the height of $self is bigger than the window and self isn't already position absolute
+//                if (($self.height() + 80  >= $(window).height()) && ($self.css('position') != 'absolute')) {
+//
+//                    // we are going to make it positioned where the user can see it, but they can still scroll
+//                    // so the top offset is based on the user's scroll position.
+//                    var topOffset = $(document).scrollTop() + 40;
+//                    $self.css({position: 'absolute', top: topOffset + 'px', marginTop: 0})
+//                } else if ($self.height()+ 80  < $(window).height()) {
+//                    //if the height is less than the window height, then we're gonna make this thing position: fixed.
+//                    if (opts.centered) {
+//                        $self.css({ position: 'fixed', top: '50%', marginTop: ($self.outerHeight() / 2) * -1})
+//                    } else {
+////                        $self.css({ position: 'fixed'}).css(opts.modalCSS);
+//                        $self.css(opts.modalCSS);
+//                    }
+//                    if (opts.preventScroll) {
+//                        $('body').css('overflow', 'hidden');
+//                    }
+//                }
+//            }
 
         });
 
