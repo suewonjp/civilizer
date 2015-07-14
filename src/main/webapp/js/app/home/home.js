@@ -938,3 +938,11 @@ function onClickGoSort(panelId) {
         document.forms["fragment-group-form"]["fragment-group-form:go-sort-action"+panelId].click()
     }
 }
+
+function _touchFragment() {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
+    
+    touchFragment([{name:'fragmentId', value:frgId}]);
+}

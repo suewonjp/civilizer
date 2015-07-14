@@ -88,6 +88,11 @@
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
             <evaluate expression="mainController.newPanelContextBean(0, -1000, 0)" result="requestScope.panelContextBean"/>
         </transition>
+
+        <transition on="touch-fragment" to="home">
+            <evaluate expression="mainController.touchFragment(requestParameters.fragmentId)" />
+            <evaluate expression="mainController.newPanelContextBean(0, -1000, 0)" result="requestScope.panelContextBean"/>
+        </transition>
         
         <transition on="save-tag" to="home">
             <evaluate expression="mainController.saveTag(paramTagBean, tagListBean, requestParameters.isNewTag)" />

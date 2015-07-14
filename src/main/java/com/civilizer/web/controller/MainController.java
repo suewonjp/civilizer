@@ -478,6 +478,22 @@ public final class MainController {
         }
 	}
 	
+	public void touchFragment(Long fragmentId) {
+	    final Fragment frg = fragmentDao.findById(fragmentId);
+	    final DateTime dt = new DateTime();
+	    frg.setUpdateDatetime(dt);
+        
+        try {
+            fragmentDao.save(frg);
+            ViewUtil.addMessage("Updated", "Fragment #" + frg.getId(), null);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            ViewUtil.addMessage("Error on saving a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+            return;
+        }
+	}
+	
 	private Set<Tag> saveTagsWhenSavingFragment(TagListBean tagListBean, String tagNames) {
 		// [NOTE] this method should be called only when fragments are saved as its name implies
 		final Collection<Tag> existingTags = tagListBean.getTags();

@@ -118,6 +118,7 @@
     <p:remoteCommand name="filterByTag" action="filter-by-tag" async="true"/>
     <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment"/>
     <p:remoteCommand name="searchFragments" action="search-fragments" />
+    <p:remoteCommand name="touchFragment" action="touch-fragment" />
     
     <div id="frg-context-menu" style="display:none; z-index:5000; position:fixed;">
 	    <p:menu>
@@ -127,6 +128,7 @@
             <p:menuitem id="delete" onclick="trashFragmentFromCtxtMenu(true)" icon="fa fa-trash" value="#{msg['label_delete']}"/>
             <p:menuitem id="restore" onclick="restoreFragmentFromCtxtMenu()" icon="fa fa-recycle" value="#{msg['label_restore']}"/>
             <p:menuitem id="relateNew" onclick="openFragmentEditorToRelate(event)" icon="fa fa-link" value="#{msg['label_relate_new']}"/>
+            <p:menuitem id="touch" onclick="_touchFragment()" icon="fa fa-hand-o-up" value="#{msg['label_touch']}"/>
 	    </p:menu>
     </div>
     
