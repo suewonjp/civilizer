@@ -1,4 +1,4 @@
-### Introduction
+### Description
 
 Civilizer is a web application that helps you efficiently manage your data/knowledge/idea including:
 
@@ -31,10 +31,13 @@ It can help you efficiently organize/structure your data by:
 
 Civilizer has a full text search functionality to greatly help you access right data at the right time
 
-> [NOTICE] Civilizer has been inspired by Piggydb (http://piggydb.net/) developed by Daisuke Morita.    
+![civilizer](http://s29.postimg.org/feih7txqv/civilizer.png)
+
+### Credits 
+
+> Civilizer has been inspired by Piggydb (http://piggydb.net/) developed by Daisuke Morita.    
 > Basic concepts and design have been borrowed from Piggydb and it used to be a sample implementation for Civilizer.  
-> Nevertheless, the two applications differ in terms of what to focus on and design/implementation/technology details and so on. 
- 
+
 * * *
 ### Installation
 
@@ -93,22 +96,6 @@ Supported browsers: (note that old versions may not work correctly)
     - ***Civilizer doesn't support IE 8 or earlier versions of IE***
     
 * * *
-### Limitations
-
-- Civilizer is currently in **ALPHA** status.
-- Layout may not be rendered correctly by some untested browsers.
-- Localization is yet to be done.
-- Civilizer is currently provided as a **PRIVATE EDITION** only.
-    - The edition does not support access by multiple users.
-    - DONT'T apply neither of the following usages with a PRIVATE edition of Civilizer:
-        - Install and run the application on a public domain machine where anonymous Internet users can access.
-        - Use the application over a public WIFI network or other insecure networks.
-    - The main goal of the PRIVATE edition is helping A SINGLE USER manage his/her PRIVATE PERSONAL DATA under some relatively SECURED PRIVATE NETWORK ENVIRONMENT (e.g. home network).
-        - In that sense, the private edition has limited security features
-        - future versions also might remain the same.
-    - We hope that sometime in the future, we will be able to develop a **Group or Enterprise Edition** to help many users share/manage data under greatly enhanced security provided.
-    
-* * *
 ### Compile/Test
 If you want to compile/test Civilizer on your own, you need the followings:
 
@@ -128,6 +115,22 @@ Using Maven, you can execute commands as follows at the root directory of the so
   - Access the application with URL http://localhost:8080/civilizer/app/home
   - Press Ctrl-C to stop the server
 
+* * *
+### Limitations
+
+- Civilizer is currently in **ALPHA** status.
+- Layout may not be rendered correctly by some untested browsers.
+- Localization is yet to be done.
+- Civilizer is currently provided as a **PRIVATE EDITION** only.
+    - The edition does not support access by multiple users.
+    - DONT'T apply neither of the following usages with a PRIVATE edition of Civilizer:
+        - Install and run the application on a public domain machine where anonymous Internet users can access.
+        - Use the application over a public WIFI network or other insecure networks.
+    - The main goal of the PRIVATE edition is helping A SINGLE USER manage his/her PRIVATE PERSONAL DATA under some relatively SECURED PRIVATE NETWORK ENVIRONMENT (e.g. home network).
+        - In that sense, the private edition has limited security features
+        - future versions also might remain the same.
+    - We hope that sometime in the future, we will be able to develop a **Group or Enterprise Edition** to help many users share/manage data under greatly enhanced security provided.
+    
 * * *
 ### Copyright/License/Disclaimer
 
