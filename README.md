@@ -31,7 +31,7 @@ It can help you efficiently organize/structure your data by:
 
 Civilizer has a full text search functionality to greatly help you access right data at the right time
 
-![civilizer](http://s29.postimg.org/feih7txqv/civilizer.png)
+![civilizer](http://s6.postimg.org/ljrursgg1/civilizer.png)
 
 ### Credits 
 
