@@ -614,7 +614,7 @@ function showConfirmDlg(mainMsg, subMsg, icon, color) {
 	}
 	
     if (! color)
-		color = "aqua";
+		color = "deepskyblue";
     
     var iconTag = msg.prev().prev();
     if (iconTag.hasClass("fa")) {
@@ -629,7 +629,7 @@ function showConfirmDlg(mainMsg, subMsg, icon, color) {
     }
     
     if (subMsg) {
-    	var p = $("<p style='margin-top:3px;white-space:pre;color:" + color + "'>").text(subMsg);
+    	var p = $("<p class='ui-panel ui-widget-content ui-corner-all' style='margin-top:3px;white-space:pre;color:" + color + "'>").text(subMsg);
     	msg.after(p);
     }
     
