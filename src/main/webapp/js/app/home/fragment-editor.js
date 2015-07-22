@@ -164,21 +164,23 @@ function autocompleteForTypingTags() {
     }
     
     $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords").autocomplete({
-        source: function(req, res) {
+        source: function(req, res) { // displaying suggestions;
             var tags = split(req.term);
-            if (tags.length && tags[tags.length-1] == "") {
-                tags.pop();
-            }
-            var typed = tags[tags.length-1];
-            tags.pop();
-            var prefix = "";
-            for (var i=0; i<tags.length; ++i) {
-                prefix += tags[i] + ",";
+            var typed = null;
+            if (tags.length) {
+                typed = tags[tags.length-1];
             }
             var output = [];
+            if (! typed) {
+                res([]); // no typing, no suggestion.
+                return;
+            }
             for (var i=0; i<tagSuggestions.length; ++i) {
                 var suggestion = tagSuggestions[i];
                 if (suggestion.indexOf(typed) == 0 && ! alreadyTyped(tags, suggestion)) {
+                    // filter out:
+                    // - tags not starting with the typed word
+                    // - already typed tags
                     output.push(suggestion);
                 }
             }
