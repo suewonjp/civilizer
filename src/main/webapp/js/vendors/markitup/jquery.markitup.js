@@ -443,7 +443,7 @@
 				ctrlKey = (!(e.altKey && e.ctrlKey)) ? (e.ctrlKey || e.metaKey) : false;
 
 				if (e.type === 'keydown') {
-					if (ctrlKey === true) {
+					if (ctrlKey === true && shiftKey === false) {
 						li = $('a[accesskey="'+((e.keyCode == 13) ? '\\n' : String.fromCharCode(e.keyCode))+'"]', header).parent('li');
 						if (li.length !== 0) {
 							ctrlKey = false;
