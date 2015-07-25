@@ -105,16 +105,16 @@ function togglePasswordChange(widget) {
 }
 
 function setCurrentTheme(defaultTheme) {
-    var theme = sessionStorage.getItem("theme");
+    var theme = localStorage.getItem("theme");
     if (! theme) {
         theme = defaultTheme;
-        sessionStorage.setItem("theme", theme);
+        localStorage.setItem("theme", theme);
     }
     PrimeFaces.changeTheme(theme);
 }
 
 function applyCurrentThemeToThemeSwitcher() {
-    var theme = sessionStorage.getItem("theme");
+    var theme = localStorage.getItem("theme");
     if (theme) {
         selectItemOnPfListbox(theme, PF('themeSwitcher'));
     }
@@ -124,7 +124,7 @@ function onChangeTheme() {
     var switcher = PF('themeSwitcher');
     var theme = switcher.getSelectedValue();
     if (theme) {
-        sessionStorage.setItem("theme", theme);
+        localStorage.setItem("theme", theme);
     }
 }
 

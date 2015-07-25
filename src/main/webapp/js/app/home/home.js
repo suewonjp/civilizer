@@ -219,14 +219,14 @@ function setupFragmentResolutionSliders() {
         if (reso === undefined) reso = 3;
         if (reso == 0) tbody.hide();
         panel.find(".fragment-content").removeClass(allClasses).addClass("frg-content-reso"+reso);
-        sessionStorage.setItem("frg-content-reso-"+pid, reso);
+        localStorage.setItem("frg-content-reso-"+pid, reso);
         return reso;
     }
     
     var resos = [
-                 applyResolution(0, sessionStorage.getItem("frg-content-reso-0")),
-                 applyResolution(1, sessionStorage.getItem("frg-content-reso-1")),
-                 applyResolution(2, sessionStorage.getItem("frg-content-reso-2")),
+                 applyResolution(0, localStorage.getItem("frg-content-reso-0")),
+                 applyResolution(1, localStorage.getItem("frg-content-reso-1")),
+                 applyResolution(2, localStorage.getItem("frg-content-reso-2")),
                  ];
     
     function reso2value(reso) {
@@ -862,28 +862,28 @@ function makeSidebarTitleToggleable() {
 
     var bmLink = addToggler($("#bookmark-title"), iconClass, function() {
 		bookmarkPanel.toggle();
-		sessionStorage.setItem("bookmarkOpen", bookmarkPanel.cfg.collapsed ? "no":"yes");
+		localStorage.setItem("bookmarkOpen", bookmarkPanel.cfg.collapsed ? "no":"yes");
 	});
 	var tpLink = addToggler($("#tag-palette-title"), iconClass, function() {
 	    tagPalettePanel.toggle();
-	    sessionStorage.setItem("tagPaletteOpen", tagPalettePanel.cfg.collapsed ? "no":"yes");
+	    localStorage.setItem("tagPaletteOpen", tagPalettePanel.cfg.collapsed ? "no":"yes");
 	});
 	var sbLink = addToggler($("#selection-box-title"), iconClass, function() {
 	    selectionBoxPanel.toggle();
-	    sessionStorage.setItem("selectionBoxOpen", selectionBoxPanel.cfg.collapsed ? "no":"yes");
+	    localStorage.setItem("selectionBoxOpen", selectionBoxPanel.cfg.collapsed ? "no":"yes");
 	});
 	var fbLink = addToggler($("#file-box-title"), iconClass, function() {
 	    fileBoxPanel.toggle();
-	    sessionStorage.setItem("fileBoxOpen", fileBoxPanel.cfg.collapsed ? "no":"yes");
+	    localStorage.setItem("fileBoxOpen", fileBoxPanel.cfg.collapsed ? "no":"yes");
 	});
 	
-	if (sessionStorage.getItem("bookmarkOpen") === "no")
+	if (localStorage.getItem("bookmarkOpen") === "no")
 	    bmLink.trigger("click");
-	if (sessionStorage.getItem("tagPaletteOpen") === "no")
+	if (localStorage.getItem("tagPaletteOpen") === "no")
 	    tpLink.trigger("click");
-	if (sessionStorage.getItem("selectionBoxPanel") === "no")
+	if (localStorage.getItem("selectionBoxPanel") === "no")
 	    sbLink.trigger("click");
-	if (sessionStorage.getItem("fileBoxOpen") === "no")
+	if (localStorage.getItem("fileBoxOpen") === "no")
 	    fbLink.trigger("click");
 }
 
