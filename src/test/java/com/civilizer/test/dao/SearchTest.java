@@ -114,16 +114,38 @@ public class SearchTest extends DaoTest {
           final SearchParams.Keyword kw = new SearchParams.Keyword(word, false);
           assertEquals(false, kw.isWholeWord());
           assertEquals(true, kw.isValid());
-          final String pattern = SearchQueryCreator.getPatternFromKeyword(kw);
+          final Pair<String, Character> tmp = SearchQueryCreator.getPatternFromKeyword(kw);
+          final String pattern = tmp.getFirst();
           assertEquals(pattern, "%My keyword%");
+          assertEquals(true, tmp.getSecond() == 0);
       }
       {
           final String word = "hello/w";
           final SearchParams.Keyword kw = new SearchParams.Keyword(word, false);
           assertEquals(true, kw.isWholeWord());
           assertEquals(true, kw.isValid());
-          final String pattern = SearchQueryCreator.getPatternFromKeyword(kw);
+          final Pair<String, Character> tmp = SearchQueryCreator.getPatternFromKeyword(kw);
+          final String pattern = tmp.getFirst();
           assertEquals(pattern, "hello");
+          assertEquals(true, tmp.getSecond() == 0);
+      }
+      {
+          final String word = "with_underscore";
+          final SearchParams.Keyword kw = new SearchParams.Keyword(word, false);
+          assertEquals(true, kw.isValid());
+          final Pair<String, Character> tmp = SearchQueryCreator.getPatternFromKeyword(kw);
+          final String pattern = tmp.getFirst();          
+          assertEquals(pattern, "%with!_underscore%");
+          assertEquals(true, tmp.getSecond() == '!');
+      }
+      {
+          final String word = "with%percent";
+          final SearchParams.Keyword kw = new SearchParams.Keyword(word, false);
+          assertEquals(true, kw.isValid());
+          final Pair<String, Character> tmp = SearchQueryCreator.getPatternFromKeyword(kw);
+          final String pattern = tmp.getFirst();          
+          assertEquals(pattern, "%with!%percent%");
+          assertEquals(true, tmp.getSecond() == '!');
       }
     }
     

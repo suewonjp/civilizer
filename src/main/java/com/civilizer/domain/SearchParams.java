@@ -119,11 +119,14 @@ public final class SearchParams implements Serializable {
 			
 			final boolean hasUnderscore = (word.indexOf('_') != -1);
 			final boolean hasPercent = (word.indexOf('%') != -1);
-			char escapeChar = ' ';
+			char escapeChar = 0;
 			
 			if (hasUnderscore || hasPercent) {
+			    // Find out a proper escape character satisfying one condition:
+			    //   The character should not be included in the given word.
 				for (int ascii=33; ascii<127; ++ascii) {
 					if (ascii == '_' || ascii == '%' || ascii=='?' || ascii=='*'|| ascii=='\'' || ascii=='\"') {
+					    // These characters are not suitable.
 						continue;
 					}
 					if (word.indexOf(ascii) == -1) {

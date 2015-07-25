@@ -14,16 +14,19 @@ import com.civilizer.utils.Pair;
 
 public final class SearchQueryCreator {
 	
-    public static String getPatternFromKeyword(SearchParams.Keyword keyword) {
+    public static Pair<String, Character> getPatternFromKeyword(SearchParams.Keyword keyword) {
+        // Escape ' (single quote) with '' if any.
         String word = keyword.getWord().replace("'", "''");
-
+        char escapeChar = 0;
+        
         if (keyword.isTrivial()) {
             final Pair<String, Character> tmp =
-                SearchParams.Keyword.escapeSqlWildcardCharacters(word);
+                    SearchParams.Keyword.escapeSqlWildcardCharacters(word);
             word = "%" + tmp.getFirst() + "%";
+            escapeChar = tmp.getSecond();
         }
-
-        return word;
+        
+        return new Pair<String, Character>(word, escapeChar);
     }
     
     private static Junction buildQueryWithKeywords(List<Keyword> words, int target, boolean any) {
@@ -40,7 +43,9 @@ public final class SearchQueryCreator {
     			Restrictions.disjunction() : Restrictions.conjunction();
     			
 		for (SearchParams.Keyword w : words) {
-			final String pattern = getPatternFromKeyword(w);
+		    final Pair<String, Character> tmp = getPatternFromKeyword(w);
+			final String pattern = tmp.getFirst();
+			final char escapeChar = tmp.getSecond();
 			String sql = null;
 			
 			if (w.isTrivial()) {
@@ -50,6 +55,9 @@ public final class SearchQueryCreator {
                 else {
                     sql = "lower(" + column + ") like " + "'" + pattern.toLowerCase() + "'";
                 }
+				if (escapeChar != 0) {
+				    sql += " escape '" + escapeChar + "'";
+				}
             }
 			else {
 				if (w.isId()) {
