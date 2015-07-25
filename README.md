@@ -61,8 +61,14 @@ You need to install the following softwares on your system prior to running Civi
     - Tomcat (http://tomcat.apache.org)
     - Jetty (http://www.eclipse.org/jetty/)
     - Jetty Runner (http://eclipse.org/jetty/documentation/current/runner.html)
-
+    
 The most simplest way is using Jetty Runner:
+
+> [NOTE] There is no prebuilt binaries prepared for the moment.  
+> So you need to build the application from the source. 
+> Refer to the section of Compile/Test below for the procedure to build the application.
+> The following procedure will assume that you have built it somehow. (Sorry for the inconvenience...) 
+> Package files including prebuilt binaries will be out soon!.
 
 1. First, make sure you have installed JRE 7 or above on your system
 1. Download a latest copy of Jetty Runner
@@ -123,7 +129,7 @@ Using Maven, you can execute commands as follows at the root directory of the so
 - Localization is yet to be done.
 - Civilizer is currently provided as a **PRIVATE EDITION** only.
     - The edition does not support access by multiple users.
-    - DONT'T apply neither of the following usages with a PRIVATE edition of Civilizer:
+    - DON'T apply neither of the following usages with a PRIVATE edition of Civilizer:
         - Install and run the application on a public domain machine where anonymous Internet users can access.
         - Use the application over a public WIFI network or other insecure networks.
     - The main goal of the PRIVATE edition is helping A SINGLE USER manage his/her PRIVATE PERSONAL DATA under some relatively SECURED PRIVATE NETWORK ENVIRONMENT (e.g. home network).
