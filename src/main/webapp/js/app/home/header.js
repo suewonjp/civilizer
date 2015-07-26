@@ -72,6 +72,14 @@ function showAboutDialog() {
     dlg.show();
 }
 
+function showImportDataDialog() {
+    
+}
+
+function showExportDataDialog() {
+    
+}
+
 function showProfileDialog() {
     var dlg = PF("userProfileDlg");
     var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);

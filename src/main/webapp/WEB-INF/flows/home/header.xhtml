@@ -65,6 +65,8 @@
         <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
         <p:menu id="user-menu" overlay="true" triggerEvent="mouseenter" trigger="user-menu-trigger" my="right top" at="right bottom">
             <p:menuitem value="#{msg['about_app']}" onclick="showAboutDialog()" icon="fa fa-university"/>
+            <p:menuitem value="#{msg['import_data']}" onclick="showImportDataDialog()" icon="fa fa-upload"/>
+            <p:menuitem value="#{msg['export_data']}" onclick="showExportDataDialog()" icon="fa fa-download"/>
             <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog()" icon="fa fa-edit"/>
             <p:separator />
             <p:menuitem value="#{msg['sign_out']}" onclick="confirmSignout()" icon="fa fa-sign-out"/>
