@@ -1,8 +1,21 @@
 package com.civilizer.utils;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 public final class FsUtil {
     
@@ -41,6 +54,135 @@ public final class FsUtil {
     public static void createUnexistingDirectory(File dir) {
         if (! dir.isDirectory()) {
             dir.mkdir();
+        }
+    }
+    
+    public static boolean exists(String path) {
+        return new File(path).exists();
+    }
+    
+    public static int compress(ZipOutputStream zipOut, InputStream st, String entryName) throws IOException {
+        final int tmpBufSize = 1024;
+        final byte[] tmpBuf = new byte[tmpBufSize];
+        int inputCount = 0;
+        
+        final ZipEntry ze = new ZipEntry(entryName);
+        zipOut.putNextEntry(ze);
+        int count = 0;
+
+        while ((count = st.read(tmpBuf, 0, tmpBufSize)) != -1) {
+            zipOut.write(tmpBuf, 0, count);
+            inputCount += count;
+        }
+            
+        return inputCount;
+    }
+
+    public static int compress(ZipOutputStream zipOut, byte[] data, String entryName) throws IOException {
+        int inputCount = 0;
+        try (final ByteArrayInputStream st = new ByteArrayInputStream(data)) {
+            inputCount = compress(zipOut, st, entryName);
+        }            
+        return inputCount;
+    }
+    
+    public static int compressFolder(String zipFilePath, String tgtPath) throws IOException {
+        int inputCount = 0;
+        
+        final File tgtFolder = new File(tgtPath);
+        assert tgtFolder.isAbsolute();
+        Collection<File> fileItems = FileUtils.listFilesAndDirs(
+                tgtFolder,
+                TrueFileFilter.INSTANCE,  // include all files
+                TrueFileFilter.INSTANCE   // include all sub directories
+        );
+        
+        final boolean unixConvention = true;
+                
+        try (final FileOutputStream dst = new FileOutputStream(zipFilePath);
+                final ZipOutputStream zipOut = new ZipOutputStream(dst)) {
+            tgtPath = FilenameUtils.normalizeNoEndSeparator(tgtPath, unixConvention);
+            final int offset = tgtPath.length();
+            final String basePath = FilenameUtils.getName(tgtPath);
+            for (File f : fileItems) {
+                if (f.equals(tgtFolder)) continue;
+                String p = FilenameUtils.normalize(f.getAbsolutePath(), unixConvention);
+                p = basePath + p.substring(offset);
+                if (f.isDirectory()) {
+                    if (f.list().length == 0) { // empty folder
+                        // An empty folder should end with "/" to denote that.
+                        if (! p.endsWith("/"))
+                            p += "/";
+                        zipOut.putNextEntry(new ZipEntry(p));
+                    }
+                }
+                else { // file
+                    try (final FileInputStream fis = new FileInputStream(f.getAbsoluteFile());) {
+                        inputCount += FsUtil.compress(zipOut, fis, p);
+                    }
+                }
+            }
+        }
+        return inputCount;
+    }
+    
+    public static byte[] uncompress(ZipInputStream zipIn) throws IOException {
+        if (zipIn.getNextEntry() == null) {
+            return null;
+        }
+
+        final int tmpBufSize = 1024;
+        final byte[] tmpBuf = new byte[tmpBufSize];
+        byte[] output = null;
+        
+        try (final ByteArrayOutputStream st = new ByteArrayOutputStream();) {
+
+            int count = 0;
+            while ((count = zipIn.read(tmpBuf, 0, tmpBufSize)) != -1) {
+                st.write(tmpBuf, 0, count);
+            }
+            output = st.toByteArray();
+        }
+        
+        return output;
+    };
+    
+    public static String uncompressToFile(ZipInputStream zipIn, String parentPath) throws IOException {
+        final ZipEntry ze = zipIn.getNextEntry();
+        if (ze == null) {
+            return null;
+        }
+        
+        final int tmpBufSize = 1024;
+        final byte[] tmpBuf = new byte[tmpBufSize];
+        int count = 0;
+        final String path = FsUtil.toNativePath(parentPath + "/" + ze.getName());
+        
+        if (path.endsWith(File.separator)) {
+            // This is an empty folder.
+            FsUtil.createUnexistingDirectory(new File(path));
+            return path;
+        }
+        else {
+            FileUtils.touch(new File(path));
+        }
+        
+        try (final FileOutputStream fos = new FileOutputStream(path);
+                final BufferedOutputStream bos = new BufferedOutputStream(fos, tmpBufSize);) {
+            
+            while ((count = zipIn.read(tmpBuf, 0, tmpBufSize)) != -1) {
+                bos.write(tmpBuf, 0, count);
+            }
+        };
+        
+        return path;
+    };
+    
+    public static void uncompressToFolder(String zipFilePath, String parentPath) throws IOException {
+        try (final FileInputStream src = new FileInputStream(zipFilePath);
+                final ZipInputStream zipIn = new ZipInputStream(src);) {
+            
+            while (FsUtil.uncompressToFile(zipIn, parentPath) != null) {}
         }
     }
 

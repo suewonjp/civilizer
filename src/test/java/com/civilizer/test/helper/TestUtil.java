@@ -115,6 +115,10 @@ public final class TestUtil {
     public static String getFilesHomePath() {
     	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + "files";
     }
+
+    public static String getTempFolderPath() {
+        return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + ".temp";
+    }
     
     public static void touchTestFilesForFileBox(FileEntityDao fileEntityDao) {
     	final String filesHome = getFilesHomePath();
