@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -61,10 +62,47 @@ public final class FsUtil {
         return new File(path).exists();
     }
     
-    public static int compress(ZipOutputStream zipOut, InputStream st, String entryName) throws IOException {
+    public static boolean contentEquals(File file0, File file1) throws IOException {
+        if (file0 == null || file1 == null)
+            return false; // even if both are all nulls.
+        if (file0.isFile()) {
+            if (file1.isFile())
+                return FileUtils.contentEquals(file0, file1);
+            return false;
+        }
+        else if (file0.isDirectory()) {
+            if (file1.isFile())
+                return false;
+            
+            if (file0.list().length == 0 && file1.list().length == 0)
+                return true; // both are empty folders
+            
+            final Collection<File> fileItems0 = FileUtils.listFilesAndDirs(
+                    file0, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+            final Collection<File> fileItems1 = FileUtils.listFilesAndDirs(
+                    file1, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+            if (fileItems0.size() != fileItems1.size())
+                return false;
+            
+            Iterator<File> itr0 = fileItems0.iterator();
+            Iterator<File> itr1 = fileItems1.iterator();            
+            while (itr0.hasNext()) {
+                final File f0 = itr0.next();
+                final File f1 = itr1.next();
+                if (f0.isDirectory() && f1.isDirectory())
+                    continue;
+                if (! contentEquals(f0, f1))
+                    return false;
+            }
+            
+            return true;
+        }
+        return false;
+    }
+    
+    public static void compress(ZipOutputStream zipOut, InputStream st, String entryName) throws IOException {
         final int tmpBufSize = 1024;
         final byte[] tmpBuf = new byte[tmpBufSize];
-        int inputCount = 0;
         
         final ZipEntry ze = new ZipEntry(entryName);
         zipOut.putNextEntry(ze);
@@ -72,58 +110,65 @@ public final class FsUtil {
 
         while ((count = st.read(tmpBuf, 0, tmpBufSize)) != -1) {
             zipOut.write(tmpBuf, 0, count);
-            inputCount += count;
         }
-            
-        return inputCount;
     }
 
-    public static int compress(ZipOutputStream zipOut, byte[] data, String entryName) throws IOException {
-        int inputCount = 0;
+    public static void compress(ZipOutputStream zipOut, byte[] data, String entryName) throws IOException {
         try (final ByteArrayInputStream st = new ByteArrayInputStream(data)) {
-            inputCount = compress(zipOut, st, entryName);
+            compress(zipOut, st, entryName);
         }            
-        return inputCount;
     }
     
-    public static int compressFolder(String zipFilePath, String tgtPath) throws IOException {
-        int inputCount = 0;
+    public static void compress(ZipOutputStream zipOut, String tgtPath) throws IOException {
+        final File tgtFile = new File(tgtPath);
+        assert tgtFile.isAbsolute() && tgtFile.exists();
         
-        final File tgtFolder = new File(tgtPath);
-        assert tgtFolder.isAbsolute();
+        final boolean unixConvention = true;        
+        tgtPath = FilenameUtils.normalizeNoEndSeparator(tgtPath, unixConvention);
+        final int offset = tgtPath.length();
+        final String basePath = FilenameUtils.getName(tgtPath);
+
+        if (tgtFile.isFile()) {
+            try (final FileInputStream fis = new FileInputStream(tgtFile.getAbsoluteFile());) {
+                FsUtil.compress(zipOut, fis, basePath);
+            }
+            return;
+        }
+        
         Collection<File> fileItems = FileUtils.listFilesAndDirs(
-                tgtFolder,
+                tgtFile,
                 TrueFileFilter.INSTANCE,  // include all files
                 TrueFileFilter.INSTANCE   // include all sub directories
-        );
+                );
         
-        final boolean unixConvention = true;
-                
-        try (final FileOutputStream dst = new FileOutputStream(zipFilePath);
-                final ZipOutputStream zipOut = new ZipOutputStream(dst)) {
-            tgtPath = FilenameUtils.normalizeNoEndSeparator(tgtPath, unixConvention);
-            final int offset = tgtPath.length();
-            final String basePath = FilenameUtils.getName(tgtPath);
-            for (File f : fileItems) {
-                if (f.equals(tgtFolder)) continue;
-                String p = FilenameUtils.normalize(f.getAbsolutePath(), unixConvention);
-                p = basePath + p.substring(offset);
-                if (f.isDirectory()) {
-                    if (f.list().length == 0) { // empty folder
-                        // An empty folder should end with "/" to denote that.
-                        if (! p.endsWith("/"))
-                            p += "/";
-                        zipOut.putNextEntry(new ZipEntry(p));
-                    }
+        for (File f : fileItems) {
+            String p = FilenameUtils.normalize(f.getAbsolutePath(), unixConvention);
+            p = basePath + (p.length() > offset ? p.substring(offset) : "");
+            if (f.isDirectory()) {
+                if (f.list().length == 0) { // empty folder
+                    // An empty folder should end with "/" to denote that.
+                    if (! p.endsWith("/"))
+                        p += "/";
+                    zipOut.putNextEntry(new ZipEntry(p));
                 }
-                else { // file
-                    try (final FileInputStream fis = new FileInputStream(f.getAbsoluteFile());) {
-                        inputCount += FsUtil.compress(zipOut, fis, p);
-                    }
+            }
+            else { // file
+                try (final FileInputStream fis = new FileInputStream(f.getAbsoluteFile());) {
+                    FsUtil.compress(zipOut, fis, p);
                 }
             }
         }
-        return inputCount;
+    }
+    
+    public static void compress(String zipFilePath, String[] paths) throws IOException {
+        assert new File(zipFilePath).isFile();
+        try (final FileOutputStream dst = new FileOutputStream(zipFilePath);
+                final ZipOutputStream zipOut = new ZipOutputStream(dst)) {
+            
+            for (String p : paths) {
+                compress(zipOut, p);
+            }
+        }
     }
     
     public static byte[] uncompress(ZipInputStream zipIn) throws IOException {

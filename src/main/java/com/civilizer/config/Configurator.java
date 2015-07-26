@@ -129,6 +129,10 @@ public final class Configurator {
 		if (p.getProperty(AppOptions.DATA_SCRIPTS) == null) {
 		    p.setProperty(AppOptions.DATA_SCRIPTS, AppOptions.DEF_DATA_SCRIPTS);
 		}
+
+		if (p.getProperty(AppOptions.DB_FILE_SUFFIX) == null) {
+		    p.setProperty(AppOptions.DB_FILE_SUFFIX, AppOptions.DEF_DB_FILE_SUFFIX);
+		}
 	}
 	
 	private void setConstrainedOptions(Properties p) {

@@ -14,6 +14,7 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -104,6 +105,25 @@ public class FsUtilTest {
     }
     
     @Test
+    public void testMethod_contentEquals() {
+        final String tmpPath = TestUtil.getTempFolderPath();
+        final File files0 = new File(TestUtil.getFilesHomePath());
+        final File files1 = new File(tmpPath + File.separator + "files");
+        try {
+            FsUtil.createUnexistingDirectory(files1);
+            FileUtils.copyDirectory(files0, files1);
+            assertEquals(true, FsUtil.contentEquals(files0, files1));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+        finally {
+            FileUtils.deleteQuietly(new File(tmpPath));
+        }
+    }
+    
+    @Test
     public void testMethod_CompressUncompress() {
         final String inContent = TestUtil.randomString(TestUtil.getRandom(), 512, 1024);
         assertNotNull(inContent);
@@ -121,7 +141,7 @@ public class FsUtilTest {
             
             for (int i=0; i<inputStreams.length; ++i) {
                 final InputStream ins = inputStreams[i];
-                assertEquals(inContent.length(), FsUtil.compress(zipOut, ins, names[i]));
+                FsUtil.compress(zipOut, ins, names[i]);
             }
         }
         catch (IOException e) {
@@ -179,8 +199,9 @@ public class FsUtilTest {
             }
             
             // compress the file structure.
-            final String zipFilePath = TestUtil.getTempFolderPath() + File.separator + "tmp.zip";
-            FsUtil.compressFolder(zipFilePath, TestUtil.getTempFolderPath() + File.separator + "tmp-fs");
+            final String zipFilePath = tmpPath + File.separator + "tmp.zip";
+            FsUtil.compress(zipFilePath,
+                    new String[]{ tmpPath + File.separator + "tmp-fs" });
             assertEquals(true, FsUtil.exists(zipFilePath));
             
             FileUtils.deleteQuietly(new File(FsUtil.toNativePath(tmpPath+"/tmp-fs")));
@@ -209,9 +230,43 @@ public class FsUtilTest {
         }
     }
     
-//    @Test
-//    public void testImportExportUserData() {
-//    }
+    @Test
+    public void testImportExportUserData() {
+        final String tmpPath = TestUtil.getTempFolderPath();
+        final String[] paths = {
+            TestUtil.getDatabaseFilePath(),
+            TestUtil.getFilesHomePath(),
+        };
+        final String zipFilePath = tmpPath + File.separator + "tmp.zip";
+        
+        try {
+            // Export the user data.
+            FsUtil.createUnexistingDirectory(new File(tmpPath));
+            FsUtil.compress(zipFilePath, paths);
+            assertEquals(true, FsUtil.exists(zipFilePath));
+            
+            // Import the user data.
+            FsUtil.uncompressToFolder(zipFilePath, tmpPath);
+            for (String p : paths) {
+                if (p == null) continue;
+                final String path = tmpPath + File.separator + FilenameUtils.getName(p);
+                final File f = new File(path);
+                if (f.isFile()) {
+                    assertEquals(true, FileUtils.contentEquals(new File(paths[0]), f));
+                }
+                else if (f.isDirectory()) {
+                    assertEquals(true, FsUtil.contentEquals(new File(paths[1]), f));
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+        finally {
+            FileUtils.deleteQuietly(new File(tmpPath));
+        }
+    }
         
 }
 

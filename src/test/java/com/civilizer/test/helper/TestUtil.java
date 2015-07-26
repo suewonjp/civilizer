@@ -112,6 +112,10 @@ public final class TestUtil {
     	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
     }
     
+    public static String getDatabaseFilePath() {
+        return System.getProperty(AppOptions.DB_FILE_PREFIX) + System.getProperty(AppOptions.DB_FILE_SUFFIX);
+    }
+
     public static String getFilesHomePath() {
     	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + "files";
     }
