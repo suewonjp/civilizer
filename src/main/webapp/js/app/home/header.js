@@ -72,13 +72,60 @@ function showAboutDialog() {
     dlg.show();
 }
 
-function showImportDataDialog() {
+function createDataBrokerHelper() {
+    var helper = new Object();
+    var dlg;
+    var wzd;
     
+    function getDialog() {
+        return dlg || (dlg = PF('dataBrokerDlg'));
+    }
+
+    function getWizard() {
+        return wzd || (wzd = PF('dataBrokerWizard'));
+    }
+    
+    helper.showDialog = function() {
+        var w = getWizard();
+        w.loadStep(w.cfg.steps[0], false);
+        
+        var d = getDialog();
+        d.jq.find(".ui-wizard-nav-next").hide();
+        d.show();
+    }
+    
+    helper.hideDialog = function() {
+        getDialog().hide();
+    }
+    
+    helper.setMode = function(exportMode) {
+        $("#user-menu-form\\:data-broker-export-mode").val(exportMode);
+        if (exportMode)
+            getDialog().jq.find(".ui-dialog-title").text(MSG.export_data);
+        else
+            getDialog().jq.find(".ui-dialog-title").text(MSG.import_data);
+    }
+    
+    helper.onTypePw = function(pwInput) {
+        var nextBtn = dlg.jq.find(".ui-wizard-nav-next");
+        showOrHide(nextBtn, $(pwInput).val());
+    }
+    
+    helper.onClickNext = function(btn) {
+        wzd.next();
+        $(btn).hide();
+    }
+    
+    helper.onCompleteNext = function(xhr, status, args) {
+        if (args.wrongAuth) {
+            $("#user-menu-form\\:dbw-pw").effect("shake");
+        }
+    }
+    
+    return helper;
 }
 
-function showExportDataDialog() {
-    
-}
+var dataBrokerHelper = createDataBrokerHelper();
 
 function showProfileDialog() {
     var dlg = PF("userProfileDlg");

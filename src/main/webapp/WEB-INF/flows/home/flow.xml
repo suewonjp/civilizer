@@ -7,6 +7,7 @@
     
     <var name="customParams" class="com.civilizer.web.view.ParameterBean"/>
     <var name="userProfileBean" class="com.civilizer.web.view.UserProfileBean"/>
+    <var name="dataBrokerBean" class="com.civilizer.web.view.DataBrokerBean"/>
     
     <on-start>
         <evaluate expression="mainController.newFragmentListBeans()" result="flowScope.fragmentListBeans"/>

@@ -25,7 +25,7 @@
         <security:remember-me key="remember-me-key"/>
     </security:http>
     
-	<security:authentication-manager>
+	<security:authentication-manager erase-credentials="false">
 		<security:authentication-provider user-service-ref="cvz-user-service">
 			<security:password-encoder ref="encoder" />
 <!-- 			<security:user-service> -->
