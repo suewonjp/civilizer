@@ -72,7 +72,7 @@ function showAboutDialog() {
     dlg.show();
 }
 
-function createDataBrokerHelper() {
+function createDataBrokerController() {
     var helper = new Object();
     var dlg;
     var wzd;
@@ -125,7 +125,7 @@ function createDataBrokerHelper() {
     return helper;
 }
 
-var dataBrokerHelper = createDataBrokerHelper();
+var DBC = createDataBrokerController();
 
 function showProfileDialog() {
     var dlg = PF("userProfileDlg");

@@ -65,8 +65,8 @@
         <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
         <p:menu id="user-menu" overlay="true" triggerEvent="mouseenter" trigger="user-menu-trigger" my="right top" at="right bottom">
             <p:menuitem value="#{msg['about_app']}" onclick="showAboutDialog()" icon="fa fa-university"/>
-            <p:menuitem value="#{msg['import_data']}" process="data-broker-export-mode" onclick="dataBrokerHelper.setMode(false)" oncomplete="dataBrokerHelper.showDialog()" icon="fa fa-upload"/>
-            <p:menuitem value="#{msg['export_data']}" process="data-broker-export-mode" onclick="dataBrokerHelper.setMode(true)" oncomplete="dataBrokerHelper.showDialog()" icon="fa fa-download"/>
+            <p:menuitem value="#{msg['import_data']}" process="data-broker-export-mode" onclick="DBC.setMode(false)" oncomplete="DBC.showDialog()" icon="fa fa-upload"/>
+            <p:menuitem value="#{msg['export_data']}" process="data-broker-export-mode" onclick="DBC.setMode(true)" oncomplete="DBC.showDialog()" icon="fa fa-download"/>
             <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog()" icon="fa fa-edit"/>
             <p:separator />
             <p:menuitem value="#{msg['sign_out']}" onclick="confirmSignout()" icon="fa fa-sign-out"/>
@@ -93,7 +93,7 @@
                     <p:panel header="type your password">
                         <h:panelGrid columns="2" cellpadding="5">
                             <span class="fa fa-key"></span>
-                            <p:password id="dbw-pw" onkeyup="dataBrokerHelper.onTypePw(this)" value="#{dataBrokerBean.password}" required="false"/>
+                            <p:password id="dbw-pw" onkeyup="DBC.onTypePw(this)" value="#{dataBrokerBean.password}" required="false"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -103,7 +103,7 @@
                 </p:tab>
                 <p:tab id="confirm-import-step">
                     <p:panel header="data import success">
-                        <p:commandButton value="Done!" onclick="dataBrokerHelper.hideDialog()" icon="fa fa-thumbs-o-up"/>
+                        <p:commandButton value="Done!" onclick="DBC.hideDialog()" icon="fa fa-thumbs-o-up"/>
                     </p:panel>
                 </p:tab>
                 <p:tab id="download-step">
@@ -112,13 +112,13 @@
                 </p:tab>
                 <p:tab id="confirm-export-step">
                     <p:panel header="data export success">
-                        <p:commandButton value="Done!" onclick="dataBrokerHelper.hideDialog()" icon="fa fa-thumbs-o-up"/>
+                        <p:commandButton value="Done!" onclick="DBC.hideDialog()" icon="fa fa-thumbs-o-up"/>
                     </p:panel>
                 </p:tab>
             </p:wizard>
 
-            <p:commandButton onclick="dataBrokerHelper.onClickNext(this)" actionListener="#{dataBrokerBean.checkAuth()}" process="@this"
-                oncomplete="dataBrokerHelper.onCompleteNext(xhr, status, args)" styleClass="ui-wizard-nav-next" icon="fa fa-hand-o-right"/>
+            <p:commandButton onclick="DBC.onClickNext(this)" actionListener="#{dataBrokerBean.checkAuth()}" process="@this"
+                oncomplete="DBC.onCompleteNext(xhr, status, args)" styleClass="ui-wizard-nav-next" icon="fa fa-hand-o-right"/>
         </p:dialog>
         
         <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
