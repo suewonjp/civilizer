@@ -88,12 +88,12 @@
         <p:dialog id="data-broker-dlg" widgetVar="dataBrokerDlg" header="#{msg['export_data']}" width="360px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
             <h:inputHidden id="data-broker-export-mode" value="#{dataBrokerBean.exportMode}"/>
 
-            <p:wizard widgetVar="dataBrokerWizard" flowListener="#{dataBrokerBean.onDataExportFlow}" showNavBar="false">
+            <p:wizard widgetVar="dataBrokerWizard" flowListener="#{dataBrokerBean.onDataExportFlow}" showStepStatus="false" showNavBar="false">
                 <p:tab id="auth-step">
                     <p:panel header="type your password">
                         <h:panelGrid columns="2" cellpadding="5">
                             <span class="fa fa-key"></span>
-                            <p:password id="dbw-pw" onkeyup="DBC.onTypePw(this)" value="#{dataBrokerBean.password}" required="false"/>
+                            <p:password id="dbw-pw" onkeyup="DBC.onTypePw(this, event)" value="#{dataBrokerBean.password}" required="false"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -102,8 +102,16 @@
                     </p:panel>
                 </p:tab>
                 <p:tab id="confirm-import-step">
-                    <p:panel header="data import success">
+                    <p:panel header="success">
                         <p:commandButton value="Done!" onclick="DBC.hideDialog()" icon="fa fa-thumbs-o-up"/>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="predownload-step">
+                    <p:panel header="wait...">
+                        <span style="margin-left:40%" class="fa fa-spinner fa-spin fa-2x"></span>
+                        <p:remoteCommand name="requestExportDataFile" process="@this"
+                            actionListener="#{dataBrokerBean.packExportData()}"
+                            oncomplete="DBC.onExportDataReady(xhr, status, args)"/>
                     </p:panel>
                 </p:tab>
                 <p:tab id="download-step">
@@ -111,13 +119,13 @@
                     </p:panel>
                 </p:tab>
                 <p:tab id="confirm-export-step">
-                    <p:panel header="data export success">
+                    <p:panel header="success">
                         <p:commandButton value="Done!" onclick="DBC.hideDialog()" icon="fa fa-thumbs-o-up"/>
                     </p:panel>
                 </p:tab>
             </p:wizard>
 
-            <p:commandButton onclick="DBC.onClickNext(this)" actionListener="#{dataBrokerBean.checkAuth()}" process="@this"
+            <p:commandButton onclick="DBC.onClickNext(this)" actionListener="#{dataBrokerBean.checkNext()}" process="@this"
                 oncomplete="DBC.onCompleteNext(xhr, status, args)" styleClass="ui-wizard-nav-next" icon="fa fa-hand-o-right"/>
         </p:dialog>
         

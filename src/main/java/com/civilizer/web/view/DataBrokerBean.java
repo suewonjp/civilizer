@@ -12,9 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SuppressWarnings("serial")
 public class DataBrokerBean implements Serializable {
     
+    private String curStep = "";
     private String password = "";
     private boolean exportMode;
-    private boolean wrongAuth;
+    private boolean authFailed;
     
     public String getPassword() {
         return password;
@@ -32,10 +33,36 @@ public class DataBrokerBean implements Serializable {
         this.exportMode = exportMode;
     }
     
-    public void checkAuth() {
-        if (wrongAuth)
-            RequestContext.getCurrentInstance().addCallbackParam("wrongAuth", true);
-        wrongAuth = false;
+    public void checkNext() {
+        if (curStep.equals("auth-step")) {
+            if (authFailed)
+                RequestContext.getCurrentInstance().addCallbackParam("authFailed", true);
+            authFailed = false;
+        }
+        else if (curStep.equals("predownload-step")) {
+            RequestContext.getCurrentInstance().addCallbackParam("exportReady", true);
+        }
+    }
+    
+//    private void importData() {
+//        
+//    }
+
+    private void exportData() throws Exception {
+        
+    }
+    
+    public void packExportData() {
+        if (curStep.equals("predownload-step")) {
+            boolean ok = true;
+            try {
+                exportData();
+            } catch (Exception e) {
+                e.printStackTrace();
+                ok = false;
+            }
+            RequestContext.getCurrentInstance().addCallbackParam("exportReady", ok);
+        }
     }
 
     public String onDataExportFlow(FlowEvent event) {
@@ -43,32 +70,38 @@ public class DataBrokerBean implements Serializable {
         final String newStep = event.getNewStep();
         
         if (oldStep.equals("auth-step") || newStep.equals("auth-step")) {
-            wrongAuth = false;
+            // Authentication step.
+            authFailed = false;
             if (password.isEmpty()) {
-                return "auth-step";
+                return (curStep = "auth-step");
             }
-            else {
+            else { // the password has been provided
                 final String pw = password;
                 password = "";
+                
                 final Authentication auth =SecurityContextHolder.getContext().getAuthentication();
                 final Object principal = auth.getPrincipal();
                 if (principal instanceof UserDetails) {
                     final UserDetails ud = (UserDetails) principal;
                     if (new BCryptPasswordEncoder().matches(pw, ud.getPassword()) == false) {
-                        wrongAuth = true;
-                        return "auth-step";
+                        // authentication failed...
+                        authFailed = true;
+                        return (curStep = "auth-step");
                     }
                 }
                 
-                return exportMode ? "download-step" : "upload-step";
+                return (curStep = exportMode ? "predownload-step" : "upload-step");
             }
         }
         else if (oldStep.equals("upload-step")) {
             // Import the uploaded data.
-            return "confirm-import-step";
+            return (curStep = "confirm-import-step");
+        }
+        else if (oldStep.equals("predownload-step")) {
+            return (curStep = "download-step");
         }
         else if (oldStep.equals("download-step")) {
-            return "confirm-export-step";
+            return (curStep = "confirm-export-step");
         }
 
         return oldStep;

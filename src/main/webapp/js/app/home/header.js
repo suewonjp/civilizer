@@ -106,9 +106,13 @@ function createDataBrokerController() {
             getDialog().jq.find(".ui-dialog-title").text(MSG.import_data);
     }
     
-    helper.onTypePw = function(pwInput) {
+    helper.onTypePw = function(pwInput, e) {
         var nextBtn = dlg.jq.find(".ui-wizard-nav-next");
-        showOrHide(nextBtn, $(pwInput).val());
+        if (event.which == $.ui.keyCode.ENTER) {
+            nextBtn.hide();
+        }
+        else
+            showOrHide(nextBtn, $(pwInput).val());
     }
     
     helper.onClickNext = function(btn) {
@@ -117,8 +121,17 @@ function createDataBrokerController() {
     }
     
     helper.onCompleteNext = function(xhr, status, args) {
-        if (args.wrongAuth) {
+        if (args.authFailed === true) {
             $("#user-menu-form\\:dbw-pw").effect("shake");
+        }
+        else if (args.exportReady === true) {
+            requestExportDataFile();
+        }
+    }
+    
+    helper.onExportDataReady = function(xhr, status, args) {
+        if (args.exportReady === true) { // success
+            wzd.next();
         }
     }
     
