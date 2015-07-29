@@ -54,7 +54,7 @@ public final class FsUtil {
     
     public static void createUnexistingDirectory(File dir) {
         if (! dir.isDirectory()) {
-            dir.mkdir();
+            dir.mkdirs();
         }
     }
     
