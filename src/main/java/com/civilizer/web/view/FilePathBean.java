@@ -103,7 +103,7 @@ public class FilePathBean implements Serializable {
 	}
 
 	public void check(String filesHomePath) {
-		final File f = new File(filesHomePath + File.separatorChar + fullPath);
+		final File f = new File(filesHomePath + File.separator + fullPath);
 		if (f.isDirectory()) {
 			folder = true;
 		}
@@ -113,7 +113,7 @@ public class FilePathBean implements Serializable {
 	}
 	
 	public File toFile(String filesHomePath) {
-		return new File(filesHomePath + File.separatorChar + fullPath);
+		return new File(filesHomePath + File.separator + fullPath);
 	}
 	
 	@Override

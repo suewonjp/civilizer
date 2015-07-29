@@ -68,7 +68,7 @@ public final class FileListBean implements Serializable {
 	public File createNewFolder(int parentFolderId, String name, String filesHomePath) {
 		final FilePathBean parentPathBean = getFilePathBean(parentFolderId);
 		final String parentPath = parentPathBean.getFullPath();
-		final String path = filesHomePath + File.separatorChar + parentPath + File.separatorChar + name;
+		final String path = filesHomePath + File.separator + parentPath + File.separator + name;
 		final File file = new File(path);
 		
 		if (file.isFile()) {
@@ -122,7 +122,7 @@ public final class FileListBean implements Serializable {
 		final String parentPath = folderPathBean.getFullPath();
 		
 		return parentPath.equals(File.separator) ?
-				File.separatorChar + leafName : parentPath + File.separatorChar + leafName;
+				File.separator + leafName : parentPath + File.separator + leafName;
 	}
 
 	public FilePathBean getFilePathBean(int index) {

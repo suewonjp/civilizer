@@ -117,7 +117,7 @@ public class WebFileBoxTest {
 		FilePathBean[] filePathBeans = pathTree.toDataArray(new FilePathBean[]{}, TreeNode.TraverseOrder.BREATH_FIRST);
 		assertEquals(dirs.size(), filePathBeans.length);
 		for (FilePathBean filePathBean : filePathBeans) {
-			assertEquals(true, dirs.contains(new File(filesHomePath + File.separatorChar + filePathBean.getFullPath())));
+			assertEquals(true, dirs.contains(new File(filesHomePath + File.separator + filePathBean.getFullPath())));
 //			System.out.println("***** " + filePathBean.getFullPath());
 		}
 		
@@ -128,7 +128,7 @@ public class WebFileBoxTest {
 		
 		filePathBeans = pathTree.toDataArray(new FilePathBean[]{}, TreeNode.TraverseOrder.BREATH_FIRST);
 		for (FilePathBean filePathBean : filePathBeans) {
-			assertEquals(true, new File(filesHomePath + File.separatorChar + filePathBean.getFullPath()).exists());
+			assertEquals(true, new File(filesHomePath + File.separator + filePathBean.getFullPath()).exists());
 //			System.out.println("***** " + filePathBean.getFullPath());
 		}
 	}
@@ -172,7 +172,7 @@ public class WebFileBoxTest {
 			assertEquals(true, newDir.isDirectory());
 			
 			try {
-				boolean contained = FileUtils.directoryContains(new File(filesHomePath+File.separatorChar+parentPath.getFullPath()), newDir);
+				boolean contained = FileUtils.directoryContains(new File(filesHomePath+File.separator+parentPath.getFullPath()), newDir);
 				assertEquals(true, contained);
 			} catch (IOException e1) {
 				e1.printStackTrace();

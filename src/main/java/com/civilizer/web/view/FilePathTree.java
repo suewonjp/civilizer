@@ -31,7 +31,7 @@ public class FilePathTree implements Serializable {
 		for (int i=1; i<names.length; ++i) {
 			parent = root.findDescendantWith(data);
 			name = names[i];
-			fullPath += File.separatorChar + name;
+			fullPath += File.separator + name;
 			data = new FilePathBean(name, fullPath);
 			if (parent != null && root.findDescendantWith(data) == null) {
 				parent.addChild(new DefaultTreeNode<FilePathBean>(data));

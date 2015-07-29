@@ -62,7 +62,7 @@ public class FileEntity implements Serializable {
 				tmp[tmp.length - 1] : "";
 		String parentPath = "";
 		for (int i=1; i<tmp.length-1; ++i) {
-			parentPath += File.separatorChar + tmp[i];
+			parentPath += File.separator + tmp[i];
 		}
 		return new Pair<String, String>(parentPath, name);
 	}

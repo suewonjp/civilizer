@@ -128,14 +128,14 @@ public final class TestUtil {
         if (System.getProperty(AppOptions.FILE_BOX_HOME) != null)
             return System.getProperty(AppOptions.FILE_BOX_HOME);
         assertNotNull(System.getProperty(AppOptions.PRIVATE_HOME_PATH));
-    	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + "files";
+    	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separator + "files";
     }
 
     public static String getTempFolderPath() {
         if (System.getProperty(AppOptions.TEMP_PATH) != null)
             return System.getProperty(AppOptions.TEMP_PATH);
         assertNotNull(System.getProperty(AppOptions.PRIVATE_HOME_PATH));
-        return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + ".temp";
+        return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separator + ".temp";
     }
     
     public static void touchTestFilesForFileBox(FileEntityDao fileEntityDao) {
