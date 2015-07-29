@@ -488,3 +488,22 @@
     text-decoration: line-through;
     font-weight: lighter;
 }
+
+#user-menu-form\:data-broker-dlg .ui-wizard-nav-next {
+    width:70px;
+    height:40px;
+}
+
+#user-menu-form\:data-broker-dlg .ui-wizard-nav-next .fa {
+    position:relative;
+    top:10px;
+}
+
+#user-menu-form\:data-broker-dlg a {
+    margin-left:40%;
+}
+
+#user-menu-form\:data-broker-dlg a:hover {
+    margin-left:40%;
+    color:highlight;
+}

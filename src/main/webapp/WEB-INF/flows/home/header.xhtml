@@ -92,7 +92,7 @@
                 <p:tab id="auth-step">
                     <p:panel header="type your password">
                         <h:panelGrid columns="2" cellpadding="5">
-                            <span class="fa fa-key"></span>
+                            <span class="fa fa-key fa-2x"></span>
                             <p:password id="dbw-pw" onkeyup="DBC.onTypePw(this, event)" value="#{dataBrokerBean.password}" required="false"/>
                         </h:panelGrid>
                     </p:panel>
@@ -106,16 +106,19 @@
                         <p:commandButton value="Done!" onclick="DBC.hideDialog()" icon="fa fa-thumbs-o-up"/>
                     </p:panel>
                 </p:tab>
-                <p:tab id="predownload-step">
+                <p:tab id="preexport-step">
                     <p:panel header="wait...">
                         <span style="margin-left:40%" class="fa fa-spinner fa-spin fa-2x"></span>
-                        <p:remoteCommand name="requestExportDataFile" process="@this"
-                            actionListener="#{dataBrokerBean.packExportData()}"
-                            oncomplete="DBC.onExportDataReady(xhr, status, args)"/>
+<!--                         <p:remoteCommand name="requestExportDataFile" process="@this" -->
+<!--                             actionListener="#{dataBrokerBean.packExportData()}" -->
+<!--                             oncomplete="DBC.onExportDataReady(xhr, status, args)"/> -->
                     </p:panel>
                 </p:tab>
-                <p:tab id="download-step">
+                <p:tab id="export-step">
                     <p:panel header="download the file">
+                        <a href="exp/cvz-export.zip" onclick="DBC.onDownloadExportData()">
+                            <span class="fa fa-download fa-2x"></span>
+                        </a> 
                     </p:panel>
                 </p:tab>
                 <p:tab id="confirm-export-step">
@@ -125,8 +128,8 @@
                 </p:tab>
             </p:wizard>
 
-            <p:commandButton onclick="DBC.onClickNext(this)" actionListener="#{dataBrokerBean.checkNext()}" process="@this"
-                oncomplete="DBC.onCompleteNext(xhr, status, args)" styleClass="ui-wizard-nav-next" icon="fa fa-hand-o-right"/>
+            <p:commandButton styleClass="ui-wizard-nav-next" onclick="DBC.onClickNext()" actionListener="#{dataBrokerBean.checkNext()}" process="@this"
+                oncomplete="DBC.onCompleteNext(xhr, status, args)" icon="fa fa-hand-o-right fa-2x"/>
         </p:dialog>
         
         <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">

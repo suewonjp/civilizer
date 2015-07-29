@@ -76,6 +76,7 @@ function createDataBrokerController() {
     var helper = new Object();
     var dlg;
     var wzd;
+    var nextBtn;
     
     function getDialog() {
         return dlg || (dlg = PF('dataBrokerDlg'));
@@ -85,13 +86,18 @@ function createDataBrokerController() {
         return wzd || (wzd = PF('dataBrokerWizard'));
     }
     
+    function getNextStepButton() {
+        return nextBtn || (nextBtn = getDialog().jq.find(".ui-wizard-nav-next"));
+    }
+    
     helper.showDialog = function() {
         var w = getWizard();
         w.loadStep(w.cfg.steps[0], false);
         
         var d = getDialog();
-        d.jq.find(".ui-wizard-nav-next").hide();
         d.show();
+
+        getNextStepButton().hide();
     }
     
     helper.hideDialog = function() {
@@ -107,32 +113,30 @@ function createDataBrokerController() {
     }
     
     helper.onTypePw = function(pwInput, e) {
-        var nextBtn = dlg.jq.find(".ui-wizard-nav-next");
+        var btn = getNextStepButton();
         if (event.which == $.ui.keyCode.ENTER) {
-            nextBtn.hide();
+            btn.hide();
         }
         else
-            showOrHide(nextBtn, $(pwInput).val());
+            showOrHide(btn, $(pwInput).val());
     }
     
-    helper.onClickNext = function(btn) {
+    helper.onClickNext = function() {
         wzd.next();
-        $(btn).hide();
+        nextBtn.hide();
     }
     
     helper.onCompleteNext = function(xhr, status, args) {
         if (args.authFailed === true) {
-            $("#user-menu-form\\:dbw-pw").effect("shake");
+            $("#user-menu-form\\:dbw-pw").effect("shake").focus();
         }
         else if (args.exportReady === true) {
-            requestExportDataFile();
+            wzd.next(); // preexport-step => export-step
         }
     }
     
-    helper.onExportDataReady = function(xhr, status, args) {
-        if (args.exportReady === true) { // success
-            wzd.next();
-        }
+    helper.onDownloadExportData = function() {
+        getNextStepButton().show();
     }
     
     return helper;

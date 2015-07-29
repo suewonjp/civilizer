@@ -29,33 +29,6 @@ public class DataBrokerBean implements Serializable {
     private boolean exportMode;
     private boolean authFailed;
     
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public boolean isExportMode() {
-        return exportMode;
-    }
-
-    public void setExportMode(boolean exportMode) {
-        this.exportMode = exportMode;
-    }
-    
-    public void checkNext() {
-        if (curStep.equals("auth-step")) {
-            if (authFailed)
-                RequestContext.getCurrentInstance().addCallbackParam("authFailed", true);
-            authFailed = false;
-        }
-        else if (curStep.equals("predownload-step")) {
-            RequestContext.getCurrentInstance().addCallbackParam("exportReady", true);
-        }
-    }
-    
     private static String[] getTargetPaths() {
         final String [] paths = {
                 System.getProperty(AppOptions.DB_FILE_PREFIX)+System.getProperty(AppOptions.DB_FILE_SUFFIX),
@@ -130,19 +103,33 @@ public class DataBrokerBean implements Serializable {
         return exportFilePath;
     }
     
-    public void packExportData() {
-        if (curStep.equals("predownload-step")) {
-            boolean ok = true;
-            try {
-                exportData();
-            } catch (Exception e) {
-                e.printStackTrace();
-                ok = false;
-            }
-            RequestContext.getCurrentInstance().addCallbackParam("exportReady", ok);
-        }
+    public String getPassword() {
+        return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public boolean isExportMode() {
+        return exportMode;
+    }
+
+    public void setExportMode(boolean exportMode) {
+        this.exportMode = exportMode;
+    }
+    
+    public void checkNext() {
+        if (curStep.equals("auth-step")) {
+            if (authFailed)
+                RequestContext.getCurrentInstance().addCallbackParam("authFailed", true);
+            authFailed = false;
+        }
+        else if (curStep.equals("preexport-step")) {
+            RequestContext.getCurrentInstance().addCallbackParam("exportReady", true);
+        }
+    }
+    
     public String onDataExportFlow(FlowEvent event) {
         final String oldStep = event.getOldStep();
         final String newStep = event.getNewStep();
@@ -168,17 +155,22 @@ public class DataBrokerBean implements Serializable {
                     }
                 }
                 
-                return (curStep = exportMode ? "predownload-step" : "upload-step");
+                return (curStep = exportMode ? "preexport-step" : "upload-step");
             }
         }
         else if (oldStep.equals("upload-step")) {
             // Import the uploaded data.
             return (curStep = "confirm-import-step");
         }
-        else if (oldStep.equals("predownload-step")) {
-            return (curStep = "download-step");
+        else if (oldStep.equals("preexport-step")) {
+            try {
+                exportData();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return (curStep = "export-step");
         }
-        else if (oldStep.equals("download-step")) {
+        else if (oldStep.equals("export-step")) {
             return (curStep = "confirm-export-step");
         }
 
