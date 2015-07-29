@@ -7,6 +7,7 @@ import java.io.Serializable;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -128,6 +129,9 @@ public class DataBrokerBean implements Serializable {
         else if (curStep.equals("preexport-step")) {
             RequestContext.getCurrentInstance().addCallbackParam("exportReady", true);
         }
+    }
+    
+    public void onFileUpload(FileUploadEvent event) {
     }
     
     public String onDataExportFlow(FlowEvent event) {

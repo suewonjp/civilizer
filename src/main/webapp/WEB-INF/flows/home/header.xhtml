@@ -85,7 +85,7 @@
             </p:panel>
         </p:dialog>
         
-        <p:dialog id="data-broker-dlg" widgetVar="dataBrokerDlg" header="#{msg['export_data']}" width="360px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+        <p:dialog id="data-broker-dlg" widgetVar="dataBrokerDlg" header="#{msg['export_data']}" width="460px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
             <h:inputHidden id="data-broker-export-mode" value="#{dataBrokerBean.exportMode}"/>
 
             <p:wizard widgetVar="dataBrokerWizard" flowListener="#{dataBrokerBean.onDataExportFlow}" showStepStatus="false" showNavBar="false">
@@ -93,12 +93,15 @@
                     <p:panel header="type your password">
                         <h:panelGrid columns="2" cellpadding="5">
                             <span class="fa fa-key fa-2x"></span>
-                            <p:password id="dbw-pw" onkeyup="DBC.onTypePw(this, event)" value="#{dataBrokerBean.password}" required="false"/>
+                            <p:password id="dbw-pw" onkeyup="DBC.onTypePw(this, event)"
+                                style="width:300px" value="#{dataBrokerBean.password}" required="false"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
                 <p:tab id="upload-step">
                     <p:panel header="upload file to import">
+                        <p:fileUpload fileUploadListener="#{dataBrokerBean.onFileUpload}"
+                            mode="advanced" auto="true"/>
                     </p:panel>
                 </p:tab>
                 <p:tab id="confirm-import-step">
