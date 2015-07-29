@@ -114,7 +114,19 @@ public final class Configurator {
 	}
 	
 	private void setUnspecifiedOptionsWithDefaultValues(Properties p) {
-		if (p.getProperty(AppOptions.DEV) == null) {
+	    if (p.getProperty(AppOptions.DB_FILE_PREFIX) == null) {
+	        p.setProperty(AppOptions.DB_FILE_PREFIX, AppOptions.DEF_DB_FILE_PREFIX);
+	    }
+
+        if (p.getProperty(AppOptions.DB_FILE_SUFFIX) == null) {
+            p.setProperty(AppOptions.DB_FILE_SUFFIX, AppOptions.DEF_DB_FILE_SUFFIX);
+        }
+		
+        if (p.getProperty(AppOptions.FILE_BOX_HOME) == null) {
+            p.setProperty(AppOptions.FILE_BOX_HOME, AppOptions.DEF_FILE_BOX_HOME);
+        }
+
+        if (p.getProperty(AppOptions.DEV) == null) {
 			p.setProperty(AppOptions.DEV, AppOptions.DEF_DEV);
 		}
 
@@ -130,8 +142,8 @@ public final class Configurator {
 		    p.setProperty(AppOptions.DATA_SCRIPTS, AppOptions.DEF_DATA_SCRIPTS);
 		}
 
-		if (p.getProperty(AppOptions.DB_FILE_SUFFIX) == null) {
-		    p.setProperty(AppOptions.DB_FILE_SUFFIX, AppOptions.DEF_DB_FILE_SUFFIX);
+		if (p.getProperty(AppOptions.TEMP_PATH) == null) {
+		    p.setProperty(AppOptions.TEMP_PATH, AppOptions.DEF_TEMP_PATH);
 		}
 	}
 	
@@ -158,14 +170,17 @@ public final class Configurator {
 		    	overrideOptionValue(AppOptions.DB_FILE_PREFIX, p);
 		    	overrideOptionValue(AppOptions.FILE_BOX_HOME, p);
 		    }
+
+		    setUnspecifiedOptionsWithDefaultValues(p);
 			
 		    // make sure the database file prefix is an absolute path
-		    setPathAbsolute(p, AppOptions.DB_FILE_PREFIX, privateHome, AppOptions.DEF_DB_FILE_PREFIX);
+		    setPathAbsolute(p, AppOptions.DB_FILE_PREFIX, privateHome);
 			
 			// make sure the file box folder path is absolute
-			setPathAbsolute(p, AppOptions.FILE_BOX_HOME, privateHome, AppOptions.DEF_FILE_BOX_HOME);
-			
-			setUnspecifiedOptionsWithDefaultValues(p);
+			setPathAbsolute(p, AppOptions.FILE_BOX_HOME, privateHome);
+
+			// make sure the temporary folder path is absolute
+			setPathAbsolute(p, AppOptions.TEMP_PATH, privateHome);
 			
 			// as a rule, some options are constrained with another option's value.
 			// they may be reset under some condition no matter how they have been set by the user.
@@ -191,13 +206,11 @@ public final class Configurator {
         }
 	}
 	
-	private void setPathAbsolute(Properties p, String key, File privateHome, String defValue) {
-		String srcPath = p.getProperty(key);
-		if (srcPath == null) {
-			logger.error("????? The key \"%s\" is NOT found! Use the default value of \"%s\"", key, defValue);
-			srcPath = defValue;
-		}
-		String absPath = FsUtil.getAbsolutePath(srcPath, privateHome.getAbsolutePath());
+	private void setPathAbsolute(Properties p, String key, File privateHome) {
+		final String srcPath = p.getProperty(key);
+		if (new File(srcPath).isAbsolute())
+		    return;
+		final String absPath = FsUtil.getAbsolutePath(srcPath, privateHome.getAbsolutePath());
 		p.setProperty(key, absPath);
 	}
 	

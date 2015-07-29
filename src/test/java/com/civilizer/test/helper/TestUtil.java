@@ -102,8 +102,14 @@ public final class TestUtil {
     	}
     }
     
+    public static String getPrivateHomePath(boolean unixConvention) {
+        final String path = System.getProperty("user.dir") +
+                (unixConvention ? "/test/private-home" : "\\test\\private-home");
+        return path;
+    }
+    
     public static void configure() {
-    	final String path = System.getProperty("user.dir") + "/test/private-home";
+    	final String path = getPrivateHomePath(true);
     	System.setProperty(AppOptions.PRIVATE_HOME_PATH, path);
     	new Configurator();
     }
@@ -113,14 +119,22 @@ public final class TestUtil {
     }
     
     public static String getDatabaseFilePath() {
+        assertNotNull(System.getProperty(AppOptions.DB_FILE_PREFIX));
+        assertNotNull(System.getProperty(AppOptions.DB_FILE_SUFFIX));
         return System.getProperty(AppOptions.DB_FILE_PREFIX) + System.getProperty(AppOptions.DB_FILE_SUFFIX);
     }
 
     public static String getFilesHomePath() {
+        if (System.getProperty(AppOptions.FILE_BOX_HOME) != null)
+            return System.getProperty(AppOptions.FILE_BOX_HOME);
+        assertNotNull(System.getProperty(AppOptions.PRIVATE_HOME_PATH));
     	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + "files";
     }
 
     public static String getTempFolderPath() {
+        if (System.getProperty(AppOptions.TEMP_PATH) != null)
+            return System.getProperty(AppOptions.TEMP_PATH);
+        assertNotNull(System.getProperty(AppOptions.PRIVATE_HOME_PATH));
         return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separatorChar + ".temp";
     }
     
