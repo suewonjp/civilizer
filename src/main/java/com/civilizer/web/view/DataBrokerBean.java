@@ -48,6 +48,10 @@ public class DataBrokerBean implements Serializable {
     public static String getImportFolderPath() {
         return System.getProperty(AppOptions.TEMP_PATH) + File.separator + importFolderName;
     }
+
+    public static String getImportFilePath() {
+        return getImportFolderPath() + File.separator + importFileName;
+    }
     
     public static void commitImportData(String uncompressPath) throws IOException, SecurityException {
         final String[] paths = getTargetPaths();
@@ -71,20 +75,16 @@ public class DataBrokerBean implements Serializable {
     
     public static String importData() throws IOException {
         final String importFolderPath = getImportFolderPath();
-        final File importFolder = new File(importFolderPath);
-        if (! importFolder.isDirectory()) {
-            throw new IOException("The import folder doesn't exist!");
-        }
+        final String importFilePath = getImportFilePath();
         
-        final File importFile =
-                new File(importFolder.getAbsolutePath()+File.separator+importFileName);
-        if (! importFile.isFile()) {
+        if (! new File(importFilePath).isFile()) {
             throw new IOException("Can't find a file to import!");
         }
         
         final String uncompressPath = importFolderPath + File.separator + "uncmp";
         
-        FsUtil.uncompressToFolder(importFile.getAbsolutePath(), uncompressPath);
+        // uncompress the imported file into the temporary folder.
+        FsUtil.uncompressToFolder(importFilePath, uncompressPath);
         
         return uncompressPath;
     }
@@ -132,6 +132,17 @@ public class DataBrokerBean implements Serializable {
     }
     
     public void onFileUpload(FileUploadEvent event) {
+        final String importFolderPath = getImportFolderPath();
+        final File importFolder = new File(importFolderPath);
+        if (! importFolder.isDirectory()) {
+            FsUtil.createUnexistingDirectory(importFolder);
+        }
+        final String importFilePath = getImportFilePath();
+        try {
+            event.getFile().write(importFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public String onDataExportFlow(FlowEvent event) {
@@ -164,7 +175,15 @@ public class DataBrokerBean implements Serializable {
         }
         else if (oldStep.equals("upload-step")) {
             // Import the uploaded data.
-            return (curStep = "confirm-import-step");
+            curStep = "import-error-step";
+            try {
+                final String uncompressPath = importData();
+                commitImportData(uncompressPath);
+                curStep = "confirm-import-step";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return curStep;
         }
         else if (oldStep.equals("preexport-step")) {
             try {

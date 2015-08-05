@@ -101,12 +101,18 @@
                 <p:tab id="upload-step">
                     <p:panel header="upload file to import">
                         <p:fileUpload fileUploadListener="#{dataBrokerBean.onFileUpload}"
-                            mode="advanced" auto="true"/>
+                            mode="advanced" auto="true"
+                            oncomplete="DBC.onFileUpload()"/>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="import-error-step">
+                    <p:panel header="failed!">
+                        <p:commandButton value="Done!" onclick="DBC.hideDialog()" icon="fa fa-thumbs-o-up"/>
                     </p:panel>
                 </p:tab>
                 <p:tab id="confirm-import-step">
                     <p:panel header="success">
-                        <p:commandButton value="Done!" onclick="DBC.hideDialog()" icon="fa fa-thumbs-o-up"/>
+                        <p:commandButton value="Done!" oncomplete="location.replace('home')" onclick="DBC.hideDialog()" icon="fa fa-thumbs-o-up"/>
                     </p:panel>
                 </p:tab>
                 <p:tab id="preexport-step">
@@ -121,7 +127,7 @@
                     <p:panel header="download the file">
                         <a href="exp/cvz-export.zip" onclick="DBC.onDownloadExportData()">
                             <span class="fa fa-download fa-2x"></span>
-                        </a> 
+                        </a>
                     </p:panel>
                 </p:tab>
                 <p:tab id="confirm-export-step">

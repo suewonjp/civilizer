@@ -73,7 +73,7 @@ function showAboutDialog() {
 }
 
 function createDataBrokerController() {
-    var helper = new Object();
+    var ctrr = new Object();
     var dlg;
     var wzd;
     var nextBtn;
@@ -90,7 +90,7 @@ function createDataBrokerController() {
         return nextBtn || (nextBtn = getDialog().jq.find(".ui-wizard-nav-next"));
     }
     
-    helper.showDialog = function() {
+    ctrr.showDialog = function() {
         var w = getWizard();
         w.loadStep(w.cfg.steps[0], false);
         
@@ -100,11 +100,11 @@ function createDataBrokerController() {
         getNextStepButton().hide();
     }
     
-    helper.hideDialog = function() {
+    ctrr.hideDialog = function() {
         getDialog().hide();
     }
     
-    helper.setMode = function(exportMode) {
+    ctrr.setMode = function(exportMode) {
         $("#user-menu-form\\:data-broker-export-mode").val(exportMode);
         if (exportMode)
             getDialog().jq.find(".ui-dialog-title").text(MSG.export_data);
@@ -112,7 +112,7 @@ function createDataBrokerController() {
             getDialog().jq.find(".ui-dialog-title").text(MSG.import_data);
     }
     
-    helper.onTypePw = function(pwInput, e) {
+    ctrr.onTypePw = function(pwInput, e) {
         var btn = getNextStepButton();
         if (event.which == $.ui.keyCode.ENTER) {
             btn.hide();
@@ -121,12 +121,12 @@ function createDataBrokerController() {
             showOrHide(btn, $(pwInput).val());
     }
     
-    helper.onClickNext = function() {
+    ctrr.onClickNext = function() {
         wzd.next();
         nextBtn.hide();
     }
     
-    helper.onCompleteNext = function(xhr, status, args) {
+    ctrr.onCompleteNext = function(xhr, status, args) {
         if (args.authFailed === true) {
             $("#user-menu-form\\:dbw-pw").effect("shake").focus();
         }
@@ -135,11 +135,15 @@ function createDataBrokerController() {
         }
     }
     
-    helper.onDownloadExportData = function() {
+    ctrr.onFileUpload = function() {
+        wzd.next(); // upload-step => import-step
+    }
+    
+    ctrr.onDownloadExportData = function() {
         getNextStepButton().show();
     }
     
-    return helper;
+    return ctrr;
 }
 
 var DBC = createDataBrokerController();
