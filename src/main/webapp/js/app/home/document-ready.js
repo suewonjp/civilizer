@@ -40,6 +40,10 @@ $(document).ready(function() {
     	// timeout for message display if any
     	$(".ui-messages-close").trigger("click");
     }, 15000);
+    
+    $(".rclick-disabled").bind("contextmenu", function(e) {
+        e.preventDefault(); 
+    });
 });
 
 $(window).load(function() {

@@ -104,6 +104,12 @@ function createDataBrokerController() {
         getDialog().hide();
     }
     
+    ctrr.onHide = function() {
+        if (wzd.currentStep == "confirm-import-step") {
+            location.replace('home');
+        }
+    }
+    
     ctrr.setMode = function(exportMode) {
         $("#user-menu-form\\:data-broker-export-mode").val(exportMode);
         if (exportMode)
