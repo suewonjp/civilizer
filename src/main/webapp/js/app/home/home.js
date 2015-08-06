@@ -570,8 +570,9 @@ function fetchFragmentsByTag(from, to) {
 		else if ($("#panel-toggler-2").prop("checked") == false) targetPanelId = 2;
 		else targetPanelId = 0;
 	}
-    $("#fragment-group-form\\:id-placeholder-for-panel").val(targetPanelId);
-    $("#panel-toggler-" + targetPanelId).prop("checked", true);
+//    $("#fragment-group-form\\:id-placeholder-for-panel").val(targetPanelId);
+	sessionStorage.setItem("panel-"+targetPanelId, "on");
+//    $("#panel-toggler-" + targetPanelId).prop("checked", true);
     $("#panel-activation-buttons").buttonset("refresh");
     filterByTag([ {name:"tagId", value:from.attr("_tid")}, {name:"panelId", value:targetPanelId} ]);
 }
@@ -821,14 +822,16 @@ function showSearchDialog(panelId, qsPhrase) {
 			}
 		}
 		if (hasSomeToSearch) {
-			searchFragments([{name:'panelId',value:panelId}]);
+//			searchFragments([{name:'panelId',value:panelId}]);
+		    searchFragmentsForPanel(panelId);
 		}
 	});
 	qsInput.keyup(function(event) {
 		// Quick search tab responds to the enter key
 		if (event.which == $.ui.keyCode.ENTER) {
 			if ($(this).val().trim()) {
-	            searchFragments([{name:'panelId',value:panelId}]);
+//	            searchFragments([{name:'panelId',value:panelId}]);
+			    searchFragmentsForPanel(panelId);
 			}
 		}
 	});
@@ -839,7 +842,8 @@ function searchWithHelpFromLastSearch(event, panelId, widget) {
 		var qsPhrase = $(widget).val().trim();
 		if (qsPhrase) {
 			$("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
-            searchFragments([{name:'panelId',value:panelId}]);
+//            searchFragments([{name:'panelId',value:panelId}]);
+			searchFragmentsForPanel(panelId);
 		}
 	}
 }
@@ -850,7 +854,13 @@ function fetchFragments(panelId, fragmentIds) {
 		ids += fragmentIds[i] + " ";
 	}
 	$("#fragment-group-form\\:search-panel\\:quick-search-input").val(ids);
-	searchFragments([{name:'panelId',value:panelId}]);
+//	searchFragments([{name:'panelId',value:panelId}]);
+	searchFragmentsForPanel(panelId);
+}
+
+function searchFragmentsForPanel(panelId) {
+    sessionStorage.setItem("panel-"+panelId, "on");
+    searchFragments([{name:'panelId',value:panelId}]);
 }
 
 function makeSidebarTitleToggleable() {
