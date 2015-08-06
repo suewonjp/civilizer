@@ -11,20 +11,13 @@ function setupPanelActivationButtons() {
     if (activeCount === 0) {
         $("#panel-toggler-0").prop("checked", true);
     }
-    
-//    var phPanel = $("#fragment-group-form\\:id-placeholder-for-panel");
-//    var idSpecified = phPanel.val();
-//    if (idSpecified > -1) {
-//        $("#panel-toggler-" + idSpecified).prop("checked", true);
-//        phPanel.val(null);
-//    }
 
     $("#panel-activation-buttons").buttonset("refresh");
     
-    onPanelActivationChange(false);
+    onPanelActivationChange();
 }
 
-function onPanelActivationChange(explicit) {
+function onPanelActivationChange() {
     var panels = [ $("#fragment-panel-0"), $("#fragment-panel-1"), $("#fragment-panel-2") ];
     var activeCount = 0;
     
@@ -40,10 +33,6 @@ function onPanelActivationChange(explicit) {
         else {
             panels[i].hide();
             sessionStorage.setItem('panel-' + i, 'off');
-            if (explicit) {
-                // Panel turned off explicitly by the user.
-//                document.forms["panel-button-form"]["panel-button-form:id-cleaner"].click();
-            }
         }
     }
     

@@ -570,9 +570,7 @@ function fetchFragmentsByTag(from, to) {
 		else if ($("#panel-toggler-2").prop("checked") == false) targetPanelId = 2;
 		else targetPanelId = 0;
 	}
-//    $("#fragment-group-form\\:id-placeholder-for-panel").val(targetPanelId);
 	sessionStorage.setItem("panel-"+targetPanelId, "on");
-//    $("#panel-toggler-" + targetPanelId).prop("checked", true);
     $("#panel-activation-buttons").buttonset("refresh");
     filterByTag([ {name:"tagId", value:from.attr("_tid")}, {name:"panelId", value:targetPanelId} ]);
 }

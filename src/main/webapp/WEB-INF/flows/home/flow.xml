@@ -5,7 +5,6 @@
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
     start-state="home">
     
-<!--     <var name="customParams" class="com.civilizer.web.view.ParameterBean"/> -->
     <var name="userProfileBean" class="com.civilizer.web.view.UserProfileBean"/>
     <var name="dataBrokerBean" class="com.civilizer.web.view.DataBrokerBean"/>
     
@@ -130,7 +129,6 @@
         <transition on="search-fragments" to="home">
             <set name="requestScope.searchContextBean" value="flowScope.searchContextBean" />
             <evaluate expression="requestScope.searchContextBean.setPanelId(requestParameters.panelId)" />
-<!--             <evaluate expression="customParams.setPanelId(requestParameters.panelId)" /> -->
         </transition>
 
         <transition on="prev-fragment-page" to="home">
