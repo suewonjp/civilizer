@@ -228,23 +228,10 @@ public final class Tag implements Serializable {
     }
     
     public static boolean containsName(Collection<Tag> tags, String name) {
-    	if (name != null && name.isEmpty()) {
-    		name = null;
-    	}
-    	if (tags != null && tags.isEmpty()) {
-    		tags = null;
-    	}
-    	
-    	boolean nameNull = (name == null);
-    	if (nameNull ^ (tags == null)) {
-    		return false;
-    	}
-    	else {
-    		if (nameNull) {
-    			return true;
-    		}    		
-    	}
-    	
+        if (tags == null || tags.isEmpty()) {
+            return false;
+        }
+        
     	for (Tag t : tags) {
     		if (t.getTagName().equals(name)) {
     			return true;

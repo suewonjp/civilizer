@@ -26,7 +26,7 @@ public class DomainTagTest {
 	@SuppressWarnings("unchecked")
     private static void buildTagHierarchy(Collection<Tag> tags) {
 	    assertNotNull(tags);
-	    assertFalse(tags.isEmpty());
+	    assertEquals(false, tags.isEmpty());
 	    
 	    Random r = TestUtil.getRandom();
 	    final int depthCount = 2 + r.nextInt(3);
@@ -38,7 +38,7 @@ public class DomainTagTest {
 	    
 	    for (Tag t : tags) {
 	        int d = r.nextInt(depthCount);
-	        assertTrue(0 <= d && d < depthCount);
+	        assertEquals(true, 0 <= d && d < depthCount);
 	        ((List<Tag>) tagsPerDepth[d]).add(t);
 	    }
 	    
@@ -55,7 +55,7 @@ public class DomainTagTest {
 	            if (r.nextBoolean()) {
 	                parent.addChild(child);
 	                boolean removed = childTags.remove(child);
-	                assertTrue(removed);
+	                assertEquals(true, removed);
 	            }
 	            pi = (pi + 1) % parentTags.size();
 	        }
@@ -67,7 +67,7 @@ public class DomainTagTest {
             for (Tag p : parentTags) {
                 Collection<Tag> children = p.getChildren();
                 for (Tag c : children) {
-                    assertTrue(childTags.contains(c));                    
+                    assertEquals(true, childTags.contains(c));                    
                 }
             }
 	    }
@@ -104,7 +104,7 @@ public class DomainTagTest {
 
 	@Test
 	public void testIDsAreValid() {
-		assertFalse(tags.isEmpty());
+		assertEquals(false, tags.isEmpty());
 		
 		for (Tag t : tags) {
 			assertNotNull(t.getId());
@@ -147,7 +147,7 @@ public class DomainTagTest {
 	
 	@Test
 	public void testMethod_getTagNamesFrom() {
-        assertFalse(tags.isEmpty());
+        assertEquals(false, tags.isEmpty());
         
         String actual = Tag.getTagNamesFrom(tags);
         Collection<String> nameList = buildTagNameList(tags);
@@ -161,7 +161,7 @@ public class DomainTagTest {
 	
 	@Test
 	public void testMethod_getTagNameCollectionFrom() {
-		assertFalse(tags.isEmpty());
+		assertEquals(false, tags.isEmpty());
 		
 		Collection<String> actualC = Tag.getTagNameCollectionFrom(tags);
 		Object[] actual = actualC.toArray();
@@ -177,49 +177,49 @@ public class DomainTagTest {
 		//--- test against edge conditions
 		final String delim = Tag.TAG_NAME_DELIMITER;
 		actualC = Tag.getTagNameCollectionFrom((String)null);
-		assertTrue(actualC != null && actualC.isEmpty());
+		assertEquals(true, actualC != null && actualC.isEmpty());
 		
 		actualC = Tag.getTagNameCollectionFrom("");
-		assertTrue(actualC != null && actualC.isEmpty());
+		assertEquals(true, actualC != null && actualC.isEmpty());
 
 		actualC = Tag.getTagNameCollectionFrom("  ");
-		assertTrue(actualC != null && actualC.isEmpty());
+		assertEquals(true, actualC != null && actualC.isEmpty());
 		
 		actualC = Tag.getTagNameCollectionFrom(delim);
-		assertTrue(actualC != null && actualC.isEmpty());
+		assertEquals(true, actualC != null && actualC.isEmpty());
 		
 		actualC = Tag.getTagNameCollectionFrom(delim+delim+delim);
-		assertTrue(actualC != null && actualC.isEmpty());
+		assertEquals(true, actualC != null && actualC.isEmpty());
 
 		actualC = Tag.getTagNameCollectionFrom(delim+" \t\n "+delim);
-		assertTrue(actualC != null && actualC.isEmpty());
+		assertEquals(true, actualC != null && actualC.isEmpty());
 		
 		actualC = Tag.getTagNameCollectionFrom("\t\n tag0  \n");
-		assertTrue(actualC != null && actualC.size() == 1);
+		assertEquals(true, actualC != null && actualC.size() == 1);
 		for (String s : actualC) {
 			assertEquals(s, "tag0");
 		}
 		
 		actualC = Tag.getTagNameCollectionFrom(delim+"tag0"+delim+delim);
-		assertTrue(actualC != null && actualC.size() == 1);
+		assertEquals(true, actualC != null && actualC.size() == 1);
 		for (String s : actualC) {
 			assertEquals(s, "tag0");
 		}
 
 		actualC = Tag.getTagNameCollectionFrom(delim+" \ttag0  "+delim+delim);
-		assertTrue(actualC != null && actualC.size() == 1);
+		assertEquals(true, actualC != null && actualC.size() == 1);
 		for (String s : actualC) {
 			assertEquals(s, "tag0");
 		}
 		
 		actualC = Tag.getTagNameCollectionFrom(delim+delim+delim+"tag0"+delim);
-		assertTrue(actualC != null && actualC.size() == 1);
+		assertEquals(true, actualC != null && actualC.size() == 1);
 		for (String s : actualC) {
 			assertEquals(s, "tag0");
 		}
 		
 		actualC = Tag.getTagNameCollectionFrom("tag0"+delim+delim+"tag1");
-		assertTrue(actualC != null && actualC.size() == 2);
+		assertEquals(true, actualC != null && actualC.size() == 2);
 		List<String> list = new ArrayList<String>(actualC);
 		assertEquals(list.get(0), "tag0");
 		assertEquals(list.get(1), "tag1");
@@ -227,12 +227,12 @@ public class DomainTagTest {
 		
 	@Test
 	public void testMethod_getTagFromName() {
-        assertFalse(tags.isEmpty());
+        assertEquals(false, tags.isEmpty());
         Random r = TestUtil.getRandom();
         
         // The method should return the existing Tag if it accepts the name of an existing one.
         int idx = r.nextInt(tags.size());
-        assertTrue(0 <= idx && idx < tags.size());
+        assertEquals(true, 0 <= idx && idx < tags.size());
         Tag expected = tags.get(idx);
         String name = expected.getTagName();
         Tag actual = Tag.getTagFromName(name, tags);
@@ -246,56 +246,46 @@ public class DomainTagTest {
 	
 	@Test
 	public void testMethod_containsId() {
-		assertFalse(tags.isEmpty());
+		assertEquals(false, tags.isEmpty());
 		boolean result = false;
 		Collection<Tag> emptyTagCollection = new ArrayList<Tag>();
 		long id = tags.get(0).getId();
 		
 		result = Tag.containsId(null, id);
-		assertFalse(result);
-		assertTrue(emptyTagCollection.isEmpty());
+		assertEquals(false, result);
+		assertEquals(true, emptyTagCollection.isEmpty());
 		result = Tag.containsId(emptyTagCollection, id);
-		assertFalse(result);
+		assertEquals(false, result);
 		
 		for (Tag t : tags) {
 			result = Tag.containsId(tags, t.getId());
-			assertTrue(result);
+			assertEquals(true, result);
 		}
 	}
 	
 	@Test
 	public void testMethod_containsName() {
-		assertFalse(tags.isEmpty());
-		boolean result = false;
+		assertEquals(false, Tag.containsName(null, null));
+		assertEquals(false, Tag.containsName(null, ""));
+
+		assertEquals(false, tags.isEmpty());
 		Collection<Tag> emptyTagCollection = new ArrayList<Tag>();
-		
-		result = Tag.containsName(null, null);
-		assertTrue(result);
-		assertTrue(emptyTagCollection.isEmpty());
-		result = Tag.containsName(emptyTagCollection, "");
-		assertTrue(result);
-		result = Tag.containsName(null, "");
-		assertTrue(result);
-		assertTrue(emptyTagCollection.isEmpty());
-		result = Tag.containsName(emptyTagCollection, null);
-		assertTrue(result);
-		
-		result = Tag.containsName(tags, "");
-		assertFalse(result);
-		result = Tag.containsName(null, tags.get(0).getTagName());
-		assertFalse(result);
-		result = Tag.containsName(emptyTagCollection, tags.get(0).getTagName());
-		assertFalse(result);
+		assertEquals(true, emptyTagCollection.isEmpty());
+		assertEquals(false, Tag.containsName(emptyTagCollection, ""));
+		assertEquals(false, Tag.containsName(emptyTagCollection, null));
+		assertEquals(false, Tag.containsName(emptyTagCollection, tags.get(0).getTagName()));
+
+		assertEquals(false, Tag.containsName(tags, null));
+		assertEquals(false, Tag.containsName(tags, ""));
 		
 		for (Tag t : tags) {
-			result = Tag.containsName(tags, t.getTagName());
-			assertTrue(result);
+			assertEquals(true, Tag.containsName(tags, t.getTagName()));
 		}
 	}
 	
 	@Test
 	public void testMethod_getTopParentTags() {
-	    assertFalse(tags.isEmpty());
+	    assertEquals(false, tags.isEmpty());
 	    
 	    // Edge cases
 	    Collection<Tag> topParents = null;
@@ -305,11 +295,11 @@ public class DomainTagTest {
 	    assertNull(topParents);
 	    
 	    topParents = Tag.getTopParentTags(tags);
-	    assertFalse(topParents.isEmpty());
+	    assertEquals(false, topParents.isEmpty());
 	    for (Tag t : tags) {
 	        Collection<Tag> children = t.getChildren();
 	        for (Tag c : children) {
-	            assertFalse(topParents.contains(c));
+	            assertEquals(false, topParents.contains(c));
 	        }
 	    }
 	}
