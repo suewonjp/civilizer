@@ -229,7 +229,7 @@ public final class Fragment implements Serializable {
         final int prime = 43;
         int result = prime + ((id == null) ? 0 : id.hashCode());
         return result;
-    }
+    }        
 
     @Override
     public boolean equals(Object obj) {
@@ -239,17 +239,13 @@ public final class Fragment implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Fragment other = (Fragment) obj;
         final Long id = getId();
-        final Long otherId = other.getId();
-        if (id == null) {
-            if (otherId != null) {
-                return false;
-            }
-        } else if (!id.equals(otherId)) {
-            return false;
-        }
-        return true;
+        final Long otherId = ((Fragment) obj).getId();
+        if (id == otherId)
+            return true;
+        if (id != null && id.equals(otherId))
+            return true;
+        return false;
     }
 
     @Override

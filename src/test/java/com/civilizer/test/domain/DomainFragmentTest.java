@@ -50,6 +50,40 @@ public class DomainFragmentTest {
 	}
 	
 	@Test
+    public void testEquality() {
+	    for (Fragment x : fragments) {
+	        // reflexive:
+	        // for any non-null reference value x, x.equals(x) should return true.
+	        assertEquals(true, x.equals(x));
+	        
+	        Fragment y = new Fragment();
+	        y.setId(x.getId());
+	        Fragment z = new Fragment();
+	        z.setId(x.getId());
+
+	        // symmetric:
+	        // for any non-null reference values x and y, x.equals(y) should return true if and only if y.equals(x) returns true.
+	        assertEquals(true, x.equals(y));
+	        assertEquals(true, y.equals(x));
+	        
+	        // transitive:
+	        // for any non-null reference values x, y, and z, if x.equals(y) returns true and y.equals(z) returns true, then x.equals(z) should return true.
+	        assertEquals(true, y.equals(z));
+	        assertEquals(true, x.equals(z));
+	        
+	        // consistent:
+	        // for any non-null reference values x and y, multiple invocations of x.equals(y) consistently return true or consistently return false, 
+	        // provided no information used in equals comparisons on the objects is modified.
+	        assertEquals(true, x.equals(y));
+	        assertEquals(true, x.equals(y));
+	        assertEquals(true, x.equals(y));
+
+	        //For any non-null reference value x, x.equals(null) should return false.
+	        assertEquals(false, x.equals(null));
+        }
+    }
+	
+	@Test
 	public void testMethod_getFragmentTitleCollectionFrom() {
 		assertFalse(fragments.isEmpty());
 		

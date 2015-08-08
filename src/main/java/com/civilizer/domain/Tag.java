@@ -299,17 +299,13 @@ public final class Tag implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Tag other = (Tag) obj;
         final Long id = getId();
-        final Long otherId = other.getId();
-        if (id == null) {
-            if (otherId != null) {
-                return false;
-            }
-        } else if (!id.equals(otherId)) {
-            return false;
-        }
-        return true;
+        final Long otherId = ((Tag) obj).getId();
+        if (id == otherId)
+            return true;
+        if (id != null && id.equals(otherId))
+            return true;
+        return false;
     }
 
     @Override
