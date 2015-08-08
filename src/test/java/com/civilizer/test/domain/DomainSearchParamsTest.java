@@ -220,6 +220,56 @@ public class DomainSearchParamsTest {
 	}
 	
 	@Test
+    public void testMethod_matchesTagName() {
+	    {
+	        final String words = "tag:tag";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(SearchParams.TARGET_TAG, keywords.getTarget());
+	        assertEquals(1, keywords.getWords().size());
+	        assertEquals(true, keywords.getWords().get(0).matchesTagName("my~Tag~"));
+	    }
+	    {
+            final String words = "tag:Tag000/wc";
+            final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+            assertEquals(1, keywords.getWords().size());
+            assertEquals(true, keywords.getWords().get(0).matchesTagName("Tag000"));
+        }
+	    {
+	        final String words = "tag:tag0/b";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(1, keywords.getWords().size());
+	        assertEquals(true, keywords.getWords().get(0).matchesTagName("Tag000"));
+	    }
+	    {
+	        final String words = "tag:\"Tag 0\"/ec";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(1, keywords.getWords().size());
+	        assertEquals(true, keywords.getWords().get(0).matchesTagName("My Tag 0"));
+	    }
+	    {
+	        final String words = "tag:tag[0-9][a-z]/r";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(1, keywords.getWords().size());
+	        assertEquals(true, keywords.getWords().get(0).matchesTagName("tag9m"));
+	        assertEquals(false, keywords.getWords().get(0).matchesTagName("tag90"));
+	    }
+	    {
+	        final String words = "tag:tag/w-";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(1, keywords.getWords().size());
+	        assertEquals(false, keywords.getWords().get(0).matchesTagName("tag"));
+	        assertEquals(true, keywords.getWords().get(0).matchesTagName("tag90"));
+	    }
+	    {
+	        final String words = "tag:tag/c-";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(1, keywords.getWords().size());
+	        assertEquals(false, keywords.getWords().get(0).matchesTagName("my~tag~"));
+	        assertEquals(true, keywords.getWords().get(0).matchesTagName("Tag"));
+	    }
+    }
+	
+	@Test
 	public void testSearchParams() {
 		{
 			final String searchPhrase = "";

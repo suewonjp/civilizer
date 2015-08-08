@@ -156,4 +156,70 @@ public class DomainFragmentTest {
         }
 	}
 	
+	@Test
+    public void testMethod_matchesTagKeywords() {
+	    final List<Tag> tags = DomainTagTest.buildTags(
+	        "my tag", "your tag", "Tag000",      
+	        "~tag~", "xxxYyy", "#bookmark"
+	    );
+	    
+	    assertEquals(false, fragments.isEmpty());
+	    Fragment f = fragments.get(0);
+	    for (Tag t : tags) {
+	        f.addTag(t);
+	    }
+	    
+	    assertEquals(tags.size(), f.getTags().size());
+	    
+	    {
+            final String words = "tag:tag";
+            final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+            assertEquals(SearchParams.TARGET_TAG, keywords.getTarget());
+            assertEquals(false, keywords.getWords().isEmpty());
+            assertEquals(true, f.matchesTagKeywords(keywords));
+        }
+	    {
+	        final String words = "anytag:zzz";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(false, f.matchesTagKeywords(keywords));
+	    }
+	    {
+	        final String words = "tag:tag/e Tag/b xxY/c";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(true, f.matchesTagKeywords(keywords));
+	    }
+	    {
+	        final String words = "tag:tag/e Tag/b xxY/c zzz";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(false, f.matchesTagKeywords(keywords));
+	    }
+	    {
+	        final String words = "tag:tag ^#.*/r";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(true, f.matchesTagKeywords(keywords));
+	    }
+	    {
+	        final String words = "tag:tag #/-";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(false, f.matchesTagKeywords(keywords));
+	    }
+	    {
+	        final String words = "tag:\"my tag\" zzz/-";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(true, f.matchesTagKeywords(keywords));
+	    }
+	    {
+	        final String words = "anytag:\"my tag\"/be zzz";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(true, keywords.isAny());
+	        assertEquals(true, f.matchesTagKeywords(keywords));
+	    }
+	    {
+	        final String words = "anytag: zzz/- zzz www";
+	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
+	        assertEquals(true, f.matchesTagKeywords(keywords));
+	    }
+	}
+            
+	
 }

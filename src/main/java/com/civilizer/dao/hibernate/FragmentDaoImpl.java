@@ -17,7 +17,6 @@ import com.civilizer.dao.TagDao;
 import com.civilizer.domain.Fragment;
 import com.civilizer.domain.FragmentOrder;
 import com.civilizer.domain.SearchParams;
-import com.civilizer.domain.SearchParams.Keyword;
 
 @Repository("fragmentDao")
 @Transactional
@@ -271,20 +270,22 @@ public final class FragmentDaoImpl implements FragmentDao {
     	
     	final SearchParams.Keywords keywords = sp.getKeywords(SearchParams.TARGET_TAG);
     	if (keywords != null) {
-    	    if (! keywords.isAny() && keywords.getWords().size() > 1) {
-    	        // if the query has multiple tag keywords, we take care of that.
-    	        // e.g. tag: tag0 tag1 => we filter out results containing tag0 and tag1 simultaneously.
-    	        final List<Keyword> words = keywords.getWords();
-    	        final Iterator<Fragment> itr = output.iterator();
-    	        while (itr.hasNext()) {
-    	            final Fragment frg = itr.next();
-    	            for (Keyword keyword : words) {
-                        if (! frg.containsTagName(keyword.getWord())) {
-                            itr.remove();
-                            break;
-                        }
-                    }
-    	        }
+    	    // We need to take care of cases as the following examples.
+    	    //     e.g. tag: tag0 tag1 
+    	    //     => we pass out results matching tag0 and tag1 simultaneously.
+    	    //     e.g. anytag: tag0 tag1/-
+    	    //     => we pass out results matching tag0 or not matching tag1
+    	    // Resolving these cases with only database queries is not so easy. (at least as I see...)
+    	    // So we deal with them by the application code here.
+    	    boolean soWeDealWithThem = keywords.hasInverse();
+    	    soWeDealWithThem |= !keywords.isAny() && keywords.getWords().size() > 1;
+    	    if (soWeDealWithThem) {
+	            final Iterator<Fragment> itr = output.iterator();
+	            while (itr.hasNext()) {
+	                final Fragment frg = itr.next();
+	                if (!frg.matchesTagKeywords(keywords))
+	                    itr.remove();
+	            }
     	    }
     	}
     	

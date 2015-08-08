@@ -12,7 +12,7 @@ import com.civilizer.test.helper.TestUtil;
 
 public class DomainTagTest {
 	
-	private List<Tag> tags = new ArrayList<Tag>();
+	private List<Tag> tags;
 	
 	private static Collection<String> buildTagNameList(Collection<Tag> tags) {
         List<String> tagNames = new ArrayList<String>();
@@ -29,7 +29,7 @@ public class DomainTagTest {
 	    assertFalse(tags.isEmpty());
 	    
 	    Random r = TestUtil.getRandom();
-	    final int depthCount = 3;
+	    final int depthCount = 2 + r.nextInt(3);
 
 	    Object[] tagsPerDepth = new Object[depthCount];
 	    for (int i=0; i<depthCount; ++i) {
@@ -72,19 +72,34 @@ public class DomainTagTest {
             }
 	    }
 	}
+	
+	public static List<Tag> buildTags(int count) {
+	    List<Tag> tags = new ArrayList<Tag>();
+	    for (int i = 0; i < count; i++) {
+            Tag t = new Tag("tag " + tags.size());
+            assertNotNull(t);
+            t.setId(new Long(i));
+            tags.add(t);
+        }        
+        buildTagHierarchy(tags);
+        return tags;
+	}
+
+	public static List<Tag> buildTags(String...names) {
+	    List<Tag> tags = new ArrayList<Tag>();
+	    for (int i = 0; i < names.length; i++) {
+	        Tag t = new Tag(names[i]);
+	        assertNotNull(t);
+	        t.setId(new Long(i));
+	        tags.add(t);
+	    }        
+	    buildTagHierarchy(tags);
+	    return tags;
+	}
 
 	@Before
 	public void setUp() throws Exception {
-		assertNotNull(tags);
-		
-		for (int i = 0; i < 16; i++) {
-			Tag t = new Tag("tag " + tags.size());
-			assertNotNull(t);
-			t.setId(new Long(i));
-	        tags.add(t);
-		}
-		
-		buildTagHierarchy(tags);
+		tags = buildTags(16 + TestUtil.getRandom().nextInt(10));
 	}
 
 	@Test

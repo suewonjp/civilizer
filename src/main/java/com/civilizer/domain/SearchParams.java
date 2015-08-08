@@ -12,26 +12,26 @@ import com.civilizer.utils.Pair;
 @SuppressWarnings("serial")
 public final class SearchParams implements Serializable {
 	
-	public static final int TARGET_DEFAULT     = 0;
-	public static final int TARGET_TAG         = 1;
-	public static final int TARGET_TITLE       = 2;
-	public static final int TARGET_TEXT        = 3;
-	public static final int TARGET_ID          = 4;
+	public static final int TARGET_DEFAULT       = 0;
+	public static final int TARGET_TAG           = 1;
+	public static final int TARGET_TITLE         = 2;
+	public static final int TARGET_TEXT          = 3;
+	public static final int TARGET_ID            = 4;
 	
 	private static final TargetDirective[] DIRECTIVES = {
+	    new TargetDirective(":", TARGET_DEFAULT, false),    
+	    new TargetDirective("any:", TARGET_DEFAULT, true),
         new TargetDirective("tag:", TARGET_TAG, false), 
         new TargetDirective("anytag:", TARGET_TAG, true),
         new TargetDirective("title:", TARGET_TITLE, false), 
         new TargetDirective("anytitle:", TARGET_TITLE, true),
         new TargetDirective("text:", TARGET_TEXT, false),   
         new TargetDirective("anytext:", TARGET_TEXT, true),
-        new TargetDirective(":", TARGET_DEFAULT, false),    
-        new TargetDirective("any:", TARGET_DEFAULT, true),
         new TargetDirective("id:", TARGET_ID, true),
     };
 	
 	private static final String TARGET_DIRECTIVE_PATTERN =
-	        "(\\b(any|tag|anytag|title|anytitle|text|anytext|id)\\b)?:";
+	        "(\\b(any|tag|tagh|anytag|title|anytitle|text|anytext|id)\\b)?:";
 	
 	public static final class Keyword implements Serializable {
 		private final String word;
@@ -82,12 +82,6 @@ public final class SearchParams implements Serializable {
 					// [RULE] .../- => inverse; the query returns data not matching the pattern.
 					inverse = true;
 				}
-				if (suffix.indexOf('d') != -1) {
-				    // [TODO]
-				    // [RULE] .../d => descendant tags; this suffix only applies to tag keywords;
-				    // the query includes a given tag and all its descendant tags.
-				    // so 
-				}
 			}
 			
 			if (word.startsWith("\"") && word.endsWith("\"")) {
@@ -98,8 +92,15 @@ public final class SearchParams implements Serializable {
 				}
 			}
 			
-			if (beginningWith && endingWith) {
+			if (beginningWith && endingWith)
 				wholeWord = true;
+			if (wholeWord)
+			    beginningWith = endingWith = true;
+			if (regex) {
+			    // 'r' flag assumes case sensitivity regardless of the value of 'c' flag
+			    caseSensitive = true;
+			    // also 'r' flag ignores other pattern matching flags
+			    wholeWord = beginningWith = endingWith = false;
 			}
 			
 			this.word = word;
@@ -144,6 +145,37 @@ public final class SearchParams implements Serializable {
 			}
 			
 			return new Pair<String, Character>(word, escapeChar);
+		}
+		
+		public boolean matchesTagName(Tag tag) {
+		    return matchesTagName(tag.getTagName());
+		}
+		
+		public boolean matchesTagName(String tagName) {
+		    final String w = caseSensitive ? word : word.toLowerCase();
+		    final String name = caseSensitive ?  tagName : tagName.toLowerCase();
+		    boolean match = false;
+		    
+		    if (regex) {
+		        // 'r' flag assumes case sensitivity regardless of the value of 'c' flag
+		        match = Pattern.matches(word, tagName);
+		    }
+		    else {
+		        if (wholeWord) {
+		            match = name.equals(w);
+		        }
+		        else if (beginningWith) {
+		            match = name.startsWith(w);
+		        }
+		        else if (endingWith) {
+		            match = name.endsWith(w);
+		        }
+		        else {
+		            match = name.contains(w);
+		        }
+		    }
+
+		    return inverse ? !match : match;
 		}
 		
 		private boolean checkValidity(String word) {
@@ -201,6 +233,11 @@ public final class SearchParams implements Serializable {
 		
 		public boolean isId() {
 			return id;
+		}
+		
+		@Override
+		public String toString() {
+            return word;
 		}
 	}
 	
@@ -279,7 +316,7 @@ public final class SearchParams implements Serializable {
 		}
 		
 		private static TargetDirective parseTarget(String src) {
-			final TargetDirective def = DIRECTIVES[6];
+			final TargetDirective def = DIRECTIVES[0];
 			
 			for (TargetDirective targetDirective : DIRECTIVES) {
 				if (src.startsWith(targetDirective.expression)) {
@@ -300,6 +337,14 @@ public final class SearchParams implements Serializable {
 
 		public boolean isAny() {
 			return any;
+		}
+		
+		public boolean hasInverse() {
+		    for (Keyword w : getWords()) {
+                if (w.isInverse())
+                    return true;
+            }
+		    return false;
 		}
 	}
 	
@@ -369,8 +414,14 @@ public final class SearchParams implements Serializable {
     public String getSearchPhrase() {
         return searchPhrase;
     }
-	
+    
 	public Keywords getKeywords(int target) {
+	    // [RULE] we may have multiple instances of same target type.
+	    // e.g. tag:...  title:...  tag:... 
+	    //     => two instances of Keywords class for TARGET_TAG
+	    // we simply accept the 1st instance only and ignore all of the rest.
+	    // there is no benefit the users write their search phrase in this way.
+	    // so we have no need to care.
 		for (Keywords words : keywords) {
 			if (words.getTarget() == target) {
 				return words;
