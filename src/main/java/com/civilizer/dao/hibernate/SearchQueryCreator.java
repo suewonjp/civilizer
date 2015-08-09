@@ -108,7 +108,7 @@ public final class SearchQueryCreator {
     
     public static Criteria buildQuery(SearchParams params, Session session) {
     	final Criteria output = session.createCriteria(Fragment.class);
-    	Criteria tagCrit = output.createCriteria("tags");
+//    	Criteria tagCrit = output.createCriteria("tags");
     	output.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
     	
     	Junction rootJunction = Restrictions.conjunction();
@@ -129,11 +129,11 @@ public final class SearchQueryCreator {
 				
 				rootJunction.add(disj);
 			}
-			else if (target == SearchParams.TARGET_TAG) {
-				Junction junc = buildQueryWithKeywords(words, target, true);
-				tagCrit.add(junc);
-			}
-			else {
+//			else if (target == SearchParams.TARGET_TAG) {
+//				Junction junc = buildQueryWithKeywords(words, target, true);
+//				tagCrit.add(junc);
+//			}
+			else if (target != SearchParams.TARGET_TAG) {
 				Junction junc = buildQueryWithKeywords(words, target, any);
 				rootJunction.add(junc);
 			}

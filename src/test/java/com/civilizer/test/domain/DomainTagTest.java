@@ -90,7 +90,7 @@ public class DomainTagTest {
 	    for (int i = 0; i < names.length; i++) {
 	        Tag t = new Tag(names[i]);
 	        assertNotNull(t);
-	        t.setId(new Long(i));
+	        t.setId(new Long(i + 1));
 	        tags.add(t);
 	    }        
 	    buildTagHierarchy(tags);

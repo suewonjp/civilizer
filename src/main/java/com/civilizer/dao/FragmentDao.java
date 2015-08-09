@@ -5,6 +5,7 @@ import java.util.*;
 import com.civilizer.domain.Fragment;
 import com.civilizer.domain.FragmentOrder;
 import com.civilizer.domain.SearchParams;
+import com.civilizer.domain.Tag;
 
 public interface FragmentDao {
     
@@ -38,7 +39,7 @@ public interface FragmentDao {
 
     public List<Long> findIdsByTagId(long tagId);
     
-    public List<Fragment> findBySearchParams(SearchParams sp);
+    public List<Fragment> findBySearchParams(SearchParams sp, List<Tag> tags);
     
     public void relateFragments(long id0, long id1);
 

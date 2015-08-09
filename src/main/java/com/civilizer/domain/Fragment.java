@@ -22,8 +22,6 @@ import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-import com.civilizer.domain.SearchParams.Keyword;
-
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "FRAGMENT")
@@ -224,37 +222,6 @@ public final class Fragment implements Serializable {
         final int fromIndex = first;
         final int toIndex = Math.min(fragments.size(), first + count);
         return fragments.subList(fromIndex, toIndex);
-    }
-    
-    public boolean matchesTagKeywords(SearchParams.Keywords keywords) {
-        final Set<Tag> tags = getTags();
-        for (Keyword w : keywords.getWords()) {
-            boolean match = true;
-            if (w.isInverse()) {
-                for (Tag t : tags) {
-                    match &= w.matchesTagName(t);
-                    if (!match) {
-                        if (keywords.isAny())
-                            break;
-                        else
-                            return false;
-                    }
-                }
-                if (match && keywords.isAny())
-                    return true;
-            }
-            else {
-                match = false;
-                for (Tag t : tags) {
-                    match |= w.matchesTagName(t);
-                }
-                if (match && keywords.isAny())
-                    return true;
-                if (!match && !keywords.isAny())
-                    return false;
-            }
-        }
-        return !keywords.isAny();
     }
 
     @Override

@@ -165,7 +165,8 @@ public final class MainController {
         }
         else if (sp != null) {
             // Fetch the fragments by the search parameters
-            fragments = fragmentDao.findBySearchParams(sp);
+            final TagListBean tagListBean = (TagListBean) rc.getFlowScope().get("tagListBean");
+            fragments = fragmentDao.findBySearchParams(sp, tagListBean.getTags());
             allCount = fragments.size();
             if (allCount > 0) {
                 fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);

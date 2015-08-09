@@ -2,10 +2,13 @@ package com.civilizer.test.domain;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import java.util.*;
 
+import org.junit.*;
+
+import com.civilizer.domain.Fragment;
 import com.civilizer.domain.SearchParams;
+import com.civilizer.domain.Tag;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.Pair;
 
@@ -220,53 +223,57 @@ public class DomainSearchParamsTest {
 	}
 	
 	@Test
-    public void testMethod_matchesTagName() {
-	    {
-	        final String words = "tag:tag";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(SearchParams.TARGET_TAG, keywords.getTarget());
-	        assertEquals(1, keywords.getWords().size());
-	        assertEquals(true, keywords.getWords().get(0).matchesTagName("my~Tag~"));
-	    }
-	    {
-            final String words = "tag:Tag000/wc";
-            final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-            assertEquals(1, keywords.getWords().size());
-            assertEquals(true, keywords.getWords().get(0).matchesTagName("Tag000"));
+    public void testTagCache() {
+	    final List<Tag> tags = DomainTagTest.buildTags(
+                "my tag", "your tag", "Tag000",      
+                "~tag~", "xxxYyy", "#bookmark",
+                "wwwZzz"
+                );
+        
+        Fragment f = new Fragment("fragment", "Some content", null);
+        f.setId(0L);
+        for (Tag t : tags) {
+            f.addTag(t);
         }
-	    {
-	        final String words = "tag:tag0/b";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(1, keywords.getWords().size());
-	        assertEquals(true, keywords.getWords().get(0).matchesTagName("Tag000"));
-	    }
-	    {
-	        final String words = "tag:\"Tag 0\"/ec";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(1, keywords.getWords().size());
-	        assertEquals(true, keywords.getWords().get(0).matchesTagName("My Tag 0"));
-	    }
-	    {
-	        final String words = "tag:tag[0-9][a-z]/r";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(1, keywords.getWords().size());
-	        assertEquals(true, keywords.getWords().get(0).matchesTagName("tag9m"));
-	        assertEquals(false, keywords.getWords().get(0).matchesTagName("tag90"));
-	    }
-	    {
-	        final String words = "tag:tag/w-";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(1, keywords.getWords().size());
-	        assertEquals(false, keywords.getWords().get(0).matchesTagName("tag"));
-	        assertEquals(true, keywords.getWords().get(0).matchesTagName("tag90"));
-	    }
-	    {
-	        final String words = "tag:tag/c-";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(1, keywords.getWords().size());
-	        assertEquals(false, keywords.getWords().get(0).matchesTagName("my~tag~"));
-	        assertEquals(true, keywords.getWords().get(0).matchesTagName("Tag"));
-	    }
+        f.removeTag(tags.get(tags.size()-1)); // remove the tag "wwwZzz"
+        
+        assertEquals(tags.size()-1, f.getTags().size());
+        
+        {
+            final SearchParams sp = new SearchParams("tag:tag");
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            assertEquals(true, tc.matches(f));
+        }
+        {
+            final SearchParams sp = new SearchParams("tag:tag/e Tag/b xxY/c");
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            assertEquals(true, tc.matches(f));
+        }
+        {
+            final SearchParams sp = new SearchParams("tag:tag/e Tag/b xxY/c zzz");
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            assertEquals(false, tc.matches(f));
+        }
+        {
+            final SearchParams sp = new SearchParams("tag:tag #/-");
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            assertEquals(false, tc.matches(f));
+        }
+        {
+            final SearchParams sp = new SearchParams("tag:\"my tag\" zzz/-");
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            assertEquals(true, tc.matches(f));
+        }
+        {
+            final SearchParams sp = new SearchParams("anytag:\"my tag\"/be zzz");
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            assertEquals(true, tc.matches(f));
+        }
+        {
+            final SearchParams sp = new SearchParams("anytag: zzz/- zzz www");
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            assertEquals(true, tc.matches(f));
+        }
     }
 	
 	@Test

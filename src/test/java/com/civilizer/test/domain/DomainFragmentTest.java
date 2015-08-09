@@ -13,7 +13,7 @@ import com.civilizer.domain.*;
 
 public class DomainFragmentTest {
 	
-	private List<Fragment> fragments = new ArrayList<Fragment>();
+	private List<Fragment> fragments;
 	
 	private static Collection<String> buildFragmentTitleList(Collection<Fragment> fragments) {
         List<String> fragmentNames = new ArrayList<String>();
@@ -23,26 +23,30 @@ public class DomainFragmentTest {
         assertEquals(fragmentNames.size(), fragments.size());
         return fragmentNames;
     }
+	
+	public static List<Fragment> buildFragments(int count) {
+	    List<Fragment> fragments = new ArrayList<Fragment>(count);
+	    for (int i = 0; i < count; i++) {
+            Fragment frg = new Fragment(
+                    "fragment " + fragments.size()
+                    , "Some content " + fragments.size()
+                    , null
+                    );
+            assertNotNull(frg);
+            frg.setId(new Long(i));
+            fragments.add(frg);
+        }
+	    return fragments;
+	}
 
 	@Before
 	public void setUp() throws Exception {
-		assertNotNull(fragments);
-		
-		for (int i = 0; i < 16; i++) {
-			Fragment frg = new Fragment(
-					"fragment " + fragments.size()
-					, "Some content " + fragments.size()
-					, null
-					);
-			assertNotNull(frg);
-			frg.setId(new Long(i));
-	        fragments.add(frg);
-		}
+		fragments = buildFragments(16);
 	}
 	
 	@Test
 	public void testIDsAreValid() {
-		assertFalse(fragments.isEmpty());
+		assertEquals(false, fragments.isEmpty());
 		
 		for (Fragment f : fragments) {
 			assertNotNull(f.getId());
@@ -85,7 +89,7 @@ public class DomainFragmentTest {
 	
 	@Test
 	public void testMethod_getFragmentTitleCollectionFrom() {
-		assertFalse(fragments.isEmpty());
+		assertEquals(false, fragments.isEmpty());
 		
 		Collection<String> actualC = Fragment.getFragmentTitleCollectionFrom(fragments);;
 		Object[] actual = actualC.toArray();
@@ -120,7 +124,7 @@ public class DomainFragmentTest {
             DateTime dt0 = f0.getUpdateDatetime();
             DateTime dt1 = f1.getUpdateDatetime();
             int r = dtCmptr.compare(dt0, dt1);
-            assertTrue(r >= 0);
+            assertEquals(true, r >= 0);
         }
 
         Collections.shuffle(fragments);
@@ -131,7 +135,7 @@ public class DomainFragmentTest {
             DateTime dt0 = f0.getCreationDatetime();
             DateTime dt1 = f1.getCreationDatetime();
             int r = dtCmptr.compare(dt0, dt1);
-            assertTrue(r >= 0);
+            assertEquals(true, r >= 0);
         }
 
         Collections.shuffle(fragments);
@@ -142,7 +146,7 @@ public class DomainFragmentTest {
             String s0 = f0.getTitle();
             String s1 = f1.getTitle();
             int r = s0.compareToIgnoreCase(s1);
-            assertTrue(r <= 0);
+            assertEquals(true, r <= 0);
         }
         
         Collections.shuffle(fragments);
@@ -152,74 +156,8 @@ public class DomainFragmentTest {
             Fragment f1 = fragments.get(i);
             long id0 = f0.getId();
             long id1 = f1.getId();
-            assertTrue(id0 < id1);
+            assertEquals(true, id0 < id1);
         }
 	}
-	
-	@Test
-    public void testMethod_matchesTagKeywords() {
-	    final List<Tag> tags = DomainTagTest.buildTags(
-	        "my tag", "your tag", "Tag000",      
-	        "~tag~", "xxxYyy", "#bookmark"
-	    );
-	    
-	    assertEquals(false, fragments.isEmpty());
-	    Fragment f = fragments.get(0);
-	    for (Tag t : tags) {
-	        f.addTag(t);
-	    }
-	    
-	    assertEquals(tags.size(), f.getTags().size());
-	    
-	    {
-            final String words = "tag:tag";
-            final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-            assertEquals(SearchParams.TARGET_TAG, keywords.getTarget());
-            assertEquals(false, keywords.getWords().isEmpty());
-            assertEquals(true, f.matchesTagKeywords(keywords));
-        }
-	    {
-	        final String words = "anytag:zzz";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(false, f.matchesTagKeywords(keywords));
-	    }
-	    {
-	        final String words = "tag:tag/e Tag/b xxY/c";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(true, f.matchesTagKeywords(keywords));
-	    }
-	    {
-	        final String words = "tag:tag/e Tag/b xxY/c zzz";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(false, f.matchesTagKeywords(keywords));
-	    }
-	    {
-	        final String words = "tag:tag ^#.*/r";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(true, f.matchesTagKeywords(keywords));
-	    }
-	    {
-	        final String words = "tag:tag #/-";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(false, f.matchesTagKeywords(keywords));
-	    }
-	    {
-	        final String words = "tag:\"my tag\" zzz/-";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(true, f.matchesTagKeywords(keywords));
-	    }
-	    {
-	        final String words = "anytag:\"my tag\"/be zzz";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(true, keywords.isAny());
-	        assertEquals(true, f.matchesTagKeywords(keywords));
-	    }
-	    {
-	        final String words = "anytag: zzz/- zzz www";
-	        final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
-	        assertEquals(true, f.matchesTagKeywords(keywords));
-	    }
-	}
-            
 	
 }

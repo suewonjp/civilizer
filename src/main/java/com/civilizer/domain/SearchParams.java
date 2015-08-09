@@ -177,6 +177,37 @@ public final class SearchParams implements Serializable {
 
 		    return inverse ? !match : match;
 		}
+
+		public boolean matchesTagNameIgnoringInverse(Tag tag) {
+		    return matchesTagNameIgnoringInverse(tag.getTagName());
+		}
+		
+		public boolean matchesTagNameIgnoringInverse(String tagName) {
+		    final String w = caseSensitive ? word : word.toLowerCase();
+		    final String name = caseSensitive ?  tagName : tagName.toLowerCase();
+		    boolean match = false;
+		    
+		    if (regex) {
+		        // 'r' flag assumes case sensitivity regardless of the value of 'c' flag
+		        match = Pattern.matches(word, tagName);
+		    }
+		    else {
+		        if (wholeWord) {
+		            match = name.equals(w);
+		        }
+		        else if (beginningWith) {
+		            match = name.startsWith(w);
+		        }
+		        else if (endingWith) {
+		            match = name.endsWith(w);
+		        }
+		        else {
+		            match = name.contains(w);
+		        }
+		    }
+		    
+		    return match;
+		}
 		
 		private boolean checkValidity(String word) {
 			boolean ok = true;
@@ -257,6 +288,12 @@ public final class SearchParams implements Serializable {
 		private final List<Keyword> words;
 		private final int target;
 		private final boolean any;
+		
+		public Keywords() {
+		    words = Collections.emptyList();
+		    target = TARGET_DEFAULT;
+		    any = false;
+		}
 		
 		public Keywords(String src) {
 			src = src.trim();
@@ -348,6 +385,75 @@ public final class SearchParams implements Serializable {
 		}
 	}
 	
+	public static final class TagCache {
+	    private final List<Long> conjuctionIds;
+	    private final List<Long> disjuctionIds;
+	    
+	    public TagCache(Collection<Tag> tags, SearchParams sp) {
+	        List<Long> conjuctionIds = Collections.emptyList();
+	        List<Long> disjuctionIds = Collections.emptyList();
+	        List<Keyword> conj = Collections.emptyList();
+	        List<Keyword> disj = Collections.emptyList();
+	        
+	        Keywords kws = sp.getKeywords(TARGET_TAG, false);
+	        if (kws != null) conj = kws.getWords();
+	        kws = sp.getKeywords(TARGET_TAG, true);
+	        if (kws != null) disj = kws.getWords();
+	        
+	        try {
+	            if (conj.isEmpty() && disj.isEmpty()) {
+	                return;
+	            }
+	            if (!conj.isEmpty())
+	                conjuctionIds = new ArrayList<>();
+	            if (!disj.isEmpty())
+	                disjuctionIds = new ArrayList<>();
+	            
+	            for (Tag t : tags) {
+	                final long tid = t.getId();
+	                if (!conjuctionIds.contains(tid)) {
+	                    for (Keyword w : conj) {
+	                        if (w.matchesTagNameIgnoringInverse(t))
+	                            conjuctionIds.add(w.isInverse() ? -tid : tid);
+	                    }
+	                }
+	                if (!disjuctionIds.contains(tid)) {
+	                    for (Keyword w : disj) {
+	                        if (w.matchesTagNameIgnoringInverse(t))
+	                            disjuctionIds.add(w.isInverse() ? -tid : tid);
+	                    }
+	                }
+	            }
+	        }
+	        finally {
+	            this.conjuctionIds = conjuctionIds;
+	            this.disjuctionIds = disjuctionIds;
+	        }
+	        
+	    }
+	    
+	    public boolean valid() {
+	        return !conjuctionIds.isEmpty() || !disjuctionIds.isEmpty();
+	    }
+	    
+	    public boolean matches(Fragment frg) {
+            for (long id : conjuctionIds) {
+                boolean match = frg.containsTagId(Math.abs(id));
+                if (id > 0 && !match || id < 0 && match)
+                    return false;
+            }
+            
+            boolean disjMatch = disjuctionIds.isEmpty();
+            for (long id : disjuctionIds) {
+                boolean match = frg.containsTagId(Math.abs(id));
+                if (id > 0 && match || id < 0 && !match)
+                    return true;
+            }
+            
+	        return disjMatch;
+	    }
+	}
+	
 	private final List<Keywords> keywords;
 	private final String searchPhrase;
 
@@ -415,7 +521,7 @@ public final class SearchParams implements Serializable {
         return searchPhrase;
     }
     
-	public Keywords getKeywords(int target) {
+	public Keywords getKeywords(int target, boolean any) {
 	    // [RULE] we may have multiple instances of same target type.
 	    // e.g. tag:...  title:...  tag:... 
 	    //     => two instances of Keywords class for TARGET_TAG
@@ -423,7 +529,7 @@ public final class SearchParams implements Serializable {
 	    // there is no benefit the users write their search phrase in this way.
 	    // so we have no need to care.
 		for (Keywords words : keywords) {
-			if (words.getTarget() == target) {
+			if (words.getTarget() == target && words.isAny() == any) {
 				return words;
 			}
 		}

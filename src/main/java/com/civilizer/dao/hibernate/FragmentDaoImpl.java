@@ -17,6 +17,7 @@ import com.civilizer.dao.TagDao;
 import com.civilizer.domain.Fragment;
 import com.civilizer.domain.FragmentOrder;
 import com.civilizer.domain.SearchParams;
+import com.civilizer.domain.Tag;
 
 @Repository("fragmentDao")
 @Transactional
@@ -256,40 +257,29 @@ public final class FragmentDaoImpl implements FragmentDao {
                 .setParameter("tagId", tagId)
                 .list();
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
-    public List<Fragment> findBySearchParams(SearchParams sp) {
-    	Session session = sessionFactory.getCurrentSession();
-    	Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    	List<Fragment> output = crit.list();
-    	for (Fragment fragment : output) {
-    		Hibernate.initialize(fragment.getTags());
-    		Hibernate.initialize(fragment.getRelatedOnes());
-		}
-    	
-    	final SearchParams.Keywords keywords = sp.getKeywords(SearchParams.TARGET_TAG);
-    	if (keywords != null) {
-    	    // We need to take care of cases as the following examples.
-    	    //     e.g. tag: tag0 tag1 
-    	    //     => we pass out results matching tag0 and tag1 simultaneously.
-    	    //     e.g. anytag: tag0 tag1/-
-    	    //     => we pass out results matching tag0 or not matching tag1
-    	    // Resolving these cases with only database queries is not so easy. (at least as I see...)
-    	    // So we deal with them by the application code here.
-    	    boolean soWeDealWithThem = keywords.hasInverse();
-    	    soWeDealWithThem |= !keywords.isAny() && keywords.getWords().size() > 1;
-    	    if (soWeDealWithThem) {
-	            final Iterator<Fragment> itr = output.iterator();
-	            while (itr.hasNext()) {
-	                final Fragment frg = itr.next();
-	                if (!frg.matchesTagKeywords(keywords))
-	                    itr.remove();
-	            }
-    	    }
+    public List<Fragment> findBySearchParams(SearchParams sp, List<Tag> tags) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+        List<Fragment> output = crit.list();
+        for (Fragment fragment : output) {
+            Hibernate.initialize(fragment.getTags());
+            Hibernate.initialize(fragment.getRelatedOnes());
+        }
+        
+    	final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+    	if (tc.valid()) {
+    	    final Iterator<Fragment> itr = output.iterator();
+            while (itr.hasNext()) {
+                final Fragment frg = itr.next();
+                if (!tc.matches(frg))
+                    itr.remove();
+            }
     	}
-    	
-    	return output;
+        
+        return output;
     }
     
     @Override

@@ -440,44 +440,44 @@ public class SearchTest extends DaoTest {
     	}
     }
     
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testSearchWithTagRestriction() {
-    	final Pair<Fragment[], Tag[]> pair = createTestData();
-        final Fragment[] fragments = pair.getFirst();
-        final Tag[] tags = pair.getSecond();
-        
-        {
-        	final String searchPhrase = "anytag:\"my tag\" \"your tag\"";
-        	final SearchParams sp = new SearchParams(searchPhrase);
-        	assertEquals(1, sp.getKeywords().size());
-        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-        	final List<Fragment> results = crit.list();
-        	assertEquals(fragments.length, results.size());
-        }
-        {
-        	final Tag tag = tags[2]; // nobody's tag
-        	final String tagName = tag.getTagName();
-        	final String searchPhrase = "tag:\"" + tagName + "\"/w";
-        	final SearchParams sp = new SearchParams(searchPhrase);
-        	assertEquals(1, sp.getKeywords().size());
-        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-        	final List<Fragment> results = crit.list();
-        	assertEquals(0, results.size());
-        }
-        {
-        	final Tag tag = tags[TestUtil.getRandom().nextInt(tags.length)];
-        	final String tagName = tag.getTagName();
-			final String searchPhrase = "tag:\"" + tagName + "\"/w";
-			final SearchParams sp = new SearchParams(searchPhrase);
-			assertEquals(1, sp.getKeywords().size());
-			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-			final List<Fragment> results = crit.list();
-			for (Fragment fragment : results) {
-				assertTrue(fragment.containsTagName(tagName));
-			}
-		}
-    }
+//    @Test
+//    @SuppressWarnings("unchecked")
+//    public void testSearchWithTagRestriction() {
+//    	final Pair<Fragment[], Tag[]> pair = createTestData();
+//        final Fragment[] fragments = pair.getFirst();
+//        final Tag[] tags = pair.getSecond();
+//        
+//        {
+//        	final String searchPhrase = "anytag:\"my tag\" \"your tag\"";
+//        	final SearchParams sp = new SearchParams(searchPhrase);
+//        	assertEquals(1, sp.getKeywords().size());
+//        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+//        	final List<Fragment> results = crit.list();
+//        	assertEquals(fragments.length, results.size());
+//        }
+//        {
+//        	final Tag tag = tags[2]; // nobody's tag
+//        	final String tagName = tag.getTagName();
+//        	final String searchPhrase = "tag:\"" + tagName + "\"/w";
+//        	final SearchParams sp = new SearchParams(searchPhrase);
+//        	assertEquals(1, sp.getKeywords().size());
+//        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+//        	final List<Fragment> results = crit.list();
+//        	assertEquals(0, results.size());
+//        }
+//        {
+//        	final Tag tag = tags[TestUtil.getRandom().nextInt(tags.length)];
+//        	final String tagName = tag.getTagName();
+//			final String searchPhrase = "tag:\"" + tagName + "\"/w";
+//			final SearchParams sp = new SearchParams(searchPhrase);
+//			assertEquals(1, sp.getKeywords().size());
+//			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
+//			final List<Fragment> results = crit.list();
+//			for (Fragment fragment : results) {
+//				assertTrue(fragment.containsTagName(tagName));
+//			}
+//		}
+//    }
     
     @Test
     @SuppressWarnings("unchecked")
