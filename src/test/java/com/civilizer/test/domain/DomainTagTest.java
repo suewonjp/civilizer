@@ -96,6 +96,16 @@ public class DomainTagTest {
 	    buildTagHierarchy(tags);
 	    return tags;
 	}
+	
+	private static boolean inSameHierarchy(Tag possibleParent, Tag possibleDescendant) {
+	    if (possibleParent.equals(possibleDescendant) || possibleParent.getChildren().contains(possibleDescendant))
+	        return true;
+	    for (Tag c : possibleParent.getChildren()) {
+            if (inSameHierarchy(c, possibleDescendant))
+                return true;
+        }
+	    return false;
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -303,6 +313,28 @@ public class DomainTagTest {
 	        }
 	    }
 	}
+	
+	@Test
+    public void testMethod_getIdsOfDescendants() {
+        assertEquals(false, tags.isEmpty());
+	    for (Tag t : tags) {
+	        boolean includeSelf = TestUtil.getRandom().nextBoolean();
+            Set<Long> idSet = t.getIdsOfDescendants(includeSelf);
+            assertNotNull(idSet);
+            if (includeSelf) {
+                assertEquals(true, idSet.contains(t.getId()));
+            }
+            for (Tag c : t.getChildren()) {
+                assertEquals(true, idSet.contains(c.getId()));
+            }
+            for (Long id : idSet) {
+                final int idx = Tag.getIndexOf(id, tags);
+                assertEquals(true, -1 < idx && idx < tags.size());
+                final Tag desc = tags.get(idx);
+                assertEquals(true, inSameHierarchy(t, desc));
+            }
+        }
+    }
 	
 	@Test
     public void testTagNameValidation() {

@@ -269,31 +269,21 @@ class DaoTest {
 	}
 
 	protected void testTagsHierarchy() {
-		Collection<Tag> tags = tagDao.findAll();
-		Collection<String> tagNames = Tag.getTagNameCollectionFrom(tags);
+		Collection<Tag> tags = tagDao.findAllWithChildren(true);
 
-		for (Tag t : tags) {
-			assertEquals(false, Hibernate.isInitialized(t.getChildren()));
-			tagDao.populate(t, false, true);
-			assertEquals(true, Hibernate.isInitialized(t.getChildren()));
-			assertEquals(false, Hibernate.isInitialized(t.getFragments()));
-			
-			Long id = getAndValidateId(t);
-			Tag tag = tagDao.findById(id, false, true);
-			Collection<Tag> children = tag.getChildren();
-			assertEquals(true,  Hibernate.isInitialized(children));
-			for (Tag c : children) {
-				assertEquals(true,  tagNames.contains(c.getTagName()));
-			}
-			
+		for (Tag tag : tags) {
+			assertEquals(true, Hibernate.isInitialized(tag.getChildren()));
+			final Long id = getAndValidateId(tag);			
 			final Set<Long> descendantIds = new HashSet<Long>();
 			tagDao.findIdsOfAllDescendants(id, null, descendantIds);
 			for (Long did : descendantIds) {
 				final Tag descendant = tagDao.findById(did);
 				final Set<Tag> ancestors = new HashSet<Tag>();
 				findAllAncestorsOfTag(descendant, ancestors);
-				assertEquals(true,  ancestors.contains(tag));
+				assertEquals(true, ancestors.contains(tag));
 			}
+		    final Set<Long> descendantIds2 = tag.getIdsOfDescendants(false);
+		    assertEquals(descendantIds2, descendantIds);
 		}
 	}
 	

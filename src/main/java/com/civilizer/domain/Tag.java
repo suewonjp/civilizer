@@ -241,6 +241,25 @@ public final class Tag implements Serializable {
     	return false;
     }
     
+    private void getIdsOfDescendants(Set<Long> idSet) {
+        for (Tag t : getChildren()) {
+            idSet.add(t.getId());
+        }
+        for (Tag t : getChildren()) {
+            t.getIdsOfDescendants(idSet);
+        }
+    }
+
+    public Set<Long> getIdsOfDescendants(boolean includeSelf) {
+        Set<Long> output = new HashSet<>();
+        if (includeSelf)
+            output.add(getId());
+        getIdsOfDescendants(output);
+        if (output.isEmpty())
+            output = Collections.emptySet();
+        return output;
+    }
+    
     public static boolean isSpecialTag(String name) {
     	for (String n : SPECIAL_TAG_NAMES) {
 			if (n.equals(name)) {
