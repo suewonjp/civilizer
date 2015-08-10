@@ -392,18 +392,19 @@ public final class SearchParams implements Serializable {
 	    public TagCache(Collection<Tag> tags, SearchParams sp) {
 	        List<Long> conjuctionIds = Collections.emptyList();
 	        List<Long> disjuctionIds = Collections.emptyList();
-	        List<Keyword> conj = Collections.emptyList();
-	        List<Keyword> disj = Collections.emptyList();
-	        
-	        Keywords kws = sp.getKeywords(TARGET_TAG, false);
-	        if (kws != null) conj = kws.getWords();
-	        kws = sp.getKeywords(TARGET_TAG, true);
-	        if (kws != null) disj = kws.getWords();
-	        
 	        try {
-	            if (conj.isEmpty() && disj.isEmpty()) {
+	            if (tags == null || tags.isEmpty())
 	                return;
-	            }
+    	        List<Keyword> conj = Collections.emptyList();
+    	        List<Keyword> disj = Collections.emptyList();
+    	        
+    	        Keywords kws = sp.getKeywords(TARGET_TAG, false);
+    	        if (kws != null) conj = kws.getWords();
+    	        kws = sp.getKeywords(TARGET_TAG, true);
+    	        if (kws != null) disj = kws.getWords();
+	            if (conj.isEmpty() && disj.isEmpty())
+	                return;
+
 	            if (!conj.isEmpty())
 	                conjuctionIds = new ArrayList<>();
 	            if (!disj.isEmpty())

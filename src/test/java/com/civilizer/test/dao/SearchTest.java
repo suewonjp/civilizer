@@ -2,6 +2,7 @@ package com.civilizer.test.dao;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import org.junit.*;
@@ -50,6 +51,16 @@ public class SearchTest extends DaoTest {
         super.tearDown();
     }
     
+    private static boolean matches(List<?> results, Object src, int...idx) {
+        final Class<?> elemType = src.getClass();
+        assertEquals(true, elemType.isArray());
+        boolean match = true;
+        for (int i : idx) {
+            match &= results.contains(Array.get(src, i));
+        }
+        return match;
+    }
+    
     @Test
     @SuppressWarnings("unchecked")
     public void testHibernateCriteriaAPI_like_ilike() {
@@ -71,39 +82,29 @@ public class SearchTest extends DaoTest {
 			final Criteria crit = session.createCriteria(Tag.class);
 			crit.add(Restrictions.like("tagName", "%tag%"));
 			final List<Tag> results = crit.list();
-//			logger.info(results);
 			assertEquals(4, results.size());
-			assertTrue(results.contains(tags[0]));
-			assertTrue(results.contains(tags[1]));
-			assertTrue(results.contains(tags[5]));
-			assertTrue(results.contains(tags[6]));
+			assertEquals(true, matches(results, tags, 0, 1, 5, 6));
 		}
     	{
     		final Criteria crit = session.createCriteria(Tag.class);
     		crit.add(Restrictions.like("tagName", "_tag"));
     		final List<Tag> results = crit.list();
-//            logger.info(results);
     		assertEquals(1, results.size());
-    		assertTrue(results.contains(tags[1]));
+    		assertEquals(true, matches(results, tags, 1));
     	}
     	{
     		final Criteria crit = session.createCriteria(Tag.class);
     		crit.add(Restrictions.sqlRestriction("TAG_NAME like 'my tag'"));
     		final List<Tag> results = crit.list();
-//    		logger.info(results);
     		assertEquals(1, results.size());
-    		assertTrue(results.contains(tags[5]));
+    		assertEquals(true, matches(results, tags, 5));
     	}
     	{
     		final Criteria crit = session.createCriteria(Tag.class);
     		crit.add(Restrictions.ilike("tagName", "tag%"));
     		final List<Tag> results = crit.list();
-//    		logger.info(results);
     		assertEquals(4, results.size());
-    		assertTrue(results.contains(tags[0]));
-    		assertTrue(results.contains(tags[2]));
-    		assertTrue(results.contains(tags[3]));
-    		assertTrue(results.contains(tags[4]));
+    		assertEquals(true, matches(results, tags, 0, 2, 3, 4));
     	}
     }
     
@@ -196,7 +197,6 @@ public class SearchTest extends DaoTest {
     }
     
     @Test
-    @SuppressWarnings("unchecked")
     public void testBasicSearch() {
         final Pair<Fragment[], Tag[]> pair = createTestData();
         final Fragment[] fragments = pair.getFirst();
@@ -205,107 +205,84 @@ public class SearchTest extends DaoTest {
 			final String searchPhrase = "title:.wrap() ";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(1, sp.getKeywords().size());
-			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-			final List<Fragment> results = crit.list();
+			final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
 			assertEquals(1, results.size());
-			assertTrue(results.contains(fragments[8]));
+			assertEquals(true, matches(results, fragments, 8));
 		}
     	{
     		final String searchPhrase = "title:. () ";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(fragments.length, results.size());
     	}
     	{
     		final String searchPhrase = "anytitle:pend wrap ";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(5, results.size());
-    		assertTrue(results.contains(fragments[2]));
-    		assertTrue(results.contains(fragments[3]));
-    		assertTrue(results.contains(fragments[8]));
-    		assertTrue(results.contains(fragments[9]));
-    		assertTrue(results.contains(fragments[10]));
+    		assertEquals(true, matches(results, fragments, 2, 3, 8, 9, 10));
     	}
     	{
     		final String searchPhrase = "title:before()  text:before";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(2, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(1, results.size());
-    		assertTrue(results.contains(fragments[4]));
+    		assertEquals(true, matches(results, fragments, 4));
     	}
     	{
     		final String searchPhrase = "text";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(2, results.size());
-    		assertTrue(results.contains(fragments[0]));
-    		assertTrue(results.contains(fragments[1]));
+    		assertEquals(true, matches(results, fragments, 0, 1));
     	}
     	{
     		final String searchPhrase = ":replace";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(2, results.size());
-    		assertTrue(results.contains(fragments[0]));
-    		assertTrue(results.contains(fragments[6]));
+    		assertEquals(true, matches(results, fragments, 0, 6));
     	}
     	{
     		final String searchPhrase = ": text html";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(1, results.size());
-    		assertTrue(results.contains(fragments[1]));
+    		assertEquals(true, matches(results, fragments, 1));
     	}
     	{
     		final String searchPhrase = "any: text html";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(4, results.size());
-    		assertTrue(results.contains(fragments[0]));
-    		assertTrue(results.contains(fragments[1]));
-    		assertTrue(results.contains(fragments[8]));
-    		assertTrue(results.contains(fragments[9]));
+    		assertEquals(true, matches(results, fragments, 0, 1, 8, 9));
     	}
     	{
     		final String searchPhrase = "text:HTML/c";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(2, results.size());
-    		assertTrue(results.contains(fragments[8]));
-    		assertTrue(results.contains(fragments[9]));
+    		assertEquals(true, matches(results, fragments, 8, 9));
     	}
     	{
     		final String searchPhrase = ": \"lets you insert\"";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(3, results.size());
-    		assertTrue(results.contains(fragments[1]));
-    		assertTrue(results.contains(fragments[2]));
-    		assertTrue(results.contains(fragments[3]));
+    		assertEquals(true, matches(results, fragments, 1, 2, 3));
     	}
     }
     
     @Test
-    @SuppressWarnings("unchecked")
     public void testWordBoundarySearch() {
     	final Pair<Fragment[], Tag[]> pair = createTestData();
         final Fragment[] fragments = pair.getFirst();
@@ -314,56 +291,44 @@ public class SearchTest extends DaoTest {
     		final String searchPhrase = ":replace/w";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(0, results.size());
     	}
         {
         	final String searchPhrase = ":wrap/w ";
         	final SearchParams sp = new SearchParams(searchPhrase);
         	assertEquals(1, sp.getKeywords().size());
-        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-        	final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
         	assertEquals(1, results.size());
-        	assertTrue(results.contains(fragments[8]));
+            assertEquals(true, matches(results, fragments, 8));
         }
         {
         	final String searchPhrase = ":wrap/b ";
         	final SearchParams sp = new SearchParams(searchPhrase);
         	assertEquals(1, sp.getKeywords().size());
-        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-        	final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
         	assertEquals(2, results.size());
-        	assertTrue(results.contains(fragments[8]));
-        	assertTrue(results.contains(fragments[9]));
+        	assertEquals(true, matches(results, fragments, 8, 9));
         }
         {
         	final String searchPhrase = ":wrap/e ";
         	final SearchParams sp = new SearchParams(searchPhrase);
         	assertEquals(1, sp.getKeywords().size());
-        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-        	final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
         	assertEquals(2, results.size());
-        	assertTrue(results.contains(fragments[8]));
-        	assertTrue(results.contains(fragments[10]));
+            assertEquals(true, matches(results, fragments, 8, 10));
         }
         {
         	final String searchPhrase = "tag/b ";
         	final SearchParams sp = new SearchParams(searchPhrase);
         	assertEquals(1, sp.getKeywords().size());
-        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-        	final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
         	assertEquals(5, results.size());
-        	assertTrue(results.contains(fragments[5]));
-        	assertTrue(results.contains(fragments[6]));
-        	assertTrue(results.contains(fragments[8]));
-        	assertTrue(results.contains(fragments[9]));
-        	assertTrue(results.contains(fragments[10]));
+        	assertEquals(true, matches(results, fragments, 5, 6, 8, 9, 10));
         }
     }
     
     @Test
-    @SuppressWarnings("unchecked")
     public void testRegexSearch() {
     	final Pair<Fragment[], Tag[]> pair = createTestData();
         final Fragment[] fragments = pair.getFirst();
@@ -372,35 +337,28 @@ public class SearchTest extends DaoTest {
 			final String searchPhrase = "title:\\.\\w+()/r ";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(1, sp.getKeywords().size());
-			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-			final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
 			assertEquals(fragments.length, results.size());
 		}
     	{
     		final String searchPhrase = "text:\\(.*\\)/r ";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(3, results.size());
-    		assertTrue(results.contains(fragments[1]));
-    		assertTrue(results.contains(fragments[5]));
-    		assertTrue(results.contains(fragments[6]));
+            assertEquals(true, matches(results, fragments, 1, 5, 6));
     	}
     	{
     		final String searchPhrase = "title:[a-z]+[A-Z]+/r ";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(2, results.size());
-    		assertTrue(results.contains(fragments[6]));
-    		assertTrue(results.contains(fragments[9]));
+    		assertEquals(true, matches(results, fragments, 6, 9));
     	}
     }
     
     @Test
-    @SuppressWarnings("unchecked")
     public void testInverseSearch() {
     	final Pair<Fragment[], Tag[]> pair = createTestData();
         final Fragment[] fragments = pair.getFirst();
@@ -409,78 +367,63 @@ public class SearchTest extends DaoTest {
 			final String searchPhrase = "text:selection/w-";
 			final SearchParams sp = new SearchParams(searchPhrase);
 			assertEquals(1, sp.getKeywords().size());
-			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-			final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
 			assertEquals(3, results.size());
-			assertTrue(results.contains(fragments[1]));
-    		assertTrue(results.contains(fragments[2]));
-    		assertTrue(results.contains(fragments[3]));
+			assertEquals(true, matches(results, fragments, 1, 2, 3));
 		}
     	{
     		final String searchPhrase = "title:wrap un/-";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(2, results.size());
-    		assertTrue(results.contains(fragments[8]));
-    		assertTrue(results.contains(fragments[9]));
+    		assertEquals(true, matches(results, fragments, 8, 9));
     	}
     	{
     		final String searchPhrase = "text:content contents/w-";
     		final SearchParams sp = new SearchParams(searchPhrase);
     		assertEquals(1, sp.getKeywords().size());
-    		final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-    		final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
     		assertEquals(4, results.size());
-    		assertTrue(results.contains(fragments[2]));
-    		assertTrue(results.contains(fragments[3]));
-    		assertTrue(results.contains(fragments[4]));
-    		assertTrue(results.contains(fragments[5]));
+    		assertEquals(true, matches(results, fragments, 2, 3, 4, 5));
     	}
     }
     
-//    @Test
-//    @SuppressWarnings("unchecked")
-//    public void testSearchWithTagRestriction() {
-//    	final Pair<Fragment[], Tag[]> pair = createTestData();
-//        final Fragment[] fragments = pair.getFirst();
-//        final Tag[] tags = pair.getSecond();
-//        
-//        {
-//        	final String searchPhrase = "anytag:\"my tag\" \"your tag\"";
-//        	final SearchParams sp = new SearchParams(searchPhrase);
-//        	assertEquals(1, sp.getKeywords().size());
-//        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-//        	final List<Fragment> results = crit.list();
-//        	assertEquals(fragments.length, results.size());
-//        }
-//        {
-//        	final Tag tag = tags[2]; // nobody's tag
-//        	final String tagName = tag.getTagName();
-//        	final String searchPhrase = "tag:\"" + tagName + "\"/w";
-//        	final SearchParams sp = new SearchParams(searchPhrase);
-//        	assertEquals(1, sp.getKeywords().size());
-//        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-//        	final List<Fragment> results = crit.list();
-//        	assertEquals(0, results.size());
-//        }
-//        {
-//        	final Tag tag = tags[TestUtil.getRandom().nextInt(tags.length)];
-//        	final String tagName = tag.getTagName();
-//			final String searchPhrase = "tag:\"" + tagName + "\"/w";
-//			final SearchParams sp = new SearchParams(searchPhrase);
-//			assertEquals(1, sp.getKeywords().size());
-//			final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-//			final List<Fragment> results = crit.list();
-//			for (Fragment fragment : results) {
-//				assertTrue(fragment.containsTagName(tagName));
-//			}
-//		}
-//    }
+    @Test
+    public void testSearchWithTagRestriction() {
+    	final Pair<Fragment[], Tag[]> pair = createTestData();
+        final Fragment[] fragments = pair.getFirst();
+        final List<Tag> tags = Arrays.asList(pair.getSecond());
+        
+        {
+        	final String searchPhrase = "anytag:\"my tag\" \"your tag\"";
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	assertEquals(1, sp.getKeywords().size());
+        	final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
+        	assertEquals(fragments.length, results.size());
+        }
+        {
+        	final Tag tag = tags.get(2); // nobody's tag
+        	final String tagName = tag.getTagName();
+        	final String searchPhrase = "tag:\"" + tagName + "\"/w";
+        	final SearchParams sp = new SearchParams(searchPhrase);
+        	final List<Fragment> results = fragmentDao.findBySearchParams(sp, tags);
+        	assertEquals(0, results.size());
+        }
+        {
+        	final Tag tag = tags.get(TestUtil.getRandom().nextInt(tags.size()));
+        	final String tagName = tag.getTagName();
+			final String searchPhrase = "tag:\"" + tagName + "\"/w";
+			final SearchParams sp = new SearchParams(searchPhrase);
+			assertEquals(1, sp.getKeywords().size());
+			final List<Fragment> results = fragmentDao.findBySearchParams(sp, tags);
+			for (Fragment fragment : results) {
+				assertEquals(true, fragment.containsTagName(tagName));
+			}
+		}
+    }
     
     @Test
-    @SuppressWarnings("unchecked")
     public void testSearchWithFragmentId() {
     	final Pair<Fragment[], Tag[]> pair = createTestData();
         final Fragment[] fragments = pair.getFirst();
@@ -495,8 +438,7 @@ public class SearchTest extends DaoTest {
         	final SearchParams sp = new SearchParams(searchPhrase);
         	assertEquals(1, sp.getKeywords().size());
         	assertEquals(1, sp.getKeywords().get(0).getWords().size());
-        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-        	final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
         	assertEquals(1, results.size());
         	assertEquals(new Long(id), results.get(0).getId());
         	assertEquals(fragments[index], results.get(0));
@@ -511,8 +453,7 @@ public class SearchTest extends DaoTest {
         	final SearchParams sp = new SearchParams(searchPhrase);
         	assertEquals(1, sp.getKeywords().size());
         	assertEquals(indices.length, sp.getKeywords().get(0).getWords().size());
-        	final Criteria crit = SearchQueryCreator.buildQuery(sp, session);
-        	final List<Fragment> results = crit.list();
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
         	assertEquals(indices.length, results.size());
         	final List<Fragment> list = Arrays.asList(fragments);
         	for (int i : indices) {
