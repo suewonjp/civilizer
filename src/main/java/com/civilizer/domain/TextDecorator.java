@@ -31,46 +31,31 @@ public final class TextDecorator {
 	}
 	
 	private static void match(List<Pair<Integer, Integer>> output, String input, SearchParams sp, boolean caseSensitive) {
-		// Create a pattern from the search parameters
-		Set<String> keywordSet = new HashSet<String>();
-
+	    String regex = "";
 		for (SearchParams.Keywords keywords : sp.getKeywords()) {
 		    for (SearchParams.Keyword kw : keywords.getWords()) {
-		        final String w = kw.getWord();
+		        String w = kw.getWord();
 		        if (kw.isId() || kw.isInverse()) {
 		            continue;
 		        }
-		        if (caseSensitive) {
-		            if (kw.isCaseSensitive()) {
-						keywordSet.add(w);
-		            }
-		        }
-		        else {
-		            if (! kw.isCaseSensitive()) {
-		                keywordSet.add(w.toLowerCase());
-		            }
-		        }
+		        if (!caseSensitive && ! kw.isCaseSensitive())
+	                w = w.toLowerCase();
+		        w = escapeRegexMetaCharacters(w);
+		        if (kw.isWholeWord())
+		            w = "\\b" + w + "\\b";
+		        else if (kw.isBeginningWith())
+		            w = "\\b" + w;
+		        else if (kw.isEndingWith())
+		            w = w + "\\b";
+		        if (!regex.isEmpty())
+		            regex += "|";
+		        regex += "("+ w + ")";
 		    }
 		}
 		
-		final int keywordCount = keywordSet.size();
-		if (keywordCount == 0) {
-			return;
-		}
-		
-		String regex = "";
-		String[] keywords = keywordSet.toArray(new String[keywordCount]);
-		final int c = keywordCount - 1;
-		for (int i=0; i<c; ++i) {
-			regex += escapeRegexMetaCharacters(keywords[i]) + "|";
-		}
-		regex += escapeRegexMetaCharacters(keywords[keywords.length - 1]);
-		final Pattern p = Pattern.compile(regex);
-		
 		// Apply regular expression with the pattern
-		final String text = caseSensitive ? 
-				input : input.toLowerCase();
-		final Matcher m = p.matcher(text);
+		final String text = caseSensitive ? input : input.toLowerCase();
+		final Matcher m = Pattern.compile(regex).matcher(text);
 		
 		// Populate the output ranges
 		while (m.find()) {
@@ -122,7 +107,6 @@ public final class TextDecorator {
 			final int si = r.getFirst();
 			if (si < pi) {
 				// The range overlaps the previous range;
-				// This case may be very rare, but we cannot guarantee it won't happen;
 				// Just ignore it for now;
 				continue;
 			}

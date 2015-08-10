@@ -9,6 +9,8 @@ import com.civilizer.domain.SearchParams;
 import com.civilizer.domain.TextDecorator;
 
 public class DomainTextDecoratorTest {
+    final String PRE = TextDecorator.PREFIX_FOR_HIGHLIGHT;
+    final String POST = TextDecorator.POSTFIX_FOR_HIGHLIGHT;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -41,13 +43,10 @@ public class DomainTextDecoratorTest {
 		
 		final String decoratedText = TextDecorator.highlight(text, sp);
 		assertNotNull(decoratedText);
-		assertEquals(true, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+"Function"+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
-		assertEquals(false, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+"function"+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
+		assertEquals(true, decoratedText.contains(PRE+"Function"+POST));
+		assertEquals(false, decoratedText.contains(PRE+"function"+POST));
 		
-		final String tmp = decoratedText
-		        .replace(TextDecorator.PREFIX_FOR_HIGHLIGHT, "")
-		        .replace(TextDecorator.POSTFIX_FOR_HIGHLIGHT, "");
-		
+		final String tmp = decoratedText.replace(PRE, "").replace(POST, "");
 		assertEquals(text, tmp);
 	}
 
@@ -64,13 +63,10 @@ public class DomainTextDecoratorTest {
 		
 		final String decoratedText = TextDecorator.highlight(text, sp);
 		assertNotNull(decoratedText);
-		assertEquals(true, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+"length"+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
-		assertEquals(true, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+"parentheses"+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
+		assertEquals(true, decoratedText.contains(PRE+"length"+POST));
+		assertEquals(true, decoratedText.contains(PRE+"parentheses"+POST));
 		
-		final String tmp = decoratedText
-		        .replace(TextDecorator.PREFIX_FOR_HIGHLIGHT, "")
-		        .replace(TextDecorator.POSTFIX_FOR_HIGHLIGHT, "");
-		
+		final String tmp = decoratedText.replace(PRE, "").replace(POST, "");
 		assertEquals(text, tmp);
 	}
 	
@@ -85,12 +81,9 @@ public class DomainTextDecoratorTest {
 			
 			final String decoratedText = TextDecorator.highlight(text, sp);
 			assertNotNull(decoratedText);
-			assertEquals(true, decoratedText.contains(TextDecorator.PREFIX_FOR_HIGHLIGHT+meta+TextDecorator.POSTFIX_FOR_HIGHLIGHT));
+			assertEquals(true, decoratedText.contains(PRE+meta+POST));
 			
-			final String tmp = decoratedText
-					.replace(TextDecorator.PREFIX_FOR_HIGHLIGHT, "")
-					.replace(TextDecorator.POSTFIX_FOR_HIGHLIGHT, "");
-			
+			final String tmp = decoratedText.replace(PRE, "").replace(POST, "");
 			assertEquals(text, tmp);
 		}
 	}
@@ -105,8 +98,24 @@ public class DomainTextDecoratorTest {
 		
 		final String decoratedText = TextDecorator.highlight(text, sp);
 		assertNotNull(decoratedText);
-//		System.out.println("++++++ " + decoratedText);
 		assertEquals(text, decoratedText);
 	}
+	
+	@Test
+    public void testHighlightKeywordsWithWordBoundaries() {
+	    final String text = "The Javascript language has nothing to do with the Java language";
+        {
+            final SearchParams sp = new SearchParams("java/w");
+            final String decoratedText = TextDecorator.highlight(text, sp);
+            assertEquals(text.indexOf("Java language"), decoratedText.indexOf(PRE+"Java"+POST));
+        }
+        {
+            final SearchParams sp = new SearchParams("java/b");
+            final String decoratedText = TextDecorator.highlight(text, sp);
+            assertEquals(4, decoratedText.indexOf(PRE+"Java"+POST));
+            String tmp = decoratedText.substring(4+(PRE+"Java"+POST).length());
+            assertEquals(true, tmp.contains(PRE+"Java"+POST));
+        }
+    }
 
 }
