@@ -97,7 +97,7 @@ public class DomainTagTest {
 	    return tags;
 	}
 	
-	private static boolean inSameHierarchy(Tag possibleParent, Tag possibleDescendant) {
+	public static boolean inSameHierarchy(Tag possibleParent, Tag possibleDescendant) {
 	    if (possibleParent.equals(possibleDescendant) || possibleParent.getChildren().contains(possibleDescendant))
 	        return true;
 	    for (Tag c : possibleParent.getChildren()) {

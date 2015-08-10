@@ -44,7 +44,7 @@ public final class TestUtil {
         assertNotNull(cal);
 
         long seed = cal.getTimeInMillis();
-//        seed = 1428894470142L;
+        seed = 1439185021758L;
         
         logger.info("random seed = " + seed);
 

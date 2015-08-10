@@ -7,8 +7,6 @@ import java.util.regex.Matcher;
 
 import com.civilizer.utils.Pair;
 
-// [TODO] adding rules regarding pagination and ordering
-
 @SuppressWarnings("serial")
 public final class SearchParams implements Serializable {
 	
@@ -33,6 +31,8 @@ public final class SearchParams implements Serializable {
 	private static final String TARGET_DIRECTIVE_PATTERN =
 	        "(\\b(any|tag|tagh|anytag|title|anytitle|text|anytext|id)\\b)?:";
 	
+	private static final String controlOperators = "cwberh-";
+	
 	public static final class Keyword implements Serializable {
 		private final String word;
 		private final boolean caseSensitive;
@@ -42,6 +42,7 @@ public final class SearchParams implements Serializable {
 		private final boolean regex;
 		private final boolean inverse;
 		private final boolean id;
+		private final boolean tagHeirarchy;
 		
 		public Keyword(String src, boolean isId) {
 			String word = src.trim();
@@ -52,7 +53,8 @@ public final class SearchParams implements Serializable {
 			boolean regex = false;
 			boolean inverse = false;
 			boolean id = isId;
-			final Pattern p = Pattern.compile("(.*)/([cwber-]+)$");
+			boolean tagHeirarchy = false;
+			final Pattern p = Pattern.compile("([^/]*)/(["+controlOperators+"]+)$");
 			final Matcher m = p.matcher(src);
 			
 			if (m.find()) {
@@ -81,6 +83,11 @@ public final class SearchParams implements Serializable {
 				if (suffix.indexOf('-') != -1) {
 					// [RULE] .../- => inverse; the query returns data not matching the pattern.
 					inverse = true;
+				}
+				if (suffix.indexOf('h') != -1) {
+				    // [RULE] .../- => hierarchy; applied to only tag keywords.
+				    // The query will respect not only the tag but all its descendant tags.
+				    tagHeirarchy = true;
 				}
 			}
 			
@@ -111,6 +118,7 @@ public final class SearchParams implements Serializable {
 			this.regex = regex;
 			this.inverse = inverse;
 			this.id = id;
+			this.tagHeirarchy = tagHeirarchy;
 		}
 		
 		public static Pair<String, Character> escapeSqlWildcardCharacters(String word) {
@@ -146,43 +154,12 @@ public final class SearchParams implements Serializable {
 			
 			return new Pair<String, Character>(word, escapeChar);
 		}
-		
+
 		public boolean matchesTagName(Tag tag) {
 		    return matchesTagName(tag.getTagName());
 		}
 		
 		public boolean matchesTagName(String tagName) {
-		    final String w = caseSensitive ? word : word.toLowerCase();
-		    final String name = caseSensitive ?  tagName : tagName.toLowerCase();
-		    boolean match = false;
-		    
-		    if (regex) {
-		        // 'r' flag assumes case sensitivity regardless of the value of 'c' flag
-		        match = Pattern.matches(word, tagName);
-		    }
-		    else {
-		        if (wholeWord) {
-		            match = name.equals(w);
-		        }
-		        else if (beginningWith) {
-		            match = name.startsWith(w);
-		        }
-		        else if (endingWith) {
-		            match = name.endsWith(w);
-		        }
-		        else {
-		            match = name.contains(w);
-		        }
-		    }
-
-		    return inverse ? !match : match;
-		}
-
-		public boolean matchesTagNameIgnoringInverse(Tag tag) {
-		    return matchesTagNameIgnoringInverse(tag.getTagName());
-		}
-		
-		public boolean matchesTagNameIgnoringInverse(String tagName) {
 		    final String w = caseSensitive ? word : word.toLowerCase();
 		    final String name = caseSensitive ?  tagName : tagName.toLowerCase();
 		    boolean match = false;
@@ -265,6 +242,10 @@ public final class SearchParams implements Serializable {
 		public boolean isId() {
 			return id;
 		}
+
+		public boolean tagHeirarchyRequired() {
+		    return tagHeirarchy;
+		}
 		
 		@Override
 		public String toString() {
@@ -303,7 +284,8 @@ public final class SearchParams implements Serializable {
 			final boolean any = targetDirective.any;
 			
 			if (! src.isEmpty()) {
-				final Pattern p = Pattern.compile("(\"[^\"]+\")|(\\S+)");
+				final Pattern p =
+				        Pattern.compile("(\"[^\"]+\"(/["+controlOperators+"]+)?)|(\\S+)");
 				boolean isId = false;
 				boolean isTag = false;
 				
@@ -375,84 +357,103 @@ public final class SearchParams implements Serializable {
 		public boolean isAny() {
 			return any;
 		}
-		
-		public boolean hasInverse() {
-		    for (Keyword w : getWords()) {
-                if (w.isInverse())
-                    return true;
-            }
-		    return false;
-		}
 	}
 	
 	public static final class TagCache {
-	    private final List<Long> conjuctionIds;
-	    private final List<Long> disjuctionIds;
-	    
-	    public TagCache(Collection<Tag> tags, SearchParams sp) {
-	        List<Long> conjuctionIds = Collections.emptyList();
-	        List<Long> disjuctionIds = Collections.emptyList();
-	        try {
-	            if (tags == null || tags.isEmpty())
-	                return;
-    	        List<Keyword> conj = Collections.emptyList();
-    	        List<Keyword> disj = Collections.emptyList();
-    	        
-    	        Keywords kws = sp.getKeywords(TARGET_TAG, false);
-    	        if (kws != null) conj = kws.getWords();
-    	        kws = sp.getKeywords(TARGET_TAG, true);
-    	        if (kws != null) disj = kws.getWords();
-	            if (conj.isEmpty() && disj.isEmpty())
-	                return;
-
-	            if (!conj.isEmpty())
-	                conjuctionIds = new ArrayList<>();
-	            if (!disj.isEmpty())
-	                disjuctionIds = new ArrayList<>();
-	            
-	            for (Tag t : tags) {
-	                final long tid = t.getId();
-	                if (!conjuctionIds.contains(tid)) {
-	                    for (Keyword w : conj) {
-	                        if (w.matchesTagNameIgnoringInverse(t))
-	                            conjuctionIds.add(w.isInverse() ? -tid : tid);
-	                    }
-	                }
-	                if (!disjuctionIds.contains(tid)) {
-	                    for (Keyword w : disj) {
-	                        if (w.matchesTagNameIgnoringInverse(t))
-	                            disjuctionIds.add(w.isInverse() ? -tid : tid);
-	                    }
-	                }
-	            }
-	        }
-	        finally {
-	            this.conjuctionIds = conjuctionIds;
-	            this.disjuctionIds = disjuctionIds;
+	    private static final class Key {
+	        final long       id;
+	        final boolean    inverse;
+	        
+	        Key(long id, boolean inverse) {
+	            this.id = id; this.inverse = inverse;
 	        }
 	        
+	        public String toString() {
+	            return new Long(id).toString() + (inverse ? " -" : "");
+	        }
 	    }
 	    
-	    public boolean valid() {
-	        return !conjuctionIds.isEmpty() || !disjuctionIds.isEmpty();
+	    private List<List<Key>> keys = new ArrayList<List<Key>>();
+	    
+	    public TagCache(Collection<Tag> tags, SearchParams sp) {
+            if (tags == null || tags.isEmpty())
+                return;
+	        List<Keyword> kwlst = Collections.emptyList();
+	        
+	        Keywords kws = sp.getKeywords(TARGET_TAG, false);
+	        if (kws != null) kwlst = kws.getWords();
+	        for (Keyword w : kwlst) {
+	            List<Key> tmp = new ArrayList<>();
+	            for (Tag t : tags) {
+	                if (w.matchesTagName(t)) {
+                        if (w.tagHeirarchyRequired()){
+                            List<Key> hks = getHierarchyKeys(t, w.isInverse());
+                            tmp.addAll(hks);
+                        }
+                        else
+                            tmp.add(new Key(t.getId(), w.isInverse()));
+                    }
+	            }
+	            if (!tmp.isEmpty())
+	                keys.add(tmp);
+            }
+	        
+	        kws = sp.getKeywords(TARGET_TAG, true);
+	        if (kws != null) kwlst = kws.getWords();
+	        List<Key> tmp = new ArrayList<>();
+	        for (Keyword w : kwlst) {
+                for (Tag t : tags) {
+                    if (w.matchesTagName(t)) {
+                        if (w.tagHeirarchyRequired()) {
+                            List<Key> hks = getHierarchyKeys(t, w.isInverse());
+                            tmp.addAll(hks);
+                        }
+                        else
+                            tmp.add(new Key(t.getId(), w.isInverse()));
+                    }
+                }
+            }
+	        if (!tmp.isEmpty())
+	            keys.add(tmp);
+	    }
+	    
+	    private static List<Key> getHierarchyKeys(Tag tag, boolean inverse) {
+	        Set<Long> idSet = tag.getIdsOfDescendants(true);
+	        if (idSet.isEmpty())
+	            return Collections.emptyList();
+	        final List<Key> output = new ArrayList<Key>();
+	        for (Long id : idSet) {
+	            output.add(new Key(id, inverse));
+	        }
+	        return output;
 	    }
 	    
 	    public boolean matches(Fragment frg) {
-            for (long id : conjuctionIds) {
-                boolean match = frg.containsTagId(Math.abs(id));
-                if (id > 0 && !match || id < 0 && match)
+	        if (frg.containsTagId(Tag.TRASH_TAG_ID))
+	            // Exclude trashed tags regardless of the search phrase.
+	            return false;
+	        
+            for (List<Key> klst : keys) {
+                assert !klst.isEmpty();
+                boolean outerMatch = false;
+                for (Key k : klst) {
+                    boolean innerMatch = frg.containsTagId(k.id);
+                    if (!k.inverse && innerMatch || k.inverse && !innerMatch) {
+                        outerMatch = true;
+                        break;
+                    }
+                }
+                if (!outerMatch)
                     return false;
             }
             
-            boolean disjMatch = disjuctionIds.isEmpty();
-            for (long id : disjuctionIds) {
-                boolean match = frg.containsTagId(Math.abs(id));
-                if (id > 0 && match || id < 0 && !match)
-                    return true;
-            }
-            
-	        return disjMatch;
+	        return true;
 	    }
+        
+        public boolean valid() {
+//            return !conjunctionKeys.isEmpty() || !disjunctionKeys.isEmpty();
+            return !keys.isEmpty();
+        }
 	}
 	
 	private final List<Keywords> keywords;

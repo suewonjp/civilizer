@@ -225,24 +225,41 @@ public class DomainSearchParamsTest {
 	@Test
     public void testTagCache() {
 	    final List<Tag> tags = DomainTagTest.buildTags(
-                "my tag", "your tag", "Tag000",      
+	            "my tag", "your tag", "Tag000",      
                 "~tag~", "xxxYyy", "#bookmark",
                 "wwwZzz"
                 );
+	    
+	    final Tag rootTag = new Tag("rootTag");
+	    rootTag.setId((long)tags.size() + 1);
+	    for (int i=0; i<tags.size(); ++i) {
+	        rootTag.addChild(tags.get(i));
+	    }
         
         Fragment f = new Fragment("fragment", "Some content", null);
         f.setId(0L);
         for (Tag t : tags) {
             f.addTag(t);
         }
-        f.removeTag(tags.get(tags.size()-1)); // remove the tag "wwwZzz"
         
+        f.removeTag(tags.get(tags.size()-1)); // remove the tag "wwwZzz"        
         assertEquals(tags.size()-1, f.getTags().size());
+        
+        tags.add(rootTag);
         
         {
             final SearchParams sp = new SearchParams("tag:tag");
             final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
             assertEquals(true, tc.matches(f));
+        }
+        {
+            final SearchParams sp = new SearchParams("tag:tag");
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            Fragment tmp = new Fragment("fragment", "Some content", null);
+            Tag trash = new Tag("trashed tag");
+            trash.setId((long)Tag.TRASH_TAG_ID);
+            tmp.addTag(trash);
+            assertEquals(false, tc.matches(tmp));
         }
         {
             final SearchParams sp = new SearchParams("tag:tag/e Tag/b xxY/c");
@@ -273,6 +290,22 @@ public class DomainSearchParamsTest {
             final SearchParams sp = new SearchParams("anytag: zzz/- zzz www");
             final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
             assertEquals(true, tc.matches(f));
+        }
+        {
+            final Tag p = rootTag;
+            final List<Tag> descendants = new ArrayList<>();
+            for (Tag t : tags) {
+                if (DomainTagTest.inSameHierarchy(p, t))
+                    descendants.add(t);
+            }
+            final SearchParams sp = new SearchParams("tag:\"" + p.getTagName() + "\"/h");
+            assertEquals(true, sp.getKeywords().get(0).getWords().get(0).tagHeirarchyRequired());
+            final SearchParams.TagCache tc = new SearchParams.TagCache(tags, sp);
+            for (Tag t : descendants) {
+                Fragment tmp = new Fragment("tmp", "Some content", null);
+                tmp.addTag(t);
+                assertEquals(true, tc.matches(tmp));
+            }
         }
     }
 	
