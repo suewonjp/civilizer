@@ -152,16 +152,19 @@ public final class MainController {
             // Fetch all the fragments
             fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder, asc);
             allCount = fragmentDao.countAll(false);
+            sp = null;
         }
         else if (tagId == Tag.TRASH_TAG_ID) {
             // Fetch the trashed fragments
             fragments = fragmentDao.findSomeByTagId(tagId, first, count + 1, frgOrder, asc);
             allCount = fragmentDao.countByTagAndItsDescendants(tagId, true, tagDao);
+            sp = null;
         }
         else if (tagId != PanelContextBean.EMPTY_TAG) {
         	// Fetch the fragments with the specified tag (non-trashed)
         	fragments = fragmentDao.findSomeNonTrashedByTagId(tagId, first, count + 1, frgOrder, asc, tagDao);
         	allCount = fragmentDao.countByTagAndItsDescendants(tagId, false, tagDao);
+            sp = null;
         }
         else if (sp != null) {
             // Fetch the fragments by the search parameters
