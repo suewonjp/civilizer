@@ -789,17 +789,23 @@ function restoreFragmentFromCtxtMenu() {
 
 function showSearchDialog(panelId, qsPhrase) {
     var dlg = PF("searchDlg");
-
+    
     var panelBtns = $("#target-panels-on-search-dlg");
-	panelBtns.buttonset();
-	$("#panel-radio-on-search-dlg-"+panelId).prop("checked", true);
-	panelBtns.buttonset("refresh").find("input[type=radio]").on("change", function(e) {
-	   var pid = $(e.currentTarget).attr("_pid");
-	   dlg.cvzCurPanelId = pid;
-	});
+    panelBtns.buttonset();
+    $("#panel-radio-on-search-dlg-"+panelId).prop("checked", true);
+    panelBtns.buttonset("refresh").find("input[type=radio]").on("change", function(e) {
+        var pid = $(e.currentTarget).attr("_pid");
+        dlg.cvzCurPanelId = pid;
+    });
 
 	dlg.show();
-	dlg.jq.find(".ui-dialog-title").text(MSG.label_search);
+	dlg.jq.on("keyup", function(e) {
+	    if (e.ctrlKey && e.which == $.ui.keyCode.SPACE) {
+            dlg.cvzCurPanelId = (dlg.cvzCurPanelId + 1) % 3;
+            $("#panel-radio-on-search-dlg-"+dlg.cvzCurPanelId).prop("checked", true);
+            panelBtns.buttonset("refresh");
+        }
+	}).find(".ui-dialog-title").text(MSG.label_search);
 	dlg.cvzCurPanelId = panelId;
 	
 	var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);

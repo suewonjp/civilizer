@@ -44,9 +44,22 @@ $(document).ready(function() {
     $(".rclick-disabled").bind("contextmenu", function(e) {
         e.preventDefault(); 
     });
+    
+    $(window).on("keyup.cvz_global_hotkey", onGlobalHotkeys);
 });
 
 $(window).load(function() {
     applyCurrentThemeToThemeSwitcher();
 });
+
+function onGlobalHotkeys(e) {
+    switch (e.keyCode) {
+    case $.ui.keyCode.SPACE:
+        if (e.ctrlKey) {
+            if (!PF("searchDlg").isVisible())
+                showSearchDialog(0, null);
+        }
+        break;
+    }
+}
 
