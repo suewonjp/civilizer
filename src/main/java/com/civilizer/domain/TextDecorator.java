@@ -33,6 +33,10 @@ public final class TextDecorator {
 	private static void match(List<Pair<Integer, Integer>> output, String input, SearchParams sp, boolean caseSensitive) {
 	    String regex = "";
 		for (SearchParams.Keywords keywords : sp.getKeywords()) {
+		    if (keywords.getTarget() == SearchParams.TARGET_TAG
+		            || keywords.getTarget() == SearchParams.TARGET_ID
+		            )
+		        continue;
 		    for (SearchParams.Keyword kw : keywords.getWords()) {
 		        String w = kw.getWord();
 		        if (kw.isId() || kw.isInverse()) {
@@ -51,8 +55,10 @@ public final class TextDecorator {
 		            regex += "|";
 		        regex += "("+ w + ")";
 		    }
-		}
-		
+		}		
+		if (regex.isEmpty())
+		    return;
+
 		// Apply regular expression with the pattern
 		final String text = caseSensitive ? input : input.toLowerCase();
 		final Matcher m = Pattern.compile(regex).matcher(text);
