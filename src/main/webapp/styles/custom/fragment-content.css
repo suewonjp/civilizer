@@ -59,8 +59,10 @@
     margin: 0px 0px 0px 0px;
 }
 
-.frg-content-reso0 {
-    display: none;
+.frg-content-reso0, .frg-content-reso3 {
+    display: block;
+    max-height: auto;
+    height: auto;
 }
 
 .frg-content-reso1 {
@@ -73,10 +75,4 @@
     display: block;
     max-height: 200px;
     overflow-y:auto;
-}
-
-.frg-content-reso3 {
-    display: block;
-    max-height: auto;
-    height: auto;
 }
