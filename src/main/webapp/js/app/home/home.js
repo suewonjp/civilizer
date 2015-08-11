@@ -788,9 +788,19 @@ function restoreFragmentFromCtxtMenu() {
 }
 
 function showSearchDialog(panelId, qsPhrase) {
-	var dlg = PF("searchDlg");
+    var dlg = PF("searchDlg");
+
+    var panelBtns = $("#target-panels-on-search-dlg");
+	panelBtns.buttonset();
+	$("#panel-radio-on-search-dlg-"+panelId).prop("checked", true);
+	panelBtns.buttonset("refresh").find("input[type=radio]").on("change", function(e) {
+	   var pid = $(e.currentTarget).attr("_pid");
+	   dlg.cvzCurPanelId = pid;
+	});
+
 	dlg.show();
-	dlg.jq.find(".ui-dialog-title").text(MSG.label_search+" ~~~> "+MSG.label_panel+" "+panelId);
+	dlg.jq.find(".ui-dialog-title").text(MSG.label_search);
+	dlg.cvzCurPanelId = panelId;
 	
 	var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
 	
@@ -820,16 +830,14 @@ function showSearchDialog(panelId, qsPhrase) {
 			}
 		}
 		if (hasSomeToSearch) {
-//			searchFragments([{name:'panelId',value:panelId}]);
-		    searchFragmentsForPanel(panelId);
+		    searchFragmentsForPanel(dlg.cvzCurPanelId);
 		}
 	});
 	qsInput.keyup(function(event) {
 		// Quick search tab responds to the enter key
 		if (event.which == $.ui.keyCode.ENTER) {
 			if ($(this).val().trim()) {
-//	            searchFragments([{name:'panelId',value:panelId}]);
-			    searchFragmentsForPanel(panelId);
+			    searchFragmentsForPanel(dlg.cvzCurPanelId);
 			}
 		}
 	});
@@ -840,7 +848,6 @@ function searchWithHelpFromLastSearch(event, panelId, widget) {
 		var qsPhrase = $(widget).val().trim();
 		if (qsPhrase) {
 			$("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
-//            searchFragments([{name:'panelId',value:panelId}]);
 			searchFragmentsForPanel(panelId);
 		}
 	}
@@ -852,7 +859,6 @@ function fetchFragments(panelId, fragmentIds) {
 		ids += fragmentIds[i] + " ";
 	}
 	$("#fragment-group-form\\:search-panel\\:quick-search-input").val(ids);
-//	searchFragments([{name:'panelId',value:panelId}]);
 	searchFragmentsForPanel(panelId);
 }
 

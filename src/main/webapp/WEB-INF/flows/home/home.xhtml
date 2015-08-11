@@ -111,6 +111,20 @@
 	        </p:tab>
 	    </p:accordionPanel>
 	    <p:commandButton id="go-search" value="#{msg['label_search']}" icon="ui-icon-check"/>
+        <span id="target-panels-on-search-dlg" style="position:relative;top:20px;left:100px">
+            <input _pid="0" type="radio" id="panel-radio-on-search-dlg-0" name="panel-radio" style="display:none;"/>
+            <label for="panel-radio-on-search-dlg-0" title="#{msg['toggle_panel']}">
+                <span class="fa fa-desktop"> 0</span>
+            </label>
+            <input _pid="1" type="radio" id="panel-radio-on-search-dlg-1" name="panel-radio" style="display:none;"/>
+            <label for="panel-radio-on-search-dlg-1" title="#{msg['toggle_panel']}">
+                <span class="fa fa-desktop"> 1</span>
+            </label>
+            <input _pid="2" type="radio" id="panel-radio-on-search-dlg-2" name="panel-radio" style="display:none;"/>
+            <label for="panel-radio-on-search-dlg-2" title="#{msg['toggle_panel']}">
+                <span class="fa fa-desktop"> 2</span>
+            </label>
+        </span>
     </p:dialog>
     
     <p:remoteCommand name="relateFragments" action="relate-fragment-pair"/>
