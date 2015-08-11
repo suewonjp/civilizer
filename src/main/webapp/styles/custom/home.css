@@ -7,10 +7,9 @@
 }
 
 #fragment-panel-0, #fragment-panel-1, #fragment-panel-2 {
-    width: 30%;
     max-height: 1200px;
     float: left;
-    margin: 0px 30px 60px 0px;
+    margin: 0px 10px 60px 0px;
     overflow: auto;
 }
 
