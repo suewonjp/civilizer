@@ -149,7 +149,6 @@ function previewFragment() {
 function autocompleteForTypingTags() {
 //    $.widget("cvz.autocomplete", $.ui.autocomplete, {
 //        _renderItem: function(ul, item) {
-//            console.log(item);
 //            return $("<li>")
 //                .addClass("ui-weak-focus")
 //                .text(item.label)
@@ -169,12 +168,12 @@ function autocompleteForTypingTags() {
     });
     
     var split = function (input) {
-        return input.trim().split(/\,\s*/);
+        return input.trim().split(/"?\,\s*"?/);
     }
     
     function alreadyTyped(typedTags, suggestion) {
     	for (var i=0; i<typedTags.length; ++i) {
-    		if (typedTags[i] == suggestion) return true;
+    		if (typedTags[i].replace(/"/g, '') == suggestion) return true;
     	}
     	return false;
     }
@@ -184,7 +183,7 @@ function autocompleteForTypingTags() {
             var tags = split(req.term);
             var typed = null;
             if (tags.length) {
-                typed = tags[tags.length-1];
+                typed = tags[tags.length-1].replace(/"/g, '');
             }
             var output = [];
             if (! typed) {
@@ -213,13 +212,31 @@ function autocompleteForTypingTags() {
             return false;
         },
         select: function (event, ui) {
-            var terms = split(this.value);
-            // remove the current input
-            terms.pop();
+            var items = split(this.value);
+            
+            // remove the current input (being typed)
+            items.pop();
+            
             // add the selected item
-            terms.push(ui.item.value);
-            // separate all the items so far with comma-and-space
-            this.value = terms.join(", ") + ", ";
+            items.push(ui.item.value);
+            
+            // normalize all the items so far
+            var output = "";
+            for (var i=0; i<items.length; ++i) {
+                var item = items[i];
+                if (item.indexOf(" ") > -1) {
+                    // double quote any item with space characters included
+                    if (item.charAt(0) != '"')
+                        item = '"' + item;
+                    if (item.charAt(item.length-1) != '"')
+                        item = item + '"';
+                }
+                // separate each item with comma-and-space
+                output += item + ", ";
+            }
+            this.value = output;
+//            this.value = items.join(", ") + ", ";
+            
             return false;
         },
         autoFocus: true,
