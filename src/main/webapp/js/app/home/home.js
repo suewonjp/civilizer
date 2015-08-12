@@ -110,7 +110,7 @@ function populateFragmentOverlay(data) {
 		postprocessFragmentContent($this);
     });
 	
-	overlayContent.find(".related-fragment-container a.-cvz-frgm").on("click", triggerFragmentOverlay);
+	overlayContent.find(".related-fragment-container a.-cvz-frgm").off("click").on("click", triggerFragmentOverlay);
 	
 	// make titles on the overlay window also draggable/droppable
 	setupDraggableForFragmentTitle();
@@ -133,7 +133,7 @@ function triggerFragmentOverlay(event) {
 }
 
 function setupFragmentOverlayTrigger(parent) {
-    $(parent).find(".-cvz-frgm").on("click", triggerFragmentOverlay);
+    $(parent).find(".-cvz-frgm").off("click").on("click", triggerFragmentOverlay);
 }
 
 function setupFragmentOverlay() {
@@ -303,7 +303,7 @@ function setupFragmentLinks(content) {
         }
     });
     
-    content.find("a.-cvz-frgm").on("click", triggerFragmentOverlay);
+    content.find("a.-cvz-frgm").off("click").on("click", triggerFragmentOverlay);
 }
 
 function setupTagLinks(content) {
@@ -317,7 +317,7 @@ function setupTagLinks(content) {
         }
     });
     
-    content.find("a.-cvz-tag").on("click", function(e) {
+    content.find("a.-cvz-tag").off("click").on("click", function(e) {
         fetchFragmentsByTag($(this), null);
         return false;
     });
@@ -404,7 +404,7 @@ function setupDraggableForFragmentTitle() {
 function setupDraggableForTags() {
 	var tagPalettePanel = $("#tag-palette-panel");
 	var overflowOption = tagPalettePanel.css("overflow");
-	$("#tag-palette-panel .each-tag").draggable(baseDraggableSettings)
+	$("#tag-palette-panel .each-tag").draggable(baseDraggableSettings).off("dragstart dragstop")
 	.on("dragstart", function(event, ui) {
 		// [NOTE] the helper object disappears at the outside of the panel unless doing this
 		tagPalettePanel.css({overflow:"initial"});
@@ -419,7 +419,7 @@ function setupDraggableForTags() {
 function setupDraggableForFiles() {
 	var fileBoxPanel = $("#file-box-form\\:file-box-panel");
 	var overflowOption = fileBoxPanel.css("overflow");
-	$(".fb-file").draggable(baseDraggableSettings)
+	$(".fb-file").draggable(baseDraggableSettings).off("dragstart dragstop")
 	.on("dragstart", function(event, ui) {
 		fileBoxPanel.css({overflow:"initial"});
 	})
@@ -793,14 +793,15 @@ function showSearchDialog(panelId, qsPhrase) {
     var panelBtns = $("#target-panels-on-search-dlg");
     panelBtns.buttonset();
     $("#panel-radio-on-search-dlg-"+panelId).prop("checked", true);
-    panelBtns.buttonset("refresh").find("input[type=radio]").on("change", function(e) {
+    panelBtns.buttonset("refresh").find("input[type=radio]").off("change").on("change", function(e) {
         var pid = $(e.currentTarget).attr("_pid");
         dlg.cvzCurPanelId = pid;
     });
 
 	dlg.show();
-	dlg.jq.on("keyup", function(e) {
+	dlg.jq.off("keyup").on("keyup", function(e) {
 	    if (e.ctrlKey && e.which == $.ui.keyCode.SPACE) {
+	        console.log(dlg.cvzCurPanelId);
             dlg.cvzCurPanelId = (dlg.cvzCurPanelId + 1) % 3;
             $("#panel-radio-on-search-dlg-"+dlg.cvzCurPanelId).prop("checked", true);
             panelBtns.buttonset("refresh");
@@ -809,6 +810,7 @@ function showSearchDialog(panelId, qsPhrase) {
 	dlg.cvzCurPanelId = panelId;
 	
 	var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
+	console.log(qsInput.keypress);
 	
 	$("#fragment-group-form\\:search-panel\\:tag-keywords").watermark(MSG.how_to_input_tags);
 	
