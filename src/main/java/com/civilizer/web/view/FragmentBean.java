@@ -52,7 +52,7 @@ public final class FragmentBean implements Serializable {
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		this.title = title.intern();
 	}
 
 	public String getContent() {
@@ -60,7 +60,7 @@ public final class FragmentBean implements Serializable {
 	}
 
 	public void setContent(String content) {
-		this.content = content;
+		this.content = content.intern();
 	}
 
 	public String getConcatenatedTagNames() {
@@ -68,7 +68,7 @@ public final class FragmentBean implements Serializable {
 	}
 
 	public void setConcatenatedTagNames(String concatenatedTagNames) {
-		this.concatenatedTagNames = concatenatedTagNames;
+		this.concatenatedTagNames = concatenatedTagNames.intern();
 	}
 	
 	public void setFragmentSelectionBean(FragmentSelectionBean fsb) {

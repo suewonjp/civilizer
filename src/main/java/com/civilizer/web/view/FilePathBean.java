@@ -7,38 +7,33 @@ import java.io.Serializable;
 public class FilePathBean implements Serializable {
 	
 	private String name = "";
-	
 	private String fullPath = "";
-	
 	private long fileEntityId = -1;
-	
 	private int id = -1;
-	
 	private boolean folder;
-	
 	private boolean broken;
 	
 	public FilePathBean(String fullPath) { 
-		this.fullPath = fullPath;
+		setFullPath(fullPath);
 	}
 
 	public FilePathBean(String name, String fullPath) { 
-		this.name = name;
-		this.fullPath = fullPath;
+		setName(name);
+		setFullPath(fullPath);
 	}
 
 	public FilePathBean(String name, String fullPath, long fileEntityId) {
-	    this.name = name;
-	    this.fullPath = fullPath;
-	    this.fileEntityId = fileEntityId;
+	    setName(name);
+	    setFullPath(fullPath);
+	    setFileEntityId(fileEntityId);
 	}
-
+	
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.intern();
 	}
 
 	public int getId() {
@@ -62,7 +57,7 @@ public class FilePathBean implements Serializable {
 	}
 
 	public void setFullPath(String fp) {
-		this.fullPath = fp;
+		this.fullPath = fp.intern();
 	}
 
 	public long getFileEntityId() {

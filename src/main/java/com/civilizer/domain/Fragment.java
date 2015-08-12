@@ -26,6 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Entity
 @Table(name = "FRAGMENT")
 public final class Fragment implements Serializable {
+    
     private Long id;
     private String title = "";
     private String content = "";
@@ -64,7 +65,7 @@ public final class Fragment implements Serializable {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.intern();
     }
 
     @Column(name = "content")
@@ -73,7 +74,7 @@ public final class Fragment implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = content.intern();
     }
 
     @Column(name = "creation_datetime")

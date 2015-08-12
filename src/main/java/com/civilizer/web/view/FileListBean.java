@@ -98,7 +98,7 @@ public final class FileListBean implements Serializable {
 	}
 
 	public void setFileName(String fileName) {
-		this.fileName = fileName;
+		this.fileName = fileName.intern();
 	}
 
 	public int getSrcNodeId() {
