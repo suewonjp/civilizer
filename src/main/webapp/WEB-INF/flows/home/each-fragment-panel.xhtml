@@ -102,7 +102,7 @@
             <span class="fa fa-search fa-1x ui-panel ui-widget-content ui-corner-all" />
         </p:commandLink>
 	    <input class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" 
-	       value="#{lastSearchPhrase}" onkeyup="searchWithHelpFromLastSearch(event, '#{panelId}', this)"/>
+	       value="#{lastSearchPhrase}" onkeypress="searchWithHelpFromLastSearch(event, '#{panelId}', this)"/>
     </div>
 </c:if>
 

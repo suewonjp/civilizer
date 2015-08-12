@@ -839,7 +839,7 @@ function showSearchDialog(panelId, qsPhrase) {
 		    searchFragmentsForPanel(dlg.cvzCurPanelId);
 		}
 	});
-	qsInput.keyup(function(event) {
+	qsInput.keypress(function(event) {
 		// Quick search tab responds to the enter key
 		if (event.which == $.ui.keyCode.ENTER) {
 			if ($(this).val().trim()) {

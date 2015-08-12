@@ -146,16 +146,7 @@ function previewFragment() {
     }
 }
 
-function autocompleteForTypingTags() {
-//    $.widget("cvz.autocomplete", $.ui.autocomplete, {
-//        _renderItem: function(ul, item) {
-//            return $("<li>")
-//                .addClass("ui-weak-focus")
-//                .text(item.label)
-//                .appendTo(ul);
-//        },
-//    });
-    
+function autocompleteForTypingTags() {    
     var pfThemeBugFix = false;
     var theme = localStorage.getItem("theme");
     if (theme && (theme == "afterdark" || theme == "afterwork"))
@@ -167,7 +158,7 @@ function autocompleteForTypingTags() {
         tagSuggestions.push($(value).find(".each-tag-name").text());
     });
     
-    var split = function (input) {
+    function split(input) {
         return input.trim().split(/"?\,\s*"?/);
     }
     
@@ -177,10 +168,21 @@ function autocompleteForTypingTags() {
     	}
     	return false;
     }
-   
-    $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords").autocomplete({
-        source: function(req, res) { // displaying suggestions;
-            var tags = split(req.term);
+    
+    function Options() {
+        var opts = this;
+
+        // [extended option] check whether autocomplete can be invoked. it is overridable.
+        this.allow = function(input) {
+            return input;
+        };
+        
+        // [jQuery.ui.autocomplete option] displaying suggestions.
+        this.source = function(req, res) {
+            var input = opts.allow(req.term);
+            if (!input)
+                return;
+            var tags = split(input);
             var typed = null;
             if (tags.length) {
                 typed = tags[tags.length-1].replace(/"/g, '');
@@ -200,8 +202,10 @@ function autocompleteForTypingTags() {
                 }
             }
             res(output);
-        },
-        focus: function () {
+        };
+        
+        // [jQuery.ui.autocomplete option] callback invoked on the focused item.
+        this.focus = function () {
             if (pfThemeBugFix) {
                 var acMenu = $("ul.ui-autocomplete");
                 acMenu.find("li.ui-weak-focus").removeClass("ui-weak-focus");
@@ -210,9 +214,11 @@ function autocompleteForTypingTags() {
             
             // prevent value inserted on focus
             return false;
-        },
-        select: function (event, ui) {
-            var items = split(this.value);
+        };
+        
+        // [jQuery.ui.autocomplete option] callback invoked when the user has selected an item.
+        this.select = function (event, ui) {
+            var items = split(this.value.substring(opts.startIdx));
             
             // remove the current input (being typed)
             items.pop();
@@ -234,11 +240,28 @@ function autocompleteForTypingTags() {
                 // separate each item with comma-and-space
                 output += item + ", ";
             }
-            this.value = output;
-//            this.value = items.join(", ") + ", ";
+            this.value = this.value.substring(0, opts.startIdx) + output;
             
             return false;
-        },
-        autoFocus: true,
-    });
+        };
+        
+        // [extended option] autocomplete can be applicable to the string starting at this index.
+        this.startIdx = 0;
+        
+        // [jQuery.ui.autocomplete option] generates focus on an item when appearing.
+        this.autoFocus = true;
+    }; // function Options()
+   
+    $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords").autocomplete(new Options());
+    
+    var anotherOpts = new Options();
+    anotherOpts.allow = function(input) {
+        var idx = input.lastIndexOf("tag:");
+        if (idx == -1)
+            return null;
+        anotherOpts.startIdx = idx + 4;
+        return input.substring(anotherOpts.startIdx);
+    };
+    $("#fragment-group-form\\:search-panel\\:quick-search-input, #last-search-phrase-0 input, #last-search-phrase-1 input, #last-search-phrase-2 input")
+        .autocomplete(anotherOpts);
 }
