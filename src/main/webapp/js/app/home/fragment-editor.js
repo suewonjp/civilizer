@@ -147,6 +147,22 @@ function previewFragment() {
 }
 
 function autocompleteForTypingTags() {
+//    $.widget("cvz.autocomplete", $.ui.autocomplete, {
+//        _renderItem: function(ul, item) {
+//            console.log(item);
+//            return $("<li>")
+//                .addClass("ui-weak-focus")
+//                .text(item.label)
+//                .appendTo(ul);
+//        },
+//    });
+    
+    var pfThemeBugFix = false;
+    var theme = localStorage.getItem("theme");
+    if (theme && (theme == "afterdark" || theme == "afterwork"))
+        // [BUG] A focused item gets invisible over these themes.
+        pfThemeBugFix = true;
+    
 	var tagSuggestions = [];
     $("#tag-palette-flat .each-tag").each(function (index, value) {
         tagSuggestions.push($(value).find(".each-tag-name").text());
@@ -162,7 +178,7 @@ function autocompleteForTypingTags() {
     	}
     	return false;
     }
-    
+   
     $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords").autocomplete({
         source: function(req, res) { // displaying suggestions;
             var tags = split(req.term);
@@ -187,6 +203,12 @@ function autocompleteForTypingTags() {
             res(output);
         },
         focus: function () {
+            if (pfThemeBugFix) {
+                var acMenu = $("ul.ui-autocomplete");
+                acMenu.find("li.ui-weak-focus").removeClass("ui-weak-focus");
+                acMenu.find("li.ui-state-focus").addClass("ui-weak-focus");
+            }
+            
             // prevent value inserted on focus
             return false;
         },
