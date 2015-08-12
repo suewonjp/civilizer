@@ -303,7 +303,7 @@ public final class SearchParams implements Serializable {
 				while (m.find()) {
 				    String w = m.group();
 				    if (isTag) {
-				        // in case of tags, (as a rule) commas can be attached with keywords;
+				        // in case of tags, (as a special rule) commas can be attached with keywords;
 				        // we trim the commas here
 				        w = trimComma(w);
 				        if (w == null) continue;

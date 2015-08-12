@@ -218,7 +218,7 @@ function autocompleteForTypingTags() {
             terms.pop();
             // add the selected item
             terms.push(ui.item.value);
-            // add placeholder to get the comma-and-space at the end
+            // separate all the items so far with comma-and-space
             this.value = terms.join(", ") + ", ";
             return false;
         },
