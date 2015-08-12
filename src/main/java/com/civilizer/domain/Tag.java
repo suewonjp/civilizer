@@ -114,6 +114,13 @@ public final class Tag implements Serializable {
     	return new ArrayList<>(children);
     }
     
+    public static String stripDoubleQuotes(String name) {
+        if (name.startsWith("\"") || name.endsWith("\"")) {
+            return name.replace("\"", "");
+        }
+        return name;
+    }
+    
     public static char findInvalidCharFromName(String name) {
         // [RULE] these characters are not accepted to be used in tag names
         final char[] invalidChar = { '\"', '/', ',', '\\' };

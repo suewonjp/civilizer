@@ -341,6 +341,8 @@ public class DomainTagTest {
 	    {
             Tag t = new Tag("\"tag name with quots\"");
             assertEquals('\"', Tag.findInvalidCharFromName(t.getTagName()));
+            t.setTagName(Tag.stripDoubleQuotes(t.getTagName()));
+            assertEquals(0, Tag.findInvalidCharFromName(t.getTagName()));
         }
 	    {
 	        Tag t = new Tag("tag name / with slashes");

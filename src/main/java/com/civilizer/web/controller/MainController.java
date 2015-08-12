@@ -509,6 +509,7 @@ public final class MainController {
 			
 			boolean weHaveNewTag = false;
 			if (t == null) {
+			    name = Tag.stripDoubleQuotes(name);
 			    final char invalidCharacter = Tag.findInvalidCharFromName(name);
 			    if (invalidCharacter != 0) {
 			        final String msg = String.format("'%s' contains a disallowed character : %s", name, invalidCharacter);
