@@ -21,11 +21,7 @@ $(document).ready(function() {
     
 	setupTabViewsForTagPalette();
 	
-	setContextMenuForFragments();
-    setContextMenuForBookmarks();
-    setContextMenuForTags();
-    setContextMenuForSelections();
-	setContextMenuForFiles();
+	setupContextMenus();
 	
 	makeSidebarTitleToggleable();
 	
@@ -40,10 +36,6 @@ $(document).ready(function() {
     	// timeout for message display if any
     	$(".ui-messages-close").trigger("click");
     }, 15000);
-    
-    $(".rclick-disabled").bind("contextmenu", function(e) {
-        e.preventDefault(); 
-    });
     
     $(window).on("keyup.cvz_global_hotkey", onGlobalHotkeys);
 });

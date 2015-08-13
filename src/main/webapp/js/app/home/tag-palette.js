@@ -14,32 +14,6 @@ function setupTabViewsForTagPalette() {
     }
 }
 
-function setContextMenuForTags() {
-   	var menu = $("#tag-context-menu");
-   	
-	$(".each-tag").bind("contextmenu", function(event) {
-	    showPopup(menu, event);
-    	var target = $(event.target).closest(".each-tag");
-    	menu.data("target-tag", target);
-    	var tid = target.attr("_tid");
-    	if (tid <=0) {
-    	    // special tags; not modifiable
-    	    $("#tag-palette-form\\:edit").hide();
-    	    $("#tag-palette-form\\:trash").hide();
-    	}
-    	else {
-    	    $("#tag-palette-form\\:edit").show();
-    	    $("#tag-palette-form\\:trash").show();
-    	}
-    	$("#tag-palette-form\\:id-placeholder-for-tag").val(tid);
-    	event.preventDefault();
-    });
-
-    $(document).bind("click", function(event) {
-    	menu.hide();
-    });
-}
-
 function onExpandComplete() {
 	setContextMenuForTags();
 	setupDraggableForTags();

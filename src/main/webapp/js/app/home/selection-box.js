@@ -6,39 +6,6 @@ function onAjaxCompleteForSelectionBox() {
     initTogglerIcon($("#selection-box-title"));
 }
 
-function setContextMenuForSelections() {
-    var menu = $("#selection-box-context-menu");
-    
-    $(".each-selected-frg, #selection-box-form\\:selection-box-panel").bind("contextmenu", function(event) {
-        var target = $(event.target).closest(".each-selected-frg");
-        if (isNaN(parseInt(target.attr("_fid")))) {
-            var fragments = getSelectedFragments();
-            menu.find("#selection-box-form\\:bookmark").show();
-            showOrHide(menu.find("#selection-box-form\\:relate"), fragments.length > 1);
-            menu.find("#selection-box-form\\:trash").show();
-            menu.find("#selection-box-form\\:unselect").show();
-            menu.find("#selection-box-form\\:select_unselect").hide();
-            if (fragments.length > 0)
-                showPopup(menu, event);
-        }
-        else {
-            menu.find("#selection-box-form\\:bookmark").hide();
-            menu.find("#selection-box-form\\:relate").hide();
-            menu.find("#selection-box-form\\:trash").hide();
-            menu.find("#selection-box-form\\:unselect").hide();
-            menu.find("#selection-box-form\\:select_unselect").show();
-            showPopup(menu, event);
-        }
-            
-        menu.data("target-fragment", target);
-        event.preventDefault();
-    });
-
-    $(document).bind("click", function(event) {
-        menu.hide();
-    });
-}
-
 function getSelectedFragments() {
     var output = [];
     $("#selection-box-form\\:selection-box-panel").find(".each-selected-frg").each(function() {

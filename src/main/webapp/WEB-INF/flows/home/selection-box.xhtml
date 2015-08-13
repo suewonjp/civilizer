@@ -21,7 +21,7 @@
     </div>
     
     <p:panel id="selection-box-panel" toggleable="true" widgetVar="selectionBoxPanel">
-        <div title="#{msg['rclick_for_menu']}">
+        <div id="selection-box" title="#{msg['rclick_for_menu']}">
             <c:forEach var="frgId" items="#{fragmentSelectionBean.fragmentIds}" varStatus="loop">
                 <c:set var="frgTitle" value="#{fragmentSelectionBean.fragmentTitles[loop.index]}" />
                 <span class="small-fragment-box each-selected-frg notxtslct" _fid="#{frgId}" _ft="#{frgTitle}" title="#{msg['rclick_for_menu']}">

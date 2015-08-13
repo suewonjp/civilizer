@@ -1,18 +1,3 @@
-function setContextMenuForBookmarks() {
-	var menu = $("#bookmark-context-menu");
-   	
-	$(".each-bookmark").bind("contextmenu", function(event) {
-	    showPopup(menu, event);
-    	var target = $(event.target).closest(".each-bookmark");
-    	menu.data("target-bookmark", target);
-    	event.preventDefault();
-    });
-
-    $(document).bind("click", function(event) {
-    	menu.hide();
-    });
-}
-
 function confirmUnbookmarkingFragment() {
 	var target = $("#bookmark-context-menu").data("target-bookmark");
 	var fid = target.attr("_bid");

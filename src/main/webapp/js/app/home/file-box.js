@@ -1,37 +1,3 @@
-function setContextMenuForFiles() {
-    var menu = $("#file-context-menu");
-    
-	$(".each-file, #file-path-tree").bind("contextmenu", function(event) {
-	    showPopup(menu, event);
-    	var target = $(event.target);
-    	if (target.attr("_isFolder") === "false") {
-    		menu.find("#file-box-form\\:new-folder").hide();
-    	}
-    	else {
-    		menu.find("#file-box-form\\:new-folder").show();
-    	}
-    	if (isNaN(parseInt(target.attr("_id")))) {
-    		// the menu has no specified target;
-    		// the target will be the root folder
-    		menu.find("#file-box-form\\:rename").hide();
-    		menu.find("#file-box-form\\:move").hide();
-    		menu.find("#file-box-form\\:delete").hide();
-    	}
-    	else {
-    		// the menu has a target file or folder
-    		menu.find("#file-box-form\\:rename").show();
-    		menu.find("#file-box-form\\:move").show();
-    		menu.find("#file-box-form\\:delete").show();
-    	}
-    	menu.data("target-file", target);
-    	event.preventDefault();
-    });
-
-    $(document).bind("click", function(event) {
-    	menu.hide();
-    });
-}
-
 function processFileClasses(parent) {
 	parent.find(".-cvz-file").each(function () {
 		var $this = $(this);

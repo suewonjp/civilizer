@@ -730,40 +730,6 @@ function confirmSignout() {
     showConfirmDlg(MSG.confirm_signout, null, "fa-sign-out", "orangered");
 }
 
-function setContextMenuForFragments() {
-	var menu = $("#frg-context-menu");
-	
-	$(".fragment-header, .rcllick-hint").bind("contextmenu", function(event) {
-    	var target = $(event.target);
-    	if (target.hasClass("rclick-hint")) {
-    		target = target.closest(".fragment-header");    		
-    	}
-    	if (target.hasClass("fragment-header")) {
-    	    showPopup(menu, event);
-	    	menu.data("target-frg", target);
-	    	if (target.attr("_deletable") === "true") {
-	    		menu.find("#fragment-group-form\\:bookmark").hide();
-	    		menu.find("#fragment-group-form\\:trash").hide();
-	    		menu.find("#fragment-group-form\\:delete").show();
-	    		menu.find("#fragment-group-form\\:restore").show();
-	    		menu.find("#fragment-group-form\\:relateNew").hide();
-	    	}
-	    	else {
-	    		menu.find("#fragment-group-form\\:bookmark").show();
-	    		menu.find("#fragment-group-form\\:trash").show();
-	    		menu.find("#fragment-group-form\\:delete").hide();
-	    		menu.find("#fragment-group-form\\:restore").hide();
-	    		menu.find("#fragment-group-form\\:relateNew").show();
-	    	}
-	    	event.preventDefault();
-    	}
-	});
-	
-	$(document).bind("click", function(event) {
-    	menu.hide();
-    });
-}
-
 function bookmarkFragmentFromCtxtMenu() {
 	var menu = $("#frg-context-menu");
 	var target = menu.data("target-frg");
