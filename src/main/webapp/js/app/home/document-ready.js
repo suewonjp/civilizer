@@ -37,7 +37,7 @@ $(document).ready(function() {
     	$(".ui-messages-close").trigger("click");
     }, 15000);
     
-    $(window).on("keyup.cvz_global_hotkey", onGlobalHotkeys);
+    $(window).off("keyup.cvz_global_hotkey").on("keyup.cvz_global_hotkey", onGlobalHotkeys);
 });
 
 $(window).load(function() {

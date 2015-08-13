@@ -20,4 +20,4 @@ function pushState() {
 
 $window.unload(pushState());
 
-$window.on("popstate", pushState);
+$window.off("popstate").on("popstate", pushState);
