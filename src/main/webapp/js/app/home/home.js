@@ -87,9 +87,8 @@ function populateFragmentOverlay(data) {
 	var prevHdr = overlayContent.find(".fragment-header");
 	var backBtn = $("#fragmen-overlay-back-button");
 	if (prevHdr.length > 0) {
-		backBtn.show();
-		backBtn.attr("href", "fragment/"+prevHdr.attr("_fid"))
-			.off("click").on("click", triggerFragmentOverlay);
+		backBtn.show().attr("href", "fragment/"+prevHdr.attr("_fid"))
+		    .addClass("-cvz-frgm");
 	}
 	else {
 		backBtn.hide();
@@ -110,8 +109,6 @@ function populateFragmentOverlay(data) {
 		postprocessFragmentContent($this);
     });
 	
-	overlayContent.find(".related-fragment-container a.-cvz-frgm").off("click").on("click", triggerFragmentOverlay);
-	
 	// make titles on the overlay window also draggable/droppable
 	setupDraggableForFragmentTitle();
 	
@@ -121,6 +118,8 @@ function populateFragmentOverlay(data) {
 	
 	overlayContent.find(".each-tag").draggable(baseDraggableSettings)
 	.each(function() {formatTagsOnFragmentHeader($(this))});
+	
+	overlayFrame.off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
 }
 
 function triggerFragmentOverlay(event) {
@@ -132,14 +131,8 @@ function triggerFragmentOverlay(event) {
 	return false; // stop the link
 }
 
-function setupFragmentOverlayTrigger(parent) {
-    $(parent).find(".-cvz-frgm").off("click").on("click", triggerFragmentOverlay);
-}
-
 function setupFragmentOverlay() {
-    setupFragmentOverlayTrigger($("#fragment-group"));
-    setupFragmentOverlayTrigger($("#bookmark-form\\:bookmark-panel"));
-    setupFragmentOverlayTrigger($("#selection-box-form\\:selection-box-panel"));
+    $("#container").off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
     
 	$("#fragment-overlay-title-bar").dblclick(function() {
     	toggleWindow($("#fragment-overlay"), $(this));
@@ -302,8 +295,6 @@ function setupFragmentLinks(content) {
             $this.replaceWith(newTag);
         }
     });
-    
-    content.find("a.-cvz-frgm").off("click").on("click", triggerFragmentOverlay);
 }
 
 function setupTagLinks(content) {
