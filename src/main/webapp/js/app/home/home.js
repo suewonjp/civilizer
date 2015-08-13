@@ -398,26 +398,26 @@ function setupDraggableForFragmentTitle() {
 function setupDraggableForTags() {
 	var tagPalettePanel = $("#tag-palette-panel");
 	var overflowOption = tagPalettePanel.css("overflow");
-	$("#tag-palette-panel .each-tag").draggable(baseDraggableSettings).off("dragstart dragstop")
-	.on("dragstart", function(event, ui) {
+	$("#tag-palette-panel .each-tag, #fragment-group .each-tag").draggable(baseDraggableSettings);
+	$("#tag-palette-panel").off(".cvz_tag_dnd")
+	.on("dragstart.cvz_tag_dnd", ".each-tag", function(event, ui) {
 		// [NOTE] the helper object disappears at the outside of the panel unless doing this
 		tagPalettePanel.css({overflow:"initial"});
 	})
-	.on("dragstop", function(event, ui) {
+	.on("dragstop.cvz_tag_dnd", ".each-tag", function(event, ui) {
 		tagPalettePanel.css({overflow:overflowOption});
 	});
-	
-	$("#fragment-group .each-tag").draggable(baseDraggableSettings);
 }
 
 function setupDraggableForFiles() {
 	var fileBoxPanel = $("#file-box-form\\:file-box-panel");
 	var overflowOption = fileBoxPanel.css("overflow");
-	$(".fb-file").draggable(baseDraggableSettings).off("dragstart dragstop")
-	.on("dragstart", function(event, ui) {
+	$(".fb-file").draggable(baseDraggableSettings);
+	$("#file-path-tree").off(".cvz_file_dnd")
+	.on("dragstart.cvz_file_dnd", function(event, ui) {
 		fileBoxPanel.css({overflow:"initial"});
 	})
-	.on("dragstop", function(event, ui) {
+	.on("dragstop.cvz_file_dnd", function(event, ui) {
 		// [NOTE] the overflow style should be identical between the tag palette and file box
 		fileBoxPanel.css({overflow:overflowOption});
 	});
