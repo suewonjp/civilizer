@@ -32,7 +32,7 @@
     <br/>
     <p:commandButton onclick="onClickGoSort('#{panelId}')" value="#{msg['label_go_sort']}" icon="ui-icon-check"/>
     <div style="display:none">
-        <p:commandButton id="go-sort-action#{panelId}" action="sort-fragments" value="#{msg['label_go_sort']}">
+        <p:commandButton id="go-sort-action#{panelId}" action="sort-fragments">
             <f:param name="panelId" value="#{panelId}"/>
         </p:commandButton>
     </div>

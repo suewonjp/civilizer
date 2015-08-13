@@ -56,14 +56,16 @@
     
     <h:inputHidden id="id-placeholder-for-file" value="#{fileListBean.srcNodeId}"/>
     
-    <p:confirmDialog header="#{msg['label_error']}" severity="alert" closeOnEscape="true" widgetVar="errorMsgDlg" showEffect="fade" hideEffect="explode">
+    <p:confirmDialog widgetVar="errorMsgDlg" header="#{msg['label_error']}"
+        severity="alert" closeOnEscape="true" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
             <h:outputText id="error-msg" styleClass="warning-color" value="&nbsp;"/>
         </f:facet>
         <p:commandButton value="#{msg['label_ok']}" onclick="PF('errorMsgDlg').hide();" icon="ui-icon-check"/>
     </p:confirmDialog>
     
-    <p:confirmDialog header="#{msg['are_you_sure']}" width="450px" closeOnEscape="true" widgetVar="confirmDlg" showEffect="fade" hideEffect="fade">
+    <p:confirmDialog widgetVar="confirmDlg" header="#{msg['are_you_sure']}"
+        width="450px" closeOnEscape="true" showEffect="fade" hideEffect="fade">
 		<div style="display:none">
 	        <p:commandButton id="ok-trash-fragment" action="trash-fragment"/>
 	        <p:commandButton id="ok-restore-fragment" action="restore-fragment"/>
@@ -133,7 +135,7 @@
     <p:remoteCommand name="searchFragments" action="search-fragments" />
     <p:remoteCommand name="touchFragment" action="touch-fragment" />
     
-    <div id="frg-context-menu" style="display:none; z-index:5000; position:fixed;">
+    <div id="frg-context-menu" style="display:none; z-index:500; position:fixed;">
 	    <p:menu>
             <p:menuitem id="edit" onclick="openFragmentEditorForEdit(event)" icon="fa fa-edit" value="#{msg['label_edit']}"/>
             <p:menuitem id="bookmark" onclick="bookmarkFragmentFromCtxtMenu()" icon="fa fa-bookmark" value="#{msg['label_bookmark']}"/>
