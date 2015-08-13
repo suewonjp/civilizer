@@ -120,6 +120,7 @@ function populateFragmentOverlay(data) {
 	.each(function() {formatTagsOnFragmentHeader($(this))});
 	
 	overlayFrame.off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
+	setupClickHandlerForTags(overlayContent);
 }
 
 function triggerFragmentOverlay(event) {
@@ -307,8 +308,10 @@ function setupTagLinks(content) {
             $this.replaceWith(newElem);
         }
     });
-    
-    content.find("a.-cvz-tag").off("click").on("click", function(e) {
+}
+
+function setupClickHandlerForTags(container) {
+    container.off("click.cvz_tag").on("click.cvz_tag", ".-cvz-tag", function(e) {
         fetchFragmentsByTag($(this), null);
         return false;
     });
@@ -758,7 +761,6 @@ function showSearchDialog(panelId, qsPhrase) {
 	dlg.show();
 	dlg.jq.off("keyup").on("keyup", function(e) {
 	    if (e.ctrlKey && e.which == $.ui.keyCode.SPACE) {
-	        console.log(dlg.cvzCurPanelId);
             dlg.cvzCurPanelId = (dlg.cvzCurPanelId + 1) % 3;
             $("#panel-radio-on-search-dlg-"+dlg.cvzCurPanelId).prop("checked", true);
             panelBtns.buttonset("refresh");
@@ -767,7 +769,6 @@ function showSearchDialog(panelId, qsPhrase) {
 	dlg.cvzCurPanelId = panelId;
 	
 	var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
-	console.log(qsInput.keypress);
 	
 	$("#fragment-group-form\\:search-panel\\:tag-keywords").watermark(MSG.how_to_input_tags);
 	

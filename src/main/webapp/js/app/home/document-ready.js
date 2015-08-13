@@ -6,6 +6,8 @@ $(document).ready(function() {
 	translateFragments();
 
 	setupFragmentOverlay();
+	
+	setupClickHandlerForTags($("#container"));
     
     setupFragmentCheckboxes();
     
