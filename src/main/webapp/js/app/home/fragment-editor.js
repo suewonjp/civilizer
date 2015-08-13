@@ -146,6 +146,36 @@ function previewFragment() {
     }
 }
 
+function validateTagNames() {
+    var tagNames = $("#fragment-editor-form\\:tags-input").val();
+    var invalidChars = ["/", "\\", ":"];
+    for (var i=0; i<invalidChars.length; ++i) {
+        if (tagNames.indexOf(invalidChars[i]) > -1) {
+            return invalidChars[i];
+        }
+    }
+    return null;
+}
+
+function onSubmitFragment() {
+    prepareFragmentContent();
+    var valid = true;
+    if (!$("#fragment-editor-form\\:title-input").val()) {
+        showError(MSG.title_empty);
+        valid = false;
+    }
+    else {
+        var invalidChar = validateTagNames();
+        if (invalidChar) {
+            showError("'" + invalidChar + MSG.cant_use_for_tags);
+            valid = false;
+        }
+    }
+    
+    if (valid)
+        document.forms["fragment-editor-form"]["fragment-editor-form:save-fragment-btn"].click()
+}
+
 function autocompleteForTypingTags() {    
     var pfThemeBugFix = false;
     var theme = localStorage.getItem("theme");
