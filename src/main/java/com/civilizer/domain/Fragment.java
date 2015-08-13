@@ -65,7 +65,8 @@ public final class Fragment implements Serializable {
     }
 
     public void setTitle(String title) {
-        this.title = title.intern();
+        if (title != null)
+            this.title = title.intern();
     }
 
     @Column(name = "content")
@@ -74,7 +75,8 @@ public final class Fragment implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content.intern();
+        if (content != null)
+            this.content = content.intern();
     }
 
     @Column(name = "creation_datetime")

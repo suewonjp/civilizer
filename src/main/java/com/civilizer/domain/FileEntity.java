@@ -49,7 +49,8 @@ public class FileEntity implements Serializable {
 	}
 	
 	public void setFileName(String name) {
-		this.fileName = name.intern();
+	    if (name != null)
+	        this.fileName = name.intern();
 	}
 	
 	public boolean isChildOf(String parentPath) {

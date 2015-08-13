@@ -12,11 +12,11 @@ public final class FragmentBean implements Serializable {
     
     private Fragment fragment;
     
-    private String title;
+    private String title = "";
 
-    private String content;
+    private String content = "";
     
-    private String concatenatedTagNames;
+    private String concatenatedTagNames = "";
     
     private List<Fragment> relatedOnes = Collections.emptyList();
     
@@ -52,7 +52,8 @@ public final class FragmentBean implements Serializable {
 	}
 
 	public void setTitle(String title) {
-		this.title = title.intern();
+	    if (title != null)
+	        this.title = title.intern();
 	}
 
 	public String getContent() {
@@ -60,7 +61,8 @@ public final class FragmentBean implements Serializable {
 	}
 
 	public void setContent(String content) {
-		this.content = content.intern();
+	    if (content != null)
+	        this.content = content.intern();
 	}
 
 	public String getConcatenatedTagNames() {
@@ -68,7 +70,8 @@ public final class FragmentBean implements Serializable {
 	}
 
 	public void setConcatenatedTagNames(String concatenatedTagNames) {
-		this.concatenatedTagNames = concatenatedTagNames.intern();
+	    if (concatenatedTagNames != null)
+	        this.concatenatedTagNames = concatenatedTagNames.intern();
 	}
 	
 	public void setFragmentSelectionBean(FragmentSelectionBean fsb) {

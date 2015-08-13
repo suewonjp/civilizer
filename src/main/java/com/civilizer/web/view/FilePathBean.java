@@ -33,7 +33,8 @@ public class FilePathBean implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = name.intern();
+	    if (name != null)
+	        this.name = name.intern();
 	}
 
 	public int getId() {
@@ -57,7 +58,8 @@ public class FilePathBean implements Serializable {
 	}
 
 	public void setFullPath(String fp) {
-		this.fullPath = fp.intern();
+	    if (fp != null)
+	        this.fullPath = fp.intern();
 	}
 
 	public long getFileEntityId() {

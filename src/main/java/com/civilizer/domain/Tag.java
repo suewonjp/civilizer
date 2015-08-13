@@ -66,7 +66,8 @@ public final class Tag implements Serializable {
     }
 
     public void setTagName(String tagName) {
-        this.tagName = tagName.intern();
+        if (tagName != null)
+            this.tagName = tagName.intern();
     }
 
     @OneToMany(fetch=FetchType.LAZY)
