@@ -22,21 +22,20 @@ function onExpandComplete() {
 function showTagEditorForCreating() {
     var saveBtn = PF("tagEditorSaveBtn");
     saveBtn.disable();
+    
     var inplace = PF("tagNameInplace");
     inplace.hide();
-    var input = inplace.jq.find(".ui-inplace-content input");
     inplace.jq.find(".ui-inplace-display").text(MSG.name_required);
-    input.val("").off("change").on("change", function() {
-            if ($(this).val().trim())
-                saveBtn.enable();
-            else
-                saveBtn.disable();
-        })
-        .off("keypress.newTagName").on("keypress.newTagName", function(e) {
-            if (e.which == $.ui.keyCode.ENTER) $(this).change();
-        });
+    
     var dlg = PF("tagEditor");
-    dlg.jq.find("input[name=isNewTag]").val(true);
+    dlg.jq.off(".te")
+    .on("keyup.te", ".ui-inplace-content input", function(e) {
+        if ($(this).val().trim())
+            saveBtn.enable();
+        else
+            saveBtn.disable();
+    })
+    .find("input[name=isNewTag]").val(true);
     dlg.show();
 }
 
