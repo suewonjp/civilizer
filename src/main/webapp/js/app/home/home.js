@@ -753,60 +753,63 @@ function showSearchDialog(panelId, qsPhrase) {
     var panelBtns = $("#target-panels-on-search-dlg");
     panelBtns.buttonset();
     $("#panel-radio-on-search-dlg-"+panelId).prop("checked", true);
-    panelBtns.buttonset("refresh").find("input[type=radio]").off("change").on("change", function(e) {
-        var pid = $(e.currentTarget).attr("_pid");
-        dlg.cvzCurPanelId = pid;
-    });
+    panelBtns.buttonset("refresh");
+	
+	var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
+	
+	$("#fragment-group-form\\:search-panel\\:tag-keywords").watermark(MSG.how_to_input_tags);
 
-	dlg.show();
-	dlg.jq.off("keyup").on("keyup", function(e) {
+	dlg.cvzCurPanelId = panelId;
+    dlg.show();
+	
+	dlg.jq.off(".cvz_sch_dlg")
+	.on("change.cvz_sch_dlg", "#target-panels-on-search-dlg input[type=radio]", function(e) {
+	    var pid = $(e.currentTarget).attr("_pid");
+        dlg.cvzCurPanelId = pid;
+	})
+	.on("keyup.cvz_sch_dlg", function(e) {
 	    if (e.ctrlKey && e.which == $.ui.keyCode.SPACE) {
             dlg.cvzCurPanelId = (dlg.cvzCurPanelId + 1) % 3;
             $("#panel-radio-on-search-dlg-"+dlg.cvzCurPanelId).prop("checked", true);
             panelBtns.buttonset("refresh");
         }
-	}).find(".ui-dialog-title").text(MSG.label_search);
-	dlg.cvzCurPanelId = panelId;
-	
-	var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
-	
-	$("#fragment-group-form\\:search-panel\\:tag-keywords").watermark(MSG.how_to_input_tags);
-	
-	$("#fragment-group-form\\:go-search").click(function() {
-	    var activeTabId = $("#fragment-group-form\\:search-panel_active").val();
-		var hasSomeToSearch = false;
-		if (activeTabId == 1) {
-			// Normal search tab is focused
-			$("#fragment-group-form\\:search-panel\\:t1").find("input[type='text']").each(function() {
-				if ($(this).val().trim()) {
-					hasSomeToSearch = true;
-					return false;
-				}
-				return true;
-			});
-			if (hasSomeToSearch) {
-				// the quick search input has higher priority so we need to clear it
-				qsInput.val(null);
-			}
-		}
-		else {
-			// Quick search tab is focused
-			if (qsInput.val().trim()) {
-				hasSomeToSearch = true;
-			}
-		}
-		if (hasSomeToSearch) {
-		    searchFragmentsForPanel(dlg.cvzCurPanelId);
-		}
-	});
-	qsInput.keypress(function(event) {
-		// Quick search tab responds to the enter key
-		if (event.which == $.ui.keyCode.ENTER) {
-			if ($(this).val().trim()) {
-			    searchFragmentsForPanel(dlg.cvzCurPanelId);
-			}
-		}
-	});
+	})
+    .on("keypress.cvz_sch_dlg", "#fragment-group-form\\:search-panel\\:quick-search-input", function(e) {
+        // Quick search tab responds to the enter key
+        if (e.which == $.ui.keyCode.ENTER) {
+            if ($(this).val().trim()) {
+                searchFragmentsForPanel(dlg.cvzCurPanelId);
+            }
+        }
+    })
+	.on("click.cvz_sch_dlg", "#fragment-group-form\\:go-search", function() {
+        var activeTabId = $("#fragment-group-form\\:search-panel_active").val();
+        var hasSomeToSearch = false;
+        if (activeTabId == 1) {
+            // Normal search tab is focused
+            $("#fragment-group-form\\:search-panel\\:t1").find("input[type='text']").each(function() {
+                if ($(this).val().trim()) {
+                    hasSomeToSearch = true;
+                    return false;
+                }
+                return true;
+            });
+            if (hasSomeToSearch) {
+                // the quick search input has higher priority so we need to clear it
+                qsInput.val(null);
+            }
+        }
+        else {
+            // Quick search tab is focused
+            if (qsInput.val().trim()) {
+                hasSomeToSearch = true;
+            }
+        }
+        if (hasSomeToSearch) {
+            searchFragmentsForPanel(dlg.cvzCurPanelId);
+        }
+    })
+    .find(".ui-dialog-title").text(MSG.label_search);
 }
 
 function searchWithHelpFromLastSearch(event, panelId, widget) {
