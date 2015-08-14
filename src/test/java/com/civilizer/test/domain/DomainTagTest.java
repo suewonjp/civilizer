@@ -345,10 +345,6 @@ public class DomainTagTest {
             assertEquals(0, Tag.findInvalidCharFromName(t.getTagName()));
         }
 	    {
-	        Tag t = new Tag("tag name / with slashes");
-	        assertEquals('/', Tag.findInvalidCharFromName(t.getTagName()));
-	    }
-	    {
 	        Tag t = new Tag(",tag name with commas");
 	        assertEquals(',', Tag.findInvalidCharFromName(t.getTagName()));
 	    }

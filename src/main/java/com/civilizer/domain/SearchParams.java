@@ -31,7 +31,7 @@ public final class SearchParams implements Serializable {
 	private static final String TARGET_DIRECTIVE_PATTERN =
 	        "(\\b(any|tag|tagh|anytag|title|anytitle|text|anytext|id)\\b)?:";
 	
-	private static final String controlOperators = "cwberh-";
+	private static final String CONTROL_OPERATORS = "cwberh-";
 	
 	public static final class Keyword implements Serializable {
 		private final String word;
@@ -54,7 +54,7 @@ public final class SearchParams implements Serializable {
 			boolean inverse = false;
 			boolean id = isId;
 			boolean tagHeirarchy = false;
-			final Pattern p = Pattern.compile("([^/]*)/(["+controlOperators+"]+)$");
+			final Pattern p = Pattern.compile("(.*)/(["+CONTROL_OPERATORS+"]+)$");
 			final Matcher m = p.matcher(src);
 			
 			if (m.find()) {
@@ -285,7 +285,7 @@ public final class SearchParams implements Serializable {
 			
 			if (! src.isEmpty()) {
 				final Pattern p =
-				        Pattern.compile("(\"[^\"]+\"(/["+controlOperators+"]+)?)|(\\S+)");
+				        Pattern.compile("(\"[^\"]+\"(/["+CONTROL_OPERATORS+"]+)?)|(\\S+)");
 				boolean isId = false;
 				boolean isTag = false;
 				
