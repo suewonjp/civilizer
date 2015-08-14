@@ -141,6 +141,16 @@ public final class Tag implements Serializable {
     	return result;
     }
     
+    public static String trimName(String src) {
+        if (src == null)
+            return "";
+        src = src.trim();
+        final int si = src.startsWith("\"") ? 1 : 0;
+        final int ei = src.endsWith("\"") ? src.length()-1 : src.length();
+        src = src.substring(si, ei).trim();
+        return src;
+    }
+    
     public static List<String> getTagNameCollectionFrom(String names) {
     	if (names == null || names.trim().isEmpty()) {
     		return Collections.emptyList();
@@ -148,7 +158,7 @@ public final class Tag implements Serializable {
     	String[] arr = names.split("\\s*[" + TAG_NAME_DELIMITER + "]+\\s*");
     	List<String> output = new ArrayList<String>();
     	for (String s : arr) {
-    		s = s.trim();
+    		s = Tag.trimName(s);
     		if (!s.isEmpty()) {
     			output.add(s);
     		}

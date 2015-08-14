@@ -337,6 +337,22 @@ public class DomainTagTest {
     }
 	
 	@Test
+    public void testMethod_trimName() {
+	    String expected = "expected tag name";
+        assertEquals(expected, Tag.trimName(expected));
+        assertEquals(expected, Tag.trimName(" \t  " + expected + "\t\t "));
+        assertEquals(expected, Tag.trimName("\"" + expected));
+        assertEquals(expected, Tag.trimName("\t \"\t " + expected));
+        assertEquals(expected, Tag.trimName(expected + "\""));
+        assertEquals(expected, Tag.trimName(expected + " \t\" "));
+        assertEquals(expected, Tag.trimName("\"" + expected + "\""));
+        assertEquals(expected, Tag.trimName("  \"" + expected + "\"  \t"));
+        assertEquals(expected, Tag.trimName("\t \" \t " + expected + "  \"\t "));
+        assertEquals(true, Tag.trimName(null).isEmpty());
+        assertEquals(true, Tag.trimName("").isEmpty());
+    }
+	
+	@Test
     public void testTagNameValidation() {
 	    {
             Tag t = new Tag("\"tag name with quots\"");
