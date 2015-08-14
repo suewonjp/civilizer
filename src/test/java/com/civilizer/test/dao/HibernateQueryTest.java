@@ -1,24 +1,33 @@
 package com.civilizer.test.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.*;
+import java.util.Collection;
+import java.util.List;
 
-import java.util.*;
-
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
-import com.civilizer.domain.*;
+import com.civilizer.domain.Fragment;
+import com.civilizer.domain.Tag;
+import com.civilizer.domain.Tag2Fragment;
 import com.civilizer.test.helper.TestUtil;
 
 public class HibernateQueryTest extends DaoTest {
@@ -254,5 +263,15 @@ public class HibernateQueryTest extends DaoTest {
 		    assertFalse(Tag.containsId(tags, Tag.TRASH_TAG_ID));
 		}
 	}
+	
+//	@Test
+//    public void testExportAsScript() {
+//	    final String tmpPath = TestUtil.getTempFolderPath();
+//	    com.civilizer.utils.FsUtil.createUnexistingDirectory(new java.io.File(tmpPath));
+//	    // The query creates a SQL script from the database.
+//	    // [NOTE] The syntax is H2 database specific.
+//	    final String queryString = "script to '" + tmpPath + java.io.File.separator + "test.sql'";
+//	    session.createSQLQuery(queryString).list();
+//    }
 	
 }
