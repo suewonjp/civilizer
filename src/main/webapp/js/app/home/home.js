@@ -750,6 +750,18 @@ function restoreFragmentFromCtxtMenu() {
 function showSearchDialog(panelId, qsPhrase) {
     var dlg = PF("searchDlg");
     
+    // Hide the dialog with a ESC key press except when the quick search input is focused.
+    // Without this code, pressing ESC key to hide autocomplete will hide the dialog,
+    // which will be a very awkward user experience.
+    var en = 'keyup.dialog_' + dlg.id;
+    $(document).off(en).on(en, function(e) {
+        active = parseInt(dlg.jq.css('z-index')) === PrimeFaces.zindex;
+        if (e.which === $.ui.keyCode.ESCAPE && dlg.isVisible() && active) {
+            if ($(e.target).attr("id") != "fragment-group-form:search-panel:quick-search-input")
+                dlg.hide();
+        };
+    });
+    
     var panelBtns = $("#target-panels-on-search-dlg");
     panelBtns.buttonset();
     $("#panel-radio-on-search-dlg-"+panelId).prop("checked", true);
@@ -775,12 +787,16 @@ function showSearchDialog(panelId, qsPhrase) {
         }
 	})
     .on("keypress.cvz_sch_dlg", "#fragment-group-form\\:search-panel\\:quick-search-input", function(e) {
-        // Quick search tab responds to the enter key
         if (e.which == $.ui.keyCode.ENTER) {
+            // Quick search tab responds to the enter key
             if ($(this).val().trim()) {
                 searchFragmentsForPanel(dlg.cvzCurPanelId);
             }
         }
+        else if (e.which == $.ui.keyCode.ESCAPE) {
+            $(e.target).blur();
+        }
+        
     })
 	.on("click.cvz_sch_dlg", "#fragment-group-form\\:go-search", function() {
         var activeTabId = $("#fragment-group-form\\:search-panel_active").val();
