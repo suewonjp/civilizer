@@ -165,7 +165,7 @@ public final class SearchParams implements Serializable {
 		    boolean match = false;
 		    
 		    if (regex) {
-		        // 'r' flag assumes case sensitivity regardless of the value of 'c' flag
+		        // 'r' flag assumes case is sensitive regardless of the value of 'c' flag
 		        match = Pattern.matches(word, tagName);
 		    }
 		    else {
@@ -364,6 +364,10 @@ public final class SearchParams implements Serializable {
 	        final long       id;
 	        final boolean    inverse;
 	        
+	        Key() {
+	            this.id = Tag.TRASH_TAG_ID; this.inverse = false;
+	        }
+
 	        Key(long id, boolean inverse) {
 	            this.id = id; this.inverse = inverse;
 	        }
@@ -383,7 +387,7 @@ public final class SearchParams implements Serializable {
 	        Keywords kws = sp.getKeywords(TARGET_TAG, false);
 	        if (kws != null) kwlst = kws.getWords();
 	        for (Keyword w : kwlst) {
-	            List<Key> tmp = new ArrayList<>();
+	            final List<Key> tmp = new ArrayList<>();
 	            for (Tag t : tags) {
 	                if (w.matchesTagName(t)) {
                         if (w.tagHeirarchyRequired()){
@@ -397,10 +401,18 @@ public final class SearchParams implements Serializable {
 	            if (!tmp.isEmpty())
 	                keys.add(tmp);
             }
+            if (!kwlst.isEmpty() && keys.isEmpty()) {
+                // [NOTE] If the search phrase contains names of nonexistent tags,
+                // we need to insert a dummy tag id that won't match any fragment.
+                // unless doing this, search with nonexistent tags will match every fragment.
+                final List<Key> tmp = new ArrayList<>();
+                tmp.add(new Key());
+                keys.add(tmp);
+            }
 	        
 	        kws = sp.getKeywords(TARGET_TAG, true);
 	        if (kws != null) kwlst = kws.getWords();
-	        List<Key> tmp = new ArrayList<>();
+	        final List<Key> tmp = new ArrayList<>();
 	        for (Keyword w : kwlst) {
                 for (Tag t : tags) {
                     if (w.matchesTagName(t)) {
@@ -413,8 +425,10 @@ public final class SearchParams implements Serializable {
                     }
                 }
             }
-	        if (!tmp.isEmpty())
-	            keys.add(tmp);
+            if (!kwlst.isEmpty() && tmp.isEmpty())
+                tmp.add(new Key());
+            if (!tmp.isEmpty())
+                keys.add(tmp);
 	    }
 	    
 	    private static List<Key> getHierarchyKeys(Tag tag, boolean inverse) {
@@ -438,7 +452,8 @@ public final class SearchParams implements Serializable {
                 boolean outerMatch = false;
                 for (Key k : klst) {
                     boolean innerMatch = frg.containsTagId(k.id);
-                    if (!k.inverse && innerMatch || k.inverse && !innerMatch) {
+//                    if (!k.inverse && innerMatch || k.inverse && !innerMatch) {
+                    if (k.inverse ^ innerMatch) {
                         outerMatch = true;
                         break;
                     }
@@ -448,10 +463,9 @@ public final class SearchParams implements Serializable {
             }
             
 	        return true;
-	    }
+	    } 
         
         public boolean valid() {
-//            return !conjunctionKeys.isEmpty() || !disjunctionKeys.isEmpty();
             return !keys.isEmpty();
         }
 	}

@@ -399,8 +399,15 @@ public class SearchTest extends DaoTest {
         	final String searchPhrase = "anytag:\"my tag\" \"your tag\"";
         	final SearchParams sp = new SearchParams(searchPhrase);
         	assertEquals(1, sp.getKeywords().size());
-        	final List<Fragment> results = fragmentDao.findBySearchParams(sp, null);
+        	final List<Fragment> results = fragmentDao.findBySearchParams(sp, tags);
         	assertEquals(fragments.length, results.size());
+        }
+        {
+            final String searchPhrase = "anytag:\"nonexistent tag\" \"another nonexistent tag\"";
+            final SearchParams sp = new SearchParams(searchPhrase);
+            assertEquals(1, sp.getKeywords().size());
+            final List<Fragment> results = fragmentDao.findBySearchParams(sp, tags);
+            assertEquals(0, results.size());
         }
         {
         	final Tag tag = tags.get(2); // nobody's tag
