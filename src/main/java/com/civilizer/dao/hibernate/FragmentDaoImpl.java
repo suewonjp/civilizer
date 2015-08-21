@@ -321,5 +321,13 @@ public final class FragmentDaoImpl implements FragmentDao {
     public void delete(Fragment fragment) {
         sessionFactory.getCurrentSession().delete(fragment);
     }
+    
+    @Override
+    public void exportDbAsScript(String outputPath) {
+        // [NOTE] this method is intended for development purposes only.
+        // Also the SQL syntax is H2 database specific. 
+        final String queryString = "script to '" + outputPath + "'";
+        sessionFactory.getCurrentSession().createSQLQuery(queryString).list();
+    }
 
 }

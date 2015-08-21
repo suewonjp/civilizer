@@ -19,7 +19,7 @@ $0 ~ /^INSERT INTO/ {
 }
 
 # Inserting data ends
-$0 ~ /;$/ {
+$0 ~ /\);[ \t]*$/ {
     if (output)
         printf "%s\n\n", $0;
     output = 0;

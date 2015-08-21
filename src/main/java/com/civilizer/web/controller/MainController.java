@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.webflow.execution.RequestContext;
 
 import com.civilizer.config.AppOptions;
+import com.civilizer.config.Configurator;
 import com.civilizer.dao.FileEntityDao;
 import com.civilizer.dao.FragmentDao;
 import com.civilizer.dao.TagDao;
@@ -34,6 +35,7 @@ import com.civilizer.domain.SearchParams;
 import com.civilizer.domain.Tag;
 import com.civilizer.domain.TextDecorator;
 import com.civilizer.security.UserDetailsService;
+import com.civilizer.utils.FsUtil;
 import com.civilizer.web.view.*;
 
 @Controller
@@ -884,6 +886,27 @@ public final class MainController {
     	Cookie cookie = new Cookie(REQUEST_PARAM_LOCALE, locale);
         response.addCookie(cookie);
     	return "redirect:/app/home?locale=" + locale;
+    }
+
+    @RequestMapping(value = "/dev/export_db_as_script", method = { RequestMethod.GET })
+    public String onExportDbAsScript() {
+        final String url = "redirect:/app/home";
+        if (!Configurator.isTrue(AppOptions.DEV))
+            return url;
+        final String tmpPath = System.getProperty(AppOptions.TEMP_PATH);
+        FsUtil.createUnexistingDirectory(new File(tmpPath));
+        final String outputPath = tmpPath  + File.separator + "exported.sql";
+        fragmentDao.exportDbAsScript(outputPath);
+        String postShellScript = System.getProperty("civilizer.exp_db_post_ss");
+        postShellScript = FsUtil.getAbsolutePath(postShellScript, null);
+        if (postShellScript != null && !postShellScript.isEmpty()) {
+            try {
+                Runtime.getRuntime().exec(postShellScript);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return url;
     }
 
 }

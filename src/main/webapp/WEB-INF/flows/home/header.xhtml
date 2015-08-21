@@ -62,6 +62,10 @@
             <p:menuitem value="#{msg['export_data']}" process="data-broker-export-mode" onclick="DBC.setMode(true)" oncomplete="DBC.showDialog()" icon="fa fa-download"/>
             <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog()" icon="fa fa-edit"/>
             <p:separator />
+        <c:if test="#{systemProperties['civilizer.dev']}">
+            <!-- [DEV] -->
+            <p:menuitem value="Export DB As Script" ajax="true" url="dev/export_db_as_script" icon="fa fa-database"/>
+        </c:if>
             <p:menuitem value="#{msg['sign_out']}" onclick="confirmSignout()" icon="fa fa-sign-out"/>
         </p:menu>
         

@@ -49,4 +49,6 @@ public interface FragmentDao {
 
     public void delete(Fragment frgm);
     
+    public void exportDbAsScript(String outputPath);
+    
 }
