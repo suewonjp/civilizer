@@ -46,7 +46,7 @@ function setContextMenuForBookmarks() {
 function setContextMenuForTags() {
     var menu = $("#tag-context-menu");
     
-    $("#fragment-group, #tag-palette-panel")
+    $("#fragment-group, #tag-palette-panel, #fragment-overlay-content")
     .off("contextmenu.cvz_tag").on("contextmenu.cvz_tag", ".each-tag", function(event) {
  
         showPopup(menu, event);
