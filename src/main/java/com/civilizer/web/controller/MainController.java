@@ -901,7 +901,9 @@ public final class MainController {
         postShellScript = FsUtil.getAbsolutePath(postShellScript, null);
         if (postShellScript != null && !postShellScript.isEmpty()) {
             try {
-                Runtime.getRuntime().exec(postShellScript);
+                List<String> command = new ArrayList<String>();
+                command.add(postShellScript);
+                new ProcessBuilder(command).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
