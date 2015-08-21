@@ -5,4 +5,5 @@
 /db-data/
 /test/
 !/src/test/
+/private/
 
