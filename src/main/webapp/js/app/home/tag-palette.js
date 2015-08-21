@@ -44,7 +44,7 @@ function showTagEditorForEditing() {
 	
 	var menu = $("#tag-context-menu");
 	var target = menu.data("target-tag");
-	var tagName = target.find(".each-tag-name").text();
+	var tagName = target.find(".each-tag-name").text() || target.text();
 	if (tagName == "") {
 		tagName = "???";
 	}
@@ -65,7 +65,7 @@ function showTagInfo() {
     
     var menu = $("#tag-context-menu");
     var target = menu.data("target-tag");
-    var tagName = target.find(".each-tag-name").text();
+    var tagName = target.find(".each-tag-name").text() || target.text();
     if (tagName == "") {
         tagName = "???";
     }
