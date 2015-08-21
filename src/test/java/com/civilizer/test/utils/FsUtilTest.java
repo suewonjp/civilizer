@@ -71,35 +71,64 @@ public class FsUtilTest {
 
     @Test
     public void testMethod_getAbsolutePath() {
-        final String baesPath = FsUtil.toNativePath("/base/path");
+        {
+            final String absPath = FsUtil.getAbsolutePath(null, null);
+            assertEquals(null, absPath);
+        }
+        {
+            final String absPath = FsUtil.getAbsolutePath("~", null);
+            assertEquals(System.getProperty("user.home"), absPath);
+        }
+        {
+            final String absPath = FsUtil.getAbsolutePath("~/", null);
+            assertEquals(System.getProperty("user.home"), absPath);
+        }
+        {
+            final String absPath = FsUtil.getAbsolutePath("~/foo/bar", null);
+            assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
+        }
+        {
+            final String absPath = FsUtil.getAbsolutePath("foo/bar", "~");
+            assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
+        }
+        {
+            final String absPath = FsUtil.getAbsolutePath("foo/bar", "~/");
+            assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
+        }
+        final String basePath = FsUtil.toNativePath("/base/path");
+        {
+            final String srcPath = null;
+            final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
+            assertEquals(null, absPath);
+        }
         {
             final String srcPath = FsUtil.toNativePath("/foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
             assertEquals(FsUtil.toNativePath("/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("~/foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
             assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("./foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
             assertEquals(FsUtil.toNativePath("/base/path/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("../foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
             assertEquals(FsUtil.toNativePath("/base/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("../../foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
             assertEquals(FsUtil.toNativePath("/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("foo/bar");
-            final String absPath = FsUtil.getAbsolutePath(srcPath, baesPath);
+            final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
             assertEquals(FsUtil.toNativePath("/base/path/foo/bar"), absPath);
         }
     }

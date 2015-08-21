@@ -21,32 +21,50 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 public final class FsUtil {
     
     public static String toNativePath(String path) {
+        if (path.startsWith("~")) {
+            // translate '~' symbol to the user home path
+            final String homePath = System.getProperty("user.home");
+            final int len = path.length();
+            if (len > 1) {
+                if (path.charAt(1) == '/' || path.charAt(1) == '\\') {
+                    if (len == 2)
+                        path = homePath;
+                    else
+                        path = homePath + path.substring(1);
+                }
+            }
+            else
+                path = homePath;
+        }
+
         return FilenameUtils.separatorsToSystem(path);
     }
     
     public static String getAbsolutePath(String srcPath, String basePath) {
-        if (srcPath == null || basePath == null) {
+        if (srcPath == null) {
             return null;
         }
-        
-        basePath = toNativePath(basePath);
+
         srcPath = toNativePath(srcPath);
         String absPath = null;
         
-        if (new File(basePath).isAbsolute()) {
-            if (new File(srcPath).isAbsolute()) {
-                // already absolute path
-                absPath = srcPath;
+        if (new File(srcPath).isAbsolute()) {
+            // already absolute path
+            absPath = srcPath;
+        }
+        else {
+            // srcPath is relative path
+            if (basePath == null) {
+                return null;
             }
-            else {
-                // relative path
-                if (srcPath.startsWith("~/") || srcPath.startsWith("~\\")) {
-                    absPath = System.getProperty("user.home") + srcPath.substring(1);
-                }
-                else {
-                    absPath = FilenameUtils.normalize(basePath + File.separator + srcPath);
-                }
+            
+            basePath = toNativePath(basePath);
+
+            if (new File(basePath).isAbsolute() == false) {
+                return null;
             }
+                
+            absPath = FilenameUtils.normalize(basePath + File.separator + srcPath);
         }
             
         return absPath;
