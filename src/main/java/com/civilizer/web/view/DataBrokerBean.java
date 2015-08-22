@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
@@ -44,6 +44,13 @@ public class DataBrokerBean implements Serializable {
         else if (oldFile.isDirectory())
             FileUtils.deleteDirectory(oldFile);
     }
+
+    private static void moveFile(File srcFile, File dstFile) throws IOException, SecurityException {
+        if (srcFile.isFile())
+            FileUtils.moveFile(srcFile, dstFile);
+        else if (srcFile.isDirectory())
+            FileUtils.moveDirectory(srcFile, dstFile);
+    }
     
     public static String getImportFolderPath() {
         return System.getProperty(AppOptions.TEMP_PATH) + File.separator + importFolderName;
@@ -54,23 +61,33 @@ public class DataBrokerBean implements Serializable {
     }
     
     public static void commitImportData(String uncompressPath) throws IOException, SecurityException {
-        final String[] paths = getTargetPaths();
-        for (String p : paths) {
-            final String path =
-                    uncompressPath+File.separator+FilenameUtils.getName(p);
-            final File newFile = new File(path);
-            final File oldFile = new File(p);
-            if (newFile.isFile()) { // Database file
-                deleteOldFile(oldFile);
-                FileUtils.moveFile(newFile, oldFile);
-            }
-            else if (newFile.isDirectory()) { // file box directory
-                deleteOldFile(oldFile);
-                FileUtils.moveDirectory(newFile, oldFile);
-            }
+        final File srcFolder = new File(uncompressPath);        
+        final File srcFiles[] = { null, null };
+        
+        for (File f : FileUtils.listFilesAndDirs(srcFolder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+            if (f.equals(srcFolder))
+                continue;
+            if (f.getName().endsWith(System.getProperty(AppOptions.DB_FILE_SUFFIX)))
+                srcFiles[0] = f;
+            else if (f.isDirectory() && f.getParentFile().equals(srcFolder))
+                srcFiles[1] = f;
+            if (srcFiles[0] != null && srcFiles[1] != null)
+                break;
         }
         
-        FileUtils.deleteQuietly(new File(uncompressPath));
+        // 'paths' is supposed to contain:
+        //   1. one file, which is a database file.
+        //   2. one folder, which is a file box folder.
+        final String[] paths = getTargetPaths();
+
+        for (int i=0; i<2; ++i) {
+            final File oldFile = new File(paths[i]);
+            final File newFile = srcFiles[i];
+            deleteOldFile(oldFile);
+            moveFile(newFile, oldFile);
+        }
+        
+        FileUtils.deleteQuietly(srcFolder);
     }
     
     public static String importData() throws IOException {
