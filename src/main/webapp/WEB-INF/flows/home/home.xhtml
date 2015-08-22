@@ -27,6 +27,127 @@
 
 <ui:define name="content">
 
+<h:form id="user-menu-dlg-form">
+    <p:dialog id="about-dlg" widgetVar="aboutDlg" header="#{msg['about_app']}"
+        width="320px" closeOnEscape="true" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+        <span class="fa fa-university fa-2x ui-panel">#{msg['application_name']}</span>
+        <p:panel>
+            <p>#{msg['label_version']} #{core['civilizer.version']}</p>
+            <p>Created by Suewon Bahng</p>
+            <span class="fa fa-bug warning-color"></span><span> #{msg['report_bug']} </span>
+            <p style="color:blue">suewonjp@gmail.com</p>
+            <hr/>
+            <p>Copyright &copy; 2014-2015 Suewon Bahng</p>
+            <p>The Apache License, Version 2.0</p>
+        </p:panel>
+    </p:dialog>
+    
+    <p:dialog styleClass="rclick-disabled" id="data-broker-dlg" widgetVar="dataBrokerDlg" header="#{msg['export_data']}"
+        width="460px" modal="true" showEffect="fade" position="center"
+        onHide="DBC.onHide()" draggable="true" resizable="false">
+                
+        <p:wizard widgetVar="dataBrokerWizard" flowListener="#{dataBrokerBean.onDataExportFlow}" showStepStatus="false" showNavBar="false">
+            <p:tab id="auth-step">
+                <p:panel header="#{msg['type_password']}">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <span class="fa fa-key fa-2x"></span>
+                        <p:password id="dbw-pw" onkeyup="DBC.onTypePw(this, event)"
+                            style="width:300px" value="#{dataBrokerBean.password}" required="false"/>
+                    </h:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="upload-step">
+                <p:panel header="#{msg['label_upload_file']}">
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:fileUpload fileUploadListener="#{dataBrokerBean.onFileUpload}"
+                            mode="advanced" auto="true"
+                            oncomplete="DBC.onFileUpload()"/>
+                        <h:outputText styleClass="fa fa-warning warning-color" value="#{msg['warn_data_import']}"/>
+                    </h:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="import-error-step">
+                <p:panel>
+                    <f:facet name="header">
+                        <h:outputText styleClass="fa fa-warning warning-color" value="#{msg['label_error']}"/>
+                    </f:facet>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton value="#{msg['label_close']}" onclick="DBC.hideDialog()" icon="fa fa-close"/>
+                    </h:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="confirm-import-step">
+                <p:panel>
+                    <f:facet name="header">
+                        <h:outputText styleClass="fa fa-thumbs-o-up" value="&nbsp;#{msg['label_success']}"/>
+                    </f:facet>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton value="#{msg['refresh_page']}" oncomplete="location.replace('home')" onclick="DBC.hideDialog()" icon="fa fa-check"/>
+                    </h:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="preexport-step">
+                <p:panel header="#{msg['label_wait']}">
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <span style="margin-left:40%" class="fa fa-spinner fa-spin fa-2x"></span>
+                    </h:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="export-step">
+                <p:panel header="#{msg['label_download_file']}">
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <a href="exp/cvz-export.zip" onclick="DBC.onDownloadExportData()">
+                            <span class="fa fa-download fa-2x"></span>
+                        </a>
+                    </h:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="confirm-export-step">
+                <p:panel>
+                    <f:facet name="header">
+                        <h:outputText styleClass="fa fa-thumbs-o-up" value="&nbsp;#{msg['label_success']}"/>
+                    </f:facet>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton value="#{msg['label_ok']}" onclick="DBC.hideDialog()" icon="fa fa-check"/>
+                    </h:panelGrid>
+                </p:panel>
+            </p:tab>
+        </p:wizard>
+
+        <p:commandButton styleClass="ui-wizard-nav-next" onclick="DBC.onClickNext()" actionListener="#{dataBrokerBean.checkNext()}" process="@this"
+            oncomplete="DBC.onCompleteNext(xhr, status, args)" icon="fa fa-hand-o-right fa-2x"/>
+    </p:dialog>
+    
+    <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}"
+        width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+        <p:panel>
+            <div class="fa fa-user">&nbsp;&nbsp;
+                <p:inplace widgetVar="userName">
+                    <p:inputText style="width:80%" value="#{userProfileBean.userName}"/>
+                </p:inplace>
+                <h:outputText style="display:none" value="#{userProfileBean.userName}"/>
+            </div>
+        </p:panel>
+        
+        <p:panel>
+            <label for="enable_password_change">#{msg['change_password']}</label>
+            <input type="checkbox" name="enable_password_change" onchange="togglePasswordChange(this)"/>
+        </p:panel>
+
+        <div id="new-password-box">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="pwd1" value="#{msg['label_password']}"/>
+                <p:password id="pwd1" value="#{userProfileBean.password}" feedback="false" match="pwd2" required="true"/>
+                <p:outputLabel for="pwd2" value="#{msg['label_confirm_password']}"/>
+                <p:password id="pwd2" feedback="false" required="true"/>
+            </h:panelGrid>
+            <p:messages id="msg" showSummary="false" showDetail="true" autoUpdate="true" />
+        </div>
+        
+        <p:commandButton widgetVar="userProfileDlgSave" disabled="true" action="update-user-profile" value="#{msg['label_save']}" icon="ui-icon-check"/>
+    </p:dialog>
+</h:form>
+
 <div style="display:none">
     <div id="fragment-overlay">
         <div id="fragment-overlay-title-bar" class="notxtslct ui-state-default" title="#{msg['dblclick_for_minmax']}">

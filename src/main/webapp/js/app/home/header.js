@@ -102,7 +102,7 @@ function createDataBrokerController() {
     }
     
     ctrr.setMode = function(exportMode) {
-        $("#user-menu-form\\:data-broker-export-mode").val(exportMode);
+        $("#data-broker-export-mode").val(exportMode);
         if (exportMode)
             getDialog().jq.find(".ui-dialog-title").text(MSG.export_data);
         else
@@ -125,7 +125,7 @@ function createDataBrokerController() {
     
     ctrr.onCompleteNext = function(xhr, status, args) {
         if (args.authFailed === true) {
-            $("#user-menu-form\\:dbw-pw").effect("shake").focus();
+            $("#user-menu-dlg-form\\:dbw-pw").effect("shake").focus();
         }
         else if (args.exportReady === true) {
             wzd.next(); // preexport-step => export-step
@@ -149,8 +149,8 @@ function showProfileDialog() {
     var dlg = PF("userProfileDlg");
     var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);
     togglePasswordChange(changePwCb);
-    $("#user-menu-form\\:pwd1").val(null);
-    $("#user-menu-form\\:pwd2").val(null);
+    $("#user-menu-dlg-form\\:pwd1").val(null);
+    $("#user-menu-dlg-form\\:pwd2").val(null);
     var inplace = PF("userName");
     
     function onInplaceCommit(val, text) {

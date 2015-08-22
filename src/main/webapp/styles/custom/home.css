@@ -63,7 +63,7 @@
 }
 
 @media screen and (max-width: 650px) {
-	#user-menu-form\:theme-switcher, #theme-icon {
+	#theme-switcher, #theme-icon {
 	   visibility: hidden;
 	}
 }
@@ -84,7 +84,7 @@
     right: 0px;
 }
 
-#user-menu-form\:theme-switcher {
+#theme-switcher {
 	display:inline;
 	position: absolute;
 	top: 6px;
@@ -100,16 +100,16 @@
 	color:cornsilk;
 }
 
-#user-menu-form\:user-menu-trigger {
+#user-menu-trigger {
 	width: 42px;
 }
 
-#user-menu-form\:pwd1, #user-menu-form\:pwd2 {
+#user-menu-dlg-form\:pwd1, #user-menu-dlg-form\:pwd2 {
     width: 100%;
 }
 
-#user-menu-form\:user-profile-dlg .ui-panel
-, #user-menu-form\:about-dlg .ui-panel {
+#user-menu-dlg-form\:user-profile-dlg .ui-panel
+, #user-menu-dlg-form\:about-dlg .ui-panel {
     margin: 5px 0px 5px 0px;
 }
 
@@ -494,21 +494,21 @@
     font-weight: lighter;
 }
 
-#user-menu-form\:data-broker-dlg .ui-wizard-nav-next {
+#user-menu-dlg-form\:data-broker-dlg .ui-wizard-nav-next {
     width:70px;
     height:40px;
 }
 
-#user-menu-form\:data-broker-dlg .ui-wizard-nav-next .fa {
+#user-menu-dlg-form\:data-broker-dlg .ui-wizard-nav-next .fa {
     position:relative;
     top:10px;
 }
 
-#user-menu-form\:data-broker-dlg a {
+#user-menu-dlg-form\:data-broker-dlg a {
     margin-left:40%;
 }
 
-#user-menu-form\:data-broker-dlg a:hover {
+#user-menu-dlg-form\:data-broker-dlg a:hover {
     margin-left:40%;
     color:highlight;
 }
