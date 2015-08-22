@@ -70,7 +70,7 @@
         </p:menu>
         
         <p:dialog id="about-dlg" widgetVar="aboutDlg" header="#{msg['about_app']}"
-            appendTo="@(body)" width="320px" closeOnEscape="true" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+            width="320px" closeOnEscape="true" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
             <span class="fa fa-university fa-2x ui-panel">#{msg['application_name']}</span>
             <p:panel>
                 <p>#{msg['label_version']} #{core['civilizer.version']}</p>
@@ -84,7 +84,7 @@
         </p:dialog>
         
         <p:dialog styleClass="rclick-disabled" id="data-broker-dlg" widgetVar="dataBrokerDlg" header="#{msg['export_data']}"
-            appendTo="@(body)" width="460px" modal="true" showEffect="fade" position="center"
+            width="460px" modal="true" showEffect="fade" position="center"
             onHide="DBC.onHide()" draggable="true" resizable="false">
             <h:inputHidden id="data-broker-export-mode" value="#{dataBrokerBean.exportMode}"/>
 
@@ -161,7 +161,7 @@
         </p:dialog>
         
         <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}"
-            appendTo="@(body)" width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
+            width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
             <p:panel>
                 <div class="fa fa-user">&nbsp;&nbsp;
                     <p:inplace widgetVar="userName">
