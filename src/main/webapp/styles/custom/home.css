@@ -2,6 +2,12 @@
 	top: 60px;
 }
 
+.context-menu {
+    display:none;
+    z-index:500;
+    position:fixed;
+}
+
 #fragment-group {
 	margin: 15px 0px 0px 2px;
 }

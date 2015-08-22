@@ -136,7 +136,7 @@
     <p:remoteCommand name="searchFragments" action="search-fragments" />
     <p:remoteCommand name="touchFragment" action="touch-fragment" />
     
-    <div id="frg-context-menu" style="display:none; z-index:500; position:fixed;">
+    <div id="frg-context-menu" class="context-menu">
 	    <p:menu>
             <p:menuitem id="edit" onclick="openFragmentEditorForEdit(event)" icon="fa fa-edit" value="#{msg['label_edit']}"/>
             <p:menuitem id="bookmark" onclick="bookmarkFragmentFromCtxtMenu()" icon="fa fa-bookmark" value="#{msg['label_bookmark']}"/>
