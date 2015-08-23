@@ -25,7 +25,7 @@ public final class AuthenticationBean implements Serializable {
         final String pw = password;
         password = "";
         
-        final Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         final Object principal = auth.getPrincipal();
         if (principal instanceof UserDetails) {
             final UserDetails ud = (UserDetails) principal;

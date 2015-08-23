@@ -52,16 +52,23 @@ public final class UserDetailsService
         return new File(credFilePath);
     }
     
-    public static void saveCustomCredential(String username, String password)
+    public static void saveCustomCredential(String username, String password, String oldPwHash)
             throws IOException, InvalidParameterException {
         
         final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(ENCRYPTION_STRENGTH);
         final List<String> lines = new ArrayList<>();
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+        if (username == null || username.isEmpty()) {
             throw new InvalidParameterException();
         }
         lines.add(encoder.encode(username));
-        lines.add(encoder.encode(password));
+        if (password == null || password.isEmpty()) {
+            if (oldPwHash != null && !oldPwHash.isEmpty())
+                lines.add(oldPwHash);
+            else
+                throw new InvalidParameterException();
+        }
+        else
+            lines.add(encoder.encode(password));
         FileUtils.writeLines(UserDetailsService.getCredentialFile(), lines, null);
     }
 

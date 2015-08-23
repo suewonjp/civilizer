@@ -51,7 +51,7 @@ public class SecurityTest {
         
         for (int i=0; i<un.length; ++i) {
             try {
-                UserDetailsService.saveCustomCredential(un[i], pw[i]);
+                UserDetailsService.saveCustomCredential(un[i], pw[i], null);
                 fail();
             } catch (InvalidParameterException e) {
             } catch (IOException e) {
@@ -67,7 +67,7 @@ public class SecurityTest {
             final String username = TestUtil.randomString(TestUtil.getRandom(), 1, 32);
             final String password = TestUtil.randomString(TestUtil.getRandom(), 8, 32);
             try {
-                UserDetailsService.saveCustomCredential(username, password);
+                UserDetailsService.saveCustomCredential(username, password, null);
             } catch (IOException e) {
                 e.printStackTrace();
                 fail("failed in saving custom credential!");

@@ -16,6 +16,9 @@ import org.joda.time.DateTime;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -864,8 +867,18 @@ public final class MainController {
 	public boolean saveUserProfile() {
 	    UserProfileBean upb = ViewUtil.findBean("userProfileBean");
 	    boolean ok = false;
+	    final String pw = upb.getPassword();
+	    String oldPwHash = null;
+	    if (pw.isEmpty()) {
+	        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	        final Object principal = auth.getPrincipal();
+	        if (principal instanceof UserDetails) {
+	            final UserDetails ud = (UserDetails) principal;
+	            oldPwHash = ud.getPassword();
+	        }
+	    }
 	    try {
-            UserDetailsService.saveCustomCredential(upb.getUserName(), upb.getPassword());
+            UserDetailsService.saveCustomCredential(upb.getUserName(), upb.getPassword(), oldPwHash);
             ok = true;
 	    } catch (InvalidParameterException e) {
 	        ViewUtil.addMessage("Error on Saving User Profile!!! (Invalid parameters)", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
