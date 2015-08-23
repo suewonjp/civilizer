@@ -103,7 +103,7 @@ function createDataBrokerController() {
     
     ctrr.onTypePw = function(pwInput, e) {
         var btn = getNextStepButton();
-        if (event.which == $.ui.keyCode.ENTER) {
+        if (e.which == $.ui.keyCode.ENTER) {
             btn.hide();
         }
         else

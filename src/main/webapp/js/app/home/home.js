@@ -934,7 +934,7 @@ function onClickGoSort(panelId) {
         dlg.hide();
     }
     else {
-        document.forms["fragment-group-form"]["fragment-group-form:go-sort-action"+panelId].click()
+        document.forms["fragment-group-form"]["fragment-group-form:go-sort-action"+panelId].click();
     }
 }
 
