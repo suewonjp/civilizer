@@ -138,13 +138,13 @@ function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {
         pfInplace.hide();
     }
     
-    jqOuterBox.click(function(e) {
+    jqOuterBox.off("click").on("click", function(e) {
         if (e.target != input[0] && input.is(":visible")) {
             commitInput();
         }
     });
     
-    input.keypress(function(e) {
+    input.off("keypress").on("keypress", function(e) {
         // [TODO] key check should be in a cross-browser way
         if (e.which == $.ui.keyCode.ENTER && input.is(":visible")) {
             commitInput();

@@ -137,51 +137,100 @@ function createDataBrokerController() {
 
 var DBC = createDataBrokerController();
 
-function showProfileDialog() {
-    var dlg = PF("userProfileDlg");
-    var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);
-    togglePasswordChange(changePwCb);
-    var inplace = PF("userName");
+function createUserProfileController() {
+    var ctrr = new Object();
+    var dlg, changePwCb, usrNmWgt, saveBtn, pwd1, pwd2;
     
-    function onInplaceCommit(val, text) {
-        inplace.jq.data("modified", val !== text);
+    function getDialog() {
+        return dlg || (dlg = PF('userProfileDlg'));
+    }
+    
+    function getChangePasswordCheckbox() {
+        return changePwCb || (changePwCb = getDialog().jq.find("input[name='enable_password_change']"));
+    }
+    
+    function getUserNameWidget() {
+        return usrNmWgt || (usrNmWgt = PF("userName"));
+    }
+    
+    function getSaveBtn() {
+        return saveBtn || (saveBtn = PF("userProfileDlgSave")); 
+    }
+    
+    function getPasswordInput(i) {
+        if (i == 1)
+            return pwd1 || (pwd1 = $("#user-menu-dlg-form\\:pwd1"));
+        else
+            return pwd2 || (pwd2 = $("#user-menu-dlg-form\\:pwd2"));
+    }
+
+    function toggleUserProfileDlgSaveBtn() {
+        var inplace = getUserNameWidget();
+        var saveBtn = getSaveBtn();
+        saveBtn.disable();
+        var considerPw = getChangePasswordCheckbox().prop("checked");
+        if (considerPw) {
+            var pw1 = getPasswordInput(1).val();
+            var pw2 = getPasswordInput(2).val();
+            if (pw1 && pw2 && pw1 == pw2)
+                saveBtn.enable();
+        }
+        else {
+            if (inplace.jq.data("modified"))
+                saveBtn.enable();
+        }
+    }
+    
+    ctrr.showDialog = function() {
+        var d = getDialog();
+        var cb = getChangePasswordCheckbox().prop("checked", false);
+        this.togglePasswordChange(cb);
+        
+        var inplace = getUserNameWidget();
+        function onInplaceCommit(val, text) {
+            inplace.jq.data("modified", val !== text);
+            toggleUserProfileDlgSaveBtn();
+        }
+        initPfInplaceWidget(
+                inplace
+                , inplace.jq.next("span").text()
+                , d.jq.find("div.ui-panel").eq(0)
+                , onInplaceCommit
+        );    
+        onInplaceCommit("", "");
+        
+        d.show();
+    }
+
+    ctrr.togglePasswordChange = function(checkbox)  {
+        getPasswordInput(1).val(null);
+        getPasswordInput(2).val(null);
+        var checked = $(checkbox).prop("checked");
+        showOrHide($("#new-password-box"), checked);
         toggleUserProfileDlgSaveBtn();
     }
     
-    initPfInplaceWidget(
-            inplace
-            , inplace.jq.next("span").text()
-            , dlg.jq.find("div.ui-panel").eq(0)
-            , onInplaceCommit
-    );    
-    onInplaceCommit("", "");
+    ctrr.onClickSaveUserProfile = function() {
+        // [TODO] validation check
+        document.forms["user-menu-dlg-form"]["user-menu-dlg-form:update-user-profile-btn"].click()
+    }
     
-    PF("userProfileDlgSave").disable();
+    ctrr.onTypePassword = function(e) {
+        if (e.which === $.ui.keyCode.ENTER) {
+            e.preventDefault();
+            return false;
+        }
+        toggleUserProfileDlgSaveBtn();        
+    }
     
-    dlg.show();
+    ctrr.onTypeUsername = function(e) {
+        getSaveBtn().disable();
+    }
+    
+    return ctrr;
 }
 
-function toggleUserProfileDlgSaveBtn() {
-    var dlg = PF("userProfileDlg");
-    var inplace = PF("userName");
-    var saveBtn = PF("userProfileDlgSave");
-    (inplace.jq.data("modified") || dlg.jq.find("input[name='enable_password_change']").prop("checked"))
-    ? saveBtn.enable() : saveBtn.disable();
-}
-
-function togglePasswordChange(widget) {
-    $("#user-menu-dlg-form\\:pwd1").val(null);
-    $("#user-menu-dlg-form\\:pwd2").val(null);
-    PF("userProfileDlg").jq.find(".ui-messages").hide();
-    var checked = $(widget).prop("checked");
-    showOrHide($("#new-password-box"), checked);
-    toggleUserProfileDlgSaveBtn();
-}
-
-function onClickSaveUserProfile() {
-    // [TODO] validation check
-    document.forms["user-menu-dlg-form"]["user-menu-dlg-form:update-user-profile-btn"].click()
-}
+var UPC = createUserProfileController();
 
 function setCurrentTheme(defaultTheme) {
     var theme = localStorage.getItem("theme");

@@ -58,7 +58,7 @@
             <p:menuitem value="#{msg['about_app']}" onclick="showAboutDialog()" icon="fa fa-university"/>
             <p:menuitem value="#{msg['import_data']}" process="data-broker-export-mode" onclick="DBC.setMode(false)" oncomplete="DBC.showDialog()" icon="fa fa-upload"/>
             <p:menuitem value="#{msg['export_data']}" process="data-broker-export-mode" onclick="DBC.setMode(true)" oncomplete="DBC.showDialog()" icon="fa fa-download"/>
-            <p:menuitem value="#{msg['change_profile']}" onclick="showProfileDialog()" icon="fa fa-edit"/>
+            <p:menuitem value="#{msg['change_profile']}" onclick="UPC.showDialog()" icon="fa fa-edit"/>
             <p:separator />
         <c:if test="#{systemProperties['civilizer.dev']}">
             <!-- [DEV] -->
