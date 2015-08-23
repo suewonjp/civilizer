@@ -1,5 +1,6 @@
 package com.civilizer.security;
 
+import java.security.InvalidParameterException;
 import java.util.*;
 import java.io.File;
 import java.io.IOException;
@@ -48,13 +49,17 @@ public final class UserDetailsService
     public static File getCredentialFile() {
         final String homePath = System.getProperty(AppOptions.PRIVATE_HOME_PATH);
         final String credFilePath = FsUtil.getAbsolutePath(CREDENTIAL_FILE, homePath);
-        return credFilePath == null
-                ? null : new File(credFilePath);
+        return new File(credFilePath);
     }
     
-    public static void saveCustomCredential(String username, String password) throws IOException {
+    public static void saveCustomCredential(String username, String password)
+            throws IOException, InvalidParameterException {
+        
         final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(ENCRYPTION_STRENGTH);
         final List<String> lines = new ArrayList<>();
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            throw new InvalidParameterException();
+        }
         lines.add(encoder.encode(username));
         lines.add(encoder.encode(password));
         FileUtils.writeLines(UserDetailsService.getCredentialFile(), lines, null);
@@ -66,7 +71,7 @@ public final class UserDetailsService
         final Logger logger = LoggerFactory.getLogger(UserDetailsService.class);
         final File credentialFile = getCredentialFile();
         UserDetails output = null;
-        boolean customCredential = credentialFile != null && credentialFile.isFile();
+        boolean customCredential = credentialFile.isFile();
         
         if (customCredential) {
             try {

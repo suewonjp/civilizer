@@ -50,14 +50,6 @@ function onPanelActivationChange() {
     }
 }
 
-function toggleUserProfileDlgSaveBtn() {
-    var dlg = PF("userProfileDlg");
-    var inplace = PF("userName");
-    var saveBtn = PF("userProfileDlgSave");
-    (inplace.jq.data("modified") || dlg.jq.find("input[name='enable_password_change']").prop("checked"))
-    ? saveBtn.enable() : saveBtn.disable();
-}
-
 function showAboutDialog() {
     var dlg = PF("aboutDlg");
     dlg.show();
@@ -149,8 +141,6 @@ function showProfileDialog() {
     var dlg = PF("userProfileDlg");
     var changePwCb = dlg.jq.find("input[type=checkbox]").prop("checked", false);
     togglePasswordChange(changePwCb);
-    $("#user-menu-dlg-form\\:pwd1").val(null);
-    $("#user-menu-dlg-form\\:pwd2").val(null);
     var inplace = PF("userName");
     
     function onInplaceCommit(val, text) {
@@ -166,15 +156,31 @@ function showProfileDialog() {
     );    
     onInplaceCommit("", "");
     
+    PF("userProfileDlgSave").disable();
+    
     dlg.show();
 }
 
+function toggleUserProfileDlgSaveBtn() {
+    var dlg = PF("userProfileDlg");
+    var inplace = PF("userName");
+    var saveBtn = PF("userProfileDlgSave");
+    (inplace.jq.data("modified") || dlg.jq.find("input[name='enable_password_change']").prop("checked"))
+    ? saveBtn.enable() : saveBtn.disable();
+}
+
 function togglePasswordChange(widget) {
+    $("#user-menu-dlg-form\\:pwd1").val(null);
+    $("#user-menu-dlg-form\\:pwd2").val(null);
+    PF("userProfileDlg").jq.find(".ui-messages").hide();
     var checked = $(widget).prop("checked");
     showOrHide($("#new-password-box"), checked);
-    var dlg = PF("userProfileDlg");
-    dlg.jq.find(".ui-messages").hide();
     toggleUserProfileDlgSaveBtn();
+}
+
+function onClickSaveUserProfile() {
+    // [TODO] validation check
+    document.forms["user-menu-dlg-form"]["user-menu-dlg-form:update-user-profile-btn"].click()
 }
 
 function setCurrentTheme(defaultTheme) {

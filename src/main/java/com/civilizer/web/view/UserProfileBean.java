@@ -20,8 +20,8 @@ import com.civilizer.config.AppOptions;
 public final class UserProfileBean implements Serializable {
     
     private Locale locale;
-    private String userName;
-    private String password;
+    private String userName = "";
+    private String password = "";
     private static final String[] themes = {
             "afterdark",
             "afternoon",

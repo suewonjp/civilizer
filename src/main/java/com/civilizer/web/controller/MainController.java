@@ -2,6 +2,7 @@ package com.civilizer.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.*;
 
 import javax.faces.application.FacesMessage;
@@ -866,8 +867,14 @@ public final class MainController {
 	    try {
             UserDetailsService.saveCustomCredential(upb.getUserName(), upb.getPassword());
             ok = true;
-        } catch (IOException e) {
-            ViewUtil.addMessage("Error on Saving User Profile!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+	    } catch (InvalidParameterException e) {
+	        ViewUtil.addMessage("Error on Saving User Profile!!! (Invalid parameters)", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        ViewUtil.addMessage("IO Error on Saving User Profile!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+	        e.printStackTrace();
+        } catch (Exception e) {
+            ViewUtil.addMessage("Unkown Error on Saving User Profile!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
             e.printStackTrace();
         }
 	    return ok;

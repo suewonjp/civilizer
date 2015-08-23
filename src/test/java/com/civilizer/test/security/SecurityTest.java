@@ -3,6 +3,7 @@ package com.civilizer.test.security;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
@@ -14,7 +15,6 @@ import com.civilizer.security.UserDetailsService;
 import com.civilizer.test.helper.TestUtil;
 
 public class SecurityTest {
-    
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
         FileUtils.deleteQuietly(UserDetailsService.getCredentialFile());
@@ -44,6 +44,24 @@ public class SecurityTest {
     }
     
     @Test
+    public void testInvalidCasesOfSaveCustomCredential() {
+        final String un[] = { null, null, "", "", "username", "" };
+        final String pw[] = { null, "", null, "", "", "password" };
+        assertEquals(un.length, pw.length);
+        
+        for (int i=0; i<un.length; ++i) {
+            try {
+                UserDetailsService.saveCustomCredential(un[i], pw[i]);
+                fail();
+            } catch (InvalidParameterException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+                fail();
+            }
+        }
+    }
+    
+    @Test
     public void testCustomCredential() {
         for (int i=0; i<3; ++i) {
             final String username = TestUtil.randomString(TestUtil.getRandom(), 1, 32);
@@ -51,8 +69,11 @@ public class SecurityTest {
             try {
                 UserDetailsService.saveCustomCredential(username, password);
             } catch (IOException e) {
-                fail("failed in saving custom credential!");
                 e.printStackTrace();
+                fail("failed in saving custom credential!");
+            } catch (InvalidParameterException e) {
+                e.printStackTrace();
+                fail("failed in saving custom credential!");
             }
             
             final UserDetailsService uds = new UserDetailsService();
