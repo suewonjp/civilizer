@@ -5,6 +5,7 @@
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
     start-state="home">
     
+    <var name="authBean" class="com.civilizer.web.view.AuthenticationBean"/>
     <var name="userProfileBean" class="com.civilizer.web.view.UserProfileBean"/>
     <var name="dataBrokerBean" class="com.civilizer.web.view.DataBrokerBean"/>
     

@@ -55,6 +55,46 @@ function showAboutDialog() {
     dlg.show();
 }
 
+function createConfirmPasswordController() {
+    var ctrr = new Object();
+    var dlg, submit, action;
+    
+    function getDialog() {
+        return dlg || (dlg = PF('confirmPwDlg'));
+    }
+    
+    function getSubmit() {
+        return submit || (submit = $("#user-menu-dlg-form\\:cpd-submit"));
+    }
+    
+    ctrr.showDialog = function(ac) {
+        if ($.isFunction(ac))
+            action = ac;
+        var d = getDialog();
+        d.show();
+    }
+    
+    ctrr.onTypePw = function(pwInput, e) {
+        var btn = getSubmit();
+        showOrHide(btn, $(pwInput).val());
+    }
+    
+    ctrr.onComplete = function(xhr, status, args) {
+        if (args.authenticated === true) {
+            dlg.hide();
+            if ($.isFunction(action))
+                action();
+        }
+        else {
+            $("#user-menu-dlg-form\\:cpd-pw").effect("shake").focus();
+        }
+    }
+    
+    return ctrr;
+}
+
+var CPC = createConfirmPasswordController();
+
 function createDataBrokerController() {
     var ctrr = new Object();
     var dlg;
@@ -211,8 +251,9 @@ function createUserProfileController() {
     }
     
     ctrr.onClickSaveUserProfile = function() {
-        // [TODO] validation check
-        document.forms["user-menu-dlg-form"]["user-menu-dlg-form:update-user-profile-btn"].click()
+        CPC.showDialog(function() {
+            document.forms["user-menu-dlg-form"]["user-menu-dlg-form:update-user-profile-btn"].click()
+        });
     }
     
     ctrr.onTypePassword = function(e) {

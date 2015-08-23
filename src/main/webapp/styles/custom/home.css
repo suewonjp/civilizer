@@ -345,7 +345,10 @@
     color: brown;
 }
 
-#bookmark-form\:bookmark-panel, #selection-box-form\:selection-box-panel, #file-box-form\:file-box-panel {
+#bookmark-form\:bookmark-panel
+, #selection-box-form\:selection-box-panel
+, #file-box-form\:file-box-panel
+{
 	max-height: 480px;
 	margin-bottom: 20px;
 	overflow: auto;
@@ -432,24 +435,28 @@
 }
 
 #tag-palette-form\:tag-editor th
-, #tag-palette-form\:tag-info th {
+, #tag-palette-form\:tag-info th
+{
 	background-color: black;
 }
 
 #tag-palette-form\:tag-editor .fa-arrow-up
-, #tag-palette-form\:tag-info .fa-arrow-up  {
+, #tag-palette-form\:tag-info .fa-arrow-up
+{
 	position: relative;
 	left: 20%;
 }
 
 #tag-palette-form\:tag-editor .fa-arrow-down
-, #tag-palette-form\:tag-info .fa-arrow-down {
+, #tag-palette-form\:tag-info .fa-arrow-down
+{
 	position: relative;
 	left: 80%;
 }
 
 #tag-palette-form\:tag-editor td
-, #tag-palette-form\:tag-info td {
+, #tag-palette-form\:tag-info td
+{
 	background-color: gray;
 	width: 280px;
 }
@@ -494,12 +501,16 @@
     font-weight: lighter;
 }
 
-#user-menu-dlg-form\:data-broker-dlg .ui-wizard-nav-next {
+#user-menu-dlg-form\:data-broker-dlg .ui-wizard-nav-next
+, #user-menu-dlg-form\:cpd-submit
+{
     width:70px;
     height:40px;
 }
 
-#user-menu-dlg-form\:data-broker-dlg .ui-wizard-nav-next .fa {
+#user-menu-dlg-form\:data-broker-dlg .ui-wizard-nav-next .fa
+, #user-menu-dlg-form\:cpd-submit .fa
+{
     position:relative;
     top:10px;
 }
