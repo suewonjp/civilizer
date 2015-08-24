@@ -52,6 +52,7 @@ function onPanelActivationChange() {
 
 function makeSidebarToggleable() {
     var toggler = $("#sidebar-toggler");
+    var icon = toggler.find(".fa");
     var sidebar = $("#sidebar");
     var content = $("#content");
     var defCntWt = content.css("width");
@@ -59,14 +60,19 @@ function makeSidebarToggleable() {
     toggler.off("click").on("click", function(e) {
         var visible = showOrHide(sidebar);
         localStorage.setItem("sidebarVisible", visible ? "yes" : "no");
-        if (visible)
+        if (visible) {
             content.css("width", defCntWt);
-        else
+            icon.removeClass("fa-arrow-circle-left").addClass("fa-arrow-circle-right");
+        }
+        else {
             content.css("width", "100%");
+            icon.removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
+        }
     });
     if (savedAsVisible === "no") {
         showOrHide(sidebar, false);
         content.css("width", "100%");
+        icon.removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
     }
 }
 
