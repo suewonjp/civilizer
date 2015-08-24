@@ -25,6 +25,8 @@ $(document).ready(function() {
 	
 	setupContextMenus();
 	
+	makeSidebarToggleable();
+	
 	makeSidebarTitleToggleable();
 	
 	setCurrentTheme("ui-darkness");

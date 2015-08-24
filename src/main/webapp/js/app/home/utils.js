@@ -113,7 +113,15 @@ function showPopup(target, e) {
 }
 
 function showOrHide(target, letItShow) {
-    letItShow ? target.show() : target.hide();
+    if ((letItShow === undefined || letItShow === null) && target.is) {
+        letItShow = (target.is(":visible") === false);
+    }
+    
+    if (letItShow)
+        target.show();
+    else
+        target.hide();
+    return letItShow;
 }
 
 function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {

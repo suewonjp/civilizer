@@ -50,6 +50,19 @@ function onPanelActivationChange() {
     }
 }
 
+function makeSidebarToggleable() {
+    var toggler = $("#sidebar-toggler");
+    var sidebar = $("#sidebar");
+    var content = $("#content");
+    var defCntWt = content.css("width");
+    toggler.off("click").on("click", function(e) {
+        if (showOrHide(sidebar))
+            content.css("width", defCntWt);
+        else
+            content.css("width", "100%");
+    });
+}
+
 function showAboutDialog() {
     var dlg = PF("aboutDlg");
     dlg.show();

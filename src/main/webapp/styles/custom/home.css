@@ -523,3 +523,11 @@
     margin-left:40%;
     color:highlight;
 }
+
+#sidebar-toggler {
+    position: fixed;
+    top: 30px;
+    right: 18%;
+    z-index: 210;
+    font-size: xx-small;
+}
