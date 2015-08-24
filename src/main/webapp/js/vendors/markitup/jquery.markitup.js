@@ -38,6 +38,8 @@
 					root:					'',
 					beforeInsert:			'',
 					afterInsert:			'',
+					onAlt:                  false,
+					onShift:                false,
 					onEnter:				{},
 					onShiftEnter:			{},
 					onCtrlEnter:			{},
@@ -167,8 +169,11 @@
 				$('li:hover > ul', ul).css('display', 'block');
 				$.each(markupSet, function() {
 					var button = this, t = '', title, li, j;
-					title = (button.key) ? (button.name||'')+' [Ctrl+'+button.key+']' : (button.name||'');
-					key   = (button.key) ? 'accesskey="'+button.key+'"' : '';
+					var leadKeys = "Ctrl+";
+					if (button.onShift) leadKeys += "Shift+";
+					if (button.onAlt) leadKeys += "Alt+";
+					title = (button.key) ? (button.name||'')+' ['+leadKeys+button.key+']' : (button.name||'');
+					key   = (button.key) ? 'accesskey="'+leadKeys+button.key+'"' : '';
 					if (button.separator) {
 						li = $('<li class="markItUpSeparator">'+(button.separator||'')+'</li>').appendTo(ul);
 					} else {
@@ -435,16 +440,41 @@
 				} 
 				return selection;
 			}
+			
+			var keyCode = $.ui.keyCode;
+
+			var specialKeyNames = {};
+	        specialKeyNames[keyCode.BACKSPACE] = "Backspace";
+	        specialKeyNames[keyCode.COMMA] = ",";
+	        specialKeyNames[keyCode.DELETE] = "Delete";
+	        specialKeyNames[keyCode.DOWN] = "Down";
+	        specialKeyNames[keyCode.END] = "End";
+	        specialKeyNames[keyCode.ENTER] = "Enter";
+	        specialKeyNames[keyCode.ESCAPE] = "Escape";
+	        specialKeyNames[keyCode.HOME] = "Home";
+	        specialKeyNames[keyCode.LEFT] = "Left";
+	        specialKeyNames[keyCode.PAGE_DOWN] = "Page_down";
+	        specialKeyNames[keyCode.PAGE_UP] = "Page_up";
+	        specialKeyNames[keyCode.PERIOD] = ".";
+	        specialKeyNames[keyCode.RIGHT] = "Right";
+	        specialKeyNames[keyCode.SPACE] = "Space";
+	        specialKeyNames[keyCode.TAB] = "Tab";
+	        specialKeyNames[keyCode.UP] = "Up"; 
 
 			// set keys pressed
 			function keyPressed(e) { 
 				shiftKey = e.shiftKey;
 				altKey = e.altKey;
-				ctrlKey = (!(e.altKey && e.ctrlKey)) ? (e.ctrlKey || e.metaKey) : false;
+				ctrlKey = e.ctrlKey;
+//				ctrlKey = (!(e.altKey && e.ctrlKey)) ? (e.ctrlKey || e.metaKey) : false;
 
 				if (e.type === 'keydown') {
-					if (ctrlKey === true && shiftKey === false) {
-						li = $('a[accesskey="'+((e.keyCode == 13) ? '\\n' : String.fromCharCode(e.keyCode))+'"]', header).parent('li');
+				    if (ctrlKey === true) {
+//					if (ctrlKey === true && shiftKey === true) {
+				        var keySequence = "Ctrl+" + (shiftKey ? "Shift+" : "") + (altKey ? "Alt+" : "");
+				        keySequence += specialKeyNames[e.keyCode] || String.fromCharCode(e.keyCode);
+					    li = $('a[accesskey="'+keySequence+'"]', header).parent('li');
+//						li = $('a[accesskey="'+((e.keyCode == 13) ? '\\n' : String.fromCharCode(e.keyCode))+'"]', header).parent('li');
 						if (li.length !== 0) {
 							ctrlKey = false;
 							setTimeout(function() {
@@ -471,16 +501,6 @@
 						if (ctrlKey == true || altKey == true) {
 							return false; 
 						}
-//						if (caretOffset !== -1) {
-//							get();
-//							caretOffset = $$.val().length - caretOffset;
-//							set(caretOffset, 0);
-//							caretOffset = -1;
-//							return false;
-//						} else {
-//							markup(shiftKey ? options.onShiftTab : options.onTab);
-//							return options.onTab.keepDefault;
-//						}
 						markup(shiftKey ? options.onShiftTab : options.onTab);
 						return options.onTab.keepDefault;
 					}
