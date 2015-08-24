@@ -136,7 +136,7 @@
         <p:panel>
             <div class="fa fa-user">&nbsp;&nbsp;
                 <p:inplace widgetVar="userName">
-                    <p:inputText style="width:80%" onkeydown="UPC.onTypeUsername(event)" value="#{userProfileBean.userName}"/>
+                    <p:inputText style="width:80%" onkeypress="UPC.onTypeUsername(event)" value="#{userProfileBean.userName}"/>
                 </p:inplace>
                 <h:outputText style="display:none" value="#{userProfileBean.userName}"/>
             </div>

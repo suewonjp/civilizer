@@ -278,6 +278,10 @@ function createUserProfileController() {
     }
     
     ctrr.onTypeUsername = function(e) {
+        if (e.which === $.ui.keyCode.ENTER) {
+            e.preventDefault();
+            return false;
+        }
         getSaveBtn().disable();
     }
     
