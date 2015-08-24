@@ -123,6 +123,5 @@
 	background-position:2px 50%;
 }
 .markItUpHeader ul ul a:hover  {
-	color:#FFF;
-	background-color:#3C769D;
+    box-shadow: 2px 2px 3px 2px white;
 }
