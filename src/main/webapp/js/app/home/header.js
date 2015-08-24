@@ -55,12 +55,19 @@ function makeSidebarToggleable() {
     var sidebar = $("#sidebar");
     var content = $("#content");
     var defCntWt = content.css("width");
+    var savedAsVisible = localStorage.getItem("sidebarVisible");
     toggler.off("click").on("click", function(e) {
-        if (showOrHide(sidebar))
+        var visible = showOrHide(sidebar);
+        localStorage.setItem("sidebarVisible", visible ? "yes" : "no");
+        if (visible)
             content.css("width", defCntWt);
         else
             content.css("width", "100%");
     });
+    if (savedAsVisible === "no") {
+        showOrHide(sidebar, false);
+        content.css("width", "100%");
+    }
 }
 
 function showAboutDialog() {
