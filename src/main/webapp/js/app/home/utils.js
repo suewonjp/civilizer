@@ -52,10 +52,10 @@ function addToggler(target, iconClass, toggler) {
     var expandIcon = "fa-plus-square";
     var link = $("<a>").attr("href", "#");
     var icon = $("<span>").addClass(iconClass + " fa " + collapseIcon);
-    link.prepend(icon).click(function (event) {
+    link.prepend(icon).click(function (e) {
         toggler();
         icon.toggleClass(collapseIcon + " " + expandIcon);
-        event.preventDefault();
+        e.preventDefault();
     }); 
     target.before(link);
     return link;
@@ -103,8 +103,8 @@ function getViewportSize() {
     return {width:pageWidth, height:pageHeight};
 }
 
-function showPopup(target, event) {
-    var x = event.clientX, y = event.clientY;
+function showPopup(target, e) {
+    var x = e.clientX, y = e.clientY;
     var tx = target.width(), ty = target.height();
     var size = getViewportSize();
     x -= Math.max(x + tx - size.width, 0);
@@ -155,9 +155,9 @@ function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {
 }
 
 function disableAutoSubmitOnEnterForForms(jqForms) {
-    jqForms.off('keypress.disableAutoSubmitOnEnter').on('keypress.disableAutoSubmitOnEnter', function(event) {
-        if (event.which === $.ui.keyCode.ENTER && $(event.target).is(':input:not(textarea,:button,:submit,:reset)')) {
-            event.preventDefault();
+    jqForms.off('keypress.disableAutoSubmitOnEnter').on('keypress.disableAutoSubmitOnEnter', function(e) {
+        if (e.which === $.ui.keyCode.ENTER && $(e.target).is(':input:not(textarea,:button,:submit,:reset)')) {
+            e.preventDefault();
         }
     });
 }

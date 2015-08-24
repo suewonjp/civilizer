@@ -123,11 +123,11 @@ function populateFragmentOverlay(data) {
 	setupClickHandlerForTags(overlayContent);
 }
 
-function triggerFragmentOverlay(event) {
+function triggerFragmentOverlay(e) {
 	var href=$(this).attr('href');
 	$.get(href, "", populateFragmentOverlay);
 	
-	event.preventDefault();
+	e.preventDefault();
 	
 	return false; // stop the link
 }
@@ -234,7 +234,7 @@ function setupFragmentResolutionSliders() {
     
     var baseSettings = {
         max:100, min:0,
-        change:function(event, ui) {
+        change:function(e, ui) {
             var reso = 3;
             if (ui.value < 20) reso = 0;
             else if (ui.value < 50) reso = 1;
@@ -400,11 +400,11 @@ function setupDraggableForTags() {
 	var overflowOption = tagPalettePanel.css("overflow");
 	$("#tag-palette-panel .each-tag, #fragment-group .each-tag").draggable(baseDraggableSettings);
 	$("#tag-palette-panel").off(".cvz_tag_dnd")
-	.on("dragstart.cvz_tag_dnd", ".each-tag", function(event, ui) {
+	.on("dragstart.cvz_tag_dnd", ".each-tag", function(e, ui) {
 		// [NOTE] the helper object disappears at the outside of the panel unless doing this
 		tagPalettePanel.css({overflow:"initial"});
 	})
-	.on("dragstop.cvz_tag_dnd", ".each-tag", function(event, ui) {
+	.on("dragstop.cvz_tag_dnd", ".each-tag", function(e, ui) {
 		tagPalettePanel.css({overflow:overflowOption});
 	});
 }
@@ -414,10 +414,10 @@ function setupDraggableForFiles() {
 	var overflowOption = fileBoxPanel.css("overflow");
 	$(".fb-file").draggable(baseDraggableSettings);
 	$("#file-path-tree").off(".cvz_file_dnd")
-	.on("dragstart.cvz_file_dnd", function(event, ui) {
+	.on("dragstart.cvz_file_dnd", function(e, ui) {
 		fileBoxPanel.css({overflow:"initial"});
 	})
-	.on("dragstop.cvz_file_dnd", function(event, ui) {
+	.on("dragstop.cvz_file_dnd", function(e, ui) {
 		// [NOTE] the overflow style should be identical between the tag palette and file box
 		fileBoxPanel.css({overflow:overflowOption});
 	});
@@ -425,9 +425,9 @@ function setupDraggableForFiles() {
 
 function setupDndForRelatingFragments() {
 	var droppable = newBaseDroppable(["fragment-title"]);
-    droppable.drop = function(event, ui) {
+    droppable.drop = function(e, ui) {
         var from = ui.draggable;
-        var to = $(event.target);
+        var to = $(e.target);
         if (from.hasClass("fragment-title")) {
             var fromId = from.attr("_fid");
             var toId = to.find(".fragment-title").attr("_fid");
@@ -441,9 +441,9 @@ function setupDndForRelatingFragments() {
 
 function setupDndForFragmentFetch() {
 	var droppable = newBaseDroppable(["fragment-title", "each-tag"]);
-    droppable.drop = function(event, ui) {
+    droppable.drop = function(e, ui) {
         var from = ui.draggable;
-        var to = $(event.target);
+        var to = $(e.target);
         if (from.hasClass("each-tag")) {
             fetchFragmentsByTag(from, to);
         }
@@ -457,9 +457,9 @@ function setupDndForFragmentFetch() {
 
 function setupDndForBookmarking() {
 	var droppable = newBaseDroppable(["fragment-title"]);
-    droppable.drop = function(event, ui) {
+    droppable.drop = function(e, ui) {
         var from = ui.draggable;
-        var to = $(event.target);
+        var to = $(e.target);
         if (from.hasClass("fragment-title")) {
         	var frgId = from.attr("_fid");
         	bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
@@ -470,9 +470,9 @@ function setupDndForBookmarking() {
 
 function setupDndForTrashing() {
 	var droppable = newBaseDroppable(["fragment-title", "each-tag"]);
-    droppable.drop = function(event, ui) {
+    droppable.drop = function(e, ui) {
         var from = ui.draggable;
-        var to = $(event.target);
+        var to = $(e.target);
         if (from.hasClass("fragment-title")) {
 	        var panelId = findPanel(from);
 	       	var deleting = FRAGMENT_DELETABLE[panelId];
@@ -488,9 +488,9 @@ function setupDndForTrashing() {
 
 function setupDndToDropDataToFrgEditor() {
     var droppable = newBaseDroppable(["each-tag", "fb-file"]);
-    droppable.drop = function(event, ui) {
+    droppable.drop = function(e, ui) {
         var from = ui.draggable;
-        var to = $(event.target);
+        var to = $(e.target);
         if (from.hasClass("each-tag")) {
             var id = from.attr("_tid");
             var encoded = "{{[tag] " + id + " }}";
@@ -510,31 +510,31 @@ function newBaseDroppable(acceptableClasses) {
 	var weakFocus = "ui-weak-focus";
 	var strongFocus = "ui-strong-focus";
 	var output = {
-		over: function(event, ui) {
+		over: function(e, ui) {
 			var from = ui.draggable;
-            var to = $(event.target);
+            var to = $(e.target);
 			if (hasAnyClass(from, acceptableClasses)) {
 	            to.addClass(strongFocus);
 	            to.removeClass(weakFocus);
 			}
         },
-        out: function(event, ui) {
+        out: function(e, ui) {
         	var from = ui.draggable;
-            var to = $(event.target);
+            var to = $(e.target);
             if (hasAnyClass(from, acceptableClasses)) {
 	            to.removeClass(strongFocus);
 	            to.addClass(weakFocus);
             }
         },
-        activate: function(event, ui) {
+        activate: function(e, ui) {
         	var from = ui.draggable;
-            var to = $(event.target);
+            var to = $(e.target);
             if (hasAnyClass(from, acceptableClasses)) {
 	            to.addClass(weakFocus);
 			}
         },
-        deactivate: function(event, ui) {
-            var to = $(event.target);
+        deactivate: function(e, ui) {
+            var to = $(e.target);
             to.removeClass(strongFocus);
             to.removeClass(weakFocus);
         },
@@ -828,8 +828,8 @@ function showSearchDialog(panelId, qsPhrase) {
     .find(".ui-dialog-title").text(MSG.label_search);
 }
 
-function searchWithHelpFromLastSearch(event, panelId, widget) {
-	if (event.which == $.ui.keyCode.ENTER) {
+function searchWithHelpFromLastSearch(e, panelId, widget) {
+	if (e.which == $.ui.keyCode.ENTER) {
 		var qsPhrase = $(widget).val().trim();
 		if (qsPhrase) {
 			$("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);

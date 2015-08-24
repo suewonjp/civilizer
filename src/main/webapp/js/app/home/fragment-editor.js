@@ -77,7 +77,7 @@ function clearFragmentEditor() {
     $("#fragment-editor-form\\:tags-input").autocomplete("widget").hide();
 }
 
-function openFragmentEditorForEdit(event) {
+function openFragmentEditorForEdit(e) {
 	var menu = $("#frg-context-menu");
 	var target = menu.data("target-frg");
 	var fragmentId = target.attr("_fid");
@@ -97,10 +97,10 @@ function openFragmentEditorForEdit(event) {
     
     var $window = $(window);
 	var $editorFrame = $("#editor-frame");
-    onClickFragmentEditorTrigger($editorFrame, $window, event, MSG.label_edit, false);
+    onClickFragmentEditorTrigger($editorFrame, $window, e, MSG.label_edit, false);
 }
 
-function openFragmentEditorToRelate(event) {
+function openFragmentEditorToRelate(e) {
     var menu = $("#frg-context-menu");
     var target = menu.data("target-frg");
     var frgId = target.attr("_fid");
@@ -108,7 +108,7 @@ function openFragmentEditorToRelate(event) {
     var $window = $(window);
     var $editorFrame = $("#editor-frame");
     var title = MSG.label_new_fragment+" ( <=> #"+frgId+" )";
-    onClickFragmentEditorTrigger($editorFrame, $window, event, title, true);
+    onClickFragmentEditorTrigger($editorFrame, $window, e, title, true);
 }
 
 function prepareFragmentContent() {
@@ -247,7 +247,7 @@ function autocompleteForTypingTags() {
         };
         
         // [jQuery.ui.autocomplete option] callback invoked when the user has selected an item.
-        this.select = function (event, ui) {
+        this.select = function (e, ui) {
             var items = split(this.value.substring(opts.startIdx));
             
             // remove the current input (being typed)
