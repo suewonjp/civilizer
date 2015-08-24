@@ -7,16 +7,16 @@
     xmlns:p="http://primefaces.org/ui">
     
 <div class="sidebar-title">
-    <span id="selection-box-title" class="fa fa-list-alt" >&nbsp;&nbsp;#{msg['label_selection_box']}&nbsp;&nbsp;</span>
+    <span id="selection-box-title" class="fa fa-list-alt" >&nbsp;&nbsp;#{msg['selection_box']}&nbsp;&nbsp;</span>
 </div>
 
 <h:form id="selection-box-form">
     <div id="selection-box-context-menu" class="context-menu">
         <p:menu>
-            <p:menuitem id="relate" onclick="confirmRelatingSelectedFragments()" icon="fa fa-link" value="#{msg['label_relate_all']}"/>
-            <p:menuitem id="trash" onclick="confirmTrashingSelectedFragments()" icon="fa fa-trash" value="#{msg['label_trash_all']}"/>
-            <p:menuitem id="unselect" onclick="confirmUnselectingSelectedFragments()" icon="fa fa-minus-circle" value="#{msg['label_unselect_all']}"/>
-            <p:menuitem id="select_unselect" onclick="selectOrUnselectFragment()" icon="fa fa-check" value="#{msg['label_select_unselect']}"/>
+            <p:menuitem id="relate" onclick="confirmRelatingSelectedFragments()" icon="fa fa-link" value="#{msg['relate_all']}"/>
+            <p:menuitem id="trash" onclick="confirmTrashingSelectedFragments()" icon="fa fa-trash" value="#{msg['trash_all']}"/>
+            <p:menuitem id="unselect" onclick="confirmUnselectingSelectedFragments()" icon="fa fa-minus-circle" value="#{msg['unselect_all']}"/>
+            <p:menuitem id="select_unselect" onclick="selectOrUnselectFragment()" icon="fa fa-check" value="#{msg['select_unselect']}"/>
         </p:menu>
     </div>
     

@@ -3,7 +3,7 @@ function setupFragmentEditor() {
 	var $editorFrame = $("#editor-frame");
 	
 	$("#new-fragment-editor-trigger, .new-fragment-editor-trigger-on-toolbar").click(function (e) {
-		onClickFragmentEditorTrigger($editorFrame, $window, e, MSG.label_new_fragment, true);
+		onClickFragmentEditorTrigger($editorFrame, $window, e, MSG.new_fragment, true);
     });
 	
     $editorFrame.resizable({
@@ -31,7 +31,7 @@ function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFra
     if (forNewFragment) {
     	var el = titleInput;
         el.val(null);
-        el.watermark(MSG.label_title);
+        el.watermark(MSG.title);
         
         el = $("#fragment-editor-form\\:tags-input");
         el.val(null);
@@ -97,7 +97,7 @@ function openFragmentEditorForEdit(e) {
     
     var $window = $(window);
 	var $editorFrame = $("#editor-frame");
-    onClickFragmentEditorTrigger($editorFrame, $window, e, MSG.label_edit, false);
+    onClickFragmentEditorTrigger($editorFrame, $window, e, MSG.edit, false);
 }
 
 function openFragmentEditorToRelate(e) {
@@ -107,7 +107,7 @@ function openFragmentEditorToRelate(e) {
     addSubmitParam($("#fragment-editor-form"), {relatedFrgId:frgId}, true);
     var $window = $(window);
     var $editorFrame = $("#editor-frame");
-    var title = MSG.label_new_fragment+" ( <=> #"+frgId+" )";
+    var title = MSG.new_fragment+" ( <=> #"+frgId+" )";
     onClickFragmentEditorTrigger($editorFrame, $window, e, title, true);
 }
 
@@ -134,7 +134,7 @@ function previewFragment() {
 	
 	$("#fragmen-overlay-back-button").hide();
     
-	$("#fragment-overlay-title").text(MSG.label_preview);
+	$("#fragment-overlay-title").text(MSG.preview);
 	
 	var srcContent = prepareFragmentContent();
     var outputHtml = $("<span class='fragment-content'>").wrapInner(translateFragmentContent(srcContent));

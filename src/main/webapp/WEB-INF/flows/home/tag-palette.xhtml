@@ -7,11 +7,11 @@
     xmlns:p="http://primefaces.org/ui">
     
 <div class="sidebar-title">
-    <span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['label_tag_palette']}</span>
+    <span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['tag_palette']}</span>
 </div>
 
 <h:form id="tag-palette-form">
-    <p:dialog id="tag-editor" header="#{msg['label_edit']}" width="600px" modal="false" showEffect="fade" widgetVar="tagEditor" position="center" draggable="true" resizable="false" >
+    <p:dialog id="tag-editor" header="#{msg['edit']}" width="600px" modal="false" showEffect="fade" widgetVar="tagEditor" position="center" draggable="true" resizable="false" >
     	<p:panel id="tag-name-panel">
 	    	<div class="fa fa-tag">&nbsp;&nbsp;
 		    	<p:inplace widgetVar="tagNameInplace">
@@ -28,7 +28,7 @@
 	        <p:panel>
 	            <div class="fa fa-tag">
 	                &nbsp;&nbsp;
-	                <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
+	                <p:inplace editor="true" label="+" saveLabel="#{msg['save']}" cancelLabel="#{msg['cancel']}">
 	                	<p:ajax event="save" update="parent-tags"/>
 						<p:selectOneListbox value="#{tagListBean.newParentTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
 					    	<f:selectItems value="#{tagListBean.listLinkableTags()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
@@ -46,7 +46,7 @@
 	        <p:panel>
 	            <div class="fa fa-tag">
                     &nbsp;&nbsp;
-                    <p:inplace editor="true" label="+" saveLabel="#{msg['label_save']}" cancelLabel="#{msg['label_cancel']}">
+                    <p:inplace editor="true" label="+" saveLabel="#{msg['save']}" cancelLabel="#{msg['cancel']}">
                     	<p:ajax event="save" update="child-tags"/>
 						<p:selectOneListbox value="#{tagListBean.newChildTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
 					    	<f:selectItems value="#{tagListBean.listLinkableTags()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
@@ -63,10 +63,10 @@
 	        </p:panel>
     	</h:panelGrid>
         <input type="hidden" name="isNewTag" value="false" class="ui-submit-param" />
-        <p:commandButton widgetVar="tagEditorSaveBtn" action="save-tag" value="#{msg['label_save']}" icon="ui-icon-check"/>
+        <p:commandButton widgetVar="tagEditorSaveBtn" action="save-tag" value="#{msg['save']}" icon="ui-icon-check"/>
     </p:dialog>
 
-    <p:dialog id="tag-info" widgetVar="tagInfoDlg" header="#{msg['label_info']}" closeOnEscape="true" width="600px" modal="false" showEffect="fade" position="center" draggable="true" resizable="false" >
+    <p:dialog id="tag-info" widgetVar="tagInfoDlg" header="#{msg['info']}" closeOnEscape="true" width="600px" modal="false" showEffect="fade" position="center" draggable="true" resizable="false" >
     	<p:panel>
 	    	<span class="fa fa-tag _tag-name"></span>
     	</p:panel>
@@ -97,10 +97,10 @@
     
     <div id="tag-context-menu" class="context-menu">
 	    <p:menu>
-            <p:menuitem id="edit" oncomplete="showTagEditorForEditing()" icon="fa fa-edit" value="#{msg['label_edit']}"
+            <p:menuitem id="edit" oncomplete="showTagEditorForEditing()" icon="fa fa-edit" value="#{msg['edit']}"
             	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
-            <p:menuitem id="trash" onclick="confirmTrashingTagFromCtxtMenu()" icon="fa fa-trash" value="#{msg['label_trash']}"/>
-            <p:menuitem id="info" oncomplete="showTagInfo()" icon="fa fa-info-circle" value="#{msg['label_info']}"
+            <p:menuitem id="trash" onclick="confirmTrashingTagFromCtxtMenu()" icon="fa fa-trash" value="#{msg['trash']}"/>
+            <p:menuitem id="info" oncomplete="showTagInfo()" icon="fa fa-info-circle" value="#{msg['info']}"
             	update="tag-info" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
 	    </p:menu>
     </div>
@@ -111,12 +111,12 @@
 	    <div id="tag-palette-panel">
 	        <ul>
 	            <li>
-	                <a href="#tag-palette-flat" title="#{msg['label_flat_view']}" >
+	                <a href="#tag-palette-flat" title="#{msg['flat_view']}" >
 	                    <span class="fa fa-list" ></span>
 	                </a>
 	            </li>
 	            <li>
-	                <a href="#tag-palette-tree" title="#{msg['label_tree_view']}" >
+	                <a href="#tag-palette-tree" title="#{msg['tree_view']}" >
 	                    <span class="fa fa-tree" ></span>
 	                </a>
 	            </li>
@@ -129,7 +129,7 @@
 			</div>
 
 		    <div id="new-tag-button">
-			    <p:commandLink onclick="showTagEditorForCreating()" title="#{msg['label_new_tag']}">
+			    <p:commandLink onclick="showTagEditorForCreating()" title="#{msg['new_tag']}">
 			        <span class="fa fa-tag fa-2x button-link ui-panel ui-widget-content ui-corner-all">+</span>
 			    </p:commandLink>
 			</div>

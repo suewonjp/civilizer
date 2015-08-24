@@ -23,7 +23,7 @@ function processFileClasses(parent) {
 function showFileUploadDialog() {
 	var dlg = PF("moveFileDlg");
     dlg.show();
-    dlg.jq.find(".ui-dialog-title").text(MSG.label_upload_file);
+    dlg.jq.find(".ui-dialog-title").text(MSG.upload_file);
     
     $("#file-upload-box").show();
     $("#file-box-form\\:src-path").text("");
@@ -74,7 +74,7 @@ function showFileUploadDialog() {
 function showMoveFileDialog() {
 	var dlg = PF("moveFileDlg");
     dlg.show();
-    dlg.jq.find(".ui-dialog-title").text(MSG.label_move);
+    dlg.jq.find(".ui-dialog-title").text(MSG.move);
     
     $("#file-upload-box").hide();
     
@@ -132,7 +132,7 @@ function showRenameFileDialog() {
     
     var dlg = PF("renameFileDlg");
     dlg.show();
-    dlg.jq.find(".ui-dialog-title").text(MSG.label_rename);
+    dlg.jq.find(".ui-dialog-title").text(MSG.rename);
 }
 
 function showNewDirectoryDialog(target) {
@@ -159,5 +159,5 @@ function showNewDirectoryDialog(target) {
     dlg.jq.find("input").focus(function() {
     	$(this).select();
     });
-    dlg.jq.find(".ui-dialog-title").text(MSG.label_new_folder);
+    dlg.jq.find(".ui-dialog-title").text(MSG.new_folder);
 }

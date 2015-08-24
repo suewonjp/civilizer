@@ -31,7 +31,7 @@ function formatTagsOnFragmentHeader(tgtTag) {
     var tid = tgtTag.attr("_tid");
     var srcTag = $("#tag-palette-flat").find("[_tid="+tid+"]");
     var fc = srcTag.attr("_frgCount");
-    tgtTag[0].title = fc + " " + MSG.label_fragments + "; " + MSG.rclick_for_menu;
+    tgtTag[0].title = fc + " " + MSG.fragments + "; " + MSG.rclick_for_menu;
     if (srcTag.hasClass("special-tag"))
     	tgtTag.addClass("special-tag");
 }
@@ -194,7 +194,7 @@ function setupFragmentCheckboxes() {
     for (var i=0; i<3; ++i) {
     	var cb = $("#fragment-group-form\\:checkbox-for-all-fragments-" + i);
     	if (cb.length > 0) {
-    		cb[0].title = MSG.label_check_uncheck_all;
+    		cb[0].title = MSG.check_uncheck_all;
     	}
     }
 }
@@ -825,7 +825,7 @@ function showSearchDialog(panelId, qsPhrase) {
             searchFragmentsForPanel(dlg.cvzCurPanelId);
         }
     })
-    .find(".ui-dialog-title").text(MSG.label_search);
+    .find(".ui-dialog-title").text(MSG.search);
 }
 
 function searchWithHelpFromLastSearch(e, panelId, widget) {

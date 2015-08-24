@@ -12,7 +12,7 @@
         <div id="editor-title-bar" class="ui-state-default">
             <span id="editor-title"></span>
             <div style="float: right;">
-             <a id="editor-frame-close-button" href="#" title="#{msg['label_close']}">
+             <a id="editor-frame-close-button" href="#" title="#{msg['close']}">
                  <span class="fa fa-close fa-2x warning-color" ></span>
              </a>
             </div>
@@ -24,9 +24,9 @@
             <h:inputHidden id="content-placeholder" value="#{paramFragmentBean.fragment.content}"/>
             <h:inputHidden id="id-placeholder-for-fragment" value="#{paramFragmentBean.fragment.id}"/>
             <div id="editor-button-bar">
-                <p:commandButton onclick="previewFragment();" value="#{msg['label_preview']}"
+                <p:commandButton onclick="previewFragment();" value="#{msg['preview']}"
                     style="margin-left:10px;" icon="fa fa-eye"/>
-                <p:commandButton onclick="onSubmitFragment();" value="#{msg['label_save']}" icon="ui-icon-check"/>
+                <p:commandButton onclick="onSubmitFragment();" value="#{msg['save']}" icon="ui-icon-check"/>
                 <div style="display:none">
                     <p:commandButton id="save-fragment-btn" action="save-fragment"/>
                 </div>

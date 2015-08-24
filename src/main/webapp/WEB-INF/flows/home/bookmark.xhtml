@@ -7,13 +7,13 @@
     xmlns:p="http://primefaces.org/ui">
     
 <div class="sidebar-title">
-    <span id="bookmark-title" class="fa fa-bookmark" >&nbsp;&nbsp;#{msg['label_bookmarks']}&nbsp;&nbsp;</span>
+    <span id="bookmark-title" class="fa fa-bookmark" >&nbsp;&nbsp;#{msg['bookmarks']}&nbsp;&nbsp;</span>
 </div>
 
 <h:form id="bookmark-form">
 	<div id="bookmark-context-menu" class="context-menu">
 	    <p:menu>
-            <p:menuitem onclick="confirmUnbookmarkingFragment()" icon="fa fa-close" value="#{msg['label_unbookmark']}"/>
+            <p:menuitem onclick="confirmUnbookmarkingFragment()" icon="fa fa-close" value="#{msg['unbookmark']}"/>
 	    </p:menu>
     </div>
     

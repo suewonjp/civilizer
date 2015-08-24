@@ -7,15 +7,15 @@
     xmlns:p="http://primefaces.org/ui">
     
 <div class="sidebar-title">
-    <span id="file-box-title" class="fa fa-floppy-o" >&nbsp;&nbsp;#{msg['label_filebox']}</span>
+    <span id="file-box-title" class="fa fa-floppy-o" >&nbsp;&nbsp;#{msg['filebox']}</span>
 </div>
 
 <h:form id="file-box-form" enctype="multipart/form-data">
 	<p:dialog header="" width="300px" modal="true" closeOnEscape="true" closhowEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false">
-        <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['label_name']} "/>
+        <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['name']} "/>
         <p:inputText style="min-width:200px" id="rename-file-dlg-name-input" value="#{fileListBean.fileName}"/>
         <br/><br/>
-        <p:commandButton action="rename-file" value="#{msg['label_ok']}" icon="ui-icon-check"/>
+        <p:commandButton action="rename-file" value="#{msg['ok']}" icon="ui-icon-check"/>
     </p:dialog>
 
 	<p:dialog width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
@@ -39,18 +39,18 @@
 <!-- 	    <p:remoteCommand> does not work with file upload for the current version of Primefaces -->
 	        <p:commandButton id="ok-upload" action="upload-file" ajax="false"/>
         </div>
-	    <p:commandButton id="ok" value="#{msg['label_ok']}" icon="ui-icon-check"/>
+	    <p:commandButton id="ok" value="#{msg['ok']}" icon="ui-icon-check"/>
     </p:dialog>
     
     <div id="file-context-menu" class="context-menu">
 	    <p:menu>
-            <p:menuitem id="upload" oncomplete="showFileUploadDialog()" icon="fa fa-upload" value="+ #{msg['label_upload_file']}"
+            <p:menuitem id="upload" oncomplete="showFileUploadDialog()" icon="fa fa-upload" value="+ #{msg['upload_file']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
-            <p:menuitem id="new-folder" onclick="showNewDirectoryDialog()" icon="fa fa-folder-open-o" value="+ #{msg['label_new_folder']}"/>
-            <p:menuitem id="rename" onclick="showRenameFileDialog()" icon="fa fa-pencil" value="#{msg['label_rename']}"/>
-            <p:menuitem id="move" oncomplete="showMoveFileDialog()" icon="fa fa-files-o" value="#{msg['label_move']}"
+            <p:menuitem id="new-folder" onclick="showNewDirectoryDialog()" icon="fa fa-folder-open-o" value="+ #{msg['new_folder']}"/>
+            <p:menuitem id="rename" onclick="showRenameFileDialog()" icon="fa fa-pencil" value="#{msg['rename']}"/>
+            <p:menuitem id="move" oncomplete="showMoveFileDialog()" icon="fa fa-files-o" value="#{msg['move']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
-            <p:menuitem id="delete" onclick="confirmDeletingFile()" icon="fa fa-trash" value="#{msg['label_delete']}"/>
+            <p:menuitem id="delete" onclick="confirmDeletingFile()" icon="fa fa-trash" value="#{msg['delete']}"/>
 	    </p:menu>
     </div>
     

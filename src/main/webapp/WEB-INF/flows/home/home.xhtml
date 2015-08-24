@@ -32,7 +32,7 @@
         width="320px" closeOnEscape="true" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
         <span class="fa fa-university fa-2x ui-panel">#{msg['application_name']}</span>
         <p:panel>
-            <p>#{msg['label_version']} #{core['civilizer.version']}</p>
+            <p>#{msg['version']} #{core['civilizer.version']}</p>
             <p>Created by Suewon Bahng</p>
             <span class="fa fa-bug warning-color"></span><span> #{msg['report_bug']} </span>
             <p style="color:blue">suewonjp@gmail.com</p>
@@ -70,7 +70,7 @@
                 </p:panel>
             </p:tab>
             <p:tab id="upload-step">
-                <p:panel header="#{msg['label_upload_file']}">
+                <p:panel header="#{msg['upload_file']}">
                     <h:panelGrid columns="1" cellpadding="5">
                         <p:fileUpload fileUploadListener="#{dataBrokerBean.onFileUpload}"
                             mode="advanced" auto="true"
@@ -82,17 +82,17 @@
             <p:tab id="import-error-step">
                 <p:panel>
                     <f:facet name="header">
-                        <h:outputText styleClass="fa fa-warning warning-color" value="#{msg['label_error']}"/>
+                        <h:outputText styleClass="fa fa-warning warning-color" value="#{msg['error']}"/>
                     </f:facet>
                     <h:panelGrid columns="1" cellpadding="5">
-                        <p:commandButton value="#{msg['label_close']}" onclick="DBC.hideDialog()" icon="fa fa-close"/>
+                        <p:commandButton value="#{msg['close']}" onclick="DBC.hideDialog()" icon="fa fa-close"/>
                     </h:panelGrid>
                 </p:panel>
             </p:tab>
             <p:tab id="confirm-import-step">
                 <p:panel>
                     <f:facet name="header">
-                        <h:outputText styleClass="fa fa-thumbs-o-up" value="&nbsp;#{msg['label_success']}"/>
+                        <h:outputText styleClass="fa fa-thumbs-o-up" value="&nbsp;#{msg['success']}"/>
                     </f:facet>
                     <h:panelGrid columns="1" cellpadding="5">
                         <p:commandButton value="#{msg['refresh_page']}" oncomplete="location.replace('home')" onclick="DBC.hideDialog()" icon="fa fa-check"/>
@@ -100,14 +100,14 @@
                 </p:panel>
             </p:tab>
             <p:tab id="preexport-step">
-                <p:panel header="#{msg['label_wait']}">
+                <p:panel header="#{msg['wait']}">
                     <h:panelGrid columns="1" cellpadding="5">
                         <span style="margin-left:40%" class="fa fa-spinner fa-spin fa-2x"></span>
                     </h:panelGrid>
                 </p:panel>
             </p:tab>
             <p:tab id="export-step">
-                <p:panel header="#{msg['label_download_file']}">
+                <p:panel header="#{msg['download_file']}">
                     <h:panelGrid columns="1" cellpadding="5">
                         <a href="exp/cvz-export.zip" onclick="DBC.onDownloadExportData()">
                             <span class="fa fa-download fa-2x"></span>
@@ -118,10 +118,10 @@
             <p:tab id="confirm-export-step">
                 <p:panel>
                     <f:facet name="header">
-                        <h:outputText styleClass="fa fa-thumbs-o-up" value="&nbsp;#{msg['label_success']}"/>
+                        <h:outputText styleClass="fa fa-thumbs-o-up" value="&nbsp;#{msg['success']}"/>
                     </f:facet>
                     <h:panelGrid columns="1" cellpadding="5">
-                        <p:commandButton value="#{msg['label_ok']}" onclick="DBC.hideDialog()" icon="fa fa-check"/>
+                        <p:commandButton value="#{msg['ok']}" onclick="DBC.hideDialog()" icon="fa fa-check"/>
                     </h:panelGrid>
                 </p:panel>
             </p:tab>
@@ -149,14 +149,14 @@
 
         <div id="new-password-box">
             <h:panelGrid columns="2" cellpadding="5">
-                <p:outputLabel for="pwd1" value="#{msg['label_password']}"/>
+                <p:outputLabel for="pwd1" value="#{msg['password']}"/>
                 <p:password id="pwd1" onkeyup="UPC.onTypePassword(event)" value="#{userProfileBean.password}" required="false"/>
-                <p:outputLabel for="pwd2" value="#{msg['label_confirm_password']}"/>
+                <p:outputLabel for="pwd2" value="#{msg['confirm_password']}"/>
                 <p:password id="pwd2" onkeyup="UPC.onTypePassword(event)" required="false"/>
             </h:panelGrid>
         </div>
         
-        <p:commandButton widgetVar="userProfileDlgSave" onclick="UPC.onClickSaveUserProfile()" value="#{msg['label_save']}" icon="ui-icon-check"/>
+        <p:commandButton widgetVar="userProfileDlgSave" onclick="UPC.onClickSaveUserProfile()" value="#{msg['save']}" icon="ui-icon-check"/>
         
         <div style="display:none">
             <p:commandButton id="update-user-profile-btn" action="update-user-profile"/>
@@ -174,7 +174,7 @@
                 </a>
             </div>
             <div style="float:right">
-                <a id="fragment-overlay-close-button" href="#" title="#{msg['label_close']}">
+                <a id="fragment-overlay-close-button" href="#" title="#{msg['close']}">
                     <span class="fa fa-close fa-2x warning-color" ></span>
                 </a>
             </div>
@@ -194,12 +194,12 @@
     
     <h:inputHidden id="id-placeholder-for-file" value="#{fileListBean.srcNodeId}"/>
     
-    <p:confirmDialog widgetVar="errorMsgDlg" header="#{msg['label_error']}"
+    <p:confirmDialog widgetVar="errorMsgDlg" header="#{msg['error']}"
         severity="alert" closeOnEscape="true" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
             <h:outputText id="error-msg" styleClass="warning-color" value="&nbsp;"/>
         </f:facet>
-        <p:commandButton value="#{msg['label_ok']}" onclick="PF('errorMsgDlg').hide();" icon="ui-icon-check"/>
+        <p:commandButton value="#{msg['ok']}" onclick="PF('errorMsgDlg').hide();" icon="ui-icon-check"/>
     </p:confirmDialog>
     
     <p:confirmDialog widgetVar="confirmDlg" header="#{msg['are_you_sure']}"
@@ -220,38 +220,38 @@
 	        <p:commandButton id="ok-delete-files" action="delete-file"/>
 	        <p:commandButton id="ok-signout" action="signout-from-home"/>
 		</div>
-        <p:commandButton id="ok" value="#{msg['label_ok']}" icon="ui-icon-check"/>
+        <p:commandButton id="ok" value="#{msg['ok']}" icon="ui-icon-check"/>
     </p:confirmDialog>
     
-    <p:dialog widgetVar="searchDlg" header="#{msg['label_search']}"
+    <p:dialog widgetVar="searchDlg" header="#{msg['search']}"
         width="500px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
     	<p:accordionPanel id="search-panel">
-	        <p:tab id="t0" title="#{msg['label_quick_search']}">
+	        <p:tab id="t0" title="#{msg['quick_search']}">
 	            <p:inputText id="quick-search-input" style="width:80%" value="#{searchContextBean.quickSearchPhrase}"/>
 	        </p:tab>
-	        <p:tab id="t1" title="#{msg['label_normal_search']}">
+	        <p:tab id="t1" title="#{msg['normal_search']}">
 	            <div>
-		            <label class="fa fa-tag"> #{msg['label_tag']} </label>
+		            <label class="fa fa-tag"> #{msg['tag']} </label>
 		            <p:inputText id="tag-keywords" autocomplete="false" value="#{searchContextBean.tagKeywords}"/>
-		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTag}" itemLabel="#{msg['label_any']}"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTag}" itemLabel="#{msg['any']}"/>
 	            </div>
 	            <div>
-		            <label class="fa fa-header"> #{msg['label_title']} </label>
+		            <label class="fa fa-header"> #{msg['title']} </label>
 		            <p:inputText id="title-keywords" value="#{searchContextBean.titleKeywords}"/>
-		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTitle}" itemLabel="#{msg['label_any']}"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyTitle}" itemLabel="#{msg['any']}"/>
 	            </div>
 	            <div>
-		            <label class="fa fa-file-text-o"> #{msg['label_content']} </label>
+		            <label class="fa fa-file-text-o"> #{msg['content']} </label>
 		            <p:inputText id="content-keywords" value="#{searchContextBean.contentKeywords}"/>
-		            <p:selectBooleanCheckbox value="#{searchContextBean.anyContent}" itemLabel="#{msg['label_any']}"/>
+		            <p:selectBooleanCheckbox value="#{searchContextBean.anyContent}" itemLabel="#{msg['any']}"/>
 	            </div>
 	            <div>
-		            <label class="fa fa-sort-numeric-asc"> #{msg['label_id']} </label>
+		            <label class="fa fa-sort-numeric-asc"> #{msg['id']} </label>
 		            <p:inputText id="id-keywords" value="#{searchContextBean.idKeywords}"/>
 	            </div>
 	        </p:tab>
 	    </p:accordionPanel>
-	    <p:commandButton id="go-search" value="#{msg['label_search']}" icon="ui-icon-check"/>
+	    <p:commandButton id="go-search" value="#{msg['search']}" icon="ui-icon-check"/>
         <span id="target-panels-on-search-dlg" style="position:relative;top:20px;left:100px">
             <input _pid="0" type="radio" id="panel-radio-on-search-dlg-0" name="panel-radio" style="display:none;"/>
             <label for="panel-radio-on-search-dlg-0" title="#{msg['toggle_panel']}">
@@ -276,13 +276,13 @@
     
     <div id="frg-context-menu" class="context-menu">
 	    <p:menu>
-            <p:menuitem id="edit" onclick="openFragmentEditorForEdit(event)" icon="fa fa-edit" value="#{msg['label_edit']}"/>
-            <p:menuitem id="bookmark" onclick="bookmarkFragmentFromCtxtMenu()" icon="fa fa-bookmark" value="#{msg['label_bookmark']}"/>
-            <p:menuitem id="trash" onclick="trashFragmentFromCtxtMenu(false)" icon="fa fa-trash" value="#{msg['label_trash']}"/>
-            <p:menuitem id="delete" onclick="trashFragmentFromCtxtMenu(true)" icon="fa fa-trash" value="#{msg['label_delete']}"/>
-            <p:menuitem id="restore" onclick="restoreFragmentFromCtxtMenu()" icon="fa fa-recycle" value="#{msg['label_restore']}"/>
-            <p:menuitem id="relateNew" onclick="openFragmentEditorToRelate(event)" icon="fa fa-link" value="#{msg['label_relate_new']}"/>
-            <p:menuitem id="touch" onclick="_touchFragment()" icon="fa fa-hand-o-up" value="#{msg['label_touch']}"/>
+            <p:menuitem id="edit" onclick="openFragmentEditorForEdit(event)" icon="fa fa-edit" value="#{msg['edit']}"/>
+            <p:menuitem id="bookmark" onclick="bookmarkFragmentFromCtxtMenu()" icon="fa fa-bookmark" value="#{msg['bookmark']}"/>
+            <p:menuitem id="trash" onclick="trashFragmentFromCtxtMenu(false)" icon="fa fa-trash" value="#{msg['trash']}"/>
+            <p:menuitem id="delete" onclick="trashFragmentFromCtxtMenu(true)" icon="fa fa-trash" value="#{msg['delete']}"/>
+            <p:menuitem id="restore" onclick="restoreFragmentFromCtxtMenu()" icon="fa fa-recycle" value="#{msg['restore']}"/>
+            <p:menuitem id="relateNew" onclick="openFragmentEditorToRelate(event)" icon="fa fa-link" value="#{msg['relate_new']}"/>
+            <p:menuitem id="touch" onclick="_touchFragment()" icon="fa fa-hand-o-up" value="#{msg['touch']}"/>
 	    </p:menu>
     </div>
     

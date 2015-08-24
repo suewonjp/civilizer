@@ -14,13 +14,13 @@
 <c:set var="lastSearchPhrase" value="#{empty panelContext.searchParams ? '' : panelContext.searchParams.searchPhrase}" />
 <c:set var="tc" value="#{fragmentListBean.totalCount}" />
 
-<p:dialog header="#{msg['label_choose_sort_option']}" modal="true" width="230px" closeOnEscape="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
+<p:dialog header="#{msg['choose_sort_option']}" modal="true" width="230px" closeOnEscape="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
     <div id="fragment-sort-option-container#{panelId}">
         <p:selectOneListbox widgetVar="frgSortOpt#{panelId}" value="#{fragmentListBean.orderOption}">
-            <f:selectItem itemLabel="#{msg['label_updated_time']}" itemValue="0"/>
-            <f:selectItem itemLabel="#{msg['label_created_time']}" itemValue="1"/>
-            <f:selectItem itemLabel="#{msg['label_title']}" itemValue="2"/>
-            <f:selectItem itemLabel="#{msg['label_id']}" itemValue="3"/>
+            <f:selectItem itemLabel="#{msg['updated_time']}" itemValue="0"/>
+            <f:selectItem itemLabel="#{msg['created_time']}" itemValue="1"/>
+            <f:selectItem itemLabel="#{msg['title']}" itemValue="2"/>
+            <f:selectItem itemLabel="#{msg['id']}" itemValue="3"/>
         </p:selectOneListbox>
     </div>
     <br/><br/>
@@ -30,7 +30,7 @@
     <input id="cb-curpageonly#{panelId}" type="checkbox"/>
     <span>#{msg['cur_page_only']}</span>
     <br/>
-    <p:commandButton onclick="onClickGoSort('#{panelId}')" value="#{msg['label_go_sort']}" icon="ui-icon-check"/>
+    <p:commandButton onclick="onClickGoSort('#{panelId}')" value="#{msg['go_sort']}" icon="ui-icon-check"/>
     <div style="display:none">
         <p:commandButton id="go-sort-action#{panelId}" action="sort-fragments">
             <f:param name="panelId" value="#{panelId}"/>
@@ -41,48 +41,48 @@
 <p:panel id="fragment-panel-toolbar-#{panelId}" styleClass="ui-state-active">
     <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments() and !panelContext.fragmentDeletable}" itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}" />
     
-    <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['label_new_fragment']}">
+    <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['new_fragment']}">
         <span class="fa fa-plus-square fa-2x button-link"></span>
     </a>
     
     <p:spacer width="6" />
     
     <p:commandLink oncomplete="showSearchDialog('#{panelId}', '#{lastSearchPhrase}')">
-        <span class="fa fa-search fa-2x button-link" title="#{msg['label_search']}"></span>
+        <span class="fa fa-search fa-2x button-link" title="#{msg['search']}"></span>
     </p:commandLink>
     
     <p:spacer width="6" />
     
     <p:commandLink rendered="#{!panelContext.isFirstPage()}" action="prev-fragment-page">
         <f:param name="panelId" value="#{panelId}"/>
-        <span class="fa fa-step-backward fa-2x button-link" title="#{msg['label_go_to_prev_page']}"></span>
+        <span class="fa fa-step-backward fa-2x button-link" title="#{msg['go_to_prev_page']}"></span>
     </p:commandLink>
     
     <p:spacer width="6" />
     
     <p:commandLink rendered="#{!panelContext.isLastPage()}" action="next-fragment-page">
         <f:param name="panelId" value="#{panelId}"/>
-        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['label_go_to_next_page']}"></span>
+        <span class="fa fa-step-forward fa-2x button-link" title="#{msg['go_to_next_page']}"></span>
     </p:commandLink>
     
     <p:spacer width="6" />
     
     <p:commandLink action="go-home">
         <f:param name="panelId" value="#{panelId}"/>
-        <span class="fa fa-home fa-2x button-link" title="#{msg['label_go_home']}"></span>
+        <span class="fa fa-home fa-2x button-link" title="#{msg['go_home']}"></span>
     </p:commandLink>
     
     <p:spacer width="6" />
 
     <p:commandLink rendered="#{tc > 0}" oncomplete="showSortOptionDialog('#{panelId}')" >
-        <span class="fa fa-sort fa-2x button-link" title="#{msg['label_sort']}"></span>
+        <span class="fa fa-sort fa-2x button-link" title="#{msg['sort']}"></span>
     </p:commandLink>
     
     <p:spacer width="6" />
     
     <c:if test="#{panelContext.fragmentDeletable}">
         <p:commandLink oncomplete="confirmEmptyingTrash()">
-            <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['label_empty_trash']}"></span>
+            <span class="fa fa-trash fa-2x button-link warning-color" title="#{msg['empty_trash']}"></span>
         </p:commandLink>
         <p:spacer width="6" />
     </c:if>
@@ -95,7 +95,7 @@
 <c:set var="curPage" value="#{panelContext.curPage+1} " />
 <c:set var="totalPages" value="#{panelContext.totalPages(tc)} " />
 <h:outputText styleClass="fa fa-file-text-o" style="font-weight:bold;color:darkgray;white-space:pre" 
-    value=" #{msg['label_total']} : #{tc} [#{first} - #{last}]      #{msg['label_page']} : #{curPage} / #{totalPages}"/>
+    value=" #{msg['total']} : #{tc} [#{first} - #{last}]      #{msg['page']} : #{curPage} / #{totalPages}"/>
 <c:if test="#{not empty lastSearchPhrase}">
     <div id="last-search-phrase-#{panelId}">
         <p:commandLink oncomplete="showSearchDialog('#{panelId}', '#{lastSearchPhrase}')" styleClass="button-link">

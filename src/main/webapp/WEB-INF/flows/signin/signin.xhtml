@@ -22,14 +22,14 @@
         <p:messages id="signin-form-messages"/>
         
         <h:panelGrid columns="2" cellpadding="5">
-            <span class="fa fa-pencil"> #{msg['label_username']}</span>
+            <span class="fa fa-pencil"> #{msg['username']}</span>
             <p:inputText id="j_username"/>
  
-            <span class="fa fa-key"> #{msg['label_password']}</span>
+            <span class="fa fa-key"> #{msg['password']}</span>
             <p:password id="j_password"/>
         </h:panelGrid>
 
-        <label id="signin-form-remember-me-label" for="_spring_security_remember_me">#{msg['label_remember_me']}</label>
+        <label id="signin-form-remember-me-label" for="_spring_security_remember_me">#{msg['remember_me']}</label>
 	    <input type="checkbox" name="_spring_security_remember_me" checked="checked"/>
       
         <p:commandButton id="sign-in-button" action="sign-in" value="#{msg['sign_in']}" icon="fa fa-sign-in" ajax="false"/>
