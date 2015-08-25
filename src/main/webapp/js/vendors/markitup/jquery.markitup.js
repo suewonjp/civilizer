@@ -474,15 +474,12 @@
 				shiftKey = e.shiftKey;
 				altKey = e.altKey;
 				ctrlKey = e.ctrlKey;
-//				ctrlKey = (!(e.altKey && e.ctrlKey)) ? (e.ctrlKey || e.metaKey) : false;
 
 				if (e.type === 'keydown') {
 				    if (ctrlKey === true) {
-//					if (ctrlKey === true && shiftKey === true) {
 				        var keySequence = "Ctrl+" + (shiftKey ? "Shift+" : "") + (altKey ? "Alt+" : "");
 				        keySequence += specialKeyNames[e.keyCode] || String.fromCharCode(e.keyCode);
 					    li = $('a[accesskey="'+keySequence+'"]', header).parent('li');
-//						li = $('a[accesskey="'+((e.keyCode == 13) ? '\\n' : String.fromCharCode(e.keyCode))+'"]', header).parent('li');
 						if (li.length !== 0) {
 							ctrlKey = false;
 							setTimeout(function() {
