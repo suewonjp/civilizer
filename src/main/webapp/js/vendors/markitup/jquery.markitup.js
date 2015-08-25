@@ -267,8 +267,7 @@
 				var openBlockWith 		= prepare(clicked.openBlockWith);
 				var closeBlockWith 		= prepare(clicked.closeBlockWith);
 				var multiline 			= clicked.multiline;
-				var swapFrom 		    = clicked.swapFrom;
-				var swapTo 			    = clicked.swapTo;
+				var dedent              = clicked.dedent;
 				
 				if (replaceWith !== "") {
 					block = openWith + replaceWith + closeWith;
@@ -285,9 +284,10 @@
 					
 					for (var l = 0; l < lines.length; l++) {
 						line = lines[l];
-						if (swapFrom) {
-							line = line.replace(swapFrom, swapTo);
-						}
+						if (dedent == 1)
+						    line = line.replace(/^[ \t]/, '');
+                        else if (dedent == 4)
+                            line = line.replace(/(^ {1,4})|(^\t)/, '');
 						var trailingSpaces;
 						if (trailingSpaces = line.match(/ *$/)) {
 							blocks.push(openWith + line.replace(/ *$/g, '') + closeWith + trailingSpaces);
@@ -316,6 +316,14 @@
 				var len, j, n, i;
 				hash = clicked = button;
 				get();
+                
+                if (button.dedent) {
+                    // special care for dedenting lines
+                    var offsetPrevNewline = textarea.value.substring(0, caretPosition).lastIndexOf('\n');
+                    set(offsetPrevNewline+1, caretPosition - (offsetPrevNewline+1) + selection.length);
+                    get();
+                }
+                
 				$.extend(hash, {	line:"", 
 						 			root:options.root,
 									textarea:textarea, 
