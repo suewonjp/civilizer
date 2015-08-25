@@ -267,7 +267,7 @@
 				var openBlockWith 		= prepare(clicked.openBlockWith);
 				var closeBlockWith 		= prepare(clicked.closeBlockWith);
 				var multiline 			= clicked.multiline;
-				var dedent              = clicked.dedent;
+				var outdent              = clicked.outdent;
 				
 				if (replaceWith !== "") {
 					block = openWith + replaceWith + closeWith;
@@ -284,9 +284,9 @@
 					
 					for (var l = 0; l < lines.length; l++) {
 						line = lines[l];
-						if (dedent == 1)
+						if (outdent == 1)
 						    line = line.replace(/^[ \t]/, '');
-                        else if (dedent == 4)
+                        else if (outdent == 4)
                             line = line.replace(/(^ {1,4})|(^\t)/, '');
 						var trailingSpaces;
 						if (trailingSpaces = line.match(/ *$/)) {
@@ -317,8 +317,8 @@
 				hash = clicked = button;
 				get();
                 
-                if (button.dedent) {
-                    // special care for dedenting lines
+                if (button.outdent) {
+                    // special care for outdenting lines
                     var offsetPrevNewline = textarea.value.substring(0, caretPosition).lastIndexOf('\n');
                     set(offsetPrevNewline+1, caretPosition - (offsetPrevNewline+1) + selection.length);
                     get();

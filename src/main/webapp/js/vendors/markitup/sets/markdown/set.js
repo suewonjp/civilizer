@@ -14,7 +14,7 @@ markItUpSettings = {
 	previewParserPath:	'',
 	onShiftEnter:		{keepDefault:false, openWith:'\n\n'},
 	onTab:    		    {keepDefault:false, multiline:true, openWith:'    '},
-	onShiftTab:    		{keepDefault:false, multiline:true, dedent:4},
+	onShiftTab:    		{keepDefault:false, multiline:true, outdent:4},
 	markupSet: [
 		{name:'First Level Heading', onAlt:true, key:'1', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '=') } },
 		{name:'Second Level Heading', onAlt:true, key:'2', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '-') } },
@@ -41,7 +41,7 @@ markItUpSettings = {
         {name:'Code', onShift:true, key:'C', multiline:true, openWith:'`', closeWith:'`'},
 		{separator:'---------------'},
 		{name:'Indent (Move Right)', onShift:true, key:'Right', openWith:' ', multiline:true, faIcon:'fa-indent fa-lg'},
-		{name:'Dedent (Move Left)', onShift:true, key:'Left', dedent:1, multiline:true, faIcon:'fa-dedent fa-lg'},
+		{name:'Outdent (Move Left)', onShift:true, key:'Left', outdent:1, multiline:true, faIcon:'fa-outdent fa-lg'},
 			{name:'Colors', dropMenu:[
 			    {name:'Cyan', multiline:true, openWith:'{{[clr-c] ', closeWith:' }}'},
 			    {name:'Blue', multiline:true, openWith:'{{[clr-b] ', closeWith:' }}'},
