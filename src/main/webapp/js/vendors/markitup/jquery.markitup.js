@@ -239,7 +239,7 @@
 								return false;
 							}
 							value = prompt(b[0], (b[1]) ? b[1] : '');
-							if (value === null) {
+							if (!value) {
 								abort = true;
 							}
 							return value;

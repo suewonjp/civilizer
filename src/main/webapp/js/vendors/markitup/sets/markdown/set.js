@@ -33,8 +33,9 @@ markItUpSettings = {
 			return markItUp.line+'. ';
 		}},
 		{separator:'---------------' },
-		{name:'Picture', onShift:true, key:'P', replaceWith:'![]([![Url:!:http://]!] "[![Title]!]")'},
-		{name:'Link', onShift:true, key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
+		{name:'Picture', onShift:true, key:'P', replaceWith:'![]([![Url:!:http://]!])'},
+		{name:'Link', onShift:true, key:'L', openWith:'[', closeWith:']([![Url:!:http://]!])', placeHolder:'Your text to link here...' },
+//		{name:'Link', onShift:true, key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
 		{name:'Fragment Link', onShift:true, key:'F', openWith:'{{[frgm][![Fragment ID]!] ', closeWith:' }}', placeHolder:'Your text to link here...', faIcon:'fa-link fa-lg' },
 		{separator:'---------------'},	
 		{name:'Quotes', onShift:true, key:'Q', openWith:'> ', closeWith:'  ', multiline:true},
