@@ -36,8 +36,6 @@
 		options = {	id:						'',
 					nameSpace:				'',
 					root:					'',
-					beforeInsert:			'',
-					afterInsert:			'',
 					onAlt:                  false,
 					onShift:                false,
 					onEnter:				{},
@@ -267,7 +265,8 @@
 				var openBlockWith 		= prepare(clicked.openBlockWith);
 				var closeBlockWith 		= prepare(clicked.closeBlockWith);
 				var multiline 			= clicked.multiline;
-				var outdent              = clicked.outdent;
+				var outdent             = clicked.outdent;
+				var block;
 				
 				if (replaceWith !== "") {
 					block = openWith + replaceWith + closeWith;
@@ -283,7 +282,7 @@
 					}
 					
 					for (var l = 0; l < lines.length; l++) {
-						line = lines[l];
+						var line = lines[l];
 						if (outdent == 1)
 						    line = line.replace(/^[ \t]/, '');
                         else if (outdent == 4)
@@ -324,7 +323,7 @@
                     get();
                 }
                 
-				$.extend(hash, {	line:"", 
+				$.extend(hash, {	//line:"", 
 						 			root:options.root,
 									textarea:textarea, 
 									selection:(selection||''), 
@@ -334,14 +333,7 @@
 									altKey:altKey
 								}
 							);
-				// callbacks before insertion
-				prepare(options.beforeInsert);
-				prepare(clicked.beforeInsert);
-				if ((ctrlKey === true && shiftKey === true) || button.multiline === true) {
-					prepare(clicked.beforeMultiInsert);
-				}			
-				$.extend(hash, { line:1 });
-
+				
 				string = build(selection);
 				start = caretPosition;
 				len = string.block.length;
@@ -366,14 +358,7 @@
 				}
 				get();
 
-				$.extend(hash, { line:'', selection:selection });
-
-				// callbacks after insertion
-				if ((ctrlKey === true && shiftKey === true) || button.multiline === true) {
-					prepare(clicked.afterMultiInsert);
-				}
-				prepare(clicked.afterInsert);
-				prepare(options.afterInsert);
+				$.extend(hash, { selection:selection });
 
 				// reinit keyevent
 				shiftKey = altKey = ctrlKey = abort = false;

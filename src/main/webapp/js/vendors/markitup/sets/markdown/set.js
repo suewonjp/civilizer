@@ -29,13 +29,10 @@ markItUpSettings = {
 		{name:'Underline', key:'U', openWith:'{{[usb] ', closeWith:' }}', multiline:true, faIcon:'fa-underline'},
 		{separator:'---------------' },
 		{name:'Bulleted List', onShift:true, key:'B', openWith:'- ', multiline:true },
-		{name:'Numeric List', onShift: true, key:'N', multiline:true, openWith:function(markItUp) {
-			return markItUp.line+'. ';
-		}},
+		{name:'Numeric List', onShift: true, key:'N', multiline:true, openWith:'1. ' },
 		{separator:'---------------' },
 		{name:'Picture', onShift:true, key:'P', replaceWith:'![]([![Url:!:http://]!])'},
 		{name:'Link', onShift:true, key:'L', openWith:'[', closeWith:']([![Url:!:http://]!])', placeHolder:'Your text to link here...' },
-//		{name:'Link', onShift:true, key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
 		{name:'Fragment Link', onShift:true, key:'F', openWith:'{{[frgm][![Fragment ID]!] ', closeWith:' }}', placeHolder:'Your text to link here...', faIcon:'fa-link fa-lg' },
 		{separator:'---------------'},	
 		{name:'Quotes', onShift:true, key:'Q', openWith:'> ', closeWith:'  ', multiline:true},
