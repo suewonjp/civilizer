@@ -1,3 +1,7 @@
+function fragmentEditorVisible() {
+    return $("#fragment-content-editor").is(":visible");
+}
+
 function setupFragmentEditor() {
 	var $window = $(window);
 	var $editorFrame = $("#editor-frame");

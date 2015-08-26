@@ -437,7 +437,9 @@ function setupDndForRelatingFragments() {
             var fromId = from.attr("_fid");
             var toId = to.find(".fragment-title").attr("_fid");
             if (fromId != toId) {
-            	confirmRelatingFragments(fromId, toId);
+                if (!fragmentEditorVisible())
+                    // [NOTE] block this functionality when the fragment editor is running.
+                    confirmRelatingFragments(fromId, toId);
             }
         }
     };
@@ -492,19 +494,24 @@ function setupDndForTrashing() {
 }
 
 function setupDndToDropDataToFrgEditor() {
-    var droppable = newBaseDroppable(["each-tag", "fb-file"]);
+    var droppable = newBaseDroppable(["fragment-title", "each-tag", "fb-file"]);
     droppable.drop = function(e, ui) {
         var from = ui.draggable;
         var to = $(e.target);
-        if (from.hasClass("each-tag")) {
+        if (from.hasClass("fragment-title")) {
+            var id = from.attr("_fid");
+            var encoded = "{{[frgm] "+id+" "+from.text().trim()+" }}";
+            $(this).insertAtCaret(encoded);
+        }
+        else if (from.hasClass("each-tag")) {
             var id = from.attr("_tid");
-            var encoded = "{{[tag] " + id + " }}";
+            var encoded = "{{[tag] "+id+" }}";
             $(this).insertAtCaret(encoded);
         }
         else if (from.hasClass("fb-file")) {
             var ids = from.attr("id");
             var id = ids.substr(ids.lastIndexOf("-") + 1);
-            var encoded = "{{[file] " + id + " }}";
+            var encoded = "{{[file] "+id+" }}";
             $(this).insertAtCaret(encoded);
         }
     };    
@@ -543,6 +550,7 @@ function newBaseDroppable(acceptableClasses) {
             to.removeClass(strongFocus);
             to.removeClass(weakFocus);
         },
+        greedy: true,
 	};
 	return output;
 }
