@@ -39,10 +39,10 @@ function formatTagsOnFragmentHeader(tgtTag) {
 function translateFragments() {
     var fg = $("#fragment-group");
     
-	// apply Civilizer's custom markup rules to fragment titles;
+	// highlight any search keyword contained in fragment titles;
     fg.find(".fragment-title").each(function() {
     	var $this = $(this);
-    	$this.html(translateCustomMarkupRules($this.html()));
+    	$this.html(translateSearchKeywordCommands($this.html()));
     });
     
     // translate Markdown formatted fragment contents into HTML format
@@ -251,16 +251,21 @@ function setupFragmentResolutionSliders() {
     }
 }
 
-function translateCustomMarkupRules(html) {
-	return html
-    	// {([keyword] ... text ... )} --- translated to a <span>
-	    // used for one special purpose; highlighting search phrase
+function translateSearchKeywordCommands(html) {
+    return html
+        // {([keyword] ... text ... )} --- translated to a <span>;
+        // used for one special purpose; highlighting search phrase
         .replace(/\{\(\[(.+?)\] /g, function(match, p1, pos, originalText) {
             return "<span class='-cvz-" + p1 + "'>"; 
         })
         .replace(/ \)\}/g, function(match, pos, originalText) {
             return "</span>";
         })
+        ;
+}
+
+function translateCustomMarkupCommands(html) {
+	return translateSearchKeywordCommands(html)
         // {{{[keyword] ... text ... }}} --- translated to a <div> block
     	.replace(/\{\{\{\[(.+?)\]/g, function(match, p1, pos, originalText) {
     	    return "<div class='-cvz-" + p1 + "'>"; 
@@ -282,8 +287,8 @@ function translateFragmentContent(content) {
     // translate Markdown text into HTML;
 	var outputHtml = parseMarkdown(content);
 	
-	// take care of custom style rules
-	return translateCustomMarkupRules(outputHtml);
+	// take care of custom markup commands
+	return translateCustomMarkupCommands(outputHtml);
 }
 
 function setupFragmentLinks(content) {
