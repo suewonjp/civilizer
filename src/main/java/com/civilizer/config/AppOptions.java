@@ -20,7 +20,7 @@ public final class AppOptions {
 	                                                              
 	// default values for each option
 	public static final String DEF_PRIVATE_HOME_PATH              = ".civilizer";
-	public static final String DEF_DB_FILE_PREFIX                 = "civilizer";
+	public static final String DEF_DB_FILE_PREFIX                 = "database/civilizer";
 	public static final String DEF_DB_FILE_SUFFIX                 = ".h2.db";
 	public static final String DEF_FILE_BOX_HOME                  = "files";
 	public static final String DEF_OVERRIDE_OPTION_FILE           = "false";	                                                              
