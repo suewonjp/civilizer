@@ -9,3 +9,6 @@ while (i < 5) {
 	System.out.println(hashedPassword);
 	i++;
 }
+
+int maxKeyLen = javax.crypto.Cipher.getMaxAllowedKeyLength("AES");
+System.out.println(maxKeyLen);
