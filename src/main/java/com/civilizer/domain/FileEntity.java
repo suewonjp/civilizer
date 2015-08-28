@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
 
+import com.civilizer.utils.FsUtil;
 import com.civilizer.utils.Pair;
 
 @SuppressWarnings("serial")
@@ -23,7 +24,8 @@ public class FileEntity implements Serializable {
 	
 	private Long id;
 	
-	// [RULE] should be a relative path and begin with a slash (/)
+	// [RULE] should be a relative path and begin with a path separator.
+	// And the path separator should be a slash (/)
 	private String fileName = "";
 	
 	public FileEntity() {}
@@ -63,7 +65,7 @@ public class FileEntity implements Serializable {
 				tmp[tmp.length - 1] : "";
 		String parentPath = "";
 		for (int i=1; i<tmp.length-1; ++i) {
-			parentPath += File.separator + tmp[i];
+			parentPath += "/" + tmp[i];
 		}
 		return new Pair<String, String>(parentPath, name);
 	}
@@ -119,7 +121,7 @@ public class FileEntity implements Serializable {
 		final int beginIndex = directory.length();
 		for (File file : files) {
 			// [NOTE] as a rule, we need to pass a relative path when creating a FileEntry
-			output.add(new FileEntity(file.getAbsolutePath().substring(beginIndex)));
+			output.add(new FileEntity(FsUtil.toNativePath(file.getAbsolutePath().substring(beginIndex))));
 		}
 		
 		return output;

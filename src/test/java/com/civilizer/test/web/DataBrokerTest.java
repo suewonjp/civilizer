@@ -8,11 +8,17 @@ import org.junit.*;
 
 import java.io.File;
 
+import com.civilizer.test.dao.DaoUrlTest;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
 import com.civilizer.web.view.DataBrokerBean;
 
 public class DataBrokerTest {
+
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        DaoUrlTest.buildCreateDataSet();
+    }
 
     @Before
     public void setUp() throws Exception {

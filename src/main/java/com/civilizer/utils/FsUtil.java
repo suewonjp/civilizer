@@ -46,8 +46,13 @@ public final class FsUtil {
         }
 
         srcPath = toNativePath(srcPath);
-        String absPath = null;
-        
+        String absPath = null;        
+
+        // [NOTE] Be cautious about boolean java.io.File.isAbsolute()!
+        //   The definition of absolute pathname is SYSTEM DEPENDENT!
+        //      On UNIX systems, a pathname is absolute if its prefix is "/".
+        //      On Microsoft Windows systems, a pathname is absolute
+        //          if its prefix is a drive specifier followed by "\\", or if its prefix is "\\\\".
         if (new File(srcPath).isAbsolute()) {
             // already absolute path
             absPath = srcPath;
@@ -179,7 +184,7 @@ public final class FsUtil {
     }
     
     public static void compress(String zipFilePath, String[] paths) throws IOException {
-        assert new File(zipFilePath).isFile();
+        FileUtils.touch(new File(zipFilePath));
         try (final FileOutputStream dst = new FileOutputStream(zipFilePath);
                 final ZipOutputStream zipOut = new ZipOutputStream(dst)) {
             

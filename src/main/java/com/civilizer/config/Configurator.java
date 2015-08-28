@@ -199,8 +199,6 @@ public final class Configurator {
 	
 	private void setPathAbsolute(Properties p, String key, File privateHome) {
 		final String srcPath = p.getProperty(key);
-		if (new File(srcPath).isAbsolute())
-		    return;
 		final String absPath = FsUtil.getAbsolutePath(srcPath, privateHome.getAbsolutePath());
 		p.setProperty(key, absPath);
 	}

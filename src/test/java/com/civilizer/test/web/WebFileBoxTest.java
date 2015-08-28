@@ -70,33 +70,27 @@ public class WebFileBoxTest {
 		
 		TestUtil.touchTestFilesForFileBox(fileEntityDao);
 	}
-	
-	private static int getRandomFilePathId(FilePathTree filePathTree, boolean forFolder) {
-		final List<FilePathBean> filePathBeans = filePathTree.getFilePathBeans();
-		int output = 0;
-		for (int i=0; i<filePathBeans.size(); ++i) {
-			final FilePathBean filePathBean = filePathBeans.get(i);
-			if (filePathBean.isBroken())
-				continue;
-			if (TestUtil.getRandom().nextInt(3) != 0)
-				continue;
-			if (filePathBean.isFolder()) {
-				if (forFolder) {
-					output = i;
-					break;
-				}
-			}
-			else {
-				if (! forFolder) {
-					output = i;
-					break;
-				}
-			}
-		}
-		while (output == 0) {
-			output = getRandomFilePathId(filePathTree, forFolder);
-		}
-		return output;
+
+	private static int getRandomFilePathId(List<FilePathBean> filePathBeans, boolean forFolder) {
+	    assertEquals(false, filePathBeans.isEmpty());
+	    List<Integer> indices = new ArrayList<>();
+	    for (int i=0; i<filePathBeans.size(); ++i) {
+	        final FilePathBean filePathBean = filePathBeans.get(i);
+	        if (filePathBean.isBroken())
+	            continue;
+	        if (filePathBean.isFolder()) {
+	            if (forFolder) {
+	                indices.add(i);
+	            }
+	        }
+	        else {
+	            if (! forFolder) {
+	                indices.add(i);
+	            }
+	        }
+	    }
+	    assertEquals(false, indices.isEmpty());
+	    return indices.get(TestUtil.getRandom().nextInt(indices.size()));
 	}
 
 	@Test
@@ -162,7 +156,7 @@ public class WebFileBoxTest {
 		fileListBean.setFilePathTree(filePathTree);
 		
 		for (int j=0; j<3; ++j) {
-			final int parentFolderId = getRandomFilePathId(filePathTree, true);
+			final int parentFolderId = getRandomFilePathId(filePathTree.getFilePathBeans(), true);
 			final FilePathBean parentPath = fileListBean.getFilePathBean(parentFolderId);
 			assertEquals(true, parentPath.isFolder());
 
@@ -206,7 +200,7 @@ public class WebFileBoxTest {
 		
 		for (int j=0; j<2; ++j) {
 			final boolean forFolder = TestUtil.getRandom().nextBoolean();
-			final int srcNodeId = getRandomFilePathId(filePathTree, forFolder);
+			final int srcNodeId = getRandomFilePathId(filePathTree.getFilePathBeans(), forFolder);
 			final String newName = forFolder ?
 					"renamed-folder"+j : "renamed-file"+j+".txt";
 			final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
@@ -292,7 +286,7 @@ public class WebFileBoxTest {
 		
 		for (int j=0; j<2; ++j) {
 			final boolean forFolder = TestUtil.getRandom().nextBoolean();
-			final int srcNodeId = getRandomFilePathId(filePathTree, forFolder);
+			final int srcNodeId = getRandomFilePathId(filePathTree.getFilePathBeans(), forFolder);
 			final FilePathBean srcPathBean = fileListBean.getFilePathBean(srcNodeId);
 			assertEquals(forFolder, srcPathBean.isFolder());
 			if (srcPathBean.getName().equals("")) {
@@ -301,7 +295,7 @@ public class WebFileBoxTest {
 				continue;
 			}
 			final String oldFilePath = srcPathBean.getFullPath();
-			final int dstNodeId = getRandomFilePathId(folderTree, true);
+			final int dstNodeId = getRandomFilePathId(folderTree.getFilePathBeans(), true);
 			final FilePathBean dstPathBean = fileListBean.getFolderPathBean(dstNodeId);
 			assertEquals(true, dstPathBean.isFolder());
 			final String newParentPath = dstPathBean.getFullPath();
@@ -415,7 +409,7 @@ public class WebFileBoxTest {
 		
 		for (int j=0; j<2; ++j) {
 			final boolean forFolder = TestUtil.getRandom().nextBoolean();
-			final int srcNodeId = getRandomFilePathId(filePathTree, forFolder);
+			final int srcNodeId = getRandomFilePathId(filePathTree.getFilePathBeans(), forFolder);
 			final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
 			if (filePathBean.getName().equals("")) {
 				// can't delete the root directory

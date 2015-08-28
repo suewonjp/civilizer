@@ -1,15 +1,38 @@
 package com.civilizer.test.dao;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.AfterClass;
 import org.junit.Test;
 
+import com.civilizer.dao.FileEntityDao;
 import com.civilizer.test.helper.TestUtil;
 
 public class DaoUrlTest extends DaoTest {
     
+    public static void buildCreateDataSet() throws Exception {
+        try {
+            TestUtil.configure();
+            
+            DaoTest.setUpBeforeClass("classpath:datasource-context-h2-url.xml",
+                    DaoUrlTest.class);
+
+            FileEntityDao fileEntityDao = ctx.getBean("fileEntityDao",
+                    FileEntityDao.class);
+            assertNotNull(fileEntityDao);
+
+            TestUtil.touchTestFilesForFileBox(fileEntityDao);
+        } finally {
+            DaoTest.tearDownAfterClass();
+            
+            TestUtil.unconfigure();
+        }
+        
+    }
+
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
     	TestUtil.configure();
