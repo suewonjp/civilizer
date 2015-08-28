@@ -10,8 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,8 +41,13 @@ public final class UserDetailsService
         return null;
     }
     
+    public static boolean encodingMatches(String raw, String encoded) {
+        return new BCryptPasswordEncoder(UserDetailsService.ENCRYPTION_STRENGTH)
+            .matches(raw, encoded);
+    }
+    
     private static UserDetails getCustomCredential(String username, String usernameCode, String passwordCode) {
-        if (new BCryptPasswordEncoder().matches(username, usernameCode)) {
+        if (encodingMatches(username, usernameCode)) {
             return createUserDetails(username, passwordCode);
         }
         return null;
@@ -70,6 +77,16 @@ public final class UserDetailsService
         else
             lines.add(encoder.encode(password));
         FileUtils.writeLines(UserDetailsService.getCredentialFile(), lines, null);
+    }
+    
+    public static boolean authenticatePassword(String pw) {
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Object principal = auth.getPrincipal();
+        if (principal instanceof UserDetails) {
+            final UserDetails ud = (UserDetails) principal;
+            return encodingMatches(pw, ud.getPassword());
+        }
+        return false;
     }
 
     @Override

@@ -9,7 +9,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.civilizer.security.UserDetailsService;
 import com.civilizer.test.helper.TestUtil;
@@ -24,11 +23,6 @@ public class SecurityTest {
     @Before
     public void setUp() throws Exception {
         TestUtil.configure();
-    }
-    
-    private static boolean matches(String raw, String encoded) {
-        return new BCryptPasswordEncoder(UserDetailsService.ENCRYPTION_STRENGTH)
-            .matches(raw, encoded);
     }
 
     @Test
@@ -80,7 +74,7 @@ public class SecurityTest {
             try {
                 UserDetails ud = uds.loadUserByUsername(username);
                 assertEquals(username, ud.getUsername());
-                assertEquals(true, matches(password, ud.getPassword()));
+                assertEquals(true, UserDetailsService.encodingMatches(password, ud.getPassword()));
             } catch (BadCredentialsException e) {
                 fail("custom authentication does not work correclty!");
             }

@@ -9,12 +9,9 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.civilizer.config.AppOptions;
+import com.civilizer.security.UserDetailsService;
 import com.civilizer.utils.FsUtil;
 
 @SuppressWarnings("serial")
@@ -175,18 +172,11 @@ public class DataBrokerBean implements Serializable {
             else { // the password has been provided
                 final String pw = password;
                 password = "";
-                
-                final Authentication auth =SecurityContextHolder.getContext().getAuthentication();
-                final Object principal = auth.getPrincipal();
-                if (principal instanceof UserDetails) {
-                    final UserDetails ud = (UserDetails) principal;
-                    if (new BCryptPasswordEncoder().matches(pw, ud.getPassword()) == false) {
-                        // authentication failed...
-                        authFailed = true;
-                        return (curStep = "auth-step");
-                    }
-                }
-                
+                if (! UserDetailsService.authenticatePassword(pw)) {
+                    // authentication failed...
+                    authFailed = true;
+                    return (curStep = "auth-step");
+                }                
                 return (curStep = exportMode ? "preexport-step" : "upload-step");
             }
         }

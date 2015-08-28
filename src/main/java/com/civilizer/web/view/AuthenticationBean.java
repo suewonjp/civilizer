@@ -3,10 +3,8 @@ package com.civilizer.web.view;
 import java.io.Serializable;
 
 import org.primefaces.context.RequestContext;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.civilizer.security.UserDetailsService;
 
 @SuppressWarnings("serial")
 public final class AuthenticationBean implements Serializable {
@@ -24,15 +22,9 @@ public final class AuthenticationBean implements Serializable {
     public void validate() {
         final String pw = password;
         password = "";
-        
-        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        final Object principal = auth.getPrincipal();
-        if (principal instanceof UserDetails) {
-            final UserDetails ud = (UserDetails) principal;
-            if (new BCryptPasswordEncoder().matches(pw, ud.getPassword())) {
-                // authentication success...
-                RequestContext.getCurrentInstance().addCallbackParam("authenticated", true);
-            }
+        if (UserDetailsService.authenticatePassword(pw)) {
+            // authentication success...
+            RequestContext.getCurrentInstance().addCallbackParam("authenticated", true);
         }
     }
 
