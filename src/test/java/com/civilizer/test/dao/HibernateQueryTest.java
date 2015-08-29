@@ -270,7 +270,7 @@ public class HibernateQueryTest extends DaoTest {
 //	    com.civilizer.utils.FsUtil.createUnexistingDirectory(new java.io.File(tmpPath));
 //	    // The query creates a SQL script from the database.
 //	    // [NOTE] The syntax is H2 database specific.
-//	    final String queryString = "script to '" + tmpPath + java.io.File.separator + "test.sql'";
+//	    final String queryString = "script to '" + tmpPath + FsUtil.SEP + "test.sql'";
 //	    session.createSQLQuery(queryString).list();
 //    }
 	

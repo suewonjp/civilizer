@@ -20,6 +20,8 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 public final class FsUtil {
     
+    public static String SEP = File.separator;
+    
     public static String toNativePath(String path) {
         if (path.startsWith("~")) {
             // translate '~' symbol to the user home path
@@ -69,10 +71,19 @@ public final class FsUtil {
                 return null;
             }
                 
-            absPath = FilenameUtils.normalize(basePath + File.separator + srcPath);
+            absPath = FilenameUtils.normalize(basePath + SEP + srcPath);
         }
             
         return absPath;
+    }
+    
+    public static String concatPath(String...names) {
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<names.length-1; ++i) {
+            sb.append(names[i]).append(SEP);
+        }
+        sb.append(names[names.length-1]);
+        return FilenameUtils.normalizeNoEndSeparator(sb.toString());
     }
     
     public static void createUnexistingDirectory(File dir) {
@@ -226,7 +237,7 @@ public final class FsUtil {
         int count = 0;
         final String path = FsUtil.toNativePath(parentPath + "/" + ze.getName());
         
-        if (path.endsWith(File.separator)) {
+        if (path.endsWith(SEP)) {
             // This is an empty folder.
             FsUtil.createUnexistingDirectory(new File(path));
             return path;

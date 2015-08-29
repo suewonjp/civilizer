@@ -3,6 +3,8 @@ package com.civilizer.web.view;
 import java.io.File;
 import java.io.Serializable;
 
+import com.civilizer.utils.FsUtil;
+
 @SuppressWarnings("serial")
 public class FilePathBean implements Serializable {
 	
@@ -100,7 +102,7 @@ public class FilePathBean implements Serializable {
 	}
 
 	public void check(String filesHomePath) {
-		final File f = new File(filesHomePath + File.separator + fullPath);
+		final File f = new File(FsUtil.concatPath(filesHomePath, fullPath));
 		if (f.isDirectory()) {
 			folder = true;
 		}
@@ -110,7 +112,7 @@ public class FilePathBean implements Serializable {
 	}
 	
 	public File toFile(String filesHomePath) {
-		return new File(filesHomePath + File.separator + fullPath);
+		return new File(FsUtil.concatPath(filesHomePath, fullPath));
 	}
 	
 	@Override

@@ -7,10 +7,12 @@ import java.io.Serializable;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.apache.commons.lang3.StringUtils;
 
 import com.civilizer.config.AppOptions;
 import com.civilizer.domain.FileEntity;
 import com.civilizer.utils.DefaultTreeNode;
+import com.civilizer.utils.FsUtil;
 import com.civilizer.utils.Pair;
 import com.civilizer.utils.TreeNode;
 
@@ -22,16 +24,16 @@ public class FilePathTree implements Serializable {
 	private List<FilePathBean> filePathBeans;
 
 	public static void addToPathTree(TreeNode<FilePathBean> root, String path) {
-		final String[] names = path.split("/");
+		final String[] names = StringUtils.split(path, FsUtil.SEP);
 		String name = "";
 		String fullPath = name;
 		TreeNode<FilePathBean> parent = root;
 		FilePathBean data = parent.getData();
 		
-		for (int i=1; i<names.length; ++i) {
+		for (int i=0; i<names.length; ++i) {
 			parent = root.findDescendantWith(data);
 			name = names[i];
-			fullPath += File.separator + name;
+			fullPath = FsUtil.concatPath(fullPath, name);
 			data = new FilePathBean(name, fullPath);
 			if (parent != null && root.findDescendantWith(data) == null) {
 				parent.addChild(new DefaultTreeNode<FilePathBean>(data));

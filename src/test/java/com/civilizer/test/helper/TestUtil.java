@@ -16,6 +16,7 @@ import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
 import com.civilizer.dao.FileEntityDao;
 import com.civilizer.domain.FileEntity;
+import com.civilizer.utils.FsUtil;
 
 public final class TestUtil {
 
@@ -44,7 +45,7 @@ public final class TestUtil {
         assertNotNull(cal);
 
         long seed = cal.getTimeInMillis();
-        seed = 1439185021758L;
+//        seed = 1439185021758L;
         
         logger.info("random seed = " + seed);
 
@@ -128,14 +129,14 @@ public final class TestUtil {
         if (System.getProperty(AppOptions.FILE_BOX_HOME) != null)
             return System.getProperty(AppOptions.FILE_BOX_HOME);
         assertNotNull(System.getProperty(AppOptions.PRIVATE_HOME_PATH));
-    	return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separator + "files";
+    	return FsUtil.concatPath(System.getProperty(AppOptions.PRIVATE_HOME_PATH),"files");
     }
 
     public static String getTempFolderPath() {
         if (System.getProperty(AppOptions.TEMP_PATH) != null)
             return System.getProperty(AppOptions.TEMP_PATH);
         assertNotNull(System.getProperty(AppOptions.PRIVATE_HOME_PATH));
-        return System.getProperty(AppOptions.PRIVATE_HOME_PATH) + File.separator + ".temp";
+        return FsUtil.concatPath(System.getProperty(AppOptions.PRIVATE_HOME_PATH), ".temp");
     }
     
     public static void touchTestFilesForFileBox(FileEntityDao fileEntityDao) {

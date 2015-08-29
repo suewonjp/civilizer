@@ -18,6 +18,7 @@ import com.civilizer.dao.FileEntityDao;
 import com.civilizer.domain.FileEntity;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.DefaultTreeNode;
+import com.civilizer.utils.FsUtil;
 import com.civilizer.utils.TreeNode;
 import com.civilizer.web.view.FileListBean;
 import com.civilizer.web.view.FilePathBean;
@@ -111,7 +112,7 @@ public class WebFileBoxTest {
 		FilePathBean[] filePathBeans = pathTree.toDataArray(new FilePathBean[]{}, TreeNode.TraverseOrder.BREATH_FIRST);
 		assertEquals(dirs.size(), filePathBeans.length);
 		for (FilePathBean filePathBean : filePathBeans) {
-			assertEquals(true, dirs.contains(new File(filesHomePath + File.separator + filePathBean.getFullPath())));
+			assertEquals(true, dirs.contains(new File(FsUtil.concatPath(filesHomePath, filePathBean.getFullPath()))));
 //			System.out.println("***** " + filePathBean.getFullPath());
 		}
 		
@@ -122,7 +123,7 @@ public class WebFileBoxTest {
 		
 		filePathBeans = pathTree.toDataArray(new FilePathBean[]{}, TreeNode.TraverseOrder.BREATH_FIRST);
 		for (FilePathBean filePathBean : filePathBeans) {
-			assertEquals(true, new File(filesHomePath + File.separator + filePathBean.getFullPath()).exists());
+			assertEquals(true, new File(FsUtil.concatPath(filesHomePath, filePathBean.getFullPath())).exists());
 //			System.out.println("***** " + filePathBean.getFullPath());
 		}
 	}
@@ -166,8 +167,8 @@ public class WebFileBoxTest {
 			assertEquals(true, newDir.isDirectory());
 			
 			try {
-				boolean contained = FileUtils.directoryContains(new File(filesHomePath+File.separator+parentPath.getFullPath()), newDir);
-				assertEquals(true, contained);
+				assertEquals(true, 
+				        FileUtils.directoryContains(new File(FsUtil.concatPath(filesHomePath, parentPath.getFullPath())), newDir));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -229,7 +230,7 @@ public class WebFileBoxTest {
 					        oldDir.getAbsolutePath(), newDir.getAbsolutePath()));
 				}
 				
-				entities = fileEntityDao.findByNamePattern(oldFilePath+File.separator+'%');
+				entities = fileEntityDao.findByNamePattern(oldFilePath+"/%");
 			}
 			else {
 				final File oldFile = filePathBean.toFile(filesHomePath);
@@ -312,7 +313,7 @@ public class WebFileBoxTest {
 					continue;
 				}
 				
-				if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath()+File.separator)) {
+				if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath()+FsUtil.SEP)) {
 					// the source is a subdirectory of the destination
 					--j;
 					continue;
@@ -337,7 +338,7 @@ public class WebFileBoxTest {
 				assertEquals(false, oldDir.isDirectory());
 				assertEquals(true, newDir.isDirectory());
 				
-				entities = fileEntityDao.findByNamePattern(oldFilePath+File.separator+'%');
+				entities = fileEntityDao.findByNamePattern(oldFilePath+"/%");
 			}
 			else {
 				final File oldFile = srcPathBean.toFile(filesHomePath);
@@ -420,7 +421,7 @@ public class WebFileBoxTest {
 			List<FileEntity> entities = Collections.emptyList();
 			
 			if (filePathBean.isFolder()) {
-				entities = fileEntityDao.findByNamePattern(filePath+File.separator+'%');
+				entities = fileEntityDao.findByNamePattern(filePath+"/%");
 			}
 			else {
 				FileEntity entity = fileEntityDao.findByName(filePath);

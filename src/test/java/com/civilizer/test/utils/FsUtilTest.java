@@ -46,7 +46,7 @@ public class FsUtilTest {
         for (String path : paths) {
             path = FsUtil.toNativePath(parentPath+path);
             File f = new File(path);
-            if (path.endsWith(File.separator)) {
+            if (path.endsWith(FsUtil.SEP)) {
                 FsUtil.createUnexistingDirectory(f);
                 assertEquals(true, f.isDirectory());
             }
@@ -162,14 +162,41 @@ public class FsUtilTest {
     }
     
     @Test
+    public void testMethod_concatPath() {
+        {
+            final String names[] = { "foo" };
+            assertEquals("foo", FsUtil.concatPath(names));
+        }
+        {
+            final String names[] = { "", "foo" };
+            assertEquals(FsUtil.SEP+"foo", FsUtil.concatPath(names));
+        }
+        {
+            final String names[] = { "foo", "bar" };
+            assertEquals("foo"+FsUtil.SEP+"bar", FsUtil.concatPath(names));
+        }
+        {
+            final String names[] = { "foo", "bar/" };
+            assertEquals("foo"+FsUtil.SEP+"bar", FsUtil.concatPath(names));
+        }
+        {
+            final String names[] = { "foo\\", "/bar\\" };
+            assertEquals("foo"+FsUtil.SEP+"bar", FsUtil.concatPath(names));
+        }
+        {
+            final String names[] = { "/foo", "bar" };
+            assertEquals(FsUtil.SEP+"foo"+FsUtil.SEP+"bar", FsUtil.concatPath(names));
+        }
+    }
+    
+    @Test
     public void testMethod_contentEquals() {
         final String tmpPath = TestUtil.getTempFolderPath();
-//        final File files0 = new File(TestUtil.getFilesHomePath());
         try {
             final String[] srcPaths = createFileStructureForTest(tmpPath);
             final String srcFolder = StringUtils.split(srcPaths[0], '/')[0];
-            final File files0 = new File(tmpPath + File.separator + srcFolder);
-            final File files1 = new File(tmpPath + File.separator + "files");
+            final File files0 = new File(FsUtil.concatPath(tmpPath, srcFolder));
+            final File files1 = new File(FsUtil.concatPath(tmpPath, "files"));
             FsUtil.createUnexistingDirectory(files1);
             FileUtils.copyDirectory(files0, files1);
             assertEquals(true, FsUtil.contentEquals(files0, files1));
@@ -190,7 +217,7 @@ public class FsUtilTest {
         final ByteArrayInputStream inputDataStm = new ByteArrayInputStream(inContent.getBytes());
         final InputStream[] inputStreams =  { inputDataStm };
         final String[] names = { "test.dat" };
-        final String zipFilePath = TestUtil.getTempFolderPath() + File.separator + "tmp.zip";
+        final String zipFilePath = FsUtil.concatPath(TestUtil.getTempFolderPath(), "tmp.zip");
         
         File tmpFolder = new File(TestUtil.getTempFolderPath());
         FsUtil.createUnexistingDirectory(tmpFolder);
@@ -241,9 +268,9 @@ public class FsUtilTest {
             final String[] paths = createFileStructureForTest(tmpPath); 
             
             // compress the file structure.
-            final String zipFilePath = tmpPath + File.separator + "tmp.zip";
+            final String zipFilePath = FsUtil.concatPath(tmpPath, "tmp.zip");
             FsUtil.compress(zipFilePath,
-                    new String[]{ tmpPath + File.separator + "tmp-fs" });
+                    new String[]{ FsUtil.concatPath(tmpPath, "tmp-fs") });
             assertEquals(true, FsUtil.exists(zipFilePath));
             
             FileUtils.deleteQuietly(new File(FsUtil.toNativePath(tmpPath+"/tmp-fs")));
@@ -254,7 +281,7 @@ public class FsUtilTest {
             // check its validity.
             for (String p : paths) {
                 final String path = FsUtil.toNativePath(tmpPath+p);
-                if (path.endsWith(File.separator)) { // empty folder
+                if (path.endsWith(FsUtil.SEP)) { // empty folder
                     assertEquals(true, new File(path).isDirectory());
                     assertEquals(0, new File(path).list().length);
                 }
@@ -271,47 +298,6 @@ public class FsUtilTest {
             FileUtils.deleteQuietly(new File(tmpPath));
         }
     }
-    
-//    @Test
-//    public void testImportExportUserData() {
-//        final String tmpPath = TestUtil.getTempFolderPath();
-//        final String[] paths = {
-//            TestUtil.getDatabaseFilePath(),
-//            TestUtil.getFilesHomePath(),
-//        };
-//        final String zipFilePath = tmpPath + File.separator + "tmp.zip";
-//        
-//        if (new File(paths[0]).exists()==false || new File(paths[1]).exists()==false)
-//            return;
-//        
-//        try {
-//            // Export the user data.
-//            FsUtil.createUnexistingDirectory(new File(tmpPath));
-//            FsUtil.compress(zipFilePath, paths);
-//            assertEquals(true, FsUtil.exists(zipFilePath));
-//            
-//            // Import the user data.
-//            FsUtil.uncompressToFolder(zipFilePath, tmpPath);
-//            for (String p : paths) {
-//                if (p == null) continue;
-//                final String path = tmpPath + File.separator + FilenameUtils.getName(p);
-//                final File f = new File(path);
-//                if (f.isFile()) {
-//                    assertEquals(true, FileUtils.contentEquals(new File(paths[0]), f));
-//                }
-//                else if (f.isDirectory()) {
-//                    assertEquals(true, FsUtil.contentEquals(new File(paths[1]), f));
-//                }
-//            }
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//            fail();
-//        }
-//        finally {
-//            FileUtils.deleteQuietly(new File(tmpPath));
-//        }
-//    }
         
 }
 

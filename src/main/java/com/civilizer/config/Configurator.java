@@ -53,7 +53,7 @@ public final class Configurator {
     }
 	
 	public static String getDefaultPrivateHomePath(String defaultPrivateHomeName) {
-	    return System.getProperty("user.home") + File.separator + defaultPrivateHomeName;
+	    return FsUtil.concatPath(System.getProperty("user.home"), defaultPrivateHomeName);
 	}
 	
 	private File detectPrivateHome(String defaultPrivateHomeName) {
@@ -78,7 +78,7 @@ public final class Configurator {
 	private void preSetupPrivateHome(File privateHome) {
 	    FsUtil.createUnexistingDirectory(privateHome);
 	    
-	    final String tgtOptionFilePath = privateHome.getAbsolutePath() + File.separator + AppOptions.OPTION_FILE_NAME;
+	    final String tgtOptionFilePath = FsUtil.concatPath(privateHome.getAbsolutePath(), AppOptions.OPTION_FILE_NAME);
 	    final File tgtOptionFile = new File(tgtOptionFilePath);
 	    if (! tgtOptionFile.exists()) {
 	        // copy the default application option file unless it exists
@@ -149,7 +149,7 @@ public final class Configurator {
 		try {
 		    // load options from the application option file
 		    final Properties p = new Properties();
-		    final String optionFilePath = privateHome.getAbsolutePath() + File.separator + AppOptions.OPTION_FILE_NAME;
+		    final String optionFilePath = privateHome.getAbsolutePath() + FsUtil.SEP + AppOptions.OPTION_FILE_NAME;
 		    p.load(new FileInputStream(optionFilePath));
 		    
 		    p.setProperty(AppOptions.PRIVATE_HOME_PATH, privateHome.getAbsolutePath());

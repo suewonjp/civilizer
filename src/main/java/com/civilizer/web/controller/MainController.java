@@ -725,7 +725,7 @@ public final class MainController {
 				return;
 			}
 			
-			entities = fileEntityDao.findByNamePattern(oldFilePath+File.separator+'%');
+			entities = fileEntityDao.findByNamePattern(oldFilePath+"/%");
 		}
 		else {
 			final File oldFile = filePathBean.toFile(filesHomePath);
@@ -779,7 +779,7 @@ public final class MainController {
 				ViewUtil.addMessage("No Effect!!!", fe.getFileName() + " :: The source and destination are identical", FacesMessage.SEVERITY_WARN);
 				return;
 			}
-			if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath()+File.separator)) {
+			if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath()+FsUtil.SEP)) {
 				ViewUtil.addMessage("Error on Moving a Folder!!!", fe.getFileName() + " :: The source is a subdirectory of the destination", FacesMessage.SEVERITY_ERROR);
 				return;
 			}
@@ -792,7 +792,7 @@ public final class MainController {
 				return;
 			}
 			
-			entities = fileEntityDao.findByNamePattern(oldFilePath+File.separator+'%');
+			entities = fileEntityDao.findByNamePattern(oldFilePath+"/%");
 		}
 		else {
 			final File oldFile = srcPathBean.toFile(filesHomePath);
@@ -846,7 +846,7 @@ public final class MainController {
 		List<FileEntity> entities = Collections.emptyList();
 		
 		if (filePathBean.isFolder()) {
-			entities = fileEntityDao.findByNamePattern(filePath+File.separator+'%');
+			entities = fileEntityDao.findByNamePattern(filePath+"/%");
 		}
 		else {
 			FileEntity entity = fileEntityDao.findByName(filePath);
@@ -915,7 +915,7 @@ public final class MainController {
             return url;
         final String tmpPath = System.getProperty(AppOptions.TEMP_PATH);
         FsUtil.createUnexistingDirectory(new File(tmpPath));
-        final String outputPath = tmpPath  + File.separator + "exported.sql";
+        final String outputPath = FsUtil.concatPath(tmpPath, "exported.sql");
         fragmentDao.exportDbAsScript(outputPath);
         String postShellScript = System.getProperty("civilizer.exp_db_post_ss");
         postShellScript = FsUtil.getAbsolutePath(postShellScript, null);

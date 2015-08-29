@@ -50,11 +50,11 @@ public class DataBrokerBean implements Serializable {
     }
     
     public static String getImportFolderPath() {
-        return System.getProperty(AppOptions.TEMP_PATH) + File.separator + importFolderName;
+        return FsUtil.concatPath(System.getProperty(AppOptions.TEMP_PATH), importFolderName);
     }
 
     public static String getImportFilePath() {
-        return getImportFolderPath() + File.separator + importFileName;
+        return FsUtil.concatPath(getImportFolderPath(), importFileName);
     }
     
     public static void commitImportData(String uncompressPath) throws IOException, SecurityException {
@@ -95,7 +95,7 @@ public class DataBrokerBean implements Serializable {
             throw new IOException("Can't find a file to import!");
         }
         
-        final String uncompressPath = importFolderPath + File.separator + "uncmp";
+        final String uncompressPath = FsUtil.concatPath(importFolderPath, "uncmp");
         
         // uncompress the imported file into the temporary folder.
         FsUtil.uncompressToFolder(importFilePath, uncompressPath);
@@ -105,11 +105,10 @@ public class DataBrokerBean implements Serializable {
 
     public static String exportData() throws IOException {
         final String[] paths = getTargetPaths();
-        final String tmpPath = System.getProperty(AppOptions.TEMP_PATH) + File.separator + exportFolderName;
+        final String tmpPath = FsUtil.concatPath(System.getProperty(AppOptions.TEMP_PATH), exportFolderName);
         FileUtils.deleteQuietly(new File(tmpPath));
         
-        final String exportFilePath =
-                tmpPath + File.separator + exportFileName;
+        final String exportFilePath = FsUtil.concatPath(tmpPath, exportFileName);
         
         // Export the user data.
         FsUtil.createUnexistingDirectory(new File(tmpPath));

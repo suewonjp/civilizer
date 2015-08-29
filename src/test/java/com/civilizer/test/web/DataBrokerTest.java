@@ -37,7 +37,7 @@ public class DataBrokerTest {
 
     @Test
     public void testDataExport() {
-        final String tmpPath = TestUtil.getTempFolderPath() + File.separator + DataBrokerBean.exportFolderName;
+        final String tmpPath = FsUtil.concatPath(TestUtil.getTempFolderPath(), DataBrokerBean.exportFolderName);
         try {
             final String exportFilePath = DataBrokerBean.exportData();
             assertNotNull(exportFilePath);
@@ -47,14 +47,14 @@ public class DataBrokerTest {
             assertEquals(true, exportFile.isAbsolute());
             assertEquals(true, exportFile.isFile());
             
-            final String uncompressPath = tmpPath + File.separator + "uncmp";
+            final String uncompressPath = FsUtil.concatPath(tmpPath, "uncmp");
             FsUtil.uncompressToFolder(exportFilePath, uncompressPath);
             
             final String[] paths = new File(uncompressPath).list();
             assertEquals(2, paths.length);
             for (String p : paths) {
                 assertNotNull(p);
-                final String path = uncompressPath + File.separator + p;
+                final String path = FsUtil.concatPath(uncompressPath, p);
                 final File f = new File(path);
                 if (f.isFile()) {
                     assertEquals(FilenameUtils.getName(TestUtil.getDatabaseFilePath()), p);
@@ -75,12 +75,19 @@ public class DataBrokerTest {
         try {
             final String exportFilePath = DataBrokerBean.exportData();
             assertNotNull(exportFilePath);
+            
+            // Original source database file may be modified with some reason.
+            // So we copy the database file somewhere else and test against it.
+            final File tmpDatabaseFile = new File(FsUtil.concatPath(TestUtil.getTempFolderPath(), "tmp-db-file"));
+            FileUtils.copyFile(new File(TestUtil.getDatabaseFilePath()), tmpDatabaseFile);
+            assertEquals(true, tmpDatabaseFile.isFile());
+            
             final File exportFile = new File(exportFilePath);
             assertNotNull(exportFile);
             
             final File importFolder = new File(importFolderPath);
             FsUtil.createUnexistingDirectory(importFolder);
-            final File importFile = new File(importFolder+File.separator+DataBrokerBean.importFileName);
+            final File importFile = new File(FsUtil.concatPath(importFolderPath, DataBrokerBean.importFileName));
             FileUtils.moveFile(exportFile, importFile);
             
             final String uncompressPath = DataBrokerBean.importData();
@@ -93,16 +100,17 @@ public class DataBrokerTest {
                 assertEquals(2, paths.length);
                 for (String p : paths) {
                     assertNotNull(p);
-                    final String path = uncompressPath + File.separator
-                            + FilenameUtils.getName(p);
+                    final String path = FsUtil.concatPath(uncompressPath, FilenameUtils.getName(p));
                     final File fileToImport = new File(path);
                     if (fileToImport.isFile()) {
-                        final File tgtFile = new File(
-                                TestUtil.getDatabaseFilePath());
-                        assertNotNull(tgtFile);
-                        assertEquals(true, tgtFile.isFile());
+//                        final File tgtFile = new File(
+//                                TestUtil.getDatabaseFilePath());
+//                        assertNotNull(tgtFile);
+//                        assertEquals(true, tgtFile.isFile());
+//                        assertEquals(true,
                         assertEquals(true,
-                                FileUtils.contentEquals(tgtFile, fileToImport));
+                                FileUtils.contentEquals(tmpDatabaseFile, fileToImport));
+//                                FileUtils.contentEquals(tgtFile, fileToImport));
                     } else if (fileToImport.isDirectory()) {
                         final File tgtFile = new File(
                                 TestUtil.getFilesHomePath());

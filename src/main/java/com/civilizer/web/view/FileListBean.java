@@ -10,6 +10,7 @@ import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import com.civilizer.domain.FileEntity;
+import com.civilizer.utils.FsUtil;
 
 @SuppressWarnings("serial")
 public final class FileListBean implements Serializable {
@@ -68,7 +69,7 @@ public final class FileListBean implements Serializable {
 	public File createNewFolder(int parentFolderId, String name, String filesHomePath) {
 		final FilePathBean parentPathBean = getFilePathBean(parentFolderId);
 		final String parentPath = parentPathBean.getFullPath();
-		final String path = filesHomePath + File.separator + parentPath + File.separator + name;
+		final String path = FsUtil.concatPath(filesHomePath, parentPath, name);
 		final File file = new File(path);
 		
 		if (file.isFile()) {
@@ -122,8 +123,9 @@ public final class FileListBean implements Serializable {
 		final FilePathBean folderPathBean = getFolderPathBean(folderIndex);
 		final String parentPath = folderPathBean.getFullPath();
 		
-		return parentPath.equals(File.separator) ?
-				File.separator + leafName : parentPath + File.separator + leafName;
+		return parentPath.equals(FsUtil.SEP) ?
+		        FsUtil.concatPath("", leafName) :
+		            FsUtil.concatPath(parentPath, leafName);
 	}
 
 	public FilePathBean getFilePathBean(int index) {
