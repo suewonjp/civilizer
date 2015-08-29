@@ -76,7 +76,7 @@ public final class UserDetailsService
         }
         else
             lines.add(encoder.encode(password));
-        FileUtils.writeLines(UserDetailsService.getCredentialFile(), lines, null);
+        FileUtils.writeLines(UserDetailsService.getCredentialFile(), lines, "\n");
     }
     
     public static boolean authenticatePassword(String pw) {

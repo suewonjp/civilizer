@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 import com.civilizer.utils.FsUtil;
 import com.civilizer.utils.Pair;
@@ -52,7 +53,7 @@ public class FileEntity implements Serializable {
 	
 	public void setFileName(String name) {
 	    if (name != null)
-	        this.fileName = name.intern();
+	        this.fileName = FilenameUtils.separatorsToUnix(name).intern();
 	}
 	
 	public boolean isChildOf(String parentPath) {
@@ -84,6 +85,7 @@ public class FileEntity implements Serializable {
 		if (oldIntermediatePath == null) {
 			oldIntermediatePath = fileName;
 		}
+		oldIntermediatePath = FilenameUtils.separatorsToUnix(oldIntermediatePath);
 		final String[] tmp = oldIntermediatePath.split("/");
 		final String oldSegment = tmp[tmp.length - 1];
 		// oldSegment => "ghi"
@@ -97,7 +99,7 @@ public class FileEntity implements Serializable {
 		if (fileName.isEmpty()) {
 			return null;
 		}
-		return new File(prefix + fileName);
+		return new File(FsUtil.toNativePath(prefix + fileName));
 	}
 	
 	public boolean persisted(String filesHome) {
@@ -121,7 +123,7 @@ public class FileEntity implements Serializable {
 		final int beginIndex = directory.length();
 		for (File file : files) {
 			// [NOTE] as a rule, we need to pass a relative path when creating a FileEntry
-			output.add(new FileEntity(FsUtil.toNativePath(file.getAbsolutePath().substring(beginIndex))));
+			output.add(new FileEntity(FilenameUtils.separatorsToUnix(file.getAbsolutePath().substring(beginIndex))));
 		}
 		
 		return output;

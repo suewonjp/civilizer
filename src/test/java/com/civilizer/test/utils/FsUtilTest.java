@@ -132,7 +132,12 @@ public class FsUtilTest {
         {
             final String srcPath = FsUtil.toNativePath("/foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
-            assertEquals(FsUtil.toNativePath("/foo/bar"), absPath);
+            if (System.getProperty("os.name").toLowerCase().contains("win"))
+                // [NOTE] "/foo/bar" is a relative path on Windows.
+                assertEquals(FsUtil.toNativePath("//base/path/foo/bar"), absPath);
+            else
+                // "/foo/bar" is an absolute path on otherOSes.
+                assertEquals(FsUtil.toNativePath("/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.toNativePath("~/foo/bar");
