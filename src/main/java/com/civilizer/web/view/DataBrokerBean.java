@@ -26,6 +26,10 @@ public class DataBrokerBean implements Serializable {
     private String password = "";
     private boolean exportMode;
     private boolean authFailed;
+    // [NOTE] Currently, data import at runtime is not supported on Windows
+    // due to some technical issue that JVM can't handle properly.
+    // See for details http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4715154
+    private boolean importable = ! System.getProperty("os.name").toLowerCase().contains("win");
     
     private static String[] getTargetPaths() {
         final String [] paths = {
@@ -37,7 +41,7 @@ public class DataBrokerBean implements Serializable {
     
     private static void deleteOldFile(File oldFile) throws IOException, SecurityException {
         if (oldFile.isFile())
-            oldFile.delete();
+            FileUtils.forceDelete(oldFile);
         else if (oldFile.isDirectory())
             FileUtils.deleteDirectory(oldFile);
     }
@@ -131,6 +135,14 @@ public class DataBrokerBean implements Serializable {
 
     public void setExportMode(boolean exportMode) {
         this.exportMode = exportMode;
+    }
+    
+    public boolean isImportable() {
+        return importable;
+    }
+    
+    public void setImportable(boolean importable) {
+        this.importable = importable;
     }
     
     public void checkNext() {
