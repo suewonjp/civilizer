@@ -51,9 +51,11 @@ $(window).load(function() {
 function onGlobalHotkeys(e) {
     switch (e.keyCode) {
     case $.ui.keyCode.SPACE:
-        if (e.ctrlKey) {
-            if (!PF("searchDlg").isVisible())
-                showSearchDialog(0, null);
+        if (e.ctrlKey && e.shiftKey) {
+            if (!PF("searchDlg").isVisible()) {
+                showSearchDialog(1, null);
+                return false;
+            }
         }
         break;
     }

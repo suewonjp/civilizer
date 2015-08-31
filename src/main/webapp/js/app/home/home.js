@@ -793,7 +793,7 @@ function showSearchDialog(panelId, qsPhrase) {
         dlg.cvzCurPanelId = pid;
 	})
 	.on("keyup.cvz_sch_dlg", function(e) {
-	    if (e.ctrlKey && e.which == $.ui.keyCode.SPACE) {
+	    if (e.ctrlKey && e.shiftKey && e.which == $.ui.keyCode.SPACE) {
             dlg.cvzCurPanelId = (dlg.cvzCurPanelId + 1) % 3;
             $("#panel-radio-on-search-dlg-"+dlg.cvzCurPanelId).prop("checked", true);
             panelBtns.buttonset("refresh");
