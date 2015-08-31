@@ -48,6 +48,7 @@ function showFileUploadDialog() {
 	fileInput.change(function () {
 	    var fileToUpload = fileUpload.display.text();
 	    if (fileToUpload) {
+	        fileToUpload = getFileName(fileToUpload);
 	    	dstPath = fp + SYSPROP.fileSep + fileToUpload;
 	    	dstOutput.text(dstPath);
 	    	okBtn.show().effect("shake");
@@ -63,6 +64,7 @@ function showFileUploadDialog() {
 		var fileToUpload = fileInput.val();
 		if (fileToUpload === undefined)
 			fileToUpload = "";
+		fileToUpload = getFileName(fileToUpload);
 		dstPath = fp + SYSPROP.fileSep + fileToUpload;
 		dstOutput.text(dstPath);
 		var dstId = $this.attr("_id");

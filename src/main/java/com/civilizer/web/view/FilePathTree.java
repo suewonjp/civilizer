@@ -66,7 +66,7 @@ public class FilePathTree implements Serializable {
 		final TreeNode<FilePathBean> pathTree = new DefaultTreeNode<>(new FilePathBean("", ""));
 		
 		for (File file : dirs) {
-			String path = file.toString().replace(filesHomePath, "");
+			String path = FsUtil.normalizePath(file.toString()).replace(filesHomePath, "");
 			FilePathTree.addToPathTree(pathTree, path);
 		}
 		

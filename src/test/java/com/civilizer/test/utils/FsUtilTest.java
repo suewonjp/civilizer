@@ -95,29 +95,30 @@ public class FsUtilTest {
 
     @Test
     public void testMethod_getAbsolutePath() {
+        final String homePath = FsUtil.normalizePath(System.getProperty("user.home"));
         {
             final String absPath = FsUtil.getAbsolutePath(null, null);
             assertEquals(null, absPath);
         }
         {
             final String absPath = FsUtil.getAbsolutePath("~", null);
-            assertEquals(System.getProperty("user.home"), absPath);
+            assertEquals(homePath, absPath);
         }
         {
             final String absPath = FsUtil.getAbsolutePath("~/", null);
-            assertEquals(System.getProperty("user.home"), absPath);
+            assertEquals(homePath, absPath);
         }
         {
             final String absPath = FsUtil.getAbsolutePath("~/foo/bar", null);
-            assertEquals(System.getProperty("user.home")+FsUtil.normalizePath("/foo/bar"), absPath);
+            assertEquals(homePath+FsUtil.normalizePath("/foo/bar"), absPath);
         }
         {
             final String absPath = FsUtil.getAbsolutePath("foo/bar", "~");
-            assertEquals(System.getProperty("user.home")+FsUtil.normalizePath("/foo/bar"), absPath);
+            assertEquals(homePath+FsUtil.normalizePath("/foo/bar"), absPath);
         }
         {
             final String absPath = FsUtil.getAbsolutePath("foo/bar", "~/");
-            assertEquals(System.getProperty("user.home")+FsUtil.normalizePath("/foo/bar"), absPath);
+            assertEquals(homePath+FsUtil.normalizePath("/foo/bar"), absPath);
         }
         
         if (System.getProperty("os.name").toLowerCase().contains("win"))
@@ -137,7 +138,7 @@ public class FsUtilTest {
         {
             final String srcPath = FsUtil.normalizePath("~/foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
-            assertEquals(System.getProperty("user.home")+FsUtil.normalizePath("/foo/bar"), absPath);
+            assertEquals(homePath+FsUtil.normalizePath("/foo/bar"), absPath);
         }
         {
             final String srcPath = FsUtil.normalizePath("./foo/bar");

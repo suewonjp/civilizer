@@ -202,3 +202,14 @@ function parentChildFolders(parent, child) {
 //    return b * 2 - 1;
 //}
 
+function getFileName(path) {
+    var output = path;
+    var iii;
+    iii = output.lastIndexOf("/");
+    if (iii > -1)
+        output = output.substring(iii+1);
+    iii = output.lastIndexOf("\\");
+    if (iii > -1)
+        output = output.substring(iii+1);
+    return output;
+}
