@@ -152,7 +152,7 @@ public final class Configurator {
 		    final String optionFilePath = privateHome.getAbsolutePath() + FsUtil.SEP + AppOptions.OPTION_FILE_NAME;
 		    p.load(new FileInputStream(optionFilePath));
 		    
-		    p.setProperty(AppOptions.PRIVATE_HOME_PATH, privateHome.getAbsolutePath());
+		    p.setProperty(AppOptions.PRIVATE_HOME_PATH, FsUtil.normalizePath(privateHome.getAbsolutePath()));
 		    
 		    final boolean override =
 		            isTrue(p, AppOptions.OVERRIDE_OPTION_FILE) || isTrue(AppOptions.OVERRIDE_OPTION_FILE);

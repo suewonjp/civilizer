@@ -103,14 +103,13 @@ public final class TestUtil {
     	}
     }
     
-    public static String getPrivateHomePath(boolean unixConvention) {
-        final String path = System.getProperty("user.dir") +
-                (unixConvention ? "/test/private-home" : "\\test\\private-home");
+    public static String getPrivateHomePath() {
+        final String path = FsUtil.concatPath(System.getProperty("user.dir"), "test/private-home");
         return path;
     }
     
     public static void configure() {
-    	final String path = getPrivateHomePath(true);
+    	final String path = getPrivateHomePath();
     	System.setProperty(AppOptions.PRIVATE_HOME_PATH, path);
     	new Configurator();
     }

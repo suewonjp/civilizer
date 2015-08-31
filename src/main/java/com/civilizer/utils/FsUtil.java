@@ -20,9 +20,15 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 public final class FsUtil {
     
-    public static String SEP = File.separator;
+    // [RULE] The file path style follows Unix convention throughout the application.
+    // Never make a path with the following:
+    //     - Windows style path separator
+    //     - File.separator
+    //     - File.separatorChar
+    // Instead, use this.
+    public static String SEP = "/";
     
-    public static String toNativePath(String path) {
+    public static String normalizePath(String path) {
         if (path.startsWith("~")) {
             // translate '~' symbol to the user home path
             final String homePath = System.getProperty("user.home");
@@ -39,7 +45,7 @@ public final class FsUtil {
                 path = homePath;
         }
 
-        return FilenameUtils.separatorsToSystem(path);
+        return FilenameUtils.separatorsToUnix(path);
     }
     
     public static String getAbsolutePath(String srcPath, String basePath) {
@@ -47,7 +53,7 @@ public final class FsUtil {
             return null;
         }
 
-        srcPath = toNativePath(srcPath);
+        srcPath = normalizePath(srcPath);
         String absPath = null;        
 
         // [NOTE] Be cautious about boolean java.io.File.isAbsolute()!
@@ -65,13 +71,13 @@ public final class FsUtil {
                 return null;
             }
             
-            basePath = toNativePath(basePath);
+            basePath = normalizePath(basePath);
 
             if (new File(basePath).isAbsolute() == false) {
                 return null;
             }
                 
-            absPath = FilenameUtils.normalize(basePath + SEP + srcPath);
+            absPath = FilenameUtils.normalize(basePath + FsUtil.SEP + srcPath, true);
         }
             
         return absPath;
@@ -80,10 +86,10 @@ public final class FsUtil {
     public static String concatPath(String...names) {
         StringBuilder sb = new StringBuilder();
         for (int i=0; i<names.length-1; ++i) {
-            sb.append(names[i]).append(SEP);
+            sb.append(names[i]).append(FsUtil.SEP);
         }
         sb.append(names[names.length-1]);
-        return FilenameUtils.normalizeNoEndSeparator(sb.toString());
+        return FilenameUtils.normalizeNoEndSeparator(sb.toString(), true);
     }
     
     public static void createUnexistingDirectory(File dir) {
@@ -157,8 +163,7 @@ public final class FsUtil {
         final File tgtFile = new File(tgtPath);
         assert tgtFile.isAbsolute() && tgtFile.exists();
         
-        final boolean unixConvention = true;        
-        tgtPath = FilenameUtils.normalizeNoEndSeparator(tgtPath, unixConvention);
+        tgtPath = FilenameUtils.normalizeNoEndSeparator(tgtPath, true);
         final int offset = tgtPath.length();
         final String basePath = FilenameUtils.getName(tgtPath);
 
@@ -176,13 +181,13 @@ public final class FsUtil {
                 );
         
         for (File f : fileItems) {
-            String p = FilenameUtils.normalize(f.getAbsolutePath(), unixConvention);
+            String p = FilenameUtils.normalize(f.getAbsolutePath(), true);
             p = basePath + (p.length() > offset ? p.substring(offset) : "");
             if (f.isDirectory()) {
                 if (f.list().length == 0) { // empty folder
-                    // An empty folder should end with "/" to denote that.
-                    if (! p.endsWith("/"))
-                        p += "/";
+                    // An empty folder should end with the file separator to denote that.
+                    if (! p.endsWith(FsUtil.SEP))
+                        p += FsUtil.SEP;
                     zipOut.putNextEntry(new ZipEntry(p));
                 }
             }
@@ -235,9 +240,9 @@ public final class FsUtil {
         final int tmpBufSize = 1024;
         final byte[] tmpBuf = new byte[tmpBufSize];
         int count = 0;
-        final String path = FsUtil.toNativePath(parentPath + "/" + ze.getName());
+        final String path = FsUtil.normalizePath(parentPath + "/" + ze.getName());
         
-        if (path.endsWith(SEP)) {
+        if (path.endsWith(FsUtil.SEP)) {
             // This is an empty folder.
             FsUtil.createUnexistingDirectory(new File(path));
             return path;

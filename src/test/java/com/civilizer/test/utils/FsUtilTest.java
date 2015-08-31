@@ -44,7 +44,7 @@ public class FsUtilTest {
           "/tmp-fs/folder3/",
         };
         for (String path : paths) {
-            path = FsUtil.toNativePath(parentPath+path);
+            path = FsUtil.normalizePath(parentPath+path);
             File f = new File(path);
             if (path.endsWith(FsUtil.SEP)) {
                 FsUtil.createUnexistingDirectory(f);
@@ -109,55 +109,55 @@ public class FsUtilTest {
         }
         {
             final String absPath = FsUtil.getAbsolutePath("~/foo/bar", null);
-            assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
+            assertEquals(System.getProperty("user.home")+FsUtil.normalizePath("/foo/bar"), absPath);
         }
         {
             final String absPath = FsUtil.getAbsolutePath("foo/bar", "~");
-            assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
+            assertEquals(System.getProperty("user.home")+FsUtil.normalizePath("/foo/bar"), absPath);
         }
         {
             final String absPath = FsUtil.getAbsolutePath("foo/bar", "~/");
-            assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
+            assertEquals(System.getProperty("user.home")+FsUtil.normalizePath("/foo/bar"), absPath);
         }
         
         if (System.getProperty("os.name").toLowerCase().contains("win"))
             return;
         
-        String basePath = FsUtil.toNativePath("/base/path");
+        String basePath = FsUtil.normalizePath("/base/path");
         {
             final String srcPath = null;
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
             assertEquals(null, absPath);
         }
         {
-            final String srcPath = FsUtil.toNativePath("/foo/bar");
+            final String srcPath = FsUtil.normalizePath("/foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
-            assertEquals(FsUtil.toNativePath("/foo/bar"), absPath);
+            assertEquals(FsUtil.normalizePath("/foo/bar"), absPath);
         }
         {
-            final String srcPath = FsUtil.toNativePath("~/foo/bar");
+            final String srcPath = FsUtil.normalizePath("~/foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
-            assertEquals(System.getProperty("user.home")+FsUtil.toNativePath("/foo/bar"), absPath);
+            assertEquals(System.getProperty("user.home")+FsUtil.normalizePath("/foo/bar"), absPath);
         }
         {
-            final String srcPath = FsUtil.toNativePath("./foo/bar");
+            final String srcPath = FsUtil.normalizePath("./foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
-            assertEquals(FsUtil.toNativePath("/base/path/foo/bar"), absPath);
+            assertEquals(FsUtil.normalizePath("/base/path/foo/bar"), absPath);
         }
         {
-            final String srcPath = FsUtil.toNativePath("../foo/bar");
+            final String srcPath = FsUtil.normalizePath("../foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
-            assertEquals(FsUtil.toNativePath("/base/foo/bar"), absPath);
+            assertEquals(FsUtil.normalizePath("/base/foo/bar"), absPath);
         }
         {
-            final String srcPath = FsUtil.toNativePath("../../foo/bar");
+            final String srcPath = FsUtil.normalizePath("../../foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
-            assertEquals(FsUtil.toNativePath("/foo/bar"), absPath);
+            assertEquals(FsUtil.normalizePath("/foo/bar"), absPath);
         }
         {
-            final String srcPath = FsUtil.toNativePath("foo/bar");
+            final String srcPath = FsUtil.normalizePath("foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
-            assertEquals(FsUtil.toNativePath("/base/path/foo/bar"), absPath);
+            assertEquals(FsUtil.normalizePath("/base/path/foo/bar"), absPath);
         }
     }
     
@@ -273,14 +273,14 @@ public class FsUtilTest {
                     new String[]{ FsUtil.concatPath(tmpPath, "tmp-fs") });
             assertEquals(true, FsUtil.exists(zipFilePath));
             
-            FileUtils.deleteQuietly(new File(FsUtil.toNativePath(tmpPath+"/tmp-fs")));
+            FileUtils.deleteQuietly(new File(FsUtil.normalizePath(tmpPath+"/tmp-fs")));
             
             // restore the file structure.
             FsUtil.uncompressToFolder(zipFilePath, tmpPath);
             
             // check its validity.
             for (String p : paths) {
-                final String path = FsUtil.toNativePath(tmpPath+p);
+                final String path = FsUtil.normalizePath(tmpPath+p);
                 if (path.endsWith(FsUtil.SEP)) { // empty folder
                     assertEquals(true, new File(path).isDirectory());
                     assertEquals(0, new File(path).list().length);

@@ -304,7 +304,7 @@ public class WebFileBoxTest {
 			
 			if (srcPathBean.isFolder()) {
 				final File oldDir = srcPathBean.toFile(filesHomePath);
-				final FileEntity fe = new FileEntity(newParentPath + "/" + srcPathBean.getName());
+				final FileEntity fe = new FileEntity(newParentPath + FsUtil.SEP + srcPathBean.getName());
 				final File newDir = fe.toFile(filesHomePath);
 				
 				if (oldDir.equals(newDir)) {
@@ -342,7 +342,7 @@ public class WebFileBoxTest {
 			}
 			else {
 				final File oldFile = srcPathBean.toFile(filesHomePath);
-				final FileEntity fe = new FileEntity(newParentPath + "/" + srcPathBean.getName());
+				final FileEntity fe = new FileEntity(newParentPath + FsUtil.SEP + srcPathBean.getName());
 				final File newFile = fe.toFile(filesHomePath);
 				
 				if (oldFile.equals(newFile)) {
@@ -378,10 +378,10 @@ public class WebFileBoxTest {
 			
 			for (FileEntity fe : entities) {
 				if (srcPathBean.isFolder()) {
-					fe.setFileName(newParentPath + "/" + srcPathBean.getName() + fe.getFileName().replace(oldFilePath, ""));
+					fe.setFileName(newParentPath + FsUtil.SEP + srcPathBean.getName() + fe.getFileName().replace(oldFilePath, ""));
 				}
 				else {
-					fe.setFileName(newParentPath + "/" + fe.endName());
+					fe.setFileName(newParentPath + FsUtil.SEP + fe.endName());
 				}
 //				System.out.println("----- " + fe);
 				fileEntityDao.save(fe);

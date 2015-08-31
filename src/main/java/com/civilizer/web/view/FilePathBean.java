@@ -61,7 +61,7 @@ public class FilePathBean implements Serializable {
 
 	public void setFullPath(String fp) {
 	    if (fp != null)
-	        this.fullPath = FsUtil.toNativePath(fp).intern();
+	        this.fullPath = FsUtil.normalizePath(fp).intern();
 	}
 
 	public long getFileEntityId() {

@@ -61,12 +61,12 @@ public class FileEntity implements Serializable {
 	}
 	
 	public Pair<String, String> splitName() {
-		final String[] tmp = fileName.split("/");
+		final String[] tmp = fileName.split(FsUtil.SEP);
 		final String name = tmp.length > 0 ?
 				tmp[tmp.length - 1] : "";
 		String parentPath = "";
 		for (int i=1; i<tmp.length-1; ++i) {
-			parentPath += "/" + tmp[i];
+			parentPath += FsUtil.SEP + tmp[i];
 		}
 		return new Pair<String, String>(parentPath, name);
 	}
@@ -86,7 +86,7 @@ public class FileEntity implements Serializable {
 			oldIntermediatePath = fileName;
 		}
 		oldIntermediatePath = FilenameUtils.separatorsToUnix(oldIntermediatePath);
-		final String[] tmp = oldIntermediatePath.split("/");
+		final String[] tmp = oldIntermediatePath.split(FsUtil.SEP);
 		final String oldSegment = tmp[tmp.length - 1];
 		// oldSegment => "ghi"
 		final int index = fileName.lastIndexOf(oldSegment);
@@ -99,7 +99,7 @@ public class FileEntity implements Serializable {
 		if (fileName.isEmpty()) {
 			return null;
 		}
-		return new File(FsUtil.toNativePath(prefix + fileName));
+		return new File(FsUtil.normalizePath(prefix + fileName));
 	}
 	
 	public boolean persisted(String filesHome) {
