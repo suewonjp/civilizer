@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
 
 @SuppressWarnings("serial")
@@ -20,7 +21,7 @@ public final class FileUploadBean  implements Serializable {
 	}
 	
 	public String getFileName() {
-		return file.getFileName();
+		return FilenameUtils.getName(file.getFileName());
 	}
 	
 	public boolean saveFile(String path) {
