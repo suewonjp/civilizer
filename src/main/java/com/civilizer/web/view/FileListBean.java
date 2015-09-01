@@ -5,12 +5,9 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Collections;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FalseFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
-
 import com.civilizer.domain.FileEntity;
 import com.civilizer.utils.FsUtil;
+import com.civilizer.utils.Pair;
 
 @SuppressWarnings("serial")
 public final class FileListBean implements Serializable {
@@ -43,45 +40,46 @@ public final class FileListBean implements Serializable {
 		return folderTree;
 	}
 
-	public static boolean directoryEmpty(File dir) {
-		// [NOTE] An empty directory means it has no file and its all sub-directories have no file at all
-		return ! FileUtils.iterateFiles(dir, null, true).hasNext();
-	}
-	
-	public static void removeEmptyDirectories(String filesHomePath) {
-		Collection<File> dirs = FileUtils.listFilesAndDirs(
-				new File(filesHomePath),  // directory
-				FalseFileFilter.INSTANCE, // exclude all files
-				TrueFileFilter.INSTANCE   // include all sub directories
-		);
-		
-		for (File dir : dirs) {
-			if (dir.getPath().equals(filesHomePath)) {
-				// skip the root directory
-				continue;
-			}
-			if (dir.isDirectory() && directoryEmpty(dir)) {
-				FileUtils.deleteQuietly(dir);
-			}
-		}
-	}
-	
-	public File createNewFolder(int parentFolderId, String name, String filesHomePath) {
-		final FilePathBean parentPathBean = getFilePathBean(parentFolderId);
-		final String parentPath = parentPathBean.getFullPath();
-		final String path = FsUtil.concatPath(filesHomePath, parentPath, name);
-		final File file = new File(path);
-		
-		if (file.isFile()) {
-			return null;
-		}
-		if (file.isDirectory() == false) {
-			if (! file.mkdir()) {
-				return null;
-			}
-		}
-		
-		return file;
+//	public static boolean directoryEmpty(File dir) {
+//		// [NOTE] An empty directory means it has no file and its all sub-directories have no file at all
+//		return ! FileUtils.iterateFiles(dir, null, true).hasNext();
+//	}
+//	
+//	public static void removeEmptyDirectories(String filesHomePath) {
+//		Collection<File> dirs = FileUtils.listFilesAndDirs(
+//				new File(filesHomePath),  // directory
+//				FalseFileFilter.INSTANCE, // exclude all files
+//				TrueFileFilter.INSTANCE   // include all sub directories
+//		);
+//		
+//		for (File dir : dirs) {
+//			if (dir.getPath().equals(filesHomePath)) {
+//				// skip the root directory
+//				continue;
+//			}
+//			if (dir.isDirectory() && directoryEmpty(dir)) {
+//				FileUtils.deleteQuietly(dir);
+//			}
+//		}
+//	}
+
+	public Pair<File, String> createNewFolder(int parentFolderId, String name, String filesHomePath) {
+	    final FilePathBean parentPathBean = getFilePathBean(parentFolderId);
+	    final String parentPath = parentPathBean.getFullPath();
+	    String path = FsUtil.concatPath(filesHomePath, parentPath, name);
+	    final File file = new File(path);
+	    path = FsUtil.normalizePath(path.substring(filesHomePath.length()));
+	    
+	    if (file.isFile()) {
+	        return new Pair<File, String>(null, path);
+	    }
+	    if (file.isDirectory() == false) {
+	        if (! file.mkdir()) {
+	            return new Pair<File, String>(null, path);
+	        }
+	    }
+	    
+	    return new Pair<File, String>(file, path);
 	}
 	
 	public void setFilePathTree(FilePathTree filePathTree) {

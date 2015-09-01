@@ -40,6 +40,7 @@ import com.civilizer.domain.Tag;
 import com.civilizer.domain.TextDecorator;
 import com.civilizer.security.UserDetailsService;
 import com.civilizer.utils.FsUtil;
+import com.civilizer.utils.Pair;
 import com.civilizer.web.view.*;
 
 @Controller
@@ -700,28 +701,33 @@ public final class MainController {
 		if (srcNodeId < 0) {
 			// [RULE] Create a new directory if *srcNodeId* is a minus value;
 			// [NOTE] we need to decode *srcNodeId* before passing it to the next processing
-			if (fileListBean.createNewFolder(-srcNodeId - 1, newName, filesHomePath) == null) {
-				ViewUtil.addMessage("Error on Creating a Folder!!!", newName + " : already exists!", FacesMessage.SEVERITY_ERROR);
+		    Pair<File, String> tmp = fileListBean.createNewFolder(-srcNodeId - 1, newName, filesHomePath);
+			if (tmp.getFirst() == null) {
+				ViewUtil.addMessage("Error on Creating a Folder!!!", tmp.getSecond() + " : already exists!", FacesMessage.SEVERITY_ERROR);
+			}
+			else {
+			    ViewUtil.addMessage("Created!!!", tmp.getSecond(), null);
 			}
 			return;
 		}
 		
 		final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
-		
 		final String oldFilePath = filePathBean.getFullPath();
 		List<FileEntity> entities = Collections.emptyList();
+		String dstPath;
 		
 		if (filePathBean.isFolder()) {
 			final File oldDir = filePathBean.toFile(filesHomePath);
 			final FileEntity fe = new FileEntity(oldFilePath);
 			fe.replaceNameSegment(oldFilePath, newName);
 			final File newDir = fe.toFile(filesHomePath);
+			dstPath = FsUtil.normalizePath(newDir.toString().substring(filesHomePath.length()));
 			
 			try {
 				FileUtils.moveDirectory(oldDir, newDir);
 			} catch (IOException e) {
 				e.printStackTrace();
-				ViewUtil.addMessage("Error on Renaming a Folder!!!", oldFilePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on Renaming!!!", oldFilePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 				return;
 			}
 			
@@ -732,12 +738,13 @@ public final class MainController {
 			final FileEntity fe = new FileEntity(oldFilePath);
 			fe.replaceNameSegment(oldFilePath, newName);
 			final File newFile = fe.toFile(filesHomePath);
+            dstPath = FsUtil.normalizePath(newFile.toString().substring(filesHomePath.length()));
 			
 			try {
 				FileUtils.moveFile(oldFile, newFile);
 			} catch (IOException e) {
 				e.printStackTrace();
-				ViewUtil.addMessage("Error on Renaming a File!!!", oldFilePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on Renaming!!!", oldFilePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 				return;
 			}
 			
@@ -747,17 +754,19 @@ public final class MainController {
 				entities.add(entity);
 			}
 		}
-		
+
 		for (FileEntity fe : entities) {
 			fe.replaceNameSegment(oldFilePath, newName);
 			try {
 				fileEntityDao.save(fe);
-				ViewUtil.addMessage("File Renamed", fe.getFileName(), null);
 			} catch (Exception e) {
 				e.printStackTrace();
-				ViewUtil.addMessage("Error on Renaming a File!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on Renaming!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				return;
 			}
 		}
+
+		ViewUtil.addMessage("Renamed", oldFilePath+" => "+dstPath, null);
 	}
 	
 	public void moveFile(FileListBean fileListBean) {
@@ -769,18 +778,20 @@ public final class MainController {
 		final FilePathBean dstPathBean = fileListBean.getFolderPathBean(dstNodeId);
 		final String newParentPath = dstPathBean.getFullPath();
 		List<FileEntity> entities = Collections.emptyList();
+		String dstPath;
 		
 		if (srcPathBean.isFolder()) {
 			final File oldDir = srcPathBean.toFile(filesHomePath);
 			final FileEntity fe = new FileEntity(newParentPath + FsUtil.SEP + srcPathBean.getName());
 			final File newDir = fe.toFile(filesHomePath);
+            dstPath = FsUtil.normalizePath(newDir.toString().substring(filesHomePath.length()));
 			
 			if (oldDir.equals(newDir)) {
-				ViewUtil.addMessage("No Effect!!!", fe.getFileName() + " :: The source and destination are identical", FacesMessage.SEVERITY_WARN);
+				ViewUtil.addMessage("Error on Moving!!!", fe.getFileName() + " :: The source and destination are identical", FacesMessage.SEVERITY_WARN);
 				return;
 			}
 			if (newDir.getAbsolutePath().startsWith(oldDir.getAbsolutePath()+FsUtil.SEP)) {
-				ViewUtil.addMessage("Error on Moving a Folder!!!", fe.getFileName() + " :: The source is a subdirectory of the destination", FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on Moving!!!", fe.getFileName() + " :: The source is a subdirectory of the destination", FacesMessage.SEVERITY_ERROR);
 				return;
 			}
 			
@@ -788,7 +799,7 @@ public final class MainController {
 				FileUtils.moveDirectory(oldDir, newDir);
 			} catch (IOException e) {
 				e.printStackTrace();
-				ViewUtil.addMessage("Error on Moving a Folder!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on Moving!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 				return;
 			}
 			
@@ -798,9 +809,10 @@ public final class MainController {
 			final File oldFile = srcPathBean.toFile(filesHomePath);
 			final FileEntity fe = new FileEntity(newParentPath + FsUtil.SEP + srcPathBean.getName());
 			final File newFile = fe.toFile(filesHomePath);
+            dstPath = FsUtil.normalizePath(newFile.toString().substring(filesHomePath.length()));
 			
 			if (oldFile.equals(newFile)) {
-				ViewUtil.addMessage("Error on Moving a File!!!", fe.getFileName() + " :: The destination already exists", FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on Moving!!!", fe.getFileName() + " :: The destination already exists", FacesMessage.SEVERITY_ERROR);
 				return;
 			}
 			
@@ -808,7 +820,7 @@ public final class MainController {
 				FileUtils.moveFile(oldFile, newFile);
 			} catch (IOException e) {
 				e.printStackTrace();
-				ViewUtil.addMessage("Error on Moving a File!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on Moving!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 				return;
 			}
 			
@@ -829,12 +841,14 @@ public final class MainController {
 			
 			try {
 				fileEntityDao.save(fe);
-				ViewUtil.addMessage("File Moved", fe.getFileName(), null);
 			} catch (Exception e) {
 				e.printStackTrace();
-				ViewUtil.addMessage("Error on Moving a File!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				ViewUtil.addMessage("Error on Moving!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+				return;
 			}
 		}
+		
+        ViewUtil.addMessage("Moved", oldFilePath+" => "+dstPath, null);
 	}
 
 	public void deleteFile(FileListBean fileListBean) {
@@ -856,12 +870,23 @@ public final class MainController {
 			}
 		}
 		
-		FileUtils.deleteQuietly(filePathBean.toFile(filesHomePath));
+		try {
+            FileUtils.forceDelete(filePathBean.toFile(filesHomePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+            ViewUtil.addMessage("Error on Deleting!!!", filePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+            return;
+        }
 		
 		for (FileEntity fe : entities) {
-			fileEntityDao.delete(fe);
-			ViewUtil.addMessage("Files Deleted", fe.getFileName(), null);
+		    try {
+		        fileEntityDao.delete(fe);
+            } catch (Exception e) {
+                ViewUtil.addMessage("Error on Deleting!!!", fe.getFileName() + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+            }
 		}
+
+		ViewUtil.addMessage("Deleted", filePath, null);
 	}
 	
 	public boolean saveUserProfile() {
@@ -886,9 +911,6 @@ public final class MainController {
 	    } catch (IOException e) {
 	        ViewUtil.addMessage("IO Error on Saving User Profile!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 	        e.printStackTrace();
-        } catch (Exception e) {
-            ViewUtil.addMessage("Unkown Error on Saving User Profile!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-            e.printStackTrace();
         }
 	    return ok;
 	}

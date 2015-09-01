@@ -19,6 +19,7 @@ import com.civilizer.domain.FileEntity;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.DefaultTreeNode;
 import com.civilizer.utils.FsUtil;
+import com.civilizer.utils.Pair;
 import com.civilizer.utils.TreeNode;
 import com.civilizer.web.view.FileListBean;
 import com.civilizer.web.view.FilePathBean;
@@ -162,8 +163,12 @@ public class WebFileBoxTest {
             assertEquals(true, parentPath.isFolder());
 
             final String newFolderName = "new-directory";
-            final File newDir = fileListBean.createNewFolder(parentFolderId, newFolderName, filesHomePath);
+            Pair<File, String> tmp = fileListBean.createNewFolder(parentFolderId, newFolderName, filesHomePath);
+            assertNotNull(tmp);
+            final File newDir = tmp.getFirst();
             assertNotNull(newDir);
+            assertNotNull(tmp.getSecond());
+            assertEquals(FsUtil.normalizePath(newDir.getAbsolutePath()), FsUtil.concatPath(filesHomePath, tmp.getSecond()));
             assertEquals(true, newDir.isDirectory());
             
             try {
@@ -182,8 +187,8 @@ public class WebFileBoxTest {
 
             filePathTree = new FilePathTree();
             fileListBean.setFilePathTree(filePathTree);
-            final FilePathBean tmp = new FilePathBean(FsUtil.normalizePath(newDir.getAbsolutePath()).replace(filesHomePath, ""));
-            assertEquals(true, filePathTree.getFilePathBeans().contains(tmp));
+            final FilePathBean p = new FilePathBean(FsUtil.normalizePath(newDir.getAbsolutePath()).replace(filesHomePath, ""));
+            assertEquals(true, filePathTree.getFilePathBeans().contains(p));
         }
     }
     
@@ -431,7 +436,12 @@ public class WebFileBoxTest {
                 }
             }
             
-            FileUtils.deleteQuietly(filePathBean.toFile(filesHomePath));
+            try {
+                FileUtils.forceDelete(filePathBean.toFile(filesHomePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+                fail(String.format("deleting '%s' failed!", filePath));
+            }
             
             for (FileEntity fe : entities) {
                 final String pathOnFileSystem = filesHomePath + fe.getFileName();
