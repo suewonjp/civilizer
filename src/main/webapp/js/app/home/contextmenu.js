@@ -17,6 +17,7 @@ function setContextMenuForFragments() {
                 menu.find("#fragment-group-form\\:delete").show();
                 menu.find("#fragment-group-form\\:restore").show();
                 menu.find("#fragment-group-form\\:relateNew").hide();
+                menu.find("#fragment-group-form\\:touch").hide();
             }
             else {
                 menu.find("#fragment-group-form\\:bookmark").show();
@@ -24,6 +25,7 @@ function setContextMenuForFragments() {
                 menu.find("#fragment-group-form\\:delete").hide();
                 menu.find("#fragment-group-form\\:restore").hide();
                 menu.find("#fragment-group-form\\:relateNew").show();
+                menu.find("#fragment-group-form\\:touch").show();
             }
             e.preventDefault();
         }
