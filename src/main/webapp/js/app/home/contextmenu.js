@@ -121,9 +121,11 @@ function setContextMenuForFiles() {
             menu.find("#file-box-form\\:rename").hide();
             menu.find("#file-box-form\\:move").hide();
             menu.find("#file-box-form\\:delete").hide();
+            menu.find("#file-box-form\\:upload").show();
         }
         else {
             // the menu has a target file or folder
+            menu.find("#file-box-form\\:upload").hide();
             menu.find("#file-box-form\\:rename").show();
             menu.find("#file-box-form\\:move").show();
             menu.find("#file-box-form\\:delete").show();
