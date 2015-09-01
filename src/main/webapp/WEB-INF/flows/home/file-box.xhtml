@@ -11,14 +11,14 @@
 </div>
 
 <h:form id="file-box-form" enctype="multipart/form-data">
-	<p:dialog header="" width="300px" modal="true" closeOnEscape="true" closhowEffect="fade" widgetVar="renameFileDlg" position="center" draggable="true" resizable="false">
+	<p:dialog widgetVar="renameFileDlg" header="" width="300px" modal="true" closeOnEscape="true" closhowEffect="fade" position="center" draggable="true" resizable="false">
         <h:outputLabel for="rename-file-dlg-name-input" value="#{msg['name']} "/>
-        <p:inputText style="min-width:200px" id="rename-file-dlg-name-input" value="#{fileListBean.fileName}"/>
+        <p:inputText id="rename-file-dlg-name-input" style="min-width:200px" value="#{fileListBean.fileName}"/>
         <br/><br/>
-        <p:commandButton action="rename-file" value="#{msg['ok']}" icon="ui-icon-check"/>
+        <p:commandButton widgetVar="renameFileDlgSubmit" action="rename-file" value="#{msg['ok']}" icon="ui-icon-check"/>
     </p:dialog>
 
-	<p:dialog width="300px" modal="true" closeOnEscape="true" showEffect="fade" widgetVar="moveFileDlg" position="center" draggable="true" resizable="false">
+	<p:dialog widgetVar="moveFileDlg" width="300px" modal="true" closeOnEscape="true" showEffect="fade" position="center" draggable="true" resizable="false">
         <div id="file-upload-box">
         	<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
 	        <p:fileUpload widgetVar="fileUpload" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
@@ -57,7 +57,7 @@
     <h:inputHidden id="id-placeholder-for-src-node" value="#{fileListBean.srcNodeId}"/>
     <h:inputHidden id="id-placeholder-for-dst-node" value="#{fileListBean.dstNodeId}"/>
     
-	<p:panel id="file-box-panel" toggleable="true" widgetVar="fileBoxPanel">
+	<p:panel widgetVar="fileBoxPanel" id="file-box-panel" toggleable="true">
 		<div id="file-path-tree" title="#{msg['rclick_for_menu']}">
             <p:tree value="#{fileListBean.filePathTree.root}" var="filePathBean" style="width:100%">
                 <p:treeNode>

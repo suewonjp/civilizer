@@ -41,7 +41,7 @@ function showFileUploadDialog() {
 	fileUpload.display.text("");
 	var holderForDstId = $("#file-box-form\\:id-placeholder-for-dst-node");
 	holderForDstId.val(0);
-	var okBtn = $("#file-box-form\\:ok").hide().click(function() {
+	var okBtn = $("#file-box-form\\:ok").hide().off("click").on("click", function() {
 		document.forms["file-box-form"]["file-box-form:ok-upload"].click();
 	});
 	
@@ -55,7 +55,8 @@ function showFileUploadDialog() {
 	    }
 	});
 	
-	$("#file-box-form\\:folder-tree .each-file").click(function () {
+	$("#file-box-form\\:folder-tree .each-file").off("click")
+	.on("click", function () {
 		var $this = $(this);
 		treeNodes.removeClass("fa-upload fb-target-dir");
 		fp = $this.attr("_fp");
@@ -92,11 +93,13 @@ function showMoveFileDialog() {
 	dstOutput.text(MSG.select_destination).removeClass("fa-close").css({color:"aqua"});
 	var treeNodes = $("#file-box-form\\:folder-tree .each-file");
 	treeNodes.removeClass("fa-upload fb-target-dir");
-	var okBtn = $("#file-box-form\\:ok").hide().click(function() {
+	var okBtn = $("#file-box-form\\:ok").hide().off("click")
+	.on("click", function() {
 		document.forms["file-box-form"]["file-box-form:ok-move"].click();
 	});
 
-	$("#file-box-form\\:folder-tree .each-file").click(function () {
+	$("#file-box-form\\:folder-tree .each-file").off("click")
+	.on("click", function () {
 		var $this = $(this);
 		treeNodes.removeClass("fa-upload fb-target-dir");
 		var fp = $this.attr("_fp");
@@ -125,21 +128,38 @@ function showRenameFileDialog() {
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
 	var srcId = target.attr("_id");
-    $("#file-box-form\\:id-placeholder-for-src-node").val(srcId);
-    
+	$("#file-box-form\\:id-placeholder-for-src-node").val(srcId);
 	var curName = target.text().trim();
-    $("#file-box-form\\:rename-file-dlg-name-input").val(curName).focus(function() {
-    	$(this).select();
-    });
+	var submitBtn = PF("renameFileDlgSubmit");
+
+	$("#file-box-form\\:rename-file-dlg-name-input").val(curName).off("focus keydown keyup")
+	.on("focus", function() {
+	    $(this).select();
+	    submitBtn.disable();
+	})
+	.on("keydown", function(e) {
+	    var typed = $(this).val().trim();
+	    if (e.which == $.ui.keyCode.ENTER && (!typed || typed == curName))
+	        return false;
+	})
+	.on("keyup", function(e) {
+	    var typed = $(this).val().trim();
+	        if (!typed || typed == curName)
+	            submitBtn.disable();
+	        else
+	            submitBtn.enable();
+	})
+	;
     
     var dlg = PF("renameFileDlg");
     dlg.show();
     dlg.jq.find(".ui-dialog-title").text(MSG.rename);
 }
 
-function showNewDirectoryDialog(target) {
+function showNewDirectoryDialog() {
     var menu = $("#file-context-menu");
 	var target = menu.data("target-file");
+    var submitBtn = PF("renameFileDlgSubmit");
 	
     // As a rule, we should send the id after encoding it like so:
     //   -( (original-value) + 1 )
@@ -154,12 +174,26 @@ function showNewDirectoryDialog(target) {
     }
 	$("#file-box-form\\:id-placeholder-for-src-node").val(id);
 	
-    $("#file-box-form\\:rename-file-dlg-name-input").val("new-directory");
+    $("#file-box-form\\:rename-file-dlg-name-input").val("new-directory").off("focus keydown keyup")
+    .on("focus", function() {
+        $(this).select();
+        submitBtn.enable();
+    })
+    .on("keydown", function() {
+        var typed = $(this).val().trim();
+        if (e.which == $.ui.keyCode.ENTER && !typed)
+            return false;
+    })
+    .on("keyup", function() {
+        var typed = $(this).val().trim();
+        if (!typed)
+            submitBtn.disable();
+        else
+            submitBtn.enable();
+    })
+    ;
     
     var dlg = PF("renameFileDlg");
     dlg.show();
-    dlg.jq.find("input").focus(function() {
-    	$(this).select();
-    });
     dlg.jq.find(".ui-dialog-title").text(MSG.new_folder);
 }
