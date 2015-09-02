@@ -53,6 +53,14 @@ public class DataBrokerBean implements Serializable {
             FileUtils.moveDirectory(srcFile, dstFile);
     }
     
+    public static String getExportFolderPath() {
+        return FsUtil.concatPath(System.getProperty(AppOptions.TEMP_PATH), exportFolderName);
+    }
+    
+    public static String getExportFilePath() {
+        return FsUtil.concatPath(getExportFolderPath(), exportFileName);
+    }
+
     public static String getImportFolderPath() {
         return FsUtil.concatPath(System.getProperty(AppOptions.TEMP_PATH), importFolderName);
     }
@@ -109,7 +117,7 @@ public class DataBrokerBean implements Serializable {
 
     public static String exportData() throws IOException {
         final String[] paths = getTargetPaths();
-        final String tmpPath = FsUtil.concatPath(System.getProperty(AppOptions.TEMP_PATH), exportFolderName);
+        final String tmpPath = getExportFolderPath();
         FileUtils.deleteQuietly(new File(tmpPath));
         
         final String exportFilePath = FsUtil.concatPath(tmpPath, exportFileName);

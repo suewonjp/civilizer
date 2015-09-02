@@ -41,6 +41,7 @@ public class DataBrokerTest {
         try {
             final String exportFilePath = DataBrokerBean.exportData();
             assertNotNull(exportFilePath);
+            assertEquals(DataBrokerBean.getExportFilePath(), exportFilePath);
             final File exportFile = new File(exportFilePath);
             assertNotNull(exportFile);
             assertEquals(new File(tmpPath), exportFile.getParentFile());
