@@ -5,6 +5,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/WEB-INF"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/extra/java"/>
 		<property name="java-output-path" value="target/classes"/>
         <property name="context-root" value="civilizer"/>
 	</wb-module>

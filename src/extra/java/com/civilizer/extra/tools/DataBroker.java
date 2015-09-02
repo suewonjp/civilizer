@@ -1,4 +1,4 @@
-package com.civilizer.offline.tools;
+package com.civilizer.extra.tools;
 
 import java.io.File;
 //import java.net.URL;
