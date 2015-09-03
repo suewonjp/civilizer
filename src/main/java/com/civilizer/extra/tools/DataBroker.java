@@ -102,14 +102,14 @@ public final class DataBroker {
             return;
         }
         
-        final String uncompressPath = DataBrokerBean.importData();
+        final String uncompressPath = DataBrokerBean.prepareDataImport();
         final File uncompressFolder = new File(uncompressPath);
         if (uncompressFolder.isDirectory() == false) {
             logger.error("Importing data failed!");
             return;
         }
         
-        DataBrokerBean.commitImportData(uncompressPath);
+        DataBrokerBean.importData(uncompressPath);
 
         logger.info("[Success!] Data Imported");
     }

@@ -69,7 +69,23 @@ public class DataBrokerBean implements Serializable {
         return FsUtil.concatPath(getImportFolderPath(), importFileName);
     }
     
-    public static void commitImportData(String uncompressPath) throws IOException, SecurityException {
+    public static String prepareDataImport() throws IOException {
+        final String importFolderPath = getImportFolderPath();
+        final String importFilePath = getImportFilePath();
+        
+        if (! new File(importFilePath).isFile()) {
+            throw new IOException("Can't find a file to import!");
+        }
+        
+        final String uncompressPath = FsUtil.concatPath(importFolderPath, "uncmp");
+        
+        // uncompress the imported file into the temporary folder.
+        FsUtil.uncompressToFolder(importFilePath, uncompressPath);
+        
+        return uncompressPath;
+    }
+    
+    public static void importData(String uncompressPath) throws IOException, SecurityException {
         final File srcFolder = new File(uncompressPath);        
         final File srcFiles[] = { null, null };
         
@@ -97,22 +113,6 @@ public class DataBrokerBean implements Serializable {
         }
         
         FileUtils.deleteQuietly(srcFolder);
-    }
-    
-    public static String importData() throws IOException {
-        final String importFolderPath = getImportFolderPath();
-        final String importFilePath = getImportFilePath();
-        
-        if (! new File(importFilePath).isFile()) {
-            throw new IOException("Can't find a file to import!");
-        }
-        
-        final String uncompressPath = FsUtil.concatPath(importFolderPath, "uncmp");
-        
-        // uncompress the imported file into the temporary folder.
-        FsUtil.uncompressToFolder(importFilePath, uncompressPath);
-        
-        return uncompressPath;
     }
 
     public static String exportData() throws IOException {
@@ -203,8 +203,8 @@ public class DataBrokerBean implements Serializable {
             // Import the uploaded data.
             curStep = "import-error-step";
             try {
-                final String uncompressPath = importData();
-                commitImportData(uncompressPath);
+                final String uncompressPath = prepareDataImport();
+                importData(uncompressPath);
                 curStep = "confirm-import-step";
             } catch (Exception e) {
                 e.printStackTrace();

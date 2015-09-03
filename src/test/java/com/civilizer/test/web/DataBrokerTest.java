@@ -91,7 +91,7 @@ public class DataBrokerTest {
             final File importFile = new File(FsUtil.concatPath(importFolderPath, DataBrokerBean.importFileName));
             FileUtils.moveFile(exportFile, importFile);
             
-            final String uncompressPath = DataBrokerBean.importData();
+            final String uncompressPath = DataBrokerBean.prepareDataImport();
             assertNotNull(uncompressPath);
             final File uncompressFolder = new File(uncompressPath);
             assertEquals(true, uncompressFolder.isDirectory());
@@ -128,7 +128,7 @@ public class DataBrokerTest {
                 // http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4715154
                 return;
             
-            DataBrokerBean.commitImportData(uncompressPath);
+            DataBrokerBean.importData(uncompressPath);
             assertEquals(false, uncompressFolder.isDirectory());
             
             {
