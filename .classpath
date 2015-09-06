@@ -13,6 +13,7 @@
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" path="src/test/resources"/>
 	<classpathentry kind="src" path="src/main/webapp/WEB-INF"/>
+	<classpathentry kind="src" path="src/extra/java"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -30,5 +31,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="extra/lib/jetty-runner.jar" sourcepath="/Users/bsw/.m2/repository/org/eclipse/jetty/jetty-runner/9.2.13.v20150730/jetty-runner-9.2.13.v20150730-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
