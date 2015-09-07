@@ -6,12 +6,13 @@
     <groupId>com.civilizer</groupId>
     <artifactId>cvz-extra</artifactId>
     <version>1.0.0.CI-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <properties>
         <maven.test.failure.ignore>true</maven.test.failure.ignore>
         <java-version>1.7</java-version>
         <app-name>civilizer</app-name>
-        <src-dir>../src/extra/java</src-dir>
-        <dep-dir>../target</dep-dir>
+        <src-dir>src/extra/java</src-dir>
+        <dep-dir>target</dep-dir>
         <dep-classes-dir>${dep-dir}/classes</dep-classes-dir>
         <dep-lib-dir>${dep-dir}/${app-name}-${project.version}/WEB-INF/lib</dep-lib-dir>
         <output-dir>${dep-dir}/extra</output-dir>
@@ -19,7 +20,17 @@
     
     <build>
         <plugins>
-            <plugin>
+            <plugin> <!-- disable default compilations -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <executions>
+                    <execution>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin> <!-- build EXTRA module using Ant commands -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
@@ -30,18 +41,16 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
-<!--                                 <echo message="java home is ${java.home}"/> -->
                                 <mkdir dir="${output-dir}/lib"/>
                                 <path id="classpath">
                                     <dirset dir="${dep-classes-dir}"/>
                                     <fileset dir="${dep-lib-dir}"
                                         includes="*.jar"/>
-                                    <fileset dir="lib" includes="*.jar"/>
+                                    <fileset dir="extra/lib" includes="*.jar"/>
                                 </path>
 <!--                                 <property name="myclasspath" refid="classpath"/> -->
 <!--                                 <echo message="Classpath = ${myclasspath}"/> -->
-<!--                                 <echo message="version = ${project.version}"/> -->
-                                <!--  compile source files in src/extra/java  -->
+                                <echo message="compiling source files in src/extra/java..."/>
                                 <javac 
                                     compiler="extjavac"
                                     executable="javac"
@@ -50,9 +59,9 @@
                                     destdir="${output-dir}"
                                     classpathref="classpath">
                                 </javac>
-                                <!-- copy extra/lib/*.jar files to the final output directory -->
+                                <echo message="copying extra/lib/*.jar files to the final output directory..."/>
                                 <copy todir="${output-dir}/lib">
-                                    <fileset dir="lib" includes="*.jar"/>
+                                    <fileset dir="extra/lib" includes="*.jar"/>
                                 </copy>
                             </target>
                         </configuration>
