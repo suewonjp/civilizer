@@ -98,8 +98,8 @@ public final class FsUtil {
         }
     }
     
-    public static boolean exists(String path) {
-        return new File(path).exists();
+    public static boolean exists(String...names) {
+        return new File(concatPath(names)).exists();
     }
     
     public static boolean contentEquals(File file0, File file1) throws IOException {

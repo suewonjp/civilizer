@@ -41,6 +41,7 @@
 <!--                                 <property name="myclasspath" refid="classpath"/> -->
 <!--                                 <echo message="Classpath = ${myclasspath}"/> -->
 <!--                                 <echo message="version = ${project.version}"/> -->
+                                <!--  compile source files in src/extra/java  -->
                                 <javac 
                                     compiler="extjavac"
                                     executable="javac"
@@ -49,6 +50,7 @@
                                     destdir="${output-dir}"
                                     classpathref="classpath">
                                 </javac>
+                                <!-- copy extra/lib/*.jar files to the final output directory -->
                                 <copy todir="${output-dir}/lib">
                                     <fileset dir="lib" includes="*.jar"/>
                                 </copy>
