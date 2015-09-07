@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.civilizer</groupId>
+    <artifactId>cvz-zip</artifactId>
+    <version>1.0.0.CI-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <properties>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
+        <app-name>civilizer</app-name>
+        <output-dir>target</output-dir>
+        <cvz-dir>${output-dir}/${app-name}-${project.version}</cvz-dir>
+        <extra-dir>${output-dir}/extra</extra-dir>
+    </properties>
+    
+    <build>
+        <directory>${output-dir}</directory>
+        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>package</id>
+                        <phase>package</phase>
+                        <goals><goal>run</goal></goals>
+                        <configuration>
+                            <target>
+                                <echo message="zipping all..."/>
+                                <zip destfile="${output-dir}/${app-name}.zip">
+                                    <zipfileset dir="${cvz-dir}" prefix="${app-name}"/>
+                                    <zipfileset dir="${extra-dir}" prefix="extra"/>
+                                </zip>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>
