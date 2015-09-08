@@ -124,7 +124,7 @@ function showOrHide(target, letItShow) {
     return letItShow;
 }
 
-function initPfInplaceWidget(pfInplace, text, jqOuterBox, onCommit) {
+function setupPfInplaceText(pfInplace, text, jqOuterBox, onCommit) {
     var display = pfInplace.jq.find(".ui-inplace-display");
     display.text(text)[0].title=MSG.click_to_rename;
     var input = pfInplace.jq.find(".ui-inplace-content input");

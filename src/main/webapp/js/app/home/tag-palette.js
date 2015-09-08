@@ -49,7 +49,7 @@ function showTagEditorForEditing() {
 		tagName = "???";
 	}
 	
-	initPfInplaceWidget(
+	setupPfInplaceText(
 	        PF("tagNameInplace")
 	        , tagName
 	        , dlg.jq.find("#tag-palette-form\\:tag-name-panel")

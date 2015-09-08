@@ -257,7 +257,7 @@ function createUserProfileController() {
             inplace.jq.data("modified", val !== text);
             toggleUserProfileDlgSaveBtn();
         }
-        initPfInplaceWidget(
+        setupPfInplaceText(
                 inplace
                 , inplace.jq.next("span").text()
                 , d.jq.find("div.ui-panel").eq(0)
