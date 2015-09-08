@@ -44,9 +44,12 @@ function showTagEditorForCreating() {
             , onNameInplaceCommit
     );
     
+    PF("parentTagNameFilter").hide();
+    PF("childTagNameFilter").hide();
+    
     var dlg = PF("tagEditor");
     dlg.jq.off(".te")
-    .on("focus.te", ".ui-inplace-content input", function(e) {
+    .on("focus.te", "#tag-palette-form\\:tag-name-panel input", function(e) {
         saveBtn.disable();
     })
     .find("input[name=isNewTag]").val(true);
@@ -85,10 +88,13 @@ function showTagEditorForEditing() {
             , $("#tag-palette-form\\:tag-name-panel")
             , onNameInplaceCommit
     );
+
+    PF("parentTagNameFilter").hide();
+    PF("childTagNameFilter").hide();
     
 	var dlg = PF("tagEditor");
     dlg.jq.off(".te")
-    .on("focus.te", ".ui-inplace-content input", function(e) {
+    .on("focus.te", "#tag-palette-form\\:tag-name-panel input", function(e) {
         saveBtn.disable();
     })
     .find("input[name=isNewTag]").val(false);

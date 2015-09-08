@@ -66,11 +66,17 @@ public final class TagListBean implements Serializable {
 	}
 
 	public void setTagToEdit(long tagId) {
+	    hierarchyTouched = false;
+	    if (Tag.isTrivialTag(tagId) == false) {
+	        this.tagToEdit = null;
+	        setParentTags(null);
+	        setChildTags(null);
+	        return;
+	    }
 		final int index = indexOf(tagId);
 		this.tagToEdit = tagBeans.get(index);
 		final Tag tag = tagToEdit.getTag();
 		childTags = new ArrayList<>(tag.getChildren());
-		hierarchyTouched = false;
 	}
     
     public List<Tag> getParentTags() {

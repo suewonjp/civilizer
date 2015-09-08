@@ -11,7 +11,10 @@
 </div>
 
 <h:form id="tag-palette-form">
-    <p:dialog id="tag-editor" header="#{msg['edit']}" width="600px" modal="false" showEffect="fade" widgetVar="tagEditor" position="center" draggable="true" resizable="false" >
+    <p:dialog widgetVar="tagEditor" id="tag-editor" header="#{msg['edit']}"
+        width="600px" modal="false" showEffect="fade"
+        position="center" draggable="true" resizable="false" >
+        
     	<p:panel id="tag-name-panel">
 	    	<div class="fa fa-tag">&nbsp;&nbsp;
 		    	<p:inplace widgetVar="tagNameInplace">
@@ -29,7 +32,7 @@
 	        <p:panel>
 	            <div class="fa fa-tag">
 	                &nbsp;&nbsp;
-	                <p:inplace editor="true" label="+" saveLabel="#{msg['save']}" cancelLabel="#{msg['cancel']}">
+	                <p:inplace widgetVar="parentTagNameFilter" editor="true" label="+" saveLabel="#{msg['save']}" cancelLabel="#{msg['cancel']}">
 	                	<p:ajax event="save" update="parent-tags"/>
 						<p:selectOneListbox value="#{tagListBean.newParentTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
 					    	<f:selectItems value="#{tagListBean.listLinkableTags()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
@@ -47,7 +50,7 @@
 	        <p:panel>
 	            <div class="fa fa-tag">
                     &nbsp;&nbsp;
-                    <p:inplace editor="true" label="+" saveLabel="#{msg['save']}" cancelLabel="#{msg['cancel']}">
+                    <p:inplace widgetVar="childTagNameFilter" editor="true" label="+" saveLabel="#{msg['save']}" cancelLabel="#{msg['cancel']}">
                     	<p:ajax event="save" update="child-tags"/>
 						<p:selectOneListbox value="#{tagListBean.newChildTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
 					    	<f:selectItems value="#{tagListBean.listLinkableTags()}" var="tag" itemLabel="#{tag.tagName}" itemValue="#{tag.id}" />
@@ -130,7 +133,8 @@
 			</div>
 
 		    <div id="new-tag-button">
-			    <p:commandLink onclick="showTagEditorForCreating()" title="#{msg['new_tag']}">
+			    <p:commandLink update="tag-editor" oncomplete="showTagEditorForCreating()" title="#{msg['new_tag']}"
+                    actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, null)}">
 			        <span class="fa fa-tag fa-2x button-link ui-panel ui-widget-content ui-corner-all">+</span>
 			    </p:commandLink>
 			</div>

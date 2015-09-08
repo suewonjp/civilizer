@@ -283,17 +283,16 @@ public final class MainController {
 	}
 
 	public void prepareTagListBeanToEditTag(TagListBean tagListBean, TagBean tagBean) {
-		final long tagId = tagBean.getTag().getId();
-		if (tagId <= 0) {
+		final long tagId = (tagBean == null) ? 
+		        Tag.TRASH_TAG_ID : tagBean.getTag().getId();
+		tagListBean.setTagToEdit(tagId);
+		if (Tag.isTrivialTag(tagId)) {
+		    tagBean.getTag().setTagName(tagListBean.getTagToEdit().getTag().getTagName());
+		    tagListBean.setParentTags(tagDao.findParentTags(tagId));
+		}
+		else if (tagBean != null) {
 		    final String name = Tag.getSpecialTagName(tagId);
 		    tagBean.getTag().setTagName(name);
-		    tagListBean.setParentTags(null);
-		    tagListBean.setChildTags(null);
-		}
-		else {
-    		tagListBean.setTagToEdit(tagId);
-    		tagBean.getTag().setTagName(tagListBean.getTagToEdit().getTag().getTagName());
-    		tagListBean.setParentTags(tagDao.findParentTags(tagId));
 		}
 	}
 	
