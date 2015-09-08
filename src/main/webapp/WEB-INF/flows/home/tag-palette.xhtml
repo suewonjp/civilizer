@@ -101,7 +101,7 @@
     
     <div id="tag-context-menu" class="context-menu">
 	    <p:menu>
-            <p:menuitem id="edit" oncomplete="showTagEditorForEditing()" icon="fa fa-edit" value="#{msg['edit']}"
+            <p:menuitem id="edit" oncomplete="TEC.showDialog(false)" icon="fa fa-edit" value="#{msg['edit']}"
             	update="tag-editor" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
             <p:menuitem id="trash" onclick="confirmTrashingTagFromCtxtMenu()" icon="fa fa-trash" value="#{msg['trash']}"/>
             <p:menuitem id="info" oncomplete="showTagInfo()" icon="fa fa-info-circle" value="#{msg['info']}"
@@ -133,7 +133,7 @@
 			</div>
 
 		    <div id="new-tag-button">
-			    <p:commandLink update="tag-editor" oncomplete="showTagEditorForCreating()" title="#{msg['new_tag']}"
+			    <p:commandLink update="tag-editor" oncomplete="TEC.showDialog(true)" title="#{msg['new_tag']}"
                     actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, null)}">
 			        <span class="fa fa-tag fa-2x button-link ui-panel ui-widget-content ui-corner-all">+</span>
 			    </p:commandLink>

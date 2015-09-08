@@ -19,87 +19,79 @@ function onExpandComplete() {
 	setupDraggableForTags();
 }
 
-function showTagEditorForCreating() {
-    var saveBtn = PF("tagEditorSaveBtn");
-    saveBtn.disable();
+function createTagEditorController() {
+    var ctrr = new Object();
+    var dlg, saveBtn, nameInplace;
+    var newTag = false;
+    
+    function getDialog() {
+        return dlg || (dlg = PF('tagEditor'));
+    }
+    
+    function getNameInplace() {
+        return nameInplace || (nameInplace = PF("tagNameInplace"));
+    }
+    
+    function getSaveBtn() {
+        return saveBtn || (saveBtn = PF("tagEditorSaveBtn"));
+    }
     
     function onNameInplaceCommit(val, text) {
         saveBtn.disable();
-        if (val !== text) {
-            var invalidChar = validateTagNames(val);
-            if (invalidChar)
-                showError("'" + invalidChar + MSG.cant_use_for_tags);
-            else
-                saveBtn.enable();
-        }
+        var submittable;
+        if (newTag)
+            submittable = (val !== text);
+        else
+            submittable = val.trim();
+        if (!submittable)
+            return;
+        var invalidChar = validateTagNames(val);
+        if (invalidChar)
+            showError("'" + invalidChar + MSG.cant_use_for_tags);
+        else
+            saveBtn.enable();
     }
-
-    var inplace = PF("tagNameInplace");
-    inplace.hide();    
-
-    setupPfInplaceText(
-            PF("tagNameInplace")
-            , inplace.jq.next("span").text()
-            , $("#tag-palette-form\\:tag-name-panel")
-            , onNameInplaceCommit
-    );
     
-    PF("parentTagNameFilter").hide();
-    PF("childTagNameFilter").hide();
+    ctrr.showDialog = function(_newTag) {
+        newTag = _newTag;
+        saveBtn = getSaveBtn();
+        if (newTag)
+            saveBtn.disable();
+        
+        PF("parentTagNameFilter").hide();
+        PF("childTagNameFilter").hide();
+
+        var nameInplace = getNameInplace();
+        nameInplace.hide();
+        
+        var tagName;
+        if (newTag)
+            tagName = nameInplace.jq.next("span").text();
+        else {
+            var target = $("#tag-context-menu").data("target-tag");
+            tagName = target.find(".each-tag-name").text() || target.text();
+        }
+
+        setupPfInplaceText(
+                nameInplace
+                , tagName
+                , $("#tag-palette-form\\:tag-name-panel")
+                , onNameInplaceCommit
+        );
+        
+        dlg = getDialog();
+        dlg.jq.off(".te")
+        .on("focus.te", "#tag-palette-form\\:tag-name-panel input", function(e) {
+            saveBtn.disable();
+        })
+        .find("input[name=isNewTag]").val(newTag);
+        dlg.show();
+    }
     
-    var dlg = PF("tagEditor");
-    dlg.jq.off(".te")
-    .on("focus.te", "#tag-palette-form\\:tag-name-panel input", function(e) {
-        saveBtn.disable();
-    })
-    .find("input[name=isNewTag]").val(true);
-    $("#tag-palette-form\\:parent-tags").empty();
-    $("#tag-palette-form\\:child-tags").empty();
-    dlg.show();
+    return ctrr;
 }
 
-function showTagEditorForEditing() {
-    var saveBtn = PF("tagEditorSaveBtn");
-    
-    function onNameInplaceCommit(val, text) {
-        saveBtn.disable();
-        if (val.trim()) {
-            var invalidChar = validateTagNames(val);
-            if (invalidChar)
-                showError("'" + invalidChar + MSG.cant_use_for_tags);
-            else
-                saveBtn.enable();
-        }
-    }
-    
-    var menu = $("#tag-context-menu");
-    var target = menu.data("target-tag");
-    var tagName = target.find(".each-tag-name").text() || target.text();
-    if (tagName == "") {
-        tagName = "???";
-    }
-    
-    var inplace = PF("tagNameInplace");
-    inplace.hide();
-    
-    setupPfInplaceText(
-            inplace
-            , tagName
-            , $("#tag-palette-form\\:tag-name-panel")
-            , onNameInplaceCommit
-    );
-
-    PF("parentTagNameFilter").hide();
-    PF("childTagNameFilter").hide();
-    
-	var dlg = PF("tagEditor");
-    dlg.jq.off(".te")
-    .on("focus.te", "#tag-palette-form\\:tag-name-panel input", function(e) {
-        saveBtn.disable();
-    })
-    .find("input[name=isNewTag]").val(false);
-	dlg.show();
-}
+var TEC = createTagEditorController();
 
 function showTagInfo() {
     var dlg = PF("tagInfoDlg");
@@ -108,9 +100,6 @@ function showTagInfo() {
     var menu = $("#tag-context-menu");
     var target = menu.data("target-tag");
     var tagName = target.find(".each-tag-name").text() || target.text();
-    if (tagName == "") {
-        tagName = "???";
-    }
     
     dlg.jq.find("._tag-name").text(" "+tagName);
 }
