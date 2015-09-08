@@ -153,7 +153,7 @@ function setupPfInplaceText(pfInplace, text, jqOuterBox, onCommit) {
         }
     });
     
-    input.off("keypress").on("keypress", function(e) {
+    input.off("keypress.pfit").on("keypress.pfit", function(e) {
         if (e.which == $.ui.keyCode.ENTER && input.is(":visible")) {
             commitInput();
             e.preventDefault();

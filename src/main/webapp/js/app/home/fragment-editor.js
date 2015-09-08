@@ -150,8 +150,7 @@ function previewFragment() {
     }
 }
 
-function validateTagNames() {
-    var tagNames = $("#fragment-editor-form\\:tags-input").val();
+function validateTagNames(tagNames) {
     var invalidChars = ["\\", ":"];
     for (var i=0; i<invalidChars.length; ++i) {
         if (tagNames.indexOf(invalidChars[i]) > -1) {
@@ -169,7 +168,7 @@ function onSubmitFragment() {
         valid = false;
     }
     else {
-        var invalidChar = validateTagNames();
+        var invalidChar = validateTagNames($("#fragment-editor-form\\:tags-input").val());
         if (invalidChar) {
             showError("'" + invalidChar + MSG.cant_use_for_tags);
             valid = false;
