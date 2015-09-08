@@ -36,6 +36,8 @@ function showTagEditorForCreating() {
             saveBtn.disable();
     })
     .find("input[name=isNewTag]").val(true);
+    $("#tag-palette-form\\:parent-tags").empty();
+    $("#tag-palette-form\\:child-tags").empty();
     dlg.show();
 }
 
