@@ -69,6 +69,7 @@ public final class Launcher {
                 ));
         waCtxt.setResourceAlias("/WEB-INF/classes/", "/classes/");
         waCtxt.setDescriptor(webXmlFile);
+        l(LogType.INFO, "Running under the development environment...");
         return true;
     }
 
@@ -96,8 +97,8 @@ public final class Launcher {
     private WebAppContext setupWebAppContext() {
         final WebAppContext waCtxt = new WebAppContext();
         waCtxt.setContextPath("/civilizer");
-        if (! setupWebAppContextForDevelopment(waCtxt))
-            if (! setupWebAppContextForProduction(waCtxt))
+        if (! setupWebAppContextForProduction(waCtxt))
+            if (! setupWebAppContextForDevelopment(waCtxt))
                 return null;
         return waCtxt;
     }

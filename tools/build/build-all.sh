@@ -5,14 +5,20 @@ scriptDir=${0%/*}
 skiptest=false
 
 function usage() {
-    printf "[[ Options ]]\n\t-skiptest : Skip unit tests\n\t-help, -h, -? : Show this message\n";
+    printf "$hostScript : Options\n\t-skiptest : Skip unit tests\n\t-help, -h, -? : Show this message\n";
     exit 0
 }
 
 while true; do
     case "$1" in
         -skiptest) skiptest=true ;;
-        -help | -h | -?) usage ;; 
+        -help | -h | -?) usage ;;
+        -*) read -n 1 -p "$hostScript : You've specified an unknown option '$1'. Ignore it and proceed? (y or n) : " ans
+            echo ""
+            if [ $ans == 'n' ]; then
+                exit 1
+            fi
+            ;;
         *) break ;;
     esac
     shift
