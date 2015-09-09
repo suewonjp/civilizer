@@ -2,6 +2,8 @@ package com.civilizer.extra.tools;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.text.MessageFormat;
+import java.util.Arrays;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.ResourceCollection;
@@ -12,20 +14,46 @@ import com.civilizer.utils.FsUtil;
 public final class Launcher {
     
     private final Server server;
+    private final int port;
+    
+    private enum LogType {
+        INFO,
+        WARN,
+        ERROR,
+    }
     
     public static void main(String[] args) {
         try {
-            new Launcher(0).startServer();
+            int port = 8080;
+            Arrays.sort(args);
+            final int iii = Arrays.binarySearch(args, "--port");
+            if (-1 < iii && iii < args.length-1) {
+                try {
+                    port = Integer.parseInt(args[iii + 1]);
+                    if (port <= 0)
+                        throw new NumberFormatException();
+                } catch (NumberFormatException e) {
+                    l(LogType.ERROR, "'" + port + "' is not a valid port number. exiting...");
+                    System.exit(1);
+                }
+            }
+            new Launcher(port).startServer();
         } catch (Exception e) {
+            l(LogType.ERROR, "An unhandled exception triggered. exiting...");
             e.printStackTrace();
             System.exit(1);
         }
     }
+    
+    private static void l(LogType type, String msg) {
+        System.out.println(MessageFormat.format("{0} : [{1}] {2}", Launcher.class.getSimpleName(), type.toString(), msg));
+    }
 
     private Launcher(int port) {
-        assert 0 <= port && port <= 0xffff;
-        server = new Server(port == 0 ? 8080 : port);
+        assert 0 < port && port <= 0xffff;
+        server = new Server(port);
         assert server != null;
+        this.port = port;
     }
     
     private boolean setupWebAppContextForDevelopment(WebAppContext waCtxt) {
@@ -81,7 +109,8 @@ public final class Launcher {
         assert waCtxt != null;
         server.setHandler(waCtxt);
         server.setStopAtShutdown(true);        
-        server.start();        
+        server.start();
+        l(LogType.INFO, "Civilizer is running... acess to http://localhost:"+port+"/civilizer/app/home");
         server.join();
     }
 
