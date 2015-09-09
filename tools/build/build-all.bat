@@ -34,8 +34,8 @@ goto :eof
     exit /b 0
     
 :usage
-    echo * options
-    echo     -skiptest : skip unit tests
-    echo     -help or -h or -? : show this message
+    echo [[ Options ]]
+    echo     -skiptest : Skip unit tests
+    echo     -help or -h or -? : Show this message
 
 endlocal

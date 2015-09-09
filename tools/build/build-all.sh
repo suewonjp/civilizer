@@ -5,7 +5,7 @@ scriptDir=${0%/*}
 skiptest=false
 
 function usage() {
-    printf "* options\n\t-skiptest : Skip unit tests\n\t-help, -h, -? : show this message\n";
+    printf "[[ Options ]]\n\t-skiptest : Skip unit tests\n\t-help, -h, -? : Show this message\n";
     exit 0
 }
 
@@ -25,9 +25,12 @@ function checkFile() {
 }
 
 pushd ../.. > /dev/null
+
 checkFile pom.xml
+
 mvn clean package -Dmaven.test.skip=$skiptest
 mvn -f extra-pom.xml compile 
 mvn -f zip-pom.xml package 
+
 popd > /dev/null
 
