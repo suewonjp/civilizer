@@ -97,9 +97,16 @@ function showTagInfo() {
     var dlg = PF("tagInfoDlg");
     dlg.show();
     
-    var menu = $("#tag-context-menu");
-    var target = menu.data("target-tag");
+    var target = $("#tag-context-menu").data("target-tag");
     var tagName = target.find(".each-tag-name").text() || target.text();
     
-    dlg.jq.find("._tag-name").text(" "+tagName);
+    dlg.jq.find("._tag-name")
+    .text(" "+tagName+" [ "+target.attr("_frgCnt")+" ("+target.attr("_frgCntWtHrc")+") ]");
+    
+    $("#tag-palette-form\\:info-parent-tags span, #tag-palette-form\\:info-child-tags span")
+    .each(function() {
+        var $this = $(this);
+        var target = getTag($this.attr("_tid"));
+        $this.text(" "+$this.attr("_name")+" [ "+target.attr("_frgCnt")+" ("+target.attr("_frgCntWtHrc")+") ]");
+    });
 }

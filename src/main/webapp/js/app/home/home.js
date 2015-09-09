@@ -29,7 +29,7 @@ function formatDatetime(src) {
 
 function formatTagsOnFragmentHeader(tgtTag) {
     var tid = tgtTag.attr("_tid");
-    var srcTag = $("#tag-palette-flat").find("[_tid="+tid+"]");
+    var srcTag = getTag(tid);
     tgtTag[0].title =
         srcTag.attr("_frgCnt")+" ("+srcTag.attr("_frgCntWtHrc")+") "
         +MSG.fragments+"; "+MSG.rclick_for_menu;
@@ -309,7 +309,7 @@ function setupTagLinks(content) {
         var $this = $(this);
         var tagId = $this.text().trim();
         if (tagId) {
-            var srcTag = $("#tag-palette-flat").find("[_tid="+tagId+"]");
+            var srcTag = getTag(tagId);
             var newElem = $("<a href='#' class='-cvz-tag tag-button each-tag' _tid='"+tagId+"'>" + srcTag.find(".each-tag-name").text() + "</a>");
             $this.replaceWith(newElem);
         }
@@ -595,10 +595,18 @@ function getFragmentTitle(frgId) {
 	return (title.length > 0) ? title.eq(0).text() : "";
 }
 
+function getTag(tagId) {
+    return $("#tag-palette-flat").find(".each-tag[_tid=" + tagId + "]");
+}
+
 function getTagName(tagId) {
-	var tag = $("#tag-palette-flat").find(".each-tag[_tid=" + tagId + "]");
+	var tag = getTag(tagId);
 	return (tag.length > 0) ? tag.find(".each-tag-name").text() : "";
 }
+
+//function getTagByName(name) {
+//    return $("#tag-palette-flat").find(".each-tag-name:contains('"+name+"')").closest(".each-tag");
+//}
 
 function getFilePath(fileId) {
 	var file = $("#file-path-tree").find(".each-file[_id=" + fileId + "]");

@@ -70,8 +70,11 @@
         <p:commandButton widgetVar="tagEditorSaveBtn" action="save-tag" value="#{msg['save']}" icon="ui-icon-check"/>
     </p:dialog>
 
-    <p:dialog id="tag-info" widgetVar="tagInfoDlg" header="#{msg['info']}" closeOnEscape="true" width="600px" modal="false" showEffect="fade" position="center" draggable="true" resizable="false" >
-    	<p:panel>
+    <p:dialog widgetVar="tagInfoDlg" id="tag-info" header="#{msg['info']}"
+        closeOnEscape="true" width="600px" modal="false" showEffect="fade"
+        position="center" draggable="true" resizable="false" >
+    	
+        <p:panel>
 	    	<span class="fa fa-tag _tag-name"></span>
     	</p:panel>
     	<br/>
@@ -81,17 +84,17 @@
 	        	<div class="fa fa-arrow-down"></div>
     		</f:facet>
 	        <p:panel>
-	            <h:panelGroup>
+	            <h:panelGroup id="info-parent-tags">
 	        		<ui:repeat var="parent" value="#{tagListBean.parentTags}">
-	        			<span class="fa fa-tag">&nbsp;&nbsp;#{parent.tagName}&nbsp;&nbsp;</span>
+	        			<span _tid="#{parent.id}" _name="#{parent.tagName}" class="fa fa-tag"></span>
 	        			<br/>
 	        		</ui:repeat>
 	            </h:panelGroup>
 	        </p:panel>
 	        <p:panel>
-                <h:panelGroup>
+                <h:panelGroup id="info-child-tags">
 	        		<ui:repeat var="child" value="#{tagListBean.childTags}">
-	        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}&nbsp;&nbsp;</span>
+	        			<span _tid="#{child.id}" _name="#{child.tagName}" class="fa fa-tag"></span>
 	        			<br/>
 	        		</ui:repeat>
                 </h:panelGroup>
