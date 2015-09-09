@@ -30,8 +30,9 @@ function formatDatetime(src) {
 function formatTagsOnFragmentHeader(tgtTag) {
     var tid = tgtTag.attr("_tid");
     var srcTag = $("#tag-palette-flat").find("[_tid="+tid+"]");
-    var fc = srcTag.attr("_frgCount");
-    tgtTag[0].title = fc + " " + MSG.fragments + "; " + MSG.rclick_for_menu;
+    tgtTag[0].title =
+        srcTag.attr("_frgCnt")+" ("+srcTag.attr("_frgCntWtHrc")+") "
+        +MSG.fragments+"; "+MSG.rclick_for_menu;
     if (srcTag.hasClass("special-tag"))
     	tgtTag.addClass("special-tag");
 }
@@ -487,7 +488,7 @@ function setupDndForTrashing() {
         	confirmTrashingFragments(frgId, deleting);
         }
         else if (from.hasClass("each-tag")) {
-        	confirmTrashingTag(from.attr("_tid"), Boolean(from.attr("_frgCount") == 0));
+        	confirmTrashingTag(from.attr("_tid"), Boolean(from.attr("_frgCnt") == 0));
         }
     };    
     $("#trashcan").droppable(droppable);
@@ -692,7 +693,7 @@ function confirmTrashingTagFromCtxtMenu() {
 	var menu = $("#tag-context-menu");
 	var target = menu.data("target-tag");
 	var tagId = target.attr("_tid");
-	var deleting = target.attr("_frgCount") == 0;
+	var deleting = target.attr("_frgCnt") == 0;
 	confirmTrashingTag(tagId, deleting);
 }
 

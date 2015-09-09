@@ -8,8 +8,9 @@
     >
     
 <span class="each-tag tag-button #{tagBean.typeName()} notxtslct"
-    _tid="#{tag.id}" _frgCount="#{tagBean.fragmentCount}"
-	title="#{tagBean.fragmentCount} #{msg['fragments']}; #{msg['rclick_for_menu']}"
+    _tid="#{tag.id}" _frgCnt="#{tagBean.fragmentCount}"
+    _frgCntWtHrc="#{tagBean.fragmentCountWtHrc}"
+	title="#{tagBean.fragmentCount} (#{tagBean.fragmentCountWtHrc}) #{msg['fragments']}; #{msg['rclick_for_menu']}"
 	onclick="fetchFragmentsByTag($(this), null)"> 
 	<span class="fa fa-tag"></span>
 	<h:outputText styleClass="each-tag-name" value="#{tag.tagName}"></h:outputText>

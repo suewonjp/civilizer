@@ -253,8 +253,10 @@ public final class MainController {
 	    	final Tag t = tags.get(i);
 	    	tb.setTag(t);
 	    	includeTrashed = (t.getId() == Tag.TRASH_TAG_ID);
-	    	final long fc = fragmentDao.countByTagAndItsDescendants(t.getId(), includeTrashed, tagDao);
+	    	final long fc = fragmentDao.countByTagId(t.getId(), includeTrashed);
 	    	tb.setFragmentCount(fc);
+	    	final long fcWtHrc = fragmentDao.countByTagAndItsDescendants(t.getId(), includeTrashed, tagDao);
+	    	tb.setFragmentCountWtHrc(fcWtHrc);
 	    	tagBeans.add(tb);
 	    }
 	    tagListBean.setTagBeans(tagBeans);

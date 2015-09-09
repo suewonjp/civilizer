@@ -9,7 +9,11 @@ public final class TagBean implements Serializable {
 
     private Tag tag;
     
+    // number of fragments associated with this tag only
     private long fragmentCount = 0;
+
+    // number of fragments associated with this tag and its descendants
+    private long fragmentCountWtHrc = 0;
 
 	public void clear() {
         if (tag != null) {
@@ -27,11 +31,19 @@ public final class TagBean implements Serializable {
 	}
 	
     public long getFragmentCount() {
-		return fragmentCount;
+        return fragmentCount;
+    }
+
+    public void setFragmentCount(long fragmentCount) {
+        this.fragmentCount = fragmentCount;
+    }
+
+    public long getFragmentCountWtHrc() {
+		return fragmentCountWtHrc;
 	}
 
-	public void setFragmentCount(long fragmentCount) {
-		this.fragmentCount = fragmentCount;
+	public void setFragmentCountWtHrc(long count) {
+		this.fragmentCountWtHrc = count;
 	}
 	
 	public String typeName() {
