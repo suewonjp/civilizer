@@ -260,7 +260,6 @@ function createUserProfileController() {
         setupPfInplaceText(
                 inplace
                 , inplace.jq.next("span").text()
-                , d.jq.find("div.ui-panel").eq(0)
                 , onInplaceCommit
         );    
         onInplaceCommit("", "");

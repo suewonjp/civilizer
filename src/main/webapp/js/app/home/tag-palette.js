@@ -75,7 +75,6 @@ function createTagEditorController() {
         setupPfInplaceText(
                 nameInplace
                 , tagName
-                , $("#tag-palette-form\\:tag-name-panel")
                 , onNameInplaceCommit
         );
         

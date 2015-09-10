@@ -124,7 +124,7 @@ function showOrHide(target, letItShow) {
     return letItShow;
 }
 
-function setupPfInplaceText(pfInplace, text, jqOuterBox, onCommit) {
+function setupPfInplaceText(pfInplace, text, onCommit) {
     var display = pfInplace.jq.find(".ui-inplace-display");
     display.text(text)[0].title=MSG.click_to_rename;
     var input = pfInplace.jq.find(".ui-inplace-content input");
@@ -147,11 +147,10 @@ function setupPfInplaceText(pfInplace, text, jqOuterBox, onCommit) {
         pfInplace.hide();
     }
     
-    jqOuterBox.off("click").on("click", function(e) {
-        if (e.target != input[0] && input.is(":visible")) {
-            commitInput();
-        }
-    });
+    input.off("blur.utils")
+    .on("blur.utils", function(e) {
+        commitInput();
+    })
     
     input.off("keypress.pfit").on("keypress.pfit", function(e) {
         if (e.which == $.ui.keyCode.ENTER && input.is(":visible")) {
