@@ -34,7 +34,7 @@ goto :eof
     exit /b 0
     
 :usage
-    echo [[ Options ]]
+    echo %hostScript% :  Options
     echo     -skiptest : Skip unit tests
     echo     -help or -h or -? : Show this message
 

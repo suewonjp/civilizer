@@ -63,4 +63,4 @@ cd $extraPath/../ > /dev/null
 echo "$hostScript : Loading Civilizer..."
 java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog \
  -Dorg.eclipse.jetty.LEVEL=INFO \
- -cp "$classPath" $homeOption com.civilizer.extra.tools.Launcher --port $port
+ -cp $classPath $homeOption com.civilizer.extra.tools.Launcher --port $port
