@@ -27,7 +27,8 @@
 (function($) {
 	$.fn.markItUp = function(settings, extraSettings) {
 		var method, params, options, ctrlKey, shiftKey, altKey; ctrlKey = shiftKey = altKey = false;
-
+		var selection = '';
+		
 		if (typeof settings == 'string') {
 			method = settings;
 			params = extraSettings;
@@ -87,13 +88,12 @@
 		}
 
 		return this.each(function() {
-			var $$, textarea, levels, scrollPosition, caretPosition, caretOffset,
+			var $$, textarea, levels, caretPosition, caretOffset,
 				clicked, hash, header, footer, iFrame, abort;
 			$$ = $(this);
 			textarea = this;
 			levels = [];
 			abort = false;
-			scrollPosition = caretPosition = 0;
 			caretOffset = -1;
 
 			if (method) {
@@ -313,35 +313,81 @@
 							closeBlockWith:closeBlockWith
 					};
 			}
+            
+			function getPrevNewlineOffset(text, startIdx) {
+			    return text.substring(0, startIdx).lastIndexOf('\n');
+			}
+			
+            function getNextNewlineOffset(text, startIdx) {
+                var pos = text.substring(startIdx).indexOf('\n');
+                return pos < 0 ?  text.length : pos + startIdx;
+            }
+            
+            function selectEntireLines(text) {
+                // This function extends the text selection
+                // so that it covers from the start of the first line
+                // to the end of the last line.
+                var prevNewlinePos = getPrevNewlineOffset(text, caretPosition);
+                var oldCaretPos = caretPosition;
+                caretPosition = prevNewlinePos + 1; // move the caret to the start of the line
+                var nextNewlinePos;
+                if (selection.length) { // text selected
+                    var selectionEnd = oldCaretPos + selection.length - 1;
+                    nextNewlinePos = getNextNewlineOffset(text, selectionEnd);
+                }
+                else { // none selected
+                    nextNewlinePos = getNextNewlineOffset(text, caretPosition);
+                }
+                // reselect the text;
+                set(caretPosition, nextNewlinePos - caretPosition);
+                get();
+            }
+            
+            function swapLines(upDir) {
+                selectEntireLines(textarea.value);
+                var text = textarea.value;
+                if (text[text.length-1] != '\n')
+                    text += '\n';
+                var selectionEnd = caretPosition + selection.length;
+                if (upDir && caretPosition <= 0 || !upDir && text.length-1 <= selectionEnd)
+                    return text;
+                var oldCaretPos = caretPosition;
+                var tgtLineStart, tgtLineEnd;
+                if (upDir) {
+                    tgtLineEnd = oldCaretPos - 1;
+                    tgtLineStart = getPrevNewlineOffset(text, tgtLineEnd - 1) + 1;
+                    caretPosition = tgtLineStart;
+                    textarea.value = text.substring(0, tgtLineStart) +
+                            selection + '\n' +
+                            text.substring(tgtLineStart, tgtLineEnd) +
+                            text.substring(selectionEnd);
+                }
+                else {
+                    tgtLineStart = selectionEnd + 1;
+                    tgtLineEnd = getNextNewlineOffset(text, tgtLineStart);
+                    caretPosition = caretPosition + (tgtLineEnd - tgtLineStart) + 1;
+                    textarea.value = text.substring(0, oldCaretPos) +
+                            text.substring(tgtLineStart, tgtLineEnd) + '\n' +
+                            selection +
+                            text.substring(tgtLineEnd);
+                }
+                set(caretPosition, selection.length);
+                get();
+            }
 
 			// define markup to insert
 			function markup(button) {
 				var len, j, n, i;
 				hash = clicked = button;
 				get();
-				
-				function getNextNewlineOffset(text, startIdx) {
-                    var pos = text.substring(startIdx).indexOf('\n');
-                    return pos < 0 ?  text.length : pos + startIdx;
-				}
-                
-                if (button.outdent || button.indent) {
+
+				if (button.outdent || button.indent) {
                     // special care for outdenting lines
-                    var prevNewlinePos = textarea.value.substring(0, caretPosition).lastIndexOf('\n');
-                    var oldCaretPos = caretPosition;
-                    caretPosition = prevNewlinePos + 1; // move the caret to the start of the line
-                    var nextNewlinePos;
-                    if (selection.length) { // text selected
-                        var selectionEnd = oldCaretPos + selection.length - 1;
-                        nextNewlinePos = getNextNewlineOffset(textarea.value, selectionEnd);
-                    }
-                    else { // none selected
-                        nextNewlinePos = getNextNewlineOffset(textarea.value, caretPosition);
-                    }
-                    // reselect the text; actual indenting/outdenting will be done inside build();
-                    set(caretPosition, nextNewlinePos - caretPosition);
-                    get();
+                    selectEntireLines(textarea.value);
                 }
+				else if (button.swapLine!=undefined) {
+				    swapLines(button.swapLine);
+				}
                 
 				$.extend(hash, { 
 						 			root:options.root,
@@ -368,7 +414,7 @@
 					caretOffset = $$.val().substring(caretPosition,  $$.val().length).length;
 					caretOffset -= fixOperaBug($$.val().substring(0, caretPosition));
 				}
-				$.extend(hash, { caretPosition:caretPosition, scrollPosition:scrollPosition } );
+				$.extend(hash, { caretPosition:caretPosition } );
 
 				if (string.block !== selection && abort === false) {
 					insert(string.block);
@@ -408,6 +454,15 @@
 					textarea.value =  textarea.value.substring(0, caretPosition)  + block + textarea.value.substring(caretPosition + selection.length, textarea.value.length);
 				}
 			}
+			
+			// scroll to the selection "approximately"
+			function scroll(start) {
+			    var $textarea = $(textarea);
+			    var lineHeight = parseInt($textarea.css('line-height'));
+			    var lineNumberTop = Math.max(0, textarea.value.substring(0, start).split('\n').length - 1);
+			    var allLines = Math.max(0, textarea.value.split('\n').length - 1);
+			    $textarea.scrollTop(lineNumberTop*lineHeight - (allLines-lineNumberTop)*lineHeight*0.2);
+            }
 
 			// set a selection
 			function set(start, len) {
@@ -424,7 +479,7 @@
 				} else if (textarea.setSelectionRange ){
 					textarea.setSelectionRange(start, start + len);
 				}
-				textarea.scrollTop = scrollPosition;
+				scroll(start);
 				textarea.focus();
 			}
 
@@ -432,7 +487,6 @@
 			function get() {
 				textarea.focus();
 
-				scrollPosition = textarea.scrollTop;
 				if (document.selection) {
 					selection = document.selection.createRange().text;
 					if (browser.msie) { // ie
@@ -493,6 +547,12 @@
 							return false;
 						}
 					}
+				    if (altKey === true) {
+				        if (e.keyCode == keyCode.UP || e.keyCode == keyCode.DOWN) {
+				            markup({swapLine:e.keyCode == keyCode.UP});
+				            return false;
+				        }
+				    }
 					if (e.keyCode === 13 || e.keyCode === 10) { // Enter key
 						if (ctrlKey === true) {  // Enter + Ctrl
 							ctrlKey = false;
