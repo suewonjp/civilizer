@@ -265,7 +265,6 @@
 				var openBlockWith 		= prepare(clicked.openBlockWith);
 				var closeBlockWith 		= prepare(clicked.closeBlockWith);
 				var multiline 			= clicked.multiline;
-				var outdent             = clicked.outdent;
 				var block;
 				
 				if (replaceWith !== "") {
@@ -281,11 +280,16 @@
 						lines = string.split(/\r?\n/);
 					}
 					
+					if (clicked.indent) {
+					    var i = 0;
+					    for (openWith='';i<clicked.indent; ++i) openWith += ' ';
+					}
+					
 					for (var l = 0; l < lines.length; l++) {
 						var line = lines[l];
-						if (outdent == 1)
+						if (clicked.outdent == 1)
 						    line = line.replace(/^[ \t]/, '');
-                        else if (outdent == 4)
+                        else if (clicked.outdent == 4)
                             line = line.replace(/(^ {1,4})|(^\t)/, '');
 						var trailingSpaces;
 						if (trailingSpaces = line.match(/ *$/)) {
@@ -315,15 +319,31 @@
 				var len, j, n, i;
 				hash = clicked = button;
 				get();
+				
+				function getNextNewlineOffset(text, startIdx) {
+                    var pos = text.substring(startIdx).indexOf('\n');
+                    return pos < 0 ?  text.length : pos + startIdx;
+				}
                 
-                if (button.outdent) {
+                if (button.outdent || button.indent) {
                     // special care for outdenting lines
-                    var offsetPrevNewline = textarea.value.substring(0, caretPosition).lastIndexOf('\n');
-                    set(offsetPrevNewline+1, caretPosition - (offsetPrevNewline+1) + selection.length);
+                    var prevNewlinePos = textarea.value.substring(0, caretPosition).lastIndexOf('\n');
+                    var oldCaretPos = caretPosition;
+                    caretPosition = prevNewlinePos + 1; // move the caret to the start of the line
+                    var nextNewlinePos;
+                    if (selection.length) { // text selected
+                        var selectionEnd = oldCaretPos + selection.length - 1;
+                        nextNewlinePos = getNextNewlineOffset(textarea.value, selectionEnd);
+                    }
+                    else { // none selected
+                        nextNewlinePos = getNextNewlineOffset(textarea.value, caretPosition);
+                    }
+                    // reselect the text; actual indenting/outdenting will be done inside build();
+                    set(caretPosition, nextNewlinePos - caretPosition);
                     get();
                 }
                 
-				$.extend(hash, {	//line:"", 
+				$.extend(hash, { 
 						 			root:options.root,
 									textarea:textarea, 
 									selection:(selection||''), 
