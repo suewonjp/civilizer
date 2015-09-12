@@ -375,6 +375,20 @@
                 get();
             }
 
+            function duplicateLines(upDir) {
+                selectEntireLines(textarea.value);
+                var text = textarea.value;
+                if (text[text.length-1] != '\n')
+                    text += '\n';
+                textarea.value = text.substring(0, caretPosition) +
+                    selection + '\n' +
+                    text.substring(caretPosition);
+                if (!upDir)
+                    caretPosition = caretPosition + selection.length + 1;
+                set(caretPosition, selection.length);
+                get();
+            }
+
 			// define markup to insert
 			function markup(button) {
 				var len, j, n, i;
@@ -385,8 +399,11 @@
                     // special care for outdenting lines
                     selectEntireLines(textarea.value);
                 }
-				else if (button.swapLine!=undefined) {
-				    swapLines(button.swapLine);
+				else if (button.swapLineUp!=undefined) {
+				    swapLines(button.swapLineUp);
+				}
+				else if (button.dupLineUp!=undefined) {
+				    duplicateLines(button.dupLineUp);
 				}
                 
 				$.extend(hash, { 
@@ -536,6 +553,13 @@
 
 				if (e.type === 'keydown') {
 				    if (ctrlKey === true) {
+	                    if (altKey === true) {
+	                        if (e.keyCode == keyCode.UP || e.keyCode == keyCode.DOWN) {
+	                            markup({dupLineUp:e.keyCode == keyCode.UP});
+	                            return false;
+	                        }
+	                    }
+	                    
 				        var keySequence = "Ctrl+" + (shiftKey ? "Shift+" : "") + (altKey ? "Alt+" : "");
 				        keySequence += specialKeyNames[e.keyCode] || String.fromCharCode(e.keyCode);
 					    li = $('a[accesskey="'+keySequence+'"]', header).parent('li');
@@ -549,7 +573,7 @@
 					}
 				    if (altKey === true) {
 				        if (e.keyCode == keyCode.UP || e.keyCode == keyCode.DOWN) {
-				            markup({swapLine:e.keyCode == keyCode.UP});
+				            markup({swapLineUp:e.keyCode == keyCode.UP});
 				            return false;
 				        }
 				    }
