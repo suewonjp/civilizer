@@ -269,7 +269,7 @@ function translateCustomMarkupCommands(html) {
 	return translateSearchKeywordCommands(html)
         // {{{[keyword] ... text ... }}} --- translated to a <div> block
     	.replace(/\{\{\{\[(.+?)({.*})?\]/g, function(match, p1, p2, pos, originalText) {
-    	    var output = "<span class='-cvz-" + p1 + "'"; 
+    	    var output = "<div class='-cvz-" + p1 + "'"; 
     	    if (p2) {
     	        output += " args='" + p2.trim() + "'";
     	    }
@@ -280,7 +280,7 @@ function translateCustomMarkupCommands(html) {
     	})
         // {{[keyword] ... text ... }} --- translated to a <span>
     	.replace(/\{\{\[([^,]+?)\]/g, function(match, p1, pos, originalText) {
-    	    return "<div class='-cvz-" + p1 + "'>";
+    	    return "<span class='-cvz-" + p1 + "'>";
     	})
     	.replace(/\}\}/g, function(match, pos, originalText) {
     		return "</span>";
