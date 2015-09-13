@@ -313,9 +313,17 @@ function setCurrentTheme(defaultTheme) {
 
 function applyCurrentThemeToThemeSwitcher() {
     var theme = localStorage.getItem("theme");
+    var switcher = PF('themeSwitcher');
     if (theme) {
-        selectItemOnPfListbox(theme, PF('themeSwitcher'));
+        selectItemOnPfListbox(theme, switcher);
     }
+
+    // [bug fix] After the above operation, 
+    // Theme switcher's underlying input widget gets focus 
+    // and it starts to accept keystrokes.
+    // and this causes unexpected theme change at application startup.
+    // so let it loose focus here.
+    switcher.blur();
 }
 
 function onChangeTheme() {
