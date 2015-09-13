@@ -37,6 +37,7 @@ markItUpSettings = {
 		{separator:'---------------'},	
 		{name:'Quotes', onShift:true, key:'Q', openWith:'> ', closeWith:'  ', multiline:true},
         {name:'Code', onShift:true, key:'C', multiline:true, openWith:'`', closeWith:'`'},
+        {name:'HTML', onShift:true, key:'H', openBlockWith:'{{{[html]\n', closeBlockWith:'\n}}}', faIcon:'fa-code fa-lg'},
 		{separator:'---------------'},
 		{name:'Indent (Move Right)', onShift:true, key:'Right', indent:1, multiline:true, faIcon:'fa-indent fa-lg'},
 		{name:'Outdent (Move Left)', onShift:true, key:'Left', outdent:1, multiline:true, faIcon:'fa-outdent fa-lg'},
