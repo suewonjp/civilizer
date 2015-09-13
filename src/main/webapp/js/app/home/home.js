@@ -268,15 +268,19 @@ function translateSearchKeywordCommands(html) {
 function translateCustomMarkupCommands(html) {
 	return translateSearchKeywordCommands(html)
         // {{{[keyword] ... text ... }}} --- translated to a <div> block
-    	.replace(/\{\{\{\[(.+?)\]/g, function(match, p1, pos, originalText) {
-    	    return "<div class='-cvz-" + p1 + "'>"; 
+    	.replace(/\{\{\{\[(.+?)({.*})?\]/g, function(match, p1, p2, pos, originalText) {
+    	    var output = "<span class='-cvz-" + p1 + "'"; 
+    	    if (p2) {
+    	        output += " args='" + p2.trim() + "'";
+    	    }
+    	    return output + ">"; 
     	})
     	.replace(/\}\}\}/g, function(match, pos, originalText) {
     	    return "</div>";
     	})
         // {{[keyword] ... text ... }} --- translated to a <span>
-    	.replace(/\{\{\[(.+?)\]/g, function(match, p1, pos, originalText) {
-    		return "<span class='-cvz-" + p1 + "'>"; 
+    	.replace(/\{\{\[([^,]+?)\]/g, function(match, p1, pos, originalText) {
+    	    return "<div class='-cvz-" + p1 + "'>";
     	})
     	.replace(/\}\}/g, function(match, pos, originalText) {
     		return "</span>";
@@ -326,10 +330,13 @@ function setupClickHandlerForTags(container) {
 function processFoldings(content) {
     content.find(".-cvz-fold").each(function() {
         var $this = $(this);
+        var args = parseJsonArgs($this);
         $this.wrapInner("<blockquote>");
         addToggler($this, "", function() {
             showOrHide($this);
-        });
+        }, args.hide);
+        if (args.title)
+            $this.before("<span class='-cvz-fold-title'>"+args.title);
     });
 }
 

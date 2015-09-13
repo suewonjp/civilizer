@@ -47,7 +47,7 @@ function makeObjectsInsertableToTextArea() {
     };
 }
 
-function addToggler(target, iconClass, toggler) {
+function addToggler(target, iconClass, toggler, toggleNow) {
     var collapseIcon = "fa-minus-square";
     var expandIcon = "fa-plus-square";
     var link = $("<a>").attr("href", "#");
@@ -56,8 +56,10 @@ function addToggler(target, iconClass, toggler) {
         toggler();
         icon.toggleClass(collapseIcon + " " + expandIcon);
         e.preventDefault();
-    }); 
+    });
     target.before(link);
+    if (toggleNow)
+        link.click();
     return link;
 }
 
@@ -211,4 +213,16 @@ function getFileName(path) {
     if (iii > -1)
         output = output.substring(iii+1);
     return output;
+}
+
+function parseJsonArgs($obj) {
+    var argStr = $obj.attr("args");
+    if (argStr) {
+        try {
+            return JSON.parse(argStr.replace(/&quot;/g,'"'));
+        } catch (e) {
+            console.error("[Civilizer] JSON.parse() failed! : " + argStr);
+        }
+    }
+    return {};
 }
