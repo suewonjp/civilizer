@@ -323,6 +323,16 @@ function setupClickHandlerForTags(container) {
     });
 }
 
+function processFoldings(content) {
+    content.find(".-cvz-fold").each(function() {
+        var $this = $(this);
+        $this.wrapInner("<blockquote>");
+        addToggler($this, "", function() {
+            showOrHide($this);
+        });
+    });
+}
+
 function processEmbeddedFragments(content) {
 	content.find(".-cvz-frgm-embed").each(function() {
 		var $this = $(this);
@@ -356,7 +366,11 @@ function unsanitizeHtml(content) {
 }
 
 function postprocessFragmentContent(content) {
-	// translate embedded fragemnts
+    // translate foldings
+    // Rule - {{{[fold]...}}}
+    processFoldings(content);
+
+    // translate embedded fragemnts
 	// Rule - {{[frgm-embed]...}}
 	processEmbeddedFragments(content);
 	
