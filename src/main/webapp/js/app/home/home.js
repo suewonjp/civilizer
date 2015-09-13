@@ -332,11 +332,16 @@ function processFoldings(content) {
         var $this = $(this);
         var args = parseJsonArgs($this);
         $this.wrapInner("<blockquote>");
-        addToggler($this, "", function() {
+        var link = addToggler($this, "fold-toggle-icon", function() {
             showOrHide($this);
         }, args.hide);
-        if (args.title)
-            $this.before("<span class='-cvz-fold-title'>"+args.title);
+        if (args.title) {
+            var title = $("<a href='#'><span class='-cvz-fold-title'>"+args.title+"</span></a>")
+            .click(function (e) {
+                link.click();
+            });
+            $this.before(title);
+        }
     });
 }
 

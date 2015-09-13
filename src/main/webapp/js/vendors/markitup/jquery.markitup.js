@@ -395,7 +395,7 @@
 				hash = clicked = button;
 				get();
 
-				if (button.outdent || button.indent) {
+				if (button.outdent || button.indent || button.selectAssist) {
                     // special care for outdenting lines
                     selectEntireLines(textarea.value);
                 }
