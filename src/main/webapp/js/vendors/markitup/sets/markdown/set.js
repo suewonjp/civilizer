@@ -13,8 +13,8 @@
 markItUpSettings = {
 	previewParserPath:	'',
 	onShiftEnter:		{keepDefault:false, openWith:'\n\n'},
-	onTab:    		    {keepDefault:false, multiline:true, indent:4},
-	onShiftTab:    		{keepDefault:false, multiline:true, outdent:4},
+	onTab:    		    {keepDefault:false, selectAssist:true, multiline:true, indent:4},
+	onShiftTab:    		{keepDefault:false, selectAssist:true, multiline:true, outdent:4},
 	markupSet: [
 		{name:'First Level Heading', selectAssist:true, onAlt:true, key:'1', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '=') } },
 		{name:'Second Level Heading', selectAssist:true, onAlt:true, key:'2', placeHolder:'Your title here...', multiline:true, closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '-') } },
