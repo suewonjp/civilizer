@@ -47,7 +47,7 @@ function makeObjectsInsertableToTextArea() {
     };
 }
 
-function addToggler(target, iconClass, toggler, toggleNow) {
+function addToggler(target, iconClass, toggler) {
     var collapseIcon = "fa-minus-square";
     var expandIcon = "fa-plus-square";
     var link = $("<a>").attr("href", "#");
@@ -58,8 +58,6 @@ function addToggler(target, iconClass, toggler, toggleNow) {
         e.preventDefault();
     });
     target.before(link);
-    if (toggleNow)
-        link.click();
     return link;
 }
 

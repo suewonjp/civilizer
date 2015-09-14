@@ -342,6 +342,12 @@ function processFoldings(content) {
             });
             $this.before(title);
         }
+        if (args.hide) {
+            link.click();
+            // with the only above code, the target element would be hidden.
+            // but it doesn't work on Safari, so make sure it becomes hidden.
+            $this.hide();
+        }
     });
 }
 
