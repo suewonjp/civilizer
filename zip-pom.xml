@@ -30,8 +30,13 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
+                                <echo message="copying launchers..."/>
+                                <copy todir="${output-dir}">
+                                    <fileset dir="tools/run"/>
+                                </copy>
                                 <echo message="zipping all..."/>
                                 <zip destfile="${output-dir}/${app-name}.zip">
+                                    <fileset dir="${output-dir}" includes="*.exe,run-civilizer.*" />
                                     <zipfileset dir="${cvz-dir}" prefix="${app-name}"/>
                                     <zipfileset dir="${extra-dir}" prefix="extra"/>
                                 </zip>
