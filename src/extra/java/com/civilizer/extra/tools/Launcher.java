@@ -212,7 +212,7 @@ public final class Launcher {
 
                     MenuItem item;
                     
-                    item = new MenuItem("\u2716 Shutdown");
+                    item = new MenuItem("Shutdown");
                     item.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             tray.remove(trayIcon);
@@ -244,7 +244,7 @@ public final class Launcher {
                 icon.setImage(img);
                 icon.setToolTip(RUNNING);
 
-                MenuItem item = new MenuItem("\u270d Browse");
+                MenuItem item = new MenuItem("Browse");
                 item.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         openBrowser();
