@@ -514,6 +514,7 @@
 							rangeCopy.moveStart('character');
 							caretPosition ++;
 						}
+						selection = selection.replace(/\r*/g, '');
 					} else { // opera
 						caretPosition = textarea.selectionStart;
 					}
