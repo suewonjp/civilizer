@@ -1,3 +1,5 @@
+rem HideSelf
+
 @echo off
 
 setlocal EnableDelayedExpansion
