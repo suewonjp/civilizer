@@ -128,7 +128,7 @@ public final class Launcher {
     }
     
     private static Font createFont() {
-        final String tgtJarPath = getFullJarPath(Pattern.compile(".*/primefaces.*"));
+        final String tgtJarPath = getFullJarPath(Pattern.compile(".*primefaces.*\\.jar"));
         final String fontPath = getResourcePathFromJarFile(new File(tgtJarPath), Pattern.compile(".*/fontawesome-webfont\\.ttf"));
         assert fontPath.isEmpty() == false;
         final InputStream is = Launcher.class.getClassLoader().getResourceAsStream(fontPath);
