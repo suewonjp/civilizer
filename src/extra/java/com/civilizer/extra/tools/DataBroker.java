@@ -1,9 +1,6 @@
 package com.civilizer.extra.tools;
 
 import java.io.File;
-//import java.net.URL;
-//import java.net.URLClassLoader;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -21,13 +18,45 @@ public final class DataBroker {
     
     private static final Logger logger = LoggerFactory.getLogger(DataBroker.class);
     
-//    private static void printClasspath() {
-//        ClassLoader cl = ClassLoader.getSystemClassLoader();
-//        java.net.URL[] urls = ((java.net.URLClassLoader)cl).getURLs();
-//        for (java.net.URL url: urls){
-//            System.out.println(url.getFile());
-//        }
-//    }
+    public static void main(String[] args) throws IOException {
+        System.out.println("Data Broker : Offline Data Export/Import CUI Tool for Civilizer\n");        
+        
+        final String privateHomePath = System.getProperty(AppOptions.PRIVATE_HOME_PATH);
+        if (privateHomePath != null && new File(privateHomePath).isAbsolute() == false)
+            System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
+        new Configurator();
+        
+        Arrays.sort(args);
+        
+        {
+            final String option = "-export";
+            final int iii = Arrays.binarySearch(args, option);
+            if (-1 < iii) {
+                if (iii < args.length-1) {
+                    onExport(args[iii + 1]);
+                }
+                else {
+                    onExport(null);
+                }
+                return;
+            }
+        }
+        {
+            final String option = "-import";
+            final int iii = Arrays.binarySearch(args, option);
+            if (-1 < iii) {
+                if (iii < args.length-1) {
+                    onImport(args[iii + 1]);
+                }
+                else {
+                    onImport(null);
+                }
+                return;
+            }
+        }
+        
+        printHelpMessage();
+    }
     
     private static void printHelpMessage() {
         String msg = "* Options :\n";
@@ -114,44 +143,4 @@ public final class DataBroker {
         logger.info("[Success!] Data Imported");
     }
     
-    public static void main(String[] args) throws IOException {
-        System.out.println("Data Broker : Offline Data Export/Import CUI Tool for Civilizer\n");        
-        
-        final String privateHomePath = System.getProperty(AppOptions.PRIVATE_HOME_PATH);
-        if (privateHomePath != null && new File(privateHomePath).isAbsolute() == false)
-            System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
-        new Configurator();
-        
-        Arrays.sort(args);
-        
-        {
-            final String option = "-export";
-            final int iii = Arrays.binarySearch(args, option);
-            if (-1 < iii) {
-                if (iii < args.length-1) {
-                    onExport(args[iii + 1]);
-                }
-                else {
-                    onExport(null);
-                }
-                return;
-            }
-        }
-        {
-            final String option = "-import";
-            final int iii = Arrays.binarySearch(args, option);
-            if (-1 < iii) {
-                if (iii < args.length-1) {
-                    onImport(args[iii + 1]);
-                }
-                else {
-                    onImport(null);
-                }
-                return;
-            }
-        }
-        
-        printHelpMessage();
-    }
-
 }
