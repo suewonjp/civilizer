@@ -19,6 +19,10 @@ function onUnknownArg() {
     fi
 }
 
+function checkPath() {
+    [ -e "$1" ] || { printf "[ $hostScript ERROR ] Can't access the path \"%s\"\n" $1 && exit 1; }
+}
+
 function setupClasspath() {
     webappPath=civilizer
     extraPath=extra
@@ -39,7 +43,7 @@ function setupClasspath() {
     PREV_IFS=$IFS
     IFS=":*"
     for cp in $classPath; do
-        [ -e $cp ] || { printf "[ $hostScript ERROR ] Can't access the classpath \"%s\"\n" $cp && exit 1; }
+        [ $cp ] && checkPath $cp
     done
     IFS=$PREV_IFS
 

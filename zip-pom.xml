@@ -30,13 +30,21 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
-                                <echo message="copying launchers..."/>
+                                <echo message="copying shell scripts..."/>
+                                
+                                <copy todir="${output-dir}/shell-utils">
+                                    <fileset dir="tools/shell-utils"/>
+                                </copy>
                                 <copy todir="${output-dir}">
                                     <fileset dir="tools/run"/>
+                                    <fileset dir="tools/data-management"/>
                                 </copy>
+                                
                                 <echo message="zipping all..."/>
+                                
                                 <zip destfile="${output-dir}/${app-name}.zip">
-                                    <fileset dir="${output-dir}" includes="*.exe,run-civilizer.*" />
+                                    <zipfileset filemode="744" dir="${output-dir}" includes="*.exe *.sh *.bat"/>
+                                    <zipfileset filemode="744" dir="${output-dir}/shell-utils" prefix="shell-utils"/>
                                     <zipfileset dir="${cvz-dir}" prefix="${app-name}"/>
                                     <zipfileset dir="${extra-dir}" prefix="extra"/>
                                 </zip>
