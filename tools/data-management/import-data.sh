@@ -15,7 +15,7 @@ importPath=
 while true; do
     case "$1" in
         -from) importPath=$2 ;;
-        -help | -h | -\?) usage "-from path: Specify input path" ;;
+        -help | -h | -\?) usage "-from path : Specify input path" ;;
         -*) onUnknownArg $1 ;;
         *) break ;;
     esac

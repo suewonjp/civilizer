@@ -14,7 +14,7 @@ skiptest=false
 while true; do
     case "$1" in
         -skiptest) skiptest=true ;;
-        -help | -h | -\?) usage "-skiptest: Skip unit tests" ;;
+        -help | -h | -\?) usage "-skiptest : Skip unit tests" ;;
         -*) onUnknownArg $1 ;;
         *) break ;;
     esac

@@ -15,7 +15,7 @@ exportPath=
 while true; do
     case "$1" in
         -to) exportPath=$2 ;;
-        -help | -h | -\?) usage "-to path: Specify output path" ;;
+        -help | -h | -\?) usage "-to path : Specify output path" ;;
         -*) onUnknownArg $1 ;;
         *) break ;;
     esac

@@ -17,7 +17,7 @@ while true; do
         -port) port=$2 ;;
         -home) home=$2 ;;
         -help | -h | -\?) usage \
-            "-port number: Specify port number" "-home path: Specify private home path"
+            "-port number : Specify port number" "-home path : Specify private home path"
             ;;
         -*) unknownArg $1 ;;
         *) break ;;

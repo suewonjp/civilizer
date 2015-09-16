@@ -31,7 +31,7 @@ if not [%home%] == [] set homeOption=Dcivilizer.private_home_path="%home%"
 ::echo !homeOption!
 
 cd !extraPath!\..
-echo %hostScript% : Loading Civilizer...
+echo [ %hostScript% ] Loading Civilizer...
 java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog ^
  -Dorg.eclipse.jetty.LEVEL=INFO ^
  -cp %classPath% %homeOption% com.civilizer.extra.tools.Launcher --port %port%
