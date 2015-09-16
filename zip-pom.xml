@@ -30,8 +30,19 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
-                                <echo message="copying shell scripts..."/>
+                                <loadproperties srcFile="src/main/resources/core.properties">
+                                </loadproperties>
+                                <echo message="target version is ${civilizer.version}"/>
                                 
+                                <echo message="${civilizer.version}" file="${output-dir}/info/version.txt"/>
+                                
+                                <echo message="copying documentations..."/>                                
+                                <copy file="README.md" tofile="${output-dir}/info/readme.txt"/>
+                                <copy todir="${output-dir}/info">
+                                    <fileset dir="./" includes="*.txt"/>
+                                </copy>
+                                
+                                <echo message="copying shell scripts..."/>                                
                                 <copy todir="${output-dir}/shell-utils">
                                     <fileset dir="tools/shell-utils"/>
                                 </copy>
@@ -40,13 +51,13 @@
                                     <fileset dir="tools/data-management"/>
                                 </copy>
                                 
-                                <echo message="zipping all..."/>
-                                
-                                <zip destfile="${output-dir}/${app-name}.zip">
-                                    <zipfileset filemode="744" dir="${output-dir}" includes="*.exe *.sh *.bat"/>
-                                    <zipfileset filemode="744" dir="${output-dir}/shell-utils" prefix="shell-utils"/>
-                                    <zipfileset dir="${cvz-dir}" prefix="${app-name}"/>
-                                    <zipfileset dir="${extra-dir}" prefix="extra"/>
+                                <echo message="zipping all..."/>                                
+                                <zip destfile="${output-dir}/${app-name}.${civilizer.version}.zip">
+                                    <zipfileset dir="${output-dir}/info" prefix="${app-name}/info"/>
+                                    <zipfileset filemode="744" dir="${output-dir}" includes="*.exe *.sh *.bat" prefix="${app-name}"/>
+                                    <zipfileset filemode="744" dir="${output-dir}/shell-utils" prefix="${app-name}/shell-utils"/>
+                                    <zipfileset dir="${cvz-dir}" prefix="${app-name}/${app-name}"/>
+                                    <zipfileset dir="${extra-dir}" prefix="${app-name}/extra"/>
                                 </zip>
                             </target>
                         </configuration>
