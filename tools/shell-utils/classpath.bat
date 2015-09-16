@@ -17,12 +17,11 @@ if not exist "!webappPath!\WEB-INF\web.xml" (
 call :toAbsolutePath webappPath 
 call :toAbsolutePath extraPath
 
-:: set classPath="%webappPath%\WEB-INF\classes;%extraPath%\lib\*;%webappPath%\WEB-INF\lib\*;%extraPath%"
 set classPath="!webappPath!\WEB-INF\classes;!extraPath!\lib\*;!webappPath!\WEB-INF\lib\*;!extraPath!"
 
-::echo !webappPath!
-::echo !extraPath!
-::echo !classPath!
+::echo webappPath = !webappPath!
+::echo extraPath = !extraPath!
+::echo classPath = !classPath!
 
 goto :eof
 
@@ -31,9 +30,3 @@ goto :eof
     set %1=%cd%
     popd
     exit /b 0
-
-:: :toAbsolutePath
-::     pushd %1
-::         set %2=%cd%
-::     popd
-::     exit /b 0
