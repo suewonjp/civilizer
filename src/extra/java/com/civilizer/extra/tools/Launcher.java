@@ -15,6 +15,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -36,6 +37,7 @@ import java.util.zip.ZipFile;
 //import javax.swing.ImageIcon;
 //import javax.swing.JMenuItem;
 //import javax.swing.JPopupMenu;
+
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.ResourceCollection;
@@ -223,6 +225,8 @@ public final class Launcher {
                     
                     try {
                         tray.add(trayIcon);
+                        
+                        trayIcon.displayMessage("Staring Civilizer...", "Please wait...", MessageType.INFO);
                     } catch (AWTException e) {
                         e.printStackTrace();
                         throw new Error(e);
@@ -251,6 +255,9 @@ public final class Launcher {
                     }
                 });
                 icon.getPopupMenu().insert(item, 0);
+                
+
+                icon.displayMessage(null, "", MessageType.NONE);
                 
                 break;
             }
