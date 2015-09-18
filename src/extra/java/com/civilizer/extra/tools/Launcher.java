@@ -257,7 +257,7 @@ public final class Launcher {
                 icon.getPopupMenu().insert(item, 0);
                 
 
-                icon.displayMessage(null, "", MessageType.NONE);
+                icon.displayMessage(null, "Civilizer is ready...", MessageType.NONE);
                 
                 break;
             }
