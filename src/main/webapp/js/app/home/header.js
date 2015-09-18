@@ -76,6 +76,21 @@ function makeSidebarToggleable() {
     }
 }
 
+function makeSidebarScrollable() {
+    var toggler = $("#sidebar-scroller");
+    var icon = toggler.find(".fa");
+    toggler.off("click").on("click", function(e) {
+        var sidebar = $("#sidebar");
+        var title = sidebar.find(".sidebar-title").eq(0).remove();
+        var form = sidebar.find("form").eq(0).remove();
+        sidebar.append(title);
+        sidebar.append(form);
+        if (form.attr("id") == "tag-palette-form") {
+            setupTabViewsForTagPalette();
+        }
+    });    
+}
+
 function showAboutDialog() {
     var dlg = PF("aboutDlg");
     dlg.show();

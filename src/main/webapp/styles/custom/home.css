@@ -524,10 +524,17 @@
     color:highlight;
 }
 
-#sidebar-toggler {
+#sidebar-toggler, #sidebar-scroller {
     position: fixed;
     top: 30px;
-    right: 18%;
     z-index: 210;
     font-size: xx-small;
+}
+
+#sidebar-toggler {
+    right: 18%;
+}
+
+#sidebar-scroller {
+    right: 16%;
 }

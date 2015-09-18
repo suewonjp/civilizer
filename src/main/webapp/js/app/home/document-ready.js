@@ -26,6 +26,8 @@ $(document).ready(function() {
 	setupContextMenus();
 	
 	makeSidebarToggleable();
+
+	makeSidebarScrollable();
 	
 	makeSidebarTitleToggleable();
 	
