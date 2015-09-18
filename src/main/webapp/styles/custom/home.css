@@ -536,5 +536,5 @@
 }
 
 #sidebar-scroller {
-    right: 16%;
+    right: calc( 18% - 24px );
 }

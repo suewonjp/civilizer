@@ -81,14 +81,18 @@ function makeSidebarScrollable() {
     var icon = toggler.find(".fa");
     toggler.off("click").on("click", function(e) {
         var sidebar = $("#sidebar");
-        var title = sidebar.find(".sidebar-title").eq(0).remove();
-        var form = sidebar.find("form").eq(0).remove();
-        sidebar.append(title);
-        sidebar.append(form);
-        if (form.attr("id") == "tag-palette-form") {
-            setupTabViewsForTagPalette();
-        }
+        var divs = sidebar.find("div[_sbpno]");
+        var sbPanel = divs.eq(0);
+        var sbPanelNo = parseInt(sbPanel.attr("_sbpno"));
+        localStorage.setItem("topSidebarPanel", ++sbPanelNo % divs.length);
+        sidebar.append(sbPanel);
     });    
+    var topSbPanelNo = parseInt(localStorage.getItem("topSidebarPanel"));
+    if (! isNaN(topSbPanelNo)) {
+        for (var i=0; i<topSbPanelNo; ++i) {
+            toggler.click();
+        }
+    }
 }
 
 function showAboutDialog() {
