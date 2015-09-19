@@ -188,7 +188,9 @@ function autocompleteForTypingTags() {
     
 	var tagSuggestions = [];
     $("#tag-palette-flat .each-tag").each(function (index, value) {
-        tagSuggestions.push($(value).find(".each-tag-name").text());
+        var tagName = $(value).find(".each-tag-name").text();
+        if (tagName != "#trash")
+            tagSuggestions.push(tagName);
     });
     
     function split(input) {
