@@ -108,7 +108,7 @@ function setContextMenuForFiles() {
     var menu = $("#file-context-menu");
     
     $("#file-box-form\\:file-box-panel")
-    .off("contextmenu.cvz_file").on("contextmenu.cvz_file", ".each-file, #file-path-tree", function(e) {
+    .off("contextmenu.cvz_file").on("contextmenu.cvz_file", function(e) {
         showPopup(menu, e);
         var target = $(e.target);
         if (target.attr("_isFolder") === "false") {
