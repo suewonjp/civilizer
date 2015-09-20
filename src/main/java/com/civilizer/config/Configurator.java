@@ -136,6 +136,12 @@ public final class Configurator {
 		if (p.getProperty(AppOptions.TEMP_PATH) == null) {
 		    p.setProperty(AppOptions.TEMP_PATH, AppOptions.DEF_TEMP_PATH);
 		}
+
+	    try {
+	        Integer.parseInt(p.getProperty(AppOptions.ITEMS_PER_PAGE));
+        } catch (Exception e) {
+            p.setProperty(AppOptions.ITEMS_PER_PAGE, AppOptions.DEF_ITEMS_PER_PAGE);
+        }
 	}
 	
 	private void setConstrainedOptions(Properties p) {

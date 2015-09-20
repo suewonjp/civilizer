@@ -2,6 +2,7 @@ package com.civilizer.web.view;
 
 import java.io.Serializable;
 
+import com.civilizer.config.AppOptions;
 import com.civilizer.domain.SearchParams;
 
 @SuppressWarnings("serial")
@@ -9,8 +10,7 @@ public final class PanelContextBean implements Serializable {
 	
 	public static final long ALL_VALID_TAGS       = -1000;
 	public static final long EMPTY_TAG            = -2000;
-	// [TODO] the default number of items per page should be configurable
-	public static final int  DEF_ITEMS_PER_PAGE   = 10;
+	public static final int  DEF_ITEMS_PER_PAGE   = Integer.parseInt(System.getProperty(AppOptions.ITEMS_PER_PAGE));
 	
 	private final SearchParams searchParams;
 	private final long tagId;

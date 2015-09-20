@@ -13,6 +13,7 @@ public final class AppOptions {
 	public static final String LOCALE                             = "civilizer.locale";
 	public static final String DATA_SCRIPTS                       = "civilizer.data_scripts";
 	public static final String TEMP_PATH                          = "civilizer.temp_path";
+	public static final String ITEMS_PER_PAGE                     = "civilizer.items_per_page";
 
 	// options for development purposes
 	public static final String INITIALIZE_DB                      = "civilizer.initialize_db";
@@ -29,5 +30,6 @@ public final class AppOptions {
 	public static final String DEF_INITIALIZE_DB                  = "false";
 	public static final String DEF_DEV        			          = "false";
 	public static final String DEF_TEMP_PATH                      = ".temp";
+	public static final String DEF_ITEMS_PER_PAGE                 = "10";
 	
 }
