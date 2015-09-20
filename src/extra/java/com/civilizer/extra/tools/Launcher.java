@@ -39,6 +39,7 @@ import java.util.zip.ZipFile;
 //import javax.swing.JPopupMenu;
 
 
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -170,8 +171,15 @@ public final class Launcher {
         return img;
     }
     
+    private static boolean systemTraySupported() {
+        // [Note] Java's standard system tray is not well supported on some of Linux systems;
+        // (at least, on Linux Mint as of 2015/09/20)
+        // So we don't display the system tray icon on Linux (for now).
+        return (SystemTray.isSupported() && !System.getProperty("os.name").toLowerCase().contains("linux"));
+    }
+    
     private static void setupSystemTray() {
-        if (SystemTray.isSupported() == false)
+        if (systemTraySupported() == false)
             return;
         
         fontForIcon = createFont();
@@ -237,10 +245,11 @@ public final class Launcher {
     }
     
     private static void updateSystemTray() {
+        if (systemTraySupported() == false)
+            return;
+        
         // We change appearance of the system tray icon to notify that the server is ready.
         // Also add extra menus.
-        if (SystemTray.isSupported() == false)
-            return;
         for (TrayIcon icon : SystemTray.getSystemTray().getTrayIcons()) {
             if (icon.getToolTip().equals(STARTING)) {
                 assert fontForIcon != null;
