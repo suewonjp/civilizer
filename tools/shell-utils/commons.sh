@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 function printVar() {
     printf '[ %s DEBUG ] $%s = %s\n' $hostScript $1 ${!1}
