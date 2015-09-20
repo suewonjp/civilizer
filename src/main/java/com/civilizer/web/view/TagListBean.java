@@ -20,9 +20,9 @@ public final class TagListBean implements Serializable {
 
     private List<Tag> childTags = Collections.emptyList();
     
-    private long newParentTagId = Tag.TRASH_TAG_ID;
+    private Long newParentTagId = (long)Tag.TRASH_TAG_ID;
 
-    private long newChildTagId = Tag.TRASH_TAG_ID;
+    private Long newChildTagId = (long)Tag.TRASH_TAG_ID;
     
     private boolean hierarchyTouched;
 
@@ -101,11 +101,13 @@ public final class TagListBean implements Serializable {
 	        this.childTags = childTags;
 	}
 
-	public long getNewParentTagId() {
+	public Long getNewParentTagId() {
 		return newParentTagId;
 	}
 
-	public void setNewParentTagId(long newParentTagId) {
+	public void setNewParentTagId(Long newParentTagId) {
+	    if (newParentTagId == null)
+	        return;
 		if (Tag.isTrivialTag(newParentTagId)) {
 			final int index = indexOf(newParentTagId);
 			if (parentTags.equals(Collections.emptyList())) {
@@ -116,11 +118,13 @@ public final class TagListBean implements Serializable {
 		}
 	}
 
-	public long getNewChildTagId() {
+	public Long getNewChildTagId() {
 		return newChildTagId;
 	}
 
-	public void setNewChildTagId(long newChildTagId) {
+	public void setNewChildTagId(Long newChildTagId) {
+	    if (newChildTagId == null)
+	        return;
 		if (Tag.isTrivialTag(newChildTagId)) {
 			final int index = indexOf(newChildTagId);
 			if (childTags.equals(Collections.emptyList())) {
