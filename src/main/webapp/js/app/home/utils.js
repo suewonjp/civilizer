@@ -72,12 +72,16 @@ function toggleWindow(frame, bar) {
     if (target.is(":visible")) {
         if (frame.hasClass("ui-resizable"))
             frame.resizable("disable");
+        if (bar.hasClass("ui-draggable-handle"))
+            frame.draggable("disable");
         target.hide();
         frame.css({width:"auto", height:"auto"});
     }
     else {
         if (frame.hasClass("ui-resizable"))
             frame.resizable("enable");
+        if (bar.hasClass("ui-draggable-handle"))
+            frame.draggable("enable");
         target.show();
     }
 }
