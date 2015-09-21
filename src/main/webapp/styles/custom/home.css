@@ -527,14 +527,11 @@
 #sidebar-toggler, #sidebar-scroller {
     position: fixed;
     top: 30px;
+    right: 18.2%;
     z-index: 210;
     font-size: xx-small;
 }
 
-#sidebar-toggler {
-    right: 18%;
-}
-
 #sidebar-scroller {
-    right: calc( 18% - 24px );
+    top: 56px;
 }
