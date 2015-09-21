@@ -35,8 +35,7 @@ $(document).ready(function() {
 	
 	$("#container").show();
 	
-	disableAutoSubmitOnEnterForForms($("#fragment-editor-form"));
-	disableAutoSubmitOnEnterForForms($("#tag-palette-form"));
+	disableAutoSubmitOnEnterForForms("#fragment-editor-form", "#tag-palette-form", "#user-menu-dlg-form");
 	
 	setTimeout(function() {
     	// timeout for message display if any

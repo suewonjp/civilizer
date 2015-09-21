@@ -161,12 +161,14 @@ function setupPfInplaceText(pfInplace, text, onCommit) {
     });
 }
 
-function disableAutoSubmitOnEnterForForms(jqForms) {
-    jqForms.off('keypress.disableAutoSubmitOnEnter').on('keypress.disableAutoSubmitOnEnter', function(e) {
-        if (e.which === $.ui.keyCode.ENTER && $(e.target).is(':input:not(textarea,:button,:submit,:reset)')) {
-            e.preventDefault();
-        }
-    });
+function disableAutoSubmitOnEnterForForms() {
+    for (var i=0; i<arguments.length; ++i) {
+        $(arguments[i]).off('keypress.disableAutoSubmitOnEnter').on('keypress.disableAutoSubmitOnEnter', function(e) {
+            if (e.which === $.ui.keyCode.ENTER && $(e.target).is(':input:not(textarea,:button,:submit,:reset)')) {
+                e.preventDefault();
+            }
+        });
+    }
 }
 
 function addSubmitParam(jqForms, params, clearBeforeAdding) {

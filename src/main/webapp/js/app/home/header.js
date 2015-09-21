@@ -121,7 +121,10 @@ function createConfirmPasswordController() {
     
     ctrr.onTypePw = function(pwInput, e) {
         var btn = getSubmit();
-        showOrHide(btn, $(pwInput).val());
+        if (e.which == $.ui.keyCode.ENTER)
+            btn.click();
+        else
+            showOrHide(btn, $(pwInput).val());
     }
     
     ctrr.onComplete = function(xhr, status, args) {
@@ -189,7 +192,7 @@ function createDataBrokerController() {
     ctrr.onTypePw = function(pwInput, e) {
         var btn = getNextStepButton();
         if (e.which == $.ui.keyCode.ENTER) {
-            btn.hide();
+            btn.click().hide();
         }
         else
             showOrHide(btn, $(pwInput).val());

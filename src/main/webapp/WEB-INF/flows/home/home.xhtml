@@ -127,7 +127,8 @@
             </p:tab>
         </p:wizard>
 
-        <p:commandButton styleClass="ui-wizard-nav-next" onclick="DBC.onClickNext()" actionListener="#{dataBrokerBean.checkNext()}" process="@this"
+        <p:commandButton styleClass="ui-wizard-nav-next" onclick="DBC.onClickNext()"
+            actionListener="#{dataBrokerBean.checkNext()}" process="@this"
             oncomplete="DBC.onCompleteNext(xhr, status, args)" icon="fa fa-hand-o-right fa-2x"/>
     </p:dialog>
     
