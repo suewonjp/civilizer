@@ -63,7 +63,7 @@
 }
 
 @media screen and (max-width: 650px) {
-	#theme-switcher, #theme-icon {
+	#theme-switcher, #theme-icon, #sidebar-toggler, #sidebar-scroller {
 	   visibility: hidden;
 	}
 }
@@ -526,12 +526,12 @@
 
 #sidebar-toggler, #sidebar-scroller {
     position: fixed;
-    top: 30px;
-    right: 18.2%;
+    top: 45px;
+    right: 28px;
     z-index: 210;
     font-size: xx-small;
 }
 
 #sidebar-scroller {
-    top: 56px;
+    right: 2px;
 }
