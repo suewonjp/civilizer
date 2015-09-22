@@ -16,10 +16,11 @@ while true; do
         -port) port=$2 ;;
         -home) home=$2 ;;
         -help | -h | -\?) usage \
-            "-port number : Specify port number" "-home path : Specify private home path"
+            "-port number : Specify port number" \
+            "-home path : Specify Private Home Directory" \
             ;;
         -*) unknownArg $1 ;;
-        *) break ;;
+        '') break ;;
     esac
     shift
 done
@@ -27,9 +28,9 @@ done
 setupClasspath 
 
 homeOption=${home:+-Dcivilizer.private_home_path="$home"}
-#printVar homeOption
 
 cd $extraPath/../
+
 echo "[ $hostScript ] : Loading Civilizer..."
 java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog \
  -Dorg.eclipse.jetty.LEVEL=INFO \
