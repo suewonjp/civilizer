@@ -27,7 +27,7 @@ if exist "shell-utils\classpath.bat" call "shell-utils\classpath.bat"
 ::echo !classPath!
 
 set homeOption=
-if not [%home%] == [] set homeOption=Dcivilizer.private_home_path="%home%"
+if not [%home%] == [] set homeOption=-Dcivilizer.private_home_path="%home%"
 ::echo !homeOption!
 
 cd !extraPath!\..
@@ -41,7 +41,7 @@ goto :eof
 
 :usage
     echo [ %hostScript% ] Options
-    echo     -skiptest : Skip unit tests
-    echo     -help or -h or -? : Show this message
+    echo     -port number : Specify port number
+    echo     -home path : Specify Private Home Directory
 
 endlocal

@@ -34,6 +34,5 @@ goto :eof
 :usage
     echo [ %hostScript% ] Options
     echo     -skiptest : Skip unit tests
-    echo     -help or -h or -? : Show this message
 
 endlocal
