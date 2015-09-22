@@ -89,6 +89,7 @@ public final class DataBroker {
         
         final String dstPath = FsUtil.concatPath(userSpecifiedPath, FilenameUtils.getName(exportFilePath));
         final File dstFile = new File(dstPath);
+        FileUtils.deleteQuietly(dstFile);
         FileUtils.moveFile(exportFile, dstFile);
         if (dstFile.isFile() == true) {
             logger.info("[Success!] Data exported to '{}'", dstFile.getAbsolutePath());
