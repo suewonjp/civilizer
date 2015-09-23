@@ -12,9 +12,11 @@
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<java-version>1.7</java-version>
 		<org.springframework-version>3.2.8.RELEASE</org.springframework-version>
+		<spring.webflow.version>2.4.2.RELEASE</spring.webflow.version>
 		<spring.security.version>3.1.3.RELEASE</spring.security.version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
-		<jsf-version>2.0.7</jsf-version>
+		<jsf-version>2.1.1-b04</jsf-version>
+<!-- 		<jsf-version>2.0.11</jsf-version> -->
 		<jetty-version>9.3.0.M2</jetty-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -172,7 +174,7 @@
 		<dependency>
 			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-faces</artifactId>
-			<version>2.3.0.RELEASE</version>
+			<version>${spring.webflow.version}</version>
 		</dependency>
 		
 		<!-- Spring Security -->
