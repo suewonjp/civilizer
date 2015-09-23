@@ -15,7 +15,7 @@ public final class JodaDateTimeConverter implements Converter
 //    , JsonDeserializer<DateTime>, JsonSerializer<DateTime>
 {
 
-	private static final String PATTERN = ViewUtil.getResourceBundleString("date_time_format");
+	private final String PATTERN = ViewUtil.getResourceBundleString("date_time_format");
 	
 	@Override
 	public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
