@@ -535,3 +535,7 @@
 #sidebar-scroller {
     right: 2px;
 }
+
+.ui-selectlistbox-item.ui-state-highlight {
+    text-decoration: underline;
+}
