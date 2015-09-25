@@ -1,3 +1,12 @@
+.fa {
+    margin-right: 3px;
+    white-space: pre;
+}
+
+.fa .ui-inplace {
+    margin-left: 3px;
+}
+
 .ui-growl {
 	top: 60px;
 }
@@ -15,7 +24,7 @@
 #fragment-panel-0, #fragment-panel-1, #fragment-panel-2 {
     max-height: 1200px;
     float: left;
-    margin: 20px 10px 60px 0px;
+    margin: 35px 10px 60px 0px;
     overflow: auto;
 }
 
@@ -373,6 +382,10 @@
 	position: relative;
 	top: 40px;
 	margin-bottom: 5px;
+}
+
+.each-file.fa {
+    white-space: nowrap;  
 }
 
 .each-file:hover {

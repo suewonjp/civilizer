@@ -38,15 +38,15 @@
         <h:outputText styleClass="-cvz-data-ut" style="display:none" value="#{fragment.updateDatetime}">
             <f:converter converterId="jodaDateTimeConverter"/>
         </h:outputText>
-        <span class="fa fa-clock-o"></span>&nbsp;
+        <span class="fa fa-clock-o"></span>
         <h:outputText styleClass="-cvz-data-ct" style="display:none" value="#{fragment.creationDatetime}">
             <f:converter converterId="jodaDateTimeConverter"/>
         </h:outputText>
-        <span class="fa fa-birthday-cake"></span>&nbsp;&nbsp;
+        <span class="fa fa-birthday-cake"></span>
         <c:forEach var="tag" items="#{fragment.tags}">
             <span class="each-tag tag-button" _tid="#{tag.id}" onclick="fetchFragmentsByTag($(this), $(this))"
                 title="#{msg['rclick_for_menu']}">
-                <span class="fa fa-tag">&nbsp;</span>
+                <span class="fa fa-tag"></span>
                 <h:outputText styleClass="each-tag-name" value="#{tag.tagName}"/>
             </span>
         </c:forEach>
@@ -62,7 +62,7 @@
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragmentBean.relatedOnes}">
         <span class="small-fragment-box notxtslct">
-            <span class="fa fa-link">&nbsp;&nbsp;</span>
+            <span class="fa fa-link"></span>
             <a class="-cvz-frgm" href="fragment/#{rf.id}">\##{rf.id}</a>
             <h:outputText escape="false" value="#{rf.title}"/>
             <p:commandLink style="text-decoration:none; color:brown;" oncomplete="confirmUnrelatingFragments('#{fragment.id}', '#{rf.id}')" >

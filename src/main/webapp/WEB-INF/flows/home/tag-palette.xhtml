@@ -7,7 +7,7 @@
     xmlns:p="http://primefaces.org/ui">
     
 <div class="sidebar-title">
-    <span id="tag-palette-title" class="fa fa-tags" >&nbsp;&nbsp;#{msg['tag_palette']}</span>
+    <span id="tag-palette-title" class="fa fa-tags" >&#160;&#160;#{msg['tag_palette']}</span>
 </div>
 
 <h:form id="tag-palette-form">
@@ -16,7 +16,7 @@
         position="center" draggable="true" resizable="false" >
         
     	<p:panel id="tag-name-panel">
-	    	<div class="fa fa-tag">&nbsp;&nbsp;
+	    	<div class="fa fa-tag">
 		    	<p:inplace widgetVar="tagNameInplace">
 		            <p:inputText style="width:80%" value="#{paramTagBean.tag.tagName}"/>
 		        </p:inplace>
@@ -31,7 +31,6 @@
     		</f:facet>
 	        <p:panel>
 	            <div class="fa fa-tag">
-	                &nbsp;&nbsp;
 	                <p:inplace widgetVar="parentTagNameFilter" editor="true" label="+" saveLabel="#{msg['save']}" cancelLabel="#{msg['cancel']}">
 	                	<p:ajax event="save" update="parent-tags"/>
 						<p:selectOneListbox value="#{tagListBean.newParentTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
@@ -41,7 +40,7 @@
 	            </div><br/>
 	            <h:panelGroup id="parent-tags">
 	        		<ui:repeat var="parent" value="#{tagListBean.parentTags}">
-	        			<span class="fa fa-tag">&nbsp;&nbsp;#{parent.tagName}&nbsp;&nbsp;</span>
+	        			<i class="fa fa-tag"></i>#{parent.tagName}
 	        			<p:commandLink update=":tag-palette-form:parent-tags" action="#{tagListBean.removeParentTag(parent.id)}" styleClass="fa fa-minus-circle button-link" />
 	        			<br/>
 	        		</ui:repeat>
@@ -49,7 +48,6 @@
 	        </p:panel>
 	        <p:panel>
 	            <div class="fa fa-tag">
-                    &nbsp;&nbsp;
                     <p:inplace widgetVar="childTagNameFilter" editor="true" label="+" saveLabel="#{msg['save']}" cancelLabel="#{msg['cancel']}">
                     	<p:ajax event="save" update="child-tags"/>
 						<p:selectOneListbox value="#{tagListBean.newChildTagId}" scrollHeight="#{cfg['tag.editor.sel.list.scrl.hgt']}" filter="true" filterMatchMode="contains">
@@ -59,7 +57,7 @@
                 </div><br/>
                 <h:panelGroup id="child-tags">
 	        		<ui:repeat var="child" value="#{tagListBean.childTags}">
-	        			<span class="fa fa-tag">&nbsp;&nbsp;#{child.tagName}&nbsp;&nbsp;</span>
+	        			<i class="fa fa-tag"></i>#{child.tagName}
 	        			<p:commandLink update=":tag-palette-form:child-tags" action="#{tagListBean.removeChildTag(child.id)}" styleClass="fa fa-minus-circle button-link" />
 	        			<br/>
 	        		</ui:repeat>

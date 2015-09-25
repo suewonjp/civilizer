@@ -92,7 +92,7 @@
             <p:tab id="confirm-import-step">
                 <p:panel>
                     <f:facet name="header">
-                        <h:outputText styleClass="fa fa-thumbs-o-up" value="&nbsp;#{msg['success']}"/>
+                        <h:outputText styleClass="fa fa-thumbs-o-up" value="#{msg['success']}"/>
                     </f:facet>
                     <h:panelGrid columns="1" cellpadding="5">
                         <p:commandButton value="#{msg['refresh_page']}" oncomplete="location.replace('home')" onclick="DBC.hideDialog()" icon="fa fa-check"/>
@@ -118,7 +118,7 @@
             <p:tab id="confirm-export-step">
                 <p:panel>
                     <f:facet name="header">
-                        <h:outputText styleClass="fa fa-thumbs-o-up" value="&nbsp;#{msg['success']}"/>
+                        <h:outputText styleClass="fa fa-thumbs-o-up" value="#{msg['success']}"/>
                     </f:facet>
                     <h:panelGrid columns="1" cellpadding="5">
                         <p:commandButton value="#{msg['ok']}" onclick="DBC.hideDialog()" icon="fa fa-check"/>
@@ -135,7 +135,7 @@
     <p:dialog id="user-profile-dlg" widgetVar="userProfileDlg" header="#{msg['change_profile']}"
         width="620px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
         <p:panel>
-            <div class="fa fa-user">&nbsp;&nbsp;
+            <div class="fa fa-user">
                 <p:inplace widgetVar="userName">
                     <p:inputText style="width:80%" onkeypress="UPC.onTypeUsername(event)" value="#{userProfileBean.userName}"/>
                 </p:inplace>
@@ -198,7 +198,7 @@
     <p:confirmDialog widgetVar="errorMsgDlg" header="#{msg['error']}"
         severity="alert" closeOnEscape="true" showEffect="fade" hideEffect="explode">
         <f:facet name="message">
-            <h:outputText id="error-msg" styleClass="warning-color" value="&nbsp;"/>
+            <h:outputText id="error-msg" styleClass="warning-color" value=""/>
         </f:facet>
         <p:commandButton value="#{msg['ok']}" onclick="PF('errorMsgDlg').hide();" icon="ui-icon-check"/>
     </p:confirmDialog>
