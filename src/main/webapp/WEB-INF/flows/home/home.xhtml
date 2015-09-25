@@ -288,19 +288,25 @@
     </div>
     
     <div id="fragment-group">
-        <c:set var="panelId" value="0"/>
+	    <c:set var="panelId" value="0"/>
 	    <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
-            <ui:include src="each-fragment-panel.xhtml"></ui:include>
+            <ui:include src="each-fragment-panel.xhtml">
+                <ui:param name="panelId" value="#{panelId}"/>
+            </ui:include>
 	    </div>
 	    
 	    <c:set var="panelId" value="1"/>
         <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
-            <ui:include src="each-fragment-panel.xhtml"></ui:include>
+            <ui:include src="each-fragment-panel.xhtml">
+                <ui:param name="panelId" value="#{panelId}"/>
+            </ui:include>
         </div>
         
         <c:set var="panelId" value="2"/>
         <div id="fragment-panel-#{panelId}" _pid="#{panelId}">
-            <ui:include src="each-fragment-panel.xhtml"></ui:include>
+            <ui:include src="each-fragment-panel.xhtml">
+                <ui:param name="panelId" value="#{panelId}"/>
+            </ui:include>
         </div>
     </div>
 </h:form>

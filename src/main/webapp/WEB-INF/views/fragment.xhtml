@@ -7,8 +7,9 @@
     xmlns:p="http://primefaces.org/ui"
     >
     
-<c:set var="withOverlay" value="true" />
-<c:set var="panelId" value="2" />
-<ui:include src="/WEB-INF/flows/home/each-fragment.xhtml" />
+<ui:include src="/WEB-INF/flows/home/each-fragment.xhtml">
+    <ui:param name="withOverlay" value="true" />
+    <ui:param name="panelId" value="2" />
+</ui:include>
 	
 </ui:composition>

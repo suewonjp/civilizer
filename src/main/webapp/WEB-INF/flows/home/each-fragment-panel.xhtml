@@ -107,9 +107,11 @@
 </c:if>
 
 <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
-    <c:set var="withOverlay" value="false" />
     <div class="each-fragment-container">
-        <ui:include src="each-fragment.xhtml" />
+        <ui:include src="each-fragment.xhtml">
+            <ui:param name="fragmentBean" value="#{fragmentBean}" />
+            <ui:param name="withOverlay" value="false" />
+        </ui:include>
     </div>
 </c:forEach>
 
