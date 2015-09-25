@@ -39,7 +39,11 @@
 </p:dialog>
 
 <p:panel id="fragment-panel-toolbar-#{panelId}" styleClass="ui-state-active">
-    <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}" rendered="#{fragmentListBean.hasFragments() and !panelContext.fragmentDeletable}" itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}" />
+    <p:selectBooleanCheckbox id="checkbox-for-all-fragments-#{panelId}"
+        rendered="#{fragmentListBean.hasFragments() and !panelContext.fragmentDeletable}"
+        itemLabel="" widgetVar="fragmentCheckboxMaster${panelId}">
+        <f:validateBean disabled="true"/>
+    </p:selectBooleanCheckbox>
     
     <a href="#editor-frame" class="new-fragment-editor-trigger-on-toolbar" title="#{msg['new_fragment']}">
         <span class="fa fa-plus-square fa-2x button-link"></span>
