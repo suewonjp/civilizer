@@ -145,7 +145,7 @@
 	        <div id="tag-palette-flat">
 	            <c:forEach var="tagBean" items="#{tagListBean.tagBeans}">
 	                <ui:include src="each-tag.xhtml">
-    	                <ui:param name="tag" value="#{tagBean.tag}"/>
+    	                <ui:param name="tagBean" value="#{tagBean}"/>
                     </ui:include>
 	            </c:forEach>
 	        </div>
@@ -155,7 +155,7 @@
 	            	<p:ajax event="collapse" listener="#{tagListBean.tagTree.onNodeCollapse}" />
 	                <p:treeNode>
 	                    <ui:include src="each-tag.xhtml">
-        	                <ui:param name="tag" value="#{tagBean.tag}"/>
+        	                <ui:param name="tagBean" value="#{tagBean}"/>
                         </ui:include>
 	                </p:treeNode>
 	            </p:tree>

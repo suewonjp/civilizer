@@ -109,8 +109,12 @@
 <c:forEach var="fragmentBean" items="#{fragmentListBean.fragmentBeans}" varStatus="loop">
     <div class="each-fragment-container">
         <ui:include src="each-fragment.xhtml">
-            <ui:param name="fragmentBean" value="#{fragmentBean}" />
-            <ui:param name="withOverlay" value="false" />
+            <ui:param name="fragmentBean" value="#{fragmentBean}"/>
+            <ui:param name="panelId" value="#{panelId}"/>
+            <ui:param name="withOverlay" value="false"/>
+            <ui:param name="loop" value="${loop}"/>
+            <ui:param name="fragmentDeletable" value="#{panelContext.fragmentDeletable}"/>
+            <ui:param name="contentClasses" value="#{panelContext.getContextClassName()}"/>
         </ui:include>
     </div>
 </c:forEach>

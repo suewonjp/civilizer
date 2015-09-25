@@ -26,8 +26,7 @@
                 <c:set var="frgTitle" value="#{fragmentSelectionBean.fragmentTitles[loop.index]}" />
                 <span class="small-fragment-box each-selected-frg notxtslct" _fid="#{frgId}" _ft="#{frgTitle}" title="#{msg['rclick_for_menu']}">
                     <a class="-cvz-frgm" href="fragment/#{frgId}">\##{frgId}</a>
-                    &nbsp;
-                    <h:outputText value="#{frgTitle}" />
+                    <span>#{frgTitle}</span>
                 </span>
                 <br/>
             </c:forEach>

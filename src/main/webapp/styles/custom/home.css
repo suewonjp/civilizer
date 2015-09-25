@@ -15,7 +15,7 @@
 #fragment-panel-0, #fragment-panel-1, #fragment-panel-2 {
     max-height: 1200px;
     float: left;
-    margin: 0px 10px 60px 0px;
+    margin: 20px 10px 60px 0px;
     overflow: auto;
 }
 

@@ -9,8 +9,6 @@ $(document).ready(function() {
 	
 	setupClickHandlerForTags($("#container"));
     
-    setupFragmentCheckboxes();
-    
     setupFragmentResolutionSliders();
     
     setupDragAndDrop();
@@ -31,8 +29,6 @@ $(document).ready(function() {
 	
 	makeSidebarTitleToggleable();
 	
-	setCurrentTheme("ui-darkness");
-	
 	$("#container").show();
 	
 	disableAutoSubmitOnEnterForForms("#fragment-editor-form", "#tag-palette-form", "#user-menu-dlg-form");
@@ -46,7 +42,9 @@ $(document).ready(function() {
 });
 
 $(window).load(function() {
+    setCurrentTheme("ui-darkness");
     applyCurrentThemeToThemeSwitcher();
+    setupFragmentCheckboxes();
 });
 
 function onGlobalHotkeys(e) {

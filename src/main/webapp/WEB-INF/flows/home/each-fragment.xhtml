@@ -11,17 +11,24 @@
 
 <h:panelGrid styleClass="each-fragment" columns="1" border="#{withOverlay ? 0 : 1}">
     <f:facet name="header">
-    <div class="fragment-header notxtslct" _fid="#{fragment.id}" _deletable="#{panelContext.fragmentDeletable}">
+    <div class="fragment-header notxtslct" _fid="#{fragment.id}" _deletable="#{fragmentDeletable}">
         <c:choose>
             <c:when test="#{withOverlay}">
                 <h:outputText value="##{fragment.id}" style="color:navy;"/>
             </c:when>
             <c:otherwise>
-                <p:selectBooleanCheckbox rendered="#{!panelContext.fragmentDeletable}" value="#{fragmentBean.checked}" 
-                    itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave${panelId}_${loop.index}">
+                <p:selectBooleanCheckbox rendered="#{!fragmentDeletable}" value="#{fragmentBean.checked}" 
+                    itemLabel="&nbsp;" widgetVar="fragmentCheckboxSlave#{panelId}_#{loop.index}">
                     <p:ajax update=":selection-box-form:selection-box-panel" oncomplete="onAjaxCompleteForSelectionBox()"/>
                 </p:selectBooleanCheckbox>
-                <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
+                <c:choose>
+                    <c:when test="#{fragmentDeletable}">
+                        <h:outputText value="##{fragment.id}" style="color:navy;"/>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
+                    </c:otherwise>
+                </c:choose>
             </c:otherwise>
         </c:choose>
         <span class="fragment-title" _fid="#{fragment.id}">
@@ -48,7 +55,7 @@
         <h:outputText style="display:none" styleClass="-cvz-data-content" value="#{fragment.content}"/>
     </div>
     </f:facet>
-    <h:outputText value="#{fragmentBean.content}" styleClass="fragment-content #{panelContext.getContextClassName()}"/>
+    <h:outputText value="#{fragmentBean.content}" styleClass="fragment-content #{contentClasses}"/>
 </h:panelGrid>
 
 <div class="related-fragment-container">
@@ -56,9 +63,7 @@
         <span class="small-fragment-box notxtslct">
             <span class="fa fa-link">&nbsp;&nbsp;</span>
             <a class="-cvz-frgm" href="fragment/#{rf.id}">\##{rf.id}</a>
-            &nbsp;&nbsp;
             <h:outputText escape="false" value="#{rf.title}"/>
-            &nbsp;&nbsp;
             <p:commandLink style="text-decoration:none; color:brown;" oncomplete="confirmUnrelatingFragments('#{fragment.id}', '#{rf.id}')" >
                 <span class="fa fa-close button-link " title="#{msg['clear_relationship']}"></span>
             </p:commandLink>

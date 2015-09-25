@@ -66,6 +66,10 @@
 	font-style: oblique;
 }
 
+.-cvz-frgm {
+    margin-right: 4px;    
+}
+
 .-cvz-frgm-embed {
 	display: block;
 }
