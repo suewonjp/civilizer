@@ -56,6 +56,7 @@
     <span id="theme-icon" class="fa fa-paint-brush fa-2x"></span>
     
     <p:themeSwitcher widgetVar="themeSwitcher" id="theme-switcher" onchange="onChangeTheme()">
+        <f:validateBean disabled="true"/>
         <f:selectItems value="#{userProfileBean.themes}" var="theme" itemLabel="#{theme}" itemValue="#{theme}"/>
     </p:themeSwitcher>
     
