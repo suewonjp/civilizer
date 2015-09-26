@@ -334,7 +334,7 @@ function processFoldings(content) {
         $this.wrapInner("<blockquote>");
         var link = addToggler($this, "fold-toggle-icon", function() {
             showOrHide($this);
-        }, args.hide);
+        });
         if (args.title) {
             var title = $("<a href='#'><span class='-cvz-fold-title'>"+args.title+"</span></a>")
             .click(function (e) {
@@ -342,7 +342,7 @@ function processFoldings(content) {
             });
             $this.before(title);
         }
-        if (args.hide) {
+        if (args.hide == "true") {
             link.click();
             // with the only above code, the target element would be hidden.
             // but it doesn't work on Safari, so make sure it becomes hidden.

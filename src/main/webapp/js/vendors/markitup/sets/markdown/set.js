@@ -38,7 +38,7 @@ markItUpSettings = {
 		{name:'Quotes', selectAssist:true, onShift:true, key:'Q', openWith:'> ', closeWith:'  ', multiline:true},
         {name:'Code', onShift:true, key:'C', multiline:true, openWith:'`', closeWith:'`'},
         {name:'HTML', onShift:true, key:'H', openBlockWith:'{{{[html]\n', closeBlockWith:'\n}}}', faIcon:'fa-code fa-lg'},
-        {name:'Fold', selectAssist:true, onShift:true, key:'End', openBlockWith:'{{{[fold{"title":"[![Title:!:...]!]","hide":""}]\n', closeBlockWith:'\n}}}', faIcon:'fa-plus-square-o fa-lg'},
+        {name:'Fold', selectAssist:true, onShift:true, key:'End', openBlockWith:'{{{[fold{"title":"[![Title:!:...]!]","hide":"true"}]\n\n', closeBlockWith:'\n\n}}}', faIcon:'fa-plus-square-o fa-lg'},
 		{separator:'---------------'},
 		{name:'Indent (Move Right)', selectAssist:true, onShift:true, key:'Right', indent:1, multiline:true, faIcon:'fa-indent fa-lg'},
 		{name:'Outdent (Move Left)', selectAssist:true, onShift:true, key:'Left', outdent:1, multiline:true, faIcon:'fa-outdent fa-lg'},
