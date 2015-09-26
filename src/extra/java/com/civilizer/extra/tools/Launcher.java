@@ -29,14 +29,19 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-//import org.eclipse.jetty.util.resource.ResourceCollection;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 // [IMPORTANT!]
@@ -74,6 +79,17 @@ public final class Launcher {
         ERROR,
     }
     
+    public static final String[] plusConfigurationClasses = new String[] {
+        org.eclipse.jetty.webapp.WebInfConfiguration.class.getCanonicalName(),
+        org.eclipse.jetty.webapp.WebXmlConfiguration.class.getCanonicalName(),
+        org.eclipse.jetty.webapp.MetaInfConfiguration.class.getCanonicalName(),
+        org.eclipse.jetty.webapp.FragmentConfiguration.class.getCanonicalName(),
+        org.eclipse.jetty.plus.webapp.EnvConfiguration.class.getCanonicalName(),
+        org.eclipse.jetty.plus.webapp.PlusConfiguration.class.getCanonicalName(),
+        org.eclipse.jetty.annotations.AnnotationConfiguration.class.getCanonicalName(),
+        org.eclipse.jetty.webapp.JettyWebXmlConfiguration.class.getCanonicalName()
+        };
+    
     public static void main(String[] args) {
         try {
             System.setProperty(STATUS, STARTING);
@@ -85,29 +101,33 @@ public final class Launcher {
             setupSystemTray(warFolder);
             
             int port = 8080;
-            Arrays.sort(args);
-            final int iii = Arrays.binarySearch(args, "--port");
-            if (-1 < iii && iii < args.length-1) {
-                try {
-                    port = Integer.parseInt(args[iii + 1]);
-                    if (port <= 0)
-                        throw new NumberFormatException();
-                } catch (NumberFormatException e) {
-                    l(LogType.ERROR, "'" + port + "' is not a valid port number. exiting...");
-                    System.exit(1);
+            for (int i=0;i<args.length; ++i) {
+                switch (args[i]) {
+                case "--port":
+                    try {
+                        port = Integer.parseInt(args[++i]);
+                        if (port <= 0)
+                            throw new NumberFormatException();
+                    } catch (NumberFormatException e) {
+                        l(LogType.ERROR, "'" + port + "' is not a valid port number. exiting...");
+                        new Error(e);
+                    }
+                    break;
                 }
             }
+            
             new Launcher(port).startServer(warFolder);
         } catch (Exception e) {
-            l(LogType.ERROR, "An unhandled exception triggered. exiting...");
             e.printStackTrace();
-            System.exit(1);
+            assert false;
+            l(LogType.ERROR, "An unhandled exception triggered. exiting...");
+            new Error(e);
         }
     }
 
     private Launcher(int port) {
         assert 0 < port && port <= 0xffff;
-        server = new Server(port);
+        server = new Server();
         assert server != null;
         this.port = port;
     }
@@ -156,29 +176,66 @@ public final class Launcher {
         
         return output;
     }
+    
+    private void prependHandler (Handler handler, HandlerCollection handlers) {
+        if (handler == null || handlers == null)
+            return;
+
+       Handler[] existing = handlers.getChildHandlers();
+       Handler[] children = new Handler[existing.length + 1];
+       children[0] = handler;
+       System.arraycopy(existing, 0, children, 1, existing.length);
+       handlers.setHandlers(children);
+    }
 
     private WebAppContext setupWebAppContext(File warFolder) {
         if (warFolder.isDirectory() == false)
             return null;
-        final WebAppContext waCtxt = new WebAppContext();
-        waCtxt.setContextPath("/civilizer");
         final String absWarPath = warFolder.getAbsolutePath();
         if (exists(absWarPath + "/WEB-INF/web.xml") == false
                 || exists(absWarPath + "/WEB-INF/classes") == false
                 || exists(absWarPath + "/WEB-INF/lib") == false
                 )
             return null;
-        waCtxt.setWar(absWarPath);
+        
+        HandlerCollection handlers = (HandlerCollection) server.getChildHandlerByClass(HandlerCollection.class);
+        if (handlers == null) {
+            handlers = new HandlerCollection();
+            server.setHandler(handlers);
+        }
+
+        ContextHandlerCollection contexts = (ContextHandlerCollection) handlers.getChildHandlerByClass(ContextHandlerCollection.class);
+        if (contexts == null) {
+            contexts = new ContextHandlerCollection();
+            prependHandler(contexts, handlers);
+        }
+        
+        //ensure a DefaultHandler is present
+        if (handlers.getChildHandlerByClass(DefaultHandler.class) == null) {
+            handlers.addHandler(new DefaultHandler());
+        }
+
+        //ensure a log handler is present
+        RequestLogHandler logHandler = (RequestLogHandler) handlers.getChildHandlerByClass(RequestLogHandler.class);
+        if (logHandler == null) {
+            logHandler = new RequestLogHandler();
+            handlers.addHandler(logHandler);
+        }
+        
+        //check a connector is configured to listen on
+        Connector[] connectors = server.getConnectors();
+        if (connectors == null || connectors.length == 0) {
+            ServerConnector connector = new ServerConnector(server);
+            connector.setPort(port);
+            server.addConnector(connector);
+        } 
+        
+        final WebAppContext waCtxt = new WebAppContext(contexts, warFolder.toString(), "/civilizer");
+        
+        waCtxt.setConfigurationClasses(plusConfigurationClasses);
+        
         return waCtxt;
     }
-    
-//    private static String getFullJarPath(final Pattern pattern){
-//        for(final String element : System.getProperty("java.class.path", ".").split("[:;]")){
-//            if (pattern.matcher(element).matches())
-//                return element;
-//        }
-//        return null;
-//    }
     
     private static String getResourcePathFromJarFile(final File file, final Pattern pattern){
         try (ZipFile zf = new ZipFile(file);){
@@ -233,25 +290,6 @@ public final class Launcher {
             throw new Error(e);
         }
     }
-    
-//    private static Font createFont() {
-//        final String tgtJarPath = getFullJarPath(Pattern.compile(".*primefaces.*\\.jar"));
-//        final String fontPath = getResourcePathFromJarFile(new File(tgtJarPath), Pattern.compile(".*/fontawesome-webfont\\.ttf"));
-//        assert fontPath.isEmpty() == false;
-//        final InputStream is = Launcher.class.getClassLoader().getResourceAsStream(fontPath);
-//        assert is != null;
-//        Font font;
-//        try {
-//            font = Font.createFont(Font.TRUETYPE_FONT, is);
-//        } catch (FontFormatException e) {
-//            e.printStackTrace();
-//            throw new Error(e);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new Error(e);
-//        }
-//        return font.deriveFont(Font.PLAIN, 24f);
-//    }
 
     // Copied from https://github.com/roysix/font-awesome-to-image
     private static Point calcDrawPoint(Font font, String icon, int size, Graphics2D graphics) {
@@ -324,50 +362,7 @@ public final class Launcher {
                 }
                 ); // EventQueue.invokeLater()
     }
-    
-//    private static void setupSystemTray() {
-//        if (systemTraySupported() == false)
-//            return;
-//        
-//        fontForIcon = createFont();
-//        final Image img = createFontIcon(fontForIcon, "\uf19c", new Color(0xff, 0x0, 0x0));
-//        
-//        EventQueue.invokeLater(
-//            new Runnable() {
-//                public void run() {
-//                    final SystemTray tray = SystemTray.getSystemTray();
-//                    assert tray != null;
-//                    assert img != null;
-//                    
-//                    PopupMenu popup = new PopupMenu();
-//                    
-//                    final TrayIcon trayIcon = new TrayIcon(img, STARTING, popup);
-//                    trayIcon.setImageAutoSize(true);
-//
-//                    MenuItem item;
-//                    
-//                    item = new MenuItem("Shutdown");
-//                    item.addActionListener(new ActionListener() {
-//                        public void actionPerformed(ActionEvent e) {
-//                            tray.remove(trayIcon);
-//                            System.exit(0);
-//                        }
-//                    });
-//                    popup.add(item);
-//                    
-//                    try {
-//                        tray.add(trayIcon);
-//                        
-//                        trayIcon.displayMessage("Staring Civilizer...", "Please wait...", MessageType.INFO);
-//                    } catch (AWTException e) {
-//                        e.printStackTrace();
-//                        throw new Error(e);
-//                    }
-//                }
-//            }
-//        ); // EventQueue.invokeLater()
-//    }
-    
+
     private static void updateSystemTray() {
         if (systemTraySupported() == false)
             return;
@@ -426,63 +421,17 @@ public final class Launcher {
         return v.equals("true") || v.equals("yes") || v.equals("on");
     }
     
-//    private boolean setupWebAppContextForDevelopment(WebAppContext waCtxt) {
-//        if (!exists("pom.xml"))
-//            return false;
-//        final String webAppDir = "src/main/webapp";
-//        final String tgtDir = "target";
-//        final String webXmlFile = webAppDir + "/WEB-INF/web.xml";
-//        if (!exists(webAppDir) || !exists(tgtDir) || !exists(webXmlFile))
-//            return false;
-//        waCtxt.setBaseResource(new ResourceCollection(
-//                new String[] { webAppDir, tgtDir }
-//                ));
-//        waCtxt.setResourceAlias("/WEB-INF/classes/", "/classes/");
-//        waCtxt.setDescriptor(webXmlFile);
-//        l(LogType.INFO, "Running under the development environment...");
-//        return true;
-//    }
-//
-//    private boolean setupWebAppContextForProduction(WebAppContext waCtxt) {
-//        final File usrDir = new File(System.getProperty("user.dir"));
-//        final File[] pkgs = usrDir.listFiles(new FileFilter() {
-//            @Override
-//            public boolean accept(File pathname) {
-//                return (pathname.isDirectory() && pathname.getName().startsWith("civilizer"));
-//            }
-//        });
-//        for (File pkg : pkgs) {
-//            final String pkgPath = pkg.getAbsolutePath();
-//            if (exists(pkgPath + "/WEB-INF/web.xml") == false
-//                    || exists(pkgPath + "/WEB-INF/classes") == false
-//                    || exists(pkgPath + "/WEB-INF/lib") == false
-//                    )
-//                continue;
-//            waCtxt.setWar(pkgPath);
-//            return true;
-//        }
-//        return false;
-//    }
-    
-//    private WebAppContext setupWebAppContext() {
-//        final WebAppContext waCtxt = new WebAppContext();
-//        waCtxt.setContextPath("/civilizer");
-//        if (! setupWebAppContextForProduction(waCtxt))
-//            if (! setupWebAppContextForDevelopment(waCtxt))
-//                return null;
-//        return waCtxt;
-//    }
-    
     private void startServer(File warFolder) throws Exception {
         assert server != null;
         
+        org.eclipse.jetty.util.resource.Resource.setDefaultUseCaches(false);
+        
         final WebAppContext waCtxt = setupWebAppContext(warFolder);
         assert waCtxt != null;
-        waCtxt.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
-                ".*/jetty-runner[^/]*\\.jar$");
         server.setHandler(waCtxt);
-        server.setStopAtShutdown(true);        
+        server.setStopAtShutdown(true);
         server.start();
+        
         System.setProperty(STATUS, RUNNING);
         System.setProperty(PORT, new Integer(port).toString());
         assert System.getProperty(PORT).equals(new Integer(port).toString());
@@ -491,26 +440,8 @@ public final class Launcher {
         if (isSysPropTrue(BROWSE_AT_STARTUP)) {
             openBrowser();
         }
+        
         server.join();
     }
-
-//    private void startServer() throws Exception {
-//        assert server != null;
-//        
-//        final WebAppContext waCtxt = setupWebAppContext();
-//        assert waCtxt != null;
-//        server.setHandler(waCtxt);
-//        server.setStopAtShutdown(true);        
-//        server.start();
-//        System.setProperty(STATUS, RUNNING);
-//        System.setProperty(PORT, new Integer(port).toString());
-//        assert System.getProperty(PORT).equals(new Integer(port).toString());
-//        l(LogType.INFO, "Civilizer is running... access to " + getCvzUrl());
-//        updateSystemTray();
-//        if (isSysPropTrue(BROWSE_AT_STARTUP)) {
-//            openBrowser();
-//        }
-//        server.join();
-//    }
 
 }

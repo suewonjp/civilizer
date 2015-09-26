@@ -190,26 +190,26 @@
         </dependency>
 
 		<!-- JSF 2 -->
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-api</artifactId>
-			<version>${jsf-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
-			<version>${jsf-version}</version>
-		</dependency>
 <!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.myfaces.core</groupId> -->
-<!-- 			<artifactId>myfaces-api</artifactId> -->
+<!-- 			<groupId>com.sun.faces</groupId> -->
+<!-- 			<artifactId>jsf-api</artifactId> -->
 <!-- 			<version>${jsf-version}</version> -->
 <!-- 		</dependency> -->
 <!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.myfaces.core</groupId> -->
-<!-- 			<artifactId>myfaces-impl</artifactId> -->
+<!-- 			<groupId>com.sun.faces</groupId> -->
+<!-- 			<artifactId>jsf-impl</artifactId> -->
 <!-- 			<version>${jsf-version}</version> -->
 <!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.apache.myfaces.core</groupId>
+			<artifactId>myfaces-api</artifactId>
+			<version>${jsf-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.myfaces.core</groupId>
+			<artifactId>myfaces-impl</artifactId>
+			<version>${jsf-version}</version>
+		</dependency>
 		<dependency>
 		    <groupId>javax.el</groupId>
 		    <artifactId>el-api</artifactId>
