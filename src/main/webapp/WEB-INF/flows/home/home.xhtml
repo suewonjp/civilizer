@@ -151,9 +151,13 @@
         <div id="new-password-box">
             <h:panelGrid columns="2" cellpadding="5">
                 <p:outputLabel for="pwd1" value="#{msg['password']}"/>
-                <p:password id="pwd1" onkeyup="UPC.onTypePassword(event)" value="#{userProfileBean.password}" required="false"/>
+                <p:password id="pwd1" onkeyup="UPC.onTypePassword(event)" value="#{userProfileBean.password}" required="false">
+                    <f:validateBean disabled="true"/>
+                </p:password>
                 <p:outputLabel for="pwd2" value="#{msg['confirm_password']}"/>
-                <p:password id="pwd2" onkeyup="UPC.onTypePassword(event)" required="false"/>
+                <p:password id="pwd2" onkeyup="UPC.onTypePassword(event)" required="false">
+                    <f:validateBean disabled="true"/>
+                </p:password>
             </h:panelGrid>
         </div>
         
