@@ -84,6 +84,7 @@ public final class UserProfileBean implements Serializable {
     
     public void setLocale(Locale l) {
         locale = l;
+        System.setProperty(AppOptions.LOCALE, l.getLanguage());
         FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
     }
 

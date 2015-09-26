@@ -2,12 +2,15 @@ package com.civilizer.web.view;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.civilizer.config.AppOptions;
 
 public final class ViewUtil {
 	
@@ -38,9 +41,9 @@ public final class ViewUtil {
 	}
 	
 	public static String getResourceBundleString(String key) {
-		final UserProfileBean userProfileBean = ViewUtil.findBean("userProfileBean");
-    	final Locale locale = userProfileBean.getLocale();
-    	final ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_RESOURCE_BASE_NAME, locale);
+//		final UserProfileBean userProfileBean = ViewUtil.findBean("userProfileBean");
+//    	final Locale locale = userProfileBean.getLocale();
+    	final ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_RESOURCE_BASE_NAME, new Locale(System.getProperty(AppOptions.LOCALE)));
     	return bundle.getString(key);
 	}
     
