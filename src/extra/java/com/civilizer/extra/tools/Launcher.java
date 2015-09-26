@@ -19,14 +19,15 @@ import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-//import java.awt.event.MouseAdapter;
-//import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileFilter;
+//import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -34,14 +35,26 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-//import javax.swing.ImageIcon;
-//import javax.swing.JMenuItem;
-//import javax.swing.JPopupMenu;
-
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.util.resource.ResourceCollection;
+//import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+// [IMPORTANT!]
+// To run this class on Eclipse, the following procedure is required.
+//
+// 1. First, Build the target war package.
+//      - run 'mvn package' from the command line.
+//      - Then, refresh the project. (press F5 with the project selected)
+// 2. On Eclipse, go to 'Run > Debug Configurations... > Java Application' 
+//    and click the toolbar button for 'New launch configuration'.
+//      - For Main tab > Main class input box:
+//          Add 'com.civilizer.extra.tools.Launcher'
+//      - (Optional) For Arguments tab > VM Arguments text box:
+//          add ' -ea -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog -Dorg.eclipse.jetty.LEVEL=INFO '
+//      - For Classpath tab:
+//          Remove all classpath except Bootstrap Entries.
+//          And then add the path 'extra/lib/jetty-runner.jar'
+//          Also add the path 'target/extra'
 public final class Launcher {
     
     private static final String PORT              = "civilizer.port";
@@ -66,7 +79,10 @@ public final class Launcher {
             System.setProperty(STATUS, STARTING);
             System.setProperty(PORT, "");
             
-            setupSystemTray();
+            final File warFolder = findWarFolder();
+            assert warFolder != null && warFolder.isDirectory();
+            
+            setupSystemTray(warFolder);
             
             int port = 8080;
             Arrays.sort(args);
@@ -81,12 +97,19 @@ public final class Launcher {
                     System.exit(1);
                 }
             }
-            new Launcher(port).startServer();
+            new Launcher(port).startServer(warFolder);
         } catch (Exception e) {
             l(LogType.ERROR, "An unhandled exception triggered. exiting...");
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    private Launcher(int port) {
+        assert 0 < port && port <= 0xffff;
+        server = new Server(port);
+        assert server != null;
+        this.port = port;
     }
     
     private static String getCvzUrl() {
@@ -101,13 +124,61 @@ public final class Launcher {
         return "http://localhost:" + port + "/civilizer/app/home";
     }
     
-    private static String getFullJarPath(final Pattern pattern){
-        for(final String element : System.getProperty("java.class.path", ".").split("[:;]")){
-            if (pattern.matcher(element).matches())
-                return element;
+    private static File getFileOrFolderFromPattern(String folderToSearch, String pattern, boolean targetIsFolder) {
+        if (folderToSearch == null || folderToSearch.isEmpty())
+            folderToSearch = System.getProperty("user.dir");
+        final File parentFolder = new File(folderToSearch);
+        if (parentFolder.isDirectory() == false)
+            return null;
+        final Pattern ptn = Pattern.compile(pattern);
+        for (File f : parentFolder.listFiles()) {
+            if (targetIsFolder && !f.isDirectory())
+                continue;
+            if (!targetIsFolder && !f.isFile())
+                continue;
+            if (ptn.matcher(f.getName()).matches())
+                return f;
         }
         return null;
     }
+    
+    private static File findWarFolder() {
+        File output = null;
+        if (exists("pom.xml")) {
+            // The current working directory is the root of the source package.
+            // This instance might've been launched from Eclipse. (development situation)
+            output = getFileOrFolderFromPattern("target", "civilizer.*", true);
+        }
+        else {
+            // This instance might've been launched from a command line. (production situation)
+            output = getFileOrFolderFromPattern(null, "civilizer", true);
+        }
+        
+        return output;
+    }
+
+    private WebAppContext setupWebAppContext(File warFolder) {
+        if (warFolder.isDirectory() == false)
+            return null;
+        final WebAppContext waCtxt = new WebAppContext();
+        waCtxt.setContextPath("/civilizer");
+        final String absWarPath = warFolder.getAbsolutePath();
+        if (exists(absWarPath + "/WEB-INF/web.xml") == false
+                || exists(absWarPath + "/WEB-INF/classes") == false
+                || exists(absWarPath + "/WEB-INF/lib") == false
+                )
+            return null;
+        waCtxt.setWar(absWarPath);
+        return waCtxt;
+    }
+    
+//    private static String getFullJarPath(final Pattern pattern){
+//        for(final String element : System.getProperty("java.class.path", ".").split("[:;]")){
+//            if (pattern.matcher(element).matches())
+//                return element;
+//        }
+//        return null;
+//    }
     
     private static String getResourcePathFromJarFile(final File file, final Pattern pattern){
         try (ZipFile zf = new ZipFile(file);){
@@ -125,24 +196,62 @@ public final class Launcher {
         return "";
     }
     
-    private static Font createFont() {
-        final String tgtJarPath = getFullJarPath(Pattern.compile(".*primefaces.*\\.jar"));
-        final String fontPath = getResourcePathFromJarFile(new File(tgtJarPath), Pattern.compile(".*/fontawesome-webfont\\.ttf"));
+    private static Font createFont(File warFolder) {
+        final File tgtJar = getFileOrFolderFromPattern(warFolder+"/WEB-INF/lib", ".*primefaces.*\\.jar", false);
+        assert tgtJar != null && tgtJar.isFile();
+        final String fontPath = getResourcePathFromJarFile(tgtJar, Pattern.compile(".*/fontawesome-webfont\\.ttf"));
         assert fontPath.isEmpty() == false;
-        final InputStream is = Launcher.class.getClassLoader().getResourceAsStream(fontPath);
-        assert is != null;
-        Font font;
+
+        URL[] urls = null;
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (FontFormatException e) {
+            urls = new URL[]{ tgtJar.toURI().toURL() };
+        } catch (MalformedURLException e) {
             e.printStackTrace();
-            throw new Error(e);
-        } catch (IOException e) {
-            e.printStackTrace();
+            assert false;
             throw new Error(e);
         }
-        return font.deriveFont(Font.PLAIN, 24f);
+        
+        try (final URLClassLoader cl = new URLClassLoader(urls);) {
+            final InputStream is = cl.getResourceAsStream(fontPath);
+            assert is != null;
+            Font font;
+            try {
+                font = Font.createFont(Font.TRUETYPE_FONT, is);
+            } catch (FontFormatException e) {
+                e.printStackTrace();
+                assert false;
+                throw new Error(e);
+            } catch (IOException e) {
+                e.printStackTrace();
+                assert false;
+                throw new Error(e);
+            }
+            return font.deriveFont(Font.PLAIN, 24f);
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert false;
+            throw new Error(e);
+        }
     }
+    
+//    private static Font createFont() {
+//        final String tgtJarPath = getFullJarPath(Pattern.compile(".*primefaces.*\\.jar"));
+//        final String fontPath = getResourcePathFromJarFile(new File(tgtJarPath), Pattern.compile(".*/fontawesome-webfont\\.ttf"));
+//        assert fontPath.isEmpty() == false;
+//        final InputStream is = Launcher.class.getClassLoader().getResourceAsStream(fontPath);
+//        assert is != null;
+//        Font font;
+//        try {
+//            font = Font.createFont(Font.TRUETYPE_FONT, is);
+//        } catch (FontFormatException e) {
+//            e.printStackTrace();
+//            throw new Error(e);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            throw new Error(e);
+//        }
+//        return font.deriveFont(Font.PLAIN, 24f);
+//    }
 
     // Copied from https://github.com/roysix/font-awesome-to-image
     private static Point calcDrawPoint(Font font, String icon, int size, Graphics2D graphics) {
@@ -173,71 +282,91 @@ public final class Launcher {
         return (SystemTray.isSupported() && !System.getProperty("os.name").toLowerCase().contains("linux"));
     }
     
-    private static void setupSystemTray() {
+    private static void setupSystemTray(File warFolder) {
         if (systemTraySupported() == false)
             return;
         
-        fontForIcon = createFont();
+        fontForIcon = createFont(warFolder);
         final Image img = createFontIcon(fontForIcon, "\uf19c", new Color(0xff, 0x0, 0x0));
         
         EventQueue.invokeLater(
-            new Runnable() {
-                public void run() {
-                    final SystemTray tray = SystemTray.getSystemTray();
-                    assert tray != null;
-                    assert img != null;
-                    
-//                    final TrayIcon trayIcon = new TrayIcon(img, STARTING, null);
-//                    trayIcon.setImageAutoSize(true);
-//
-//                    final JPopupMenu jpopup = new JPopupMenu();
-//
-//                    JMenuItem javaCupMI = new JMenuItem("Example", new ImageIcon("javacup.gif"));
-//                    jpopup.add(javaCupMI);
-//
-//                    jpopup.addSeparator();
-//
-//                    JMenuItem exitMI = new JMenuItem("Exit");
-//                    jpopup.add(exitMI);
-//                    
-//                    trayIcon.addMouseListener(new MouseAdapter() {
-//                        public void mouseReleased(MouseEvent e) {
-//                            if (e.getButton() == MouseEvent.BUTTON1) {
-//                                jpopup.setLocation(e.getX(), e.getY());
-//                                jpopup.setInvoker(null);
-//                                jpopup.setVisible(true);
-//                            }
-//                        }
-//                    });
-                    
-                    PopupMenu popup = new PopupMenu();
-                    
-                    final TrayIcon trayIcon = new TrayIcon(img, STARTING, popup);
-                    trayIcon.setImageAutoSize(true);
-
-                    MenuItem item;
-                    
-                    item = new MenuItem("Shutdown");
-                    item.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            tray.remove(trayIcon);
-                            System.exit(0);
-                        }
-                    });
-                    popup.add(item);
-                    
-                    try {
-                        tray.add(trayIcon);
+                new Runnable() {
+                    public void run() {
+                        final SystemTray tray = SystemTray.getSystemTray();
+                        assert tray != null;
+                        assert img != null;
                         
-                        trayIcon.displayMessage("Staring Civilizer...", "Please wait...", MessageType.INFO);
-                    } catch (AWTException e) {
-                        e.printStackTrace();
-                        throw new Error(e);
+                        PopupMenu popup = new PopupMenu();
+                        
+                        final TrayIcon trayIcon = new TrayIcon(img, STARTING, popup);
+                        trayIcon.setImageAutoSize(true);
+                        
+                        MenuItem item;
+                        
+                        item = new MenuItem("Shutdown");
+                        item.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                tray.remove(trayIcon);
+                                System.exit(0);
+                            }
+                        });
+                        popup.add(item);
+                        
+                        try {
+                            tray.add(trayIcon);
+                            
+                            trayIcon.displayMessage("Staring Civilizer...", "Please wait...", MessageType.INFO);
+                        } catch (AWTException e) {
+                            e.printStackTrace();
+                            throw new Error(e);
+                        }
                     }
                 }
-            }
-        ); // EventQueue.invokeLater()
+                ); // EventQueue.invokeLater()
     }
+    
+//    private static void setupSystemTray() {
+//        if (systemTraySupported() == false)
+//            return;
+//        
+//        fontForIcon = createFont();
+//        final Image img = createFontIcon(fontForIcon, "\uf19c", new Color(0xff, 0x0, 0x0));
+//        
+//        EventQueue.invokeLater(
+//            new Runnable() {
+//                public void run() {
+//                    final SystemTray tray = SystemTray.getSystemTray();
+//                    assert tray != null;
+//                    assert img != null;
+//                    
+//                    PopupMenu popup = new PopupMenu();
+//                    
+//                    final TrayIcon trayIcon = new TrayIcon(img, STARTING, popup);
+//                    trayIcon.setImageAutoSize(true);
+//
+//                    MenuItem item;
+//                    
+//                    item = new MenuItem("Shutdown");
+//                    item.addActionListener(new ActionListener() {
+//                        public void actionPerformed(ActionEvent e) {
+//                            tray.remove(trayIcon);
+//                            System.exit(0);
+//                        }
+//                    });
+//                    popup.add(item);
+//                    
+//                    try {
+//                        tray.add(trayIcon);
+//                        
+//                        trayIcon.displayMessage("Staring Civilizer...", "Please wait...", MessageType.INFO);
+//                    } catch (AWTException e) {
+//                        e.printStackTrace();
+//                        throw new Error(e);
+//                    }
+//                }
+//            }
+//        ); // EventQueue.invokeLater()
+//    }
     
     private static void updateSystemTray() {
         if (systemTraySupported() == false)
@@ -284,13 +413,6 @@ public final class Launcher {
     private static void l(LogType type, String msg) {
         System.out.println(MessageFormat.format("{0} : [{1}] {2}", Launcher.class.getSimpleName(), type.toString(), msg));
     }
-
-    private Launcher(int port) {
-        assert 0 < port && port <= 0xffff;
-        server = new Server(port);
-        assert server != null;
-        this.port = port;
-    }
     
     private static boolean exists(String path) {
         return new File(path).exists();
@@ -304,58 +426,60 @@ public final class Launcher {
         return v.equals("true") || v.equals("yes") || v.equals("on");
     }
     
-    private boolean setupWebAppContextForDevelopment(WebAppContext waCtxt) {
-        if (!exists("pom.xml"))
-            return false;
-        final String webAppDir = "src/main/webapp";
-        final String tgtDir = "target";
-        final String webXmlFile = webAppDir + "/WEB-INF/web.xml";
-        if (!exists(webAppDir) || !exists(tgtDir) || !exists(webXmlFile))
-            return false;
-        waCtxt.setBaseResource(new ResourceCollection(
-                new String[] { webAppDir, tgtDir }
-                ));
-        waCtxt.setResourceAlias("/WEB-INF/classes/", "/classes/");
-        waCtxt.setDescriptor(webXmlFile);
-        l(LogType.INFO, "Running under the development environment...");
-        return true;
-    }
-
-    private boolean setupWebAppContextForProduction(WebAppContext waCtxt) {
-        final File usrDir = new File(System.getProperty("user.dir"));
-        final File[] pkgs = usrDir.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return (pathname.isDirectory() && pathname.getName().startsWith("civilizer"));
-            }
-        });
-        for (File pkg : pkgs) {
-            final String pkgPath = pkg.getAbsolutePath();
-            if (exists(pkgPath + "/WEB-INF/web.xml") == false
-                    || exists(pkgPath + "/WEB-INF/classes") == false
-                    || exists(pkgPath + "/WEB-INF/lib") == false
-                    )
-                continue;
-            waCtxt.setWar(pkgPath);
-            return true;
-        }
-        return false;
-    }
+//    private boolean setupWebAppContextForDevelopment(WebAppContext waCtxt) {
+//        if (!exists("pom.xml"))
+//            return false;
+//        final String webAppDir = "src/main/webapp";
+//        final String tgtDir = "target";
+//        final String webXmlFile = webAppDir + "/WEB-INF/web.xml";
+//        if (!exists(webAppDir) || !exists(tgtDir) || !exists(webXmlFile))
+//            return false;
+//        waCtxt.setBaseResource(new ResourceCollection(
+//                new String[] { webAppDir, tgtDir }
+//                ));
+//        waCtxt.setResourceAlias("/WEB-INF/classes/", "/classes/");
+//        waCtxt.setDescriptor(webXmlFile);
+//        l(LogType.INFO, "Running under the development environment...");
+//        return true;
+//    }
+//
+//    private boolean setupWebAppContextForProduction(WebAppContext waCtxt) {
+//        final File usrDir = new File(System.getProperty("user.dir"));
+//        final File[] pkgs = usrDir.listFiles(new FileFilter() {
+//            @Override
+//            public boolean accept(File pathname) {
+//                return (pathname.isDirectory() && pathname.getName().startsWith("civilizer"));
+//            }
+//        });
+//        for (File pkg : pkgs) {
+//            final String pkgPath = pkg.getAbsolutePath();
+//            if (exists(pkgPath + "/WEB-INF/web.xml") == false
+//                    || exists(pkgPath + "/WEB-INF/classes") == false
+//                    || exists(pkgPath + "/WEB-INF/lib") == false
+//                    )
+//                continue;
+//            waCtxt.setWar(pkgPath);
+//            return true;
+//        }
+//        return false;
+//    }
     
-    private WebAppContext setupWebAppContext() {
-        final WebAppContext waCtxt = new WebAppContext();
-        waCtxt.setContextPath("/civilizer");
-        if (! setupWebAppContextForProduction(waCtxt))
-            if (! setupWebAppContextForDevelopment(waCtxt))
-                return null;
-        return waCtxt;
-    }
+//    private WebAppContext setupWebAppContext() {
+//        final WebAppContext waCtxt = new WebAppContext();
+//        waCtxt.setContextPath("/civilizer");
+//        if (! setupWebAppContextForProduction(waCtxt))
+//            if (! setupWebAppContextForDevelopment(waCtxt))
+//                return null;
+//        return waCtxt;
+//    }
     
-    private void startServer() throws Exception {
+    private void startServer(File warFolder) throws Exception {
         assert server != null;
         
-        final WebAppContext waCtxt = setupWebAppContext();
+        final WebAppContext waCtxt = setupWebAppContext(warFolder);
         assert waCtxt != null;
+        waCtxt.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
+                ".*/jetty-runner[^/]*\\.jar$");
         server.setHandler(waCtxt);
         server.setStopAtShutdown(true);        
         server.start();
@@ -369,5 +493,24 @@ public final class Launcher {
         }
         server.join();
     }
+
+//    private void startServer() throws Exception {
+//        assert server != null;
+//        
+//        final WebAppContext waCtxt = setupWebAppContext();
+//        assert waCtxt != null;
+//        server.setHandler(waCtxt);
+//        server.setStopAtShutdown(true);        
+//        server.start();
+//        System.setProperty(STATUS, RUNNING);
+//        System.setProperty(PORT, new Integer(port).toString());
+//        assert System.getProperty(PORT).equals(new Integer(port).toString());
+//        l(LogType.INFO, "Civilizer is running... access to " + getCvzUrl());
+//        updateSystemTray();
+//        if (isSysPropTrue(BROWSE_AT_STARTUP)) {
+//            openBrowser();
+//        }
+//        server.join();
+//    }
 
 }
