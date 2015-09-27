@@ -92,7 +92,7 @@
             <p:tab id="confirm-import-step">
                 <p:panel>
                     <f:facet name="header">
-                        <h:outputText styleClass="fa fa-thumbs-o-up" value="#{msg['success']}"/>
+                        <i class="fa fa-thumbs-o-up"></i>#{msg['success']}
                     </f:facet>
                     <h:panelGrid columns="1" cellpadding="5">
                         <p:commandButton value="#{msg['refresh_page']}" oncomplete="location.replace('home')" onclick="DBC.hideDialog()" icon="fa fa-check"/>
@@ -118,7 +118,7 @@
             <p:tab id="confirm-export-step">
                 <p:panel>
                     <f:facet name="header">
-                        <h:outputText styleClass="fa fa-thumbs-o-up" value="#{msg['success']}"/>
+                        <i class="fa fa-thumbs-o-up"></i>#{msg['success']}
                     </f:facet>
                     <h:panelGrid columns="1" cellpadding="5">
                         <p:commandButton value="#{msg['ok']}" onclick="DBC.hideDialog()" icon="fa fa-check"/>
