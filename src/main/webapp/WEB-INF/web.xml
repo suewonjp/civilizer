@@ -14,6 +14,14 @@
         <param-value>/WEB-INF/spring/root-context.xml /WEB-INF/spring/security-context.xml</param-value>
     </context-param>
     <context-param>
+        <param-name>org.apache.myfaces.STRICT_JSF_2_FACELETS_COMPATIBILITY</param-name>
+        <param-value>true</param-value>
+    </context-param>
+<!--     <context-param> -->
+<!--         <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name> -->
+<!--         <param-value>-1</param-value> -->
+<!--     </context-param> -->
+    <context-param>
         <param-name>org.apache.myfaces.EXPRESSION_FACTORY</param-name>
         <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
     </context-param>
@@ -32,10 +40,6 @@
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Production</param-value>
-    </context-param>
-    <context-param>
-        <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
-        <param-value>1</param-value>
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>
