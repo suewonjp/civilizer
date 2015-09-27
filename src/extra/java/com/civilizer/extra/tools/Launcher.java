@@ -60,6 +60,8 @@ import org.eclipse.jetty.webapp.WebAppContext;
 //          Remove all classpath except Bootstrap Entries.
 //          And then add the path 'extra/lib/jetty-runner.jar'
 //          Also add the path 'target/extra'
+//      - For Source tab:
+//          Click Add > Java Project, then add 'civilizer'
 // 3. Note that this server launches the webapp located at 'target/civilizer-1.0.0.CI-SNAPSHOT'.
 //    If you modified other parts of the source than this class,
 //    then run 'mvn clean package -Dmaven.test.skip=true' to confirm the effect of the modification.
