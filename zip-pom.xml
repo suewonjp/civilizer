@@ -35,6 +35,8 @@
                                 <echo message="target version is ${civilizer.version}"/>
                                 
                                 <echo message="${civilizer.version}" file="${output-dir}/info/version.txt"/>
+
+                                <copy file="jetty.xml" todir="${output-dir}"/>
                                 
                                 <echo message="copying documentations..."/>                                
                                 <copy file="README.md" tofile="${output-dir}/info/readme.txt"/>
@@ -54,7 +56,7 @@
                                 <echo message="zipping all..."/>                                
                                 <zip destfile="${output-dir}/${app-name}.${civilizer.version}.zip">
                                     <zipfileset dir="${output-dir}/info" prefix="${app-name}/info"/>
-                                    <zipfileset filemode="744" dir="${output-dir}" includes="*.exe *.sh *.bat" prefix="${app-name}"/>
+                                    <zipfileset filemode="744" dir="${output-dir}" includes="*.exe *.sh *.bat jetty.xml" prefix="${app-name}"/>
                                     <zipfileset filemode="744" dir="${output-dir}/shell-utils" prefix="${app-name}/shell-utils"/>
                                     <zipfileset dir="${cvz-dir}" prefix="${app-name}/${app-name}"/>
                                     <zipfileset dir="${extra-dir}" prefix="${app-name}/extra"/>
