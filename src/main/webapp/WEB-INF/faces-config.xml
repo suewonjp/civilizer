@@ -24,5 +24,13 @@
             <var>core</var>
         </resource-bundle>
     </application>
+    
+    <faces-config-extension>
+        <facelets-processing> 
+            <file-extension>.xhtml</file-extension> 
+            <process-as>xhtml</process-as> 
+            <oam-compress-spaces>true</oam-compress-spaces> 
+        </facelets-processing> 
+    </faces-config-extension> 
 
 </faces-config>
