@@ -45,10 +45,10 @@ import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 // [IMPORTANT!]
-// To run this class on Eclipse, the following procedure is required.
+// To run this embedded Jetty server on Eclipse, the following procedure is required.
 //
-// 1. First, Build the target war package.
-//      - run 'mvn package' from the command line.
+// 1. First, Build the target WAR package.
+//      - run 'mvn clean package' from the command line.
 //      - Then, refresh the project. (press F5 with the project selected)
 // 2. On Eclipse, go to 'Run > Debug Configurations... > Java Application' 
 //    and click the toolbar button for 'New launch configuration'.
@@ -60,6 +60,11 @@ import org.eclipse.jetty.webapp.WebAppContext;
 //          Remove all classpath except Bootstrap Entries.
 //          And then add the path 'extra/lib/jetty-runner.jar'
 //          Also add the path 'target/extra'
+// 3. Note that this server launches the webapp located at 'target/civilizer-1.0.0.CI-SNAPSHOT'.
+//    If you modified other parts of the source than this class,
+//    then run 'mvn clean package -Dmaven.test.skip=true' to confirm the effect of the modification.
+//    This embedded server will ignore any outcome ( other than this class ) built by Eclipse.
+
 public final class Launcher {
     
     private static final String PORT              = "civilizer.port";
