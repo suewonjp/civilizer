@@ -2,7 +2,6 @@ package com.civilizer.extra.tools;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -26,27 +25,19 @@ public final class DataBroker {
             System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
         new Configurator();
         
-        Arrays.sort(args);
-        
-        {
-            final String option = "-export";
-            final int iii = Arrays.binarySearch(args, option);
-            if (-1 < iii) {
-                if (iii < args.length-1) {
-                    onExport(args[iii + 1]);
+        for (int i=0;i<args.length; ++i) {
+            switch (args[i]) {
+            case "-export":
+                if (i < args.length-1) {
+                    onExport(args[++i]);
                 }
                 else {
                     onExport(null);
                 }
                 return;
-            }
-        }
-        {
-            final String option = "-import";
-            final int iii = Arrays.binarySearch(args, option);
-            if (-1 < iii) {
-                if (iii < args.length-1) {
-                    onImport(args[iii + 1]);
+            case "-import":
+                if (i < args.length-1) {
+                    onImport(args[++i]);
                 }
                 else {
                     onImport(null);
