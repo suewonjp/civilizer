@@ -35,6 +35,14 @@
         <param-value>Production</param-value>
     </context-param>
     <context-param>
+        <param-name>javax.faces.FACELETS_DEVELOPMENT</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+        <param-value>2</param-value>
+    </context-param>
+    <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>ui-darkness</param-value>
     </context-param>

@@ -26,6 +26,7 @@
 </ui:define>
 
 <ui:define name="content">
+<ui:debug hotkey="d" rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}"/>
 
 <h:form id="user-menu-dlg-form">
     <p:dialog id="about-dlg" widgetVar="aboutDlg" header="#{msg['about_app']}"
