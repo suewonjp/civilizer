@@ -428,6 +428,22 @@ public class SearchTest extends DaoTest {
 				assertEquals(true, fragment.containsTagName(tagName));
 			}
 		}
+        {
+            // comma-separated tag list should be equivalent to space-separated tag list
+            int count = 0;
+            for (Fragment f : fragments) {
+                if (f.getTags().size() >= 2)
+                    ++count;
+            }
+            String searchPhrase = "tag:\"my tag\" \"your tag\"";
+            SearchParams sp = new SearchParams(searchPhrase);
+            List<Fragment> results = fragmentDao.findBySearchParams(sp, tags);
+            assertEquals(count, results.size());
+            searchPhrase = "tag:\"my tag\", \"your tag\"";
+            sp = new SearchParams(searchPhrase);
+            results = fragmentDao.findBySearchParams(sp, tags);
+            assertEquals(count, results.size());
+        }
     }
     
     @Test
