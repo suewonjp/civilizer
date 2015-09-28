@@ -12,6 +12,7 @@ This product includes software developed by H2 Group.
     http://h2database.com/html/main.html
 
 This product includes software developed by Apache Software Foundation. 
+    https://myfaces.apache.org
     https://commons.apache.org
     http://logging.apache.org/log4j
 
