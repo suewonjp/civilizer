@@ -68,7 +68,7 @@ Supported browsers: (note that old versions may not work correctly)
 ### How To Install and Run
     
 1. ***Make sure your system has JRE (version 7+) installed on it.***
-1. Download the latest released zip file and extract its content on your machine.
+1. Download a .zip file of [the latest release](https://github.com/suewonjp/civilizer/releases/latest) and extract its content on your machine.
 1. Run it with the following instruction.
     - Windows Users:
         - Just click ***civilizer-win32.exe***.
