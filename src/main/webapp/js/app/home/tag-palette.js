@@ -98,6 +98,8 @@ function showTagInfo() {
     
     var target = $("#tag-context-menu").data("target-tag");
     var tagName = target.find(".each-tag-name").text() || target.text();
+    if (target.attr("_frgCnt") === undefined)
+        target = getTagByName(tagName);
     
     dlg.jq.find("._tag-name")
     .text(" "+tagName+" [ "+target.attr("_frgCnt")+" ("+target.attr("_frgCntWtHrc")+") ]");

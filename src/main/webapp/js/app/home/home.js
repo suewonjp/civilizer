@@ -636,9 +636,9 @@ function getTagName(tagId) {
 	return (tag.length > 0) ? tag.find(".each-tag-name").text() : "";
 }
 
-//function getTagByName(name) {
-//    return $("#tag-palette-flat").find(".each-tag-name:contains('"+name+"')").closest(".each-tag");
-//}
+function getTagByName(name) {
+    return $("#tag-palette-flat").find(".each-tag-name:contains('"+name+"')").closest(".each-tag");
+}
 
 function getFilePath(fileId) {
 	var file = $("#file-path-tree").find(".each-file[_id=" + fileId + "]");
