@@ -125,7 +125,7 @@ public class DomainSearchParamsTest {
 			assertEquals(false, keywords.isAny());
 		}
 		{
-			final String words = " \t: \t\n ";
+			final String words = " \t: \t\n \u3000 ";
 			final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 			assertEquals(0, keywords.getWords().size());
 			assertEquals(SearchParams.TARGET_DEFAULT, keywords.getTarget());
@@ -161,7 +161,7 @@ public class DomainSearchParamsTest {
 		{
 		    // As a special rule, tags with trailing commas can be accepted;
 		    // and those commas should be trimmed
-		    final String words = "tag: tag0, tag1, , , tag2, , , ,";
+		    final String words = "tag: tag0, tag1, , , tag2, ,\u3000 , ,";
 		    final SearchParams.Keywords keywords = new SearchParams.Keywords(words);
 		    assertEquals(SearchParams.TARGET_TAG, keywords.getTarget());
 		    assertEquals(3, keywords.getWords().size());
