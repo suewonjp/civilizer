@@ -3,7 +3,7 @@
 Civilizer is a web application that helps you efficiently manage your data/knowledge/idea including:
 
 - knowledge/expertise for your job
-- temporary memo/notes
+- temporary memo/notesa
 - schedule/plan
 - detailed procedures you often forget for infrequent tasks
   - e.g. installing printer drivers on your computers, submitting a tax return, ...
@@ -36,6 +36,16 @@ Civilizer has a full text search functionality to greatly help you access right 
 ### Credits 
 
 > Civilizer has been inspired by Piggydb (http://piggydb.net/) developed by Daisuke Morita.  
+
+### Related Materials
+- Civilizer Blog 
+  - https://sourceforge.net/p/civilizer/blog/
+- Civilizer Wiki and online Docummentions
+  - https://github.com/suewonjp/civilizer/wiki
+- Civilizer Forum
+  - https://sourceforge.net/p/civilizer/forum/
+- Civilizer Tickets
+  - https://sourceforge.net/p/civilizer/tickets/
 
 * * *
 ### Prerequisites
@@ -178,3 +188,8 @@ Shell scripts have been provided to build all the binaries/resources and package
 
 * * *
 Written by Suewon Bahng   ( Last Updated 27 September, 2015 )
+
+### Contributors
+Suewon Bahng  
+
+Other contributors are welcome!
