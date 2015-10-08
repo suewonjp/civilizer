@@ -49,6 +49,9 @@ This product includes software developed by Todd Northrop.
 
 This product includes software developed by The Blueprint Community.
     http://www.blueprintcss.org
+    
+This product includes software developed by Jonathan Ong and others.
+    https://github.com/component/textarea-caret-position
 
 This product uses the following software in order to build and package it.
     https://maven.apache.org/

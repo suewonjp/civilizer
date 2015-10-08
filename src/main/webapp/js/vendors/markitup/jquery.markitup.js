@@ -475,10 +475,8 @@
 			// scroll to the selection "approximately"
 			function scroll(start) {
 			    var $textarea = $(textarea);
-			    var lineHeight = parseInt($textarea.css('line-height'));
-			    var lineNumberTop = Math.max(0, textarea.value.substring(0, start).split('\n').length - 1);
-			    var allLines = Math.max(0, textarea.value.split('\n').length - 1);
-			    $textarea.scrollTop(lineNumberTop*lineHeight - (allLines-lineNumberTop)*lineHeight*0.2);
+                var caretPos = getCaretCoordinates(textarea, start);
+                $textarea.scrollTop(caretPos.top - $textarea.height()*0.5);
             }
 
 			// set a selection
