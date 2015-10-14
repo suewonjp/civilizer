@@ -1,101 +1,138 @@
-function showSearchDialog(panelId, qsPhrase) {
-    var dlg = PF("searchDlg");
-    
-    // Hide the dialog with a ESC key press except when the quick search input is focused.
-    // Without this code, pressing ESC key to hide autocomplete will hide the dialog,
-    // which will be a very awkward user experience.
-    var en = 'keyup.dialog_' + dlg.id;
-    $(document).off(en).on(en, function(e) {
-        active = parseInt(dlg.jq.css('z-index')) === PrimeFaces.zindex;
-        if (e.which === $.ui.keyCode.ESCAPE && dlg.isVisible() && active) {
-            if ($(e.target).attr("id") != "fragment-group-form:search-panel:quick-search-input")
-                dlg.hide();
-        };
-    });
-    
-    var panelBtns = $("#target-panels-on-search-dlg");
-    panelBtns.buttonset();
-    $("#panel-radio-on-search-dlg-"+panelId).prop("checked", true);
-    panelBtns.buttonset("refresh");
-    
-    var qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input").val(qsPhrase);
-    
-    $("#fragment-group-form\\:search-panel\\:tag-keywords").watermark(MSG.how_to_input_tags);
+var SC = createSearchController();
 
-    dlg.cvzCurPanelId = panelId;
-    dlg.show();
+function createSearchController() {
+    var ctrr = new Object();
+    var dlg, panelBtns, qsInput;
+    var curPanelId = 1;
     
-    dlg.jq.off(".cvz_sch_dlg")
-    .on("change.cvz_sch_dlg", "#target-panels-on-search-dlg input[type=radio]", function(e) {
-        var pid = $(e.currentTarget).attr("_pid");
-        dlg.cvzCurPanelId = pid;
-    })
-    .on("keyup.cvz_sch_dlg", function(e) {
-        if (e.ctrlKey && e.shiftKey && e.which == $.ui.keyCode.SPACE) {
-            dlg.cvzCurPanelId = (dlg.cvzCurPanelId + 1) % 3;
-            $("#panel-radio-on-search-dlg-"+dlg.cvzCurPanelId).prop("checked", true);
-            panelBtns.buttonset("refresh");
-        }
-    })
-    .on("keypress.cvz_sch_dlg", "#fragment-group-form\\:search-panel\\:quick-search-input", function(e) {
-        if (e.which == $.ui.keyCode.ENTER) {
-            // Quick search tab responds to the enter key
-            if ($(this).val().trim()) {
-                searchFragmentsForPanel(dlg.cvzCurPanelId);
+    function getDialog() {
+        return dlg || (dlg = PF("searchDlg"));
+    }
+
+    function getPanelButtons() {
+        return panelBtns || (panelBtns = $("#target-panels-on-search-dlg").buttonset());
+    }
+    
+    function getQuickSearchInput() {
+        return qsInput || (qsInput = $("#fragment-group-form\\:search-panel\\:quick-search-input"));
+    }
+    
+    function fixEscKeyProblem() {
+        // Hide the dialog with a ESC key press except when the quick search input is focused.
+        // Without this code, pressing ESC key to hide autocomplete will hide the dialog,
+        // which will be a very awkward user experience.
+        var dlg = getDialog();
+        var en = 'keyup.dialog_' + dlg.id;
+        $(document).off(en).on(en, function(e) {
+            active = parseInt(dlg.jq.css('z-index')) === PrimeFaces.zindex;
+            if (e.which === $.ui.keyCode.ESCAPE && dlg.isVisible() && active) {
+                if ($(e.target).attr("id") != "fragment-group-form:search-panel:quick-search-input")
+                    dlg.hide();
+            };
+        });
+    }
+    
+    function setupHandlers() {
+        getDialog().jq.off(".cvz_sch_dlg")
+        .on("change.cvz_sch_dlg", "#target-panels-on-search-dlg input[type=radio]", function(e) {
+            var pid = $(e.currentTarget).attr("_pid");
+            curPanelId = pid;
+        })
+        .on("keyup.cvz_sch_dlg", function(e) {
+            if (e.ctrlKey && e.shiftKey && e.which == $.ui.keyCode.SPACE) {
+                curPanelId = (curPanelId + 1) % 3;
+                $("#panel-radio-on-search-dlg-"+curPanelId).prop("checked", true);
+                getPanelButtons().buttonset("refresh");
             }
-        }
-        else if (e.which == $.ui.keyCode.ESCAPE) {
-            $(e.target).blur();
-        }
-        
-    })
-    .on("click.cvz_sch_dlg", "#fragment-group-form\\:go-search", function() {
-        var activeTabId = $("#fragment-group-form\\:search-panel_active").val();
-        var hasSomeToSearch = false;
-        if (activeTabId == 1) {
-            // Normal search tab is focused
-            $("#fragment-group-form\\:search-panel\\:t1").find("input[type='text']").each(function() {
+        })
+        .on("keypress.cvz_sch_dlg", "#fragment-group-form\\:search-panel\\:quick-search-input", function(e) {
+            if (e.which == $.ui.keyCode.ENTER) {
+                // Quick search tab responds to the enter key
                 if ($(this).val().trim()) {
-                    hasSomeToSearch = true;
-                    return false;
+                    searchFragmentsForPanel(curPanelId);
                 }
-                return true;
-            });
+            }
+            else if (e.which == $.ui.keyCode.ESCAPE) {
+                $(e.target).blur();
+            }
+        })
+        .on("click.cvz_sch_dlg", "#fragment-group-form\\:go-search", function() {
+            var activeTabId = $("#fragment-group-form\\:search-panel_active").val();
+            var hasSomeToSearch = false;
+            if (activeTabId == 1) {
+                // Normal search tab is focused
+                $("#fragment-group-form\\:search-panel\\:t1").find("input[type='text']").each(function() {
+                    if ($(this).val().trim()) {
+                        hasSomeToSearch = true;
+                        return false;
+                    }
+                    return true;
+                });
+                if (hasSomeToSearch) {
+                    // the quick search input has higher priority so we need to clear it
+                    getQuickSearchInput().val(null);
+                }
+            }
+            else {
+                // Quick search tab is focused
+                if (getQuickSearchInput().val().trim()) {
+                    hasSomeToSearch = true;
+                }
+            }
             if (hasSomeToSearch) {
-                // the quick search input has higher priority so we need to clear it
-                qsInput.val(null);
+                searchFragmentsForPanel(curPanelId);
             }
-        }
-        else {
-            // Quick search tab is focused
-            if (qsInput.val().trim()) {
-                hasSomeToSearch = true;
+        })
+        .on("click.cvz_sch_dlg", "#search-hist li a", function() {
+            var $this = $(this);
+            var idx = $this.attr("_idx");
+            if (idx) {
+                removeSearchHistoryEntity(idx);
             }
-        }
-        if (hasSomeToSearch) {
-            searchFragmentsForPanel(dlg.cvzCurPanelId);
-        }
-    })
-    .on("click.cvz_sch_dlg", "#search-hist li a", function() {
-        var $this = $(this);
-        var idx = $this.attr("_idx");
-        if (idx) {
-            removeSearchHistoryEntity(idx);
-        }
-        else {
-            var phrase = $(this).next("input").val().trim();
-            qsInput.val(phrase);
-            searchFragmentsForPanel(dlg.cvzCurPanelId);
-        }
-    })
-    .on("keypress.cvz_sch_dlg", "#search-hist li input", function(e) {
-        if (e.which == $.ui.keyCode.ENTER) {
-            var phrase = $(this).val().trim();
-            qsInput.val(phrase);
-            searchFragmentsForPanel(dlg.cvzCurPanelId);
-        }
-    })
-    .find(".ui-dialog-title").text(MSG.search);
+            else {
+                var phrase = $(this).next("input").val().trim();
+                getQuickSearchInput().val(phrase);
+                searchFragmentsForPanel(curPanelId);
+            }
+        })
+        .on("keypress.cvz_sch_dlg", "#search-hist li input", function(e) {
+            if (e.which == $.ui.keyCode.ENTER) {
+                var phrase = $(this).val().trim();
+                getQuickSearchInput().val(phrase);
+                searchFragmentsForPanel(curPanelId);
+            }
+        })
+        ;
+    }
+    
+    ctrr.init = function() {
+        if (dlg)
+            return;
+        getDialog().jq.find(".ui-dialog-title").text(MSG.search);
+        
+        fixEscKeyProblem();
+        
+        setupHandlers();
+        
+        $("#fragment-group-form\\:search-panel\\:tag-keywords").watermark(MSG.how_to_input_tags);
+        
+        setupSearchHistory();
+    }
+    
+    ctrr.showDialog = function(panelId, qsPhrase) {
+        this.init();
+        $("#panel-radio-on-search-dlg-"+panelId).prop("checked", true);
+        getPanelButtons().buttonset("refresh");
+        curPanelId = panelId;
+        getQuickSearchInput().val(qsPhrase);
+        dlg.show();
+    }
+    
+    return ctrr;
+}
+
+function showSearchDialog(panelId, qsPhrase) {
+    SC.showDialog(panelId, qsPhrase);
 }
 
 function searchWithHelpFromLastSearch(e, panelId, widget) {
