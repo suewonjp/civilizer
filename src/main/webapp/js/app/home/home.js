@@ -880,9 +880,16 @@ function showSearchDialog(panelId, qsPhrase) {
         }
     })
     .on("click.cvz_sch_dlg", "#search-hist li a", function() {
-        var phrase = $(this).next("input").val().trim();
-        qsInput.val(phrase);
-        searchFragmentsForPanel(dlg.cvzCurPanelId);
+        var $this = $(this);
+        var idx = $this.attr("_idx");
+        if (idx) {
+            removeSearchHistoryEntity(idx);
+        }
+        else {
+            var phrase = $(this).next("input").val().trim();
+            qsInput.val(phrase);
+            searchFragmentsForPanel(dlg.cvzCurPanelId);
+        }
     })
     .on("keypress.cvz_sch_dlg", "#search-hist li input", function(e) {
         if (e.which == $.ui.keyCode.ENTER) {
@@ -1012,12 +1019,22 @@ function _touchFragment() {
     touchFragment([{name:'fragmentId', value:frgId}]);
 }
 
+function setupSearchHistoryUI(hist) {    
+    var list = $("#search-hist").empty();
+    for (var i=0, j=hist.length; i<j; ++i) {
+        list.append(
+            "<li><a href='#' class='ui-panel ui-widget-content ui-corner-all fa fa-search button-link'/><input type='text' value='"
+            + hist[i]
+            + "'/><a href='#' _idx='" + i + "' class='fa fa-minus-circle button-link'/></li>");
+    }    
+}
+
 function setupSearchHistory() {
     var histStr = localStorage.getItem("srch-hist");
     var hist = JSON.parse(histStr) || [];
-    $(".last-search-phrase").each(function() {
+    $(".last-search-phrase").each(function(idx) {        
         var phrase = $(this).text();
-        if (phrase) {
+        if ($("#last-search-phrase-"+idx).is(":visible") && phrase) {
             var idx = hist.indexOf(phrase);
             if (idx > -1) {
                 hist.splice(idx, 1);
@@ -1027,11 +1044,19 @@ function setupSearchHistory() {
                 hist.pop();
         }
     });
+
+    setupSearchHistoryUI(hist);
     
-    var list = $("#search-hist").empty();
-    for (var i=0, j=hist.length; i<j; ++i) {
-        list.append("<li><a href='#' class='fa fa-search button-link'/><input type='text' value='" + hist[i] + "'/></li>");
-    }
+    localStorage.setItem("srch-hist", JSON.stringify(hist));
+}
+
+function removeSearchHistoryEntity(idx) {
+    var histStr = localStorage.getItem("srch-hist");
+    var hist = JSON.parse(histStr) || [];
+    
+    hist.splice(idx, 1);
+    
+    setupSearchHistoryUI(hist);
     
     localStorage.setItem("srch-hist", JSON.stringify(hist));
 }
