@@ -879,6 +879,18 @@ function showSearchDialog(panelId, qsPhrase) {
             searchFragmentsForPanel(dlg.cvzCurPanelId);
         }
     })
+    .on("click.cvz_sch_dlg", "#search-hist li a", function() {
+        var phrase = $(this).next("input").val().trim();
+        qsInput.val(phrase);
+        searchFragmentsForPanel(dlg.cvzCurPanelId);
+    })
+    .on("keypress.cvz_sch_dlg", "#search-hist li input", function(e) {
+        if (e.which == $.ui.keyCode.ENTER) {
+            var phrase = $(this).val().trim();
+            qsInput.val(phrase);
+            searchFragmentsForPanel(dlg.cvzCurPanelId);
+        }
+    })
     .find(".ui-dialog-title").text(MSG.search);
 }
 
@@ -998,4 +1010,28 @@ function _touchFragment() {
     var frgId = target.attr("_fid");
     
     touchFragment([{name:'fragmentId', value:frgId}]);
+}
+
+function setupSearchHistory() {
+    var histStr = localStorage.getItem("srch-hist");
+    var hist = JSON.parse(histStr) || [];
+    $(".last-search-phrase").each(function() {
+        var phrase = $(this).text();
+        if (phrase) {
+            var idx = hist.indexOf(phrase);
+            if (idx > -1) {
+                hist.splice(idx, 1);
+            }
+            hist.unshift(phrase);
+            if (hist.length > 7)
+                hist.pop();
+        }
+    });
+    
+    var list = $("#search-hist").empty();
+    for (var i=0, j=hist.length; i<j; ++i) {
+        list.append("<li><a href='#' class='fa fa-search button-link'/><input type='text' value='" + hist[i] + "'/></li>");
+    }
+    
+    localStorage.setItem("srch-hist", JSON.stringify(hist));
 }

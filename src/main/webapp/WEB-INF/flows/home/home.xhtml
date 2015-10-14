@@ -256,6 +256,10 @@
 		            <p:inputText id="id-keywords" value="#{searchContextBean.idKeywords}"/>
 	            </div>
 	        </p:tab>
+	        <p:tab id="t2" title="#{msg['search_history']}">
+                <ul id="search-hist">
+                </ul>
+            </p:tab>
 	    </p:accordionPanel>
 	    <p:commandButton id="go-search" value="#{msg['search']}" icon="ui-icon-check"/>
         <span id="target-panels-on-search-dlg" style="position:relative;top:20px;left:100px">

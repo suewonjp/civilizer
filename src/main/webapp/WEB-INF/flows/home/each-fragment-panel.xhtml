@@ -13,6 +13,8 @@
 <c:set var="lastSearchPhrase" value="#{empty panelContext.searchParams ? '' : panelContext.searchParams.searchPhrase}" />
 <c:set var="tc" value="#{fragmentListBean.totalCount}" />
 
+<h:outputText style="display:none" styleClass="last-search-phrase" value="#{lastSearchPhrase}"/>
+
 <p:dialog header="#{msg['choose_sort_option']}" modal="true" width="230px" closeOnEscape="true" showEffect="fade" widgetVar="sortOptionDlg#{panelId}" position="center" draggable="false" resizable="false" >
     <div id="fragment-sort-option-container#{panelId}">
         <p:selectOneListbox widgetVar="frgSortOpt#{panelId}" value="#{fragmentListBean.orderOption}">

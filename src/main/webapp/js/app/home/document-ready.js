@@ -39,6 +39,8 @@ $(document).ready(function() {
     }, 15000);
     
     $(window).off("keyup.cvz_global_hotkey").on("keyup.cvz_global_hotkey", onGlobalHotkeys);
+    
+    setupSearchHistory();
 });
 
 $(window).load(function() {

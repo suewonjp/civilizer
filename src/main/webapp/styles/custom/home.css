@@ -552,3 +552,15 @@
 .ui-selectlistbox-item.ui-state-highlight {
     text-decoration: underline;
 }
+
+#search-hist {
+    list-style-type: none;
+}
+
+#search-hist li {
+    display: block;
+}
+
+#search-hist input {
+    width: 300px;
+}
