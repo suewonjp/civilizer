@@ -155,6 +155,12 @@
                 expression="mainController.newPanelContextBean(requestParameters.panelId, -1000, 0)"
                 result="requestScope.panelContextBean"/>
         </transition>
+
+        <transition on="empty-panel" to="home">
+            <evaluate
+                expression="mainController.newPanelContextBean(requestParameters.panelId, -2000, 0)"
+                result="requestScope.panelContextBean"/>
+        </transition>
         
         <transition on="upload-file" to="home" >
 			<evaluate expression="mainController.uploadFile(fileUploadBean, fileListBean)" />

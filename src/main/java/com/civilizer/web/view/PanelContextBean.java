@@ -20,15 +20,15 @@ public final class PanelContextBean implements Serializable {
 	private final boolean isLast;
 	private final boolean fragmentDeletable;
 	
-	public PanelContextBean() {
-		this.tagId = ALL_VALID_TAGS;
-		this.panelId = 0;
-		this.curPage = 0;
-		this.itemsPerPage = DEF_ITEMS_PER_PAGE;
-		this.isLast = false;
-		fragmentDeletable = false;
-		searchParams = null;
-	}
+//	public PanelContextBean() {
+//		this.tagId = ALL_VALID_TAGS;
+//		this.panelId = 0;
+//		this.curPage = 0;
+//		this.itemsPerPage = DEF_ITEMS_PER_PAGE;
+//		this.isLast = false;
+//		fragmentDeletable = false;
+//		searchParams = null;
+//	}
 
 	public PanelContextBean(int panelId, long tagId) {
 		this.tagId = tagId;

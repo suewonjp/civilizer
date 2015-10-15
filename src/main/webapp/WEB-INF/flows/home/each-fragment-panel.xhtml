@@ -79,6 +79,13 @@
     
     <p:spacer width="6" />
 
+    <p:commandLink rendered="#{tc > 0}" action="empty-panel">
+        <f:param name="panelId" value="#{panelId}"/>
+        <span class="fa fa-eraser fa-2x button-link" title="#{msg['empty_panel']}"></span>
+    </p:commandLink>
+    
+    <p:spacer width="6" />
+
     <p:commandLink rendered="#{tc > 0}" oncomplete="showSortOptionDialog('#{panelId}')" >
         <span class="fa fa-sort fa-2x button-link" title="#{msg['sort']}"></span>
     </p:commandLink>
