@@ -14,7 +14,7 @@
     <div class="fragment-header notxtslct" _fid="#{fragment.id}" _deletable="#{fragmentDeletable}">
         <c:choose>
             <c:when test="#{withOverlay}">
-                <h:outputText value="##{fragment.id}" style="color:navy;"/>
+                <h:outputText value="##{fragment.id}" styleClass="fragment-id"/>
             </c:when>
             <c:otherwise>
                 <p:selectBooleanCheckbox rendered="#{!fragmentDeletable}" value="#{fragmentBean.checked}" 
@@ -24,10 +24,10 @@
                 </p:selectBooleanCheckbox>
                 <c:choose>
                     <c:when test="#{fragmentDeletable}">
-                        <h:outputText value="##{fragment.id}" style="color:navy;"/>
+                        <h:outputText value="##{fragment.id}" styleClass="fragment-id"/>
                     </c:when>
                     <c:otherwise>
-                        <a class="-cvz-frgm" href="fragment/#{fragment.id}">\##{fragment.id}</a>
+                        <a class="-cvz-frgm fragment-id" href="fragment/#{fragment.id}">\##{fragment.id}</a>
                     </c:otherwise>
                 </c:choose>
             </c:otherwise>

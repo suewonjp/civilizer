@@ -28,6 +28,11 @@
     overflow: auto;
 }
 
+.fragment-id, a.fragment-id {
+    color:navy;
+    font-weight: bold;
+}
+
 #new-fragment-editor-trigger {
 	font-size: medium;
     margin-left: 3px;
