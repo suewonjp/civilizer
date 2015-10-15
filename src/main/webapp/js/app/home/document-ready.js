@@ -31,6 +31,8 @@ $(document).ready(function() {
 	
 	$("#container").show();
 	
+	setupSearchHistory();
+	
 	disableAutoSubmitOnEnterForForms("#fragment-editor-form", "#tag-palette-form", "#user-menu-dlg-form");
 	
 	setTimeout(function() {

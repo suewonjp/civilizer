@@ -115,8 +115,6 @@ function createSearchController() {
         setupHandlers();
         
         $("#fragment-group-form\\:search-panel\\:tag-keywords").watermark(MSG.how_to_input_tags);
-        
-        setupSearchHistory();
     }
     
     ctrr.showDialog = function(panelId, qsPhrase) {
@@ -126,7 +124,7 @@ function createSearchController() {
         curPanelId = panelId;
         getQuickSearchInput().val(qsPhrase);
         dlg.show();
-    }
+    }    
     
     return ctrr;
 }
