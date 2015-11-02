@@ -1,12 +1,12 @@
 ### Description
 
-Civilizer is a web application that helps you efficiently manage your data/knowledge/idea including:
+Civilizer is a **personal** web application that helps you efficiently manage your data/knowledge/idea including:
 
 - knowledge/expertise for your job
 - temporary memo/notesa
 - schedule/plan
 - detailed procedures you often forget for infrequent tasks
-  - e.g. installing printer drivers on your computers, submitting a tax return, ...
+  - e.g., installing printer drivers on your computers, submitting a tax return, ...
 - expressions/vocabularies (e.g. when you learn a foreign language)
 - ideas/inspirations
 - todo list for your job or life
@@ -16,7 +16,7 @@ Civilizer is a web application that helps you efficiently manage your data/knowl
 Civilizer can keep your data in various forms including:
 
 - text
-    - can be authored in Markdown with a dedicated editor
+    - can be authored in [Markdown](https://en.wikipedia.org/wiki/Markdown) with a dedicated editor
     - eventually rendered in HTML
 - hyper links
 - images
@@ -38,9 +38,11 @@ Civilizer has a full text search functionality to greatly help you access right 
 > Civilizer has been inspired by Piggydb (http://piggydb.net/) developed by Daisuke Morita.  
 
 ### Related Materials
+- Civilizer Twitter
+  - [@civilizer_pkm](https://twitter.com/civilizer_pkm)
 - Civilizer Blog 
   - https://sourceforge.net/p/civilizer/blog/
-- Civilizer Wiki and online Docummentions
+- Civilizer Wiki and online Docummentations
   - https://github.com/suewonjp/civilizer/wiki
 - Civilizer Forum
   - https://sourceforge.net/p/civilizer/forum/
@@ -52,18 +54,19 @@ Civilizer has a full text search functionality to greatly help you access right 
 
 Java Runtime Environment (JRE)
 - Note that JRE 7 or above is needed
+- The latest JRE is recommended
 
 Supported platforms:
 
 - Linux
     - Ubuntu/Linux Mint
-    - Other Distros (? - not fully tested yet)
+    - Other Distros (? - will work, not fully tested though)
 - OS X
     - Mavericks
-    - Yosemite or above (? - not fully tested yet)
+    - Yosemite or above (? - will work, not fully tested though)
 - Windows
     - 7/8
-    - 10 or above (? - not fully tested yet)
+    - 10 or above (? - will work, not fully tested though)
 
 Supported browsers: (note that old versions may not work correctly)
 
@@ -71,13 +74,15 @@ Supported browsers: (note that old versions may not work correctly)
 - Safari
 - Chrome
 - Opera
-- Internet Explorer/Edge
+- Edge
+- Internet Explorer
     - 9/10/11
     - ***Civilizer doesn't support IE 8 or earlier versions of IE***
     
 ### How To Install and Run
     
 1. ***Make sure your system has JRE (version 7+) installed on it.***
+    - Type and run _**java -version**_ from the command prompt to confirm your system JRE version.
 1. Download a .zip file of [the latest release](https://github.com/suewonjp/civilizer/releases/latest) and extract its content on your machine.
 1. Run it with the following instruction.
     - Windows Users:
@@ -187,7 +192,7 @@ Shell scripts have been provided to build all the binaries/resources and package
     limitations under the License.
 
 * * *
-Written by Suewon Bahng   ( Last Updated 27 September, 2015 )
+Written by Suewon Bahng   ( Last Updated 2 November, 2015 )
 
 ### Contributors
 Suewon Bahng  
