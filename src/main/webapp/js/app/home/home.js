@@ -894,3 +894,11 @@ function _touchFragment() {
     
     touchFragment([{name:'fragmentId', value:frgId}]);
 }
+
+function closeOtherFragments() {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
+    
+    fetchFragments(findPanel(target), [frgId]);
+}
