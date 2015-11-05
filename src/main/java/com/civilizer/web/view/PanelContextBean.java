@@ -8,8 +8,9 @@ import com.civilizer.domain.SearchParams;
 @SuppressWarnings("serial")
 public final class PanelContextBean implements Serializable {
 	
-	public static final long ALL_VALID_TAGS       = -1000;
-	public static final long EMPTY_TAG            = -2000;
+	public static final long FETCH_ALL            = -1000;
+	public static final long INVALID_TAG          = -2000;
+	public static final long EMPTY_PANEL          = -3000;
 	public static final int  DEF_ITEMS_PER_PAGE   = Integer.parseInt(System.getProperty(AppOptions.ITEMS_PER_PAGE));
 	
 	private final SearchParams searchParams;

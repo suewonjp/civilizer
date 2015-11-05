@@ -101,7 +101,7 @@ public final class MainController {
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
 			final FragmentListBean flb = new FragmentListBean();
 			final long tagId = (i == 0) ?
-					PanelContextBean.ALL_VALID_TAGS : PanelContextBean.EMPTY_TAG;
+					PanelContextBean.FETCH_ALL : PanelContextBean.INVALID_TAG;
 			flb.setPanelContextBean(new PanelContextBean(i, tagId));
 			output[i] = flb;
 		}
@@ -145,7 +145,7 @@ public final class MainController {
         	// a new KEYWORD SEARCH has been kicked;
             sp = scb.buildSearchParams();
             // this branch has the highest priority of all so it forces to overwrite a few key variables like so:
-            tagId = PanelContextBean.EMPTY_TAG;
+            tagId = PanelContextBean.INVALID_TAG;
             curPage = 0;
         }
         final int count = pcb.getItemsPerPage();
@@ -155,7 +155,7 @@ public final class MainController {
         
         List<Fragment> fragments = Collections.emptyList(); // resultant fragments
         long allCount = 0; // the number of fragments at maximum
-        if (tagId == PanelContextBean.ALL_VALID_TAGS) {
+        if (tagId == PanelContextBean.FETCH_ALL) {
             // Fetch all the fragments
             fragments = fragmentDao.findSomeNonTrashed(first, count + 1, frgOrder, asc);
             allCount = fragmentDao.countAll(false);
@@ -167,7 +167,7 @@ public final class MainController {
             allCount = fragmentDao.countByTagAndItsDescendants(tagId, true, tagDao);
             sp = null;
         }
-        else if (tagId != PanelContextBean.EMPTY_TAG) {
+        else if (tagId != PanelContextBean.INVALID_TAG) {
         	// Fetch the fragments with the specified tag (non-trashed)
         	fragments = fragmentDao.findSomeNonTrashedByTagId(tagId, first, count + 1, frgOrder, asc, tagDao);
         	allCount = fragmentDao.countByTagAndItsDescendants(tagId, false, tagDao);
@@ -181,7 +181,7 @@ public final class MainController {
             if (allCount > 0) {
                 fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
             }
-            tagId = PanelContextBean.EMPTY_TAG;
+            tagId = PanelContextBean.INVALID_TAG;
         }
         
         // [NOTE] The content of fragments should be IMMUTABLE form here!

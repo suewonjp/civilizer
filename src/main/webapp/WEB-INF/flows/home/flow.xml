@@ -158,7 +158,7 @@
 
         <transition on="empty-panel" to="home">
             <evaluate
-                expression="mainController.newPanelContextBean(requestParameters.panelId, -2000, 0)"
+                expression="mainController.newPanelContextBean(requestParameters.panelId, -3000, 0)"
                 result="requestScope.panelContextBean"/>
         </transition>
         
