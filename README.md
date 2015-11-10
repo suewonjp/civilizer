@@ -38,6 +38,8 @@ Civilizer has a full text search functionality to greatly help you access right 
 > Civilizer has been inspired by Piggydb (http://piggydb.net/) developed by Daisuke Morita.  
 
 ### Related Materials
+- Civilizer Tutorial Video
+  - https://www.youtube.com/watch?v=0omObKmJd4E 
 - Civilizer Twitter
   - [@civilizer_pkm](https://twitter.com/civilizer_pkm)
 - Civilizer Blog 
