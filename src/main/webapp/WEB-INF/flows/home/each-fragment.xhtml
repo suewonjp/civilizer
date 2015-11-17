@@ -11,7 +11,8 @@
 
 <h:panelGrid styleClass="each-fragment" columns="1" border="#{withOverlay ? 0 : 1}">
     <f:facet name="header">
-    <div class="fragment-header notxtslct" _fid="#{fragment.id}" _deletable="#{fragmentDeletable}">
+    <div class="fragment-header notxtslct"
+        _fid="#{fragment.id}" _deletable="#{fragmentDeletable}" _withOverlay="#{withOverlay}">
         <c:choose>
             <c:when test="#{withOverlay}">
                 <h:outputText value="##{fragment.id}" styleClass="fragment-id"/>

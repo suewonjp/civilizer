@@ -27,6 +27,10 @@ function setContextMenuForFragments() {
                 menu.find("#fragment-group-form\\:relateNew").show();
                 menu.find("#fragment-group-form\\:touch").show();
             }
+            if (target.attr("_withOverlay") == "true")
+                menu.find("#fragment-group-form\\:closeOthers").hide();
+            else
+                menu.find("#fragment-group-form\\:closeOthers").show();
             e.preventDefault();
         }
     });
