@@ -227,9 +227,10 @@ function autocompleteForTypingTags() {
                 res([]); // no typing, no suggestion.
                 return;
             }
+            typed = typed.toLowerCase();
             for (var i=0; i<tagSuggestions.length; ++i) {
                 var suggestion = tagSuggestions[i];
-                if (suggestion.indexOf(typed) == 0 && ! alreadyTyped(tags, suggestion)) {
+                if (suggestion.toLowerCase().indexOf(typed) == 0 && ! alreadyTyped(tags, suggestion)) {
                     // filter out:
                     // - tags not starting with the typed word
                     // - already typed tags
