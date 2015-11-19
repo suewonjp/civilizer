@@ -636,7 +636,17 @@ function getTagName(tagId) {
 	return (tag.length > 0) ? tag.find(".each-tag-name").text() : "";
 }
 
-function getTagByName(name) {
+function getTagByName(name) { // returns the exact tag for the name;
+    var tags = getTagsByName(name);
+    name = name.trim();
+    for (var i=0; i<tags.length; ++i) {
+        if (tags.eq(i).text().trim() == name)
+            return tags.eq(i);
+    }
+}
+
+function getTagsByName(name) { // returns multiple tags containing the name;
+    name = name.trim();
     return $("#tag-palette-flat").find(".each-tag-name:contains('"+name+"')").closest(".each-tag");
 }
 
