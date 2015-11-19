@@ -113,3 +113,11 @@ function showTagInfo() {
         $this.text(" "+$this.attr("_name")+" [ "+target.attr("_frgCnt")+" ("+target.attr("_frgCntWtHrc")+") ]");
     });
 }
+
+function refreshTagInfo(tid) {
+    var dlg = PF("tagInfoDlg");
+    dlg.hide();
+    $("#tag-palette-form\\:id-placeholder-for-tag").val(tid);
+    $("#tag-context-menu").data("target-tag", getTag(tid));
+    document.forms["tag-palette-form"]["tag-palette-form:tag-info-refresh"].click();
+}

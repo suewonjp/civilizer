@@ -86,7 +86,7 @@
 	            <h:panelGroup id="info-parent-tags">
 	        		<ui:repeat var="parent" value="#{tagListBean.parentTags}">
             	    	<a class="fa fa-tag button-link" onclick="fetchFragmentsByTag($(this).next(), null)"/>
-	        			<span _tid="#{parent.id}" _name="#{parent.tagName}"></span>
+	        			<span _tid="#{parent.id}" _name="#{parent.tagName}" class="tag-info-name" onclick="refreshTagInfo('#{parent.id}')"></span>
 	        			<br/>
 	        		</ui:repeat>
 	            </h:panelGroup>
@@ -95,12 +95,16 @@
                 <h:panelGroup id="info-child-tags">
 	        		<ui:repeat var="child" value="#{tagListBean.childTags}">
             	    	<a class="fa fa-tag button-link" onclick="fetchFragmentsByTag($(this).next(), null)"/>
-	        			<span _tid="#{child.id}" _name="#{child.tagName}"></span>
+	        			<span _tid="#{child.id}" _name="#{child.tagName}" class="tag-info-name" onclick="refreshTagInfo('#{child.id}')"></span>
 	        			<br/>
 	        		</ui:repeat>
                 </h:panelGroup>
 	        </p:panel>
     	</h:panelGrid>
+        <div style="display:none">
+            <p:commandButton id="tag-info-refresh" oncomplete="showTagInfo()" 
+                update="tag-info" actionListener="#{mainController.prepareTagListBeanToEditTag(tagListBean, paramTagBean)}"/>
+        </div>
     </p:dialog>
     
     <div id="tag-context-menu" class="context-menu">

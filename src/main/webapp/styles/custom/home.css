@@ -291,7 +291,15 @@
 	display: inline-block;
 }
 
-.tag-button, .tag-box, .file-button {
+.tag-info-name {
+    border:1px solid #ffc826;
+    border-radius: 3px;
+    text-decoration:none;
+    background-color: #ffd65e;
+    cursor: pointer;
+}
+
+.tag-button, .file-button {
     margin: 2px 1px 1px 1px;
     border:1px solid #ffc826;
     -webkit-box-shadow: #B4B5B5 1px 1px 1px  ;-moz-box-shadow: #B4B5B5 1px 1px 1px ; box-shadow: #B4B5B5 1px 1px 1px;
