@@ -267,6 +267,7 @@
 
 .button-link:hover {
     color: #ff830e;
+    cursor: pointer;
 }
 
 .each-tag .fa-tag {

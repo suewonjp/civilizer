@@ -73,7 +73,8 @@
         position="center" draggable="true" resizable="false" >
     	
         <p:panel>
-	    	<span class="fa fa-tag _tag-name"></span>
+	    	<a class="fa fa-tag button-link" onclick="fetchFragmentsByTag($(this).next(), null)"/>
+	    	<span class="_tag-name"></span>
     	</p:panel>
     	<br/>
     	<h:panelGrid columns="2" cellpadding="10">
@@ -84,7 +85,8 @@
 	        <p:panel>
 	            <h:panelGroup id="info-parent-tags">
 	        		<ui:repeat var="parent" value="#{tagListBean.parentTags}">
-	        			<span _tid="#{parent.id}" _name="#{parent.tagName}" class="fa fa-tag"></span>
+            	    	<a class="fa fa-tag button-link" onclick="fetchFragmentsByTag($(this).next(), null)"/>
+	        			<span _tid="#{parent.id}" _name="#{parent.tagName}"></span>
 	        			<br/>
 	        		</ui:repeat>
 	            </h:panelGroup>
@@ -92,7 +94,8 @@
 	        <p:panel>
                 <h:panelGroup id="info-child-tags">
 	        		<ui:repeat var="child" value="#{tagListBean.childTags}">
-	        			<span _tid="#{child.id}" _name="#{child.tagName}" class="fa fa-tag"></span>
+            	    	<a class="fa fa-tag button-link" onclick="fetchFragmentsByTag($(this).next(), null)"/>
+	        			<span _tid="#{child.id}" _name="#{child.tagName}"></span>
 	        			<br/>
 	        		</ui:repeat>
                 </h:panelGroup>

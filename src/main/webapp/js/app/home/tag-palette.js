@@ -102,7 +102,9 @@ function showTagInfo() {
         target = getTagByName(tagName);
     
     dlg.jq.find("._tag-name")
-    .text(" "+tagName+" [ "+target.attr("_frgCnt")+" ("+target.attr("_frgCntWtHrc")+") ]");
+    .text(" "+tagName+" [ "+target.attr("_frgCnt")+" ("+target.attr("_frgCntWtHrc")+") ]")
+    .attr("_tid", target.attr("_tid"))
+    ;
     
     $("#tag-palette-form\\:info-parent-tags span, #tag-palette-form\\:info-child-tags span")
     .each(function() {
