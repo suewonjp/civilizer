@@ -139,6 +139,11 @@
 			        <span class="fa fa-trash fa-2x button-link ui-panel ui-widget-content ui-corner-all" _tid="0"></span>
 			    </p:commandLink>
 			</div>
+            
+            <div id="tag-quick-search">
+                <input class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                    onkeypress="fetchFragmentsByTagQuickSearch(event, $(this))"/>
+            </div>
 
 		    <div id="new-tag-button">
 			    <p:commandLink update="tag-editor" oncomplete="TEC.showDialog(true)" title="#{msg['new_tag']}"

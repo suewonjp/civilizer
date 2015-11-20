@@ -193,6 +193,14 @@ function autocompleteForTypingTags() {
             tagSuggestions.push(tagName);
     });
     
+    function pfThemeBugHandler() {
+        if (pfThemeBugFix) {
+            var acMenu = $("ul.ui-autocomplete");
+            acMenu.find("li.ui-weak-focus").removeClass("ui-weak-focus");
+            acMenu.find("li.ui-state-focus").addClass("ui-weak-focus");
+        }
+    }
+    
     function split(input) {
         return input.trim().split(/"?\,\s*"?/);
     }
@@ -242,11 +250,7 @@ function autocompleteForTypingTags() {
         
         // [jQuery.ui.autocomplete option] callback invoked on the focused item.
         this.focus = function () {
-            if (pfThemeBugFix) {
-                var acMenu = $("ul.ui-autocomplete");
-                acMenu.find("li.ui-weak-focus").removeClass("ui-weak-focus");
-                acMenu.find("li.ui-state-focus").addClass("ui-weak-focus");
-            }
+            pfThemeBugHandler();
             
             // prevent value inserted on focus
             return false;
@@ -288,11 +292,39 @@ function autocompleteForTypingTags() {
         this.autoFocus = true;
     }; // function Options()
    
-    $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords").autocomplete(new Options());
+    // tag inputs for the fragment editor or the search dialog;
+    $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords")
+        .autocomplete(new Options());
     
+    // quick tag search input on the tag palette;
     var anotherOpts = new Options();
+    anotherOpts.focus = function(e, ui) {
+        pfThemeBugHandler();
+        return true;
+    }
+    anotherOpts.select = function(e, ui) {
+        $(e.target).val(ui.item.value);
+        var tab = $("#tag-palette-flat");
+        tab.find("span.ui-state-focus").remove();
+        // create a clone of the tag chosen from the autocomplete UI
+        // and prepend it to the top of the array and scroll.
+        // [NOTE] we use jQuery's clone() method here;
+        // it works for now because tag elements in the tag palette have no id attribute;
+        // if those elements have id attributes for whatever reasons,
+        // we should also take care of the code here.
+        tab.prepend(getTagByName(ui.item.value).clone().addClass("ui-state-focus"))
+        .animate({ // make the selected tag visible by scrolling
+            scrollTop:0
+        }, 500);
+        return false;
+    }
+    $("#tag-quick-search input").autocomplete(anotherOpts);
+    
+    // quick search input for the search dialog or last search phrase input on panels;
+    anotherOpts = new Options();
     anotherOpts.allow = function(input) {
         var idx = input.lastIndexOf("tag:");
+        // we need to trigger the autocomplete UI only when the special keyword "tag:" is detected.
         if (idx == -1)
             return null;
         anotherOpts.startIdx = idx + 4;

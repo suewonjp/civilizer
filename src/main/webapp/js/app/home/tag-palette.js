@@ -5,6 +5,7 @@ function setupTabViewsForTagPalette() {
          activate : function (e, ui) {
             currentTagGroupTabIndex = ui.newTab.index().toString();
             sessionStorage.setItem('tag-palette-tab-index', currentTagGroupTabIndex);
+            showOrHide($("#tag-quick-search"), currentTagGroupTabIndex == "0");
          }
     });
 
@@ -120,4 +121,13 @@ function refreshTagInfo(tid) {
     $("#tag-palette-form\\:id-placeholder-for-tag").val(tid);
     $("#tag-context-menu").data("target-tag", getTag(tid));
     document.forms["tag-palette-form"]["tag-palette-form:tag-info-refresh"].click();
+}
+
+function fetchFragmentsByTagQuickSearch(e, input) {
+    if (e.which == $.ui.keyCode.ENTER) {
+        var tag = getTagByName(input.val());
+        if (tag)
+            fetchFragmentsByTag(tag, null);
+    }
+    return false;
 }

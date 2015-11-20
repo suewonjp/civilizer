@@ -326,13 +326,21 @@
 }
 
 #trashcan, #new-tag-button {
-    margin: 10px 0px 10px 15px;
+    padding: 10px 0px 10px 10px;
 	display:inline-block;
 	font-size:x-small;
 }
 
 #trashcan {
-	width: 50%;
+	width: 15%;
+}
+
+#tag-quick-search {
+    display: inline;
+}
+
+#tag-quick-search input {
+    width: 110px;
 }
 
 #new-tag-button {
