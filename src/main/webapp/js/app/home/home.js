@@ -628,12 +628,12 @@ function getFragmentTitle(frgId) {
 }
 
 function getTag(tagId) {
-    return $("#tag-palette-flat").find(".each-tag[_tid=" + tagId + "]");
+    return $("#tag-palette-flat").find(".each-tag[_tid=" + tagId + "]").first();
 }
 
 function getTagName(tagId) {
 	var tag = getTag(tagId);
-	return (tag.length > 0) ? tag.find(".each-tag-name").text() : "";
+	return (tag.length > 0) ? tag.find(".each-tag-name").first().text() : "";
 }
 
 function getTagByName(name) { // returns the exact tag for the name;
