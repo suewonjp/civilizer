@@ -305,17 +305,19 @@ function autocompleteForTypingTags() {
     anotherOpts.select = function(e, ui) {
         $(e.target).val(ui.item.value);
         var tab = $("#tag-palette-flat");
-        tab.find("span.ui-state-focus").remove();
-        // create a clone of the tag chosen from the autocomplete UI
-        // and prepend it to the top of the array and scroll.
-        // [NOTE] we use jQuery's clone() method here;
-        // it works for now because tag elements in the tag palette have no id attribute;
-        // if those elements have id attributes for whatever reasons,
-        // we should also take care of the code here.
-        tab.prepend(getTagByName(ui.item.value).clone().addClass("ui-state-focus"))
-        .animate({ // make the selected tag visible by scrolling
-            scrollTop:0
-        }, 500);
+        var old = tab.find("span.ui-state-focus").first();
+        if (old.length > 0) {
+            // relocate the previously selected tag at the original position.
+            old.detach().removeClass("ui-state-focus");
+            getTagByName(old.data("prev")).after(old);
+        }
+        var tag = getTagByName(ui.item.value).addClass("ui-state-focus");
+        // remember the original location of the selected tag.
+        tag.data("prev", tag.prev("span").find(".each-tag-name").text());
+        tab.prepend(tag)
+            .animate({ // always make the selected tag visible
+                scrollTop:0
+            }, 500);
         return false;
     }
     $("#tag-quick-search input").autocomplete(anotherOpts);
