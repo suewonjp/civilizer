@@ -1,5 +1,7 @@
 function setupTabViewsForTagPalette() {
 	var currentTagGroupTabIndex = "0";
+	
+	$("#tag-quick-search input").watermark(MSG.type_tag);
 
     $tab = $( "#tag-palette-panel" ).tabs({
          activate : function (e, ui) {
