@@ -142,6 +142,7 @@
             
             <div id="tag-quick-search">
                 <input class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                    onkeyup="if (event.which == $.ui.keyCode.ESCAPE) $(this).val('')"
                     onkeypress="fetchFragmentsByTagQuickSearch(event, $(this))"/>
             </div>
 

@@ -131,8 +131,5 @@ function fetchFragmentsByTagQuickSearch(e, input) {
         if (tag)
             fetchFragmentsByTag(tag, null);
     }
-    else if (e.which == $.ui.keyCode.ESCAPE) {
-        input.val("");
-    }
     return false;
 }
