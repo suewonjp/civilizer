@@ -46,10 +46,6 @@ Civilizer has a full text search functionality to greatly help you access right 
   - https://sourceforge.net/p/civilizer/blog/
 - Civilizer Wiki and online Docummentations
   - https://github.com/suewonjp/civilizer/wiki
-- Civilizer Forum
-  - https://sourceforge.net/p/civilizer/forum/
-- Civilizer Tickets
-  - https://sourceforge.net/p/civilizer/tickets/
 
 * * *
 ### Prerequisites
