@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Civilzer Blog</title>
+    <description>Blog for Civilizer; An Open Source Personal Knowledge Management Tool</description>
+    <link>http://suewonjp.github.io/civilizer/blog/</link>
+    <atom:link href="http://suewonjp.github.io/civilizer/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 26 Nov 2015 16:36:15 +0900</pubDate>
+    <lastBuildDate>Thu, 26 Nov 2015 16:36:15 +0900</lastBuildDate>
+    <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Risk of Information Broadcasting</title>
+        <description>&lt;h4 id=&quot;strip-search-phone-call-scam-revisited&quot;&gt;Strip search phone call scam: Revisited&lt;/h4&gt;
+&lt;p&gt;I discussed &lt;a href=&quot;https://en.wikipedia.org/wiki/Milgram_experiment&quot;&gt;Milgram Effect&lt;/a&gt; in &lt;a href=&quot;/civilizer/blog/2015/10/28/milgram-effect/&quot;&gt;my previous post&lt;/a&gt;. I claimed that Milgram Effect can manipulate human minds so powerfully and it could possibly disrupt your daily decision making processes. &lt;a href=&quot;https://en.wikipedia.org/wiki/Strip_search_phone_call_scam&quot;&gt;The Mount Washington scam&lt;/a&gt; is one notable incident that shows how scammers make use of Milgram Effect to exert a strong influence on your mind. If you don’t know what the incident was, please, check out &lt;a href=&quot;https://en.wikipedia.org/wiki/Strip_search_phone_call_scam&quot;&gt;the Wikipedia page&lt;/a&gt; or read &lt;a href=&quot;/civilizer/blog/2015/10/28/milgram-effect/&quot;&gt;my previous post&lt;/a&gt; or &lt;a href=&quot;http://abcnews.go.com/2020/story?id=3688563&amp;amp;page=1&quot;&gt;this news article&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Besides Milgram Effect, the incident had another issue that I think is mentionable in this post. After the incident, the victim sued the fast food franchise company for $200 million claiming that the company was responsible for her damages. The lawsuit had disputes over several issues. Among them, one issue was whether the company properly warned their employees about the hoax which had occurred many times before that incident across almost 10 years throughout the country. It was clear that the company was well aware of all those scam calls. At least, it is true that they took some measures against the hoax.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;They had training manual that included a section saying “no legitimate law enforcement agency would ever ask you to conduct such a [strip] search.” 
+    &lt;ul&gt;
+      &lt;li&gt;But, according to the media, none of the employees at the restaurant say they recall seeing the section.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Also, a voice mail message was sent to the franchise to warn possible scam calls.
+    &lt;ul&gt;
+      &lt;li&gt;But, the manager testified that she had forgotten to mention the voice mail message to her assistant managers because it was vaguely worded and she didn’t think it was important.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Well, a couple of actions taken by the organization “in advance” didn’t work and it led to a significant disaster to the victimized poor young female and manipulated employees, who were also victims of the hoax, and the company itself. &lt;/p&gt;
+
+&lt;h4 id=&quot;risk-of-information-broadcasting&quot;&gt;Risk of information broadcasting&lt;/h4&gt;
+&lt;p&gt;We see all sorts of information or knowledge flowing in our organization everyday. Some information flows in a top-down direction, some flows in a bottom-up direction. &lt;/p&gt;
+
+&lt;p&gt;Although it is not the topic of this post, let’s first think about a bottom-up flow. We, employees, are all aware that there is no guarantee that every information from leaf nodes of the hierarchy actually reaches top nodes (CEO, CTO, CFO, …) of the same hierarchy. Every organization on some scale has middle class managers here and there and they act like some sort of filters. For instance, a paper proposing new kind of innovative business model may be sleeping in a bottom drawer of one of your superior’s desk. He may think the proposal is not worth further discussion or he might’ve simply forgotten it. For whatever reasons, they have discretion in whether delivering each bottom-up information into their upper hierarchy. Every organization has more or less pyramid shaped hierarchy so this is inevitable.&lt;/p&gt;
+
+&lt;p&gt;And can we guarantee that any information (except confidential information) flowing in a top-down way will reach out every leaf node of the hierarchy? At least, the Mount Washington scam incident showed us an example failure. Every organization has regulations, protocols, rules or something. We usually learn them at the first day when we join the organization, and rarely learn them again. Most of training or operation manuals are too thick and boring. All these are hard problems to solve. But, more bigger problem is we all take for granted all of these situations. Every now and then, critical guidelines or policies may come down to employees, and those important things may be easily ignored when every employee is already  immune to the trivial top-down information flow and they are preoccupied too much by their day to day duty. As the manager at the fast food franchise didn’t relay the voice call message to others, some important information may be lost somewhere in the pipe.&lt;/p&gt;
+
+&lt;p&gt;I think many organizations have some attitude that they consider it done once information has been delivered to their employees. But, properly speaking, they don’t know whether the information has been actually delivered because they usually don’t include some feedback mechanism in their system. What that famous hamburger company did was just &lt;em&gt;&lt;strong&gt;broadcasting without any feedback&lt;/strong&gt;&lt;/em&gt; that receiver has confirmed the signal. So there was no guarantee, from the first place, that every employee in the field could acknowledge the threat and danger of the hoax.&lt;/p&gt;
+
+&lt;h4 id=&quot;adopting-gamification&quot;&gt;Adopting Gamification&lt;/h4&gt;
+&lt;p&gt;One of my previous employers had an education program for their revised Code Of Conduct. Taking the program was a must to every member in the organization and actually the COC contained many important information and regulations that every employee should remember. The program was a kind of web service, it took more or less 30 minutes. An interesting thing was, the program employed a concept of &lt;a href=&quot;https://en.wikipedia.org/wiki/Gamification&quot;&gt;Gamification&lt;/a&gt;. It was not just a broadcast or one-way course. After explanation of each COC with clear examples, the program had s simple quiz at the end. You needed to get a little bit of high scores to pass it, and if you failed, you were required to try it again at a later time. It had at least a feedback mechanism (s quiz), so I think that kind of program will work better than traditional trainings. I think it would be better to give some rewards for the best scores, the program I took had no such system, though.&lt;/p&gt;
+
+&lt;p&gt;A course of one or two instructors and gathering people in a big room may look right. However, you don’t know how many attendees are really listening. I attended those programs several times. I see a few people sleeping all the time. They usually have Q&amp;amp;A time or surveys to encourage some feedbacks from the attendees, but it still doesn’t guarantee that the information or knowledge has been acknowledged by everyone. That’s why I think web training programs employing Gamification techniques are much more useful tools in terms of information reachability.&lt;/p&gt;
+
+&lt;h4 id=&quot;we-informed-that-so-were-done&quot;&gt;We informed that, so we’re done.&lt;/h4&gt;
+&lt;p&gt;At the lawsuit of the Mount Washington scam incident, lawyers for the company claimed that if the company’s employees had taken note of written policies and a voice mail message, the workers should have realized it was a hoax. The claim may sound reasonable at first. But, think about it. Like they argue, if everything works that well with just one time of information delivery, every human in every nation will have so much high education. Is that true? No. As you already know, our real world has all sorts of education problems. We need repetitive trainings, feedbacks, tests, and other kinds of program because that kind of simple information delivery doesn’t guarantee anything one hundred percent.&lt;/p&gt;
+
+&lt;p&gt;We assume that signals coming from a top-node from the hierarchy will reach every node of the same hierarchy. But, that’s an illusion. We have no guarantee of the signal delivered everywhere. More reasonably, we need to assume that the signal might be lost somewhere in the communication relay. &lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;“We informed that, so we’re done” mind of some organizations is kind of risky to themselves&lt;/strong&gt;&lt;/em&gt;. 
+Not caring for managing information flow may lead to significant damage to organizations just like we saw what happened in the strip search phone call scam case. At least, “We informed something. What was that? Tell me” mind is necessary to reduce the risk. Encouraging feedbacks from everyone sounds so much difficult. And constructing system to support that kind of mind may demand more money. But, we have technologies evolving fast and we have new ideas (such as Gamification, Knowledge Management, etc.) giving us more insights. They will help!&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 18 Nov 2015 21:00:00 +0900</pubDate>
+        <link>http://suewonjp.github.io/civilizer/blog/2015/11/18/risk-of-information-broadcasting/</link>
+        <guid isPermaLink="true">http://suewonjp.github.io/civilizer/blog/2015/11/18/risk-of-information-broadcasting/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Power of Obedience</title>
+        <description>&lt;h4 id=&quot;milgram-experiment&quot;&gt;Milgram experiment&lt;/h4&gt;
+&lt;p&gt;Do you know &lt;a href=&quot;https://en.wikipedia.org/wiki/Milgram_experiment&quot;&gt;Milgram experiment&lt;/a&gt;? It’s a famous social psychological experiment conducted by psychologist Stanley Milgram that demonstrated human’s great tendency of obedience to authority figures. If you are not familiar with the experiment, I recommend you to read the Wikipedia page. Here is my short version of explanation. But, it might’ve been misinterpreted by mistake, so I really recommend you to figure out the details by yourself.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;In the experiment, there are three roles; the &lt;strong&gt;Experimenter&lt;/strong&gt; who is an authoritative role, the &lt;strong&gt;Teacher&lt;/strong&gt; who is an experiment subject, the &lt;strong&gt;Learner&lt;/strong&gt; who is an actor or confederate;&lt;/li&gt;
+  &lt;li&gt;The teacher and the learner are separated into different rooms.&lt;/li&gt;
+  &lt;li&gt;The teacher is supposed to give the learner some quiz and the learner is supposed to answer them;&lt;/li&gt;
+  &lt;li&gt;Whenever the answer was incorrect, the teacher would administer an electroshock to the learner, with the voltage increasing in 15-volt increments for each wrong answer. 
+    &lt;ul&gt;
+      &lt;li&gt;Before beginning the experiment, the teacher was given a sample electric shock to experience how much painful it would be to the learner.&lt;/li&gt;
+      &lt;li&gt;Actually, however, there is no shock. The learner, who is an actor, just acts like the shock is real.&lt;/li&gt;
+      &lt;li&gt;The actor bangs on the wall, screams, demands to be free, complains about his heart condition and performs other acting to make the subject believe the pains are real.&lt;/li&gt;
+      &lt;li&gt;The more strong the shock gets, the bigger the screams or other messages become in order to indicate the pain is going up to so much serious level.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The experimenter encourages the subject to continue the experiment if he seems hesitating or worried.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Note that the actual experiment was more complicated than the above simplified procedure. &lt;/p&gt;
+
+&lt;p&gt;In the first experiment conducted in 1961, many participants continued giving shocks in spite of hearing a series of screams indicating so much pain and the demanding to be free from the victims. And 65 percent of participants administered the 450-volt shock which was set as the highest voltage (seriously dangerous if it was for real) for the experiment. More of similar experiments have been conducted since Milgram’s first experiment. Some experiment even used a real “cute” puppy with a real electric shock (harmless, though). The results were similar;  &lt;/p&gt;
+
+&lt;p&gt;Some people may think the experiment shows how humans can be as brutal as they can go. But it’s not the point of the experiment in my opinion. It tries to show how far humans can go obedient to various authority figures (e.g., your boss, experts, police officers, etc). And the result of the experiment indicates human nature to obey the authority is even more stronger than we would imagine. My assumption is, it has been deeply rooted at our core.&lt;/p&gt;
+
+&lt;h4 id=&quot;instinct-of-obedience-at-our-deep-core&quot;&gt;Instinct of obedience at our deep core&lt;/h4&gt;
+&lt;p&gt;Some people reveal themselves that they are more obedient to authority than other people. I personally met a few of those people in my life. I could see those people clearly were feeling uneasy about my occasional behaviors such as questioning my boss’s decisions or ideas. I can agree that all of us need to respect our boss’s orders to some degree. But questioning some of their decisions is harmful so should it be discouraged? Some people seemingly think that way. They hardly show behaviors similar to questioning authority themselves and emit some signals that they don’t like it when they see such behaviors of others.&lt;/p&gt;
+
+&lt;p&gt;But I have no intention of blaming them at all. Some of such people are necessary for the sake of a team or organization anyway. If your team only consists of those who just like to question everything, your team might be put under a situation such as “too many discussions, little progresses”. Also someone may guess that those more inherently obedient people would happily give the highest shock voltage. I think that is a kind of bias we should avoid. Also I don’t know that kind of group is a majority or minority in our society. What I have interest in here is how the tendency of obedience to authority figures affects more regular and average people.&lt;/p&gt;
+
+&lt;p&gt;Most of people are not so clear how much of tendency they have in terms of obeying authority persons. But Milgram experiment showed so many people were obedient to the person in charge of the experiment even though they had freedom and right to quit continuing it. The experiment reported that many participants displayed varying degrees of tension and stress such as sweating, trembling, stuttering, groaning, weeping, etc. Clearly, we can see they received significant amount of stress indicating so much inner conflict. Nevertheless, generally speaking, behavior of following and obeying instructions from the authority figure comes first, and behaviors related to morality and sympathy and something similar came next or were suppressed.&lt;/p&gt;
+
+&lt;p&gt;That means whatever causes to make us obey authority people are so much strong and powerful. We know that similar behaviors are observable from other animals which have some sort of hierarchy or society, for instance, most of primates other than human. I think this behavior would’ve been very helpful in terms of evolution and survival of species. Hunter-gatherers, our ancestors, were under great threats and dangers more often than now, and probably they often confronted many hostile situations where quick decision makings and actions were vital and critical. In those circumstances, just following orders from the group leaders and obeying them would’ve been much more effective for their survival. Considering our long history of having hierarchical societies and social interactions, it’s not so unnatural even if we assume that the obedience behavior is related to something at our genetic level or some deeply hardwired functions at our core level. &lt;/p&gt;
+
+&lt;h4 id=&quot;instinct-of-obedience-and-decision-makings&quot;&gt;Instinct of obedience and decision makings&lt;/h4&gt;
+&lt;p&gt;However, we don’t live in the hunter-gatherer’s age. no need to hurry like our ancestors used to. In today’s age of information, we can collect and manage enough information and knowledge to help us make proper and optimal decisions. Still, some decisions are required to make quickly. But various technologies are here and there to assist us. Unless some external environmental factors, over which we don’t have so much control, make us quickly decide something in a hurry, we generally are able to control and optimize our decision making systems. Generally speaking, you may think organizations or individuals can make better decisions than ever because of information and knowledge flooded everywhere and good fast evolving technologies.&lt;/p&gt;
+
+&lt;p&gt;But &lt;a href=&quot;/civilizer/blog/2015/10/23/ambiguity-effect&quot;&gt;as stated in my earlier blog post&lt;/a&gt;, unless we carefully design our decision making system, some cognitive biases slip in, as a result, we may make nonoptimal decisions. Likewise, the inner instinct to obey someone in higher power or expertise might negatively affect our decisions. &lt;/p&gt;
+
+&lt;p&gt;Think about your everyday decision makings; They mostly may be going smoothly. However, sometimes you need to decide something or draw a conclusion under some sort of time pressure or emergency. Even if your organization has good knowledge base backed by efficient system, that doesn’t mean every employee has a good skill of retrieving the right information at the right time for a proper decision making. Your skill level of managing knowledge and retrieving information may not be that good. That means more often than not you may not be provided enough resources required for a good decision making. That’s where your hardwired mechanisms such as ambient effect or Milgram effect comes in. &lt;/p&gt;
+
+&lt;p&gt;Milgram experiment shows us that our instinct of obedience to authority is so mush powerful.
+In the experiment, we see those participants had discretion to make their own decision. But in fact, they didn’t use that discretion. That’s indicating it’s really doubtful if you can make your own decision under strong influences of Milgram effect.&lt;/p&gt;
+
+&lt;h4 id=&quot;strip-search-phone-call-scam&quot;&gt;Strip search phone call scam&lt;/h4&gt;
+&lt;p&gt;Many scammers are cleverly leveraging Milgram effect. One notable incident is &lt;a href=&quot;https://en.wikipedia.org/wiki/Strip_search_phone_call_scam&quot;&gt;The Mount Washington scam&lt;/a&gt;. Suppose that you are a manager in a restaurant and take a phone call from a man claiming he is a police officer. He says one of your workers are suspected of theft and asks you to search the worker. Of course, he gives you spurious reasons about why he can’t be there himself (e.g., all officers are busy at the moment with other bigger crimes) Do you think you would never fall for it? Similar scams were made nearly 10 times over 10 years prior to The Mount Washington scam incident. That means so many people fell for it. If you think you wouldn’t fall for it, what is that reason?&lt;/p&gt;
+
+&lt;p&gt;In the case of the Mount Washington scam, the assistant manager, believing that the caller was a real police officer, conducted a strip search of a part time job girl, which is clearly illegal regardless of being conducted on behalf of police investigation. Another employee committed an even more serious crime against the same victim under the scammer’s authoritative influences. In this case, similar to the Milgram experiment, the instinct of obedience or whatever you call it, simply overpowered human’s ability to make right decisions.&lt;/p&gt;
+
+&lt;p&gt;Of course, poorly designed scams would be easy to detect and many won’t be deceived. But most of scams are carefully and cleverly designed and make use of various small tricks which are mostly focused on depriving us of many options to carefully analyze our surrounding circumstances and related information. For instance, the scammer may say so; “We don’t have enough time. If you don’t do it, all of us’ll be in a trouble”. The scammer won’t give us enough time and room with which we can fully analyze the situation and consider other options. Basically, they constantly try to compromise our decision making ability and make Milgram effect more and more influential.&lt;/p&gt;
+
+&lt;p&gt;Not to speak of scams, the similar situation may happen regularly more than you would imagine in you and your organization. All kinds of small emergency are happening from time to time. Even if you are so perfect to do your job correctly, sometimes you are asked to quickly clean up other people’s mess. In all of emergency, we more often than not have insufficient resources (time, knowledge, data, advice, etc.) for a good decision making. Also, people would get panicked more or less, and feel some stress which might lead to loosing more of our own ability to help us make good decisions. All of these conditions are friendly to Milgram effect.&lt;/p&gt;
+
+&lt;h4 id=&quot;milgram-effect-threat-for-our-day-to-day-decisions&quot;&gt;Milgram effect threat for our day to day decisions.&lt;/h4&gt;
+&lt;p&gt;Suppose that your organization is a social web vender and one day, An employee found that the network security had been compromised and some of customer data had been stolen! At this emergency, top brains of your company are assembled to discuss what to do. Some argue that opening up the fact of security breach is essential. They say that informing the customers of the fact and make them take necessary countermeasures as soon as possible would be correct in terms of morality and maintaining trust from the customers. But what about share prices of the company? It might be a lot bigger concern than morality for some people. Finally, the CEO comes to a conclusion that they need to hide the fact; He says “Our corporation USUALLY put first our customer’s value and profit. But this is a rare emergency. Sometimes we need to respond to an exceptional situation with an exceptional solution. We have no other choice.”. Doesn’t that sound similar to Milgram experiment?&lt;/p&gt;
+
+&lt;p&gt;I know this imaginary decision making scenario might look funny to you. Something like that may not happen in the real world. Milgram effect is not the only factor leading to nonoptimal decisions. Also there may be positive factors leading to optimal decisions. So real world decision makings would be a lot more complicated. But I wanted to just roughly illustrate how Milgram effect might work during our decision making process especially in the case of emergency or crisis. When your CEO says something like “We have no other choice”, what would be your response especially when you feel something is wrong about his decision? In this kind of situation, Milgram experiment tells us that most of us will simply obey the authority even if we feel that’s not right.&lt;/p&gt;
+
+&lt;p&gt;“You (or we) have no other choice” talk from an authority figure actually might be a lot powerful more than you would imagine. I was once told the same talk from an employee of a real-estate company. At the end of my house rental contract with them, I decided to move without extending the contract and informed them of my leaving. But unexpectedly, they started to claim I should pay an additional rent based on the contract agreement, which didn’t make sense to me. When the agent told me that, over the phone, “you have no other choice but to pay”, I felt my blood pressure suddenly going up. I clearly came uncomfortable and even panicked. I stuttered a lot. Nevertheless, somehow I could resist and denied agreement to pay and determined to dig out myself about their claim. After some research, I found that their spurious claim had no strong legal basis. In fact, my contract agreement had several unclear issues. And I figured they cleverly leveraged that vagueness. Also I felt direct conversations with these guys would not be a good idea so I chose an e-mail as the only communication means. They requested me to talk with them but I refused and insisted on e-mail communications which later could be used as a valid legal proof. Through an e-mail, I requested them to provide me any clear legal basis for their claim. Then, no more of bullshit claim! They dropped it. I could safely leave without paying extra money.&lt;/p&gt;
+
+&lt;p&gt;We usually never think people like the real-estate agents have so much power or authority. Depending on situations, however, similar experts talking to you suddenly might become authority figures and try to manipulate and exploit you. Be careful! In my opinion, this is more serious threat to us than scams especially when we dispute on some issues we are not so familiar with. My previous case with real-estate guys was somewhere between a scam and valid legal issue. Even if you think you are Milgram effect scam proof, how you can cleverly deal with this kind of unclear dispute might be questionable. You will occasionally have subtle issues and disputes with other people who know more than you. Usually we will encounter those disputes or quarrels more often than scams. Every malicious person with higher expertise than you could become a potential authority figure and you highly likely might be a victim of Miglram effect. If you encounter one, deep research for the issue by yourself and avoiding direct talking with them might be helpful as I did. And if possible, asking help or advice from another friendly experts might be a safer solution.&lt;/p&gt;
+
+&lt;h4 id=&quot;so-what-we-do&quot;&gt;So what we do?&lt;/h4&gt;
+&lt;p&gt;Dealing with Milgram effect is not easy. I can’t suggest any perfect solution here. But I think it’s important to understand how it may affect our daily discussions or decision makings. If you have skills of quickly accessing right information all the time, it would definitely help you. And equipping yourself with general knowledge would help you on a long term basis.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 28 Oct 2015 21:00:00 +0900</pubDate>
+        <link>http://suewonjp.github.io/civilizer/blog/2015/10/28/milgram-effect/</link>
+        <guid isPermaLink="true">http://suewonjp.github.io/civilizer/blog/2015/10/28/milgram-effect/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Ambiguity effect</title>
+        <description>&lt;h4 id=&quot;ambiguity-effect&quot;&gt;Ambiguity effect&lt;/h4&gt;
+&lt;p&gt;Have you heard of &lt;a href=&quot;https://en.wikipedia.org/wiki/Ambiguity_effect&quot;&gt;Ambiguity effect&lt;/a&gt;? It’s a  cognitive bias. According to the Wikipedia page, the effect implies that people tend to select options for which the probability of a favorable outcome is known, over an option for which the probability of a favorable outcome is unknown.&lt;/p&gt;
+
+&lt;p&gt;Here is a citation from the same page illustrating an example of how the effect works :&lt;br /&gt;
+&amp;gt; As an example, consider a bucket containing 30 balls. The balls are colored red, black and white. Ten of the balls are red, and the remaining 20 are either black or white, with all combinations of black and white being equally likely. In option X, drawing a red ball wins a person $100, and in option Y, drawing a black ball wins them $100. The probability of picking a winning ball is the same for both options X and Y. In option X, the probability of selecting a winning ball is 1 in 3 (10 red balls out of 30 total balls). In option Y, despite the fact that the number of black balls is uncertain, the probability of selecting a winning ball is also 1 in 3. This is because the number of black balls is equally distributed among all possibilities between 0 and 20. The difference between the two options is that in option X, the probability of a favorable outcome is known, but in option Y, the probability of a favorable outcome is unknown (“ambiguous”).  &lt;/p&gt;
+
+&lt;p&gt;People have a greater tendency to select a ball under option X, ( where the exact number of a winning ball is clearly known ) rather than option B ( where the exact number of a winning ball is unknown ). &lt;/p&gt;
+
+&lt;p&gt;I think this effect can be extended or generalized a little bit as follows: “people favors what they think they know and disfavors what they think they know less or is ambigous”. I often find many people say some negative opinions toward concepts or ideas with which they are not so familiar. (Including myself. Almost no one might be free from this bias) This may mean that people’s decision making process can be greatly affected by their knowledge of related problems or concepts.&lt;/p&gt;
+
+&lt;p&gt;Think about every meeting being held at your organization. The issues or subjects in the discussion are clear to every attendee? In that context, we can break instances of meetings into 3 possible cases. 
+1. Every member in the meeting understand more or less the problem domain.
+1. Every member is ignorant of it.
+1. &lt;em&gt;&lt;strong&gt;Imbalance of knowledge&lt;/strong&gt;&lt;/em&gt; 
+  - Some understand more or less and the others don’t.&lt;/p&gt;
+
+&lt;p&gt;In my opinion, the best case is all members in the discussion know more or less the problem domain or related contexts. The 2nd best is all members are ignorant. &lt;strong&gt;The worst is imbalance of knowledge; Some know more or less, the others know little&lt;/strong&gt;… Why?&lt;/p&gt;
+
+&lt;p&gt;First of all, you need to understand discussions with knowledge imbalance highly likely happen day to day basis at your organization. Employees are all busy and some of them are lazy. Some have a wide range of knowledge but others don’t. Various casual and informal discussions happen day to day in your organization and some people may consider them trivial and unimportant. So some people read something in preparation for the discussion, but some don’t do anything and just join the discussion with their preexisting knowledge only. So discussions with knowledge imbalance happen more often than not.&lt;/p&gt;
+
+&lt;p&gt;If you don’t understand some particular issues in discussion, you likely come to be subject to the ambiguity effect and as a result, you might show some favor or disfavor toward that particular issues. But no matter how trivial the discussions are, sometimes your comment or mention may matter regardless of your awareness. The worst case is, when you are responsible for the decision making but you have little knowledge of the problem domain. In that case, little will protect you from the ambiguity bias and that may lead to a bad decision, which may hurt you or your organization sometime later on.&lt;/p&gt;
+
+&lt;h4 id=&quot;danger-of-discussion-with-knowledge-imbalance&quot;&gt;Danger of discussion with knowledge imbalance&lt;/h4&gt;
+&lt;p&gt;I remember a particular discussion I had when I was working for a game studio a few years ago. I was discussing with another coworker which technology should be adopted and implemented for solving some specific problem at the moment. I supported one technology and he supported another. During the discussion, I suddenly detected some pattern from his argument. He used to say “I don’t know much about those technologies, but blah blah blah…”. He repeated that pattern of saying several times, and clearly, it seemed he really knew little. &lt;/p&gt;
+
+&lt;p&gt;While I was trying to cite supportive facts from materials that I’d read and my personal experience (I even played a game that implemented the technology in the discussion to figure out how it works in the actual games), he didn’t give me any of such things. Even though he was clearly admitting that he had less knowledge of those technologies, he stubbornly kept sticking to his view and denying my view. But without any of supportive facts or citations, his argument was far from convincing. That behavior totally didn’t make sense to me and I realized that the discussion itself was unproductive at all. It really wondered to me because he usually liked analytic thinking for his other jobs and I considered him as more of a logical guy. But his logic at the discussion was not logical to me.&lt;/p&gt;
+
+&lt;p&gt;I’m not sure whether he was driven by some cognitive bias such as the ambiguity effect. But what is clear to me is discussing something without prior knowledge is so much unproductive and even dangerous. No prior knowledge means it is highly likely that we are subject to those cognitive biases. Less knowledge means we may be driven more by our prejudice or personality or other hidden motives (e.g., I hate him and I don’t like he has some initiative) I find many aggressive “opinion push forwarding” people (including myself) exist out there. And human’s behavior looks reasonable mostly, but not always like my previous coworker. This kind of personality things or unstability of human natures may make our communication complicated and out of its right track when we discuss something with each other. &lt;/p&gt;
+
+&lt;p&gt;In my opinion, discussions might be most unproductive or dangerous when some have prior knowledge and some don’t, I think it’s rather safer when all members in a discussion know little about the discussion subject. (It may sound stupid, though…) In that case, it is likely that the decision making may be put off until everyone gets familiar with the problem domain. It’s safer because no decision might be made carelessly. But in the case of knowledge imbalance, sometimes it’s not clear who understands and who doesn’t. And someone “invisibly” driven by biases may affect the decision making. The consequent decision may not end up good because one can hardly say that decision has been made in an optimal way.&lt;/p&gt;
+
+&lt;p&gt;Also, there is another cognitive bias called &lt;a href=&quot;https://en.wikipedia.org/wiki/Curse_of_knowledge&quot;&gt;Curse of knowledge&lt;/a&gt; which, at this time, have some bad effect on those who have prior knowledge. The curse of knowledge bias may even more increase the discrepancy of perceptions between those who have prior knowledge and those who don’t. So it may make the problem even worse.&lt;/p&gt;
+
+&lt;h4 id=&quot;practice-of-5-minutes-meeting&quot;&gt;Practice of 5 minutes meeting&lt;/h4&gt;
+&lt;p&gt;Mr. Mikitani, CEO of Rakuten, a big e-commerce and Internet company based on Japan, pushed forward a practice of carrying out 5 minute meetings that originally used to be one hour meetings. Before making that decision, he noticed that 55 minutes of an usual meeting were being taken up by various explanations. So he made members who were supposed to give a presentation at the meeting submit their written materials in advance of the meeting. Most of the people write down what they want to say in preparation anyway, the submit would hardly be an additional burden for them. Of course, other meeting members are required to read all the materials before the meeting, but it can be done using various spare time such as commuting time.&lt;/p&gt;
+
+&lt;p&gt;You may guess the main motive of that practice is time-saving. I agree with you. But In my view, on top of that, there is another benefit. It is making meeting attendees equip themselves with some prior knowledge in advance of the discussion so making the discussion at its right track. At traditional casual meetings where significant time might be spent for explanations, we can be hardly sure of how each attendee would quickly and deeply understand topics and issues from that brief explanations. Maybe the discussion subject is more important or sensitive than it might look and it involves other subtle issues or surroundings. But ideally speaking, attendees need to quickly catch that sort of hardly visible context under 20~30 minutes or so. That means we highly likely have various ambiguities here and there with regular meetings we attend everyday. However, at many meetings, right after the explanation stage, people may need to dive subsequent stages of discussion and decision making! Doesn’t that sound risky to you?&lt;/p&gt;
+
+&lt;h4 id=&quot;preventing-too-early-discussion-and-decision-making&quot;&gt;Preventing too early discussion and decision making&lt;/h4&gt;
+&lt;p&gt;Traditional meetings where some materials are handed out and someone explains over them, may increase risk of knowledge imbalance. Humans are all different. During limited time span, some issues may be clearly visible to some people, but may not be to others. In that case, those who don’t have clear knowledge may be subject to the ambiguity effect, in the mean while, those who have clear knowledge may be subject to curse of knowledge effect. And those biases are much more tough than you may imagine and hard to resist. You can tell how they are tough and hard to overcome when you view many psychological experiments and surveys yourself. The biases keep disturbing the communication and make people favor or disfavor a particular decision making factor more than necessary and consequently, the discussion highly likely may not end up an optimal and desirable way.&lt;/p&gt;
+
+&lt;p&gt;One of the solution to this problem might be the practice of five minute meeting introduced earlier. But the practice may work at Rakuten because the most powerful person in the organization is initiating it. Unless powerful people in your organization care so much, I think it’s not so easy to initiate this sort of practice. How do you effectively enforce your boss to read related materials in advance of the meeting?&lt;/p&gt;
+
+&lt;p&gt;Introducing this kind of practice is more of trying to change organizational culture in my view. Think about whether your organization’s decision making process is carefully designed and considers this kind of risk. If people in your organization attend casual style of meeting or discussion everyday and try to wrap up everything in just one meeting, that is your organizational culture. And that means they don’t care. And the rooted culture can’t be changed so easily. &lt;/p&gt;
+
+&lt;p&gt;You can argue that nonetheless, it’s hard to say that every casual meeting has some risk because communication skills of the attendees may affect the discussion quality. People of good communication skills and good insights may discuss well whatever topic they encounter. That may be a good point. But does your organization have so many of those people? People of good communication skills are generally free from cognitive biases? &lt;/p&gt;
+
+&lt;p&gt;I don’t know. But still anyway, generally speaking, it is a lot safer that we don’t walk on every stage (explanation, discussion, decision making) in just one meeting or discussion. And we need to carefully see and evaluate if it’s the right time for discussion. Too early discussion might be harmful. Someone who highly values a quick decision making process, may be against my idea, but I think multiple steps of discussion, especially when it deals with sensitive issues, really is necessary in terms of risk management. &lt;/p&gt;
+
+&lt;p&gt;Anyway, I think we need to understand how important is that we equip ourselves with enough prior knowledge and investigate related things on our own before diving into discussions. And if the discussions may lead to some kind of decision making, it comes more important. In terms of long term solution, this problem might be where knowledge management can help. At organizational level, individual person needs to cooperate the policy or process of organizational knowledge management if it ever exists. At personal level, it is necessary that you efficiently manage your knowledge required for your job or other related context. And if it’s possible, sharing your knowledge helps. &lt;/p&gt;
+</description>
+        <pubDate>Fri, 23 Oct 2015 21:00:00 +0900</pubDate>
+        <link>http://suewonjp.github.io/civilizer/blog/2015/10/23/ambiguity-effect/</link>
+        <guid isPermaLink="true">http://suewonjp.github.io/civilizer/blog/2015/10/23/ambiguity-effect/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Structured data vs Unstructured data</title>
+        <description>&lt;h4 id=&quot;unstructured-data&quot;&gt;Unstructured data&lt;/h4&gt;
+&lt;p&gt;The other day, to a friend of mine, I explained a rough concept of PKM (Personal Knowledge Management) and How &lt;a href=&quot;http://suewonjp.github.io/civilizer/&quot;&gt;Civilizer&lt;/a&gt; can help PKM activities. He argued that using tools like Civilizer is an overkill, and a simple tool like Windows Notepad is enough.&lt;/p&gt;
+
+&lt;p&gt;As far as I’m aware, note applications like EverNote are being used widely for activities similar to PKM. That makes sense because I think EverNote is so much sophisticated and useful enough. But Windows Notepad? I don’t think so. The data model, which Windows Notepad is supposed to work with, is just a series of text. In other words, it is just a form of &lt;em&gt;&lt;strong&gt;Unstructured Data&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before discussing what is unstructured data, we need to discuss what is &lt;em&gt;&lt;strong&gt;Structured Data&lt;/strong&gt;&lt;/em&gt;. Actually, the concept of structured/unstructured data may be subject to slightly different definitions and translations by people. Note that What’s described here is just my interpretation.&lt;/p&gt;
+
+&lt;h4 id=&quot;structured-data&quot;&gt;Structured Data&lt;/h4&gt;
+&lt;p&gt;Structured Data is data that follows some carefully predefined rules and format which can be used to identify/categorize/link or relate/constrain data. These additional attributes can make humans or machines to effectively collect or track or filter the data. &lt;/p&gt;
+
+&lt;p&gt;Example of highly structured data is every database system these days. ( multiple unique columns representing various distinct aspects of the table, primary keys to identify particular entity, foreign keys for relationships, constraints to limit errors slipping in, and so on ). Carefully structured data model in databases can leverage powers of SQL queries so that humans or machines can effectively extract useful information from the database.&lt;/p&gt;
+
+&lt;h4 id=&quot;giving-structure-to-your-data&quot;&gt;Giving Structure to Your Data&lt;/h4&gt;
+&lt;p&gt;Just a bunch of text, that Windows Notepad deals with, doesn’t follow so many significant rules. The data of raw text is so primitive that there is not much Windows Notepad can do for you. What it can provide you best is simple text search functionality. The structure of raw text data is almost none. &lt;/p&gt;
+
+&lt;p&gt;Let’s imagine there exists certain database which contains a bunch of rows of a single table with a single column just full of raw text, which covers wide range of content, such as people’s name and address and their job, etc. Various useful features of SQL can’t help with this imaginary database because this data has almost no useful structure. That means your smart SQL skill is useless to this data. What a waste!&lt;/p&gt;
+
+&lt;p&gt;Only having a single column means it has only one attribute to identify a particular data entity, but that attribute is actually a mixture of other attributes (name, address, job, …). Text data on Windows Notepad looks like this, which is similar to mass of diverse information. This mixed or blended form of data is usually difficult to identify or filter or modify. The situation almost looks like this. Let’s say we have data of A + B, and the mixture always goes together. That means when we need only A, we have no choice but to retrieve A + B altogether, which sounds inefficient. Or when we try to modify only B, we need to be so careful so that modification doesn’t touch A, which sounds so much error-prone and stressful.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, Excel can express its data with columns and rows. This row-column structure of Excel data actually make Excel a lot useful and powerful software, even if you may think the structure is so simple and trivial. My point is this. &lt;em&gt;&lt;strong&gt;Providing some structure to your data will give it an extra value and usefulness.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;structured-data-and-its-short-term-cost&quot;&gt;Structured data and its short term cost&lt;/h4&gt;
+&lt;p&gt;Basically, we need to convert unstructured form of data (such as collection of text data) into a structured form to make it useful to us. The more highly structured your data is, the more value you can extract from that data. You can argue that unstructured data itself can be valuable enough if it contains useful information for us. That’s right. But it would be more correct if you say that it is &lt;em&gt;&lt;strong&gt;“potentially”&lt;/strong&gt;&lt;/em&gt; valuable. I agree what the data contains is an important issue. But how we extract that useful information from the data is important as well. Unstructured data has arbitrary format and follows arbitrary rules and that imposes a big challenge to us. &lt;/p&gt;
+
+&lt;p&gt;Most structured data comes with its extra cost to convert its original unstructured form to a structured form. There have been so many part time jobs out there to insert data written in papers or documents into database consoles. These jobs are basically for converting unstructured data to structured data. Paying money for humans for the converting is a traditional way. Some of data or content companies may have automation tools to do the converting instead of human labors, but developing and maintaining those tools don’t come with no cost. &lt;/p&gt;
+
+&lt;p&gt;However, generally speaking, we can say that those costs are short term, and worth paying compared to long term benefits we can get by the converting. And that’s why most businesses have been converting their data, paying the money.&lt;/p&gt;
+
+&lt;h4 id=&quot;pkm-and-structured-data&quot;&gt;PKM and Structured data&lt;/h4&gt;
+&lt;p&gt;The friend, arguing Windows Notepad is useful enough, is an web engineer. In the mean time, I know someone that personally using database software to manage data for his job. He, even not an engineer, writes SQL statements to a database console to efficiently store and retrieve his data. ( The data is for his personal duty and not worth sharing with other coworkers. ) I guess some of his coworkers probably won’t understand why he is doing that. While some non-technical person understands the concept of structured data, some engineers don’t even care for the concept. I wonder.&lt;/p&gt;
+
+&lt;p&gt;He advocating Windows Notepad might think personal data is so trivial that it’s an overkill to adapt some database concepts to practice a PKM activity. In my opinion, the benefits of structured data does not distinguish if the data is personal use or enterprise use. Besides, I don’t think anyone’s personal data is such trivial these days. Even though it is for a personal use, your data might grow up to a significant volume as you create and edit it over your career. Scalability is not an issue that only enterprise data deserves these days, at least in my opinion. There is no such rule that only enterprise data should be in a structured form. &lt;/p&gt;
+
+&lt;p&gt;I mentioned in my &lt;a href=&quot;/civilizer/blog/2015/10/04/Personal-Knowledge-Management-and-Civilizer/&quot;&gt;earlier blog post&lt;/a&gt; that whether or not practicing PKM is more primary question and which tool to choose is a secondary question. If you think you’ll be happy with  Windows Notepad, I recommend you try PKM with that. Maybe, collaborating with other extra tools like grep can be a little more productive, but, still it sounds not so convincingly productive to me. &lt;/p&gt;
+
+&lt;p&gt;As discussed earlier, structuring your data has a caveat, it costs efforts or time in a short term. That may be why many people hate tagging or organizing their data. But, it definitely has a lot more beneficial long term value and the short term cost can be significantly decreased once you’ve got the knack.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 12 Oct 2015 21:00:00 +0900</pubDate>
+        <link>http://suewonjp.github.io/civilizer/blog/2015/10/12/structured-unstructed-data/</link>
+        <guid isPermaLink="true">http://suewonjp.github.io/civilizer/blog/2015/10/12/structured-unstructed-data/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>The importance of small practices</title>
+        <description>&lt;h4 id=&quot;small-practices&quot;&gt;Small Practices&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.snapfiles.com/images/articles/a1006-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Image source : &lt;a href=&quot;http://www.snapfiles.com&quot;&gt;http://www.snapfiles.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Every modern OS has its default file explorer, and every file explorer has a common functionality called &lt;em&gt;&lt;strong&gt;“Bookmarks”&lt;/strong&gt;&lt;/em&gt;. The name might be different on platforms. In Windows Explorer, it is called as &lt;em&gt;&lt;strong&gt;Favorites&lt;/strong&gt;&lt;/em&gt; (See the above image).
+I think Bookmarks are very useful. Let’s say you have a shared folder located on some remote machine and you visit the folder from time to time. Also say the path of the folder is a little deep like “&lt;em&gt;&lt;code&gt;\\some-file-server\path\to\folder\you\access\at\times&lt;/code&gt;&lt;/em&gt;” so it’s not so easy to remember.
+Bookmarking for this kind of folder as well as folders more frequently you access are a good idea. And just one click lets you instantly access those folders.&lt;/p&gt;
+
+&lt;p&gt;But I see some people who simply ignore this useful feature. Their bookmarks items are as the same as the default. And they just insist on clicking one by one to their destination folder every time. Some people just ignore tiny little time they are wasting.&lt;/p&gt;
+
+&lt;p&gt;Talking about file explorers, file explorer of multi-pane might enhance your work efficiency.
+&lt;a href=&quot;http://http://www.softwareok.com/?seite=Freeware/Q-Dir&quot;&gt;Q-Dir&lt;/a&gt; on Windows is one of those tools. I love it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.softwareok.com/img/ss/t_en/Q-Dir1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When you use Windows Explorerer (default file explorer on Windows), jumping across multiple folders usually consists of extra more clicks but tools like Q-Dir will remove those unnecessary hassles for you. Another tools such as clipboard managers or virtual desktop application may save you a little bit of time at work. Also, doing your jobs with only sequence of shortcut keys without using your mouse (so called mouseless programming) will give you some efficiency. I even have got my fingertips so naturally familiar with pressing combination key sequences such as “Control + Shift + F4” that I don’t have to peek my keyboard.&lt;/p&gt;
+
+&lt;h4 id=&quot;do-those-small-practices-matter&quot;&gt;Do those small practices matter?&lt;/h4&gt;
+&lt;p&gt;You may think “So what? Such small time saving is a big deal?”…&lt;/p&gt;
+
+&lt;p&gt;Time saving of each small practice may not be such a big deal. But &lt;strong&gt;an aggregate all of each small trick may end up significant time saving&lt;/strong&gt;. Even if you can save only a few seconds per each small practice, total of them may prevent you from wasting more than 30 minutes a day, and more than 80 hours a year. Still, 80 hours a year may not be a big deal, but nobody knows the otherwise wasted time may be even more bigger than you imagine!&lt;/p&gt;
+
+&lt;p&gt;The more important fact is that you don’t have so many other options with which you can save your time at work. Can you recommend other better practices that can easily save you a lot of time &lt;em&gt;&lt;strong&gt;at a personal practice level&lt;/strong&gt;&lt;/em&gt;?&lt;/p&gt;
+
+&lt;h4 id=&quot;behavioral-practices&quot;&gt;Behavioral Practices&lt;/h4&gt;
+&lt;p&gt;Actually, other kinds of practice exist, but they may require you to have some kind of self-discipline. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Steve_Maguire&quot;&gt;Steve Maguire&lt;/a&gt; introduced a simple useful practice in his book “&lt;a href=&quot;http://www.amazon.com/Debugging-Development-Process-Practical-Strategies/dp/1556156502&quot;&gt;Debugging the Development Process&lt;/a&gt;”. He noticed that some programmers allowed e-mail readers running all the time, which somehow constantly interrupted their work. If you receive every incoming e-mail every 5 minutes in average, that means you get distraction every 5 minutes in average. So he recommends e-mail respondence &lt;strong&gt;in batches&lt;/strong&gt;, that you read mails in the morning, when coming from launch, right before leaving the work. This simple practice may give you a long continuous uninterrupted time frame and eventually, more effectively concentrated time for your job.&lt;/p&gt;
+
+&lt;p&gt;I call these kinds of practice &lt;em&gt;&lt;strong&gt;Behavioral Practices&lt;/strong&gt;&lt;/em&gt; because they require you to change your habit or behavior or discipline. I think they are useful and worth a try. But distractions for your work efficiency are more than e-mail at your work environment. Also it is sometimes hard to tell which is a mere unnecessary distraction for you, or which is necessary one. And some distractions are what you can’t even deal with your discretion such as regular interrupts from your careless boss.&lt;/p&gt;
+
+&lt;h4 id=&quot;practices-of-organizational-or-team-level&quot;&gt;Practices of organizational or team level&lt;/h4&gt;
+&lt;p&gt;Some organizational level of practices will actually give you (and your team) a lot of work efficiency, but they are absolutely out of your personal boundary.&lt;/p&gt;
+
+&lt;p&gt;Agile methodologies, switching to a better source code control system, switching to a better knowledge base system, etc. might be all good and effective and can end up a lot of time saving. But to practice those techniques, many people in your team should agree (especially a powerful person like your boss) and if the culture or situation of your organization simply doesn’t agree with them, they can’t be even started.&lt;/p&gt;
+
+&lt;p&gt;Talking about these high level practices here may be off topic (I’m talking about personal level of useful practices in this article), but my point is this:&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;Really powerful practices usually come with more pain and risk and discipline no matter which level the practices can be categorized.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Once I advocated switching the source code management system for the team from MS SourceSafe to Subversion when I used to work for one of my previous employers long ago. But persuading my boss was so hard even though Subversion was already good proven better software and SourceSafe was already too outdated even at that time. He simply rejected my idea. Maybe my persuading strategy had a problem. Later, another employee joined our team. He hated SourceSafe even so much and pushed his idea of switching to SVN. I didn’t know why but it worked this time! &lt;/p&gt;
+
+&lt;p&gt;Anyway we could switch to SVN with our joint effort of him and me. But as usual, the benefit of switching that kind of infrastructural tool doesn’t come at a short time frame. Also some people still would practice their old habits. When we used SourceSafe, nobody wrote commit messages at all! (maybe shocking to some readers…) Even if we switched to a new tool, such habits remained. So I implemented a SVN hook and blocked every commit with no message. Writing commit messages are absolutely necessary for the long term benefits as all of you are well aware, but it might’ve been some trouble or hassle for some people at the team until they finally got into the habit of writing meaningful messages for their commits.&lt;/p&gt;
+
+&lt;p&gt;Sometimes organizational level of practices should fight this kind of old habits, biases, or cultural ideas having been rooted for a long time. I always think organizational or team level of practices are usually worth a try and they are potentially the biggest boost in terms of production efficiency. But once again, they come with pain and risk and discipline which some people in your team might be afraid of. But still, worth a try.&lt;/p&gt;
+
+&lt;h4 id=&quot;conclusion&quot;&gt;Conclusion.&lt;/h4&gt;
+&lt;p&gt;Just leveraging simple small practices(such as bookmarking some folders you visit frequently or at times) usually work even if the positive outcome of each is very small. But I see too many people just ignore them and simply practice nothing. They argue whether or not doing those tiny tricks doesn’t make a big deal (usually, they’re saying that without even trying). At the same time, they may suggest you alternative ways that may produce better results. But we often see their suggestions are powerful enough, but might involve other prerequisites. (e.g. Your team should agree with you, or other additional infra is necessary to do that, etc)&lt;/p&gt;
+
+&lt;p&gt;Of course, when you believe there is a more powerful practice to boost your team or yourself, you need to push. It’s always worth a try. I’m not against that idea. But you can’t tell it’s ever going to work especially the practices are out of your personal boundary. While you consider a significant and powerful solution for your job efficiency, considering easy small practices to save your valuable time is also important. &lt;/p&gt;
+
+&lt;p&gt;Just do save a few extra seconds you can easily save! It doesn’t matter you stick to some powerful methodologies such as Agile or XP or Functional Programming. While sticking to those good practices, but I recommend you do not ignore other small time saving practices.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 06 Oct 2015 21:00:00 +0900</pubDate>
+        <link>http://suewonjp.github.io/civilizer/blog/2015/10/06/small-practices/</link>
+        <guid isPermaLink="true">http://suewonjp.github.io/civilizer/blog/2015/10/06/small-practices/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Personal Knowledge Management and Civilizer</title>
+        <description>&lt;h3 id=&quot;how-many-times-do-you-think-you-encounter-new-information-or-knowledge-every-day&quot;&gt;How many times do you think you encounter new information or knowledge every day?&lt;/h3&gt;
+
+&lt;p&gt;Please, try to answer this question. The answer may depend on each individual’s personality and his or her current job or education. I assume the average number of the answer might’ve been a little bit smaller if the same question was asked earlier like 10 years ago.  &lt;/p&gt;
+
+&lt;p&gt;We have been encountering new knowledge or information from the traditional media such as books, TV, newspapers, magazines. In addition to the traditional media, we’ve become to have new kind of media such as Web pages, wikis, blogs, SNS. Other than media, we now have new communication infrastructures such as wireless, more powerful devices such as smart phones. We have more sources of information than we used to have, and another kind of media will highly likely show up in the future.  &lt;/p&gt;
+
+&lt;p&gt;Generally speacking, &lt;strong&gt;the average number figure for the answer to this question will increase as the number of information sources increase&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;OK. Then, let’s consider another question.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-do-you-handle-new-knowledge-or-information-that-you-think-is-useful-to-you&quot;&gt;How do you handle new knowledge or information that you think is useful to you?&lt;/h3&gt;
+&lt;p&gt;The answer to this question will depend on each individual, too.  &lt;/p&gt;
+
+&lt;p&gt;As stated earlier, we have more sources of information, and more means of communication than in the past. That means you may encounter more and more possibly useful information these days and also other people may do. That means, nowadays, merely more chances of encountering many new information is not an advantage over other people. An individual properly and efficiently handling and managing the new knowledge and information may have some advantages over those who don’t. That is mainly because human brains have limited power and capacity.&lt;/p&gt;
+
+&lt;p&gt;Most of People who don’t take this question so seriously might take the most simple option to handle their new information. That is, just leaving it to their brains. &lt;br /&gt;
+This option certainly won’t work well ( unless you are some super-human ) because of the following two reasons at least.&lt;br /&gt;
+- First, (once again) human brains have limited power and capacity.&lt;br /&gt;
+- Second, majority of how human brains work is still unclear and whether your brain will keep the new information in the long term memory is kind of unpredictable. &lt;/p&gt;
+
+&lt;p&gt;So if you care, you need to consider any option other than leaving everything to your brain.&lt;br /&gt;
+Some people like taking notes on their diary or notepad. That’s good, I think.&lt;br /&gt;
+Others use note application software to manage information. If your data happen to be mostly digitalized, that is an even better solution.  &lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;I think which tool to use is the secondary question. The most important question is:&lt;/strong&gt;&lt;/em&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;“Are you practicing something (no matter what it is) to handle your information properly and efficiently?”&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;personal-knowledge-management&quot;&gt;Personal Knowledge Management.&lt;/h3&gt;
+&lt;p&gt;Here comes the concept of &lt;em&gt;&lt;strong&gt;Personal Knowledge Management&lt;/strong&gt;&lt;/em&gt;.&lt;br /&gt;
+The following page is Wikipedia’s explanation of Personal Knowledge Management.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Personal_knowledge_management&quot;&gt;https://en.wikipedia.org/wiki/Personal_knowledge_management&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The explanation is, like other pages of Wikipedia, generic and academic and … a little boring. ( sorry, Wikipedia people… :-) )   &lt;/p&gt;
+
+&lt;p&gt;My personal view on PKM is more narrower.&lt;br /&gt;
+Have you underlined some phrase with a pen when you read a book? In my opinion, it is a primitive form of PKM.  &lt;/p&gt;
+
+&lt;p&gt;Whether we recognize it or not, we do some activities of PKM. Do you create and organize some mail box tree and sort your incoming mails into them by categories when you use your mail client? ( I do that. ) But also I see some people just storing whatever mails they get into only one big mail box. Even these people who dislike organizing things may be involved with a few activities of managing information that they think useful. Address book of their phones might be an example.   &lt;/p&gt;
+
+&lt;p&gt;As the Wikipedia’s page states, PKM is relatively new and underresearched area. That means still many people don’t take the concept of PKM so seriously. People have started to talk about PKM recently even though humans have been doing kind of activities that look like PKM from the age of the first civilization. That’s because we suddenly happen to have so many sources of information, and so good infra such as wide area network and wireless, and so useful devices and means in addition to the traditional information sources of books or social interactions.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;In the past, there might’ve been almost little difference between people who were good at PKM practices and people who weren’t. 
+However, that might be changing…&lt;/strong&gt;&lt;/em&gt; &lt;/p&gt;
+
+&lt;h3 id=&quot;me-and-civilizerhttpsuewonjpgithubiocivilizer&quot;&gt;Me and &lt;a href=&quot;http://suewonjp.github.io/civilizer/&quot;&gt;Civilizer&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;I have had interest in the topic of PKM in the past 2 years. Actually I am not so familiar with the theories involved with PKM because I’m not a person from academia. I just thought I needed some better efficient method to manage my knowledge and expertise.&lt;/p&gt;
+
+&lt;p&gt;I searched the Web to find whether there was a good tool to fulfill my needs. I happened to run into &lt;a href=&quot;http://piggydb.net/&quot;&gt;Piggydb&lt;/a&gt;. I think Piggydb is a good tool and I was quite happy with it for a while. But I felt the tool was quite limited to fulfill my unique needs as my data grow, and I started to think of switching to another tool or building my own.&lt;/p&gt;
+
+&lt;p&gt;Eventually I decided to build my own tool of PKM. It was &lt;a href=&quot;http://suewonjp.github.io/civilizer/&quot;&gt;Civlizer&lt;/a&gt; and it has been &lt;a href=&quot;https://github.com/suewonjp/civilizer/releases/latest&quot;&gt;released&lt;/a&gt; recently.&lt;/p&gt;
+
+&lt;p&gt;I’m heavily using Civilizer every day and it is already a part of my life. I wish I’d come up with several more good concepts of PKM and implement them into Civilizer. I wish eventually Civilizer would become a useful tool for some people who seriously care for their knowledge and work.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;Civilizer and Piggydb are web based applications. But some people prefer desktop applications such as Evernote or &lt;a href=&quot;http://wikidpad.sourceforge.net/&quot;&gt;WikidPad&lt;/a&gt; for their PKM practice. Desktop and web-based have their own pros and cons. I don’t have any intention to discuss the details here.  &lt;/p&gt;
+
+&lt;p&gt;As I stated earlier, &lt;strong&gt;which tool to use is the secondary question&lt;/strong&gt;. Even using physical things such as notes or diary is still good option in my opinion even though personally I don’t like it.  &lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Once again, the most primary question I hope you would answer is:&lt;/strong&gt;&lt;/em&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;“Are you practicing something to efficiently and properly manage your knowledge and information?”&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 04 Oct 2015 21:00:00 +0900</pubDate>
+        <link>http://suewonjp.github.io/civilizer/blog/2015/10/04/Personal-Knowledge-Management-and-Civilizer/</link>
+        <guid isPermaLink="true">http://suewonjp.github.io/civilizer/blog/2015/10/04/Personal-Knowledge-Management-and-Civilizer/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
