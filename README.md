@@ -1,4 +1,4 @@
-### Description
+### DESCRIPTION
 
 Civilizer is a **personal** web application that helps you efficiently manage your data/knowledge/idea including:
 
@@ -31,24 +31,25 @@ It can help you efficiently organize/structure your data by:
 
 Civilizer has a full text search functionality to greatly help you access right data at the right time
 
-![civilizer](http://s6.postimg.org/ljrursgg1/civilizer.png)
+**See [ screenshots ](http://suewonjp.github.io/civilizer/#screenshots) or [tutorial video](http://suewonjp.github.io/civilizer/#videos)**
 
-### Credits 
+### CREDITS 
 
-> Civilizer has been inspired by Piggydb (http://piggydb.net/) developed by Daisuke Morita.  
+> Civilizer has been inspired by [Piggydb](http://piggydb.net/) developed by Daisuke Morita.  
 
-### Related Materials
+### RELATED LINKS
 - Civilizer Tutorial Video
-  - https://www.youtube.com/watch?v=0omObKmJd4E 
+  - <https://www.youtube.com/watch?v=0omObKmJd4E>
 - Civilizer Twitter
-  - [@civilizer_pkm](https://twitter.com/civilizer_pkm)
+  - <[@civilizer_pkm](https://twitter.com/civilizer_pkm)>
 - Civilizer Blog 
-  - https://sourceforge.net/p/civilizer/blog/
+  - <http://suewonjp.github.io/civilizer/blog/>
 - Civilizer Wiki and online Docummentations
-  - https://github.com/suewonjp/civilizer/wiki
+  - <https://github.com/suewonjp/civilizer/wiki>
 
 * * *
-### Prerequisites
+
+### PREREQUISITES
 
 Java Runtime Environment (JRE)
 - Note that JRE 7 or above is needed
@@ -77,11 +78,11 @@ Supported browsers: (note that old versions may not work correctly)
     - 9/10/11
     - ***Civilizer doesn't support IE 8 or earlier versions of IE***
     
-### How To Install and Run
+### HOW TO INSTALL AND RUN
     
 1. ***Make sure your system has JRE (version 7+) installed on it.***
     - Type and run _**java -version**_ from the command prompt to confirm your system JRE version.
-1. Download a .zip file of [the latest release](https://github.com/suewonjp/civilizer/releases/latest) and extract its content on your machine.
+1. Download [the latest release](http://suewonjp.github.io/civilizer/#download) and extract its content on your machine.
 1. Run it with the following instruction.
     - Windows Users:
         - Just click ***civilizer-win32.exe***.
@@ -116,7 +117,7 @@ Supported browsers: (note that old versions may not work correctly)
 >   - This will run Civilizer with all it needs at the minimum.
 >   - No tray icon or no other overhead.
 
-### How To Uninstall
+### HOW TO UNINSTALL
 
 1. Just remove the extracted folder.
 1. Civilizer automatically creates a folder named ***.civilizer*** in your User directory. 
@@ -125,7 +126,8 @@ Supported browsers: (note that old versions may not work correctly)
         - In case you want to make a backup of your data, refer to the user manual about how to do that.
    
 * * *
-### Compile/Test
+
+### COMPILE/TEST
 If you want to compile/test Civilizer on your own, you need the following as a minimum:
 
 - JDK 1.7 or above
@@ -162,7 +164,8 @@ Shell scripts have been provided to build all the binaries/resources and package
     - Run ***tools/build/build-all.sh*** from the command line.
 
 * * *
-### Limitations
+
+### LIMITATIONS
 
 - Civilizer is currently in **BETA** status.
 - Layout may not be rendered correctly on some untested browsers.
@@ -173,7 +176,8 @@ Shell scripts have been provided to build all the binaries/resources and package
     - We hope that sometime in the future, we will be able to develop a **Group or Enterprise Edition** to help a group of users share/manage data under greatly enhanced security provided.
 
 * * *
-### Copyright/License/Disclaimer
+
+### COPYRIGHT/LICENSE/DISCLAIMER
 
     Copyright (c) 2014-2015 Suewon Bahng, suewonjp@gmail.com
     
@@ -190,9 +194,9 @@ Shell scripts have been provided to build all the binaries/resources and package
     limitations under the License.
 
 * * *
-Written by Suewon Bahng   ( Last Updated 2 November, 2015 )
+Written by Suewon Bahng   ( Last Updated 26 November, 2015 )
 
-### Contributors
+### CONTRIBUTORS
 Suewon Bahng  
 
 Other contributors are welcome!
