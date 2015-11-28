@@ -38,14 +38,14 @@ Civilizer has a full text search functionality to greatly help you access right 
 > Civilizer has been inspired by [Piggydb](http://piggydb.net/) developed by Daisuke Morita.  
 
 ### RELATED LINKS
-- Civilizer Tutorial Video
-  - <https://www.youtube.com/watch?v=0omObKmJd4E>
-- Civilizer Twitter
-  - <[@civilizer_pkm](https://twitter.com/civilizer_pkm)>
-- Civilizer Blog 
-  - <http://suewonjp.github.io/civilizer/blog/>
-- Civilizer Wiki and online Docummentations
-  - <https://github.com/suewonjp/civilizer/wiki>
+- [civilizer official page](http://suewonjp.github.io/civilizer/)
+- [civilizer github page](https://github.com/suewonjp/civilizer)
+- [civilizer sourceforge page](https://sourceforge.net/projects/civilizer/)
+- [civilizer twitter - @civilizer_pkm](https://twitter.com/civilizer_pkm)
+- [civilizer blog](http://suewonjp.github.io/civilizer/blog/)
+- [civilizer tutorial video](https://www.youtube.com/watch?v=0omObKmJd4E&feature=youtu.be)
+- [civilizer wiki and online docummentations](https://github.com/suewonjp/civilizer/wiki)
+- [feature request & bug report & other issues](https://github.com/suewonjp/civilizer/issues)
 
 * * *
 
