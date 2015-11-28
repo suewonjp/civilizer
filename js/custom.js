@@ -59,13 +59,16 @@ $(document).ready(function() {
     }
   });
 
-  $(".screenshot-item").on("click", function(e) {
-    $("#full-image").show()
-      .css("background", "url("+$(this).find("img").attr("src")+") no-repeat center center fixed")
-      .off("click").on("click", function(e) {
-        $(this).hide();
-      })
-  });
+  if (window.orientation == undefined) {
+    // Only for desktops
+    $(".screenshot-item").on("click", function(e) {
+      $("#full-image").show()
+        .css("background", "url("+$(this).find("img").attr("src")+") no-repeat center center fixed")
+        .off("click").on("click", function(e) {
+          $(this).hide();
+        })
+    });
+  }
 
   $(window).on("load resize", function() {
     $("#full-image").css("height", window.innerHeight);
