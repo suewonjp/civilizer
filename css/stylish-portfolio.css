@@ -16,6 +16,23 @@ body {
   font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+@keyframes emphasis {
+  from {
+    color: mistyrose;
+  }
+  to {
+    color: darkgreen;
+  }
+}
+
+.notification {
+  animation-name: emphasis;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  text-decoration: underline;
+}
+
 .text-vertical-center {
   display: table-cell;
   text-align: center;
