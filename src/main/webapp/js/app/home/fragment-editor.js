@@ -196,8 +196,8 @@ function autocompleteForTypingTags() {
     function pfThemeBugHandler() {
         if (pfThemeBugFix) {
             var acMenu = $("ul.ui-autocomplete");
-            acMenu.find("li.ui-weak-focus").removeClass("ui-weak-focus");
-            acMenu.find("li.ui-state-focus").addClass("ui-weak-focus");
+            acMenu.find("li.ui-strong-focus").removeClass("ui-strong-focus");
+            acMenu.find("li.ui-state-focus").addClass("ui-strong-focus");
         }
     }
     
