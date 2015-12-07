@@ -468,6 +468,7 @@
 {
 	position: relative;
 	left: 20%;
+	text-shadow: 11px 0px 0px brown;
 }
 
 #tag-palette-form\:tag-editor .fa-arrow-down
@@ -475,6 +476,7 @@
 {
 	position: relative;
 	left: 80%;
+	text-shadow: 11px 0px 0px brown;
 }
 
 #tag-palette-form\:tag-editor td
