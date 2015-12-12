@@ -3,6 +3,8 @@ package com.civilizer.test.config;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
@@ -130,6 +132,24 @@ public class ConfigTest {
         System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
         System.clearProperty(AppOptions.DB_FILE_PREFIX);
         System.clearProperty(AppOptions.FILE_BOX_HOME);
+    }
+    
+    @Test
+    public void testJapaneseString() {
+        final String homePath = TestUtil.getPrivateHomePath();
+        System.setProperty(AppOptions.PRIVATE_HOME_PATH, homePath);
+        new Configurator();
+        final String actual = System.getProperty("civilizer.sample_japanese_str");
+        if (actual != null) {
+            final String expected = "カタカナ";
+            try {
+                assertEquals(expected, new String(actual.getBytes("ISO-8859-1"), Charset.forName("UTF-8")));
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+                fail();
+            }
+        }
+        System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
     }
     
     @Test

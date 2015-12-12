@@ -82,8 +82,7 @@ public final class Configurator {
 	    final File tgtOptionFile = new File(tgtOptionFilePath);
 	    if (! tgtOptionFile.exists()) {
 	        // copy the default application option file unless it exists
-	        final File defaultOptionFile = 
-	                new File (getClass().getClassLoader().getResource(AppOptions.OPTION_FILE_NAME).getFile());
+	        final File defaultOptionFile = FsUtil.getResourceAsFile(getClass(), AppOptions.OPTION_FILE_NAME);
 	        try {
                 FileUtils.copyFile(defaultOptionFile, tgtOptionFile);
             } catch (IOException e) {
@@ -204,7 +203,12 @@ public final class Configurator {
 	}
 	
 	private void setPathAbsolute(Properties p, String key, File privateHome) {
-		final String srcPath = p.getProperty(key);
+	    // [NOTE] java.util.Properties.load(InputStream inStream) is assumed to use the ISO 8859-1 character encoding;
+	    // So we need additional character encoding conversion in preparation for
+	    // users writing arbitrary file paths containing UTF-8 characters. 
+	    // See how FsUtil.toUtf8Path() does that.
+	    // Currently, we don't support other encodings that are neither of UTF-8 or ISO 8859-1.
+		final String srcPath = FsUtil.toUtf8Path(p.getProperty(key));
 		final String absPath = FsUtil.getAbsolutePath(srcPath, privateHome.getAbsolutePath());
 		p.setProperty(key, absPath);
 	}

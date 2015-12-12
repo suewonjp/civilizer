@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -159,6 +160,18 @@ public class FsUtilTest {
             final String srcPath = FsUtil.normalizePath("foo/bar");
             final String absPath = FsUtil.getAbsolutePath(srcPath, basePath);
             assertEquals(FsUtil.normalizePath("/base/path/foo/bar"), absPath);
+        }
+    }
+    
+    @Test
+    public void testMethod_getResourceAsFile() {
+        final File file = FsUtil.getResourceAsFile(getClass(), "dir for test/test resource.txt");
+        assertEquals(file.isFile(), true);
+        try {
+            final String content = FileUtils.readFileToString(file, Charset.forName("UTF-8"));
+            assertEquals("ひらがな　カタカナ　한글 english\n", content);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

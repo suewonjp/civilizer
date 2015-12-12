@@ -8,6 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.zip.ZipEntry;
@@ -27,6 +31,25 @@ public final class FsUtil {
     //     - File.separatorChar
     // Instead, use this.
     public static String SEP = "/";
+    
+    public static String toUtf8Path(String path) {
+        try {
+            path = new String(path.getBytes("ISO-8859-1"), Charset.forName("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return path;
+    }
+    
+    public static File getResourceAsFile(Class<?> clazz, String rscName) {
+        File file = null;
+        try {
+            file = new File(new URI(clazz.getClassLoader().getResource(rscName).toString()));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
     
     public static String normalizePath(String path) {
         if (path.startsWith("~")) {
