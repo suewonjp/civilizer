@@ -3,10 +3,10 @@
 hostScript=${0##*/}
 scriptDir=${0%/*}
 
-cd $scriptDir
+cd "$scriptDir"
 
-utilsDir=$(cd shell-utils 2> /dev/null && pwd)
-[ $utilsDir ] || utilsDir=$(cd ../shell-utils 2> /dev/null && pwd)
+utilsDir=$(cd "shell-utils" 2> /dev/null && pwd)
+[ "$utilsDir" ] || utilsDir=$(cd "../shell-utils" 2> /dev/null && pwd)
 source "$utilsDir/commons.sh"
 
 home=
@@ -29,7 +29,7 @@ setupClasspath
 
 homeOption=${home:+-Dcivilizer.private_home_path="$home"}
 
-cd $extraPath/../
+cd "$extraPath/../"
 
 echo "[ $hostScript ] : Importing Data..."
 java -cp $classPath $homeOption com.civilizer.extra.tools.DataBroker -import $importPath

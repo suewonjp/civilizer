@@ -5,7 +5,7 @@ setlocal EnableDelayedExpansion
 set hostScript=%~nx0
 set scriptDir=%~dp0
 
-cd %scriptDir%
+cd "%scriptDir%"
 
 set importPath=
 :param_setup
@@ -23,7 +23,7 @@ if exist "shell-utils\classpath.bat" call "shell-utils\classpath.bat"
 set homeOption=
 if not [%home%] == [] set homeOption=-Dcivilizer.private_home_path="%home%"
 
-cd !extraPath!\..
+cd "!extraPath!\.."
 echo [ %hostScript% ] Importing Data...
 java -cp %classPath% %homeOption% com.civilizer.extra.tools.DataBroker -import %importPath%
  

@@ -7,7 +7,7 @@ setlocal EnableDelayedExpansion
 set hostScript=%~nx0
 set scriptDir=%~dp0
 
-cd %scriptDir%
+cd "%scriptDir%"
 
 set home=
 set port=8080
@@ -27,14 +27,14 @@ if exist "shell-utils\classpath.bat" call "shell-utils\classpath.bat"
 ::echo !classPath!
 
 set homeOption=
-if not [%home%] == [] set homeOption=-Dcivilizer.private_home_path="%home%"
+if not [%home%] == [] set homeOption=-Dcivilizer.private_home_path=%home%
 ::echo !homeOption!
 
-cd !extraPath!\..
+cd "!extraPath!\.."
 echo [ %hostScript% ] Loading Civilizer...
 java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog ^
  -Dorg.eclipse.jetty.LEVEL=INFO ^
- -cp %classPath% %homeOption% com.civilizer.extra.tools.Launcher --port %port%
+ -cp "%classPath%" "%homeOption%" com.civilizer.extra.tools.Launcher --port %port%
  
 :: Everything is OK... :-)
 goto :eof

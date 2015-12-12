@@ -3,10 +3,10 @@
 hostScript=${0##*/}
 scriptDir=${0%/*}
 
-cd $scriptDir
+cd "$scriptDir"
 
-utilsDir=$(cd shell-utils 2> /dev/null && pwd)
-[ $utilsDir ] || utilsDir=$(cd ../shell-utils 2> /dev/null && pwd)
+utilsDir=$(cd "shell-utils" 2> /dev/null && pwd)
+[ "$utilsDir" ] || utilsDir=$(cd "../shell-utils" 2> /dev/null && pwd)
 source "$utilsDir/commons.sh"
 
 home=
@@ -29,9 +29,9 @@ setupClasspath
 
 homeOption=${home:+-Dcivilizer.private_home_path="$home"}
 
-cd $extraPath/../
+cd "$extraPath/../"
 
 echo "[ $hostScript ] : Loading Civilizer..."
 java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog \
  -Dorg.eclipse.jetty.LEVEL=INFO \
- -cp $classPath $homeOption com.civilizer.extra.tools.Launcher --port $port
+ -cp "$classPath" "$homeOption" com.civilizer.extra.tools.Launcher --port $port

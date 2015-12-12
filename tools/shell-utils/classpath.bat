@@ -26,7 +26,7 @@ set classPath="!webappPath!\WEB-INF\classes;!extraPath!\lib\*;!webappPath!\WEB-I
 goto :eof
 
 :toAbsolutePath
-    call pushd %%%1%%
+    call pushd "%%%1%%"
     set %1=%cd%
     popd
     exit /b 0
