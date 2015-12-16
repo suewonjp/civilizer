@@ -2,13 +2,13 @@ function setContextMenuForFragments() {
     var menu = $("#frg-context-menu");
     
     $("#fragment-group, #fragment-overlay-content")
-    .off("contextmenu.cvz_frg").on("contextmenu.cvz_frg", ".fragment-header", function(e) {
+    .off("contextmenu.cvz_frg").on("contextmenu.cvz_frg", ".fragment-header, .fragment-header span", function(e) {
    
         var target = $(e.target);
-        if (target.hasClass("rclick-hint")) {
-            target = target.closest(".fragment-header");            
+        if (target.hasClass("rclick-hint") || target.is("span")) {
+            target = target.closest(".fragment-header");
         }
-        if (target.hasClass("fragment-header")) {
+        if (target && target.hasClass("fragment-header")) {
             showPopup(menu, e);
             menu.data("target-frg", target);
             if (target.attr("_deletable") === "true") {
