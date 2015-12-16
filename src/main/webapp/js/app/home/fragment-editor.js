@@ -26,6 +26,12 @@ function setupFragmentEditor() {
     });
 	
     $("#fragment-content-editor").markItUp(markItUpSettings, {});
+    
+    // Invoke the Fragment editor by double clicking a Fragment title.
+    $(".fragment-title").off(".frg_title").on("dblclick.frg_title", function (e) {
+        openFragmentEditorForEdit(e, $(e.target).closest(".fragment-header"));
+        return false;
+    });
 }
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {
@@ -81,9 +87,9 @@ function clearFragmentEditor() {
     $("#fragment-editor-form\\:tags-input").autocomplete("widget").hide();
 }
 
-function openFragmentEditorForEdit(e) {
+function openFragmentEditorForEdit(e, tgt) {
 	var menu = $("#frg-context-menu");
-	var target = menu.data("target-frg");
+	var target = menu.data("target-frg") || tgt;
 	var fragmentId = target.attr("_fid");
 	var panelId = findPanel(target);
     
