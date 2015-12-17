@@ -10,9 +10,8 @@ var baseDraggableSettings = {
 };
 
 function newBaseDroppable(acceptableClasses) {
-    var weakFocus = "ui-weak-focus";
-    var strongFocus = "ui-strong-focus";
-    var output = {
+    var weakFocus = "ui-weak-focus", strongFocus = "ui-strong-focus",
+    output = {
         over: function(e, ui) {
             var from = ui.draggable;
             var to = $(e.target);
@@ -49,7 +48,7 @@ function newBaseDroppable(acceptableClasses) {
 function relatingFragmentsDropHandler(e, ui) {
     var from = ui.draggable;
     var to = $(e.target);
-    if (from.hasClass("fragment-title") || from.hasClass("small-fragment-box")) {
+    if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
         var fromId = from.attr("_fid");
         var toId = to.find(".fragment-title").attr("_fid") || to.attr("_fid");
         if (fromId != toId) {
@@ -66,7 +65,7 @@ function fragmentFetchDropHandler(e, ui) {
     if (from.hasClass("each-tag")) {
         fetchFragmentsByTag(from, to);
     }
-    else if (from.hasClass("fragment-title")) {
+    else if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
         fetchFragments(findPanel(to), [from.attr("_fid")]);
     }
 }
@@ -74,7 +73,7 @@ function fragmentFetchDropHandler(e, ui) {
 function bookmarkingDropHandler(e, ui) {
     var from = ui.draggable;
     var to = $(e.target);
-    if (from.hasClass("fragment-title")) {
+    if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
         var frgId = from.attr("_fid");
         bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
     }
@@ -83,7 +82,7 @@ function bookmarkingDropHandler(e, ui) {
 function trashingDropHandler(e, ui) {
     var from = ui.draggable;
     var to = $(e.target);
-    if (from.hasClass("fragment-title")) {
+    if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
         var panelId = findPanel(from);
         var deleting = FRAGMENT_DELETABLE[panelId];
         var frgId = from.attr("_fid");
@@ -97,20 +96,22 @@ function trashingDropHandler(e, ui) {
 function frgEditorDropHandler(e, ui) {
     var from = ui.draggable;
     var to = $(e.target);
-    if (from.hasClass("fragment-title")) {
+    if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
         var id = from.attr("_fid");
-        var encoded = "{{[frgm] "+id+" "+from.text().trim()+" }}";
+        var title = from.attr("_ft") || from.text();
+        title = title ? title.trim() : "";
+        var encoded = "{{[frgm] "+id+" "+title+" }}  \n";
         $(this).insertAtCaret(encoded);
     }
     else if (from.hasClass("each-tag")) {
         var id = from.attr("_tid");
-        var encoded = "{{[tag] "+id+" }}";
+        var encoded = "{{[tag] "+id+" }}  \n";
         $(this).insertAtCaret(encoded);
     }
     else if (from.hasClass("fb-file")) {
         var ids = from.attr("id");
         var id = ids.substr(ids.lastIndexOf("-") + 1);
-        var encoded = "{{[file] "+id+" }}";
+        var encoded = "{{[file] "+id+" }}  \n";
         $(this).insertAtCaret(encoded);
     }
 }
@@ -154,26 +155,26 @@ function setupDndForRelatingFragments() {
 }
 
 function setupDndForFragmentFetch() {
-    var droppable = newBaseDroppable(["fragment-title", "each-tag"]);
+    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box", "each-tag"]);
     droppable.drop = fragmentFetchDropHandler;
     $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
     $("#panel-activation-buttons label").droppable(droppable);
 }
 
 function setupDndForBookmarking() {
-    var droppable = newBaseDroppable(["fragment-title"]);
+    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box"]);
     droppable.drop = bookmarkingDropHandler;
     $("#bookmark-form\\:bookmark-panel").droppable(droppable);
 }
 
 function setupDndForTrashing() {
-    var droppable = newBaseDroppable(["fragment-title", "each-tag"]);
+    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box", "each-tag"]);
     droppable.drop = trashingDropHandler;
     $("#trashcan").droppable(droppable);
 }
 
 function setupDndToDropDataToFrgEditor() {
-    var droppable = newBaseDroppable(["fragment-title", "each-tag", "fb-file"]);
+    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box", "each-tag", "fb-file"]);
     droppable.drop = frgEditorDropHandler;
     $("#fragment-content-editor").droppable(droppable);
 }
