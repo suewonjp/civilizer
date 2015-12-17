@@ -338,6 +338,7 @@ function applyCurrentThemeToThemeSwitcher() {
     var switcher = PF('themeSwitcher');
     if (theme) {
         selectItemOnPfListbox(theme, switcher);
+        $(".each-fragment th").addClass("ui-state-default");
     }
 
     // [bug fix] After the above operation, 

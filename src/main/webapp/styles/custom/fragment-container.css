@@ -42,6 +42,11 @@
     overflow-y: hidden;
 }
 
+.fragment-header .ui-chkbox-box {
+    border:thin solid white;
+    box-shadow:1px 1px dimgray;
+}
+
 .fragment-header .fa-clock-o {
     cursor:default;
     margin-left: 5px;
