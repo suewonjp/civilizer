@@ -2,6 +2,13 @@ function fragmentEditorVisible() {
     return $("#fragment-content-editor").is(":visible");
 }
 
+function setupQuickFragmentEditing(header) {
+    header.off(".frg_title").on("dblclick.frg_title", ".fragment-title", function (e) {
+        openFragmentEditorForEdit(e, $(e.target).closest(".fragment-header"));
+        return false;
+    });
+}
+
 function setupFragmentEditor() {
 	var $window = $(window);
 	var $editorFrame = $("#editor-frame");
@@ -28,10 +35,7 @@ function setupFragmentEditor() {
     $("#fragment-content-editor").markItUp(markItUpSettings, {});
     
     // Invoke the Fragment editor by double clicking a Fragment title.
-    $(".fragment-title").off(".frg_title").on("dblclick.frg_title", function (e) {
-        openFragmentEditorForEdit(e, $(e.target).closest(".fragment-header"));
-        return false;
-    });
+    setupQuickFragmentEditing($(".fragment-header"));
 }
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {

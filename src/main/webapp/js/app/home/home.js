@@ -122,6 +122,8 @@ function populateFragmentOverlay(data) {
 	
 	overlayFrame.off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
 	setupClickHandlerForTags(overlayContent);
+	
+	setupQuickFragmentEditing(overlayContent.find(".fragment-header"));
 }
 
 function triggerFragmentOverlay(e) {
