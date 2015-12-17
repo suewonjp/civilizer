@@ -1,6 +1,6 @@
 function confirmUnbookmarkingFragment() {
 	var target = $("#bookmark-context-menu").data("target-bookmark");
-	var fid = target.attr("_bid");
+	var fid = target.attr("_fid");
 	var subMsg = "\n#"+fid + "  " + target.attr("_ft");
 	$("#fragment-group-form\\:ok").click(function() {
 	    addSubmitParam($("#fragment-group-form"), {fragmentId:fid});
