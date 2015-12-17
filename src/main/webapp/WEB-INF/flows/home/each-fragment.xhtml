@@ -62,7 +62,7 @@
 
 <div class="related-fragment-container">
     <c:forEach var="rf" items="#{fragmentBean.relatedOnes}">
-        <span class="small-fragment-box notxtslct">
+        <span class="small-fragment-box notxtslct" _fid="#{rf.id}" _ft="#{rf.title}">
             <span class="fa fa-link"></span>
             <a class="-cvz-frgm" href="fragment/#{rf.id}">\##{rf.id}</a>
             <h:outputText escape="false" value="#{rf.title}"/>

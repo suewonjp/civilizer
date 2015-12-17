@@ -432,7 +432,7 @@ function setupDragAndDrop() {
 }
 
 function setupDraggableForFragmentTitle() {
-	$(".fragment-title").draggable(baseDraggableSettings);
+	$(".fragment-title, .small-fragment-box").draggable(baseDraggableSettings);
 }
 
 function setupDraggableForTags() {
@@ -464,13 +464,13 @@ function setupDraggableForFiles() {
 }
 
 function setupDndForRelatingFragments() {
-	var droppable = newBaseDroppable(["fragment-title"]);
+	var droppable = newBaseDroppable(["fragment-title", "small-fragment-box"]);
     droppable.drop = function(e, ui) {
         var from = ui.draggable;
         var to = $(e.target);
-        if (from.hasClass("fragment-title")) {
+        if (from.hasClass("fragment-title") || from.hasClass("small-fragment-box")) {
             var fromId = from.attr("_fid");
-            var toId = to.find(".fragment-title").attr("_fid");
+            var toId = to.find(".fragment-title").attr("_fid") || to.attr("_fid");
             if (fromId != toId) {
                 if (!fragmentEditorVisible())
                     // [NOTE] block this functionality when the fragment editor is running.
@@ -478,7 +478,7 @@ function setupDndForRelatingFragments() {
             }
         }
     };
-    $(".fragment-header").droppable(droppable);
+    $(".fragment-header, .small-fragment-box").droppable(droppable);
 }
 
 function setupDndForFragmentFetch() {
@@ -524,7 +524,7 @@ function setupDndForTrashing() {
         else if (from.hasClass("each-tag")) {
         	confirmTrashingTag(from.attr("_tid"), Boolean(from.attr("_frgCnt") == 0));
         }
-    };    
+    };
     $("#trashcan").droppable(droppable);
 }
 
@@ -623,10 +623,12 @@ function showSortOptionDialog(panelId) {
 
 function getFragmentTitle(frgId) {
 	var title = $("#fragment-group").find(".fragment-title[_fid=" + frgId + "]");
-	if (!title || title.length == 0) {
+	if (title.length == 0)
 	    title = $("#fragment-overlay-content").find(".fragment-title");
-	}
-	return (title.length > 0) ? title.eq(0).text() : "";
+	if (title.length == 0)
+	    return $(".small-fragment-box[_fid=" + frgId + "]").attr("_ft") || "";
+	else
+	    return (title.length > 0) ? title.eq(0).text() : "";
 }
 
 function getTag(tagId) {
