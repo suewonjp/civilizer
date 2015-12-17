@@ -36,24 +36,65 @@
 .fragment-content hr {
     border:thin solid lightgray;
 }
-
-.fragment-content ul ul {
-    list-style-type: square;
+    
+.fragment-content ul {
+    list-style: none;
+    font-family:'FontAwesome';
 }
 
-.fragment-content ul ul ul {
-    list-style-type: circle;
+.fragment-content ul > li:before {
+    content:"\f00c";
+    color: green;
+    margin: auto 0.5em auto -1.5em;
+}
+
+.fragment-content ul > li > ul > li:before {
+    content: "\f0f4";
+    color: dimgray;
+}
+
+.fragment-content ul > li > ul > li > ul > li:before {
+    content: "\f054";
+    color: brown;
+}
+
+.fragment-content ul > li > ul > li > ul > li > ul > li:before {
+    content: "\f000";
+    color: powderblue;
+}
+
+.fragment-content > ol > li {
+    list-style: none;
+    counter-increment: item;
+}
+
+.fragment-content > ol > li:before {
+    white-space:pre-wrap;
+    content: " " counter(item) " ";
+    color: green;
+    border:thin solid green;
+    border-radius:0.15em;
+    margin: auto 0.5em auto -1.5em;
+}
+
+.fragment-content ol {
+    list-style-type: decimal;
 }
 
 .fragment-content ol ol {
-    list-style-type: lower-roman;
+    list-style-type: upper-roman;
 }
 
 .fragment-content ol ol ol {
+    list-style-type: upper-alpha;
+}
+
+.fragment-content ol ol ol ol {
     list-style-type: lower-alpha;
 }
 
 .fragment-content li > p {
+    display:inline;
     margin: 0px 0px 0px 0px;
 }
 
