@@ -3,8 +3,9 @@ function setContextMenuForFragments() {
     
     $("#fragment-group, #fragment-overlay-content")
     .off("contextmenu.cvz_frg").on("contextmenu.cvz_frg", ".fragment-header, .fragment-header span", function(e) {
-   
         var target = $(e.target);
+        if (target.closest(".each-tag").length)
+            return true;
         if (target.hasClass("rclick-hint") || target.is("span")) {
             target = target.closest(".fragment-header");
         }
