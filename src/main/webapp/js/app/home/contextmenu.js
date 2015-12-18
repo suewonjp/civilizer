@@ -82,6 +82,7 @@ function setContextMenuForSelections() {
         var fragments = getSelectedFragments();
         menu.find("#selection-box-form\\:bookmark").show();
         showOrHide(menu.find("#selection-box-form\\:relate"), fragments.length > 1);
+        menu.find("#selection-box-form\\:append-tag").show();
         menu.find("#selection-box-form\\:trash").show();
         menu.find("#selection-box-form\\:unselect").show();
         menu.find("#selection-box-form\\:select_unselect").hide();

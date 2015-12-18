@@ -47,6 +47,32 @@ function confirmTrashingSelectedFragments() {
     showConfirmDlg(mainMsg, subMsg, "fa-trash", "orangered");
 }
 
+function appendTagToSelectedFragments() {
+    var submitBtn = PF("tagAllDlgSubmit");
+    submitBtn.disable();
+    
+    var tagInput = $("#selection-box-form\\:tag-all-dlg input");
+    
+    tagInput.off("keyup")
+    .on("keyup", function() {
+        var typed = $(this).val().trim();
+        if (typed)
+            submitBtn.enable();
+        else
+            submitBtn.disable();
+    })
+    ;
+
+    submitBtn.jq.off("click").on("click", function() {
+        addSubmitParam($("#fragment-group-form"), {unselected:listUnselectedFragments()});
+        appendTags([{name:"tagNames", value:tagInput.val().trim()}]);
+    });
+    
+    var dlg = PF("tagAllDlg");
+    dlg.jq.find("input").watermark(MSG.type_tag);
+    dlg.show();
+}
+
 function confirmUnselectingSelectedFragments() {
     document.forms["fragment-group-form"]["fragment-group-form:ok-unselect-all-fragments"].click();
 }

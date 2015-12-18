@@ -68,13 +68,18 @@
         </transition>
 
         <transition on="trash-fragments" to="home">
-            <evaluate expression="mainController.trashFragments(flowScope.fragmentSelectionBean, requestParameters.unselected)" />
+            <evaluate expression="mainController.trashFragments(fragmentSelectionBean, requestParameters.unselected)"/>
             <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
             <evaluate expression="mainController.newBookmarkTagBean()" result="flowScope.bookmarkTagBean"/>
         </transition>
 
         <transition on="unselect-all-fragments" to="home">
-            <evaluate expression="flowScope.fragmentSelectionBean.clear()"/>
+            <evaluate expression="fragmentSelectionBean.clear()"/>
+        </transition>
+
+        <transition on="append-tags" to="home">
+            <evaluate expression="mainController.appendTagToFragments(tagListBean, fragmentSelectionBean, requestParameters.unselected, requestParameters.tagNames)"/>
+            <evaluate expression="mainController.newTagListBean()" result="flowScope.tagListBean"/>
         </transition>
         
         <transition on="empty-trash" to="home">
@@ -120,7 +125,7 @@
         </transition>
 
         <transition on="relate-fragments" to="home">
-            <evaluate expression="mainController.relateFragments(flowScope.fragmentSelectionBean, requestParameters.unselected)" />
+            <evaluate expression="mainController.relateFragments(fragmentSelectionBean, requestParameters.unselected)" />
         </transition>
 
         <transition on="unrelate-fragments" to="home">

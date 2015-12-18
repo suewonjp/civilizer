@@ -302,8 +302,8 @@ function autocompleteForTypingTags() {
         this.autoFocus = true;
     }; // function Options()
    
-    // tag inputs for the fragment editor or the search dialog;
-    $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords")
+    // tag inputs for the fragment editor or the search dialog or "Tag All" dialog;
+    $("#fragment-editor-form\\:tags-input, #fragment-group-form\\:search-panel\\:tag-keywords, #selection-box-form\\:tag-all-dlg input")
         .autocomplete(new Options());
     
     // quick tag search input on the tag palette;

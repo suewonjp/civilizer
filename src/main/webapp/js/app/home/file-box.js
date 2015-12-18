@@ -134,10 +134,10 @@ function showRenameFileDialog() {
 	})
 	.on("keyup", function(e) {
 	    var typed = $(this).val().trim();
-	        if (!typed || typed == curName)
-	            submitBtn.disable();
-	        else
-	            submitBtn.enable();
+        if (!typed || typed == curName)
+            submitBtn.disable();
+        else
+            submitBtn.enable();
 	})
 	;
     

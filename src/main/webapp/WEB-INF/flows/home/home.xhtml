@@ -230,7 +230,7 @@
 		</div>
         <p:commandButton id="ok" value="#{msg['ok']}" icon="ui-icon-check"/>
     </p:confirmDialog>
-    
+        
     <p:dialog widgetVar="searchDlg" header="#{msg['search']}"
         width="500px" modal="true" showEffect="fade" position="center" draggable="true" resizable="false">
     	<p:accordionPanel id="search-panel">
@@ -285,6 +285,7 @@
     <p:remoteCommand name="bookmarkFragment" action="bookmark-fragment"/>
     <p:remoteCommand name="searchFragments" action="search-fragments" />
     <p:remoteCommand name="touchFragment" action="touch-fragment" />
+    <p:remoteCommand name="appendTags" action="append-tags" />
     
     <div id="frg-context-menu" class="context-menu">
 	    <p:menu>

@@ -369,6 +369,48 @@ public final class MainController {
 			ViewUtil.addMessage("Error on unbookmarking!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
+	
+	private void appendTagToFragment(Long fragmentId, Set<Tag> tags) {
+	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
+	    for (Tag tag : tags) {
+            frg.addTag(tag);
+        }
+	    try {
+	        fragmentDao.save(frg);
+	        ViewUtil.addMessage("Updated", "Fragment #" + frg.getId(), null);
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	        ViewUtil.addMessage("Error on saving a fragment!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+	    }
+	}
+	
+	private void appendTagToFragments(List<Long> fragmentIds, Set<Tag> tags) {
+	    for (Long id : fragmentIds) {
+	        appendTagToFragment(id, tags);
+	    }
+	}
+
+    public void appendTagToFragments(TagListBean tagListBean, FragmentSelectionBean fsb, String unselected, String tagNames) {
+        final List<Long> ids = getSelectedIdsFromSelectionBox(fsb, unselected);
+        final Set<Tag> tags = saveTagsWhenSavingFragment(tagListBean, tagNames);
+        appendTagToFragments(ids, tags);
+    }
+    
+    private List<Long> getSelectedIdsFromSelectionBox(FragmentSelectionBean fsb, String unselected) {
+        final String[] tmp = StringUtils.split(unselected);
+        final long[] excIds = new long[tmp.length]; // ids to be excluded
+        for (int i=0; i<tmp.length; ++i) {
+            excIds[i] = Integer.parseInt(tmp[i]);
+        }
+        final List<Long> ids = new ArrayList<>();
+        for (Long id : fsb.getFragmentIds()) {
+            if (ArrayUtils.indexOf(excIds, id) >= 0)
+                continue;
+            ids.add(id);
+        }
+        return ids;
+    }
 
 	public void trashFragment(Long fragmentId) {
 		final Fragment frg = fragmentDao.findById(fragmentId, true, false);
@@ -408,17 +450,7 @@ public final class MainController {
 	}
 
 	public void trashFragments(FragmentSelectionBean fsb, String unselected) {
-	    final String[] tmp = StringUtils.split(unselected);
-	    final long[] excIds = new long[tmp.length]; // ids to be excluded
-	    for (int i=0; i<tmp.length; ++i) {
-            excIds[i] = Integer.parseInt(tmp[i]);
-        }
-	    final List<Long> ids = new ArrayList<>();
-	    for (Long id : fsb.getFragmentIds()) {
-	        if (ArrayUtils.indexOf(excIds, id) >= 0)
-	            continue;
-            ids.add(id);
-        }
+	    final List<Long> ids = getSelectedIdsFromSelectionBox(fsb, unselected);
 	    trashFragments(ids);
 	    fsb.clear();
 	}
@@ -634,17 +666,7 @@ public final class MainController {
 	}
 
 	public void relateFragments(FragmentSelectionBean fsb, String unselected) {
-        final String[] tmp = StringUtils.split(unselected);
-        final long[] excIds = new long[tmp.length]; // ids to be excluded
-        for (int i=0; i<tmp.length; ++i) {
-            excIds[i] = Integer.parseInt(tmp[i]);
-        }
-        final List<Long> ids = new ArrayList<>();
-        for (Long id : fsb.getFragmentIds()) {
-            if (ArrayUtils.indexOf(excIds, id) >= 0)
-                continue;
-            ids.add(id);
-        }
+	    final List<Long> ids = getSelectedIdsFromSelectionBox(fsb, unselected);
 	    try {
 	        final int idc = ids.size();
 	        for (int i=0; i<idc-1; ++i) {
