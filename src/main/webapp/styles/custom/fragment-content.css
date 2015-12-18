@@ -98,6 +98,10 @@
     margin: 0px 0px 0px 0px;
 }
 
+.fragment-content img {
+    max-width:90%;
+}
+
 .frg-content-reso0, .frg-content-reso3 {
     display: block;
     max-height: auto;

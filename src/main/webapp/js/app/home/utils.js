@@ -4,6 +4,7 @@ function isImage(fileExt) {
         || (fileExt == ".gif")
         || (fileExt == ".bmp")
         || (fileExt == ".ico")
+        || (fileExt == ".svg")
         ;
 }
 
