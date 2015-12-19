@@ -167,3 +167,64 @@ function setupContextMenus() {
 
     completeContextMenuSetup();
 }
+
+function confirmTrashingTagFromCtxtMenu() {
+    var menu = $("#tag-context-menu");
+    var target = menu.data("target-tag");
+    var tagId = target.attr("_tid");
+    var deleting = target.attr("_frgCnt") == 0;
+    confirmTrashingTag(tagId, deleting);
+}
+
+function confirmDeletingFile() {
+    $("#fragment-group-form\\:ok").click(function() {
+        document.forms["fragment-group-form"]["fragment-group-form:ok-delete-files"].click();
+    });
+  
+    var menu = $("#file-context-menu");
+    var target = menu.data("target-file");
+    var fileId = target.attr("_id");
+    $("#fragment-group-form\\:id-placeholder-for-file").val(fileId);
+
+    var subMsg = "\n" + getFilePath(fileId);
+    showConfirmDlg(MSG.confirm_deleting, subMsg, "fa-trash", "orangered");
+}
+
+function bookmarkFragmentFromCtxtMenu() {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
+    bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
+}
+
+function trashFragmentFromCtxtMenu(deleting) {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
+
+    confirmTrashingFragments(frgId, deleting);
+}
+
+function restoreFragmentFromCtxtMenu() {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
+    
+    confirmRestoringFragments(frgId);
+}
+
+function _touchFragment() {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
+    
+    touchFragment([{name:'fragmentId', value:frgId}]);
+}
+
+function closeOtherFragments() {
+    var menu = $("#frg-context-menu");
+    var target = menu.data("target-frg");
+    var frgId = target.attr("_fid");
+    
+    fetchFragments(findPanel(target), [frgId]);
+}
