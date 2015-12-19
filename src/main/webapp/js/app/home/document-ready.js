@@ -41,6 +41,11 @@ $(document).ready(function() {
     }, 15000);
     
     $(window).off("keyup.cvz_global_hotkey").on("keyup.cvz_global_hotkey", onGlobalHotkeys);
+    
+    var appUrl = location.protocol + '//' + location.hostname;
+    // Open external URLs and File Box URLs in a new tab or window.
+    $('a[href^="http://"], a[href^="https://"]').not('[href^="'+appUrl+'"]')
+    .add('a[href^="file-box/"]').attr('target','_blank');
 });
 
 $(window).load(function() {
