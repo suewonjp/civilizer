@@ -606,9 +606,10 @@ InlineLexer.prototype.output = function(src) {
         this.inLink = false;
       }
       src = src.substring(cap[0].length);
-      out += this.options.sanitize
-        ? escape(cap[0])
-        : cap[0];
+      var sanitize = this.options.sanitize;
+      if (/^<iframe /i.test(cap[0]) || /^<\/iframe>/i.test(cap[0]))
+          sanitize = false;
+      out += sanitize ? escape(cap[0]) : cap[0];
       continue;
     }
 
