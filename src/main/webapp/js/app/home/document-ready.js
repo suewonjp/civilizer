@@ -44,9 +44,8 @@ $(document).ready(function() {
     
     $(window).off("keyup.cvz_global_hotkey").on("keyup.cvz_global_hotkey", onGlobalHotkeys);
     
-    var appUrl = location.protocol + '//' + location.hostname;
-    // Open external URLs in a new tab or window.
-    $('a[href^="http://"], a[href^="https://"]').not('[href^="'+appUrl+'"]').attr('target','_blank');
+//    var appUrl = location.protocol + '//' + location.hostname;
+//    $('a[href^="http://"], a[href^="https://"]').not('[href^="'+appUrl+'"]').attr('target','_blank');
 });
 
 $(window).load(function() {
