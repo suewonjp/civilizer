@@ -130,6 +130,7 @@ function setContextMenuForFiles() {
             menu.find("#file-box-form\\:move").hide();
             menu.find("#file-box-form\\:delete").hide();
             menu.find("#file-box-form\\:upload").show();
+            menu.find("#file-box-form\\:info").hide();
         }
         else {
             // the menu has a target file or folder
@@ -137,6 +138,7 @@ function setContextMenuForFiles() {
             menu.find("#file-box-form\\:rename").show();
             menu.find("#file-box-form\\:move").show();
             menu.find("#file-box-form\\:delete").show();
+            menu.find("#file-box-form\\:info").show();
         }
         menu.data("target-file", target);
         e.preventDefault();

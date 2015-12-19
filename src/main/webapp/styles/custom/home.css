@@ -405,6 +405,17 @@
 
 .each-file:hover {
     color:gray;
+    cursor:pointer;
+}
+
+.file-info {
+    margin: 1em auto 1em 1em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.file-info-img {
+    max-width: 100%;
 }
 
 .ui-autocomplete {

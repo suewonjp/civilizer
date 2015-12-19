@@ -231,3 +231,16 @@ function parseJsonArgs($obj) {
     }
     return {};
 }
+
+function prefix(str, sep) {
+    // prefix("foo.bar.txt", ".") => foo
+    return str.substring(0, str.indexOf(sep));
+}
+
+function suffix(str, sep, excludeSep) {
+    // suffix("foo.bar.txt", ".") => .txt
+    // suffix("foo.bar.txt", ".", true) => txt
+    return str.substring(str.lastIndexOf(sep) + (excludeSep === true ? sep.length : 0));
+}
+
+

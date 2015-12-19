@@ -395,7 +395,7 @@ function postprocessFragmentContent(content) {
 	content.find("a").each(function() {
 	    var $this = $(this);
 	    var href = $this.attr("href");
-	    if (isImage(href.substring(href.lastIndexOf("."))))
+	    if (isImage(suffix(href, ".")))
 	        $this.replaceWith("<img src='"+href+"'>");
 	});
 	

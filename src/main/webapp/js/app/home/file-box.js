@@ -11,7 +11,7 @@ function processFileClasses(parent) {
 				$this.text("").append("<img title='"+fileName+"' src='"+filePath+"'>");
 			}
 			else {
-				$this.text("").append("<a title='"+fileName+"' href='"+filePath+"'>" + filePath + "</a>");
+				$this.text("").append("<a target='_blank' title='"+fileName+"' href='"+filePath+"'>" + filePath + "</a>");
 			}
 		}
 		else { // the file does not exist on the file system for whatever reasons...
@@ -185,4 +185,47 @@ function showNewDirectoryDialog() {
     var dlg = PF("renameFileDlg");
     dlg.show();
     dlg.jq.find(".ui-dialog-title").text(MSG.new_folder);
+}
+
+function showFileInfo() {
+    var overlayFrame = $("#fragment-overlay");
+    overlayFrame.lightbox_me({
+        centered:false
+        , showOverlay:false
+        , lightboxSpeed:"fast"
+        , closeSelector:"#fragment-overlay-close-button"
+        , closeEsc:true
+        , modalCSS:{ position:"fixed", bottom: '34px', right: '2%' }
+    });
+    
+    var titleBar = $("#fragment-overlay-title-bar");
+    if (titleBar.next().is(":visible") == false) {
+        toggleWindow(overlayFrame, titleBar);
+    }
+    
+    $("#fragmen-overlay-back-button").hide();
+    
+    var target = $("#file-context-menu").data("target-file") || $(this);
+    $("#file-context-menu").data("target-file", null)
+    var fp = target.attr("_fp");
+    var path = "file-box/"+fp;
+    var title, content = "<p class='file-info'>"+fp+"</p>";
+    if (target.attr("_isFolder") == "true") {
+        title = "<i class='fa fa-folder-open'></i>";
+    }
+    else {
+        var fid = suffix(target.attr("id"), "-", true);
+        title = "<i class='fa fa-file'> #"+fid+"</i>";
+        content = "<a target='_blank' href='"+path+"'>"+content+"</a>";
+        if (isImage(suffix(fp, ".")))
+            content += "<img class='file-info-img' src='"+path+"'/>";
+    }
+    
+    $("#fragment-overlay-title").html(title);
+    $("#fragment-overlay-content").html(content);
+}
+
+function setupFileInfo() {
+    $("#file-box-form\\:file-box-panel").off(".file_info")
+    .on("click.file_info", ".each-file", showFileInfo);
 }

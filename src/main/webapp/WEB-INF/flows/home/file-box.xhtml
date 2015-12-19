@@ -51,6 +51,7 @@
             <p:menuitem id="move" oncomplete="showMoveFileDialog()" icon="fa fa-files-o" value="#{msg['move']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
             <p:menuitem id="delete" onclick="confirmDeletingFile()" icon="fa fa-trash" value="#{msg['delete']}"/>
+            <p:menuitem id="info" onclick="showFileInfo()" icon="fa fa-info" value="#{msg['info']}"/>
 	    </p:menu>
     </div>
     
