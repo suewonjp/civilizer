@@ -213,6 +213,27 @@ function unsanitizeHtml(content) {
     });
 }
 
+function embedYoutubeVideo() {
+    function kickYoutubeVideo() {
+        var $this = $(this);
+        var iframe = $("<iframe src='//www.youtube.com/embed/"
+            + $this.attr("_vid") + "' frameborder='0' allowfullscreen>");
+        $this.replaceWith(iframe);
+        return false;
+    }
+    
+    var yv = $("iframe[src*='www.youtube.com/embed/']");
+    for (var i=0; i<yv.length; ++i) {
+        var videoId = suffix(yv.eq(i).attr("src"), "/", true);
+        var div = $("<div class='yt-player' _vid='"+videoId+"'>" +
+            '<img class="yt-thumb" src="//i.ytimg.com/vi/' + videoId +
+            '/mqdefault.jpg"/><div class="fa fa-youtube-play"></div></div>')
+        .click(kickYoutubeVideo)
+        ;
+        yv.eq(i).replaceWith(div);
+    }
+}
+
 function postprocessFragmentContent(content) {
     // translate foldings
     // Rule - {{{[fold]...}}}
@@ -245,4 +266,6 @@ function postprocessFragmentContent(content) {
     // unsanitize HTML code if any
     // Rule - {{[html]...}}
     unsanitizeHtml(content);
+    
+    embedYoutubeVideo();
 }

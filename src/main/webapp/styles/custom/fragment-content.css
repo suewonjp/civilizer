@@ -123,3 +123,24 @@
 .fold-toggle-icon {
     color: cornflowerblue;
 }
+
+.yt-player { 
+    overflow: hidden;
+    position: relative;
+    max-width: 320px;
+    max-height: 180px;
+    cursor: pointer;
+}
+
+.yt-player .fa-youtube-play {
+    position: absolute;
+    font-size: 3em;
+    color: red;
+    left: 50%;
+    top: 50%;
+}
+
+img.yt-thumb {
+    max-width: 100%;
+    max-height: 100%;
+}
