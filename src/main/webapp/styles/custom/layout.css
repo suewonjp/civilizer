@@ -1,6 +1,7 @@
 #container {
 	min-width: 1200px;
 	width: 100%;
+    margin: 0px;
 	display: none;
 }
 
@@ -20,14 +21,16 @@
 }
 
 #content {
+    min-width: 982px;
 	width: 81%;
-	margin-left: 0;
+    margin: 0px;
 	float: left;
 }
 
 #sidebar {
-	margin-top: 50px;
+    min-width: 210px;
 	width: 18%;
+	margin-top: 50px;
 	float: right;
 }
 

@@ -39,7 +39,7 @@ function onPanelActivationChange() {
     var w = '100%';
     switch (activeCount) {
     case 2:
-        w = '49%';
+        w = '48%';
         break;
     case 3: 
         w = '32%';

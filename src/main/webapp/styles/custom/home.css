@@ -24,7 +24,8 @@
 #fragment-panel-0, #fragment-panel-1, #fragment-panel-2 {
     max-height: 1200px;
     float: left;
-    margin: 35px 10px 60px 0px;
+    margin: 0px;
+    padding: 35px 6px 60px 0px;
     overflow: auto;
 }
 
@@ -213,6 +214,8 @@
     z-index: 210;
     font-size: x-small;
     border: 2px solid black;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 #frg-reso-slider0
