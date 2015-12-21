@@ -424,3 +424,42 @@ function onClickGoSort(panelId) {
         document.forms["fragment-group-form"]["fragment-group-form:go-sort-action"+panelId].click();
     }
 }
+
+function setupPanelToolbarArea() {
+    var ptbs = $("#fragment-group-form\\:fragment-panel-toolbar-0, #fragment-group-form\\:fragment-panel-toolbar-1, #fragment-group-form\\:fragment-panel-toolbar-2")
+    .off("click").on("click", function() {
+        return false;
+    })
+    ;
+    
+    function onHoverOnPanelToolbarArea(pageX) {
+        for (var i=0; i<3; ++i) {
+            var panel = $("#fragment-panel-" + i);
+            if (!panel.is(":visible"))
+                continue;
+            var panelToolbar = ptbs.eq(i);
+            var left = panel.offset().left;
+            if (left > pageX || pageX > left+panel.width()) {
+                panelToolbar.css("visibility", "hidden");
+                continue;
+            }
+            panelToolbar.css({
+                visibility : "visible",
+                left : panel.offset().left - $(window).scrollLeft(),
+            });
+        }
+    }
+    
+    $("#panel-toolbar-area").off(".cvz_tba").on("mousemove.cvz_tba", function(e) {
+        onHoverOnPanelToolbarArea(e.pageX);
+        return false;
+    })
+    .on("click.cvz_tba", function() {
+        return false;
+    })
+    ;
+    
+    $("#content").off("click").on("click", function() {
+        ptbs.css("visibility", "hidden");
+    });
+}

@@ -21,13 +21,15 @@ function onPanelActivationChange() {
     var panels = [ $("#fragment-panel-0"), $("#fragment-panel-1"), $("#fragment-panel-2") ];
     var activeCount = 0;
     
+    $("#fragment-group-form\\:fragment-panel-toolbar-0, #fragment-group-form\\:fragment-panel-toolbar-1, #fragment-group-form\\:fragment-panel-toolbar-2")
+    .css("visibility", "hidden");
+    
     for (var i=0; i<3; ++i) {
         if ($("#panel-toggler-" + i).prop("checked")) {
             ++activeCount;
             panels[i].show();
-            $("fragment-group-form\\:fragment-panel-toolbar-"+i).offset({
-                left: panels[i].offset().left
-            });
+//            $("#fragment-group-form\\:fragment-panel-toolbar-"+i)
+//            .css("left", panels[i].offset().left - $(window).scrollLeft());
             sessionStorage.setItem('panel-' + i, 'on');
         }
         else {

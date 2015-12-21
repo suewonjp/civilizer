@@ -31,6 +31,8 @@ $(document).ready(function() {
 	
 	makeSidebarTitleToggleable();
 	
+	setupPanelToolbarArea();
+	
 	$("#container").show();
 	
 	setupSearchHistory();

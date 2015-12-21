@@ -209,13 +209,32 @@
 , #fragment-group-form\:fragment-panel-toolbar-2
 {
     position: fixed;
-    bottom: 0%;
-    max-height:28px;
+    bottom: 0px;
+    max-height:34px;
     z-index: 210;
-    font-size: x-small;
+    font-size: 0.7em;
     border: 2px solid black;
     overflow: hidden;
     white-space: nowrap;
+    box-sizing: border-box;
+    visibility: hidden;
+}
+
+#panel-toolbar-area {
+    position: fixed;
+    bottom: 0px;
+    width:100%;
+    min-height:34px;
+    max-height:34px;
+    z-index: 209;
+    background-color: gray;
+    opacity: 0.5;
+}
+
+#panel-toolbar-area i {
+    margin: auto auto auto 40%;
+    font-size: 2em;
+    color:yellow;
 }
 
 #frg-reso-slider0
