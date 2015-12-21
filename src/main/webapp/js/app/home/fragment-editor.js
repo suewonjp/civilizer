@@ -121,7 +121,8 @@ function openFragmentEditorToRelate(e) {
     addSubmitParam($("#fragment-editor-form"), {relatedFrgId:frgId}, true);
     var $window = $(window);
     var $editorFrame = $("#editor-frame");
-    var title = MSG.new_fragment+" ( <=> #"+frgId+" )";
+    var title = " \uf0c1 #"+frgId;
+//    var title = MSG.new_fragment+" ( <=> #"+frgId+" )";
     onClickFragmentEditorTrigger($editorFrame, $window, e, title, true);
 }
 

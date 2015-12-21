@@ -189,6 +189,7 @@
 }
 
 #editor-title {
+    font-family:'FontAwesome';
     font-size: 140%;
     font-style: bold;
     position: relative;
