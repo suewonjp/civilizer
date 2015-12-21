@@ -426,11 +426,7 @@ function onClickGoSort(panelId) {
 }
 
 function setupPanelToolbarArea() {
-    var ptbs = $("#fragment-group-form\\:fragment-panel-toolbar-0, #fragment-group-form\\:fragment-panel-toolbar-1, #fragment-group-form\\:fragment-panel-toolbar-2")
-    .off("click").on("click", function() {
-        return false;
-    })
-    ;
+    var ptbs = $("#fragment-group-form\\:fragment-panel-toolbar-0, #fragment-group-form\\:fragment-panel-toolbar-1, #fragment-group-form\\:fragment-panel-toolbar-2");
     
     function onHoverOnPanelToolbarArea(pageX) {
         for (var i=0; i<3; ++i) {
@@ -453,13 +449,15 @@ function setupPanelToolbarArea() {
     $("#panel-toolbar-area").off(".cvz_tba").on("mousemove.cvz_tba", function(e) {
         onHoverOnPanelToolbarArea(e.pageX);
         return false;
-    })
-    .on("click.cvz_tba", function() {
-        return false;
-    })
-    ;
-    
-    $("#content").off("click").on("click", function() {
-        ptbs.css("visibility", "hidden");
+    });
+
+    $("#content").off("click").on("click", function(e) {
+        var tgt = $(e.target);
+        if (tgt.is(ptbs))
+            return false;
+        else if (tgt.is("#panel-toolbar-area"))
+            return false;
+        else if ($("#content").has(tgt))
+            ptbs.css("visibility", "hidden");
     });
 }
