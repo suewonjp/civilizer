@@ -234,13 +234,28 @@ function parseJsonArgs($obj) {
 
 function prefix(str, sep) {
     // prefix("foo.bar.txt", ".") => foo
-    return str.substring(0, str.indexOf(sep));
+    return str && str.substring(0, str.indexOf(sep));
 }
 
 function suffix(str, sep, excludeSep) {
     // suffix("foo.bar.txt", ".") => .txt
     // suffix("foo.bar.txt", ".", true) => txt
-    return str.substring(str.lastIndexOf(sep) + (excludeSep === true ? sep.length : 0));
+    return str && str.substring(str.lastIndexOf(sep) + (excludeSep === true ? sep.length : 0));
+}
+
+function inbetween(str, sep0, sep1) {
+    // inbetween("foo.bar.txt", ".", ".") => bar
+    // inbetween("foo.txt", ".", ".") => null
+    if (!str)
+        return null;
+    var idx = str.indexOf(sep0);
+    if (idx < 0)
+        return null;
+    str = str.substring(idx + sep0.length);
+    idx = str.lastIndexOf(sep1);
+    if (idx < 0)
+        return null;
+    return str.substring(0, idx);
 }
 
 function jsonp(url, successcb) {

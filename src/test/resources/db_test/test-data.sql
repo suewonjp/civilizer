@@ -192,8 +192,12 @@ Content Cell  | Content Cell
 Content Cell  | Content Cell
 '), TIMESTAMP '2015-04-14 11:11:00.000', TIMESTAMP '2015-04-14 11:11:00.000')
 ,(21, 'Embedding Youtube videos', STRINGDECODE('
-<iframe width="560" height="315" src="https://www.youtube.com/embed/0omObKmJd4E" frameborder="0" allowfullscreen></iframe>
-'), TIMESTAMP '2015-12-22 10:55:00.000', TIMESTAMP '2015-12-22 10:59:00.000')
+https://www.youtube.com/watch?v=0omObKmJd4E&feature=youtu.be
+\r\n
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0omObKmJd4E" frameborder="0" allowfullscreen>Civilizer - Tool to efficiently manage your data/knowledge/idea</iframe>
+\r\n
+https://youtu.be/0omObKmJd4E'
+), TIMESTAMP '2015-12-22 10:55:00.000', TIMESTAMP '2015-12-22 10:59:00.000')
 ;
 
 INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES

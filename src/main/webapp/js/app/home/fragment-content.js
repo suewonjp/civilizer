@@ -213,7 +213,7 @@ function unsanitizeHtml(content) {
     });
 }
 
-function embedYoutubeVideo() {
+function embedYoutubeVideo(content) {
     function kickYoutubeVideo() {
         var $this = $(this);
         var iframe = $("<iframe src='//www.youtube.com/embed/"
@@ -222,16 +222,23 @@ function embedYoutubeVideo() {
         return false;
     }
     
-    var yv = $("iframe[src*='www.youtube.com/embed/']");
-    for (var i=0; i<yv.length; ++i) {
-        var videoId = suffix(yv.eq(i).attr("src"), "/", true);
-        var div = $("<div class='yt-player' _vid='"+videoId+"'>" +
-            '<img class="yt-thumb" src="//i.ytimg.com/vi/' + videoId +
+    content.find("iframe[src*='www.youtube.com/embed/'], a[href*='youtu.be/'], a[href*='www.youtube.com/watch?']")
+    .each(function() {
+        var $this = $(this), videoId;
+        if ($this.is("iframe"))
+            videoId = suffix($this.attr("src"), "/", true);
+        else if ($this.is("a[href*='youtu.be/']"))
+            videoId = suffix($this.attr("href"), "/", true);
+        else if ($this.is("a[href*='www.youtube.com/watch?']"))
+            videoId = inbetween($this.attr("href"), "v=", "&")
+                || suffix($this.attr("href"), "v=", true);
+        var div = $("<div class='yt-video' _vid='"+videoId+"'>" +
+            '<img class="yt-thumb" title="' + $this.text() +
+            '" src="//i.ytimg.com/vi/' + videoId +
             '/mqdefault.jpg"/><div class="fa fa-youtube-play"></div></div>')
-        .click(kickYoutubeVideo)
-        ;
-        yv.eq(i).replaceWith(div);
-    }
+            .click(kickYoutubeVideo);
+        $this.replaceWith(div);
+    });
 }
 
 function postprocessFragmentContent(content) {
@@ -267,5 +274,5 @@ function postprocessFragmentContent(content) {
     // Rule - {{[html]...}}
     unsanitizeHtml(content);
     
-    embedYoutubeVideo();
+    embedYoutubeVideo(content);
 }

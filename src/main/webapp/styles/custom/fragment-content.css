@@ -124,7 +124,7 @@
     color: cornflowerblue;
 }
 
-.yt-player { 
+.yt-video { 
     overflow: hidden;
     position: relative;
     max-width: 320px;
@@ -132,7 +132,7 @@
     cursor: pointer;
 }
 
-.yt-player .fa-youtube-play {
+.yt-video .fa-youtube-play {
     position: absolute;
     font-size: 3em;
     color: red;
