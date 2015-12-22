@@ -191,6 +191,9 @@ First Header  | Second Header\r\n------------- | -------------
 Content Cell  | Content Cell
 Content Cell  | Content Cell
 '), TIMESTAMP '2015-04-14 11:11:00.000', TIMESTAMP '2015-04-14 11:11:00.000')
+,(21, 'Embedding Youtube videos', STRINGDECODE('
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0omObKmJd4E" frameborder="0" allowfullscreen></iframe>
+'), TIMESTAMP '2015-12-22 10:55:00.000', TIMESTAMP '2015-12-22 10:59:00.000')
 ;
 
 INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES
@@ -206,6 +209,8 @@ INSERT INTO TAG(TAG_ID, TAG_NAME) VALUES
 ,(12, 'reference')
 ,(13, 'etc')
 ,(14, 'table')
+,(15, 'multimedia')
+,(16, 'videos')
 ,(100, 'markdown')
 ;
 
@@ -229,6 +234,8 @@ INSERT INTO TAG2TAG(PARENT_ID, CHILD_ID) VALUES
 ,(100, 14)
 ,(13, 8)
 ,(12, 4)
+,(15, 4)
+,(15, 16)
 ;
 
 INSERT INTO TAG2FRAGMENT(TAG_ID, FRAGMENT_ID) VALUES
@@ -259,6 +266,7 @@ INSERT INTO TAG2FRAGMENT(TAG_ID, FRAGMENT_ID) VALUES
 ,(13, 18)
 ,(14, 19)
 ,(14, 20)
+,(16, 21)
 ;
 
 INSERT INTO FRAGMENT2FRAGMENT(FROM_ID, TO_ID) VALUES
