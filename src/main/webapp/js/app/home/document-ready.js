@@ -33,6 +33,10 @@ $(document).ready(function() {
 	
 	setupPanelToolbarArea();
 	
+    $(".each-fragment th").addClass("ui-state-default");
+
+    setCurrentTheme("ui-darkness");
+	
 	$("#container").show();
 	
 	setupSearchHistory();
@@ -51,9 +55,8 @@ $(document).ready(function() {
 });
 
 $(window).load(function() {
-    setCurrentTheme("ui-darkness");
-    applyCurrentThemeToThemeSwitcher();
     setupFragmentCheckboxes();
+    applyCurrentThemeToThemeSwitcher();
 });
 
 var curPanel = 0;

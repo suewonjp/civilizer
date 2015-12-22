@@ -185,14 +185,15 @@ function addSubmitParam(jqForms, params, clearBeforeAdding) {
 }
 
 function selectItemOnPfListbox(value, pfListbox) {
-    for (var i=0; i<pfListbox.options.length; ++i) {
-        var option = pfListbox.options.eq(i);
-        if (option.text() === value) {
-            var item = pfListbox.items.eq(i);
-            pfListbox.selectItem(item);
-            return;
+    for (var i=0,len=pfListbox.options.length; i<len; ++i) {
+        if (pfListbox.options.eq(i).text() === value) {
+            pfListbox.selectItem(pfListbox.items.eq(i));
+            break;
         }
     }
+    
+//    var item = $("<div>").append($(pfListbox.items).clone()).find("li[data-label='"+value+"']")
+//    pfListbox.selectItem(item);
 }
 
 function parentChildFolders(parent, child) {

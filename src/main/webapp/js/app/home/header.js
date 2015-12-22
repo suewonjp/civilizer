@@ -336,19 +336,17 @@ function setCurrentTheme(defaultTheme) {
 }
 
 function applyCurrentThemeToThemeSwitcher() {
-    var theme = localStorage.getItem("theme");
     var switcher = PF('themeSwitcher');
-    if (theme) {
+    if (switcher) {
+        switcher.input.off("change");
+        switcher.focusInput.off(".ui-selectonemenu");
+        var theme = localStorage.getItem("theme");
         selectItemOnPfListbox(theme, switcher);
-        $(".each-fragment th").addClass("ui-state-default");
+        switcher.input.on("change", onChangeTheme);
     }
-
-    // [bug fix] After the above operation, 
-    // Theme switcher's underlying input widget gets focus 
-    // and it starts to accept keystrokes.
-    // and this causes unexpected theme change at application startup.
-    // so let it loose focus here.
-    switcher.blur();
+    else {
+        setTimeout(applyCurrentThemeToThemeSwitcher, 500);
+    }
 }
 
 function onChangeTheme() {
@@ -356,6 +354,7 @@ function onChangeTheme() {
     var theme = switcher.getSelectedValue();
     if (theme) {
         localStorage.setItem("theme", theme);
+        PrimeFaces.changeTheme(theme);
     }
 }
 
