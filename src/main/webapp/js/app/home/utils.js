@@ -243,4 +243,12 @@ function suffix(str, sep, excludeSep) {
     return str.substring(str.lastIndexOf(sep) + (excludeSep === true ? sep.length : 0));
 }
 
+function jsonp(url, successcb) {
+    $.ajax({
+        type:"get",
+        url: url,
+        dataType: 'jsonp',
+        success: successcb // (data, textStatus, jqXHR)
+    });
+}
 
