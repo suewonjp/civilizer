@@ -2,81 +2,126 @@
 // markItUp!
 // By Jay Salvat - http://markitup.jaysalvat.com/
 // ------------------------------------------------------------------*/
-.markItUp .markItUpButton1 a {
-	background-image:url(images/h1.png); 
-}
-.markItUp .markItUpButton2 a {
-	background-image:url(images/h2.png); 
-}
-.markItUp .markItUpButton3 a {
-	background-image:url(images/h3.png); 
-}
-.markItUp .markItUpButton4 a {
-	background-image:url(images/h4.png); 
-}
-.markItUp .markItUpButton5 a {
-	background-image:url(images/h5.png); 
-}
-.markItUp .markItUpButton6 a {
-	background-image:url(images/h6.png); 
+.markItUp a {
+    margin-left:5px;
+    display: block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    text-align: center;
 }
 
-.markItUp .markItUpButton7 a {
-	background-image:url(images/bold.png);
+.markItUp .miu-h1 a:before {
+    content:"\f1dc" "1";
 }
-.markItUp .markItUpButton8 a {
-	background-image:url(images/italic.png);
+.markItUp .miu-h2 a:before {
+    content:"\f1dc" "2";
 }
-.markItUp .markItUpButton9 a {
-	background-image:url(images/stroke.png);
+.markItUp .miu-h3 a:before {
+    content:"\f1dc" "3";
 }
-.markItUp .markItUpButton10 {
-  font-size: 1.15em;
+.markItUp .miu-h4 a:before {
+    content:"\f1dc" "4";
 }
-
-.markItUp .markItUpButton11 a {
-	background-image:url(images/list-bullet.png);
+.markItUp .miu-h5 a:before {
+    content:"\f1dc" "5";
 }
-.markItUp .markItUpButton12 a {
-	background-image:url(images/list-numeric.png);
-}
-
-.markItUp .markItUpButton13 a {
-	background-image:url(images/picture.png); 
-}
-.markItUp .markItUpButton14 a {
-	background-image:url(images/link.png);
+.markItUp .miu-h6 a:before {
+    content:"\f1dc" "6";
 }
 
-.markItUp .markItUpButton16 a	{
-	background-image:url(images/quotes.png);
+.markItUp .miu-b a:before {
+    content:"\f032";
+    color:maroon;
 }
-.markItUp .markItUpButton17 a	{
-	background-image:url(images/code.png);
+.markItUp .miu-i a:before {
+    content:"\f033";
+    color:maroon;
+}
+.markItUp .miu-s a:before {
+    content:"\f0cc";
+    color:maroon;
+}
+.markItUp .miu-u a:before {
+    content:"\f0cd";
+    color:maroon;
+    font-size: 1.1em;
 }
 
-.markItUp .markItUpButton22-1 a	{
+.markItUp .miu-ul a:before {
+    content:"\f0ca";
+    font-size: 1.3em;
+    color:green;
+}
+.markItUp .miu-ol a:before {
+    content:"\f0cb";
+    font-size: 1.3em;
+    color:green;
+}
+
+.markItUp .miu-img a:before {
+    content:"\f03e";
+    font-size: 1.4em;
+    color:darkorange;
+}
+.markItUp .miu-link a:before {
+    content:"\f08e";
+    font-size: 1.4em;
+    color:navy;
+}
+.markItUp .miu-frg-link a:before {
+    content:"\f0c1";
+    font-size: 1.4em;
+}
+
+.markItUp .miu-quotes a:before	{
+    content:"\f10d";
+    color:dimgray;
+}
+.markItUp .miu-code a:before	{
+    content:"` `";
+    font-size: 1.3em;
+}
+.markItUp .miu-html a:before	{
+    content:"\f121";
+    font-size: 1.3em;
+}
+.markItUp .miu-fold a:before	{
+    content:"\f0fe";
+    font-size: 1.3em;
+    color:cornflowerblue;
+}
+.markItUp .miu-indent a:before	{
+    content:"\f03c";
+    font-size: 1.3em;
+}
+.markItUp .miu-outdent a:before	{
+    content:"\f03b";
+    font-size: 1.3em;
+}
+
+.markItUp .miu-clr-c a	{
 	background-color:cyan;
 }
-.markItUp .markItUpButton22-2 a	{
+.markItUp .miu-clr-b a	{
 	background-color:royalblue;
 }
-.markItUp .markItUpButton22-3 a {
+.markItUp .miu-clr-r a {
 	background-color: red;
 }
-.markItUp .markItUpButton22-4 a {
+.markItUp .miu-clr-g a {
 	background-color: limegreen;
 }
-.markItUp .markItUpButton22-5 a {
+.markItUp .miu-clr-y a {
 	background-color: orange;
 }
-.markItUp .markItUpButton22-6 a {
+.markItUp .miu-clr-m a {
 	background-color: magenta;
 }
-.markItUp .markItUpButton22-7 a {
+.markItUp .miu-clr-v a {
 	background-color: blueviolet;
 }
-.markItUp .markItUpButton22-8 a {
+.markItUp .miu-clr-br a {
 	background-color: brown;
 }
 

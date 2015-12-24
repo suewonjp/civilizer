@@ -143,20 +143,20 @@
 				footer = $('<div class="markItUpFooter"></div>').insertAfter($$);
 
 				// listen key events
-				$$.bind('keydown.markItUp', keyPressed).bind('keyup', keyPressed);
-				
-				// bind an event to catch external calls
-				$$.bind("insertion.markItUp", function(e, settings) {
+				$$.off(".markItUp")
+				.on('keydown.markItUp', keyPressed)
+				.on('keyup.markItUp', keyPressed)				
+				.on("insertion.markItUp", function(e, settings) {
+				    // bind an event to catch external calls
 					if (settings.target !== false) {
 						get();
 					}
 					if (textarea === $.markItUp.focused) {
 						markup(settings);
 					}
-				});
-
-				// remember the last focus
-				$$.bind('focus.markItUp', function() {
+				})
+				.on('focus.markItUp', function() {
+				    // remember the last focus
 					$.markItUp.focused = this;
 				});
 			}
@@ -179,32 +179,29 @@
 						for (j = levels.length -1; j >= 0; j--) {
 							t += levels[j]+"-";
 						}
-						li = $('<li class="markItUpButton markItUpButton'+t+(i)+' '+(button.className||'')+'"><a href="" '+key+' title="'+title+'"/></li>')
-						.bind("contextmenu.markItUp", function() { // prevent contextmenu on mac and allow ctrl+click
+						li = $('<li class="'+(button.className||'')+'"><a href="" '+key+' title="'+title+'"/></li>')
+						.off(".markItUp")
+						.on("contextmenu.markItUp", function() { // prevent contextmenu on mac and allow ctrl+click
 							return false;
-						}).bind('click.markItUp', function(e) {
+						}).on('click.markItUp', function(e) {
 							e.preventDefault();
-						}).bind("focusin.markItUp", function(){
+						}).on("focusin.markItUp", function(){
                             $$.focus();
-						}).bind('mouseup', function() {
+						}).on('mouseup', function() {
 							if (button.call) {
 								eval(button.call)();
 							}
 							setTimeout(function() { markup(button) },1);
 							return false;
-						}).bind('mouseenter.markItUp', function() {
+						}).on('mouseenter.markItUp', function() {
 								$('> ul', this).show();
 								$(document).one('click', function() { // close dropmenu if click outside
 										$('ul ul', header).hide();
 									}
 								);
-						}).bind('mouseleave.markItUp', function() {
+						}).on('mouseleave.markItUp', function() {
 								$('> ul', this).hide();
 						}).appendTo(ul);
-						if (button.faIcon) {
-							var span = $("<span>").addClass("fa " + button.faIcon);
-							li.find("a").prepend(span);
-						}
 						if (button.dropMenu) {
 							levels.push(i);
 							$(li).addClass('markItUpDropMenu').append(dropMenus(button.dropMenu));
