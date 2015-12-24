@@ -6,3 +6,5 @@
 /test/
 !/src/test/
 /extra/
+**/compressed.*
+
