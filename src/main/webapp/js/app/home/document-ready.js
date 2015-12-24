@@ -35,7 +35,7 @@ $(document).ready(function() {
 	
     $(".each-fragment th").addClass("ui-state-default");
 
-    setCurrentTheme("ui-darkness");
+    setCurrentTheme("aristo");
 	
 	$("#container").show();
 	
