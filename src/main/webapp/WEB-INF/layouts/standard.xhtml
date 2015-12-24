@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="#{userProfileBean.language}"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets">
@@ -9,27 +10,8 @@
     <ui:include src="meta.xhtml" />
     
     <title>#{msg['application_name']}</title>
-    
-    <script src="resources/js/vendors/jquery-ui/jquery-ui.min.js" />
-    <script src="resources/js/vendors/marked/marked.js"></script>
-    <script src="resources/js/vendors/markitup/jquery.markitup.js"></script>
-    <script src="resources/js/vendors/markitup/sets/markdown/set.js"></script>
-    <script src="resources/js/vendors/watermark/jquery.watermark.min.js"></script>
-    <script src="resources/js/vendors/lightbox_me/jquery.lightbox_me.js"></script>
-    <script src="resources/js/vendors/moment-with-locales.min.js"></script>
-    <script src="resources/js/vendors/textarea-caret-position/index.js"></script>
 
-    <ui:insert name="site-scripts" />
-    
-    <link rel="stylesheet" href="resources/styles/blueprint/screen.css" type="text/css" media="screen, projection" />
-    <link rel="stylesheet" href="resources/js/vendors/markitup/skins/markitup/style.css" type="text/css" />
-    <link rel="stylesheet" href="resources/js/vendors/markitup/sets/markdown/style.css" type="text/css" />
-    <link rel="stylesheet" href="resources/styles/custom/layout.css" type="text/css" />
-    <link rel="stylesheet" href="resources/styles/custom/home.css" type="text/css" />
-    <link rel="stylesheet" href="resources/styles/custom/fragment-container.css" type="text/css" />
-    <link rel="stylesheet" href="resources/styles/custom/fragment-content.css" type="text/css" />
-    <link rel="stylesheet" href="resources/styles/custom/signin.css" type="text/css" />
-    <link rel="stylesheet" href="resources/styles/custom/custom-markup-rules.css" type="text/css" />
+    <ui:insert name="flow-scripts" />
 </h:head>
 
 <f:view contentType="text/html" locale="#{userProfileBean.locale}">

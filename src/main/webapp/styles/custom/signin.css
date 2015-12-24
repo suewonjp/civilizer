@@ -1,6 +1,8 @@
 #signin-form-panel {
-	width: 50%;
-	margin-top: 10px;
+	max-width: 50%;
+	min-width: 300px;
+	margin-top: 50px;
+	font-size: 0.8em;
 }
 
 #j_username, #j_password {
@@ -9,9 +11,8 @@
 
 #signin-form-remember-me-label {
 	color: gold;
-	margin-left: 15%;
 }
 
 #sign-in-button {
-	margin-top: 40px;
+	margin: 20px auto auto 10px;
 }

@@ -7,18 +7,17 @@
     xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/layouts/standard.xhtml">
 
-<ui:define name="site-scripts">
-    <script src="resources/js/app/signin/signin.js"></script>
+<ui:define name="flow-scripts">
+    <link rel="stylesheet" href="resources/styles/custom/layout.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/styles/custom/signin.css" type="text/css"/>
+
+    <script src="resources/js/app/signin/signin.js"/>
 </ui:define>
 
 <ui:define name="content">
 
 <h:form prependId="false">
-    <h1>
-        #{msg["welcome"]}
-    </h1>
-    
-    <p:panel id="signin-form-panel" header="Welcome!">
+    <p:panel id="signin-form-panel" header="#{msg['welcome']}">
         <p:messages id="signin-form-messages"/>
         
         <h:panelGrid columns="2" cellpadding="5">

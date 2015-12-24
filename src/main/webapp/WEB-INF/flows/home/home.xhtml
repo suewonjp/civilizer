@@ -7,21 +7,40 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/layouts/standard.xhtml">
 
-<ui:define name="site-scripts">
+<ui:define name="flow-scripts">
+    <link rel="stylesheet" href="resources/styles/blueprint/screen.css" type="text/css" media="screen, projection"/>
+    <link rel="stylesheet" href="resources/js/vendors/markitup/skins/markitup/style.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/js/vendors/markitup/sets/markdown/style.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/styles/custom/layout.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/styles/custom/home.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/styles/custom/fragment-container.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/styles/custom/fragment-content.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/styles/custom/custom-markup-rules.css" type="text/css"/>
+    
+    <script src="resources/js/vendors/jquery-ui/jquery-ui.min.js"/>
+    <script src="resources/js/vendors/marked/marked.js"/>
+    <script src="resources/js/vendors/markitup/jquery.markitup.js"/>
+    <script src="resources/js/vendors/markitup/sets/markdown/set.js"/>
+    <script src="resources/js/vendors/watermark/jquery.watermark.min.js"/>
+    <script src="resources/js/vendors/lightbox_me/jquery.lightbox_me.js"/>
+    <script src="resources/js/vendors/moment-with-locales.min.js"/>
+    <script src="resources/js/vendors/textarea-caret-position/index.js"/>
+    
+    <script src="resources/js/app/home/utils.js"/>
+    <script src="resources/js/app/home/home.js"/>
+    <script src="resources/js/app/home/header.js"/>
+    <script src="resources/js/app/home/fragment-editor.js"/>
+    <script src="resources/js/app/home/fragment-content.js"/>
+    <script src="resources/js/app/home/bookmark.js"/>
+    <script src="resources/js/app/home/tag-palette.js"/>
+    <script src="resources/js/app/home/selection-box.js"/>
+    <script src="resources/js/app/home/file-box.js"/>
+    <script src="resources/js/app/home/contextmenu.js"/>
+    <script src="resources/js/app/home/search.js"/>
+    <script src="resources/js/app/home/dnd.js"/>
+    <script src="resources/js/app/home/document-ready.js"/>
+    
 	<ui:include src="js/constants.xhtml"/>
-    <script src="resources/js/app/home/utils.js"></script>
-    <script src="resources/js/app/home/home.js"></script>
-    <script src="resources/js/app/home/header.js"></script>
-    <script src="resources/js/app/home/fragment-editor.js"></script>
-    <script src="resources/js/app/home/fragment-content.js"></script>
-    <script src="resources/js/app/home/bookmark.js"></script>
-    <script src="resources/js/app/home/tag-palette.js"></script>
-    <script src="resources/js/app/home/selection-box.js"></script>
-    <script src="resources/js/app/home/file-box.js"></script>
-    <script src="resources/js/app/home/contextmenu.js"></script>
-    <script src="resources/js/app/home/search.js"></script>
-    <script src="resources/js/app/home/dnd.js"></script>
-    <script src="resources/js/app/home/document-ready.js"></script>
 </ui:define>
 
 <ui:define name="header">
