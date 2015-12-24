@@ -453,11 +453,9 @@ function setupPanelToolbarArea() {
 
     $("#content").off("click").on("click", function(e) {
         var tgt = $(e.target);
-        if (tgt.is(ptbs))
+        if (tgt.is("#panel-toolbar-area") || ptbs.has(tgt).length)
             return false;
-        else if (tgt.is("#panel-toolbar-area"))
-            return false;
-        else if ($("#content").has(tgt))
+        else if ($("#content").has(tgt).length)
             ptbs.css("visibility", "hidden");
     });
 }
