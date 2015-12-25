@@ -8,36 +8,45 @@
 	template="/WEB-INF/layouts/standard.xhtml">
 
 <ui:define name="flow-scripts">
-    <link rel="stylesheet" href="resources/styles/vendors/blueprint/screen.css" type="text/css" media="screen, projection"/>
-    <link rel="stylesheet" href="resources/styles/vendors/markitup/markitup.css" type="text/css"/>
-    <link rel="stylesheet" href="resources/styles/app/layout.css" type="text/css"/>
-    <link rel="stylesheet" href="resources/styles/app/home.css" type="text/css"/>
-    <link rel="stylesheet" href="resources/styles/app/fragment-container.css" type="text/css"/>
-    <link rel="stylesheet" href="resources/styles/app/fragment-content.css" type="text/css"/>
-    <link rel="stylesheet" href="resources/styles/app/custom-markup-rules.css" type="text/css"/>
-    
-    <script src="resources/js/vendors/jquery-ui/jquery-ui.min.js"/>
-    <script src="resources/js/vendors/marked/marked.js"/>
-    <script src="resources/js/vendors/markitup/jquery.markitup.js"/>
-    <script src="resources/js/vendors/markitup/sets/markdown/set.js"/>
-    <script src="resources/js/vendors/watermark/jquery.watermark.min.js"/>
-    <script src="resources/js/vendors/lightbox_me/jquery.lightbox_me.js"/>
-    <script src="resources/js/vendors/moment-with-locales.min.js"/>
-    <script src="resources/js/vendors/textarea-caret-position/index.js"/>
-    
-    <script src="resources/js/app/home/utils.js"/>
-    <script src="resources/js/app/home/home.js"/>
-    <script src="resources/js/app/home/header.js"/>
-    <script src="resources/js/app/home/fragment-editor.js"/>
-    <script src="resources/js/app/home/fragment-content.js"/>
-    <script src="resources/js/app/home/bookmark.js"/>
-    <script src="resources/js/app/home/tag-palette.js"/>
-    <script src="resources/js/app/home/selection-box.js"/>
-    <script src="resources/js/app/home/file-box.js"/>
-    <script src="resources/js/app/home/contextmenu.js"/>
-    <script src="resources/js/app/home/search.js"/>
-    <script src="resources/js/app/home/dnd.js"/>
-    <script src="resources/js/app/home/document-ready.js"/>
+    <c:choose>
+        <c:when test="#{systemProperties['civilizer.use_compressed_css_js']}">
+            <link rel="stylesheet" href="resources/styles/compressed.css" type="text/css"/>
+        
+            <script src="resources/js/compressed.js"/>
+        </c:when>
+        <c:otherwise><!-- [NOTE] extra-pom.xml file also should be maintained whenever modifying the following css/js import -->
+            <link rel="stylesheet" href="resources/styles/vendors/blueprint/screen.css" type="text/css" media="screen, projection"/>
+            <link rel="stylesheet" href="resources/styles/vendors/markitup/markitup.css" type="text/css"/>
+            <link rel="stylesheet" href="resources/styles/app/layout.css" type="text/css"/>
+            <link rel="stylesheet" href="resources/styles/app/home.css" type="text/css"/>
+            <link rel="stylesheet" href="resources/styles/app/fragment-container.css" type="text/css"/>
+            <link rel="stylesheet" href="resources/styles/app/fragment-content.css" type="text/css"/>
+            <link rel="stylesheet" href="resources/styles/app/custom-markup-rules.css" type="text/css"/>
+            
+            <script src="resources/js/vendors/jquery-ui/jquery-ui.min.js"/>
+            <script src="resources/js/vendors/marked/marked.js"/>
+            <script src="resources/js/vendors/markitup/jquery.markitup.js"/>
+            <script src="resources/js/vendors/markitup/sets/markdown/set.js"/>
+            <script src="resources/js/vendors/watermark/jquery.watermark.min.js"/>
+            <script src="resources/js/vendors/lightbox_me/jquery.lightbox_me.js"/>
+            <script src="resources/js/vendors/moment-with-locales.min.js"/>
+            <script src="resources/js/vendors/textarea-caret-position/index.js"/>
+            
+            <script src="resources/js/app/home/utils.js"/>
+            <script src="resources/js/app/home/home.js"/>
+            <script src="resources/js/app/home/header.js"/>
+            <script src="resources/js/app/home/fragment-editor.js"/>
+            <script src="resources/js/app/home/fragment-content.js"/>
+            <script src="resources/js/app/home/bookmark.js"/>
+            <script src="resources/js/app/home/tag-palette.js"/>
+            <script src="resources/js/app/home/selection-box.js"/>
+            <script src="resources/js/app/home/file-box.js"/>
+            <script src="resources/js/app/home/contextmenu.js"/>
+            <script src="resources/js/app/home/search.js"/>
+            <script src="resources/js/app/home/dnd.js"/>
+            <script src="resources/js/app/home/document-ready.js"/>
+        </c:otherwise>
+    </c:choose>
     
 	<ui:include src="js/constants.xhtml"/>
 </ui:define>

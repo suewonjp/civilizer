@@ -12,10 +12,15 @@
         <java-version>1.7</java-version>
         <app-name>civilizer</app-name>
         <src-dir>src/extra/java</src-dir>
-        <dep-dir>target</dep-dir>
-        <dep-classes-dir>${dep-dir}/classes</dep-classes-dir>
-        <dep-lib-dir>${dep-dir}/${app-name}-${project.version}/WEB-INF/lib</dep-lib-dir>
-        <output-dir>${dep-dir}/extra</output-dir>
+        <wa-dir>src/main/webapp</wa-dir>
+        <build-dir>target</build-dir>
+        <war-dir>${build-dir}/${app-name}-${project.version}</war-dir>
+        <dep-classes-dir>${build-dir}/classes</dep-classes-dir>
+        <dep-lib-dir>${war-dir}/WEB-INF/lib</dep-lib-dir>
+        <output-dir>${build-dir}/extra</output-dir>
+        <compressor>tools/compressor/yuicompressor-2.4.8.jar</compressor>
+        <min-css>${wa-dir}/styles/compressed.css</min-css>
+        <min-js>${wa-dir}/js/compressed.js</min-js>
     </properties>
     
     <build>
@@ -30,13 +35,13 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin> <!-- build EXTRA module using Ant commands -->
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
                 <executions>
-                    <execution>
-                        <id>compile</id>
+                    <execution><!-- build EXTRA module using Ant commands -->
+                        <id>compile-extra</id>
                         <phase>compile</phase>
                         <goals><goal>run</goal></goals>
                         <configuration>
@@ -63,6 +68,86 @@
                                 <copy todir="${output-dir}/lib">
                                     <fileset dir="extra/lib" includes="*.jar"/>
                                 </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution><!-- compress CSS, JS files -->
+                        <id>compress-css-js</id>
+                        <phase>compile</phase>
+                        <goals><goal>run</goal></goals>
+                        <configuration>
+                            <target>
+                                <delete file="${min-css}"/>
+                                <echo message="compressing CSS files..."/>
+                                
+                                <java jar="${compressor}" fork="true" append="true" output="${min-css}">
+                                    <arg line="--type css ${wa-dir}/styles/vendors/blueprint/screen.css"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-css}">
+                                    <arg line="--type css ${wa-dir}/styles/vendors/markitup/markitup.css"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-css}">
+                                    <arg line="--type css ${wa-dir}/styles/app/layout.css"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-css}">
+                                    <arg line="--type css ${wa-dir}/styles/app/home.css"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-css}">
+                                    <arg line="--type css ${wa-dir}/styles/app/fragment-container.css"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-css}">
+                                    <arg line="--type css ${wa-dir}/styles/app/fragment-content.css"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-css}">
+                                    <arg line="--type css ${wa-dir}/styles/app/custom-markup-rules.css"/></java>
+                                    
+                                <copy file="${min-css}" todir="${war-dir}/styles"/>
+                                
+                                <delete file="${min-js}"/>
+                                <echo message="compressing JS files..."/>
+                                
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/jquery-ui/jquery-ui.min.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/marked/marked.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/markitup/jquery.markitup.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/markitup/sets/markdown/set.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/watermark/jquery.watermark.min.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/lightbox_me/jquery.lightbox_me.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/moment-with-locales.min.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/textarea-caret-position/index.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/utils.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/home.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/header.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/fragment-editor.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/fragment-content.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/bookmark.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/tag-palette.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/selection-box.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/file-box.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/contextmenu.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/search.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/dnd.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/app/home/document-ready.js"/></java>
+                                    
+                                <copy file="${min-js}" todir="${war-dir}/js"/>
+                                
+                                <propertyfile file="${war-dir}/WEB-INF/classes/app-options.properties">
+                                    <entry key="civilizer.use_compressed_css_js" value="true" operation="+"/>
+                                </propertyfile>
                             </target>
                         </configuration>
                     </execution>

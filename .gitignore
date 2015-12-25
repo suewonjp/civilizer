@@ -6,5 +6,5 @@
 /test/
 !/src/test/
 /extra/
-**/compressed.*
-
+src/main/webapp/js/compressed.js
+src/main/webapp/styles/compressed.css
