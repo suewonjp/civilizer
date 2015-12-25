@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
@@ -44,12 +45,19 @@ public final class FsUtil {
     public static File getResourceAsFile(Class<?> clazz, String rscName) {
         File file = null;
         try {
-            file = new File(new URI(clazz.getClassLoader().getResource(rscName).toString()));
+            final URL url = clazz.getClassLoader().getResource(rscName);
+            if (url != null)
+                file = new File(new URI(url.toString()));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         return file;
     }
+
+//    public static boolean resourceExists(Class<?> clazz, String rscName) {
+//        final File f = getResourceAsFile(clazz, rscName);
+//        return (f != null) && f.exists();
+//    }
     
     public static String normalizePath(String path) {
         if (path.startsWith("~")) {
