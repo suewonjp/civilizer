@@ -26,7 +26,11 @@ function createSearchController() {
         $(document).off(en).on(en, function(e) {
             active = parseInt(dlg.jq.css('z-index')) === PrimeFaces.zindex;
             if (e.which === $.ui.keyCode.ESCAPE && dlg.isVisible() && active) {
-                if ($(e.target).attr("id") != "fragment-group-form:search-panel:quick-search-input")
+                var tgt = $(e.target);
+                if (tgt.attr("id") == "fragment-group-form:search-panel:quick-search-input" ||
+                    tgt.attr("id") == "fragment-group-form:search-panel:tag-keywords")
+                    tgt.blur();
+                else
                     dlg.hide();
             };
         });
