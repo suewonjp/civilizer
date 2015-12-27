@@ -342,13 +342,13 @@
 }
 
 #trashcan, #new-tag-button {
-    padding: 10px 0px 10px 10px;
 	display:inline-block;
 	font-size:x-small;
 }
 
 #trashcan {
-	width: 15%;
+    padding: 10px 0px 10px 10px;
+	width: 42px;
 }
 
 #tag-quick-search {
@@ -356,10 +356,11 @@
 }
 
 #tag-quick-search input {
-    width: 110px;
+    width: 100px;
 }
 
 #new-tag-button {
+    padding: 10px 0px 10px 0px;
     float:right;
 }
 
