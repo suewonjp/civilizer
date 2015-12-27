@@ -1,12 +1,27 @@
 Copyright (c) 2014-2015 Suewon Bahng, suewonjp@gmail.com
 
-Last Updated (2015-12-16)
+Last Updated (2015-12-27)
 
 ## Version 0.9.0.RC4 (scheduled at 2015-12-29)
 - Bug fix:
-  - The application did not work properly when users installed it under folder containing spaces.
+  - The application did not start properly when users had installed it under path containing spaces.
+- New feature: File information menu in File Box
+  - You can check out information on files stored in File Box.
+  - Double click on each file or right click and the click 'info' menu.
+- New feature: Tagging multiple Fragments
+  - You can append a Tag to multiple Fragments at once.
 - Improvement:
-  - File box now supports UTF-8 encoded folder/files.
+  - File Box now supports UTF-8 encoded folder/files.
+- Improvement:
+  - You can instantly embed Youtube videos into any Fragment just by copy and paste the URLs.
+  
+- Behavior change:
+  - Panel Tool Bars invisible by default.
+  - They will show as soon as you hover on the gray area at the bottom of the page.
+- Style change:
+  - Fragment Header
+  - Tool bar menus in Fragment Editor
+  - List style in Fragment content
 
 ## Version 0.9.0.RC3 (2015-11-30)
 - New feature: Closing Other Fragments
