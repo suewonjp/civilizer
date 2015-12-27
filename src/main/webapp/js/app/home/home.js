@@ -453,7 +453,7 @@ function setupPanelToolbarArea() {
 
     $("#content").off("click").on("click", function(e) {
         var tgt = $(e.target);
-        if (tgt.is("#panel-toolbar-area") || ptbs.has(tgt).length)
+        if (tgt.is("#panel-toolbar-area, #panel-toolbar-area i") || ptbs.has(tgt).length)
             return false;
         else if ($("#content").has(tgt).length)
             ptbs.css("visibility", "hidden");
