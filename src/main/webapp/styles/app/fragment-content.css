@@ -63,6 +63,10 @@
     color: powderblue;
 }
 
+.fragment-content ol {
+    counter-reset: item;
+}
+
 .fragment-content > ol > li {
     list-style: none;
     counter-increment: item;

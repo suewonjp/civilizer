@@ -196,7 +196,7 @@
     color:dimgray;
 }
 .markItUp .miu-code a:before    {
-    content:"` `";
+    content:"``";
     font-size: 1.3em;
 }
 .markItUp .miu-html a:before    {
