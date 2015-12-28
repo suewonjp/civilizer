@@ -174,13 +174,17 @@ function findPanel(obj) {
 	return -1;
 }
 
+function findAvailablePanel() {
+    var targetPanelId = 0;
+    if ($("#panel-toggler-1").prop("checked") == false) targetPanelId = 1;
+    else if ($("#panel-toggler-2").prop("checked") == false) targetPanelId = 2;
+    return targetPanelId;
+}
+
 function fetchFragmentsByTag(from, to) {
 	var targetPanelId = findPanel(to);
-	if (targetPanelId < 0) {
-		if ($("#panel-toggler-1").prop("checked") == false) targetPanelId = 1;
-		else if ($("#panel-toggler-2").prop("checked") == false) targetPanelId = 2;
-		else targetPanelId = 0;
-	}
+	if (targetPanelId < 0)
+	    targetPanelId = findAvailablePanel();
 	sessionStorage.setItem("panel-"+targetPanelId, "on");
     $("#panel-activation-buttons").buttonset("refresh");
     filterByTag([ {name:"tagId", value:from.attr("_tid")}, {name:"panelId", value:targetPanelId} ]);

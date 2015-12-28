@@ -217,6 +217,8 @@ function showFileInfo() {
         var fid = suffix(target.attr("id"), "-", true);
         title = "<i class='fa fa-file'> #"+fid+"</i>";
         content = "<a target='_blank' href='"+path+"'>"+content+"</a>";
+        $("#fragment-group-form\\:search-panel\\:quick-search-input").val("\\{\\{\\[file\\](\\s*)"+fid+"(\\s*)\\}\\}/r");
+        content += "<a href='#' onclick='searchFragmentsForPanel(findAvailablePanel())'><p class='file-info'>"+MSG.get_frg4file+"</p></a>";
         if (isImage(suffix(fp, ".")))
             content += "<img class='file-info-img' src='"+path+"'/>";
     }
