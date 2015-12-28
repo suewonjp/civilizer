@@ -234,9 +234,15 @@
 								return false;
 							}
 							value = prompt(b[0], (b[1]) ? b[1] : '');
-							if (!value) {
-								abort = true;
+							if (value) {
+							    if (b[0] === "Url")
+							        // Some URLs have ')' characters (e.g., many Wikipedia URLs)
+							        // which don't work right with the Markdown inline link rule.
+							        // So we convert any ')' character to its HTML character entity.
+							        value = value.replace(")", "&#41;");
 							}
+							else
+								abort = true;
 							return value;
 						}
 					);

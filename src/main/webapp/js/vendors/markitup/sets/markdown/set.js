@@ -32,7 +32,7 @@ markItUpSettings = {
 		{className:'miu-ol', name:'Numeric List', selectAssist:true, onShift: true, key:'N', multiline:true, openWith:'1. ' },
 		{separator:'---------------' },
 		{className:'miu-img', name:'Picture', onShift:true, key:'P', openWith:'![]([![Url:!:http://]!] "', closeWith:'")'},
-		{className:'miu-link', name:'Link', onShift:true, key:'L', openWith:'[', closeWith:']([![Url:!:http://]!])', placeHolder:'Your text to link here...' },
+		{className:'miu-link', name:'Link', onShift:true, key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "")', placeHolder:'Your text to link here...' },
 		{className:'miu-frg-link', name:'Fragment Link', onShift:true, key:'F', openWith:'{{[frgm][![Fragment ID]!] ', closeWith:' }}', placeHolder:'Your text to link here...'},
 		{separator:'---------------'},	
 		{className:'miu-quotes', name:'Quotes', selectAssist:true, onShift:true, key:'Q', openWith:'> ', closeWith:'  ', multiline:true},
