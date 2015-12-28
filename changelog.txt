@@ -7,7 +7,7 @@ Last Updated (2015-12-27)
   - The application did not start properly when users had installed it under path containing spaces.
 - New feature: File information menu in File Box
   - You can check out information on files stored in File Box.
-  - Double click on each file or right click and the click 'info' menu.
+  - Click on each file or right click and select 'info' menu.
 - New feature: Tagging multiple Fragments
   - You can append a Tag to multiple Fragments at once.
 - Improvement:
