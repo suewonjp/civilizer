@@ -115,7 +115,7 @@ function translateSearchKeywordCommands(html) {
 }
 
 function translateCustomMarkupCommands(html) {
-    return translateSearchKeywordCommands(html)
+    return translateSearchKeywordCommands(html
         // {{{[keyword] ... text ... }}} --- translated to a <div> block
         .replace(/\{\{\{\[(.+?)({.*})?\]/g, function(match, p1, p2, pos, originalText) {
             var output = "<div class='-cvz-" + p1 + "'"; 
@@ -134,7 +134,7 @@ function translateCustomMarkupCommands(html) {
         .replace(/\}\}/g, function(match, pos, originalText) {
             return "</span>";
         })
-        ;
+        );
 }
 
 function translateFragmentContent(content) {
