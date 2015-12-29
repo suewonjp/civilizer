@@ -3,6 +3,10 @@
     background-color: white;
 }
 
+.fragment-content table {
+    margin: 5px auto 20px auto;    
+}
+
 .fragment-content table
 ,.fragment-content tr
 ,.fragment-content th
