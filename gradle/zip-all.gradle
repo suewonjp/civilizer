@@ -1,0 +1,38 @@
+ext {
+    appName = "civilizer"
+}
+
+task zipAll {
+    description 'Archives the final package file'
+    dependsOn = [ war, compressWebRsc ]
+}
+
+zipAll << {
+    ext.coreProperties = new Properties()
+    coreProperties.load(file("${projectDir}/src/main/resources/core.properties").newDataInputStream())
+    ext.version = coreProperties.getProperty("civilizer.version")
+    
+    ant.echo(message:version, file:"${buildDir}/info/version.txt")
+
+    copy { from "${projectDir}/jetty.xml"; into buildDir }
+
+    println "copying documentations..."
+    copy { from "${projectDir}/README.md"; into "${buildDir}/info"; rename { "readme.txt" } }
+    copy { from projectDir; into "${buildDir}/info"; include "*.txt" }
+
+    println "copying shell scripts..."
+    copy { from "${projectDir}/tools/shell-utils"; into "${buildDir}/shell-utils" }
+    copy { from "${projectDir}/tools/run"; into buildDir }
+    copy { from "${projectDir}/tools/data-management"; into buildDir }
+
+    println "zipping all..."
+    ant.zip(destfile:"${buildDir}/${appName}.${version}.zip") {
+        zipfileset(dir:"${buildDir}/info", prefix:"${appName}/info")
+        zipfileset(filemode:"744", dir:buildDir, includes:"*.exe *.sh *.bat jetty.xml", prefix:appName)
+        zipfileset(filemode:"744", dir:"${buildDir}/shell-utils", prefix:"${appName}/shell-utils")
+        zipfileset(dir:explodedWarDir, prefix:"${appName}/${appName}")
+        zipfileset(dir:"${buildDir}/extra", prefix:"${appName}/extra")
+        zipfileset(dir:"${projectDir}/extra/lib", prefix:"${appName}/extra/lib")
+    }
+}
+
