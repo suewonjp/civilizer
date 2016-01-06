@@ -1,0 +1,114 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'war'
+apply from: 'gradle/compress-webrsc.gradle'
+apply from: 'gradle/zip-all.gradle'
+
+group = 'com.civilizer'
+description = """Civilizer"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+ext {
+    explodedWarDir = file("${buildDir}/civilizer-war")
+    springVersion = '3.2.8.RELEASE'
+    springSecurityVersion = '3.1.3.RELEASE'
+    slf4jVersion =  '1.6.6'
+    jettyVersion = '9.3.0.M2'
+}
+
+configurations {
+    jettyRunner { transitive = false }
+}
+
+repositories {
+    maven { url "http://download.java.net/maven/2/" }
+    maven { url "http://repository.primefaces.org" }
+    maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile ("org.apache.commons:commons-lang3:3.3.2") { force = true }
+    compile ("commons-io:commons-io:2.4") { force = true }
+    compile ("commons-fileupload:commons-fileupload:1.3.1") { force = true }
+    compile ("aspectj:aspectjrt:1.5.4") { force = true }
+    compile ("org.springframework:spring-context:${springVersion}") {
+        exclude(module: 'commons-logging')
+        force = true
+    }
+    compile ("org.springframework:spring-core:${springVersion}") { force = true }
+    compile ("org.springframework:spring-beans:${springVersion}") { force = true }
+    compile ("org.springframework:spring-aop:${springVersion}") { force = true }
+    compile ("org.springframework:spring-webmvc:${springVersion}") { force = true }
+    compile ("org.springframework:spring-web:${springVersion}") { force = true }
+    compile ("org.springframework:spring-expression:${springVersion}") { force = true }
+    compile ("org.springframework:spring-jdbc:${springVersion}") { force = true }
+    compile ("org.springframework:spring-orm:${springVersion}") { force = true }
+    compile ("org.hibernate:hibernate-entitymanager:3.6.10.Final") { force = true }
+    compile ("org.hibernate:hibernate-validator:4.2.0.Final") { force = true }
+    compile ("com.h2database:h2:1.3.160") { force = true }
+    compile ("javax.validation:validation-api:1.0.0.GA") { force = true }
+    compile ("joda-time:joda-time:2.0") { force = true }
+    compile ("joda-time:joda-time-hibernate:1.3") { force = true }
+    compile ("org.slf4j:slf4j-api:1.6.6") { force = true }
+    compile ("javax.inject:javax.inject:1") { force = true }
+    compile ("javax.servlet:jstl:1.2") { force = true }
+    compile ("org.springframework.webflow:spring-faces:2.4.2.RELEASE") { force = true }
+    compile ("org.springframework.security:spring-security-web:${springSecurityVersion}") { force = true }
+    compile ("org.springframework.security:spring-security-config:${springSecurityVersion}") { force = true }
+    compile ("javax.el:el-api:2.2") { force = true }
+    compile ("org.glassfish.web:el-impl:2.2") { force = true }
+    compile ("org.primefaces:primefaces:5.2") { force = true }
+    compile ("org.primefaces.themes:all-themes:1.0.9") { force = true }
+    compile ("org.apache.myfaces.core:myfaces-api:2.2.8") { force = true }
+    compile ("org.apache.myfaces.core:myfaces-impl:2.2.8") { force = true }
+    compile ("log4j:log4j:1.2.15") {
+        exclude(module: 'mail')
+        exclude(module: 'jms')
+        exclude(module: 'jmxtools')
+        exclude(module: 'jmxri')
+    }
+    runtime ("org.slf4j:jcl-over-slf4j:1.6.6") { force = true }
+    runtime ("org.slf4j:slf4j-log4j12:1.6.6") { force = true }
+    testCompile ("junit:junit:4.10") { force = true }
+    providedCompile ("javax.servlet:servlet-api:2.5") { force = true }
+    jettyRunner ("org.eclipse.jetty:jetty-runner:${jettyVersion}") { force = true }
+}
+
+sourceSets {
+    extra {
+        compileClasspath += sourceSets.main.output
+        compileClasspath += sourceSets.main.compileClasspath
+        compileClasspath += fileTree(dir: "${projectDir}", include: "extra/lib/*.jar")
+        copy {
+            from configurations.jettyRunner
+            into "${projectDir}/extra/lib"
+            rename {  "jetty-runner.jar" }
+        }
+    }
+}
+
+tasks.extraClasses << {
+    copy {
+        from "${buildDir}/classes/extra"
+        into "${buildDir}/extra" 
+    }
+}
+
+task explodedWar(type: Copy) {
+    into explodedWarDir
+    with war
+}
+
+war {
+    exclude "**/extra/**"
+    exclude "**/jetty-*"
+    dependsOn = [ explodedWar, extraClasses ]
+}
+
+task all {
+    dependsOn = [ clean, zipAll ]
+}
+

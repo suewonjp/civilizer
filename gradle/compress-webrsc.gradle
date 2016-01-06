@@ -1,0 +1,87 @@
+ext {
+    compressor = "tools/compressor/yuicompressor-2.4.8.jar"
+    minCss = "${webAppDir}/styles/compressed.css"
+    minJs = "${webAppDir}/js/compressed.js"
+}
+
+tasks.clean.doFirst {
+    delete minCss, minJs
+}
+
+task compressWebRsc {
+    description 'Compresses or minifiies web resources such as CSS and JS files'
+}
+
+def compress = {
+    srcFile, type -> 
+    def o = minCss;
+    if (type == "js")
+        o = minJs;
+    compressWebRsc << {
+        ant.java(jar:compressor, fork:true, append:true, output:o ) {
+            arg(line:"--type ${type} ${webAppDir}/${srcFile}")
+        }
+    }
+}
+
+compressWebRsc <<  {
+    println "Compressing CSS files..."
+    ant.delete(file:minCss)
+}
+
+compressWebRsc.inputs.dir "${webAppDir}/styles" 
+compressWebRsc.outputs.file minCss
+
+compress("styles/vendors/blueprint/screen.css", "css")
+compress("styles/vendors/markitup/markitup.css", "css")
+compress("styles/app/layout.css", "css")
+compress("styles/app/home.css", "css")
+compress("styles/app/fragment-container.css", "css")
+compress("styles/app/fragment-content.css", "css")
+compress("styles/app/custom-markup-rules.css", "css")
+
+compressWebRsc << {
+    if (explodedWarDir.directory)
+        ant.copy(file:minCss, todir:"${explodedWarDir}/styles")
+}
+
+compressWebRsc <<  {
+    println "Compressing JS files..."
+    ant.delete(file:minJs)
+}
+
+compressWebRsc.inputs.dir "${webAppDir}/js" 
+compressWebRsc.outputs.file minJs
+
+compress("js/vendors/jquery-ui/jquery-ui.min.js", "js")
+compress("js/vendors/marked/marked.js", "js")
+compress("js/vendors/markitup/jquery.markitup.js", "js")
+compress("js/vendors/markitup/sets/markdown/set.js", "js")
+compress("js/vendors/watermark/jquery.watermark.min.js", "js") 
+compress("js/vendors/lightbox_me/jquery.lightbox_me.js", "js") 
+compress("js/vendors/moment-with-locales.min.js", "js") 
+compress("js/vendors/textarea-caret-position/index.js", "js") 
+compress("js/app/home/utils.js", "js") 
+compress("js/app/home/home.js", "js") 
+compress("js/app/home/header.js", "js") 
+compress("js/app/home/fragment-editor.js", "js") 
+compress("js/app/home/fragment-content.js", "js") 
+compress("js/app/home/bookmark.js", "js") 
+compress("js/app/home/tag-palette.js", "js") 
+compress("js/app/home/selection-box.js", "js") 
+compress("js/app/home/file-box.js", "js") 
+compress("js/app/home/contextmenu.js", "js") 
+compress("js/app/home/search.js", "js") 
+compress("js/app/home/dnd.js", "js") 
+compress("js/app/home/document-ready.js", "js")
+
+compressWebRsc << {
+    if (explodedWarDir.directory) {
+        ant.copy(file:minJs, todir:"${explodedWarDir}/js")
+    
+        ant.propertyfile(file:"${explodedWarDir}/WEB-INF/classes/app-options.properties") {
+            entry(key:"civilizer.use_compressed_css_js", value:true, operation:"+")
+        }
+    }
+}
+
