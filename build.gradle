@@ -90,6 +90,10 @@ sourceSets {
     }
 }
 
+tasks.compileJava.options.encoding = "UTF-8"
+tasks.compileTestJava.options.encoding = "UTF-8"
+tasks.compileExtraJava.options.encoding = "UTF-8"
+
 tasks.extraClasses << {
     copy {
         from "${buildDir}/classes/extra"
