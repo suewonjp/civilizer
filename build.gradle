@@ -5,7 +5,6 @@ apply from: 'gradle/compress-webrsc.gradle'
 apply from: 'gradle/zip-all.gradle'
 
 group = 'com.civilizer'
-//version = '1.0.0.CI-SNAPSHOT'
 description = """Civilizer"""
 
 sourceCompatibility = 1.7
@@ -80,8 +79,8 @@ dependencies {
 
 sourceSets {
     extra {
-        compileClasspath += [ "${buildDir}/classes/main" ]
-        compileClasspath += main.compileClasspath
+        compileClasspath += sourceSets.main.output
+        compileClasspath += sourceSets.main.compileClasspath
         compileClasspath += fileTree(dir: "${projectDir}", include: "extra/lib/*.jar")
         copy {
             from configurations.jettyRunner
