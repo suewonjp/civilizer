@@ -93,7 +93,7 @@ Supported browsers: (note that old versions may not work correctly)
     - ***[For Linux Users] Currently, system tray icon is not supported on Linux because underlying systems (OS or JVM or both) apparently have technical problems in supporting Java's system tray icon feature.***
     - <span style="color:red">The icon will stay in red during the loading process.</span>
     - It'll take a while to complete the loading.
-    - With the loading finished, the icon color becomes white (azure color in a more correct term), and Civilizer can be accessed via your browser.
+    - With the loading finished, the icon color changes, and Civilizer can be accessed via your browser.
 1. Access Civilizer. 
     - If everything has gone well, your default browser will automatically launch or be focused on most of major systems.
     - If your browser doesn't respond, access Civilizer manually.

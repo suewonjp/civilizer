@@ -382,7 +382,7 @@ public final class Launcher {
         for (TrayIcon icon : SystemTray.getSystemTray().getTrayIcons()) {
             if (icon.getToolTip().equals(STARTING)) {
                 assert fontForIcon != null;
-                final Image img = createFontIcon(fontForIcon, "\uf19c", new Color(0xf0, 0xff, 0xff));
+                final Image img = createFontIcon(fontForIcon, "\uf19c", new Color(255,222,173));
                 icon.setImage(img);
                 icon.setToolTip(RUNNING);
 
