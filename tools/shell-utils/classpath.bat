@@ -17,7 +17,7 @@ if not exist "!webappPath!\WEB-INF\web.xml" (
 call :toAbsolutePath webappPath 
 call :toAbsolutePath extraPath
 
-set classPath="!webappPath!\WEB-INF\classes;!extraPath!\lib\*;!webappPath!\WEB-INF\lib\*;!extraPath!"
+set classPath=!webappPath!\WEB-INF\classes;!extraPath!\lib\*;!webappPath!\WEB-INF\lib\*;!extraPath!
 
 ::echo webappPath = !webappPath!
 ::echo extraPath = !extraPath!

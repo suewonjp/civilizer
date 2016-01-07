@@ -26,11 +26,11 @@ function checkPath() {
 function setupClasspath() {
     webappPath=civilizer
     extraPath=extra
-    if [ ! -f "$webappPath/WEB-INF/web.xml" -o ! -f $extraPath/lib/jetty-runner.jar ]; then
+    if [ ! -f "$webappPath/WEB-INF/web.xml" -o ! -f "$extraPath/lib/jetty-runner.jar" ]; then
         webappPath=../../target/civilizer-1.0.0.CI-SNAPSHOT
         extraPath=../../target/extra
 
-        if [ ! -f "$webappPath/WEB-INF/web.xml" -o ! -f $extraPath/lib/jetty-runner.jar ]; then
+        if [ ! -f "$webappPath/WEB-INF/web.xml" -o ! -f "$extraPath/lib/jetty-runner.jar" ]; then
             echo "[ $hostScript ERROR ] Civilizer can't be found!"
             exit 1
         fi
@@ -38,7 +38,7 @@ function setupClasspath() {
 
     webappPath=$( cd "$webappPath" && pwd )
     extraPath=$( cd "$extraPath" && pwd )
-    classPath="$webappPath/WEB-INF/classes:$extraPath/lib/*:$webappPath/WEB-INF/lib/*:$extraPath"   
+    classPath=$webappPath/WEB-INF/classes:$extraPath/lib/*:$webappPath/WEB-INF/lib/*:$extraPath   
 
     PREV_IFS=$IFS
     IFS=":*"
@@ -52,5 +52,10 @@ function setupClasspath() {
         printVar extraPath; 
         printVar classPath;
     }
+
+    local uname=$( uname )
+    if [ ${uname:0:6} = "CYGWIN" ]; then
+        classPath=$( cygpath -pw "$classPath" )
+    fi
 }
 

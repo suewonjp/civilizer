@@ -22,11 +22,11 @@ if exist "..\shell-utils\classpath.bat" call "..\shell-utils\classpath.bat"
 if exist "shell-utils\classpath.bat" call "shell-utils\classpath.bat" 
 
 set homeOption=
-if not [%home%] == [] set homeOption=-Dcivilizer.private_home_path="%home%"
+if not [%home%] == [] set homeOption="-Dcivilizer.private_home_path=%home%"
 
 cd "!extraPath!\.."
 echo [ %hostScript% ] Exporting Data...
-java -cp %classPath% %homeOption% com.civilizer.extra.tools.DataBroker -export %exportPath%
+java -cp "%classPath%" %homeOption% com.civilizer.extra.tools.DataBroker -export %exportPath%
  
 :: Everything is OK... :-)
 goto :eof
