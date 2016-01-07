@@ -25,11 +25,14 @@ while true; do
     shift
 done
 
-setupClasspath 
+setupClasspath
 
 homeOption="${home:+-Dcivilizer.private_home_path=$home}"
 
 cd "$extraPath/../"
+if [ -f "../pom.xml" ]; then 
+    cd ..
+fi
 
 echo "[ $hostScript ] : Loading Civilizer..."
 java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog \

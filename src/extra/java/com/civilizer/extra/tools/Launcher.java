@@ -171,10 +171,11 @@ public final class Launcher {
     
     private static File findWarFolder() {
         File output = null;
-        if (exists("pom.xml")) {
+        // [NOTE] We need to care of this when we are no longer dependent to Maven...
+        if (exists("pom.xml") && exists("target")) {
             // The current working directory is the root of the source package.
             // This instance might've been launched from Eclipse. (development situation)
-            output = getFileOrFolderFromPattern("target", "civilizer.*", true);
+            output = getFileOrFolderFromPattern("target", "civilizer-.*", true);
         }
         else {
             // This instance might've been launched from a command line. (production situation)
@@ -261,7 +262,9 @@ public final class Launcher {
     }
     
     private static Font createFont(File warFolder) {
+        l(LogType.INFO, warFolder.toString());
         final File tgtJar = getFileOrFolderFromPattern(warFolder+"/WEB-INF/lib", ".*primefaces.*\\.jar", false);
+        l(LogType.INFO, tgtJar.toString());
         assert tgtJar != null && tgtJar.isFile();
         final String fontPath = getResourcePathFromJarFile(tgtJar, Pattern.compile(".*/fontawesome-webfont\\.ttf"));
         assert fontPath.isEmpty() == false;

@@ -31,6 +31,8 @@ if not [%home%] == [] set homeOption="-Dcivilizer.private_home_path=%home%"
 ::echo !homeOption!
 
 cd "!extraPath!\.."
+if exist "..\pom.xml" cd ..
+
 echo [ %hostScript% ] Loading Civilizer...
 java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog ^
  -Dorg.eclipse.jetty.LEVEL=INFO %homeOption% ^
