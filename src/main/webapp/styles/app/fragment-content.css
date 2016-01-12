@@ -16,6 +16,11 @@
     border-collapse: collapse;
 }
 
+.fragment-content em {
+    font-style: italic;
+    color: gray;
+}
+
 .fragment-content pre {
     background-color: whitesmoke;
     white-space: pre-wrap;
