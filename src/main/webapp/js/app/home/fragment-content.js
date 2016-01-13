@@ -88,6 +88,8 @@ function populateFragmentOverlay(data) {
     // make titles on the overlay window also draggable/droppable
     setupDraggableForFragmentTitle();
     
+    setupDndForRelatingFragments();
+    
     setContextMenuForFragments();
     
     setContextMenuForTags();
