@@ -130,21 +130,27 @@
 
 .markItUp .miu-h1 a:before {
     content:"\f1dc" "1";
+    font-size: 0.96em;
 }
 .markItUp .miu-h2 a:before {
     content:"\f1dc" "2";
+    font-size: 0.96em;
 }
 .markItUp .miu-h3 a:before {
     content:"\f1dc" "3";
+    font-size: 0.96em;
 }
 .markItUp .miu-h4 a:before {
     content:"\f1dc" "4";
+    font-size: 0.96em;
 }
 .markItUp .miu-h5 a:before {
     content:"\f1dc" "5";
+    font-size: 0.96em;
 }
 .markItUp .miu-h6 a:before {
     content:"\f1dc" "6";
+    font-size: 0.96em;
 }
 
 .markItUp .miu-b a:before {
