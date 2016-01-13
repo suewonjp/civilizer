@@ -100,6 +100,7 @@ function setContextMenuForSelections() {
         
         menu.find("#selection-box-form\\:bookmark").hide();
         menu.find("#selection-box-form\\:relate").hide();
+        menu.find("#selection-box-form\\:append-tag").hide();
         menu.find("#selection-box-form\\:trash").hide();
         menu.find("#selection-box-form\\:unselect").hide();
         menu.find("#selection-box-form\\:select_unselect").show();
