@@ -59,12 +59,12 @@
     margin-left:5px;
     max-height: 20px;
 }
-.markItUpHeader ul .markItUpDropMenu:before {
+.markItUpHeader ul .markItUpDropMenu > a:before {
     content:"\f0d7";
     vertical-align:-16px;
     color:red;
 }
-.markItUpHeader ul ul .markItUpDropMenu:before {
+.markItUpHeader ul ul .markItUpDropMenu > a:before {
     content:"\f0da";
     vertical-align:-12px;
 }
@@ -107,7 +107,6 @@
 }
 .markItUpHeader ul ul a {
     display:block;
-    padding-left:0px;
     text-indent:0;
     width:120px; 
     padding:5px 5px 5px 25px;
