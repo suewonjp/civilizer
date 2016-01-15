@@ -25,7 +25,7 @@ if not [%home%] == [] set homeOption=-Dcivilizer.private_home_path=%home%
 
 cd "!extraPath!\.."
 echo [ %hostScript% ] Importing Data...
-java -cp "%classPath%" "%homeOption%" com.civilizer.extra.tools.DataBroker -import %importPath%
+java -cp "%classPath%" %homeOption% com.civilizer.extra.tools.DataBroker -import %importPath%
  
 :: Everything is OK... :-)
 goto :eof
