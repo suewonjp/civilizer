@@ -1,8 +1,8 @@
 Copyright (c) 2014-2016 Suewon Bahng, suewonjp@gmail.com
 
-Last Updated (2016-01-14)
+Last Updated (2016-01-15)
 
-## Version 0.9.0.RC4 (scheduled at 2016-01-15)
+## Version 0.9.0.RC4 (2016-01-15)
 - Bug fix:
   - The application did not start properly when users had installed it under path containing spaces.
 - New feature: File information menu in File Box
