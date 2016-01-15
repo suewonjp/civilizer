@@ -107,6 +107,7 @@ public final class Launcher {
             
             setupSystemTray(warFolder);
             
+            String home = "";
             int port = 8080;
             for (int i=0;i<args.length; ++i) {
                 switch (args[i]) {
@@ -120,10 +121,14 @@ public final class Launcher {
                         new Error(e);
                     }
                     break;
+                case "--home":
+                    if (i < args.length - 1)
+                        home = args[++i];
+                    break;
                 }
             }
             
-            new Launcher(port).startServer(warFolder);
+            new Launcher(port, home).startServer(warFolder);
         } catch (Exception e) {
             e.printStackTrace();
             assert false;
@@ -132,11 +137,12 @@ public final class Launcher {
         }
     }
 
-    private Launcher(int port) {
+    private Launcher(int port, String home) {
         assert 0 < port && port <= 0xffff;
         server = new Server();
         assert server != null;
         this.port = port;
+        System.setProperty("civilizer.private_home_path", home);
     }
     
     private static String getCvzUrl() {

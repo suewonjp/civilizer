@@ -62,7 +62,7 @@ public final class Configurator {
 		final String defaultPrivateHomePath = getDefaultPrivateHomePath(defaultPrivateHomeName);
         final String privateHomePathByRuntimeArg = System.getProperty(AppOptions.PRIVATE_HOME_PATH);
         
-        if (privateHomePathByRuntimeArg != null) {
+        if (privateHomePathByRuntimeArg != null && !privateHomePathByRuntimeArg.isEmpty()) {
         	final File f = new File(privateHomePathByRuntimeArg);
         	if (! f.isAbsolute()) {
         		// if the private home path is relative, the final path gets determined by the context of the current user working directory.

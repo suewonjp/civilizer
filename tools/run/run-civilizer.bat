@@ -26,17 +26,13 @@ if exist "shell-utils\classpath.bat" call "shell-utils\classpath.bat"
 ::echo !extraPath!
 ::echo !classPath!
 
-set homeOption=
-if not [%home%] == [] set homeOption="-Dcivilizer.private_home_path=%home%"
-::echo !homeOption!
-
 cd "!extraPath!\.."
 if exist "..\pom.xml" cd ..
 
 echo [ %hostScript% ] Loading Civilizer...
 java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog ^
- -Dorg.eclipse.jetty.LEVEL=INFO %homeOption% ^
- -cp "%classPath%" com.civilizer.extra.tools.Launcher --port %port%
+ -Dorg.eclipse.jetty.LEVEL=INFO ^
+ -cp "%classPath%" com.civilizer.extra.tools.Launcher --port %port% --home "%home%"
  
 :: Everything is OK... :-)
 goto :eof
