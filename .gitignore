@@ -1,11 +1,12 @@
 **/.DS_Store
 **/.swp
 .gradle
+build/
 **/build/
+target/
 **/target/
 test/
 !/src/test/
 extra/
 src/main/webapp/js/compressed.js
 src/main/webapp/styles/compressed.css
-
