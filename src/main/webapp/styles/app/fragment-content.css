@@ -27,18 +27,24 @@
 }
 
 .fragment-content blockquote p {
-	margin: 0px 0px 0px 0px;
+	margin: 0px 2px 0.6em 0px;
 }
 
-.fragment-content blockquote {
+.fragment-content .-cvz-fold blockquote {
     border: 1px solid slategray;
     margin: 3px 10px 10px 10px;
     padding-left: 6px;
 }
 
+.fragment-content blockquote {
+    border-left: 4px solid darkgray;
+    margin: 3px 10px 10px 10px;
+    padding-left: 6px;
+}
+
 .fragment-content blockquote blockquote {
-    border: 1px solid lavender;
-    margin: 6px 18px 3px 18px;
+    border-left: 3px solid lavender;
+    margin: 0px 18px 0px 18px;
     padding-left: 6px;
 }
 
