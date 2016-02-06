@@ -24,8 +24,23 @@ function translateFragments() {
     // translate Markdown formatted fragment contents into HTML format
     fg.find(".fragment-content").each(function() {
         var $this = $(this);
-        $this.html(translateFragmentContent($this.text()));
+        var text = $this.text();
+        $this.html(translateFragmentContent(text));
         postprocessFragmentContent($this);
+        if ($this.hasClass("fp-search")) {
+            // Highlight search keywords
+            $this.find("*").each(function() {
+               var elem = $(this), attrs = this.attributes;
+               // Remove any of search keyword markups from HTML attributes
+               for (var i=0; i<attrs.length; ++i) {
+                   var attr = attrs[i];
+                   attr.value = removeSearchKeywordCommands(attr.value);                   
+                   elem.attr(attr.name, attr.value);
+               }
+               // Translate search keyword markups inside HTML text
+               elem.html(translateSearchKeywordCommands(elem.html()));
+            });
+        }
     });
     
     // add a tooltip message of updated and created time
@@ -116,27 +131,39 @@ function translateSearchKeywordCommands(html) {
         ;
 }
 
-function translateCustomMarkupCommands(html) {
-    return translateSearchKeywordCommands(html)
-        // {{{[keyword] ... text ... }}} --- translated to a <div> block
-        .replace(/\{\{\{\[(.+?)({.*})?\]/g, function(match, p1, p2, pos, originalText) {
-            var output = "<div class='-cvz-" + p1 + "'"; 
-            if (p2) {
-                output += " args='" + p2.trim() + "'";
-            }
-            return output + ">"; 
+function removeSearchKeywordCommands(html) {
+    return html
+        .replace(/\{\(\[(.+?)\] /g, function(match, p1, pos, originalText) {
+            return ""; 
         })
-        .replace(/\}\}\}/g, function(match, pos, originalText) {
-            return "</div>";
-        })
-        // {{[keyword] ... text ... }} --- translated to a <span>
-        .replace(/\{\{\[([^,]+?)\]/g, function(match, p1, pos, originalText) {
-            return "<span class='-cvz-" + p1 + "'>";
-        })
-        .replace(/\}\}/g, function(match, pos, originalText) {
-            return "</span>";
+        .replace(/ \)\}/g, function(match, pos, originalText) {
+            return "";
         })
         ;
+}
+
+function translateCustomMarkupCommands(html) {
+//    return translateSearchKeywordCommands(html)
+    return html
+    // {{{[keyword] ... text ... }}} --- translated to a <div> block
+    .replace(/\{\{\{\[(.+?)({.*})?\]/g, function(match, p1, p2, pos, originalText) {
+        var output = "<div class='-cvz-" + p1 + "'"; 
+        if (p2) {
+            output += " args='" + p2.trim() + "'";
+        }
+        return output + ">"; 
+    })
+    .replace(/\}\}\}/g, function(match, pos, originalText) {
+        return "</div>";
+    })
+    // {{[keyword] ... text ... }} --- translated to a <span>
+    .replace(/\{\{\[([^,]+?)\]/g, function(match, p1, pos, originalText) {
+        return "<span class='-cvz-" + p1 + "'>";
+    })
+    .replace(/\}\}/g, function(match, pos, originalText) {
+        return "</span>";
+    })
+    ;
 }
 
 function translateFragmentContent(content) {
