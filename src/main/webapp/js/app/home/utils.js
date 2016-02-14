@@ -52,10 +52,10 @@ function addToggler(target, iconClass, toggler) {
     var collapseIcon = "fa-minus-square";
     var expandIcon = "fa-plus-square";
     var link = $("<a>").attr("href", "#");
-    var icon = $("<span>").addClass(iconClass + " fa " + collapseIcon);
-    link.prepend(icon).click(function (e) {
+    var icon = $("<span>").addClass(iconClass + " fa " + collapseIcon).removeClass(expandIcon);
+    link.prepend(icon).off("click").on("click", function (e) {
         toggler();
-        icon.toggleClass(collapseIcon + " " + expandIcon);
+        $(this).find(".fa").toggleClass(collapseIcon + " " + expandIcon);
         e.preventDefault();
     });
     target.before(link);

@@ -143,7 +143,6 @@ function removeSearchKeywordCommands(html) {
 }
 
 function translateCustomMarkupCommands(html) {
-//    return translateSearchKeywordCommands(html)
     return html
     // {{{[keyword] ... text ... }}} --- translated to a <div> block
     .replace(/\{\{\{\[(.+?)({.*})?\]/g, function(match, p1, p2, pos, originalText) {
@@ -196,9 +195,9 @@ function processFoldings(content) {
         });
         if (args.title) {
             var title = $("<a href='#'><span class='-cvz-fold-title'>"+args.title+"</span></a>")
-            .click(function (e) {
-                link.click();
-            });
+                .off("click").on("click", function (e) {
+                    link.click();
+                });
             $this.before(title);
         }
         if (args.hide == "true") {
