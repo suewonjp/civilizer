@@ -55,7 +55,7 @@ function addToggler(target, iconClass, toggler) {
     var icon = $("<span>").addClass(iconClass + " fa " + collapseIcon).removeClass(expandIcon);
     link.prepend(icon).off("click").on("click", function (e) {
         toggler();
-        $(this).find(".fa").toggleClass(collapseIcon + " " + expandIcon);
+        $(this).find(".fold-toggle-icon").toggleClass(collapseIcon + " " + expandIcon);
         e.preventDefault();
     });
     target.before(link);

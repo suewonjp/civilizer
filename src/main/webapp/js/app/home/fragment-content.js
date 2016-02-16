@@ -52,6 +52,14 @@ function translateFragments() {
     fg.find(".each-tag").each(function() {
         formatTagsOnFragmentHeader($(this));
     });
+    
+    // set click handler for every folding in fragments
+    fg.off("click.fold_toggle").on("click.fold_toggle", ".-cvz-fold-handle", function(e) {
+        var $this = $(this);
+        $this.find(".fold-toggle-icon").toggleClass("fa-plus-square fa-minus-square");
+        showOrHide($this.next(".-cvz-fold"));
+        e.preventDefault();
+    });
 }
 
 function populateFragmentOverlay(data) {
@@ -118,14 +126,17 @@ function populateFragmentOverlay(data) {
     setupQuickFragmentEditing(overlayContent.find(".fragment-header"));
 }
 
+const SEARCH_KEYWORD_PATTERN_BEGIN = /\(\{\(\[(.+?)\] /g;
+const SEARCH_KEYWORD_PATTERN_END = / \)\}\)/g;
+
 function translateSearchKeywordCommands(html) {
     return html
         // ({([keyword] ... text ... )}) --- translated to a <span>;
         // used for one special purpose; highlighting search phrase
-        .replace(/\(\{\(\[(.+?)\] /g, function(match, p1, pos, originalText) {
+        .replace(SEARCH_KEYWORD_PATTERN_BEGIN, function(match, p1, pos, originalText) {
             return "<span class='-cvz-" + p1 + "'>"; 
         })
-        .replace(/ \)\}\)/g, function(match, pos, originalText) {
+        .replace(SEARCH_KEYWORD_PATTERN_END, function(match, pos, originalText) {
             return "</span>";
         })
         ;
@@ -133,10 +144,10 @@ function translateSearchKeywordCommands(html) {
 
 function removeSearchKeywordCommands(html) {
     return html
-        .replace(/\{\(\[(.+?)\] /g, function(match, p1, pos, originalText) {
+        .replace(SEARCH_KEYWORD_PATTERN_BEGIN, function(match, p1, pos, originalText) {
             return ""; 
         })
-        .replace(/ \)\}/g, function(match, pos, originalText) {
+        .replace(SEARCH_KEYWORD_PATTERN_END, function(match, pos, originalText) {
             return "";
         })
         ;
@@ -190,18 +201,14 @@ function processFoldings(content) {
         var $this = $(this);
         var args = parseJsonArgs($this);
         $this.wrapInner("<blockquote>");
-        var link = addToggler($this, "fold-toggle-icon", function() {
-            showOrHide($this);
-        });
+        var handle = $("<a href='#' class='-cvz-fold-handle'>");
+        var icon = $("<span class='fold-toggle-icon fa fa-plus-square'>");
+        $this.before(handle.prepend(icon));
         if (args.title) {
-            var title = $("<a href='#'><span class='-cvz-fold-title'>"+args.title+"</span></a>")
-                .off("click").on("click", function (e) {
-                    link.click();
-                });
-            $this.before(title);
+            handle.append($("<span class='-cvz-fold-title'>"+args.title+"</span>"));
         }
         if (args.hide == "true") {
-            link.click();
+            handle.click();
             // with the only above code, the target element would be hidden.
             // but it doesn't work on Safari, so make sure it becomes hidden.
             $this.hide();
