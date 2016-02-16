@@ -29,7 +29,7 @@ public final class SearchParams implements Serializable {
     };
 	
 	private static final String TARGET_DIRECTIVE_PATTERN =
-	        "(\\b(any|tag|tagh|anytag|title|anytitle|text|anytext|id)\\b)?:";
+	        "(\\b(any|tag|anytag|title|anytitle|text|anytext|id)\\b)?:";
 	
 	private static final String CONTROL_OPERATORS = "cwberh-";
 	
