@@ -864,7 +864,7 @@ Renderer.prototype.del = function(text) {
 Renderer.prototype.link = function(href, title, text) {
   if (this.options.sanitize) {
     try {
-      var prot = decodeURIComponent(unescape(href))
+      var prot = unescape(href)
         .replace(/[^\w:]/g, '')
         .toLowerCase();
     } catch (e) {

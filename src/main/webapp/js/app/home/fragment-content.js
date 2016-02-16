@@ -37,8 +37,10 @@ function translateFragments() {
                    attr.value = removeSearchKeywordCommands(attr.value);                   
                    elem.attr(attr.name, attr.value);
                }
-               // Translate search keyword markups inside HTML text
-               elem.html(translateSearchKeywordCommands(elem.html()));
+               if (elem.children().length === 0) {
+                   // Translate search keyword markups inside HTML text
+                   elem.html(translateSearchKeywordCommands(elem.html()));
+               }
             });
         }
     });
@@ -126,8 +128,10 @@ function populateFragmentOverlay(data) {
     setupQuickFragmentEditing(overlayContent.find(".fragment-header"));
 }
 
-const SEARCH_KEYWORD_PATTERN_BEGIN = /\(\{\(\[(.+?)\] /g;
-const SEARCH_KEYWORD_PATTERN_END = / \)\}\)/g;
+const SEARCH_KEYWORD_PATTERN_BEGIN = /%28%7B%28%5B(.+?)%5D%20/g;
+const SEARCH_KEYWORD_PATTERN_END = /%20%29%7D%29/g;
+//const SEARCH_KEYWORD_PATTERN_BEGIN = /\(\{\(\[(.+?)\] /g;
+//const SEARCH_KEYWORD_PATTERN_END = / \)\}\)/g;
 
 function translateSearchKeywordCommands(html) {
     return html

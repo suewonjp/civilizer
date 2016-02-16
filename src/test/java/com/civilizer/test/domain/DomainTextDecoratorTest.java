@@ -89,19 +89,6 @@ public class DomainTextDecoratorTest {
 	}
 	
 	@Test
-	public void testHighlightWithUrls() {
-		final String text = "http://bsw.com/hello/world";
-		final String searchKeywords = "bsw hello world";
-		final SearchParams sp = new SearchParams(searchKeywords);
-		assertEquals(1, sp.getKeywords().size());
-		assertEquals(3, sp.getKeywords().get(0).getWords().size());
-		
-		final String decoratedText = TextDecorator.highlight(text, sp);
-		assertNotNull(decoratedText);
-		assertEquals(text, decoratedText);
-	}
-	
-	@Test
     public void testHighlightKeywordsWithWordBoundaries() {
 	    final String text = "The Javascript language has nothing to do with the Java language";
         {
