@@ -49,15 +49,16 @@ function makeObjectsInsertableToTextArea() {
 }
 
 function addToggler(target, iconClass, toggler) {
-    var collapseIcon = "fa-minus-square";
-    var expandIcon = "fa-plus-square";
-    var link = $("<a>").attr("href", "#");
-    var icon = $("<span>").addClass(iconClass + " fa " + collapseIcon).removeClass(expandIcon);
-    link.prepend(icon).off("click").on("click", function (e) {
-        toggler();
-        $(this).find(".fold-toggle-icon").toggleClass(collapseIcon + " " + expandIcon);
-        e.preventDefault();
-    });
+    var link = $("<a href='#'>"),
+        icon = $("<span class='fa fa-minus-square "+ iconClass + "'>");
+    link.prepend(icon);
+    if (typeof toggler === "function") {
+        link.off("click").on("click", function (e) {
+            toggler();
+            $(this).find("." + iconClass).toggleClass("fa-plus-square fa-minus-square");
+            e.preventDefault();
+        });
+    }
     target.before(link);
     return link;
 }

@@ -344,37 +344,49 @@ function confirmSignout() {
 }
 
 function makeSidebarTitleToggleable() {
-    var bookmarkPanel = PF('bookmarkPanel');
-    var tagPalettePanel = PF('tagPalettePanel');
-    var fileBoxPanel = PF('fileBoxPanel');
-    var selectionBoxPanel = PF('selectionBoxPanel');
-    var iconClass="toggle-icon";
-
-    var bmLink = addToggler($("#bookmark-title"), iconClass, function() {
-		bookmarkPanel.toggle();
-		localStorage.setItem("bookmarkOpen", bookmarkPanel.cfg.collapsed ? "no":"yes");
-	});
-	var tpLink = addToggler($("#tag-palette-title"), iconClass, function() {
-	    tagPalettePanel.toggle();
-	    localStorage.setItem("tagPaletteOpen", tagPalettePanel.cfg.collapsed ? "no":"yes");
-	});
-	var sbLink = addToggler($("#selection-box-title"), iconClass, function() {
-	    selectionBoxPanel.toggle();
-	    localStorage.setItem("selectionBoxOpen", selectionBoxPanel.cfg.collapsed ? "no":"yes");
-	});
-	var fbLink = addToggler($("#file-box-title"), iconClass, function() {
-	    fileBoxPanel.toggle();
-	    localStorage.setItem("fileBoxOpen", fileBoxPanel.cfg.collapsed ? "no":"yes");
-	});
-	
-	if (localStorage.getItem("bookmarkOpen") === "no")
-	    bmLink.trigger("click");
-	if (localStorage.getItem("tagPaletteOpen") === "no")
-	    tpLink.trigger("click");
-	if (localStorage.getItem("selectionBoxPanel") === "no")
-	    sbLink.trigger("click");
-	if (localStorage.getItem("fileBoxOpen") === "no")
-	    fbLink.trigger("click");
+    var bookmarkPanel = PF('bookmarkPanel'),
+        tagPalettePanel = PF('tagPalettePanel'),
+        fileBoxPanel = PF('fileBoxPanel'),
+        selectionBoxPanel = PF('selectionBoxPanel'),
+        iconClass="toggle-icon",
+        bmLink = addToggler($("#bookmark-title"), iconClass),
+        tpLink = addToggler($("#tag-palette-title"), iconClass),
+        sbLink = addToggler($("#selection-box-title"), iconClass),
+        fbLink = addToggler($("#file-box-title"), iconClass);
+    
+    $("#sidebar").off("click").on("click", ".sidebar-title a", function(e) {
+        var $this = $(this),
+            id = $this.next("span").attr("id");
+        $this.find("span").toggleClass("fa-plus-square fa-minus-square");
+        e.preventDefault();
+        switch (id) {
+        case "bookmark-title":
+            bookmarkPanel.toggle();
+            localStorage.setItem("bookmarkOpen", bookmarkPanel.cfg.collapsed ? "no":"yes");
+            break;
+        case "tag-palette-title":
+            tagPalettePanel.toggle();
+            localStorage.setItem("tagPaletteOpen", tagPalettePanel.cfg.collapsed ? "no":"yes");
+            break;
+        case "selection-box-title":
+            selectionBoxPanel.toggle();
+            localStorage.setItem("selectionBoxOpen", selectionBoxPanel.cfg.collapsed ? "no":"yes");
+            break;
+        case "file-box-title":
+            fileBoxPanel.toggle();
+            localStorage.setItem("fileBoxOpen", fileBoxPanel.cfg.collapsed ? "no":"yes");
+            break;
+        }
+    });
+    
+    if (localStorage.getItem("bookmarkOpen") === "no")
+        bmLink.trigger("click");
+    if (localStorage.getItem("tagPaletteOpen") === "no")
+        tpLink.trigger("click");
+    if (localStorage.getItem("selectionBoxPanel") === "no")
+        sbLink.trigger("click");
+    if (localStorage.getItem("fileBoxOpen") === "no")
+        fbLink.trigger("click");
 }
 
 function sortFragments(fragments, panelId) {
