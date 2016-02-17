@@ -1,9 +1,15 @@
 // [NOTE] this is a default basic setting for all jQuery UI Draggable objects;
 // It should remain as IMMUTABLE
-var baseDraggableSettings = {
+const baseDraggableSettings = {
     cursor:"move",
+    cursorAt:{ left:30 },
     scroll: false,
-    helper: "clone",
+    helper: function() {
+        var clone = $(this).clone().removeAttr("id");
+        clone.css({ "max-width":60, "overflow":"hidden", "white-space":"nowrap" });
+        return clone;
+    },
+//    helper: "clone",
     zIndex: 10000,
     containment: "document",
     appendTo: "body",
@@ -13,24 +19,21 @@ function newBaseDroppable(acceptableClasses) {
     var weakFocus = "ui-weak-focus", strongFocus = "ui-strong-focus",
     output = {
         over: function(e, ui) {
-            var from = ui.draggable;
-            var to = $(e.target);
+            var from = ui.draggable, to = $(e.target);
             if (hasAnyClass(from, acceptableClasses)) {
                 to.addClass(strongFocus);
                 to.removeClass(weakFocus);
             }
         },
         out: function(e, ui) {
-            var from = ui.draggable;
-            var to = $(e.target);
+            var from = ui.draggable, to = $(e.target);
             if (hasAnyClass(from, acceptableClasses)) {
                 to.removeClass(strongFocus);
                 to.addClass(weakFocus);
             }
         },
         activate: function(e, ui) {
-            var from = ui.draggable;
-            var to = $(e.target);
+            var from = ui.draggable, to = $(e.target);
             if (hasAnyClass(from, acceptableClasses)) {
                 to.addClass(weakFocus);
             }
