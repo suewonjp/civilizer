@@ -6,7 +6,7 @@ const baseDraggableSettings = {
     scroll: false,
     helper: function() {
         var clone = $(this).clone().removeAttr("id");
-        clone.css({ "max-width":60, "overflow":"hidden", "white-space":"nowrap" });
+        clone.css({ "min-width":60, "max-width":60, "overflow":"hidden", "white-space":"nowrap" });
         return clone;
     },
 //    helper: "clone",
