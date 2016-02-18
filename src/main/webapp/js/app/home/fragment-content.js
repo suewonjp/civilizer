@@ -123,7 +123,7 @@ function populateFragmentOverlay(data) {
     .each(function() {formatTagsOnFragmentHeader($(this))});
     
     overlayFrame.off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
-    setupClickHandlerForTags(overlayContent);
+//    setupClickHandlerForTags(overlayContent);
     
     setupQuickFragmentEditing(overlayContent.find(".fragment-header"));
 }

@@ -7,7 +7,8 @@ $(document).ready(function() {
 
 	setupFragmentOverlay();
 	
-	setupClickHandlerForTags($("#container"));
+	setupClickHandlerForTags($("body"));
+//	setupClickHandlerForTags($("#container"));
     
     setupFragmentResolutionSliders();
     
