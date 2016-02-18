@@ -55,8 +55,8 @@ function translateFragments() {
         formatTagsOnFragmentHeader($(this));
     });
     
-    // set click handler for every folding in fragments
-    fg.off("click.fold_toggle").on("click.fold_toggle", ".-cvz-fold-handle", function(e) {
+    // set click handler for every folding in fragments and fragment overlay
+    $("body").off("click.fold_toggle").on("click.fold_toggle", ".-cvz-fold-handle", function(e) {
         var $this = $(this);
         $this.find(".fold-toggle-icon").toggleClass("fa-plus-square fa-minus-square");
         showOrHide($this.next(".-cvz-fold"));
@@ -207,7 +207,6 @@ function processFoldings(content) {
         $this.wrapInner("<blockquote>");
         var handle = $("<a href='#' class='-cvz-fold-handle'>");
         var icon = $("<span class='fold-toggle-icon fa fa-plus-square'>");
-        $this.before(handle.prepend(icon));
         if (args.title) {
             handle.append($("<span class='-cvz-fold-title'>"+args.title+"</span>"));
         }
@@ -217,6 +216,7 @@ function processFoldings(content) {
             // but it doesn't work on Safari, so make sure it becomes hidden.
             $this.hide();
         }
+        $this.before(handle.prepend(icon));
     });
 }
 
