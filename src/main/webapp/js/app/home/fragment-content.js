@@ -37,11 +37,9 @@ function translateFragments() {
                    attr.value = removeSearchKeywordCommands(attr.value);                   
                    elem.attr(attr.name, attr.value);
                }
-               if (elem.find("a").length === 0) {
-                   // Translate search keyword markups inside HTML text
-                   elem.html(translateSearchKeywordCommands(elem.html()));
-               }
             });
+            // Translate search keyword markups
+            $this.html(translateSearchKeywordCommands($this.html()));
         }
     });
     
