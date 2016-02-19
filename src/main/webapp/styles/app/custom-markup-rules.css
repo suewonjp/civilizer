@@ -70,7 +70,8 @@
 	display: block;
 }
 
-.-cvz-fold-title {
+.-cvz-fold-title code, span.-cvz-fold-title {
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
     margin: 0 0 0 8px;
     font-weight: bold;
     text-decoration: underline;

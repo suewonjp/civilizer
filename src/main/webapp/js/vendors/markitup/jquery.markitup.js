@@ -235,14 +235,19 @@
 							}
 							value = prompt(b[0], (b[1]) ? b[1] : '');
 							if (value) {
-							    if (b[0] === "Url")
+							    switch (b[0]) {
+							    case "Url":
 							        // Some URLs have ')' characters (e.g., many Wikipedia URLs)
 							        // which don't work right with the Markdown inline link rule.
 							        // So we convert any ')' character to its HTML character entity.
-							        value = value.replace(")", "&#41;");
+							        value = value.replace(/\)/g, "&#41;");
+							        break;
+							    case "FoldTitle":
+							        value = value.replace(/"/g, "&#34;");
+							        break;
+							    }
 							}
-							else
-								abort = true;
+							else abort = true;
 							return value;
 						}
 					);

@@ -222,9 +222,9 @@ function getFileName(path) {
     return output;
 }
 
-function parseJsonArgs($obj) {
-    var argStr = $obj.attr("args");
-    if (argStr) {
+function parseJsonArgs(obj) {
+    var argStr = obj instanceof jQuery ? obj.attr("args") : obj;
+    if (typeof argStr === "string") {
         try {
             return JSON.parse(argStr.replace(/&quot;/g,'"'));
         } catch (e) {

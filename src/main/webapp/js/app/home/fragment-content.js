@@ -200,8 +200,16 @@ function setupFragmentLinks(content) {
 
 function processFoldings(content) {
     content.find(".-cvz-fold").each(function() {
-        var $this = $(this);
-        var args = parseJsonArgs($this);
+        var $this = $(this), args = parseJsonArgs($this);
+        
+        // search keyword commands may touch folding parameters.
+        // when that happens, we need to restore original key names;
+        for (var k in args) {
+            var v = args[k];
+            k = removeSearchKeywordCommands(k);
+            args[k] = v;
+        }
+        
         $this.wrapInner("<blockquote>");
         var handle = $("<a href='#' class='-cvz-fold-handle'>");
         var icon = $("<span class='fold-toggle-icon fa fa-plus-square'>");
