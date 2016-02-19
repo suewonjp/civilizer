@@ -53,28 +53,27 @@ function onPanelActivationChange() {
 }
 
 function makeSidebarToggleable() {
-    var toggler = $("#sidebar-toggler");
-    var icon = toggler.find(".fa");
-    var sidebar = $("#sidebar");
-    var content = $("#content");
-    var defCntWt = content.css("width");
-    var savedAsVisible = localStorage.getItem("sidebarVisible");
-    toggler.off("click").on("click", function(e) {
-        var visible = showOrHide(sidebar);
-        localStorage.setItem("sidebarVisible", visible ? "yes" : "no");
-        if (visible) {
-            content.css("width", defCntWt);
-            icon.removeClass("fa-arrow-circle-left").addClass("fa-arrow-circle-right");
-        }
-        else {
+    var sidebar = $("#sidebar"), 
+        content = $("#content"),
+        defCntWt = content.css("width");
+    $("#sidebar-toggler").off("click").on("click", function(e) {
+        var icon = $(this).find(".fa");
+        
+        if (localStorage.getItem("sidebarVisible") === "yes") {
             content.css("width", "100%");
             icon.removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
+            localStorage.setItem("sidebarVisible", "no");
+        }
+        else {
+            content.css("width", defCntWt);
+            icon.removeClass("fa-arrow-circle-left").addClass("fa-arrow-circle-right");
+            localStorage.setItem("sidebarVisible", "yes");
         }
     });
-    if (savedAsVisible === "no") {
-        showOrHide(sidebar, false);
+    
+    if (localStorage.getItem("sidebarVisible") === "no") {
         content.css("width", "100%");
-        icon.removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
+        $("#sidebar-toggler .fa").removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
     }
 }
 

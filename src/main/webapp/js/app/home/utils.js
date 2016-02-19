@@ -123,10 +123,26 @@ function showOrHide(target, letItShow) {
         letItShow = (target.is(":visible") === false);
     }
     
-    if (letItShow)
+    if (letItShow) {
         target.show();
-    else
+    }
+    else {
         target.hide();
+    }
+    return letItShow;
+}
+
+function toggleVisibility(target, letItShow) {
+    if ((letItShow === undefined || letItShow === null) && target.is) {
+        letItShow = (target.css("visibility") === "hidden");
+    }
+    
+    if (letItShow) {
+        target.css("visibility", "visible");
+    }
+    else {
+        target.css("visibility", "hidden");
+    }
     return letItShow;
 }
 
