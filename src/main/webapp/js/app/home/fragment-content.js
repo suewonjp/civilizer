@@ -158,21 +158,21 @@ function removeSearchKeywordCommands(html) {
 function translateCustomMarkupCommands(html) {
     return html
     // {{{[keyword] ... text ... }}} --- translated to a <div> block
-    .replace(/\{\{\{\[(.+?)({.*})?\]/g, function(match, p1, p2, pos, originalText) {
+    .replace(/\{\{\{\[(.+?)({.*})?\]\s?/g, function(match, p1, p2, pos, originalText) {
         var output = "<div class='-cvz-" + p1 + "'"; 
         if (p2) {
             output += " args='" + p2.trim() + "'";
         }
         return output + ">"; 
     })
-    .replace(/\}\}\}/g, function(match, pos, originalText) {
+    .replace(/\s?\}\}\}/g, function(match, pos, originalText) {
         return "</div>";
     })
     // {{[keyword] ... text ... }} --- translated to a <span>
-    .replace(/\{\{\[([^,]+?)\]/g, function(match, p1, pos, originalText) {
+    .replace(/\{\{\[([^,]+?)\]\s?/g, function(match, p1, pos, originalText) {
         return "<span class='-cvz-" + p1 + "'>";
     })
-    .replace(/\}\}/g, function(match, pos, originalText) {
+    .replace(/\s?\}\}/g, function(match, pos, originalText) {
         return "</span>";
     })
     ;
