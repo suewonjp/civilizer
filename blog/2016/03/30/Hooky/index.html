@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Blog for Civilizer; An Open Source Personal Knowledge Management Tool">
+    <meta name="author" content="Suewon Bahng">
+
+    <title>Hooky : Tiny And Useful Open Source OS X Utility - Civilzer Blog</title>
+
+    <link rel="canonical" href="http://suewonjp.github.io/civilizer/blog/2016/03/30/Hooky/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/civilizer/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/civilizer/blog/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/civilizer/blog/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/civilizer/blog/">Civilzer Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/civilizer/blog/">Home</a>
+                </li>
+                <li>
+                    <a href="http://suewonjp.github.io/civilizer/">Try Civilizer</a>
+                </li>
+                
+                <li>
+                    <a href="/civilizer/blog/about/">About</a>
+                </li>
+                
+                <li>
+                    <a href="/civilizer/blog/contact/">Contact</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/civilizer/blog/img/post-bg-default.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Hooky : Tiny And Useful Open Source OS X Utility</h1>
+                    
+                    <h2 class="subheading">Hooky is a small Mac OS X application that helps you use OS X shortcuts/hotkeys more conveniently. </h2>
+                    
+                    <span class="meta">Posted by Suewon Bahng on March 30, 2016</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<h4 id="why-did-i-develop-hooky">Why did I develop Hooky?</h4>
+<p><em><strong>Hooky</strong></em> is a small Mac OS X application that may help you make use of OS X shortcuts/hotkeys in a more effective manner. (It’s open source and free)</p>
+
+<p>If you are a Linux user, you might be aware that you can paste arbitrarily selected text by clicking mouse middle button. Some users might think that functionality is useless, but it looks really convenient to me. I had been using Linux Mint for quite a time, and came back to OS X, then I missed that functionality so much. I searched the web if I could find any way to use the similar feature in OS X. OS X doesn’t support any of similar features. But <a href="https://www.boastr.net">BetterTouchTool</a> could let me mimic the functionality on the OS (not same though), and I was happy for a while until the tool became a commercial app.</p>
+
+<p>BetterTouchTool is quite an excellent app, but for me I used to use a very small bit of it. The tool’s main feature is enhancing usability around devices such as a trackpad or magic mouse that I don’t own. I was using it for the sole purpose of emulating middle click paste similar to that of Linux. Unfortunately, the tool was quite expensive for me to purchase it only for that functionality. I gave up buying it. ( Not every Mac user is rich :-( )</p>
+
+<p>In the mean while, I’d been quite interested in OS X Cocoa programming, but no experience at all. So I decided to make an app to fulfill my own requirement while challenging the unfamiliar world of OS X application development.</p>
+
+<h4 id="what-does-hooky-do">What does Hooky do?</h4>
+<p><em><strong>Hooky</strong></em> is a small status bar (or menu bar) application. It sits on the menu bar area at the top of the screen and waits for any of UI events specified by you. When it detects any of those UI events, it invokes an existing keyboard shortcut (also specified by you) for you.</p>
+
+<p>For instance, to emulate middle click paste of Linux systems, Hooky waits for any of middle click events and once it detects one, then it fires keyboard events equivalent to pushing ⌘V. </p>
+
+<p>Events to detect such as Middle Button Click are referred to as <strong>Proxy Events</strong> in Hooky. Also the shortcuts to invoke such as ⌘V are referred to as <strong>Target Shortcuts</strong>.</p>
+
+<p>Hooky accepts many pair of “Proxy Events/Target Shortcuts” from users. Users can create, edit, delete, disable/enable them via the following UI.</p>
+
+<p><img src="/civilizer/blog/img/hooky-2016-03-28.png" alt="hooky-screenshot" /></p>
+
+<h4 id="proxy-events">Proxy Events</h4>
+<p>Hooky offers two types of <em>Proxy Events</em>. </p>
+
+<ul>
+  <li><strong>Mouse Click Events</strong>
+    <ul>
+      <li>Long press, Single/Double/Triple click for any of left, right, middle buttons</li>
+      <li>One or more of Modifier Keys (⌘⌥⇧⌃) may be involved.</li>
+      <li>Note that long press needs you to release the mouse button to finally invoke the target shortcuts. (In other words, just holding down the button won’t signal anything.)</li>
+    </ul>
+  </li>
+  <li><strong>Multiple Keystrokes on Modifier Keys</strong> (<strong>MKM</strong> events)
+    <ul>
+      <li>Only works for a <strong>SINGLE</strong> Modifier Key (⌘ or ⌥ or ⇧ or ⌃)</li>
+      <li>Long press on the modifier keys won’t count. You should <strong>TAP</strong> on them!</li>
+      <li>No other regular keys or mouse buttons are involved.</li>
+      <li>Double/Triple/Quadruple tappings are supported 
+        <ul>
+          <li>Note that single tap is not supported because it will cause lots of conflicts.</li>
+        </ul>
+      </li>
+      <li>e.g., You may <em>double tap on ⌥</em> to switch applications instead of pressing ⌘Tab.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>It won’t make sense at all unless <em>proxy events</em> are easier to invoke than their <em>target shortcuts</em>. That’s why proxy events are just leveraging mouse clicks or modifier keys or combinations of both only.</p>
+
+<h4 id="target-shortcuts">Target Shortcuts</h4>
+<p>BTW, is ⌘V so much hard to press? It may be controversial. For me, it’s not so difficult to quickly press it without getting my eyes off of the screen, but it’s not so much easy either. Most of time, just clicking mouse middle button is a lot easier, especially when my hand is holding the mouse. ( even more handy when another hand is grabbing a cup or glass :-) ) </p>
+
+<p>Of course, when both of my hands are on the keyboard, ⌘V is a lot faster. Both approaches are effective alike. Hooky won’t shadow the target shortcuts so you can use them whenever you think they would be faster to invoke.</p>
+
+<p>Unlike ⌘V, other shortcuts demand many more fingers and they are harder to push and harder to remember. Hooky might be a good tool to invoke those complicated shortcuts with more simpler motions. </p>
+
+<p>Even not so complicated shortcuts such as ⌘Tab are (arguably) unfriendly to the muscle of your hand. At least for me, just tapping on the ⌃ key 2 ~ 3 times feels better than elongating my fingers to push ⌘Tab.</p>
+
+<h4 id="how-to-installuse">How to install/use</h4>
+<ol>
+  <li>Download the latest .dmg file from <a href="https://github.com/suewonjp/Hooky/releases/latest">here</a>.</li>
+  <li>Double click the .dmg file and drag the .app file inside it into your <em>/Applications</em> directory.</li>
+  <li>Open <em>Spotlight</em> and type <em>Hooky</em>.</li>
+  <li>An icon that looks like a <em>hook</em> will appear on the menu bar.</li>
+  <li>Clicking on that icon will bring up the window where you can register your <em>“proxy event/target shortcut”</em> pairs.</li>
+</ol>
+
+<h4 id="how-to-manage-proxy-eventtarget-shortcut-pairs">How to manage “Proxy Event/Target Shortcut” pairs</h4>
+<p>Let me explain how you can use Hooky UI.</p>
+
+<p><img src="/civilizer/blog/img/hooky-annotation.png" alt="hooky-screenshot" /></p>
+
+<ol>
+  <li>Pushing the button will make the edit box slide in. 
+    <ul>
+      <li>With the edit box, you can set up a proxy event and target shortcut.</li>
+      <li><strong>The edit box</strong> is the area surrounded by the blue dashed box </li>
+    </ul>
+  </li>
+  <li>Pushing the button will save your setup.</li>
+  <li>Pushing the button will disable all the pairs.
+    <ul>
+      <li>Pushing the same button will enable the pairs again.</li>
+    </ul>
+  </li>
+  <li>Quit Hooky.</li>
+  <li>Specify type of click or tap for the proxy event being edited.
+    <ul>
+      <li>For mouse click events, select either of Click/Double Click/Triple Click/Long Press</li>
+      <li>For MKM (Multiple Keystrokes on Modifier Keys) events, select either of Double Tap/Triple Tap/Quadruple Tap</li>
+    </ul>
+  </li>
+  <li>Specify type of mouse button for the proxy event being edited
+    <ul>
+      <li>Select either of NONE/MOUSE LEFT/MOUSE RIGHT/MOUSE MIDDLE</li>
+      <li>If <strong>NONE</strong> is selected, you can specify an MKM event.</li>
+      <li>Note that you can select a single modifier key only for MKK events.</li>
+    </ul>
+  </li>
+  <li>Specify the target shortcut.
+    <ul>
+      <li>Just press the keyboard shortcut you’d like to invoke via the proxy event.</li>
+      <li><strong><em>[ KEY BY KEY MODE (IMPORTANT) ]</em></strong> This is a tricky part. This text field UI can’t detect global shortcuts because of an inherent limitation of Hooky. (See <em>Limitations</em> section below) 
+        <ul>
+          <li>For example, If you try to input ⌘Space, only Spotlight shows up and nothing else.</li>
+          <li>In this case, press Space first, and then press ⌘. (Separately!)</li>
+          <li>This mode is referred to as <strong>Key By Key</strong> mode.</li>
+          <li>By pushing a regular key part (e.g., Space) of the shortcut first, the UI will switch to Key By Key mode automatically. </li>
+          <li>You will easily notice this mode because the background color of the text field suddenly changes.</li>
+          <li>After the regular key inserted, push the remaining modifier key part (e.g., ⌘)</li>
+          <li>Then, press <em>Return</em> to finish the Key By Key mode.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Pushing the button will let you edit the corresponding pair.</li>
+  <li>Pushing the button will let you delete the corresponding pair.</li>
+  <li>Unchecking the checkbox will let you disable the corresponding pair.
+    <ul>
+      <li>You can reenable it by checking the same checkbox. </li>
+    </ul>
+  </li>
+</ol>
+
+<blockquote>
+  <p><strong>Note For Uninstallation:</strong><br />
+Hooky will save your settings <em>~/.hooky</em> folder. <br />
+This folder will be created when you install the app and it just contains a simple text file.<br />
+Delete the folder if you find it unnecessary when uninstalling Hooky.<br />
+The behavior for saving user settings is subject to change.  </p>
+</blockquote>
+
+<h4 id="limitations">Limitations</h4>
+<p>Hooky doesn’t require any of higher privileges or registration procedures. But this imposes some limitations.</p>
+
+<p><strong>Hooky might not detect any of events being used by higher privileged applications</strong> (including apps permitted to use <a href="https://developer.apple.com/accessibility/osx/">Accessibility API</a>)</p>
+
+<p>Applications like BetterTouchTool probably make use of low level APIs which need user permission. Those applications can do a lot more than Hooky can do and if they occupy UI events that Hooky has interest in, Hooky might not have a chance of detecting those events. </p>
+
+<p>Also <strong>Hooky can’t modify existing behaviors of proxy events</strong>. This will cause problems when you want to use mouse left/right clicks as proxy events. Even though Hooky offers UI to let you register left/right clicks as valid proxy events, registering them is not recommended. (except a few, e.g., right double click) They can be only used when you are sure that they won’t conflict with other applications or existing OS behaviors. </p>
+
+<p>Mouse middle click could be safely used as proxy events in most of cases. Note that you will have enough slots with middle click only. You have 4 types of mouse button clicks (Long press, single/double/triple click). And each click can be modified with 4 modifier keys (⌘⌥⇧⌃) and the number of USABLE modifier combinations is 10. (Total combinations are 15. However, pushing 3 or 4 keys together is against Hooky’s goal.) The total number of proxy events available with middle button only is up to 40 (= 4 x 10). In addition to that, the total number of MKM proxy events is 12 (= 3 x 4, 3 types of tapping and 4 modifier keys). So <em><strong>you have the total of 52 free slots without needing left/right buttons</strong></em> and I think that is more than enough.</p>
+
+<p><strong>Another limitation is that Hooky can’t detect regular key strokes</strong>. (A regular key means non-modifier keys such as alphanumeric keys or other special keys such as Return, Escape, F1, and so on.) The API that currently Hooky is using has such limitation imposed by Apple. MKM proxy events are detected when you tap on modifier keys in multiple times, but when you push a regular key by accident and the timing is really good, an unexpected behavior might happen.</p>
+
+<p>Let’s say, while tapping on ⌘ modifier key twice, which has been assigned for zooming up screen (⌥⌘=) by you, if you press the ‘H’ key accidentally or intentionally, (as an unexpected side effect) your front app will become hidden (⌘H does that by default as you know). And then your screen will be zoomed up as an expected behavior.</p>
+
+<p>But tapping on ⌘ key only twice is so easy and simple task. I guess the case like the above will rarely happen in reality.</p>
+
+<h4 id="tips">Tips</h4>
+<p>Let me share with you some of useful pairs.</p>
+
+<ul>
+  <li>Mouse Middle Click - ⌘V (Paste from clipboard)</li>
+  <li>Mouse Right Double Click - ⌘C (Copy to clipboard)</li>
+  <li>Mouse Middle Long Press - ⌘` (Switch window of same application)</li>
+  <li>⌃ Double Tap - ⌥⌘8 (Zoom in/out screen)</li>
+  <li>⌃ Triple Tap - ⌘⇥ (Switch application)</li>
+</ul>
+
+<p>Your configuration may depend on what you do everyday. For instance, if you need to take a screenshot frequently, you can assign middle double click as a proxy event to the target shortcut such as ⇧⌘3.</p>
+
+<p>If you know what the target action is, but no keyboard shortcut is assigned yet, go to <em><strong>System Preferences &gt; Keyboard &gt; Shortcuts tab &gt; select App Shortcuts from the left panel &gt;</strong></em> add whatever shortcut you like.</p>
+
+<p>Also note that you can quickly access Hooky’s UI all the time because it sits on the menu bar area where is always visible unless you enter a full screen mode. Disable each of pair or all the pairs when some conflicts occur and you think Hooky is in your way somehow. Once the conflicting situation is gone, you can easily revive disabled settings. </p>
+
+<p>Hooky distinguishes which is a single click, double click, long press based on a configurable system setting. Go to _<strong>System Preferences &gt; Mouse &gt; Double-Click speed</strong> and adjust the slider as it suits you best. If you modify the double click speed faster, you need to double click that much faster in order for Hooky to identify that as a legitimate double click event.</p>
+
+<h4 id="thats-it">That’s it.</h4>
+<p>Please, try Hooky if you find it useful. I’ll welcome any suggestion or bug report.</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/civilizer/blog/2015/11/18/risk-of-information-broadcasting/" data-toggle="tooltip" data-placement="top" title="Risk of Information Broadcasting">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row text-center">
+      <h4><strong>Suewon Bahng</strong> </h4>
+      <p>
+        
+      </p>
+      <ul class="list-unstyled">
+        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:suewonjp@gmail.com">suewonjp@gmail.com</a>
+        </li>
+      </ul> 
+      <br>
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center">
+<li>
+  <a href="/civilizer/blog/feed.xml">
+    <span class="fa-stack fa-lg">
+      <i class="fa fa-circle fa-stack-2x"></i>
+      <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+    </span>
+  </a>
+</li>
+
+<li>
+  <a href="https://twitter.com/civilizer_pkm">
+    <span class="fa-stack fa-lg">
+      <i class="fa fa-circle fa-stack-2x"></i>
+      <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+    </span>
+  </a>
+</li>
+
+
+
+<li>
+  <a href="https://github.com/suewonjp">
+    <span class="fa-stack fa-lg">
+      <i class="fa fa-circle fa-stack-2x"></i>
+      <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+    </span>
+  </a>
+</li>
+
+
+<li>
+  <a href="https://www.linkedin.com/in/suewonjp">
+    <span class="fa-stack fa-lg">
+      <i class="fa fa-circle fa-stack-2x"></i>
+      <i class="fa fa-linkedin-square fa-stack-1x fa-inverse"></i>
+    </span>
+</li>
+
+</ul>
+
+
+        <p class="text-muted">Copyright &copy; 2014-2016 Suewon Bahng </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/civilizer/blog/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/civilizer/blog/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/civilizer/blog/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>
