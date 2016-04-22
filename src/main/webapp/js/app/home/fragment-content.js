@@ -175,6 +175,13 @@ function translateCustomMarkupCommands(html) {
     .replace(/\s?\}\}/g, function(match, pos, originalText) {
         return "</span>";
     })
+    .replace(/((&amp;#125;){2,3})/g, function(match, p1) {
+        var output = "";
+        for (var i=0,c=p1.length; i<c; ++i) {
+            if (p1[i] === "&") output += "}";
+        }
+        return output;
+    })
     ;
 }
 
