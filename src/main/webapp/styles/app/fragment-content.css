@@ -82,26 +82,29 @@
     
 .fragment-content ul {
     list-style: none;
-    font-family:'FontAwesome';
 }
 
 .fragment-content ul > li:before {
+    font-family: FontAwesome;
     content:"\f00c";
     color: green;
     margin: auto 0.5em auto -1.5em;
 }
 
 .fragment-content ul > li > ul > li:before {
+    font-family: FontAwesome;
     content: "\f0f4";
     color: dimgray;
 }
 
 .fragment-content ul > li > ul > li > ul > li:before {
+    font-family: FontAwesome;
     content: "\f054";
     color: brown;
 }
 
 .fragment-content ul > li > ul > li > ul > li > ul > li:before {
+    font-family: FontAwesome;
     content: "\f000";
     color: powderblue;
 }
