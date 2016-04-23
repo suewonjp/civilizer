@@ -13,8 +13,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -112,7 +110,6 @@ public final class MainController {
 //		final ExternalContext ec = rc.getExternalContext();
 //		final ParameterMap pm =  ec.getRequestParameterMap();
 //		final String locale = pm.get(REQUEST_PARAM_LOCALE);
-//		logger.info(locale);
 		
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
 			final PanelContextBean pc = (pcb != null && pcb.getPanelId() == i) ?
@@ -186,7 +183,6 @@ public final class MainController {
             if (allCount > 0) {
                 fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
             }
-//            tagId = PanelContextBean.INVALID_TAG;
         }
         
         // [NOTE] The content of fragments should be IMMUTABLE from here!
@@ -364,7 +360,6 @@ public final class MainController {
 	public void unbookmarkFragment(Long fragmentId) {
 	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 	    removeTag(frg, getBookmarkTag());
-//	    frg.removeTag(getBookmarkTag());
 	    try {
 			fragmentDao.save(frg);
 			ViewUtil.addMessage("Unbookmarked", "Fragment #" + frg.getId(), null);
@@ -437,7 +432,6 @@ public final class MainController {
 	        return;
 	    }
 	    removeTag(frg, trashcanTag);
-//	    frg.removeTag(trashcanTag);
 	    try {
 	        fragmentDao.save(frg);
 	        ViewUtil.addMessage("Restored", "Fragment #" + frg.getId(), null);
