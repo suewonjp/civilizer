@@ -175,16 +175,21 @@ public final class MainController {
         }
         else if (sp != null) {
             // Fetch the fragments by the search parameters
-            final TagListBean tagListBean = (TagListBean) rc.getFlowScope().get("tagListBean");
-            fragments = fragmentDao.findBySearchParams(sp, tagListBean.getTags());
+            try {
+                final TagListBean tagListBean = (TagListBean) rc.getFlowScope().get("tagListBean");
+                fragments = fragmentDao.findBySearchParams(sp, tagListBean.getTags());
+            } catch (Exception e) {
+                e.printStackTrace();
+                ViewUtil.addMessage("Error on searching!!!", e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+            }
             allCount = fragments.size();
             if (allCount > 0) {
                 fragments = Fragment.paginate(fragments, first, count + 1, frgOrder, asc);
             }
-            tagId = PanelContextBean.INVALID_TAG;
+//            tagId = PanelContextBean.INVALID_TAG;
         }
         
-        // [NOTE] The content of fragments should be IMMUTABLE form here!
+        // [NOTE] The content of fragments should be IMMUTABLE from here!
         
         final boolean isLastPage = fragments.size() <= count;
         final boolean givenTagIsTrashTag = Tag.isTrashTag(tagId);
