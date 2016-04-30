@@ -19,7 +19,7 @@ function setupTabViewsForTagPalette() {
 
 function onExpandComplete() {
 	setContextMenuForTags();
-	setupDraggableForTags();
+	setupDndForTags(false, true);
 }
 
 function createTagEditorController() {

@@ -545,6 +545,16 @@
 	box-shadow: 0px 0px 20px 20px orangered inset;
 }
 
+.dnd-visualcue-activate {
+    border: thick solid aqua;
+	box-shadow: 0px 0px 20px 0px aqua inset;
+}
+
+.dnd-visualcue-over {
+    border: thick solid orangered;
+	box-shadow: 0px 0px 20px 20px orangered inset;
+}
+
 #fragment-group-form\:search-panel input {
 	width: 60%;
 }

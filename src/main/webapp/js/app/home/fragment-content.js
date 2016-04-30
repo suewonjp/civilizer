@@ -109,19 +109,16 @@ function populateFragmentOverlay(data) {
     });
     
     // make titles on the overlay window also draggable/droppable
-    setupDraggableForFragmentTitle();
-    
-    setupDndForRelatingFragments();
+    setupDndForFragments(true);
+    setupDndForTags(true);
     
     setContextMenuForFragments();
     
     setContextMenuForTags();
     
-    overlayContent.find(".each-tag").draggable(baseDraggableSettings)
-    .each(function() {formatTagsOnFragmentHeader($(this))});
+    overlayContent.find(".each-tag").each(function() {formatTagsOnFragmentHeader($(this))});
     
     overlayFrame.off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
-//    setupClickHandlerForTags(overlayContent);
     
     setupQuickFragmentEditing(overlayContent.find(".fragment-header"));
 }

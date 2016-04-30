@@ -1,0 +1,52 @@
+@keyframes dndx-kf-bg-pos { 
+    0% { background-position:0%; }
+    100% { background-position:100%; }
+}
+
+@keyframes dndx-kf-swing {
+    0% { transform: rotate(1.5deg); }
+    100% { transform: rotate(-1.5deg); }
+}
+
+@keyframes dndx-kf-opaque-in {
+  from { opacity: 0; }
+  to { opacity: 0.8; }
+}
+
+@keyframes dndx-kf-flash {
+  from, 30%, to { opacity: 1; }
+  15%, 50% { opacity: 0; }
+}
+
+.dndx-visualcue-swing {
+    animation: dndx-kf-swing 1s ease 0s infinite alternate;
+}
+
+.dndx-visualcue-gradient {
+    background-size: 200%;
+    background-image: linear-gradient(to right, aqua, moccasin 90%);
+    animation: dndx-kf-bg-pos 3s ease 0s infinite alternate;
+}
+
+.dndx-visualcue-overlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+    transition: opacity 250ms ease;
+    animation: dndx-kf-opaque-in 250ms ease;
+}
+
+.dndx-visualcue-exterior-activate {
+    box-shadow: 0px 0px 10px 10px aqua;
+}
+
+.dndx-visualcue-exterior-over {
+    box-shadow: 0px 0px 10px 5px orangered inset;
+}
+
+.dndx-visualcue-flash {
+    animation: dndx-kf-flash 3s ease 0s infinite;
+}
+

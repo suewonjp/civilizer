@@ -85,6 +85,8 @@
                                 <java jar="${compressor}" fork="true" append="true" output="${min-css}">
                                     <arg line="--type css ${wa-dir}/styles/vendors/markitup/markitup.css"/></java>
                                 <java jar="${compressor}" fork="true" append="true" output="${min-css}">
+                                    <arg line="--type css ${wa-dir}/styles/vendors/dndx/dndx.css"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-css}">
                                     <arg line="--type css ${wa-dir}/styles/app/layout.css"/></java>
                                 <java jar="${compressor}" fork="true" append="true" output="${min-css}">
                                     <arg line="--type css ${wa-dir}/styles/app/home.css"/></java>
@@ -116,6 +118,8 @@
                                     <arg line="--type js ${wa-dir}/js/vendors/moment-with-locales.min.js"/></java>
                                 <java jar="${compressor}" fork="true" append="true" output="${min-js}">
                                     <arg line="--type js ${wa-dir}/js/vendors/textarea-caret-position/index.js"/></java>
+                                <java jar="${compressor}" fork="true" append="true" output="${min-js}">
+                                    <arg line="--type js ${wa-dir}/js/vendors/dndx/dndx.js"/></java>
                                 <java jar="${compressor}" fork="true" append="true" output="${min-js}">
                                     <arg line="--type js ${wa-dir}/js/app/home/utils.js"/></java>
                                 <java jar="${compressor}" fork="true" append="true" output="${min-js}">

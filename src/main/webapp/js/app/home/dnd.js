@@ -1,196 +1,148 @@
-// [NOTE] this is a default basic setting for all jQuery UI Draggable objects;
-// It should remain as IMMUTABLE
-const baseDraggableSettings = {
-    cursor:"move",
-    cursorAt:{ left:30 },
-    scroll: false,
-    helper: function() {
-        var clone = $(this).clone().removeAttr("id");
-        clone.css({ "min-width":60, "max-width":60, "overflow":"hidden", "white-space":"nowrap" });
-        return clone;
-    },
-//    helper: "clone",
-    zIndex: 10000,
-    containment: "document",
-    appendTo: "body",
-};
-
-function newBaseDroppable(acceptableClasses) {
-    var weakFocus = "ui-weak-focus", strongFocus = "ui-strong-focus",
-    output = {
-        over: function(e, ui) {
-            var from = ui.draggable, to = $(e.target);
-            if (hasAnyClass(from, acceptableClasses)) {
-                to.addClass(strongFocus);
-                to.removeClass(weakFocus);
+function setupDndForFragments(forFramentOverlay) {
+    var srcSelector = ".fragment-title, .small-fragment-box";
+    if (forFramentOverlay === true) {
+        dndx(srcSelector, ".fragment-header, .small-fragment-box").refresh();
+    }
+    else {
+        dndx(srcSelector)
+        .onconflict(function($srcObj, $tgtObj0, $tgtObj1) {
+            if ($tgtObj0.is("#fragment-content-editor")) return $tgtObj0;
+            if ($tgtObj1.is("#fragment-content-editor")) return $tgtObj1;
+            if ($tgtObj0.is("#fragment-overlay-content .fragment-header")) return $tgtObj0;
+            if ($tgtObj1.is("#fragment-overlay-content .fragment-header")) return $tgtObj1;
+            if ($tgtObj0.is(".fragment-header")) return $tgtObj0;
+            if ($tgtObj1.is(".fragment-header")) return $tgtObj1;
+            return $tgtObj0;
+        })
+        .ondrop(function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
+            var frgId = $srcObj.attr("_fid");
+            if ($tgtObj.is(".fragment-header, .small-fragment-box")) {
+                var tgtFrgId = $tgtObj.find(".fragment-title").attr("_fid") || $tgtObj.attr("_fid");
+                if (frgId != tgtFrgId) {
+                    if (!fragmentEditorVisible())
+                        // [NOTE] block this functionality when the fragment editor is running.
+                        confirmRelatingFragments(frgId, tgtFrgId);
+                }
             }
-        },
-        out: function(e, ui) {
-            var from = ui.draggable, to = $(e.target);
-            if (hasAnyClass(from, acceptableClasses)) {
-                to.removeClass(strongFocus);
-                to.addClass(weakFocus);
+            else if ($tgtObj.is("[id^='fragment-group-form\\:fragment-panel-toolbar-']")) {
+                fetchFragments(findPanel($tgtObj), [frgId]);
             }
-        },
-        activate: function(e, ui) {
-            var from = ui.draggable, to = $(e.target);
-            if (hasAnyClass(from, acceptableClasses)) {
-                to.addClass(weakFocus);
+            else if ($tgtObj.is("#panel-activation-buttons label")) {
+                fetchFragments(findPanel($tgtObj), [frgId]);
             }
-        },
-        deactivate: function(e, ui) {
-            var to = $(e.target);
-            to.removeClass(strongFocus);
-            to.removeClass(weakFocus);
-        },
-        greedy: true,
-    };
-    return output;
+            else if ($tgtObj.is("#bookmark-form\\:bookmark-panel")) {
+                bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
+            }
+            else if ($tgtObj.is("#trashcan .fa-trash")) {
+                var panelId = findPanel($srcObj), deleting = FRAGMENT_DELETABLE[panelId];
+                confirmTrashingFragments(frgId, deleting);
+            }
+            else if ($tgtObj.is("#fragment-content-editor")) {
+                var title = $srcObj.attr("_ft") || $srcObj.text();
+                title = (typeof title === "string") ? title.trim() : "";
+                var encoded = "{{[frgm] "+id+" "+title+" }}  \n";
+                $tgtObj.insertAtCaret(encoded);
+            }
+        })
+        .targets(".fragment-header, .small-fragment-box")
+        .targets("[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #bookmark-form\\:bookmark-panel, #trashcan .fa-trash, #fragment-content-editor")
+        ;
+        
+        // Trashed fragments are not draggable
+        $(".fragment-header .each-tag-name:contains(#trash)").each(function() {
+            $(this).closest(".fragment-header")
+                .find(".fragment-title.ui-draggable").draggable("destroy");
+        });
+    }
 }
 
-function relatingFragmentsDropHandler(e, ui) {
-    var from = ui.draggable;
-    var to = $(e.target);
-    if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
-        var fromId = from.attr("_fid");
-        var toId = to.find(".fragment-title").attr("_fid") || to.attr("_fid");
-        if (fromId != toId) {
-            if (!fragmentEditorVisible())
-                // [NOTE] block this functionality when the fragment editor is running.
-                confirmRelatingFragments(fromId, toId);
+function setupDndForTags(forFramentOverlay, onTagTreeExpand) {
+    function onDrop(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
+        if ($tgtObj.is("[id^='fragment-group-form\\:fragment-panel-toolbar-']")) {
+            fetchFragmentsByTag($srcObj, $tgtObj);
+        }
+        else if ($tgtObj.is("#panel-activation-buttons label")) {
+            fetchFragmentsByTag($srcObj, $tgtObj);
+        }
+        else if ($tgtObj.is("#trashcan .fa-trash")) {
+            confirmTrashingTag($srcObj.attr("_tid"), Boolean($srcObj.attr("_frgCnt") == 0));
+        }
+        else if ($tgtObj.is("#fragment-content-editor")) {
+            var id = $srcObj.attr("_tid"), encoded = "{{[tag] "+id+" }}  \n";
+            $tgtObj.insertAtCaret(encoded);
         }
     }
-}
-
-function fragmentFetchDropHandler(e, ui) {
-    var from = ui.draggable;
-    var to = $(e.target);
-    if (from.hasClass("each-tag")) {
-        fetchFragmentsByTag(from, to);
+    
+    var tgtSelector = "[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #trashcan .fa-trash, #fragment-content-editor";
+    if (forFramentOverlay === true) {
+        dndx("#fragment-overlay-content .each-tag", tgtSelector).ondrop(onDrop).refresh();
     }
-    else if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
-        fetchFragments(findPanel(to), [from.attr("_fid")]);
+    else if (onTagTreeExpand === true) {
+        dndx("#tag-palette-panel .each-tag, #fragment-group .each-tag", tgtSelector).refresh();
     }
-}
-
-function bookmarkingDropHandler(e, ui) {
-    var from = ui.draggable;
-    var to = $(e.target);
-    if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
-        var frgId = from.attr("_fid");
-        bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
-    }
-}
-
-function trashingDropHandler(e, ui) {
-    var from = ui.draggable;
-    var to = $(e.target);
-    if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
-        var panelId = findPanel(from);
-        var deleting = FRAGMENT_DELETABLE[panelId];
-        var frgId = from.attr("_fid");
-        confirmTrashingFragments(frgId, deleting);
-    }
-    else if (from.hasClass("each-tag")) {
-        confirmTrashingTag(from.attr("_tid"), Boolean(from.attr("_frgCnt") == 0));
+    else {
+        dndx("#tag-palette-panel .each-tag, #fragment-group .each-tag", tgtSelector)
+        .onconflict(function($srcObj, $tgtObj0, $tgtObj1) {
+            if ($tgtObj0.is("#fragment-content-editor")) return $tgtObj0;
+            if ($tgtObj1.is("#fragment-content-editor")) return $tgtObj1;
+            return $tgtObj0;
+        })
+        .ondrop(onDrop);
+        
+        // Trash tags are not draggable
+        $("#fragment-group .each-tag-name:contains(#trash)").each(function() {
+           $(this).closest(".each-tag").draggable("destroy"); 
+        });
     }
 }
 
-function frgEditorDropHandler(e, ui) {
-    var from = ui.draggable;
-    var to = $(e.target);
-    if (hasAnyClass(from, ["fragment-title", "small-fragment-box"])) {
-        var id = from.attr("_fid");
-        var title = from.attr("_ft") || from.text();
-        title = title ? title.trim() : "";
-        var encoded = "{{[frgm] "+id+" "+title+" }}  \n";
-        $(this).insertAtCaret(encoded);
-    }
-    else if (from.hasClass("each-tag")) {
-        var id = from.attr("_tid");
-        var encoded = "{{[tag] "+id+" }}  \n";
-        $(this).insertAtCaret(encoded);
-    }
-    else if (from.hasClass("fb-file")) {
-        var ids = from.attr("id");
-        var id = ids.substr(ids.lastIndexOf("-") + 1);
-        var encoded = "{{[file] "+id+" }}  \n";
-        $(this).insertAtCaret(encoded);
-    }
-}
-
-function setupDraggableForFragmentTitle() {
-    $(".fragment-title, .small-fragment-box").draggable(baseDraggableSettings);
-}
-
-function setupDraggableForTags() {
-    var tagPalettePanel = $("#tag-palette-panel");
-    var overflowOption = tagPalettePanel.css("overflow");
-    $("#tag-palette-panel .each-tag, #fragment-group .each-tag").draggable(baseDraggableSettings);
-    $("#tag-palette-panel").off(".cvz_tag_dnd")
-    .on("dragstart.cvz_tag_dnd", ".each-tag", function(e, ui) {
-        // [NOTE] the helper object disappears at the outside of the panel unless doing this
-        tagPalettePanel.css({overflow:"initial"});
-    })
-    .on("dragstop.cvz_tag_dnd", ".each-tag", function(e, ui) {
-        tagPalettePanel.css({overflow:overflowOption});
+function setupDndForFiles() {
+    dndx(".fb-file", "#fragment-content-editor")
+    .ondrop(function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
+        if ($tgtObj.is("#fragment-content-editor")) {
+            var ids = $srcObj.attr("id"), id = ids.substr(ids.lastIndexOf("-") + 1),
+                encoded = "{{[file] "+id+" }}  \n";
+            $tgtObj.insertAtCaret(encoded);
+        }
     });
-}
-
-function setupDraggableForFiles() {
-    var fileBoxPanel = $("#file-box-form\\:file-box-panel");
-    var overflowOption = fileBoxPanel.css("overflow");
-    $(".fb-file").draggable(baseDraggableSettings);
-    $("#file-path-tree").off(".cvz_file_dnd")
-    .on("dragstart.cvz_file_dnd", function(e, ui) {
-        fileBoxPanel.css({overflow:"initial"});
-    })
-    .on("dragstop.cvz_file_dnd", function(e, ui) {
-        // [NOTE] the overflow style should be identical between the tag palette and file box
-        fileBoxPanel.css({overflow:overflowOption});
-    });
-}
-
-function setupDndForRelatingFragments() {
-    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box"]);
-    droppable.drop = relatingFragmentsDropHandler;
-    $(".fragment-header, .small-fragment-box").droppable(droppable);
-}
-
-function setupDndForFragmentFetch() {
-    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box", "each-tag"]);
-    droppable.drop = fragmentFetchDropHandler;
-    $('[id^="fragment-group-form\\:fragment-panel-toolbar-"]').droppable(droppable);
-    $("#panel-activation-buttons label").droppable(droppable);
-}
-
-function setupDndForBookmarking() {
-    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box"]);
-    droppable.drop = bookmarkingDropHandler;
-    $("#bookmark-form\\:bookmark-panel").droppable(droppable);
-}
-
-function setupDndForTrashing() {
-    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box", "each-tag"]);
-    droppable.drop = trashingDropHandler;
-    $("#trashcan").droppable(droppable);
-}
-
-function setupDndToDropDataToFrgEditor() {
-    var droppable = newBaseDroppable(["fragment-title", "small-fragment-box", "each-tag", "fb-file"]);
-    droppable.drop = frgEditorDropHandler;
-    $("#fragment-content-editor").droppable(droppable);
 }
 
 function setupDragAndDrop() {
-    setupDraggableForFragmentTitle();
-    setupDraggableForTags();
-    setupDraggableForFiles();
+    // Global settings for all drag & drop operations
+    dndx()
+    .visualcue(function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
+        switch (eventType) {
+        case "dropactivate":
+            $tgtObj.addClass("dnd-visualcue-activate"); 
+            break;
+        case "dropdeactivate":
+            $tgtObj.removeClass("dnd-visualcue-over dnd-visualcue-activate");
+            break;
+        case "dropover": 
+            $tgtObj.addClass("dnd-visualcue-over");
+            break;
+        case "dropout":
+            $tgtObj.removeClass("dnd-visualcue-over");
+            break;
+        }
+    })
+    .draggableOptions({
+        cursor:"move",
+        cursorAt:{ left:30 },
+        scroll: false,
+        helper: function() {
+            var clone = $(this).clone().removeAttr("id");
+            clone.css({ "min-width":60, "max-width":60, "overflow":"hidden", "white-space":"nowrap" });
+            return clone;
+        },
+        zIndex: 10000,
+        containment: "document",
+        appendTo: "body",
+    })
+    ;
     
-    setupDndForRelatingFragments();
-    setupDndForFragmentFetch();
-    setupDndForBookmarking();
-    setupDndForTrashing();
-    setupDndToDropDataToFrgEditor();
+    setupDndForFragments();
+    setupDndForTags();
+    setupDndForFiles();
 }
 
