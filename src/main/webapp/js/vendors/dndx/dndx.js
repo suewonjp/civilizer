@@ -29,7 +29,8 @@ var dndx = null;
         var iii = this.indexOf(item), output = item;
         if (iii > -1) {
             this[iii] = this[this.length - 1];
-            --this.length;
+            this.pop();
+            //--this.length;
         }
         else {
             output = null;
@@ -59,25 +60,26 @@ var dndx = null;
 
     function createDataStore() {
         dataStore = {
-            pairs : {},
-            protoDraggableOptions : {
-                cursor:"move",
+            pairs: {},
+            protoDraggableOptions: {
+                cursor: "move",
                 scroll: false,
                 zIndex: defaultZ,
                 containment: "document",
                 appendTo: "body",
             },
-            protoDroppableOptions : {
-                greedy : true,
+            protoDroppableOptions: {
+                greedy: true,
+                //tolerance: "pointer",
             },
-            protoPair : {
-                visualcue:noop,
-                cbConflict:noop,
-                cbActivate:noop,
-                cbDeactivate:noop,
-                cbOver:noop,
-                cbOut:noop,
-                cbDrop:noop,
+            protoPair: {
+                visualcue: noop,
+                cbConflict: noop,
+                cbActivate: noop,
+                cbDeactivate: noop,
+                cbOver: noop,
+                cbOut: noop,
+                cbDrop: noop,
             },
         };
     }
@@ -332,24 +334,24 @@ var dndx = null;
                 break;
             }
         },
-        visualcueFlash : function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
-            switch (eventType) {
-            case "dropactivate":
-                $tgtObj.addClass("dndx-visualcue-flash"); 
-                break;
-            case "dropdeactivate":
-                $tgtObj.removeClass("dndx-visualcue-flash dndx-visualcue-gradient");
-                break;
-            case "dropover": 
-                $tgtObj.removeClass("dndx-visualcue-flash");
-                $tgtObj.addClass("dndx-visualcue-gradient");
-                break;
-            case "dropout":
-                $tgtObj.addClass("dndx-visualcue-flash");
-                $tgtObj.removeClass("dndx-visualcue-gradient");
-                break;
-            }
-        },
+        //visualcueFlash : function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
+            //switch (eventType) {
+            //case "dropactivate":
+                //$tgtObj.addClass("dndx-visualcue-flash"); 
+                //break;
+            //case "dropdeactivate":
+                //$tgtObj.removeClass("dndx-visualcue-flash dndx-visualcue-gradient");
+                //break;
+            //case "dropover": 
+                //$tgtObj.removeClass("dndx-visualcue-flash");
+                //$tgtObj.addClass("dndx-visualcue-gradient");
+                //break;
+            //case "dropout":
+                //$tgtObj.addClass("dndx-visualcue-flash");
+                //$tgtObj.removeClass("dndx-visualcue-gradient");
+                //break;
+            //}
+        //},
     };
 
     function triggerException(msg) {
@@ -463,7 +465,9 @@ var dndx = null;
                 refreshPair(this.srcSelector, this.tgtSelector);
             }
             if (this.source) {
-                refreshPairs(this.source);
+                var tmp = {};
+                tmp[this.srcSelector] = this.source;
+                refreshPairs(tmp);
             }
             else {
                 refreshPairs(dataStore.pairs);
@@ -553,8 +557,8 @@ var dndx = null;
 
     // This function binds all required event handlers to the 'body' element of the DOM tree
     function bindEventHandlers() {
-        function grabPair(e, ui) {
-            var $src = ui.draggable, $tgt = $(e.target), srcSelector = $src.data(srcDataKey), pair;
+        function grabPair($src, $tgt) {
+            var srcSelector = $src.data(srcDataKey), pair;
             if (srcSelector in dataStore.pairs === false || !$src.is(srcSelector))
                 return null;
             for (var tgtSelector in dataStore.pairs[srcSelector]) {
@@ -569,7 +573,7 @@ var dndx = null;
 
         $("body").off(".dndx")
         .on("dropactivate.dndx", className, function(e, ui) {
-            var pair = grabPair(e, ui);
+            var pair = grabPair(ui.draggable, $(e.target));
             if (pair) {
                 eventContext = eventContext || { pairs:[], };
                 if (eventContext.pairs.indexOf(pair) === -1) {
@@ -585,7 +589,7 @@ var dndx = null;
             if (!eventContext) {
                 return false;
             }
-            var pair = grabPair(e, ui);
+            var pair = grabPair(ui.draggable, $(e.target));
             if (pair && pair !== eventContext.focusedPair) {
                 var iii = eventContext.pairs.indexOf(pair);
                 if (iii > -1) {
@@ -601,10 +605,11 @@ var dndx = null;
             return false;
         })
         .on("dropover.dndx", className, function(e, ui) {
-            var pair = grabPair(e, ui);
+            var pair = grabPair(ui.draggable, $(e.target));
             if (pair) {
                 var hitTargets = eventContext.hitTargets || (eventContext.hitTargets = createUniqueSequence()),
-                    head = hitTargets.front(), $head = $(head), $tgt = $(e.target);
+                    head = hitTargets.front(), $head = $(head), $tgt = $(e.target),
+                    prevPair = eventContext.focusedPair;
 
                 eventContext.$src = ui.draggable;
                 eventContext.focusedPair = pair;
@@ -616,8 +621,8 @@ var dndx = null;
                         hitTargets.push(e.target);
                         return false;
                     }
-                    pair.visualcue("dropout", eventContext.$src, $head, pair.srcSelector, pair.tgtSelector);
-                    pair.cbOut("dropout", eventContext.$src, $head, pair.srcSelector, pair.tgtSelector);
+                    prevPair.visualcue("dropout", eventContext.$src, $head, prevPair.srcSelector, prevPair.tgtSelector);
+                    prevPair.cbOut("dropout", eventContext.$src, $head, prevPair.srcSelector, prevPair.tgtSelector);
                 }
 
                 pair.visualcue(e.type, eventContext.$src, $tgt, pair.srcSelector, pair.tgtSelector, e);
@@ -652,6 +657,7 @@ var dndx = null;
                     }
 
                     head = hitTargets.front(), $head = $(head);
+                    eventContext.focusedPair = pair = grabPair(eventContext.$src, $head);
                     pair.visualcue("dropover", eventContext.$src, $head, pair.srcSelector, pair.tgtSelector, e);
                     pair.cbOver("dropover", eventContext.$src, $head, pair.srcSelector, pair.tgtSelector, e);
                 }
@@ -659,7 +665,10 @@ var dndx = null;
             return false;
         })
         .on("drop.dndx", className, function(e, ui) {
-            var pair = grabPair(e, ui);
+            if (!eventContext.focusedPair) {
+                return false;
+            }
+            var pair = grabPair(ui.draggable, $(e.target));
             if (pair) {
                 var hitTargets = eventContext.hitTargets, head = hitTargets.front(), $head = $(head);
                 if (head === e.target) {
