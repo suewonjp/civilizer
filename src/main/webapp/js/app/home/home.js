@@ -12,6 +12,14 @@ function formatTagsOnFragmentHeader(tgtTag) {
     	tgtTag.addClass("special-tag");
 }
 
+function fragmentTrashed($frgHdr) {
+    var fid = $frgHdr.attr("_fid");
+    if (fid) {
+        return $("#trashed-fragment-ids span:contains(" + fid + ")").length;
+    }
+    return $frgHdr.attr("_deletable") === "true";
+}
+
 function triggerFragmentOverlay(e) {
 	var href=$(this).attr('href');
 	$.get(href, "", populateFragmentOverlay);

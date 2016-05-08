@@ -34,8 +34,7 @@ function setupDndForFragments(forFramentOverlay) {
                 bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
             }
             else if ($tgtObj.is("#trashcan .fa-trash")) {
-                var panelId = findPanel($srcObj), deleting = FRAGMENT_DELETABLE[panelId];
-                confirmTrashingFragments(frgId, deleting);
+                confirmTrashingFragments(frgId, fragmentTrashed($srcObj));
             }
             else if ($tgtObj.is("#fragment-content-editor")) {
                 var title = $srcObj.attr("_ft") || $srcObj.text();
@@ -65,7 +64,11 @@ function setupDndForTags(forFramentOverlay, onTagTreeExpand) {
             fetchFragmentsByTag($srcObj, $tgtObj);
         }
         else if ($tgtObj.is("#trashcan .fa-trash")) {
-            confirmTrashingTag($srcObj.attr("_tid"), Boolean($srcObj.attr("_frgCnt") == 0));
+            var tid = $srcObj.attr("_tid");
+            if (tid <= 0) {
+                return;
+            }
+            confirmTrashingTag(tid, Boolean($srcObj.attr("_frgCnt") == 0));
         }
         else if ($tgtObj.is("#fragment-content-editor")) {
             var id = $srcObj.attr("_tid"), encoded = "{{[tag] "+id+" }}  \n";

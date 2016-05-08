@@ -219,6 +219,12 @@
         </div>
         <div id="fragment-overlay-content"></div>
     </div>
+    
+    <div id="trashed-fragment-ids">
+        <c:forEach var="id" items="#{mainController.getIdsOfTrashedFragments()}">
+            <span>#{id}</span>
+        </c:forEach>
+    </div>
 </div>
 
 <h:form id="fragment-group-form">

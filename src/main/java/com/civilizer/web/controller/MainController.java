@@ -937,6 +937,10 @@ public final class MainController {
 	    return ok;
 	}
 	
+	public List<Long> getIdsOfTrashedFragments() {
+	    return fragmentDao.findIdsByTagId(Tag.TRASH_TAG_ID);
+	}
+	
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
     public String onRequestForFragment(ModelMap model, @PathVariable Long fragmentId) {
     	final Fragment frg = fragmentDao.findById(fragmentId, true, true);
