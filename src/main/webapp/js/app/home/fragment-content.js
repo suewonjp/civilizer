@@ -121,6 +121,8 @@ function populateFragmentOverlay(data) {
     overlayFrame.off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
     
     setupQuickFragmentEditing(overlayContent.find(".fragment-header"));
+    
+    setupRelatedFragments();
 }
 
 const SEARCH_KEYWORD_PATTERN_BEGIN = /%28%7B%28%5B(.+?)%5D%20/g;

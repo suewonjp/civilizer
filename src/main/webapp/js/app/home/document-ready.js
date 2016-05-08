@@ -7,6 +7,8 @@ $(document).ready(function() {
 
 	setupFragmentOverlay();
 	
+	setupRelatedFragments();
+	
 	setupClickHandlerForTags($("body"));
 //	setupClickHandlerForTags($("#container"));
     

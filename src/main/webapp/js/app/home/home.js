@@ -15,7 +15,11 @@ function formatTagsOnFragmentHeader(tgtTag) {
 function fragmentTrashed($frgHdr) {
     var fid = $frgHdr.attr("_fid");
     if (fid) {
-        return $("#trashed-fragment-ids span:contains(" + fid + ")").length;
+        var ids = $("#trashed-fragment-ids span"), i, c;
+        for (i=0,c=ids.length; i<c; ++i) {
+            if ($(ids[i]).text() === fid) return true;
+        }
+        return false;
     }
     return $frgHdr.attr("_deletable") === "true";
 }
@@ -23,17 +27,24 @@ function fragmentTrashed($frgHdr) {
 function triggerFragmentOverlay(e) {
 	var href=$(this).attr('href');
 	$.get(href, "", populateFragmentOverlay);
-	
 	e.preventDefault();
-	
 	return false; // stop the link
 }
 
 function setupFragmentOverlay() {
-    $("#container").off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
+    $("#container").off("click.cvz_frg_overlay")
+    .on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
     
 	$("#fragment-overlay-title-bar").dblclick(function() {
     	toggleWindow($("#fragment-overlay"), $(this));
+    });
+}
+
+function setupRelatedFragments() {
+    $(".related-fragment-container .small-fragment-box").each(function() {
+        var $this = $(this);
+        if (fragmentTrashed($this))
+            $this.addClass("trashed-fragment-title");
     });
 }
 
