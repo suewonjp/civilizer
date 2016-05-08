@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.Transient;
 
 import com.civilizer.domain.Fragment;
+import com.civilizer.domain.Tag;
 
 @SuppressWarnings("serial")
 public final class FragmentBean implements Serializable {
@@ -84,6 +85,10 @@ public final class FragmentBean implements Serializable {
 
     public void setRelatedOnes(List<Fragment> relatedOnes) {
         this.relatedOnes = relatedOnes;
+    }
+    
+    public boolean deletable() {
+        return Tag.containsId(this.fragment.getTags(), Tag.TRASH_TAG_ID);
     }
 	
 	public void clear() {

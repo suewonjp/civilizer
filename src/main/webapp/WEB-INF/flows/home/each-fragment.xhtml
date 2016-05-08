@@ -23,14 +23,15 @@
                     <f:validateBean disabled="true"/>
                     <p:ajax update=":selection-box-form:selection-box-panel" oncomplete="onAjaxCompleteForSelectionBox()"/>
                 </p:selectBooleanCheckbox>
-                <c:choose>
-                    <c:when test="#{fragmentDeletable}">
-                        <h:outputText value="##{fragment.id}" styleClass="fragment-id"/>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="-cvz-frgm fragment-id" href="fragment/#{fragment.id}">\##{fragment.id}</a>
-                    </c:otherwise>
-                </c:choose>
+                <a class="-cvz-frgm fragment-id" href="fragment/#{fragment.id}">\##{fragment.id}</a>
+<!--                 <c:choose> -->
+<!--                     <c:when test="#{fragmentDeletable}"> -->
+<!--                         <h:outputText value="##{fragment.id}" styleClass="fragment-id"/> -->
+<!--                     </c:when> -->
+<!--                     <c:otherwise> -->
+<!--                         <a class="-cvz-frgm fragment-id" href="fragment/#{fragment.id}">\##{fragment.id}</a> -->
+<!--                     </c:otherwise> -->
+<!--                 </c:choose> -->
             </c:otherwise>
         </c:choose>
         <span class="fragment-title" _fid="#{fragment.id}">

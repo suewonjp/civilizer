@@ -47,13 +47,13 @@ function setupDndForFragments(forFramentOverlay) {
         .targets(".fragment-header, .small-fragment-box")
         .targets("[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #bookmark-form\\:bookmark-panel, #trashcan .fa-trash, #fragment-content-editor")
         ;
-        
-        // Trashed fragments are not draggable
-        $(".fragment-header .each-tag-name:contains(#trash)").each(function() {
-            $(this).closest(".fragment-header")
-                .find(".fragment-title.ui-draggable").draggable("destroy");
-        });
     }
+    
+    // Trashed fragments are not draggable
+//    $(".fragment-header .each-tag-name:contains(#trash)").each(function() {
+//        $(this).closest(".fragment-header")
+//        .find(".fragment-title.ui-draggable").draggable("destroy");
+//    });
 }
 
 function setupDndForTags(forFramentOverlay, onTagTreeExpand) {
@@ -76,6 +76,11 @@ function setupDndForTags(forFramentOverlay, onTagTreeExpand) {
     var tgtSelector = "[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #trashcan .fa-trash, #fragment-content-editor";
     if (forFramentOverlay === true) {
         dndx("#fragment-overlay-content .each-tag", tgtSelector).ondrop(onDrop).refresh();
+
+        // Special tags are not draggable
+//        $("#fragment-overlay-content .each-tag-name:contains(#)").each(function() {
+//            $(this).closest(".each-tag.ui-draggable").draggable("destroy"); 
+//        });
     }
     else if (onTagTreeExpand === true) {
         dndx("#tag-palette-panel .each-tag, #fragment-group .each-tag", tgtSelector).refresh();
@@ -89,11 +94,11 @@ function setupDndForTags(forFramentOverlay, onTagTreeExpand) {
         })
         .ondrop(onDrop);
         
-        // Trash tags are not draggable
-        $("#fragment-group .each-tag-name:contains(#trash)").each(function() {
-           $(this).closest(".each-tag").draggable("destroy"); 
-        });
-    }
+        // Special tags are not draggable
+//        $("#fragment-group .each-tag-name:contains(#), #tag-palette-panel .each-tag-name:contains(#)").each(function() {
+//            $(this).closest(".each-tag.ui-draggable").draggable("destroy"); 
+//        });
+    }    
 }
 
 function setupDndForFiles() {

@@ -942,6 +942,7 @@ public final class MainController {
     	final Fragment frg = fragmentDao.findById(fragmentId, true, true);
     	final FragmentBean fb = newFragmentBean(frg, null, null);
     	model.addAttribute("fragmentBean", fb);
+    	model.addAttribute("fragmentDeletable", fb.deletable());
     	return "fragment";
     }
 
