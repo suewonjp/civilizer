@@ -10,6 +10,10 @@ function setupDndForFragments(forFramentOverlay) {
             if ($tgtObj1.is("#fragment-content-editor")) return $tgtObj1;
             if ($tgtObj0.is("#fragment-overlay-content .fragment-header")) return $tgtObj0;
             if ($tgtObj1.is("#fragment-overlay-content .fragment-header")) return $tgtObj1;
+            if ($tgtObj0.is("#editor-frame")) return $tgtObj0;
+            if ($tgtObj1.is("#editor-frame")) return $tgtObj1;
+            if ($tgtObj0.is("#fragment-overlay")) return $tgtObj0;
+            if ($tgtObj1.is("#fragment-overlay")) return $tgtObj1;
             if ($tgtObj0.is(".fragment-header")) return $tgtObj0;
             if ($tgtObj1.is(".fragment-header")) return $tgtObj1;
             return $tgtObj0;
@@ -19,9 +23,7 @@ function setupDndForFragments(forFramentOverlay) {
             if ($tgtObj.is(".fragment-header, .small-fragment-box")) {
                 var tgtFrgId = $tgtObj.find(".fragment-title").attr("_fid") || $tgtObj.attr("_fid");
                 if (frgId != tgtFrgId) {
-                    if (!fragmentEditorVisible())
-                        // [NOTE] block this functionality when the fragment editor is running.
-                        confirmRelatingFragments(frgId, tgtFrgId);
+                    confirmRelatingFragments(frgId, tgtFrgId);
                 }
             }
             else if ($tgtObj.is("[id^='fragment-group-form\\:fragment-panel-toolbar-']")) {
@@ -45,11 +47,12 @@ function setupDndForFragments(forFramentOverlay) {
         })
         .targets(".fragment-header, .small-fragment-box")
         .targets("[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #bookmark-form\\:bookmark-panel, #trashcan .fa-trash, #fragment-content-editor")
+        .newPair(null, "#editor-frame, #fragment-overlay").nullify()
         ;
     }
     
-    // Trashed fragments are not draggable
 //    $(".fragment-header .each-tag-name:contains(#trash)").each(function() {
+//        // Trashed fragments are not draggable
 //        $(this).closest(".fragment-header")
 //        .find(".fragment-title.ui-draggable").draggable("destroy");
 //    });
@@ -65,9 +68,6 @@ function setupDndForTags(forFramentOverlay, onTagTreeExpand) {
         }
         else if ($tgtObj.is("#trashcan .fa-trash")) {
             var tid = $srcObj.attr("_tid");
-            if (tid <= 0) {
-                return;
-            }
             confirmTrashingTag(tid, Boolean($srcObj.attr("_frgCnt") == 0));
         }
         else if ($tgtObj.is("#fragment-content-editor")) {
@@ -76,31 +76,51 @@ function setupDndForTags(forFramentOverlay, onTagTreeExpand) {
         }
     }
     
+    function onConflict($srcObj, $tgtObj0, $tgtObj1) {
+        if ($tgtObj0.is("#fragment-content-editor")) return $tgtObj0;
+        if ($tgtObj1.is("#fragment-content-editor")) return $tgtObj1;
+        if ($tgtObj0.is("#editor-frame")) 
+            return $tgtObj0;
+        if ($tgtObj1.is("#editor-frame")) 
+            return $tgtObj1;
+        if ($tgtObj0.is("#fragment-overlay")) 
+            return $tgtObj0;
+        if ($tgtObj1.is("#fragment-overlay")) 
+            return $tgtObj1;        
+        return $tgtObj0;
+    }
+    
+    function onCheckPair($srcObj, $tgtObj) {
+        if ($tgtObj.is("#trashcan .fa-trash")) {
+            var tid = $srcObj.attr("_tid");
+            if (tid <= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     var tgtSelector = "[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #trashcan .fa-trash, #fragment-content-editor";
     if (forFramentOverlay === true) {
-        dndx("#fragment-overlay-content .each-tag", tgtSelector).ondrop(onDrop).refresh();
-
-        // Special tags are not draggable
-//        $("#fragment-overlay-content .each-tag-name:contains(#)").each(function() {
-//            $(this).closest(".each-tag.ui-draggable").draggable("destroy"); 
-//        });
+        dndx("#fragment-overlay-content .each-tag", tgtSelector).refresh();
     }
     else if (onTagTreeExpand === true) {
         dndx("#tag-palette-panel .each-tag, #fragment-group .each-tag", tgtSelector).refresh();
     }
     else {
         dndx("#tag-palette-panel .each-tag, #fragment-group .each-tag", tgtSelector)
-        .onconflict(function($srcObj, $tgtObj0, $tgtObj1) {
-            if ($tgtObj0.is("#fragment-content-editor")) return $tgtObj0;
-            if ($tgtObj1.is("#fragment-content-editor")) return $tgtObj1;
-            return $tgtObj0;
-        })
-        .ondrop(onDrop);
+        .onconflict(onConflict)
+        .ondrop(onDrop)
+        .oncheckpair(onCheckPair)
+        .newPair(null, "#editor-frame, #fragment-overlay").nullify()
+        ;
         
-        // Special tags are not draggable
-//        $("#fragment-group .each-tag-name:contains(#), #tag-palette-panel .each-tag-name:contains(#)").each(function() {
-//            $(this).closest(".each-tag.ui-draggable").draggable("destroy"); 
-//        });
+        dndx("#fragment-overlay-content .each-tag", tgtSelector)
+        .onconflict(onConflict)
+        .ondrop(onDrop)
+        .oncheckpair(onCheckPair)
+        .newPair(null, "#editor-frame, #fragment-overlay").nullify()
+        ;
     }    
 }
 
