@@ -41,7 +41,7 @@ function setupDndForFragments(forFramentOverlay) {
             else if ($tgtObj.is("#fragment-content-editor")) {
                 var title = $srcObj.attr("_ft") || $srcObj.text();
                 title = (typeof title === "string") ? title.trim() : "";
-                var encoded = "{{[frgm] "+id+" "+title+" }}  \n";
+                var encoded = "{{[frgm] " + frgId + " "+title+" }}  \n";
                 $tgtObj.insertAtCaret(encoded);
             }
         })
