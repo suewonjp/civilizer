@@ -33,7 +33,7 @@ function setupDndForFragments(forFramentOverlay) {
                 fetchFragments(findPanel($tgtObj), [frgId]);
             }
             else if ($tgtObj.is("#bookmark-form\\:bookmark-panel")) {
-                bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
+                confirmBookmarkingFragment(frgId, $srcObj.text());
             }
             else if ($tgtObj.is("#trashcan .fa-trash")) {
                 confirmTrashingFragments(frgId, fragmentTrashed($srcObj));
@@ -44,6 +44,18 @@ function setupDndForFragments(forFramentOverlay) {
                 var encoded = "{{[frgm] "+id+" "+title+" }}  \n";
                 $tgtObj.insertAtCaret(encoded);
             }
+        })
+        .oncheckpair(function($srcObj, $tgtObj) {
+            if ($tgtObj.is("#bookmark-form\\:bookmark-panel")) {
+                // Let the bookmark panel invite only bookmarkable fragments
+                return bookmarkable($srcObj);
+            }
+            var tgtFrgId = $tgtObj.attr("_fid");
+            if (tgtFrgId) {
+                // Don't let elements of the identical fragment attract each other 
+                return tgtFrgId !== $srcObj.attr("_fid");
+            }
+            return true;
         })
         .targets(".fragment-header, .small-fragment-box")
         .targets("[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #bookmark-form\\:bookmark-panel, #trashcan .fa-trash, #fragment-content-editor")
@@ -93,7 +105,7 @@ function setupDndForTags(forFramentOverlay, onTagTreeExpand) {
     function onCheckPair($srcObj, $tgtObj) {
         if ($tgtObj.is("#trashcan .fa-trash")) {
             var tid = $srcObj.attr("_tid");
-            if (tid <= 0) {
+            if (tid <= 0) { // Don't attract special tags
                 return false;
             }
         }

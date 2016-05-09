@@ -22,6 +22,8 @@ function setContextMenuForFragments() {
             }
             else {
                 menu.find("#fragment-group-form\\:bookmark").show();
+                if (! bookmarkable(target))
+                    menu.find("#fragment-group-form\\:bookmark").hide();
                 menu.find("#fragment-group-form\\:trash").show();
                 menu.find("#fragment-group-form\\:delete").hide();
                 menu.find("#fragment-group-form\\:restore").hide();
@@ -192,10 +194,8 @@ function confirmDeletingFile() {
 }
 
 function bookmarkFragmentFromCtxtMenu() {
-    var menu = $("#frg-context-menu");
-    var target = menu.data("target-frg");
-    var frgId = target.attr("_fid");
-    bookmarkFragment([ {name:"fragmentId", value:frgId} ]);
+    var target = $("#frg-context-menu").data("target-frg");
+    confirmBookmarkingFragment(target.attr("_fid"), target.find(".fragment-title").text());
 }
 
 function trashFragmentFromCtxtMenu(deleting) {
