@@ -108,9 +108,10 @@ function setupFragmentCheckboxes() {
 }
 
 function setupFragmentResolutionSliders() {
-    $("#fragment-group .fragment-header").dblclick(function() {
+    $("body").on("dblclick.frg_hdr", "#fragment-group .fragment-header", function() {
         var tgt = $(this).closest(".each-fragment").find("tbody");
         showOrHide(tgt, !tgt.is(":visible"));
+        return false;
     });
 
     var allClasses = "frg-content-reso0 frg-content-reso1 frg-content-reso2 frg-content-reso3";

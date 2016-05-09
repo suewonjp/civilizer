@@ -2,8 +2,8 @@ function fragmentEditorVisible() {
     return $("#fragment-content-editor").is(":visible");
 }
 
-function setupQuickFragmentEditing(header) {
-    header.off(".frg_title").on("dblclick.frg_title", ".fragment-title", function (e) {
+function setupQuickFragmentEditing() {
+    $("body").on("dblclick.frg_hdr", ".fragment-title", function (e) {
         openFragmentEditorForEdit(e, $(e.target).closest(".fragment-header"));
         return false;
     });
@@ -28,14 +28,15 @@ function setupFragmentEditor() {
     	, cursor:"move"
     });
     
-    $("#editor-title-bar").dblclick(function() {
+	$("#editor-title-bar").dblclick(function() {
     	toggleWindow($editorFrame, $(this));
+    	return false;
     });
 	
     $("#fragment-content-editor").markItUp(markItUpSettings, {});
     
     // Invoke the Fragment editor by double clicking a Fragment title.
-    setupQuickFragmentEditing($(".fragment-header"));
+    setupQuickFragmentEditing();
 }
 
 function onClickFragmentEditorTrigger($editorFrame, $window, e, title, forNewFragment) {

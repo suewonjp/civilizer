@@ -118,10 +118,6 @@ function populateFragmentOverlay(data) {
     
     overlayContent.find(".each-tag").each(function() {formatTagsOnFragmentHeader($(this))});
     
-    overlayFrame.off("click.cvz_frg_overlay").on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
-    
-    setupQuickFragmentEditing(overlayContent.find(".fragment-header"));
-    
     setupRelatedFragments();
 }
 
