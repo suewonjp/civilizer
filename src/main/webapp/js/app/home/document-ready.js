@@ -10,7 +10,6 @@ $(document).ready(function() {
 	setupRelatedFragments();
 	
 	setupClickHandlerForTags($("body"));
-//	setupClickHandlerForTags($("#container"));
     
     setupFragmentResolutionSliders();
     

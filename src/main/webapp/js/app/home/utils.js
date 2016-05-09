@@ -208,9 +208,6 @@ function selectItemOnPfListbox(value, pfListbox) {
             break;
         }
     }
-    
-//    var item = $("<div>").append($(pfListbox.items).clone()).find("li[data-label='"+value+"']")
-//    pfListbox.selectItem(item);
 }
 
 function parentChildFolders(parent, child) {

@@ -1,7 +1,6 @@
 function setContextMenuForFragments() {
     var menu = $("#frg-context-menu");
     
-//    $("#fragment-group, #fragment-overlay-content")
     $("body")
     .off("contextmenu.cvz_frg").on("contextmenu.cvz_frg", ".fragment-header, .fragment-header span", function(e) {
         var target = $(e.target);
@@ -54,7 +53,6 @@ function setContextMenuForBookmarks() {
 function setContextMenuForTags() {
     var menu = $("#tag-context-menu");
     
-//    $("#fragment-group, #tag-palette-panel, #fragment-overlay-content")
     $("body")
     .off("contextmenu.cvz_tag").on("contextmenu.cvz_tag", ".each-tag", function(e) {
  
@@ -62,7 +60,7 @@ function setContextMenuForTags() {
         var target = $(e.target).closest(".each-tag");
         menu.data("target-tag", target);
         var tid = target.attr("_tid");
-        if (tid <=0) {
+        if (tid <= 0) {
             // special tags; not modifiable
             $("#tag-palette-form\\:edit").hide();
             $("#tag-palette-form\\:trash").hide();

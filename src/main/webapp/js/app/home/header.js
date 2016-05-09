@@ -28,8 +28,6 @@ function onPanelActivationChange() {
         if ($("#panel-toggler-" + i).prop("checked")) {
             ++activeCount;
             panels[i].show();
-//            $("#fragment-group-form\\:fragment-panel-toolbar-"+i)
-//            .css("left", panels[i].offset().left - $(window).scrollLeft());
             sessionStorage.setItem('panel-' + i, 'on');
         }
         else {

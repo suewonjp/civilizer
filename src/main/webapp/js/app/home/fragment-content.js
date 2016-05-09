@@ -127,8 +127,6 @@ function populateFragmentOverlay(data) {
 
 const SEARCH_KEYWORD_PATTERN_BEGIN = /%28%7B%28%5B(.+?)%5D%20/g;
 const SEARCH_KEYWORD_PATTERN_END = /%20%29%7D%29/g;
-//const SEARCH_KEYWORD_PATTERN_BEGIN = /\(\{\(\[(.+?)\] /g;
-//const SEARCH_KEYWORD_PATTERN_END = / \)\}\)/g;
 
 function translateSearchKeywordCommands(html) {
     return html

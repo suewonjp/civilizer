@@ -28,7 +28,7 @@ function triggerFragmentOverlay(e) {
 	var href=$(this).attr('href');
 	$.get(href, "", populateFragmentOverlay);
 	e.preventDefault();
-	return false; // stop the link
+	return false;
 }
 
 function setupFragmentOverlay() {
