@@ -32,7 +32,7 @@ function triggerFragmentOverlay(e) {
 }
 
 function setupFragmentOverlay() {
-    $("#container").off("click.cvz_frg_overlay")
+    $("body").off("click.cvz_frg_overlay")
     .on("click.cvz_frg_overlay", ".-cvz-frgm", triggerFragmentOverlay);
     
 	$("#fragment-overlay-title-bar").dblclick(function() {
