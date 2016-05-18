@@ -62,24 +62,27 @@ var dndx = null;
         dataStore = {
             pairs: {},
             protoDraggableOptions: {
-                cursor: "move",
                 scroll: false,
                 zIndex: defaultZ,
                 containment: "document",
                 appendTo: "body",
             },
             protoDroppableOptions: {
-                greedy: true,
+                //greedy: true,
                 //tolerance: "pointer",
             },
             protoPair: {
                 visualcue: noop,
                 cbConflict: noop,
+                cbStart: noop,
+                cbStop: noop,
                 cbActivate: noop,
                 cbDeactivate: noop,
                 cbOver: noop,
                 cbOut: noop,
                 cbDrop: noop,
+                cursorForDrag: "move",
+                cursorForHover: "pointer",
             },
         };
     }
@@ -149,6 +152,24 @@ var dndx = null;
         $obj.data(srcDataKey, srcSelector);
     }
 
+    function embedDraggableHelperCreator(dstOptions, helperOption) {
+        function createCloneHelper() {
+            var $this = $(this), clone = $this.clone().removeAttr("id").data(srcDataKey, $this.data(srcDataKey));
+            return clone;
+        }
+
+        if (helperOption === "clone") {
+            dstOptions.helper = createCloneHelper;
+        }
+        else if (helperOption instanceof Function) {
+            dstOptions.helper = function(e) {
+                var selector = $(this).data(srcDataKey), helper = helperOption.call(this, e);
+                $(helper).data(srcDataKey, selector).removeClass(tgtClassName);
+                return helper;
+            };
+        }
+    }
+
     function createDraggable(srcSelector) {
         var $obj = $(srcSelector);
         $obj.draggable(dataStore.protoDraggableOptions).addClass(srcClassName);
@@ -160,15 +181,39 @@ var dndx = null;
         $obj.droppable(dataStore.protoDroppableOptions).addClass(tgtClassName);
     }
 
+    function extendDraggableOptions(originalOptions, optionsToAdd) {
+        var mergedOptions;
+        optionsToAdd = optionsToAdd || {};
+        if (originalOptions === dataStore.protoDraggableOptions)
+            mergedOptions = $.extend(originalOptions, optionsToAdd);
+        else
+            mergedOptions = $.extend({}, originalOptions, optionsToAdd);
+        embedDraggableHelperCreator(mergedOptions, optionsToAdd.helper);
+        return mergedOptions;
+    }
+
+    function extendDroppableOptions(originalOptions, optionsToAdd) {
+        var mergedOptions;
+        if (originalOptions === dataStore.protoDroppableOptions)
+            mergedOptions = $.extend(originalOptions, optionsToAdd);
+        else
+            mergedOptions = $.extend({}, originalOptions, optionsToAdd);
+        return mergedOptions;
+    }
+
     function refreshDraggable(srcSelector, options) {
-        var $obj = $(srcSelector), instance = $obj.draggable("instance");
-        $obj.draggable($.extend({}, instance ? instance.options : {}, options)).addClass(srcClassName);
+        var $obj = $(srcSelector), instance = $obj.draggable("instance"),
+            finalOptions = extendDraggableOptions(instance ? instance.options : {}, options);
+            //finalOptions = $.extend({}, instance ? instance.options : {}, options);
+        //embedDraggableHelperCreator(finalOptions, options.helper);
+        $obj.draggable(finalOptions).addClass(srcClassName);
         embedSourceKey($obj, srcSelector);
     }
 
     function refreshDroppable(srcSelector, tgtSelector, options) {
         var $obj = $(tgtSelector), instance = $obj.droppable("instance");
-        $obj.droppable($.extend({}, instance ? instance.options : {}, options)).addClass(tgtClassName);
+        $obj.droppable(extendDroppableOptions(instance ? instance.options : {}, options)).addClass(tgtClassName);
+        //$obj.droppable($.extend({}, instance ? instance.options : {}, options)).addClass(tgtClassName);
     }
 
     function refreshPair(srcSelector, tgtSelector) { 
@@ -226,22 +271,14 @@ var dndx = null;
     }
 
     function assignCallback(pair, source, slotName, cb, defaultOp) {
+        var owner = pair || (source && source[srcClassName]) || dataStore.protoPair;
         cb = cb || defaultOp;
-        if (pair) {
-            if (cb === "fallback")
-                delete pair[slotName];
-            else 
-                pair[slotName] = cb;
+        if (cb === "fallback") {
+            if (owner !== dataStore.protoPair)
+                delete owner[slotName];
         }
-        else if (source) {
-            if (cb === "fallback")
-                delete source[srcClassName][slotName];
-            else 
-                source[srcClassName][slotName] = cb;
-        }
-        else {
-            if (cb instanceof Function)
-                dataStore.protoPair[slotName] = cb;
+        else if (cb instanceof Function) {
+            owner[slotName] = cb;
         }
     }
 
@@ -283,7 +320,7 @@ var dndx = null;
 
     var builtinVisualcueOwner = {
         visualcueNothing : noop,
-        visualcueOverlay : function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
+        visualcueOverlay : function(eventType, $srcObj, $tgtObj) {
             switch (eventType) {
             case "dropactivate":
                 showOverlay($srcObj[0], $tgtObj);
@@ -302,7 +339,7 @@ var dndx = null;
                 break;
             }
         },
-        visualcueSwing : function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
+        visualcueSwing : function(eventType, $srcObj, $tgtObj) {
             switch (eventType) {
             case "dropactivate":
                 $tgtObj.addClass("dndx-visualcue-swing"); 
@@ -318,7 +355,7 @@ var dndx = null;
                 break;
             }
         },
-        visualcueExterior : function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
+        visualcueExterior : function(eventType, $srcObj, $tgtObj) {
             switch (eventType) {
             case "dropactivate":
                 $tgtObj.addClass("dndx-visualcue-exterior-activate"); 
@@ -334,24 +371,6 @@ var dndx = null;
                 break;
             }
         },
-        //visualcueFlash : function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
-            //switch (eventType) {
-            //case "dropactivate":
-                //$tgtObj.addClass("dndx-visualcue-flash"); 
-                //break;
-            //case "dropdeactivate":
-                //$tgtObj.removeClass("dndx-visualcue-flash dndx-visualcue-gradient");
-                //break;
-            //case "dropover": 
-                //$tgtObj.removeClass("dndx-visualcue-flash");
-                //$tgtObj.addClass("dndx-visualcue-gradient");
-                //break;
-            //case "dropout":
-                //$tgtObj.addClass("dndx-visualcue-flash");
-                //$tgtObj.removeClass("dndx-visualcue-gradient");
-                //break;
-            //}
-        //},
     };
 
     function builtinVisualcue(name) {
@@ -362,6 +381,11 @@ var dndx = null;
         return builtinVisualcueOwner[vcName];
     }
 
+    function cleanup() {
+        unbindEventHandlers();
+        apiOwner = dataStore = null;
+    }
+
     // This function defines all APIs (except dndx() function) for the library and associates them to the object 'apiOwner'
     function defineAPIs() {
         apiOwner = {}; // This object owns all public functions of the library
@@ -369,9 +393,10 @@ var dndx = null;
         // CHAINABLE METHODS
         apiOwner.targets = function(tgtSelector) {
             validateSelector(tgtSelector);
-            if (this.srcSelector) {
-                setupPair(dataStore.pairs, this.srcSelector, tgtSelector);
+            if (!this.srcSelector) {
+                triggerException("Should not be called from the global level!");
             }
+            setupPair(dataStore.pairs, this.srcSelector, tgtSelector);
             return createChainable(this.srcSelector, tgtSelector);
         };
 
@@ -380,7 +405,8 @@ var dndx = null;
                 refreshDraggable(this.srcSelector, options);
             }
             else {
-                $.extend(dataStore.protoDraggableOptions, options);
+                extendDraggableOptions(dataStore.protoDraggableOptions, options);
+                //$.extend(dataStore.protoDraggableOptions, options);
                 refreshPairs(dataStore.pairs);
             }
             return this;
@@ -390,42 +416,26 @@ var dndx = null;
                 refreshDroppable(this.srcSelector, this.tgtSelector, options);
             }
             else {
-                $.extend(dataStore.protoDroppableOptions, options);
+                extendDroppableOptions(dataStore.protoDroppableOptions, options);
+                //$.extend(dataStore.protoDroppableOptions, options);
                 refreshPairs(dataStore.pairs);
             }
             return this;
         };
 
         apiOwner.visualcue = function(param) {
-            if (this.pair) {
-                if (typeof param === "string") {
-                    if (param === "fallback")
-                        delete this.pair.visualcue;
-                    else
-                        this.pair.visualcue = builtinVisualcue(param);
-                }
-                else if (param instanceof Function) {
-                    this.pair.visualcue = param;
-                }
+            var owner = this.pair || (this.source && this.source[srcClassName]) || dataStore.protoPair;
+            if (param === "fallback") {
+                delete owner.visualcue;
             }
-            else if (this.source) {
-                if (typeof param === "string") {
-                    if (param === "fallback")
-                        delete this.source[srcClassName].visualcue;
-                    else
-                        this.source[srcClassName].visualcue = builtinVisualcue(param);
-                }
-                else if (param instanceof Function) {
-                    this.source[srcClassName].visualcue = param;
-                }
+            else if (typeof param === "string") {
+                owner.visualcue = builtinVisualcue(param);
             }
-            else {
-                if (typeof param === "string") {
-                    dataStore.protoPair.visualcue = builtinVisualcue(param);
-                }
-                else if (param instanceof Function) {
-                    dataStore.protoPair.visualcue = param;
-                }
+            else if (param instanceof Function) {
+                owner.visualcue = param;
+            }
+            else if (param === null) {
+                owner.visualcue = noop;
             }
             return this;
         };
@@ -437,6 +447,21 @@ var dndx = null;
 
         apiOwner.onconflict = function(cb) {
             assignCallback(this.pair, this.source, "cbConflict", cb, noop);
+            return this;
+        };
+
+        apiOwner.onstart = function(cb) {
+            if (this.pair) {
+                triggerException("Should not be called from the pair level!");
+            }
+            assignCallback(null, this.source, "cbStart", cb, noop);
+            return this;
+        };
+        apiOwner.onstop = function(cb) {
+            if (this.pair) {
+                triggerException("Should not be called from the pair level!");
+            }
+            assignCallback(null, this.source, "cbStop", cb, noop);
             return this;
         };
 
@@ -461,8 +486,17 @@ var dndx = null;
             return this;
         };
 
+        //apiOwner.asSortableList = function(tgtSelector, options) {
+            //validateSelector(tgtSelector);
+            //var chainable = this;
+            //if (this.source) {
+            //}
+            //return chainable;
+        //};
+
         apiOwner.nullify = function() {
             if (this.pair) {
+                this.pair.nullified = true;
                 this.pair.visualcue = builtinVisualcue("Nothing");
                 this.pair.cbActivate = this.pair.cbDeactivate = this.pair.cbOver = this.pair.cbOut = this.pair.cbDrop = noop;
             }
@@ -537,15 +571,21 @@ var dndx = null;
             return _disable.call(this, false);
         };
 
+        apiOwner.cursor = function(dragType, hoverType) {
+            if (this.pair)
+                return this;
+            var owner = (this.source && this.source[srcClassName]) || dataStore.protoPair;
+            owner.cursorForDrag = dragType || "move";
+            owner.cursorForHover = hoverType || "pointer";
+            return this;
+        };
+
         // NON CHAINABLE METHODS
         apiOwner.remove = function(removeUnderlingObjects) {
             removePair(this.srcSelector, this.tgtSelector, removeUnderlingObjects);
         };
 
-        apiOwner.destroy = function() {
-            unbindEventHandlers();
-            apiOwner = dataStore = null;
-        };
+        apiOwner.destroy = cleanup;
 
         if ($.data(document.body, "dndx-under-inspection")) {
             // DEBUG/TEST METHODS (NOT FOR PRODUCTION USE!!!)
@@ -582,7 +622,7 @@ var dndx = null;
             }
         }
 
-        var className = "." + tgtClassName, eventContext = null;
+        var tgtClass = "." + tgtClassName, srcClass = "." + srcClassName, eventContext = null;
 
         function rejectTarget(tgt, ec) {
             if (!ec)
@@ -596,7 +636,27 @@ var dndx = null;
         }
 
         $("body").off(".dndx")
-        .on("dropactivate.dndx", className, function(e, ui) {
+        .on("dragstart.dndx", srcClass, function(e, ui) {
+            e.stopPropagation();
+            var srcSelector = ui.helper.data(srcDataKey);
+            if (srcSelector in dataStore.pairs === false)
+                return false;
+            var etc = { srcSelector:srcSelector, position:ui.position, offset:ui.offset, event:e, },
+                srcSettings = dataStore.pairs[srcSelector][srcClassName];
+            srcSettings.cbStart(e.type, ui.helper, [], etc);
+            ui.helper.css({ cursor: srcSettings.cursorForDrag, });
+        })
+        .on("dragstop.dndx", srcClass, function(e, ui) {
+            e.stopPropagation();
+            var srcSelector = ui.helper.data(srcDataKey);
+            if (srcSelector in dataStore.pairs === false)
+                return false;
+            var etc = { srcSelector:srcSelector, originalPosition:ui.originalPosition, position:ui.position, offset:ui.offset, event:e, },
+                srcSettings = dataStore.pairs[srcSelector][srcClassName];
+            srcSettings.cbStop(e.type, ui.helper, [], etc);
+            ui.helper.css({ cursor: srcSettings.cursorForHover, });
+        })
+        .on("dropactivate.dndx", tgtClass, function(e, ui) {
             var pair = grabPair(ui.draggable, $(e.target));
             if (pair) {
                 eventContext = eventContext || { pairs:[], };
@@ -612,13 +672,16 @@ var dndx = null;
                             }
                         });
                     }
-                    pair.visualcue(e.type, ui.draggable, $tgtObj, pair.srcSelector, pair.tgtSelector, e);
-                    pair.cbActivate(e.type, ui.draggable, $tgtObj, pair.srcSelector, pair.tgtSelector, e);
+                    var etc = { srcSelector: pair.srcSelector, tgtSelector:pair.tgtSelector, };
+                    if (! pair.nullified) {
+                        pair.visualcue(e.type, ui.draggable, $tgtObj, etc);
+                    }
+                    pair.cbActivate(e.type, ui.draggable, $tgtObj, etc);
                 }
             }
             return false;
         })
-        .on("dropdeactivate.dndx", className, function(e, ui) {
+        .on("dropdeactivate.dndx", tgtClass, function(e, ui) {
             if (!eventContext) {
                 return false;
             }
@@ -630,8 +693,9 @@ var dndx = null;
                     var $tgtObj = $(pair.tgtSelector).filter(function() {
                         return ! rejectTarget(this, eventContext);
                     });
-                    pair.visualcue(e.type, ui.draggable, $tgtObj, pair.srcSelector, pair.tgtSelector);
-                    pair.cbDeactivate(e.type, ui.draggable, $tgtObj, pair.srcSelector, pair.tgtSelector);
+                    var etc = { srcSelector: pair.srcSelector, tgtSelector:pair.tgtSelector, };
+                    pair.visualcue(e.type, ui.draggable, $tgtObj, etc);
+                    pair.cbDeactivate(e.type, ui.draggable, $tgtObj, etc);
                     if (eventContext.pairs.length === 0) {
                         eventContext = null;
                     }
@@ -639,7 +703,7 @@ var dndx = null;
             }
             return false;
         })
-        .on("dropover.dndx", className, function(e, ui) {
+        .on("dropover.dndx", tgtClass, function(e, ui) {
             if (rejectTarget(e.target, eventContext)) {
                 return false;
             }
@@ -647,7 +711,7 @@ var dndx = null;
             if (pair) {
                 var hitTargets = eventContext.hitTargets || (eventContext.hitTargets = createUniqueSequence()),
                     head = hitTargets.front(), $head = $(head), $tgt = $(e.target),
-                    prevPair = eventContext.focusedPair;
+                    prevPair = eventContext.focusedPair, etc;
 
                 eventContext.$src = ui.draggable;
                 eventContext.focusedPair = pair;
@@ -660,18 +724,20 @@ var dndx = null;
                         eventContext.focusedPair = prevPair;
                         return false;
                     }
-                    prevPair.visualcue("dropout", eventContext.$src, $head, prevPair.srcSelector, prevPair.tgtSelector);
-                    prevPair.cbOut("dropout", eventContext.$src, $head, prevPair.srcSelector, prevPair.tgtSelector);
+                    etc = { srcSelector:prevPair.srcSelector, tgtSelector:prevPair.tgtSelector, };
+                    prevPair.visualcue("dropout", eventContext.$src, $head, etc);
+                    prevPair.cbOut("dropout", eventContext.$src, $head, etc);
                 }
 
-                pair.visualcue(e.type, eventContext.$src, $tgt, pair.srcSelector, pair.tgtSelector, e);
-                pair.cbOver(e.type, eventContext.$src, $tgt, pair.srcSelector, pair.tgtSelector, e);
+                etc = { srcSelector:pair.srcSelector, tgtSelector:pair.tgtSelector, };
+                pair.visualcue(e.type, eventContext.$src, $tgt, etc);
+                pair.cbOver(e.type, eventContext.$src, $tgt, etc);
 
                 hitTargets.pushFront(e.target);
             }
             return false;
         })
-        .on("dropout.dndx", className, function(e, ui) {
+        .on("dropout.dndx", tgtClass, function(e, ui) {
             if (rejectTarget(e.target, eventContext)) {
                 return false;
             }
@@ -679,12 +745,13 @@ var dndx = null;
                 return false;
             }
             var pair = eventContext.focusedPair, hitTargets = eventContext.hitTargets,
-                head = hitTargets ? hitTargets.front() : null, $head = $(head);
+                head = hitTargets ? hitTargets.front() : null, $head = $(head), etc;
             if (pair) {
                 hitTargets.remove(e.target);
                 if (head === e.target) {
-                    pair.visualcue(e.type, eventContext.$src, $head, pair.srcSelector, pair.tgtSelector);
-                    pair.cbOut(e.type, eventContext.$src, $head, pair.srcSelector, pair.tgtSelector);
+                    etc = { srcSelector:pair.srcSelector, tgtSelector:pair.tgtSelector, };
+                    pair.visualcue(e.type, eventContext.$src, $head, etc);
+                    pair.cbOut(e.type, eventContext.$src, $head, etc);
 
                     if (hitTargets.length > 1) {
                         var i, c, selected = $(hitTargets[0]);
@@ -700,13 +767,14 @@ var dndx = null;
 
                     head = hitTargets.front(), $head = $(head);
                     eventContext.focusedPair = pair = grabPair(eventContext.$src, $head);
-                    pair.visualcue("dropover", eventContext.$src, $head, pair.srcSelector, pair.tgtSelector, e);
-                    pair.cbOver("dropover", eventContext.$src, $head, pair.srcSelector, pair.tgtSelector, e);
+                    etc = { srcSelector:pair.srcSelector, tgtSelector:pair.tgtSelector, };
+                    pair.visualcue("dropover", eventContext.$src, $head, etc);
+                    pair.cbOver("dropover", eventContext.$src, $head, etc);
                 }
             }
             return false;
         })
-        .on("drop.dndx", className, function(e, ui) {
+        .on("drop.dndx", tgtClass, function(e, ui) {
             if (rejectTarget(e.target, eventContext)) {
                 return false;
             }
@@ -717,8 +785,9 @@ var dndx = null;
             if (pair) {
                 var hitTargets = eventContext.hitTargets, head = hitTargets.front(), $head = $(head);
                 if (head === e.target) {
-                    pair.visualcue(e.type, ui.draggable, $head, pair.srcSelector, pair.tgtSelector, e);
-                    pair.cbDrop(e.type, ui.draggable, $head, pair.srcSelector, pair.tgtSelector, e);
+                    var etc = { srcSelector:pair.srcSelector, tgtSelector:pair.tgtSelector, };
+                    pair.visualcue(e.type, ui.draggable, $head, etc);
+                    pair.cbDrop(e.type, ui.draggable, $head, etc);
                     eventContext.focusedPair = eventContext.$src = eventContext.hitTargets = null;
                 }
             }
@@ -792,6 +861,8 @@ var dndx = null;
 
         return createChainable(srcSelector, tgtSelector);
     }; 
+
+    dndx.destroy = cleanup;
 
 }(jQuery));
 
