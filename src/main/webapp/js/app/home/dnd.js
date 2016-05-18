@@ -8,16 +8,16 @@ function setupDndForFragments(forFramentOverlay) {
         .onconflict(function($srcObj, $tgtObj0, $tgtObj1) {
             if ($tgtObj0.is("#fragment-content-editor")) return $tgtObj0;
             if ($tgtObj1.is("#fragment-content-editor")) return $tgtObj1;
-            if ($tgtObj0.is("#fragment-overlay-content .fragment-header")) return $tgtObj0;
-            if ($tgtObj1.is("#fragment-overlay-content .fragment-header")) return $tgtObj1;
+            if ($tgtObj0.is("#fragment-overlay-content .fragment-header, #fragment-overlay-content .small-fragment-box")) return $tgtObj0;
+            if ($tgtObj1.is("#fragment-overlay-content .fragment-header, #fragment-overlay-content .small-fragment-box")) return $tgtObj1;
             if ($tgtObj0.is("#editor-frame")) return $tgtObj0;
             if ($tgtObj1.is("#editor-frame")) return $tgtObj1;
+            if ($tgtObj0.is("[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label")) return $tgtObj0;
+            if ($tgtObj1.is("[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label")) return $tgtObj1;
             if ($tgtObj0.is("#fragment-overlay")) return $tgtObj0;
             if ($tgtObj1.is("#fragment-overlay")) return $tgtObj1;
-            if ($tgtObj0.is(".fragment-header")) return $tgtObj0;
-            if ($tgtObj1.is(".fragment-header")) return $tgtObj1;
-            if ($tgtObj0.is(".small-fragment-box")) return $tgtObj0;
-            if ($tgtObj1.is(".small-fragment-box")) return $tgtObj1;
+            if ($tgtObj0.is(".fragment-header, .small-fragment-box")) return $tgtObj0;
+            if ($tgtObj1.is(".fragment-header, .small-fragment-box")) return $tgtObj1;
             return $tgtObj0;
         })
         .ondrop(function(eventType, $srcObj, $tgtObj, srcSelector, tgtSelector, e) {
