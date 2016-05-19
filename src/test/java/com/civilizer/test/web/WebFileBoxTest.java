@@ -2,15 +2,19 @@ package com.civilizer.test.web;
 
 import static org.junit.Assert.*;
 
+import org.junit.*;
+
 import java.util.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.junit.*;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.civilizer.config.AppOptions;
@@ -455,6 +459,37 @@ public class WebFileBoxTest {
         
         // file structures for test are heavily modified. refresh it.
         renewTestData();
+    }
+    
+    @Test
+    public void testDeleteMemoryMappedFiles() throws Exception {
+        File f = new File(FsUtil.concatPath(filesHomePath, "sample.txt"));
+        FileUtils.writeStringToFile(f, "Hello, Civilizer...");
+
+        try (RandomAccessFile raf = new RandomAccessFile(f,"rw");
+            FileChannel fc = raf.getChannel()) {
+            MappedByteBuffer mbf = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            closeDirectBuffer(mbf); // This operation is necessary for Windows
+        } 
+        
+        f.delete();
+        Assert.assertEquals(false, f.exists());
+    }
+    
+    private void closeDirectBuffer(ByteBuffer cb) {
+        if (!cb.isDirect()) return;
+
+        // we could use this type cast and call functions without reflection code,
+        // but static import from sun.* package is risky for non-SUN virtual machine.
+        //try { ((sun.nio.ch.DirectBuffer)cb).cleaner().clean(); } catch (Exception ex) { }
+        try {
+            Method cleaner = cb.getClass().getMethod("cleaner");
+            cleaner.setAccessible(true);
+            Method clean = Class.forName("sun.misc.Cleaner").getMethod("clean");
+            clean.setAccessible(true);
+            clean.invoke(cleaner.invoke(cb));
+        } catch(Exception ex) { }
+        cb = null;
     }
 
 }
