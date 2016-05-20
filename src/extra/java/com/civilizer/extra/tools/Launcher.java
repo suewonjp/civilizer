@@ -95,7 +95,7 @@ public final class Launcher {
         org.eclipse.jetty.plus.webapp.PlusConfiguration.class.getCanonicalName(),
         org.eclipse.jetty.annotations.AnnotationConfiguration.class.getCanonicalName(),
         org.eclipse.jetty.webapp.JettyWebXmlConfiguration.class.getCanonicalName()
-        };
+    };
     
     public static void main(String[] args) {
         try {
@@ -109,6 +109,7 @@ public final class Launcher {
             
             String home = "";
             int port = 8080;
+            boolean cleanStart = false;
             for (int i=0;i<args.length; ++i) {
                 switch (args[i]) {
                 case "--port":
@@ -122,13 +123,23 @@ public final class Launcher {
                     }
                     break;
                 case "--home":
-                    if (i < args.length - 1)
-                        home = args[++i];
+                    if (i < args.length - 1) {
+                        String path = args[i + 1];
+                        if (! path.startsWith("--")) {
+                            // any string starting with "--" will be considered as an option specifier;
+                            // [SIDE EFFECT] this will reject any path starting with "--"
+                            home = path;
+                            ++i;
+                        }
+                    }
+                    break;
+                case "--cleanStart":
+                    cleanStart = true;
                     break;
                 }
             }
             
-            new Launcher(port, home).startServer(warFolder);
+            new Launcher(port, home, cleanStart).startServer(warFolder);
         } catch (Exception e) {
             e.printStackTrace();
             assert false;
@@ -137,12 +148,16 @@ public final class Launcher {
         }
     }
 
-    private Launcher(int port, String home) {
+    private Launcher(int port, String home, boolean cleanStart) {
         assert 0 < port && port <= 0xffff;
         server = new Server();
         assert server != null;
         this.port = port;
         System.setProperty("civilizer.private_home_path", home);
+        if (cleanStart) {
+            System.setProperty("civilizer.override_option_file", "true");
+            System.setProperty("civilizer.clean_start", "true");
+        }
     }
     
     private static String getCvzUrl() {
