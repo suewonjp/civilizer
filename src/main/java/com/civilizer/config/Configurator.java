@@ -141,6 +141,10 @@ public final class Configurator {
         } catch (Exception e) {
             p.setProperty(AppOptions.ITEMS_PER_PAGE, AppOptions.DEF_ITEMS_PER_PAGE);
         }
+
+	    if (p.getProperty(AppOptions.CLEAN_START) == null) {
+	        p.setProperty(AppOptions.CLEAN_START, AppOptions.DEF_CLEAN_START);
+	    }
 	}
 	
 	private void setConstrainedOptions(Properties p) {
@@ -148,6 +152,12 @@ public final class Configurator {
             // [NOTE] 'database initialization' is available only for a development mode
             p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
         }
+	    if (isTrue(p, AppOptions.CLEAN_START)) {
+	        // [NOTE] CLEAN_START is for starting the app with a clean empty DB (without help documentation)
+	        // This option is so dangerous that it should not be specified via option files
+	        p.setProperty(AppOptions.INITIALIZE_DB, "true");
+	        p.setProperty(AppOptions.DATA_SCRIPTS, "");
+	    }
 	}
 	
 	private void addAppOptionsToSystemProperties(File privateHome) {
@@ -165,6 +175,7 @@ public final class Configurator {
 		    	// override some options with the corresponding system properties if any
 		    	overrideOptionValue(AppOptions.DB_FILE_PREFIX, p);
 		    	overrideOptionValue(AppOptions.FILE_BOX_HOME, p);
+		    	overrideOptionValue(AppOptions.CLEAN_START, p);
 		    }
 
 		    setUnspecifiedOptionsWithDefaultValues(p);
