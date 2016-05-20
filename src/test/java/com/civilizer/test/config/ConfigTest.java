@@ -68,6 +68,8 @@ public class ConfigTest {
     	System.setProperty(AppOptions.FILE_BOX_HOME, "file/box/home");
     	new Configurator();
     	
+    	FileUtils.deleteQuietly(new File(homePath + "/file"));
+    	
     	assertEquals("true", System.getProperty(AppOptions.OVERRIDE_OPTION_FILE));
     	assertEquals(FsUtil.normalizePath(homePath + "/db/file/prefix"), System.getProperty(AppOptions.DB_FILE_PREFIX));
     	assertEquals(FsUtil.normalizePath(homePath + "/file/box/home"), System.getProperty(AppOptions.FILE_BOX_HOME));
@@ -84,12 +86,12 @@ public class ConfigTest {
     	System.setProperty(AppOptions.PRIVATE_HOME_PATH, homePath);
     	System.setProperty(AppOptions.OVERRIDE_OPTION_FILE, "true");
     	System.setProperty(AppOptions.DB_FILE_PREFIX, userHomePath + "/db/file/prefix");
-    	System.setProperty(AppOptions.FILE_BOX_HOME, userHomePath + "/file/box/home");
+//    	System.setProperty(AppOptions.FILE_BOX_HOME, userHomePath + "/file/box/home");
     	new Configurator();
     	
     	assertEquals("true", System.getProperty(AppOptions.OVERRIDE_OPTION_FILE));
     	assertEquals(FsUtil.normalizePath(userHomePath + "/db/file/prefix"), System.getProperty(AppOptions.DB_FILE_PREFIX));
-    	assertEquals(FsUtil.normalizePath(userHomePath + "/file/box/home"), System.getProperty(AppOptions.FILE_BOX_HOME));
+//    	assertEquals(FsUtil.normalizePath(userHomePath + "/file/box/home"), System.getProperty(AppOptions.FILE_BOX_HOME));
     	
     	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
     	System.clearProperty(AppOptions.DB_FILE_PREFIX);
@@ -103,12 +105,12 @@ public class ConfigTest {
     	System.setProperty(AppOptions.PRIVATE_HOME_PATH, homePath);
     	System.setProperty(AppOptions.OVERRIDE_OPTION_FILE, "true");
     	System.setProperty(AppOptions.DB_FILE_PREFIX, "~/db/file/prefix");
-    	System.setProperty(AppOptions.FILE_BOX_HOME, "~/file/box/home");
+//    	System.setProperty(AppOptions.FILE_BOX_HOME, "~/file/box/home");
     	new Configurator();
     	
     	assertEquals("true", System.getProperty(AppOptions.OVERRIDE_OPTION_FILE));
     	assertEquals(FsUtil.normalizePath(userHomePath + "/db/file/prefix"), System.getProperty(AppOptions.DB_FILE_PREFIX));
-    	assertEquals(FsUtil.normalizePath(userHomePath + "/file/box/home"), System.getProperty(AppOptions.FILE_BOX_HOME));
+//    	assertEquals(FsUtil.normalizePath(userHomePath + "/file/box/home"), System.getProperty(AppOptions.FILE_BOX_HOME));
     	
     	System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
     	System.clearProperty(AppOptions.DB_FILE_PREFIX);
@@ -122,12 +124,12 @@ public class ConfigTest {
         System.setProperty(AppOptions.PRIVATE_HOME_PATH, homePath);
         System.setProperty(AppOptions.OVERRIDE_OPTION_FILE, "true");
         System.setProperty(AppOptions.DB_FILE_PREFIX, userHomePath + "\\db\\file\\prefix");
-        System.setProperty(AppOptions.FILE_BOX_HOME, userHomePath + "\\file\\box\\home");
+//        System.setProperty(AppOptions.FILE_BOX_HOME, userHomePath + "\\file\\box\\home");
         new Configurator();
         
         assertEquals(false, System.getProperty(AppOptions.PRIVATE_HOME_PATH).contains("\\"));
         assertEquals(FsUtil.normalizePath(userHomePath + "/db/file/prefix"), System.getProperty(AppOptions.DB_FILE_PREFIX));
-        assertEquals(FsUtil.normalizePath(userHomePath + "/file/box/home"), System.getProperty(AppOptions.FILE_BOX_HOME));
+//        assertEquals(FsUtil.normalizePath(userHomePath + "/file/box/home"), System.getProperty(AppOptions.FILE_BOX_HOME));
         
         System.clearProperty(AppOptions.PRIVATE_HOME_PATH);
         System.clearProperty(AppOptions.DB_FILE_PREFIX);
