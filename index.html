@@ -165,7 +165,7 @@
   <li><a href="https://twitter.com/civilizer_pkm">civilizer twitter - @civilizer_pkm</a></li>
   <li><a href="http://suewonjp.github.io/civilizer/blog/">civilizer blog</a></li>
   <li><a href="https://www.youtube.com/watch?v=0omObKmJd4E&amp;feature=youtu.be">civilizer tutorial video</a></li>
-  <li><a href="https://github.com/suewonjp/civilizer/wiki">civilizer wiki and online docummentations</a></li>
+  <li><a href="https://github.com/suewonjp/civilizer/wiki">civilizer online manual/docummentations</a></li>
   <li><a href="https://github.com/suewonjp/civilizer/issues">feature request &amp; bug report &amp; other issues</a></li>
 </ul>
 
@@ -173,29 +173,24 @@
 
 <h3 id="prerequisites">PREREQUISITES</h3>
 
-<p>Java Runtime Environment (JRE)
-- Note that JRE 7 or above is needed
-- The latest JRE is recommended</p>
+<p>Java Runtime Environment (JRE)</p>
+
+<ul>
+  <li>JRE 7 or higher</li>
+</ul>
 
 <p>Supported platforms:</p>
 
 <ul>
-  <li>Linux
-    <ul>
-      <li>Ubuntu/Linux Mint</li>
-      <li>Other Distros (? - will work, not fully tested though)</li>
-    </ul>
-  </li>
+  <li>Linux</li>
   <li>OS X
     <ul>
-      <li>Mavericks</li>
-      <li>Yosemite or above (? - will work, not fully tested though)</li>
+      <li>Mavericks or higher</li>
     </ul>
   </li>
   <li>Windows
     <ul>
-      <li>7/8</li>
-      <li>10 or above (? - will work, not fully tested though)</li>
+      <li>7/8/10 or higher</li>
     </ul>
   </li>
 </ul>
@@ -210,8 +205,8 @@
   <li>Edge</li>
   <li>Internet Explorer
     <ul>
-      <li>9/10/11</li>
-      <li><strong><em>Civilizer doesn’t support IE 8 or earlier versions of IE</em></strong></li>
+      <li>9/10/11 ( 9 or 10 may not render some styles correctly )</li>
+      <li><strong><em>IE 8 won’t work</em></strong></li>
     </ul>
   </li>
 </ul>
@@ -285,18 +280,10 @@
   <li>The pages you’ll see after accessing Civilizer is basically its <strong><em>User Manual</em></strong>.
     <ul>
       <li>The manual also has a role of exemplary data from which you can get some idea of how to create or edit your own data.</li>
-      <li>For now, no online manual is provided.</li>
+      <li>Also, Civilizer has <a href="https://github.com/suewonjp/civilizer/wiki">online user manual</a></li>
     </ul>
   </li>
 </ol>
-
-<blockquote>
-  <p>For Advanced Users
-- Simply, run the following command from your shell at the root of the installation directory.
-  - <em>java -jar extra/lib/jetty-runner.jar –config jetty.xml –port 8080 –path /civilizer civilizer</em>
-  - This will run Civilizer with all it needs at the minimum.
-  - No tray icon or no other overhead.</p>
-</blockquote>
 
 <h3 id="how-to-uninstall">HOW TO UNINSTALL</h3>
 
@@ -316,87 +303,37 @@
 
 <hr />
 
-<h3 id="compiletest">COMPILE/TEST</h3>
-<p>If you want to compile/test Civilizer on your own, you need the following as a minimum:</p>
+<h3 id="how-to-build">HOW TO BUILD</h3>
+<p>Refer to <a href="https://github.com/suewonjp/civilizer/wiki/Building-Civilizer">this page</a>.</p>
 
-<ul>
-  <li>JDK 1.7 or above</li>
-  <li>Maven (https://maven.apache.org/)</li>
-  <li>Eclipse IDE (Optional)
-    <ul>
-      <li>Spring Tool Suite (https://spring.io/tools) is recommended.</li>
-      <li>Do the following before importing the project into Eclipse IDE.<br />
-        <ol>
-          <li>Install the latest <em>Maven integration in Eclipse (m2e)</em> plugin.</li>
-          <li>Run <em>mvn clean package</em> command.</li>
-        </ol>
-      </li>
-    </ul>
-  </li>
-</ul>
+<p><strong><em>In fact, building Civilizer from the latest source code is quite easy.</em></strong></p>
 
-<p>Using Maven, you can execute commands as follow at the root directory of the source package:</p>
+<ol>
+  <li>Download the latest source code
+    <ul>
+      <li>Press <strong><em>Clone or download</em></strong> button above</li>
+    </ul>
+  </li>
+  <li>Uncompress the downloaded package and go to that directory</li>
+  <li>From there, open a commandline tool or terminal so that you can execute shell commands</li>
+  <li>Just execute the following command
+    <ul>
+      <li>Windows Users:</li>
+      <li><em>gradlew.bat all</em></li>
+      <li>Other OS Users:</li>
+      <li><em>./gradle all</em></li>
+    </ul>
+  </li>
+  <li>And just wait. It might take more than several minutes especially for the first time to build</li>
+</ol>
 
-<ul>
-  <li>To compile the binaries and perform unit tests:<br />
-    <ul>
-      <li>mvn test</li>
-    </ul>
-  </li>
-  <li>To build a .WAR file:
-    <ul>
-      <li>mvn clean package
-        <ul>
-          <li>Alternatively, <em>mvn clean package -Dmaven.test.skip=true</em> to skip unit tests.</li>
-        </ul>
-      </li>
-      <li>The output WAR can be found as <em>{root directory}/target/civilizer.{version-number…}.war</em> file.</li>
-      <li>You can deploy and run the .WAR file on the Web Servers (technically, <a href="https://en.wikipedia.org/wiki/Web_container">Servlet Containers</a>) such as:
-        <ul>
-          <li>Tomcat (http://tomcat.apache.org)</li>
-          <li>Jetty (http://www.eclipse.org/jetty/) or Jetty Runner (http://eclipse.org/jetty/documentation/current/runner.html)</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>To compile the binary and load the application onto a Jetty server on the fly:<br />
-    <ul>
-      <li>mvn jetty:run</li>
-    </ul>
-  </li>
-</ul>
-
-<p>Shell scripts have been provided to build all the binaries/resources and package them all:</p>
-
-<ul>
-  <li>Windows Users:
-    <ul>
-      <li>Run <strong><em>tools/build/build-all.bat</em></strong> from the command line.</li>
-      <li>Alternatively,
-        <ul>
-          <li>install Babun (http://babun.github.io)
-            <ul>
-              <li>It is a shell application running on top of Cygwin.</li>
-            </ul>
-          </li>
-          <li>Run <strong><em>tools/build/build-all.sh</em></strong> from the command line powered by Babun.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Other OS Users:
-    <ul>
-      <li>Run <strong><em>tools/build/build-all.sh</em></strong> from the command line.</li>
-    </ul>
-  </li>
-</ul>
+<p>Refer to <a href="https://github.com/suewonjp/civilizer/wiki/Building-Civilizer">this page</a> for more advanced topics about build or development.</p>
 
 <hr />
 
 <h3 id="limitations">LIMITATIONS</h3>
 
 <ul>
-  <li>Civilizer is currently in <strong>BETA</strong> status.</li>
   <li>Layout may not be rendered correctly on some untested browsers.</li>
   <li>Localization is yet to be done.</li>
   <li>Civilizer is currently provided as a <strong>PRIVATE EDITION</strong> only.
