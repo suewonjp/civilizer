@@ -44,7 +44,7 @@ Civilizer has a full text search functionality to greatly help you access right 
 - [civilizer twitter - @civilizer_pkm](https://twitter.com/civilizer_pkm)
 - [civilizer blog](http://suewonjp.github.io/civilizer/blog/)
 - [civilizer tutorial video](https://www.youtube.com/watch?v=0omObKmJd4E&feature=youtu.be)
-- [civilizer wiki and online docummentations](https://github.com/suewonjp/civilizer/wiki)
+- [civilizer online manual/docummentations](https://github.com/suewonjp/civilizer/wiki)
 - [feature request & bug report & other issues](https://github.com/suewonjp/civilizer/issues)
 
 * * *
@@ -52,20 +52,16 @@ Civilizer has a full text search functionality to greatly help you access right 
 ### PREREQUISITES
 
 Java Runtime Environment (JRE)
-- Note that JRE 7 or above is needed
-- The latest JRE is recommended
+
+- JRE 7 or higher
 
 Supported platforms:
 
 - Linux
-    - Ubuntu/Linux Mint
-    - Other Distros (? - will work, not fully tested though)
 - OS X
-    - Mavericks
-    - Yosemite or above (? - will work, not fully tested though)
+    - Mavericks or higher
 - Windows
-    - 7/8
-    - 10 or above (? - will work, not fully tested though)
+    - 7/8/10 or higher
 
 Supported browsers: (note that old versions may not work correctly)
 
@@ -75,8 +71,8 @@ Supported browsers: (note that old versions may not work correctly)
 - Opera
 - Edge
 - Internet Explorer
-    - 9/10/11
-    - ***Civilizer doesn't support IE 8 or earlier versions of IE***
+    - 9/10/11 ( 9 or 10 may not render some styles correctly )
+    - ***IE 8 won't work***
     
 ### HOW TO INSTALL AND RUN
     
@@ -109,14 +105,8 @@ Supported browsers: (note that old versions may not work correctly)
             - Click on the man icon located at the top-right corner of the page. 
 1. The pages you'll see after accessing Civilizer is basically its ***User Manual***.
     - The manual also has a role of exemplary data from which you can get some idea of how to create or edit your own data.
-    - For now, no online manual is provided.
+    - Also, Civilizer has [online user manual](https://github.com/suewonjp/civilizer/wiki)
     
-> For Advanced Users
-> - Simply, run the following command from your shell at the root of the installation directory.
->   - _java -jar extra/lib/jetty-runner.jar --config jetty.xml --port 8080 --path /civilizer civilizer_
->   - This will run Civilizer with all it needs at the minimum.
->   - No tray icon or no other overhead.
-
 ### HOW TO UNINSTALL
 
 1. Just remove the extracted folder.
@@ -127,47 +117,27 @@ Supported browsers: (note that old versions may not work correctly)
    
 * * *
 
-### COMPILE/TEST
-If you want to compile/test Civilizer on your own, you need the following as a minimum:
+### HOW TO BUILD
 
-- JDK 1.7 or above
-- Maven (https://maven.apache.org/)
-- Eclipse IDE (Optional)
-    - Spring Tool Suite (https://spring.io/tools) is recommended.
-    - Do the following before importing the project into Eclipse IDE.  
-        1. Install the latest _Maven integration in Eclipse (m2e)_ plugin.
-        1. Run _mvn clean package_ command.
+***In fact, building Civilizer from the latest source code is quite easy.***
 
-Using Maven, you can execute commands as follow at the root directory of the source package:
+1. Download the latest source code
+     - Press ***Clone or download*** button above
+1. Uncompress the downloaded package and go to that directory
+1. From there, open a commandline tool or terminal so that you can execute shell commands
+1. Just execute the following command
+    - Windows Users:
+     - _gradlew.bat all_
+    - Other OS Users:
+     - _./gradle all_
+1. And just wait. It might take more than several minutes especially for the first time to build
 
-- To compile the binaries and perform unit tests:  
-    - mvn test
-- To build a .WAR file:
-    - mvn clean package
-        - Alternatively, _mvn clean package -Dmaven.test.skip=true_ to skip unit tests.
-    - The output WAR can be found as _{root directory}/target/civilizer.{version-number...}.war_ file.
-    - You can deploy and run the .WAR file on the Web Servers (technically, [Servlet Containers](https://en.wikipedia.org/wiki/Web_container)) such as:
-        - Tomcat (http://tomcat.apache.org)
-        - Jetty (http://www.eclipse.org/jetty/) or Jetty Runner (http://eclipse.org/jetty/documentation/current/runner.html)
-- To compile the binary and load the application onto a Jetty server on the fly:  
-    - mvn jetty:run
-    
-Shell scripts have been provided to build all the binaries/resources and package them all:
-
-- Windows Users:
-    - Run ***tools/build/build-all.bat*** from the command line.
-    - Alternatively,
-        - install Babun (http://babun.github.io)
-          - It is a shell application running on top of Cygwin.
-        - Run ***tools/build/build-all.sh*** from the command line powered by Babun.
-- Other OS Users:
-    - Run ***tools/build/build-all.sh*** from the command line.
+Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civilizer) for more advanced topics about build or development.
 
 * * *
 
 ### LIMITATIONS
 
-- Civilizer is currently in **BETA** status.
 - Layout may not be rendered correctly on some untested browsers.
 - Localization is yet to be done.
 - Civilizer is currently provided as a **PRIVATE EDITION** only.
