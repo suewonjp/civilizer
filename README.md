@@ -103,9 +103,9 @@ Supported browsers: (note that old versions may not work correctly)
     - After authenticated, you can reach the default page of the application.
         - You may change username or password by accessing ***'Change Profile'*** menu.
             - Click on the man icon located at the top-right corner of the page. 
-1. The pages you'll see after accessing Civilizer is basically its ***User Manual***.
-    - The manual also has a role of exemplary data from which you can get some idea of how to create or edit your own data.
-    - Also, Civilizer has [online user manual](https://github.com/suewonjp/civilizer/wiki)
+1. The pages you'll see after accessing Civilizer is its ***User Manual***.
+    - The manual also has a role of samples from which you can get some idea of how to create or edit your own data.
+    - Also, Civilizer has the [online user manual](https://github.com/suewonjp/civilizer/wiki)
     
 ### HOW TO UNINSTALL
 
@@ -124,13 +124,14 @@ Supported browsers: (note that old versions may not work correctly)
 1. Download the latest source code
      - Press ***Clone or download*** button above
 1. Uncompress the downloaded package and go to that directory
-1. From there, open a commandline tool or terminal so that you can execute shell commands
-1. Just execute the following command
+1. Just execute the following command from the command line
     - Windows Users:
-     - _gradlew.bat all_
+        - _gradlew.bat all_
     - Other OS Users:
-     - _./gradlew all_
+        - _./gradlew all_
 1. And just wait. It might take more than several minutes especially for the first time to build
+1. You can find the output package in the **build** directory
+    - e.g., {uncompressed-folder}/build/civilizer.{version-notation}.zip
 
 Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civilizer) for more advanced topics about build or development.
 
