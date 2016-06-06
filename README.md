@@ -129,7 +129,7 @@ Supported browsers: (note that old versions may not work correctly)
     - Windows Users:
      - _gradlew.bat all_
     - Other OS Users:
-     - _./gradle all_
+     - _./gradlew all_
 1. And just wait. It might take more than several minutes especially for the first time to build
 
 Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civilizer) for more advanced topics about build or development.
