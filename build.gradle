@@ -75,6 +75,14 @@ dependencies {
     testCompile ("junit:junit:4.10") { force = true }
     providedCompile ("javax.servlet:servlet-api:2.5") { force = true }
     jettyRunner ("org.eclipse.jetty:jetty-runner:${jettyVersion}") { force = true }
+
+    // mandatory dependencies for using Spock
+    compile "org.codehaus.groovy:groovy-all:2.4.1"
+    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+
+    // optional dependencies for using Spock
+    testRuntime "cglib:cglib-nodep:3.1" // allows mocking of classes (in addition to interfaces)
+    testRuntime "org.objenesis:objenesis:2.1" // allows mocking of classes without default constructor (together with CGLIB)
 }
 
 sourceSets {
