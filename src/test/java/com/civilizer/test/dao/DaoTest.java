@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
+import org.junit.Ignore;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
@@ -20,6 +21,7 @@ import com.civilizer.dao.*;
 import com.civilizer.domain.*;
 import com.civilizer.test.helper.TestUtil;
 
+@Ignore
 class DaoTest {
 
 	protected static Logger logger;
@@ -32,6 +34,8 @@ class DaoTest {
 
 	private final List<Tag> temporalTags = new ArrayList<Tag>();
 	private final List<Fragment> temporalFragments = new ArrayList<Fragment>();
+	
+	public DaoTest() {}
 
 	protected static void setUpBeforeClass(
 	    String dataSourceContextPath

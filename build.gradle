@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'war'
 apply from: 'gradle/compress-webrsc.gradle'
@@ -23,6 +24,7 @@ configurations {
 }
 
 repositories {
+    mavenCentral()
     maven { url "http://download.java.net/maven/2/" }
     maven { url "http://repository.primefaces.org" }
     maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
@@ -113,6 +115,12 @@ task explodedWar(type: Copy) {
     into explodedWarDir
     with war
 }
+
+//test {
+    //testLogging {
+        //events "passed", "skipped", "failed", "standardOut", "standardError"
+    //}
+//}
 
 war {
     exclude "**/extra/**"
