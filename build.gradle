@@ -79,7 +79,7 @@ dependencies {
     jettyRunner ("org.eclipse.jetty:jetty-runner:${jettyVersion}") { force = true }
 
     // mandatory dependencies for using Spock
-    compile "org.codehaus.groovy:groovy-all:2.4.1"
+    compile "org.codehaus.groovy:groovy-all:2.4.6"
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 
     // optional dependencies for using Spock
