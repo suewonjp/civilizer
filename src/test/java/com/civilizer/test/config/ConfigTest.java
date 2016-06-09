@@ -176,13 +176,13 @@ public class ConfigTest {
     @Test
     public void testMethod_Configurator_equals() {
         final String option = "Whatever Option";
-        assertEquals(false, Configurator.equals(option, "true", true));
+        assertEquals(false, Configurator.equals(option, "true", false));
         System.setProperty(option, "TRUE");
-        assertEquals(true, Configurator.equals(option, "true", true));
+        assertEquals(true, Configurator.equals(option, "true", false));
         System.setProperty(option, "True");
-        assertEquals(true, Configurator.equals(option, "true", true));
+        assertEquals(true, Configurator.equals(option, "true", false));
         System.setProperty(option, "false");
-        assertEquals(false, Configurator.equals(option, "true", true));
+        assertEquals(false, Configurator.equals(option, "true", false));
         System.clearProperty(option);
     }
 

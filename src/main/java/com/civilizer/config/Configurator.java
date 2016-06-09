@@ -31,7 +31,7 @@ public final class Configurator {
 	    String v = p.getProperty(optionKey);
 	    if (v == null)
 	        return false;
-	    if (caseSensitive)
+	    if (! caseSensitive)
 	        v = v.toLowerCase();
 	    return v.equals(optionValue);
 	}
