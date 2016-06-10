@@ -2,12 +2,12 @@ package com.civilizer.test.utils;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import com.civilizer.utils.DefaultTreeNode;
 import com.civilizer.utils.TreeNode;
 
+@Ignore
 public class TreeNodeTest {
 
 	@Before

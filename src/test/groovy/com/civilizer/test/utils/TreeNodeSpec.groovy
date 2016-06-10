@@ -5,6 +5,7 @@ import spock.lang.*
 import com.civilizer.utils.DefaultTreeNode;
 import com.civilizer.utils.TreeNode;
 
+@Subject(TreeNode)
 class TreeNodeSpec extends spock.lang.Specification {
     
     TreeNode<Character> root, a, b, c, d, e, f, g, h

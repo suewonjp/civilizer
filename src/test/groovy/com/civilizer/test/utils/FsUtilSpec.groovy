@@ -21,6 +21,7 @@ import org.junit.Test;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
 
+@Subject(FsUtil)
 class FsUtilSpec extends spock.lang.Specification {
     
     def setup() {

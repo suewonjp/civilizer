@@ -1,8 +1,7 @@
 package com.civilizer.test.utils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+import org.junit.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -16,13 +15,12 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
 
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
 
+@Ignore
 public class FsUtilTest {
 
     @Before

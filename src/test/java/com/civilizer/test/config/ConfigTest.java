@@ -1,13 +1,13 @@
 package com.civilizer.test.config;
 
 import static org.junit.Assert.*;
+import org.junit.*;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.*;
 import org.springframework.beans.BeansException;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -17,6 +17,7 @@ import com.civilizer.dao.FragmentDao;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
 
+@Ignore
 public class ConfigTest {
     
     @Before
