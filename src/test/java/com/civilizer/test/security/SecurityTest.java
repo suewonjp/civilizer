@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.civilizer.security.UserDetailsService;
 import com.civilizer.test.helper.TestUtil;
 
+@Ignore
 public class SecurityTest {
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
