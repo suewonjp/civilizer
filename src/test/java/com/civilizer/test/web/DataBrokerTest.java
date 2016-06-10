@@ -1,10 +1,10 @@
 package com.civilizer.test.web;
 
 import static org.junit.Assert.*;
+import org.junit.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.junit.*;
 
 import java.io.File;
 
@@ -13,6 +13,7 @@ import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
 import com.civilizer.web.view.DataBrokerBean;
 
+@Ignore
 public class DataBrokerTest {
 
     @BeforeClass
