@@ -335,15 +335,13 @@ public final class SearchParams implements Serializable {
 		}
 		
 		private static TargetDirective parseTarget(String src) {
-			final TargetDirective def = DIRECTIVES[0];
-			
 			for (TargetDirective targetDirective : DIRECTIVES) {
 				if (src.startsWith(targetDirective.expression)) {
 					return targetDirective;
 				}
 			}
 			
-			return def; // No directive specified, which means ':' is specified implicitly
+			return DIRECTIVES[0]; // No directive specified, which means ':' is specified implicitly
 		}
 		
 		public List<Keyword> getWords() {
