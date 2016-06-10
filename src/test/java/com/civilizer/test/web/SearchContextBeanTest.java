@@ -2,12 +2,13 @@ package com.civilizer.test.web;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.*;
 
 import com.civilizer.domain.SearchParams;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.web.view.SearchContextBean;
 
+@Ignore
 public class SearchContextBeanTest {
 	
 	@Test
