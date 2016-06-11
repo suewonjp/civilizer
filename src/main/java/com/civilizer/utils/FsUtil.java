@@ -133,6 +133,13 @@ public final class FsUtil {
         return new File(concatPath(names)).exists();
     }
     
+    public static void moveFile(File oldFile, File newFile) throws IOException {
+        if (oldFile.isDirectory())
+            FileUtils.moveDirectory(oldFile, newFile);
+        else
+            FileUtils.moveFile(oldFile, newFile);
+    }
+    
     public static boolean contentEquals(File file0, File file1) throws IOException {
         if (file0 == null || file1 == null)
             return false; // even if both are all nulls.
