@@ -52,7 +52,7 @@ class SecuritySpec extends spock.lang.Specification {
             ""          | "password"
     }
     
-    def checkCustomCredential() {
+    def "Custom credential"() {
         given: "Random username and password"
             final String un = TestUtil.randomString(TestUtil.getRandom(), 1, 32);
             final String pw = TestUtil.randomString(TestUtil.getRandom(), 8, 32);
@@ -73,12 +73,6 @@ class SecuritySpec extends spock.lang.Specification {
             
         where: 
             exception << [ IOException, InvalidParameterException ]
-    }
-    
-    def "Custom credentials"() {
-        2.times {
-            checkCustomCredential();
-        }
     }
 
 }

@@ -22,7 +22,7 @@ class FragmentSpec extends spock.lang.Specification {
             fragmentNames.add(f.getTitle());
         }
         assert fragmentNames.size() == fragments.size()
-        return fragmentNames;
+        fragmentNames;
     }
     
     def buildFragments(int count) {
@@ -36,7 +36,7 @@ class FragmentSpec extends spock.lang.Specification {
             frg.setId(new Long(i));
             fragments.add(frg);
         }
-        return fragments;
+        fragments;
     }
     
     def "IDs are valid"() {
@@ -93,12 +93,12 @@ class FragmentSpec extends spock.lang.Specification {
     
     def "Fragment.getFragmentTitleCollectionFrom"() {
         given: "Fragment titles built from the method in question"
-            Collection<String> actualC = 
+            Collection<String> actual = 
                 Fragment.getFragmentTitleCollectionFrom(fragments);
         and: "Fragment titles from the test code"
-            Collection<String> expectedC = buildFragmentTitleList(fragments);
+            Collection<String> expected = buildFragmentTitleList(fragments);
         expect:
-            expectedC.toArray() == actualC.toArray()
+            expected == actual
     }
     
     def "Sort"() {

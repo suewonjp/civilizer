@@ -57,8 +57,6 @@ class FsUtilSpec extends spock.lang.Specification {
     }
     
     def "FsUtil.getAbsolutePath -- for ~(tilde) notation"() {
-        def absPath;
-        
         given: "The (absolute) path of the user home directory"
             final String homePath = FsUtil.normalizePath(System.getProperty("user.home"));
             
@@ -102,15 +100,8 @@ class FsUtilSpec extends spock.lang.Specification {
             final File file = FsUtil.getResourceAsFile(getClass(), "dir for test/test resource.txt");
         expect:
             file.isFile()
-            
-        def content;
-        
         when: "Read content from the file"
-            try {
-                content = FileUtils.readFileToString(file, Charset.forName("UTF-8"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            def content = FileUtils.readFileToString(file, Charset.forName("UTF-8"));
         then: "The content is as expected"
             "ひらがな　カタカナ　한글 english\n" == content
     }
@@ -134,7 +125,7 @@ class FsUtilSpec extends spock.lang.Specification {
     def "FsUtil.forceDelete --- for a file"() {
         given: "A file to delete"
             File f = new File(FsUtil.concatPath(TestUtil.getPrivateHomePath(), "sample.txt"));
-        FileUtils.writeStringToFile(f, "Hello, Civilizer...");
+            FileUtils.writeStringToFile(f, "Hello, Civilizer...");
         when: "Delete it!"
             FsUtil.forceDelete(f);
         then:
