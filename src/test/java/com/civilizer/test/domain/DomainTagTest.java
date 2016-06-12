@@ -2,14 +2,14 @@ package com.civilizer.test.domain;
 
 import static org.junit.Assert.*;
 
-import java.util.*;
+import org.junit.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import java.util.*;
 
 import com.civilizer.domain.*;
 import com.civilizer.test.helper.TestUtil;
 
+@Ignore
 public class DomainTagTest {
 	
 	private List<Tag> tags;
