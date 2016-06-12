@@ -6,10 +6,6 @@ import org.junit.*;
 
 import java.util.*;
 import java.io.*;
-import java.lang.reflect.Method;
-import java.nio.ByteBuffer;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FalseFileFilter;
@@ -288,8 +284,15 @@ public class WebFileBoxTest {
         final int srcNodeId = getRandomFilePathId(filePathTree.getFilePathBeans(), forFolder, true);
         final FilePathBean filePathBean = fileListBean.getFilePathBean(srcNodeId);
         final String filePath = filePathBean.getFullPath();
-        List<FileEntity> entities = Collections.emptyList();
         
+        try {
+            FsUtil.forceDelete(filePathBean.toFile(filesHomePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail(String.format("deleting '%s' failed!", filePath));
+        }
+        
+        List<FileEntity> entities = Collections.emptyList();        
         if (filePathBean.isFolder()) {
             entities = fileEntityDao.findByNamePattern(filePath+"/%");
         }
@@ -299,15 +302,7 @@ public class WebFileBoxTest {
                 entities = new ArrayList<>();
                 entities.add(entity);
             }
-        }
-        
-        try {
-            FileUtils.forceDelete(filePathBean.toFile(filesHomePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-            fail(String.format("deleting '%s' failed!", filePath));
-        }
-        
+        }        
         for (FileEntity f : entities) {
             final String pathOnFileSystem = filesHomePath + f.getFileName();
             assertEquals(false, new File(pathOnFileSystem).exists());
@@ -315,37 +310,6 @@ public class WebFileBoxTest {
         }
         
         renewTestData();
-    }
-    
-    @Test
-    public void testDeleteMemoryMappedFiles() throws Exception {
-        File f = new File(FsUtil.concatPath(filesHomePath, "sample.txt"));
-        FileUtils.writeStringToFile(f, "Hello, Civilizer...");
-
-        try (RandomAccessFile raf = new RandomAccessFile(f,"rw");
-            FileChannel fc = raf.getChannel()) {
-            MappedByteBuffer mbf = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-            closeDirectBuffer(mbf); // This operation is necessary for Windows
-        } 
-        
-        f.delete();
-        Assert.assertEquals(false, f.exists());
-    }
-    
-    private void closeDirectBuffer(ByteBuffer cb) {
-        if (!cb.isDirect()) return;
-
-        // we could use this type cast and call functions without reflection code,
-        // but static import from sun.* package is risky for non-SUN virtual machine.
-        //try { ((sun.nio.ch.DirectBuffer)cb).cleaner().clean(); } catch (Exception ex) { }
-        try {
-            Method cleaner = cb.getClass().getMethod("cleaner");
-            cleaner.setAccessible(true);
-            Method clean = Class.forName("sun.misc.Cleaner").getMethod("clean");
-            clean.setAccessible(true);
-            clean.invoke(cleaner.invoke(cb));
-        } catch(Exception ex) { }
-        cb = null;
     }
 
 }

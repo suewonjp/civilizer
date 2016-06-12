@@ -9,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -861,7 +860,7 @@ public final class MainController {
 		}
 		
 		try {
-            FileUtils.forceDelete(filePathBean.toFile(filesHomePath));
+            FsUtil.forceDelete(filePathBean.toFile(filesHomePath));
         } catch (IOException e) {
             e.printStackTrace();
             ViewUtil.addMessage("Error on Deleting!!!", filePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);

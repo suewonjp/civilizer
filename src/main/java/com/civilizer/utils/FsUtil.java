@@ -8,10 +8,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
@@ -138,6 +143,34 @@ public final class FsUtil {
             FileUtils.moveDirectory(oldFile, newFile);
         else
             FileUtils.moveFile(oldFile, newFile);
+    }
+    
+    private static void closeDirectBuffer(ByteBuffer cb) {
+        if (!cb.isDirect()) return;
+
+        // we could use this type cast and call functions without reflection code,
+        // but static import from sun.* package is risky for non-SUN virtual machine.
+        //try { ((sun.nio.ch.DirectBuffer)cb).cleaner().clean(); } catch (Exception ex) { }
+        try {
+            Method cleaner = cb.getClass().getMethod("cleaner");
+            cleaner.setAccessible(true);
+            Method clean = Class.forName("sun.misc.Cleaner").getMethod("clean");
+            clean.setAccessible(true);
+            clean.invoke(cleaner.invoke(cb));
+        } catch(Exception ex) { }
+        cb = null;
+    }
+    
+    public static void forceDelete(File file) throws IOException {
+        if (file.isFile()) {
+            try (RandomAccessFile raf = new RandomAccessFile(file,"rw");
+                    FileChannel fc = raf.getChannel()) {
+                MappedByteBuffer mbf = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+                FsUtil.closeDirectBuffer(mbf); // This operation is necessary for Windows
+            } 
+        }
+        
+        FileUtils.forceDelete(file);
     }
     
     public static boolean contentEquals(File file0, File file1) throws IOException {

@@ -131,6 +131,35 @@ class FsUtilSpec extends spock.lang.Specification {
             [ "/foo", "bar" ]       || FsUtil.SEP + "foo" + FsUtil.SEP + "bar"
     }
     
+    def "FsUtil.forceDelete --- for a file"() {
+        given: "A file to delete"
+            File f = new File(FsUtil.concatPath(TestUtil.getPrivateHomePath(), "sample.txt"));
+        FileUtils.writeStringToFile(f, "Hello, Civilizer...");
+        when: "Delete it!"
+            FsUtil.forceDelete(f);
+        then:
+            notThrown IOException
+            ! f.exists()
+    }
+
+    def "FsUtil.forceDelete --- for a directory"() {
+        given: "A directory to delete"
+            final def dirPath = FsUtil.concatPath(TestUtil.getTempFolderPath(), "tmpdir");
+            final def dir = new File(dirPath);
+            FsUtil.createUnexistingDirectory(dir);
+        and: "Attach some arbitrary files to the directory"
+            [ "sample0.txt", "sample1.txt" ].each {
+                File f = new File(FsUtil.concatPath(dirPath, it));
+                FileUtils.touch(f);
+                FileUtils.writeStringToFile(f, "Hello, Civilizer...");
+            }
+        when: "Delete it!"
+            FsUtil.forceDelete(dir);
+        then:
+            notThrown IOException
+            ! dir.exists()
+    }
+    
     def "FsUtil.contentEquals"() {
         given: "Two arbitrary folders"
             final String tmpPath = TestUtil.getTempFolderPath();
