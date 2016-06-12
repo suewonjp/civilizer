@@ -2,15 +2,16 @@ package com.civilizer.test.domain;
 
 import static org.junit.Assert.*;
 
+import org.junit.*;
+
 import java.util.*;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
-import org.junit.Before;
-import org.junit.Test;
 
 import com.civilizer.domain.*;
 
+@Ignore
 public class DomainFragmentTest {
 	
 	private List<Fragment> fragments;
