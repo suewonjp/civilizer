@@ -12,6 +12,7 @@ import com.civilizer.domain.Tag;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.Pair;
 
+@Ignore
 public class DomainSearchParamsTest {
 
 	@Before

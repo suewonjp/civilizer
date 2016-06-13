@@ -18,7 +18,7 @@ class TagSpec extends spock.lang.Specification {
         tags = buildTags(16 + TestUtil.getRandom().nextInt(10));
     }
     
-    def buildTagNameList(Collection<Tag> tags) {
+    static def buildTagNameList(Collection<Tag> tags) {
         List<String> tagNames = new ArrayList<String>();
         for (Tag t : tags) {
             tagNames.add(t.getTagName());
@@ -27,7 +27,7 @@ class TagSpec extends spock.lang.Specification {
         tagNames;
     }
     
-    def buildTagHierarchy(Collection<Tag> tags) {
+    static def buildTagHierarchy(Collection<Tag> tags) {
         assert tags && ! tags.isEmpty()
         
         Random r = TestUtil.getRandom();
@@ -75,7 +75,7 @@ class TagSpec extends spock.lang.Specification {
         }
     }
     
-    def buildTags(int count) {
+    static def buildTags(int count) {
         List<Tag> tags = new ArrayList<Tag>();
         for (int i = 0; i < count; i++) {
             Tag t = new Tag("tag " + tags.size());
@@ -87,19 +87,20 @@ class TagSpec extends spock.lang.Specification {
         tags;
     }
 
-    def buildTags(String...names) {
+    static def buildTags(def names) {
         List<Tag> tags = new ArrayList<Tag>();
-        for (int i = 0; i < names.length; i++) {
-            Tag t = new Tag(names[i]);
+        names.eachWithIndex {
+            name, i ->
+            Tag t = new Tag(name);
             assert t
             t.setId(new Long(i + 1));
             tags.add(t);
-        }        
+        }
         buildTagHierarchy(tags);
         tags;
     }
     
-    boolean inSameHierarchy(Tag possibleParent, Tag possibleDescendant) {
+    static boolean inSameHierarchy(Tag possibleParent, Tag possibleDescendant) {
         if (possibleParent.equals(possibleDescendant) || possibleParent.getChildren().contains(possibleDescendant))
             return true;
         for (Tag c : possibleParent.getChildren()) {
