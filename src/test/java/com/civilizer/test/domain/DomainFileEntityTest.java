@@ -2,16 +2,16 @@ package com.civilizer.test.domain;
 
 import static org.junit.Assert.*;
 
+import org.junit.*;
+
 import java.io.File;
 import java.util.Collection;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.civilizer.domain.FileEntity;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.Pair;
 
+@Ignore
 public class DomainFileEntityTest {
 
 	@Before
