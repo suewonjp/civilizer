@@ -187,6 +187,8 @@ public class WebFileBoxTest {
             fail(String.format("moving a file/folder %s to %s failed!",
                 oldFile.getAbsolutePath(), newFile.getAbsolutePath()));
         }
+        assertEquals(false, oldFile.exists());
+        assertEquals(true, newFile.exists());
 
         List<FileEntity> entities = Collections.emptyList();
         if (filePathBean.isFolder()) {
@@ -248,8 +250,8 @@ public class WebFileBoxTest {
             fail(String.format("moving a file/folder %s to %s failed!",
                 oldFile.getAbsolutePath(), newFile.getAbsolutePath()));
         }
-        assertEquals(false, oldFile.isFile());
-        assertEquals(true, newFile.isFile());
+        assertEquals(false, oldFile.exists());
+        assertEquals(true, newFile.exists());
 
         List<FileEntity> entities = Collections.emptyList();
         if (srcPathBean.isFolder()) {
