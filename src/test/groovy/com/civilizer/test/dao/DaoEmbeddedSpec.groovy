@@ -9,6 +9,7 @@ import com.civilizer.dao.*;
 import com.civilizer.domain.*;
 import com.civilizer.test.helper.TestUtil;
 
+@Subject([ FragmentDao, TagDao, FileEntityDao ])
 class DaoEmbeddedSpec extends DaoSpecBase {
     
     def setupSpec() {

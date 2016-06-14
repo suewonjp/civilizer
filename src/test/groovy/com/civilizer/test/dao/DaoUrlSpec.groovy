@@ -2,9 +2,11 @@ package com.civilizer.test.dao
 
 import spock.lang.*;
 
+import com.civilizer.dao.*;
 import com.civilizer.domain.*;
 import com.civilizer.test.helper.TestUtil;
 
+@Subject([ FragmentDao, TagDao, FileEntityDao ])
 class DaoUrlSpec extends DaoSpecBase {
     
     def setupSpec() {
