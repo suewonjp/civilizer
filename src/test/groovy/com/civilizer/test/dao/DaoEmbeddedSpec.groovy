@@ -3,8 +3,9 @@ package com.civilizer.test.dao
 import spock.lang.*;
 
 import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
+import org.hibernate.HibernateException
 
+import com.civilizer.dao.*;
 import com.civilizer.domain.*;
 import com.civilizer.test.helper.TestUtil;
 
@@ -17,6 +18,22 @@ class DaoEmbeddedSpec extends DaoSpecBase {
     
     def cleanupSpec() {
         DaoSpecBase.cleanupApplicationContext();
+    }
+    
+    static void buildCreateDataSet() throws Exception {
+        try {
+            TestUtil.configure();            
+            DaoSpecBase.setupApplicationContext(
+                "classpath:datasource-context-h2-url.xml");
+            FileEntityDao fileEntityDao = ctx.getBean("fileEntityDao",
+                    FileEntityDao.class);
+            assert fileEntityDao;
+
+            TestUtil.touchTestFilesForFileBox(fileEntityDao);
+        } finally {
+            DaoSpecBase.cleanupApplicationContext();
+            TestUtil.unconfigure();
+        }
     }
     
     def ".executeQueryForResult"() {

@@ -5,11 +5,7 @@ import spock.lang.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.File;
-
-import com.civilizer.test.dao.DaoUrlTest;
+import com.civilizer.test.dao.DaoEmbeddedSpec;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
 import com.civilizer.web.view.DataBrokerBean;
@@ -18,7 +14,7 @@ import com.civilizer.web.view.DataBrokerBean;
 class DataBrokerSpec extends spock.lang.Specification {
     
     def setupSpec() {
-        DaoUrlTest.buildCreateDataSet();
+        DaoEmbeddedSpec.buildCreateDataSet();
     }
     
     def cleanupSpec() {
