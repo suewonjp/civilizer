@@ -2,6 +2,7 @@ package com.civilizer.test.dao;
 
 import org.junit.*;
 
+@Ignore
 public class DaoEmbeddedTest extends DaoTest {
      
     @BeforeClass

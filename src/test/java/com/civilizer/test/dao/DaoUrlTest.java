@@ -1,16 +1,13 @@
 package com.civilizer.test.dao;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
-import org.junit.Test;
+import org.junit.*;
 
 import com.civilizer.dao.FileEntityDao;
 import com.civilizer.test.helper.TestUtil;
 
+@Ignore
 public class DaoUrlTest extends DaoTest {
     
     public static void buildCreateDataSet() throws Exception {
