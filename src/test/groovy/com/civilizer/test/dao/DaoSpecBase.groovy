@@ -109,7 +109,7 @@ class DaoSpecBase extends spock.lang.Specification {
         }
     }
     
-    def setup() {
+    void doSetup() {
         TestUtil.configure();
         
         fragmentDao = ctx.getBean("fragmentDao", FragmentDao.class);
@@ -123,9 +123,17 @@ class DaoSpecBase extends spock.lang.Specification {
         TestUtil.touchTestFilesForFileBox(fileEntityDao);
     }
     
-    def cleanup() {
+    void doCleanup() {
         deleteAllTemporalObjects();
         TestUtil.unconfigure();
+    }
+    
+    def setup() {
+        doSetup();
+    }
+    
+    def cleanup() {
+        doCleanup();
     }
     
 }

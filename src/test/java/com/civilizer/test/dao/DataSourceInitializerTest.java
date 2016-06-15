@@ -8,6 +8,7 @@ import com.civilizer.config.AppOptions;
 import com.civilizer.dao.DataSourceInitializer;
 import com.civilizer.test.helper.TestUtil;
 
+@Ignore
 public class DataSourceInitializerTest extends DaoTest {
 
 	@Before
