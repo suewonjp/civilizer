@@ -1,9 +1,8 @@
 package com.civilizer.test.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import org.junit.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,11 +17,6 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 import com.civilizer.domain.Fragment;
@@ -30,6 +24,7 @@ import com.civilizer.domain.Tag;
 import com.civilizer.domain.Tag2Fragment;
 import com.civilizer.test.helper.TestUtil;
 
+@Ignore
 public class HibernateQueryTest extends DaoTest {
 	
 	private static final DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
