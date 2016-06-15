@@ -2,10 +2,11 @@ package com.civilizer.test.dao;
 
 import static org.junit.Assert.*;
 
+import org.junit.*;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
-import org.junit.*;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +18,7 @@ import com.civilizer.domain.*;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.Pair;
 
+@Ignore
 public class SearchTest extends DaoTest {
 	
 	private Session session;
