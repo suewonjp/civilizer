@@ -2,7 +2,6 @@ package com.civilizer.test.security
 
 import spock.lang.*;
 
-import java.io.IOException;
 import java.security.InvalidParameterException;
 
 import org.apache.commons.io.FileUtils;

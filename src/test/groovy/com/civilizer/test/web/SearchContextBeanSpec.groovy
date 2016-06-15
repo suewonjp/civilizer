@@ -3,10 +3,10 @@ package com.civilizer.test.web
 import spock.lang.*;
 
 import com.civilizer.domain.SearchParams;
-import com.civilizer.test.helper.TestUtil;
 import com.civilizer.web.view.SearchContextBean;
+import com.civilizer.test.helper.TestUtil;
 
-@Subject(SearchContextBean)
+@Subject([ SearchContextBean, SearchParams ])
 class SearchContextBeanSpec extends spock.lang.Specification {
     
     def "Initial status"() {

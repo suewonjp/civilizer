@@ -2,24 +2,15 @@ package com.civilizer.test.utils
 
 import spock.lang.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
-import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
+import com.civilizer.test.helper.TestUtil;
 
 @Subject(FsUtil)
 class FsUtilSpec extends spock.lang.Specification {

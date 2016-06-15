@@ -13,6 +13,7 @@ import com.civilizer.domain.*;
 import com.civilizer.utils.Pair;
 import com.civilizer.test.helper.TestUtil;
 
+@Subject(SearchQueryCreator)
 class SearchSpec extends DaoSpecBase {
     
     Session session;

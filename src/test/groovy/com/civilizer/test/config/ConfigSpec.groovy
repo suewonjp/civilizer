@@ -2,8 +2,6 @@ package com.civilizer.test.config
 
 import spock.lang.*;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
@@ -13,8 +11,8 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
 import com.civilizer.dao.FragmentDao;
-import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
+import com.civilizer.test.helper.TestUtil;
 
 @Subject(Configurator)
 class ConfigSpec extends spock.lang.Specification {
