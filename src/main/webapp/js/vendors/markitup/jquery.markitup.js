@@ -363,7 +363,7 @@
                 var tgtLineStart, tgtLineEnd;
                 if (upDir) {
                     tgtLineEnd = oldCaretPos - 1;
-                    tgtLineStart = getPrevNewlineOffset(text, tgtLineEnd - 1) + 1;
+                    tgtLineStart = getPrevNewlineOffset(text, tgtLineEnd) + 1;
                     caretPosition = tgtLineStart;
                     textarea.value = text.substring(0, tgtLineStart) +
                             selection + '\n' +
