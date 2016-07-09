@@ -43,14 +43,14 @@ markItUpSettings = {
 		{className:'miu-indent', name:'Indent (Move Right)', selectAssist:true, onAlt:true, key:'.', indent:1, multiline:true},
 		{className:'miu-outdent', name:'Outdent (Move Left)', selectAssist:true, onAlt:true, key:',', outdent:1, multiline:true},
 		{name:'Colors', dropMenu:[
-		    {className:'miu-clr-c', name:'Cyan', openBlockWith:'{{[clr-c] ', closeBlockWith:' }}'},
-		    {className:'miu-clr-b', name:'Blue', openBlockWith:'{{[clr-b] ', closeBlockWith:' }}'},
-		    {className:'miu-clr-r', name:'Red', openBlockWith:'{{[clr-r] ', closeBlockWith:' }}'},
-		    {className:'miu-clr-g', name:'Green', openBlockWith:'{{[clr-g] ', closeBlockWith:' }}'},
-		    {className:'miu-clr-y', name:'Yellow', openBlockWith:'{{[clr-y] ', closeBlockWith:' }}'},
-		    {className:'miu-clr-m', name:'Magenta', openBlockWith:'{{[clr-m] ', closeBlockWith:' }}'},
-		    {className:'miu-clr-v', name:'Violet', openBlockWith:'{{[clr-v] ', closeBlockWith:' }}'},
-		    {className:'miu-clr-br', name:'Brown', openBlockWith:'{{[clr-br] ', closeBlockWith:' }}'},
+		    {className:'miu-clr-c', name:'Cyan', openWith:'{{[clr-c] ', closeWith:' }}', multiline:true},
+		    {className:'miu-clr-b', name:'Blue', openWith:'{{[clr-b] ', closeWith:' }}', multiline:true},
+		    {className:'miu-clr-r', name:'Red', openWith:'{{[clr-r] ', closeWith:' }}', multiline:true},
+		    {className:'miu-clr-g', name:'Green', openWith:'{{[clr-g] ', closeWith:' }}', multiline:true},
+		    {className:'miu-clr-y', name:'Yellow', openWith:'{{[clr-y] ', closeWith:' }}', multiline:true},
+		    {className:'miu-clr-m', name:'Magenta', openWith:'{{[clr-m] ', closeWith:' }}', multiline:true},
+		    {className:'miu-clr-v', name:'Violet', openWith:'{{[clr-v] ', closeWith:' }}', multiline:true},
+		    {className:'miu-clr-br', name:'Brown', openWith:'{{[clr-br] ', closeWith:' }}', multiline:true},
 	    ]},
 	]
 }
