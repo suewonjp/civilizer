@@ -59,11 +59,13 @@ function makeSidebarToggleable() {
         
         if (localStorage.getItem("sidebarVisible") === "yes") {
             content.css("width", "100%");
+            sidebar.css("visibility", "hidden");
             icon.removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
             localStorage.setItem("sidebarVisible", "no");
         }
         else {
             content.css("width", defCntWt);
+            sidebar.css("visibility", "visible");
             icon.removeClass("fa-arrow-circle-left").addClass("fa-arrow-circle-right");
             localStorage.setItem("sidebarVisible", "yes");
         }
@@ -71,6 +73,7 @@ function makeSidebarToggleable() {
     
     if (localStorage.getItem("sidebarVisible") === "no") {
         content.css("width", "100%");
+        sidebar.css("visibility", "hidden");
         $("#sidebar-toggler .fa").removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
     }
 }
