@@ -1,9 +1,9 @@
 ### DESCRIPTION
 
-Civilizer is a **personal** web application that helps you efficiently manage your data/knowledge/idea including:
+**Civilizer** is a web application that helps you efficiently manage your personal data/knowledge/idea including:
 
-- knowledge/expertise for your job
-- temporary memo/notesa
+- knowledge/expertise/tips/tricks for your job
+- temporary memo/notes
 - schedule/plan
 - detailed procedures you often forget for infrequent tasks
   - e.g., installing printer drivers on your computers, submitting a tax return, ...
@@ -110,10 +110,7 @@ Supported browsers: (note that old versions may not work correctly)
 ### HOW TO UNINSTALL
 
 1. Just remove the extracted folder.
-1. Civilizer automatically creates a folder named ***.civilizer*** in your User directory. 
-    - So remove it unless you need it.
-    - Note that this folder may contain your data.
-        - In case you want to make a backup of your data, refer to the user manual about how to do that.
+1. Remove the  ***.civilizer*** folder (containing user settings and data) in your _user directory_ if it exists.
    
 * * *
 
@@ -123,12 +120,13 @@ Supported browsers: (note that old versions may not work correctly)
 
 1. Download the latest source code
      - Press ***Clone or download*** button above
-1. Uncompress the downloaded package and go to that directory
-1. Just execute the following command from the command line
+1. Go to the source directory uncompressed or cloned
+1. Execute the following command from the command line
     - Windows Users:
         - _gradlew.bat all_
     - Other OS Users:
         - _./gradlew all_
+    - Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civilizer) unless it works well.
 1. And just wait. It might take more than several minutes especially for the first time to build
 1. You can find the output package in the **build** directory
     - e.g., {uncompressed-folder}/build/civilizer.{version-notation}.zip
@@ -144,7 +142,8 @@ Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civiliz
 - Civilizer is currently provided as a **PRIVATE EDITION** only.
     - Note that the main goal of the PRIVATE edition is helping A SINGLE USER manage his/her PRIVATE PERSONAL DATA under some relatively SECURED PRIVATE NETWORK ENVIRONMENT (e.g. home network).
     - The edition does not support access by multiple users.
-    - We hope that sometime in the future, we will be able to develop a **Group or Enterprise Edition** to help a group of users share/manage data under greatly enhanced security provided.
+    - Or don't care if you want to use Civilizer just like a _desktop app_. That usage is absolutely fine.
+- We hope that sometime in the future, we will be able to develop a **Group or Enterprise Edition** to help a group of users share/manage data under greatly enhanced security provided.
 
 * * *
 
