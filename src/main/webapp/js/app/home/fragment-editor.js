@@ -218,7 +218,7 @@ function autocompleteForTypingTags() {
     }
     
     function alreadyTyped(typedTags, suggestion) {
-    	for (var i=0; i<typedTags.length; ++i) {
+        for (var i=0,c=typedTags.length-1; i<c; ++i) {
     		if (typedTags[i].replace(/"/g, '') == suggestion) return true;
     	}
     	return false;
@@ -248,7 +248,7 @@ function autocompleteForTypingTags() {
                 return;
             }
             typed = typed.toLowerCase();
-            for (var i=0; i<tagSuggestions.length; ++i) {
+            for (var i=0,c=tagSuggestions.length; i<c; ++i) {
                 var suggestion = tagSuggestions[i];
                 if (suggestion.toLowerCase().indexOf(typed) == 0 && ! alreadyTyped(tags, suggestion)) {
                     // filter out:
