@@ -190,7 +190,7 @@ class SearchParamsSpec extends spock.lang.Specification {
             final Tag p = rootTag;
             final List<Tag> descendants = new ArrayList<>();
             tags.each {
-                if (DomainTagTest.inSameHierarchy(p, it))
+                if (TagSpec.inSameHierarchy(p, it))
                     descendants.add(it);
             }
             sp = new SearchParams("tag:\"" + p.getTagName() + "\"/h");
