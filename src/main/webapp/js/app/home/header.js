@@ -59,13 +59,13 @@ function makeSidebarToggleable() {
         
         if (localStorage.getItem("sidebarVisible") === "yes") {
             content.css("width", "100%");
-            sidebar.css("visibility", "hidden");
+            sidebar.css({ position:"absolute", left:"-100%"});
             icon.removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
             localStorage.setItem("sidebarVisible", "no");
         }
         else {
             content.css("width", defCntWt);
-            sidebar.css("visibility", "visible");
+            sidebar.css({ position:"stack" });
             icon.removeClass("fa-arrow-circle-left").addClass("fa-arrow-circle-right");
             localStorage.setItem("sidebarVisible", "yes");
         }
@@ -73,7 +73,7 @@ function makeSidebarToggleable() {
     
     if (localStorage.getItem("sidebarVisible") === "no") {
         content.css("width", "100%");
-        sidebar.css("visibility", "hidden");
+        sidebar.css({ position:"absolute", left:"-100%"});
         $("#sidebar-toggler .fa").removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
     }
 }
