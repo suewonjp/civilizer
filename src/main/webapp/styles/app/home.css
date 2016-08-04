@@ -321,6 +321,7 @@
     text-decoration:none;
     background-color: #ffd65e;
     cursor: pointer;
+    color: black;
 }
 
 .tag-button, .file-button {
