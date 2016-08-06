@@ -103,9 +103,7 @@ Supported browsers: (note that old versions may not work correctly)
     - After authenticated, you can reach the default page of the application.
         - You may change username or password by accessing ***'Change Profile'*** menu.
             - Click on the man icon located at the top-right corner of the page. 
-1. The pages you'll see after accessing Civilizer is its ***User Manual***.
-    - The manual also has a role of samples from which you can get some idea of how to create or edit your own data.
-    - Also, Civilizer has the [online user manual](https://github.com/suewonjp/civilizer/wiki)
+1. The pages you'll see after accessing Civilizer is the table of content for its [User Manual](https://github.com/suewonjp/civilizer/wiki)
     
 ### HOW TO UNINSTALL
 
