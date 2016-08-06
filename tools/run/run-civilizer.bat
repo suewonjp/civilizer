@@ -42,8 +42,8 @@ goto :eof
 :usage
     echo [ %hostScript% ] Options
     echo     -port number : Specify port number
-    echo     -home path : Specify Private Home Directory
-    echo     -cleanStart : Start the app with a clean empty DB
-                    [CAUTION!!!] Your previous data will be all gone. Make a backup first! 
+    echo     -home path   : Specify Private Home Directory
+    echo     -cleanStart  : Start the app with a clean empty DB
+    echo                    [CAUTION^^!^^!^^!] Your previous data will be all gone. Make a backup first^^! 
 
 endlocal
