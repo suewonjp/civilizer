@@ -115,7 +115,7 @@
                                 <java jar="${compressor}" fork="true" append="true" output="${min-js}">
                                     <arg line="--type js ${wa-dir}/js/vendors/lightbox_me/jquery.lightbox_me.js"/></java>
                                 <java jar="${compressor}" fork="true" append="true" output="${min-js}">
-                                    <arg line="--type js ${wa-dir}/js/vendors/moment-with-locales.min.js"/></java>
+                                    <arg line="--type js ${wa-dir}/js/vendors/moment/moment-with-locales.min.js"/></java>
                                 <java jar="${compressor}" fork="true" append="true" output="${min-js}">
                                     <arg line="--type js ${wa-dir}/js/vendors/textarea-caret-position/index.js"/></java>
                                 <java jar="${compressor}" fork="true" append="true" output="${min-js}">
