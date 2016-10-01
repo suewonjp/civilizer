@@ -259,13 +259,13 @@ function unsanitizeHtml(content) {
 }
 
 function embedYoutubeVideo(content) {
-    function kickYoutubeVideo() {
-        var $this = $(this);
-        var iframe = $("<iframe src='//www.youtube.com/embed/"
-            + $this.attr("_vid") + "' frameborder='0' allowfullscreen>");
+    $("#fragment-group").off("click.ytv").on("click.ytv", ".yt-video", function() {
+        var $this = $(this),
+            iframe = $("<iframe src='//www.youtube.com/embed/"
+                + $this.attr("_vid") + "' frameborder='0' allowfullscreen>");
         $this.replaceWith(iframe);
         return false;
-    }
+    });
     
     content.find("iframe[src*='www.youtube.com/embed/'], a[href*='youtu.be/'], a[href*='www.youtube.com/watch?']")
     .each(function() {
@@ -280,8 +280,7 @@ function embedYoutubeVideo(content) {
         var div = $("<div class='yt-video' _vid='"+videoId+"'>" +
             '<img class="yt-thumb" title="' + $this.text() +
             '" src="//i.ytimg.com/vi/' + videoId +
-            '/mqdefault.jpg"/><div class="fa fa-youtube-play"></div></div>')
-            .click(kickYoutubeVideo);
+            '/mqdefault.jpg"/><div class="fa fa-youtube-play"></div></div>');
         $this.replaceWith(div);
     });
 }
