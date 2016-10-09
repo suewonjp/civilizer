@@ -9,9 +9,11 @@ import javax.faces.application.FacesMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,20 +26,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.webflow.execution.RequestContext;
 
-import com.civilizer.config.AppOptions;
-import com.civilizer.config.Configurator;
-import com.civilizer.dao.FileEntityDao;
-import com.civilizer.dao.FragmentDao;
-import com.civilizer.dao.TagDao;
-import com.civilizer.domain.FileEntity;
-import com.civilizer.domain.Fragment;
-import com.civilizer.domain.FragmentOrder;
-import com.civilizer.domain.SearchParams;
-import com.civilizer.domain.Tag;
-import com.civilizer.domain.TextDecorator;
-import com.civilizer.security.UserDetailsService;
-import com.civilizer.utils.FsUtil;
-import com.civilizer.utils.Pair;
+import com.civilizer.config.*;
+import com.civilizer.dao.*;
+import com.civilizer.domain.*;
+import com.civilizer.security.*;
+import com.civilizer.utils.*;
 import com.civilizer.web.view.*;
 
 @Controller
@@ -692,26 +685,47 @@ public final class MainController {
 		}
 	}
 	
-	public void uploadFile(FileUploadBean fileUploadBean, FileListBean fileListBean) {
-		final int dstNodeId = fileListBean.getDstNodeId();
-		final String newFileName = fileUploadBean.getFileName();
-		final String filePath = fileListBean.getFullFilePath(dstNodeId, newFileName);
-		final String filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
-		final String fileWritePath = filesHomePath + filePath;
-		if (fileUploadBean.saveFile(fileWritePath)) {
-			final FileEntity fe = new FileEntity(filePath);
-			try {
-				fileEntityDao.save(fe);
-				ViewUtil.addMessage("File Uploaded", filePath, null);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				ViewUtil.addMessage("Error on File Upload!!!", filePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
-			}
-		}
-		else {
-			ViewUtil.addMessage("Error on File Upload!!!", filePath, FacesMessage.SEVERITY_ERROR);
-		}
+	public void uploadFile(FileUploadEvent event) {
+	    final String newFileName = event.getFile().getFileName();
+	    ViewUtil.putAttributeToFlowScope("uploadedFileNames", newFileName);
+        final String tmpPath = System.getProperty(AppOptions.TEMP_PATH);
+        FsUtil.createUnexistingDirectory(new File(tmpPath));
+        final String fileWritePath = FsUtil.concatPath(tmpPath, newFileName);
+        try {
+            FileUtils.writeByteArrayToFile(new File(fileWritePath), event.getFile().getContents());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+	public void onFinishFileUpload(FileListBean fileListBean) {
+        final String filesHomePath = System.getProperty(AppOptions.FILE_BOX_HOME);
+        final String tmpPath = System.getProperty(AppOptions.TEMP_PATH);
+	    final List<String> fileNames = ViewUtil.getAttributesFromFlowScope("uploadedFileNames");
+	    final int dstNodeId = fileListBean.getDstNodeId();
+	    try {
+	        for (String fileName : fileNames) {
+	            final String filePath = fileListBean.getFullFilePath(dstNodeId, fileName);
+	            final String newPath = FsUtil.concatPath(filesHomePath, filePath);
+	            final String oldPath = FsUtil.concatPath(tmpPath, fileName);
+	            System.out.println(oldPath + " ===> " + newPath);
+	            try {
+	                FsUtil.moveFile(new File(oldPath), new File(newPath));
+	                final FileEntity fe = new FileEntity(filePath);
+	                fileEntityDao.save(fe);
+	                ViewUtil.addMessage("File Uploaded", filePath, null);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                ViewUtil.addMessage("Error on File Upload!!!", filePath + " :: " + e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+	            }
+	        }
+        } finally {
+            ViewUtil.removeAttributesFromFlowScope("uploadedFileNames");
+        }
+	}
+
+	public void onCloseFileDialog() {
+	    ViewUtil.removeAttributesFromFlowScope("uploadedFileNames");
 	}
 
 	public void renameFile(FileListBean fileListBean) {

@@ -20,55 +20,41 @@ function processFileClasses(parent) {
 	});
 }
 
-function showFileUploadDialog() {
-	var dlg = PF("moveFileDlg");
-    dlg.show();
-    dlg.jq.find(".ui-dialog-title").text(MSG.upload_file);
-    
-    $("#file-upload-box").show();
-    $("#file-box-form\\:src-path").text("");
-    
-	var target = $("#file-context-menu").data("target-file");
-	var dstOutput = $("#file-box-form\\:dst-path").text(MSG.select_destination).removeClass("fa-close").css({color:"aqua"});
-	var treeNodes = $("#file-box-form\\:folder-tree .each-file").removeClass("fa-upload fb-target-dir");
-	var fp = "";
-	var dstPath = "";
-	var fileUpload= PF('fileUpload');
-	fileUpload.display.text("");
-	var fileInput = fileUpload.input.val("");
-	var holderForDstId = $("#file-box-form\\:id-placeholder-for-dst-node").val(0);
-	var okBtn = $("#file-box-form\\:ok").hide().off("click").on("click", function() {
-		document.forms["file-box-form"]["file-box-form:ok-upload"].click();
-	});
-	
-	fileInput.change(function () {
-	    var fileToUpload = fileUpload.display.text();
-	    if (fileToUpload) {
-	        fileToUpload = getFileName(fileToUpload);
-	    	dstPath = fp + SYSPROP.fileSep + fileToUpload;
-	    	dstOutput.text(dstPath);
-	    	okBtn.show().effect("shake");
-	    }
-	});
-	
-	$("#file-box-form\\:folder-tree .each-file").off("click")
-	.on("click", function () {
-		var $this = $(this);
-		treeNodes.removeClass("fa-upload fb-target-dir");
-		fp = $this.attr("_fp");
-		if (fp === undefined)
-			fp = "";
-		var fileToUpload = fileInput.val();
-		if (fileToUpload === undefined)
-			fileToUpload = "";
-		fileToUpload = getFileName(fileToUpload);
-		dstPath = fp + SYSPROP.fileSep + fileToUpload;
-		dstOutput.text(dstPath);
-		holderForDstId.val($this.attr("_id"));
-		$this.addClass("fa-upload fb-target-dir");
-	})
-	;
-}
+var FUDC = { // File Upload Dialog Controller
+    fileCount : 0,
+    show : function() {
+        var dlg = PF("moveFileDlg");
+        dlg.show();
+        dlg.jq.find(".ui-dialog-title").text(MSG.upload_file);
+
+        $("#file-box-form\\:dst-path").text(MSG.select_destination).removeClass("fa-close").css({color:"aqua"});
+        $("#file-upload-box").show();
+        $("#file-box-form\\:src-path").text("");
+        $("#file-box-form\\:ok").hide();
+        $("#file-box-form\\:folder-tree").off("click").on("click", ".each-file", function (e) {
+            var $this = $(this),
+                fp = $this.attr("_fp") || "";
+
+            $("#file-box-form\\:id-placeholder-for-dst-node").val($this.attr("_id"));
+
+            $("#file-box-form\\:dst-path").text(fp + SYSPROP.fileSep);
+            $("#file-box-form\\:folder-tree .each-file").removeClass("fa-upload fb-target-dir");
+            $this.addClass("fa-upload fb-target-dir");
+            e.preventDefault();
+        });
+        this.fileCount = 0;
+    },
+    onstart :  function(pfObj) {
+        this.fileCount = pfObj.files.length;
+    },
+    oncomplete : function(pfObj) {
+        if (--this.fileCount === 0) {
+            setTimeout(function() {
+                document.forms["file-box-form"]["file-box-form:ok-upload"].click();
+            }, 500);
+        }
+    }
+};
 
 function showMoveFileDialog() {
 	var dlg = PF("moveFileDlg");

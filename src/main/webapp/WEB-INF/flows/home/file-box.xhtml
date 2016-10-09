@@ -18,10 +18,10 @@
         <p:commandButton widgetVar="renameFileDlgSubmit" action="rename-file" value="#{msg['ok']}" icon="ui-icon-check"/>
     </p:dialog>
 
-	<p:dialog widgetVar="moveFileDlg" width="300px" modal="true" closeOnEscape="true" showEffect="fade" position="center" draggable="true" resizable="false">
+	<p:dialog widgetVar="moveFileDlg" width="560px" modal="true" closeOnEscape="true" showEffect="fade" position="center" draggable="true" resizable="false">
         <div id="file-upload-box">
-        	<!-- [TODO] externalize any other configurable parameters like this file size limit value -->
-	        <p:fileUpload widgetVar="fileUpload" value="#{fileUploadBean.file}" mode="simple" skinSimple="true" sizeLimit="#{cfg['file.upload.size.limit']}" style="width:200px"/>
+            <p:fileUpload widgetVar="fileUpload" fileUploadListener="#{mainController.uploadFile}" dragDropSupport="false"
+                mode="advanced" multiple="true" onstart="FUDC.onstart(this)" oncomplete="FUDC.oncomplete(this)"/>
         </div>
         <br/><h:outputText id="src-path" value=""/><br/>
         <br/><span class="fa fa-arrow-circle-down fa-2x"></span><br/>
@@ -40,11 +40,12 @@
 	        <p:commandButton id="ok-upload" action="upload-file" ajax="false"/>
         </div>
 	    <p:commandButton id="ok" value="#{msg['ok']}" icon="ui-icon-check"/>
+        <p:ajax event="close" listener="#{mainController.onCloseFileDialog}"/>
     </p:dialog>
-    
+
     <div id="file-context-menu" class="context-menu">
 	    <p:menu>
-            <p:menuitem id="upload" oncomplete="showFileUploadDialog()" icon="fa fa-upload" value="+ #{msg['upload_file']}"
+            <p:menuitem id="upload" oncomplete="FUDC.show()" icon="fa fa-upload" value="+ #{msg['upload_file']}"
             	update="folder-tree" actionListener="#{fileListBean.folderTree.populateNodes(null)}"/>
             <p:menuitem id="new-folder" onclick="showNewDirectoryDialog()" icon="fa fa-folder-open-o" value="+ #{msg['new_folder']}"/>
             <p:menuitem id="rename" onclick="showRenameFileDialog()" icon="fa fa-pencil" value="#{msg['rename']}"/>

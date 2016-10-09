@@ -494,6 +494,10 @@
 	color: lime;
 }
 
+#file-upload-box button {
+    float: none;
+}
+
 #tag-palette-form\:tag-editor th
 , #tag-palette-form\:tag-info th
 {

@@ -22,8 +22,6 @@
     
     <view-state id="home" view="home.xhtml">
     
-    	<var name="fileUploadBean" class="com.civilizer.web.view.FileUploadBean"/>
-    
         <on-entry>
             <evaluate
                 expression="mainController.populateFragmentListBeans(fragmentListBeans, requestScope.panelContextBean, requestScope.searchContextBean, flowRequestContext)"
@@ -168,7 +166,7 @@
         </transition>
         
         <transition on="upload-file" to="home" >
-			<evaluate expression="mainController.uploadFile(fileUploadBean, fileListBean)" />
+			<evaluate expression="mainController.onFinishFileUpload(fileListBean)"/>
 			<evaluate expression="mainController.newFileListBean()" result="flowScope.fileListBean"/>
 		</transition>
 
