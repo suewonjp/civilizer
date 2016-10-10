@@ -170,7 +170,8 @@ public final class FsUtil {
             } 
         }
         
-        FileUtils.forceDelete(file);
+        if (file.exists())
+            FileUtils.forceDelete(file);
     }
     
     public static boolean contentEquals(File file0, File file1) throws IOException {
