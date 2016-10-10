@@ -3,6 +3,10 @@
     white-space: pre;
 }
 
+.fa-rgap:before {
+    margin-right: 3px;
+}
+
 .fa .ui-inplace {
     margin-left: 3px;
 }

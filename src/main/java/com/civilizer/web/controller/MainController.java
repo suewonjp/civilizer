@@ -708,11 +708,11 @@ public final class MainController {
 	            final String filePath = fileListBean.getFullFilePath(dstNodeId, fileName);
 	            final String newPath = FsUtil.concatPath(filesHomePath, filePath);
 	            final String oldPath = FsUtil.concatPath(tmpPath, fileName);
-	            System.out.println(oldPath + " ===> " + newPath);
 	            try {
-	                FsUtil.moveFile(new File(oldPath), new File(newPath));
+	                FsUtil.forceMoveFile(new File(oldPath), new File(newPath));
 	                final FileEntity fe = new FileEntity(filePath);
-	                fileEntityDao.save(fe);
+	                if (fileEntityDao.findByName(filePath) == null)
+	                    fileEntityDao.save(fe);
 	                ViewUtil.addMessage("File Uploaded", filePath, null);
 	            } catch (Exception e) {
 	                e.printStackTrace();

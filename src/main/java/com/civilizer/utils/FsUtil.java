@@ -144,6 +144,12 @@ public final class FsUtil {
         else
             FileUtils.moveFile(oldFile, newFile);
     }
+
+    public static void forceMoveFile(File oldFile, File newFile) throws IOException {
+        if (newFile.exists())
+            FileUtils.forceDelete(newFile);
+        FileUtils.moveFile(oldFile, newFile);
+    }
     
     private static void closeDirectBuffer(ByteBuffer cb) {
         if (!cb.isDirect()) return;

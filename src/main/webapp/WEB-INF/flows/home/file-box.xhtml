@@ -26,6 +26,7 @@
         <br/><h:outputText id="src-path" value=""/><br/>
         <br/><span class="fa fa-arrow-circle-down fa-2x"></span><br/>
         <br/><h:outputText id="dst-path" value=""/><br/><br/>
+        <span class="fa fa-rgap fa-warning warning-color">#{msg['warn_file_overwrite']}</span>
         <p:tree id="folder-tree" value="#{fileListBean.folderTree.root}" var="folderPathBean" style="width:100%">
             <p:treeNode dynamic="true">
                 <span class="each-file fa #{folderPathBean.getCssClassName()}" _id="#{folderPathBean.id}" _fp="#{folderPathBean.fullPath}">
