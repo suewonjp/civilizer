@@ -62,7 +62,7 @@ dependencies {
     compile ("org.springframework.security:spring-security-config:${springSecurityVersion}") { force = true }
     compile ("javax.el:el-api:2.2") { force = true }
     compile ("org.glassfish.web:el-impl:2.2") { force = true }
-    compile ("org.primefaces:primefaces:5.2") { force = true }
+    compile ("org.primefaces:primefaces:6.0") { force = true }
     compile ("org.primefaces.themes:all-themes:1.0.9") { force = true }
     compile ("org.apache.myfaces.core:myfaces-api:2.2.8") { force = true }
     compile ("org.apache.myfaces.core:myfaces-impl:2.2.8") { force = true }
