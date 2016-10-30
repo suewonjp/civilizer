@@ -17,6 +17,7 @@ import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import com.civilizer.domain.*;
 import com.civilizer.test.helper.TestUtil;
 
+@Ignore
 class HibernateQuerySpec extends DaoSpecBase {
     
     static final DateTimeComparator dtCmptr = DateTimeComparator.getInstance();

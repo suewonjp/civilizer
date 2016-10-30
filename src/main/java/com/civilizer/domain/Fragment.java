@@ -80,7 +80,7 @@ public final class Fragment implements Serializable {
     }
 
     @Column(name = "creation_datetime")
-    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @DateTimeFormat(iso=ISO.DATE)
     public DateTime getCreationDatetime() {
         return creationDatetime;
@@ -91,7 +91,7 @@ public final class Fragment implements Serializable {
     }
 
     @Column(name = "update_datetime")
-    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @DateTimeFormat(iso=ISO.DATE)
     public DateTime getUpdateDatetime() {
         return updateDatetime;

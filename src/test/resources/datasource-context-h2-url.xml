@@ -23,7 +23,7 @@
 	</jdbc:initialize-database>
 
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
@@ -32,7 +32,7 @@
 	<context:component-scan base-package="com.civilizer.domain,com.civilizer.dao" />
 
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.civilizer.domain" />
 		<property name="hibernateProperties">
