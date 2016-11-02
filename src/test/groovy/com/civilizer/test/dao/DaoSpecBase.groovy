@@ -4,10 +4,16 @@ import spock.lang.*;
 
 import javax.sql.DataSource;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.civilizer.dao.*;
 import com.civilizer.domain.*;
@@ -16,7 +22,12 @@ import com.civilizer.test.helper.TestUtil;
 @Ignore
 class DaoSpecBase extends spock.lang.Specification {
     
-    static def GenericXmlApplicationContext ctx;
+    static GenericXmlApplicationContext ctx;
+
+    SessionFactory sessionFactory;
+    HibernateTransactionManager txManager;
+    TransactionStatus txStatus;
+    Session session;
     
     FragmentDao fragmentDao;
     TagDao tagDao;
@@ -35,7 +46,7 @@ class DaoSpecBase extends spock.lang.Specification {
     static def cleanupApplicationContext() {
         ctx.close();
     }
-    
+
     static void runSqlScript(String ... scripts) {
         DataSource dataSource = ctx.getBean("dataSource", DataSource.class);
         assert dataSource
@@ -48,6 +59,32 @@ class DaoSpecBase extends spock.lang.Specification {
         DatabasePopulatorUtils.execute(populator, dataSource);
     }
     
+    def beginTransaction() {
+        assert ctx
+        sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);
+        assert sessionFactory
+        txManager = ctx.getBean("transactionManager", HibernateTransactionManager.class);
+        assert txManager
+
+        DefaultTransactionDefinition txd = new DefaultTransactionDefinition();
+        txd.setName("TxForUnitTest");
+        txd.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+        txStatus = txManager.getTransaction(txd);
+        assert txStatus
+
+        session = sessionFactory.getCurrentSession();
+        assert session
+    }
+
+    def endTransaction(def rollback) {
+        assert txManager && txStatus
+        if (rollback)
+            txManager.rollback(txStatus);
+        else
+            txManager.commit(txStatus);
+    }
+
     void deleteAllTemporalObjects() {
         temporalTags.each {
             if (tagDao.findById(it.getId()))
@@ -58,7 +95,7 @@ class DaoSpecBase extends spock.lang.Specification {
                 fragmentDao.delete(it);
         }
     }
-    
+
     Tag newTag(String name) {
         if (name == null) {
             name = "new tag " + temporalTags.size();
@@ -131,7 +168,7 @@ class DaoSpecBase extends spock.lang.Specification {
     def setup() {
         doSetup();
     }
-    
+
     def cleanup() {
         doCleanup();
     }

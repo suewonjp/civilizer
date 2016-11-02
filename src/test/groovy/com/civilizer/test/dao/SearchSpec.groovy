@@ -6,18 +6,14 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 import com.civilizer.dao.hibernate.SearchQueryCreator;
 import com.civilizer.domain.*;
 import com.civilizer.utils.Pair;
 import com.civilizer.test.helper.TestUtil;
 
-@Ignore
 @Subject(SearchQueryCreator)
 class SearchSpec extends DaoSpecBase {
-    
-    Session session;
     
     def setupSpec() {
         DaoSpecBase.setupApplicationContext(
@@ -32,12 +28,15 @@ class SearchSpec extends DaoSpecBase {
     @Override
     void doSetup() {
         super.doSetup();
-        def sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);
-        assert sessionFactory
-        session = SessionFactoryUtils.getSession(sessionFactory, true);
-        assert session
+        beginTransaction();
     }
     
+    @Override
+    void doCleanup() {
+        endTransaction(true);
+        super.doCleanup();
+    }
+
     static def matches(def results, def src, Object...idx) {
 //        assert src.getClass().isArray();
         idx.every {

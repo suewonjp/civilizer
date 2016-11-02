@@ -12,17 +12,13 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 import com.civilizer.domain.*;
 import com.civilizer.test.helper.TestUtil;
 
-@Ignore
 class HibernateQuerySpec extends DaoSpecBase {
     
     static final DateTimeComparator dtCmptr = DateTimeComparator.getInstance();
-    
-    Session session;
     
     def setupSpec() {
         assert dtCmptr
@@ -37,10 +33,13 @@ class HibernateQuerySpec extends DaoSpecBase {
     @Override
     void doSetup() {
         super.doSetup();
-        def sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);
-        assert sessionFactory
-        session = SessionFactoryUtils.getSession(sessionFactory, true);
-        assert session
+        beginTransaction();
+    }
+
+    @Override
+    void doCleanup() {
+        endTransaction(true);
+        super.doCleanup();
     }
     
     def "Simple criteria query"() {
