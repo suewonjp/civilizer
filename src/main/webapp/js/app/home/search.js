@@ -128,6 +128,8 @@ function createSearchController() {
         curPanelId = panelId;
         getQuickSearchInput().val(qsPhrase);
         dlg.show();
+        $("#fragment-group-form\\:search-panel\\:quick-search-input")
+        .val($(".last-search-phrase").eq(curPanelId).text()).focus().select();
     }    
     
     return ctrr;
