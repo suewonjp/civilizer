@@ -65,16 +65,20 @@ function setupFragmentCheckboxes() {
             fragmentCheckboxMaster.jq.offset({ left:fragmentCheckboxSlaves[0].jq.offset().left });
             
             return function (e) {
-                if (fragmentCheckboxMaster.isChecked()) {
-                    for (var i=0; i<fragmentCount; ++i) {
-                        fragmentCheckboxSlaves[i].check();
-                    }
-                }
-                else {
+                if (!$(e.target).is("input"))
+                    return;
+                var span = fragmentCheckboxMaster.jq.find("span");
+                if (span.hasClass("ui-icon-check")) {
                     for (var i=0; i<fragmentCount; ++i) {
                         fragmentCheckboxSlaves[i].uncheck();
                     }
                 }
+                else {
+                    for (var i=0; i<fragmentCount; ++i) {
+                        fragmentCheckboxSlaves[i].check();
+                    }
+                }
+                span.toggleClass("ui-icon-check ui-icon-blank");
             }
         }
     }
