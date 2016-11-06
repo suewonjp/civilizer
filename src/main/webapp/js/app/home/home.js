@@ -65,49 +65,31 @@ function setupFragmentCheckboxes() {
             fragmentCheckboxMaster.jq.offset({ left:fragmentCheckboxSlaves[0].jq.offset().left });
             
             return function (e) {
-                if (!$(e.target).is("input"))
-                    return;
-                var span = fragmentCheckboxMaster.jq.find("span");
-                if (span.hasClass("ui-icon-check")) {
+                var icon = fragmentCheckboxMaster.jq.find(".ui-chkbox-icon");
+                if (icon.hasClass("ui-icon-cvz-check")) {
                     for (var i=0; i<fragmentCount; ++i) {
                         fragmentCheckboxSlaves[i].uncheck();
                     }
+                    icon.removeClass("ui-icon-cvz-check ui-icon-check").addClass("ui-icon-blank");
                 }
                 else {
                     for (var i=0; i<fragmentCount; ++i) {
                         fragmentCheckboxSlaves[i].check();
                     }
+                    icon.removeClass("ui-icon-blank").addClass("ui-icon-cvz-check ui-icon-check");
                 }
-                span.toggleClass("ui-icon-check ui-icon-blank");
             }
         }
     }
     
-    var fragmentCheckboxMaster;
-    var panelId;
+    var fragmentCheckboxMaster, panelId;
     
-    panelId = 0;
-    fragmentCheckboxMaster = PrimeFaces.widgets["fragmentCheckboxMaster"+panelId];
-    if (fragmentCheckboxMaster) {
-    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
-    }
-    panelId = 1;
-    fragmentCheckboxMaster = PrimeFaces.widgets["fragmentCheckboxMaster"+panelId];
-    if (fragmentCheckboxMaster) {
-    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
-    }
-    panelId = 2;
-    fragmentCheckboxMaster = PrimeFaces.widgets["fragmentCheckboxMaster"+panelId];
-    if (fragmentCheckboxMaster) {
-    	fragmentCheckboxMaster.jq.click(generateClickHandler(panelId));
-    }
-    
-    // Attach a tooltip message to a checkbox on each fragment panel menu
-    for (var i=0; i<3; ++i) {
-    	var cb = $("#fragment-group-form\\:checkbox-for-all-fragments-" + i);
-    	if (cb.length > 0) {
-    		cb[0].title = MSG.check_uncheck_all;
-    	}
+    for (panelId=0; panelId<3; ++panelId) {
+        fragmentCheckboxMaster = PrimeFaces.widgets["fragmentCheckboxMaster"+panelId];
+        if (fragmentCheckboxMaster) {
+            fragmentCheckboxMaster.jq.find("input").click(generateClickHandler(panelId));
+            fragmentCheckboxMaster.jq.title = MSG.check_uncheck_all; // Attach a tooltip message
+        }
     }
 }
 
