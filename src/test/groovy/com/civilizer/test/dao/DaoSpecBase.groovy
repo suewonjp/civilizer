@@ -59,6 +59,22 @@ class DaoSpecBase extends spock.lang.Specification {
         DatabasePopulatorUtils.execute(populator, dataSource);
     }
     
+    static void buildCreateDataSet() throws Exception {
+        try {
+            TestUtil.configure();
+            DaoSpecBase.setupApplicationContext(
+                "classpath:datasource-context-h2-url.xml");
+            FileEntityDao fileEntityDao = ctx.getBean("fileEntityDao",
+                    FileEntityDao.class);
+            assert fileEntityDao;
+
+            TestUtil.touchTestFilesForFileBox(fileEntityDao);
+        } finally {
+            DaoSpecBase.cleanupApplicationContext();
+            TestUtil.unconfigure();
+        }
+    }
+
     def beginTransaction() {
         assert ctx
         sessionFactory = ctx.getBean("sessionFactory", SessionFactory.class);

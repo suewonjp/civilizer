@@ -5,30 +5,26 @@ import spock.lang.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils
 
-import com.civilizer.test.dao.DaoEmbeddedSpec;
+import com.civilizer.test.dao.DaoSpecBase;
 import com.civilizer.test.helper.TestUtil;
 import com.civilizer.utils.FsUtil;
 import com.civilizer.web.view.DataBrokerBean;
 
 @Subject(DataBrokerBean)
-class DataBrokerSpec extends spock.lang.Specification {
+class DataBrokerSpec extends DaoSpecBase {
     
     def setupSpec() {
-        DaoEmbeddedSpec.buildCreateDataSet();
-    }
-    
-    def cleanupSpec() {
-        FileUtils.deleteQuietly(new File(TestUtil.getTempFolderPath()));
-    }
-    
-    def setup() {
         TestUtil.configure();
-    }
-    
-    def cleanup() {
+        DaoSpecBase.setupApplicationContext(
+            "classpath:datasource-context-h2-url.xml");
         TestUtil.unconfigure();
     }
     
+    def cleanupSpec() {
+        DaoSpecBase.cleanupApplicationContext();
+        FileUtils.deleteQuietly(new File(TestUtil.getTempFolderPath()));
+    }
+
     def "Data export"() {
         given: "A temporary folder where to export data"
             final String tmpPath = FsUtil.concatPath(TestUtil.getTempFolderPath(), DataBrokerBean.exportFolderName);
@@ -83,6 +79,8 @@ class DataBrokerSpec extends spock.lang.Specification {
         then:
             tmpDatabaseFile.isFile()
             
+        // [TODO] Insert arbitrary data into the DB before importing anything --- (A)
+
         when: "Move the exported file into the path from which to import it"
             // This is a necessary step because the data can't be imported from an arbitrary path.
             final File importFolder = new File(importFolderPath);
@@ -133,6 +131,8 @@ class DataBrokerSpec extends spock.lang.Specification {
         and: "The imported data should exist in the right places"
             dbFile.isFile()
             fbFolder.isDirectory()
+
+        // [TODO] Check data in the imported DB. The data inserted at (A) shouldn't be detected
     }
 
 }

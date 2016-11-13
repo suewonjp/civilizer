@@ -21,22 +21,6 @@ class DaoEmbeddedSpec extends DaoSpecBase {
         DaoSpecBase.cleanupApplicationContext();
     }
     
-    static void buildCreateDataSet() throws Exception {
-        try {
-            TestUtil.configure();            
-            DaoSpecBase.setupApplicationContext(
-                "classpath:datasource-context-h2-url.xml");
-            FileEntityDao fileEntityDao = ctx.getBean("fileEntityDao",
-                    FileEntityDao.class);
-            assert fileEntityDao;
-
-            TestUtil.touchTestFilesForFileBox(fileEntityDao);
-        } finally {
-            DaoSpecBase.cleanupApplicationContext();
-            TestUtil.unconfigure();
-        }
-    }
-    
     def ".executeQueryForResult"() {
         expect:
             fragmentDao.executeQueryForResult("from Fragment") ==
