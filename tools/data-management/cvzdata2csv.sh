@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 tput sgr 0
 
 hostScript=${0##*/}
 scriptDir=${0%/*}
 curDir=$PWD
+defaultInput="~/.civilizer/database/civilizer"
 
 ### Move to the directory where this script is located
 cd "$scriptDir"
@@ -38,8 +39,6 @@ function help() {
 
 ### Array to contain the name of tables to export
 unset tables
-
-defaultInput="~/.civilizer/database/civilizer"
 
 ### Collect user parameters
 while [ "$1" ]; do
