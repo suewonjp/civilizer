@@ -116,7 +116,8 @@ public class ResourceHttpRequestHandler extends WebContentGenerator implements H
     public void handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        checkAndPrepare(request, response, true);
+        checkRequest(request);
+        prepareResponse(response);
 
         // check whether a matching resource exists
         Resource resource = getResource(request);
