@@ -1,12 +1,14 @@
 
 set webappPath=civilizer
 set extraPath=extra
+set extraLibPath=!extraPath!\lib
 if not exist "!webappPath!\WEB-INF\web.xml" (
-    if not exist "!extraPath!\lib\jetty-runner.jar" (
+    if not exist "!extraLibPath!\jetty-runner.jar" (
         set webappPath=..\..\target\civilizer-1.0.0.CI-SNAPSHOT
         set extraPath=..\..\target\extra
+        set extraLibPath=..\..\extra\lib
         if not exist "!webappPath!\WEB-INF\web.xml" (
-            if not exist "!extraPath!\lib\jetty-runner.jar" (
+            if not exist "!extraLibPath!\jetty-runner.jar" (
                 echo "[%hostScript% ERROR] Civilizer can't be found!"
                 exit /b 1
             )
@@ -17,7 +19,7 @@ if not exist "!webappPath!\WEB-INF\web.xml" (
 call :toAbsolutePath webappPath 
 call :toAbsolutePath extraPath
 
-set classPath=!webappPath!\WEB-INF\classes;!extraPath!\lib\*;!webappPath!\WEB-INF\lib\*;!extraPath!
+set classPath=!webappPath!\WEB-INF\classes;!extraLibPath!\*;!webappPath!\WEB-INF\lib\*;!extraPath!
 
 ::echo webappPath = !webappPath!
 ::echo extraPath = !extraPath!
