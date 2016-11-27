@@ -21,6 +21,10 @@
     position:fixed;
 }
 
+.ui-menuitem-icon {
+    padding-left: 3px;
+}
+
 #fragment-group {
 	margin: 15px 0px 0px 2px;
 }
