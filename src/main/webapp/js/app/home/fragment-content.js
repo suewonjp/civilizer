@@ -26,6 +26,10 @@ function translateFragments() {
         var $this = $(this);
         var text = $this.text();
         $this.html(translateFragmentContent(text));
+        $this.find(".-cvz-tag, .-cvz-file").each(function() {
+            var $t = $(this);
+            $t.text(removeSearchKeywordCommands($t.text()));
+        });
         postprocessFragmentContent($this);
         if ($this.hasClass("fp-search")) {
             // Highlight search keywords
