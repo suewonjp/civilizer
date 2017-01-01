@@ -2,11 +2,18 @@ Copyright (c) 2014-2016 Suewon Bahng, suewonjp@gmail.com
 
 Last Updated (2016-10-22)
 
-## Version 0.9.0.RC6 (2016-??-??)
+## Version 0.9.0.RC6 (2017-??-??)
 - Bug fix:
  - Youtube videos were not clickable under some situation
+- Bug fix:
+ - The previous Windows launcher (civilizer-win32.exe) used to be wrongfully identified as a malware by some
+ antivirus tools
+ - Now using another better exe wrapper seemingly free from the issue
 - New feature: Multiple File Upload
  - Can upload multiple files at once into File Box
+- New feature: (ADVANCED) raw database access
+ - Can access the underlying database using H2 console or shell
+ - This feature is for advanced users only;
 - Behavior Change:
  - Won't trigger any exception when users try to delete non-existing
  files/folders

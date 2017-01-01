@@ -58,7 +58,8 @@ This product includes software developed by Jonathan Ong and others.
 This product uses the following software in order to build and package it.
     https://maven.apache.org/
     https://ant.apache.org/manual/
-    http://www.battoexeconverter.com
+    http://www.battoexeconverter.com ( used until 0.9.0.RC4 )
+    https://www.autoitscript.com/site/autoit/ ( using since 0.9.0.RC5 )
     http://yui.github.io/yuicompressor/
 
 
