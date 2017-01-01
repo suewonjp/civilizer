@@ -44,7 +44,8 @@ public final class TextDecorator {
 		        }
 		        if (!caseSensitive && ! kw.isCaseSensitive())
 	                w = w.toLowerCase();
-		        w = escapeRegexMetaCharacters(w);
+		        if (!kw.isRegex())
+		            w = escapeRegexMetaCharacters(w);
 		        if (kw.isWholeWord())
 		            w = "\\b" + w + "\\b";
 		        else if (kw.isBeginningWith())
