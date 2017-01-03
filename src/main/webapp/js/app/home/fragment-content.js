@@ -30,7 +30,6 @@ function translateFragments() {
             var $t = $(this);
             $t.text(removeSearchKeywordCommands($t.text()));
         });
-        postprocessFragmentContent($this);
         if ($this.hasClass("fp-search")) {
             // Highlight search keywords
             $this.find("*").each(function() {
@@ -45,6 +44,7 @@ function translateFragments() {
             // Translate search keyword markups
             $this.html(translateSearchKeywordCommands($this.html()));
         }
+        postprocessFragmentContent($this);
     });
     
     // add a tooltip message of updated and created time
