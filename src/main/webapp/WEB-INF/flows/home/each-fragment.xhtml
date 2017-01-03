@@ -21,7 +21,7 @@
                 <p:selectBooleanCheckbox rendered="#{!fragmentDeletable}" value="#{fragmentBean.checked}" 
                     itemLabel="" widgetVar="fragmentCheckboxSlave#{panelId}_#{loop.index}">
                     <f:validateBean disabled="true"/>
-                    <p:ajax update=":selection-box-form:selection-box-panel" oncomplete="onAjaxCompleteForSelectionBox()"/>
+                    <p:ajax update=":selection-box-form:selection-box-panel" oncomplete="prepareSelectionBox()"/>
                 </p:selectBooleanCheckbox>
                 <a class="-cvz-frgm fragment-id" href="fragment/#{fragment.id}">\##{fragment.id}</a>
 <!--                 <c:choose> -->

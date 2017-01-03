@@ -37,6 +37,9 @@ function setupDndForFragments(forFramentOverlay) {
             else if ($tgtObj.is("#bookmark-form\\:bookmark-panel")) {
                 confirmBookmarkingFragment(frgId, $srcObj.text());
             }
+            else if ($tgtObj.is("#selection-box-form\\:selection-box-panel")) {
+                selectFragmentById(frgId);
+            }
             else if ($tgtObj.is("#trashcan .fa-trash")) {
                 confirmTrashingFragments(frgId, fragmentTrashed($srcObj));
             }
@@ -60,7 +63,7 @@ function setupDndForFragments(forFramentOverlay) {
             return true;
         })
         .targets(".fragment-header, .small-fragment-box")
-        .targets("[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #bookmark-form\\:bookmark-panel, #trashcan .fa-trash, #fragment-content-editor")
+        .targets("[id^='fragment-group-form\\:fragment-panel-toolbar-'], #panel-activation-buttons label, #bookmark-form\\:bookmark-panel, #selection-box-form\\:selection-box-panel, #trashcan .fa-trash, #fragment-content-editor")
         .newPair(null, "#editor-frame, #fragment-overlay").nullify()
         ;
     }

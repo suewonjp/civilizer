@@ -1,7 +1,9 @@
-function onAjaxCompleteForSelectionBox() {
+function prepareSelectionBox() {
     setContextMenuForSelections();
     
     initTogglerIcon($("#selection-box-title"));
+
+    setupDndForFragments(true);
 }
 
 function getSelectedFragments() {
@@ -86,5 +88,15 @@ function selectOrUnselectFragment() {
     else {
         // mark as unselected
         target.addClass("middle-line");
+    }
+}
+
+function selectFragmentById(frgId) {
+    var frg = $("#fragment-group").find(".fragment-header[_fid=" + frgId + "]");
+    for (var i=0; i<frg.length; ++i) {
+        PF(frg.eq(i).data("pfCheckbox")).check();
+    }
+    if (! frg.length) {
+        selectFragment([{ name:'fid', value:frgId }]);
     }
 }

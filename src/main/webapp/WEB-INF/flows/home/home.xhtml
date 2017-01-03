@@ -322,6 +322,8 @@
     <p:remoteCommand name="searchFragments" action="search-fragments" />
     <p:remoteCommand name="touchFragment" action="touch-fragment" />
     <p:remoteCommand name="appendTags" action="append-tags" />
+    <p:remoteCommand name="selectFragment" actionListener="#{mainController.selectFragment()}"
+        update=":selection-box-form:selection-box-panel" oncomplete="prepareSelectionBox()"/>
     
     <div id="frg-context-menu" class="context-menu">
 	    <p:menu>

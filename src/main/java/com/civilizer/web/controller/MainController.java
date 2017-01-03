@@ -6,6 +6,7 @@ import java.security.InvalidParameterException;
 import java.util.*;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.webflow.execution.RequestContext;
+import org.springframework.webflow.execution.RequestContextHolder;
 
 import com.civilizer.config.*;
 import com.civilizer.dao.*;
@@ -362,6 +364,17 @@ public final class MainController {
 		}
 	}
 	
+	public void selectFragment() {
+	    final Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+	    final String fid = params.get("fid");
+	    if (fid != null) {
+	        final Fragment frg = fragmentDao.findById(new Long(fid));
+	        final RequestContext rc = RequestContextHolder.getRequestContext();
+	        final FragmentSelectionBean fsb = (FragmentSelectionBean) rc.getFlowScope().get("fragmentSelectionBean");
+	        fsb.addFragment(frg);
+	    }
+	}
+
 	private void appendTagToFragment(Long fragmentId, Set<Tag> tags) {
 	    final Fragment frg = fragmentDao.findById(fragmentId, true, false);
 	    for (Tag tag : tags) {

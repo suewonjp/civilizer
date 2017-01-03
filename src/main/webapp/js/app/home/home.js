@@ -55,7 +55,9 @@ function setupFragmentCheckboxes() {
             var fragmentCheckboxSlaves = [];    
             
             for (var j=0; j<fragmentCount; ++j) {
-                var cb = PF("fragmentCheckboxSlave" + panelId + "_" + j);
+                var cbName = "fragmentCheckboxSlave" + panelId + "_" + j,
+                    cb = PF(cbName);
+                cb.jq.closest(".fragment-header").data("pfCheckbox", cbName);
                 fragmentCheckboxSlaves.push(cb);
             }
         
