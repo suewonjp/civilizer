@@ -19,7 +19,7 @@
             </c:when>
             <c:otherwise>
                 <p:selectBooleanCheckbox rendered="#{!fragmentDeletable}" value="#{fragmentBean.checked}" 
-                    itemLabel="" widgetVar="fragmentCheckboxSlave#{panelId}_#{loop.index}">
+                    onchange="onChangeFragmentCheckbox(this, '#{fragment.id}')" itemLabel="" widgetVar="fragmentCheckboxSlave#{panelId}_#{loop.index}">
                     <f:validateBean disabled="true"/>
                     <p:ajax update=":selection-box-form:selection-box-panel" oncomplete="prepareSelectionBox()"/>
                 </p:selectBooleanCheckbox>

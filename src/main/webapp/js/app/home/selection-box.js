@@ -91,6 +91,17 @@ function selectOrUnselectFragment() {
     }
 }
 
+function onChangeFragmentCheckbox(chkbox, frgId) {
+    var self = $(chkbox).closest(".fragment-header"),
+        frg = $("#fragment-group").find(".fragment-header[_fid=" + frgId + "]").not(self),
+        pfcb;
+    for (var i=0; i<frg.length; ++i) {
+        pfcb = PF(frg.eq(i).data("pfCheckbox"));
+        if (chkbox.checked) pfcb.check();
+        else pfcb.uncheck();
+    }
+}
+
 function selectFragmentById(frgId) {
     var frg = $("#fragment-group").find(".fragment-header[_fid=" + frgId + "]");
     for (var i=0; i<frg.length; ++i) {
