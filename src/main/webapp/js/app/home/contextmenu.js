@@ -86,8 +86,9 @@ function setContextMenuForSelections() {
         showOrHide(menu.find("#selection-box-form\\:relate"), fragments.length > 1);
         menu.find("#selection-box-form\\:append-tag").show();
         menu.find("#selection-box-form\\:trash").show();
-        menu.find("#selection-box-form\\:unselect").show();
-        menu.find("#selection-box-form\\:select_unselect").hide();
+        menu.find("#selection-box-form\\:unselect-all").show();
+        menu.find("#selection-box-form\\:unselect").hide();
+        menu.find("#selection-box-form\\:include_exclude").hide();
         if (fragments.length > 0)
             showPopup(menu, e);
         e.preventDefault();
@@ -104,8 +105,9 @@ function setContextMenuForSelections() {
         menu.find("#selection-box-form\\:relate").hide();
         menu.find("#selection-box-form\\:append-tag").hide();
         menu.find("#selection-box-form\\:trash").hide();
-        menu.find("#selection-box-form\\:unselect").hide();
-        menu.find("#selection-box-form\\:select_unselect").show();
+        menu.find("#selection-box-form\\:unselect-all").hide();
+        menu.find("#selection-box-form\\:unselect").show();
+        menu.find("#selection-box-form\\:include_exclude").show();
         
         showPopup(menu, e);
         menu.data("target-fragment", target);

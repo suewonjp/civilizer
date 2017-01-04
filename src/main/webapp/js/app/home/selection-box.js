@@ -111,3 +111,17 @@ function selectFragmentById(frgId) {
         selectFragment([{ name:'fid', value:frgId }]);
     }
 }
+
+function unselectFragmentById(frgId) {
+    if (! frgId) {
+        var target = $("#selection-box-context-menu").data("target-fragment");
+        frgId = target.attr("_fid");
+    }
+    var frg = $("#fragment-group").find(".fragment-header[_fid=" + frgId + "]");
+    for (var i=0; i<frg.length; ++i) {
+        PF(frg.eq(i).data("pfCheckbox")).uncheck();
+    }
+    if (! frg.length) {
+        unselectFragment([{ name:'fid', value:frgId }]);
+    }
+}

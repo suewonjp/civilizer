@@ -364,15 +364,24 @@ public final class MainController {
 		}
 	}
 	
+	private void selectOrUnselectFragment(boolean select) {
+        final Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        final String fid = params.get("fid");
+        if (fid != null) {
+            final Fragment frg = fragmentDao.findById(new Long(fid));
+            final RequestContext rc = RequestContextHolder.getRequestContext();
+            final FragmentSelectionBean fsb = (FragmentSelectionBean) rc.getFlowScope().get("fragmentSelectionBean");
+            if (select) fsb.addFragment(frg);
+            else fsb.removeFragment(frg);
+        }
+	}
+	
 	public void selectFragment() {
-	    final Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-	    final String fid = params.get("fid");
-	    if (fid != null) {
-	        final Fragment frg = fragmentDao.findById(new Long(fid));
-	        final RequestContext rc = RequestContextHolder.getRequestContext();
-	        final FragmentSelectionBean fsb = (FragmentSelectionBean) rc.getFlowScope().get("fragmentSelectionBean");
-	        fsb.addFragment(frg);
-	    }
+	    selectOrUnselectFragment(true);
+	}
+
+	public void unselectFragment() {
+        selectOrUnselectFragment(false);
 	}
 
 	private void appendTagToFragment(Long fragmentId, Set<Tag> tags) {
