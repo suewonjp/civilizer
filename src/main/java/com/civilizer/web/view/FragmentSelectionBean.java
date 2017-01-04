@@ -17,7 +17,8 @@ public final class FragmentSelectionBean implements Serializable {
     }
     
     public void setFragmentIds(List<Long> fragmentIds) {
-        this.fragmentIds = fragmentIds;
+        if (fragmentIds != null)
+            this.fragmentIds = fragmentIds;
     }
     
     public List<String> getFragmentTitles() {
@@ -25,15 +26,18 @@ public final class FragmentSelectionBean implements Serializable {
     }
 
     public void setFragmentTitles(List<String> fragmentTitles) {
-        this.fragmentTitles = fragmentTitles;
+        if (fragmentTitles != null)
+            this.fragmentTitles = fragmentTitles;
     }
     
     public void addFragment(Fragment fragment) {
+        if (fragment == null)
+            return;
         if (fragmentIds.equals(Collections.emptyList())) {
             fragmentIds = new ArrayList<>();
             fragmentTitles = new ArrayList<>();
         }
-        final long id = fragment.getId();
+        final Long id = fragment.getId();
         if (! fragmentIds.contains(id)) {
             fragmentIds.add(fragment.getId());
             fragmentTitles.add(fragment.getTitle());
@@ -41,16 +45,21 @@ public final class FragmentSelectionBean implements Serializable {
     }
             
     public void removeFragment(Fragment fragment) {
+        if (fragment == null)
+            return;
         fragmentIds.remove(fragment.getId());
         fragmentTitles.remove(fragment.getTitle());
+        if (fragmentIds.isEmpty()) {
+            clear();
+        }
     }
     
     public void clear() {
-        fragmentIds.clear();
-        fragmentTitles.clear();
+        fragmentIds = Collections.emptyList();
+        fragmentTitles = Collections.emptyList();
     }
     
-    public boolean contains(long id) {
+    public boolean contains(Long id) {
         return fragmentIds.contains(id);
     }
 
