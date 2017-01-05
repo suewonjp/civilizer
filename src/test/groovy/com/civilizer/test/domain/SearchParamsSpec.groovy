@@ -76,14 +76,21 @@ class SearchParamsSpec extends spock.lang.Specification {
             " \t: \t\n \u3000 "                 || 0    | false | SearchParams.TARGET_DEFAULT
             ' :  ""\t'                          || 0    | false | SearchParams.TARGET_DEFAULT
             "text: ..."                         || 1    | false | SearchParams.TARGET_TEXT
+            "te: ..."                           || 1    | false | SearchParams.TARGET_TEXT
             "anytext: . ! ?  ' \" "             || 5    | true  | SearchParams.TARGET_TEXT
+            "ate: . ! ?  ' \" "                 || 5    | true  | SearchParams.TARGET_TEXT
             "tag: tag"                          || 1    | false | SearchParams.TARGET_TAG
+            "t: tag"                            || 1    | false | SearchParams.TARGET_TAG
             "anytag:tag0 tag2"                  || 2    | true  | SearchParams.TARGET_TAG
+            "at:tag0 tag2"                      || 2    | true  | SearchParams.TARGET_TAG
             "title: title"                      || 1    | false | SearchParams.TARGET_TITLE
+            "ti: title"                         || 1    | false | SearchParams.TARGET_TITLE
             'anytitle:title "title:"  '         || 2    | true  | SearchParams.TARGET_TITLE
+            'ati:title "title:"  '              || 2    | true  | SearchParams.TARGET_TITLE
             "id:1 3 5 9 11 013"                 || 6    | true  | SearchParams.TARGET_ID
             ":word phrase '' \"\" wholeWorld/w" || 4    | false | SearchParams.TARGET_DEFAULT
             "any: 'hello _%' Phrase/c \"quoted phrase\" "  || 4  | true | SearchParams.TARGET_DEFAULT
+            "a: 'hello _%' Phrase/c \"quoted phrase\" "    || 4  | true | SearchParams.TARGET_DEFAULT
     }
     
     def "SearchParams.Keywords --- special cases"() {
@@ -216,9 +223,13 @@ class SearchParamsSpec extends spock.lang.Specification {
             ":"                     || 0
             "anytitle:"             || 0
             "word phrase/w anytag: tag0" || 2
+            "word phrase/w at: tag0" || 2
             "text:word phrase/w anytag:TAG any:" || 2
+            "te:word phrase/w at:TAG any:" || 2
+            "te:word phrase/w at:TAG ati:title" || 3
             // [NOTE] any directive inside double quotes should be ignored
             'anytitle:title "any:" text:"good content"' || 2
+            'ati:title "any:" te:"good content"' || 2
     }
 
 }

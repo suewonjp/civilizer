@@ -17,19 +17,26 @@ public final class SearchParams implements Serializable {
 	public static final int TARGET_ID            = 4;
 	
 	private static final TargetDirective[] DIRECTIVES = {
-	    new TargetDirective(":", TARGET_DEFAULT, false),    
+	    new TargetDirective(":", TARGET_DEFAULT, false),
 	    new TargetDirective("any:", TARGET_DEFAULT, true),
-        new TargetDirective("tag:", TARGET_TAG, false), 
+	    new TargetDirective("a:", TARGET_DEFAULT, true),
+        new TargetDirective("tag:", TARGET_TAG, false),
+        new TargetDirective("t:", TARGET_TAG, false),
         new TargetDirective("anytag:", TARGET_TAG, true),
-        new TargetDirective("title:", TARGET_TITLE, false), 
+        new TargetDirective("at:", TARGET_TAG, true),
+        new TargetDirective("title:", TARGET_TITLE, false),
+        new TargetDirective("ti:", TARGET_TITLE, false),
         new TargetDirective("anytitle:", TARGET_TITLE, true),
-        new TargetDirective("text:", TARGET_TEXT, false),   
+        new TargetDirective("ati:", TARGET_TITLE, true),
+        new TargetDirective("text:", TARGET_TEXT, false),
+        new TargetDirective("te:", TARGET_TEXT, false),
         new TargetDirective("anytext:", TARGET_TEXT, true),
+        new TargetDirective("ate:", TARGET_TEXT, true),
         new TargetDirective("id:", TARGET_ID, true),
     };
 	
 	private static final String TARGET_DIRECTIVE_PATTERN =
-	        "(\\b(any|tag|anytag|title|anytitle|text|anytext|id)\\b)?:";
+	        "(\\b(any|a|tag|t|anytag|at|title|ti|anytitle|ati|text|te|anytext|ate|id)\\b)?:";
 	
 	private static final String CONTROL_OPERATORS = "cwberh-";
 	

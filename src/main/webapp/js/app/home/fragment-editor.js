@@ -337,11 +337,14 @@ function autocompleteForTypingTags() {
     // quick search input for the search dialog or last search phrase input on panels;
     anotherOpts = new Options();
     anotherOpts.allow = function(input) {
-        var idx = input.lastIndexOf("tag:");
-        // we need to trigger the autocomplete UI only when the special keyword "tag:" is detected.
-        if (idx == -1)
+        var m = /\b((tag:)|(t:)|(at:)|(anytag:))/.exec(input),
+            idx = m && m.index;
+
+        // we need to trigger the autocomplete UI
+        // only when either of the keywords "tag:,t:,anytag:,at:" is detected.
+        if (! m)
             return null;
-        anotherOpts.startIdx = idx + 4;
+        anotherOpts.startIdx = idx + m[0].length;
         return input.substring(anotherOpts.startIdx);
     };
     $("#fragment-group-form\\:search-panel\\:quick-search-input, #last-search-phrase-0 input, #last-search-phrase-1 input, #last-search-phrase-2 input")
