@@ -1,7 +1,5 @@
 #!/bin/bash
 
-tput sgr 0
-
 hostScript=${0##*/}
 scriptDir=${0%/*}
 defaultInput="$HOME/.civilizer/database/civilizer"
@@ -10,16 +8,21 @@ defaultInput="$HOME/.civilizer/database/civilizer"
 cd "$scriptDir"
 
 ### Load the script file containing necessary utility functions
-utilsDir=$(cd "shell-utils" 2> /dev/null && pwd)
-[ "$utilsDir" ] || utilsDir=$(cd "../shell-utils" 2> /dev/null && pwd)
-source "$utilsDir/commons.sh"
+[ -f "shell-utils/commons.sh" ] && source "shell-utils/commons.sh" || {
+    [ -f "../shell-utils/commons.sh" ] && source "../shell-utils/commons.sh";
+} || {
+    echo "[ $hostScript ][ ERROR ] Can't find shell-utils/common.sh!"
+    echo -e "\t ( You may be running the script from a wrong place... )"
+    exit 1
+}
 
-function help() {
+confirmJre
+
+help() {
         usage \
-            "-db path  : Specify $(tput setaf 1)ABSOLUTE PATH$(tput sgr 0) to Civilizer Database File (.h2.db);" \
+            "-db path  : Specify $(echolor $bold $red ABSOLUTE PATH) to Civilizer Database File (.h2.db);" \
             "          : If not specified, it is assumed to be ${defaultInput}" \
             "-shell    : Open H2 Shell instead of H2 Console" \
-            "$(tput sgr 0)" \
             "" \
             "EXAMPLE   : ${hostScript} -db ${defaultInput}" \
             "";
@@ -31,33 +34,52 @@ function help() {
 withShell=no
 
 ### Collect user parameters
+debug=
 while [ "$1" ]; do
     case "$1" in
         -db) inputPath=$2; shift ;;
-        -shell) withShell=yes; shift ;;
+        -shell) withShell=yes; ;;
+        -debug) debug=debug ;;
         -help | -h | -\?) help ;;
+        -*) onUnknownOption $1 ;;
+        *) break ;;
     esac
     shift
 done
 
 ### Set up Java class path to H2 Shell
-setupClasspath
+setupClasspath "$debug"
 
 ### Path to the database
-inputPath=${inputPath:-"$defaultInput"}
+inputPath="${inputPath:-"$defaultInput"}"
 
 ### Add '.h2.db' prefix if it is missing
-[ '.h2.db' != ${inputPath:(-6)} ] && inputPath+=.h2.db
+[ '.h2.db' != "${inputPath:(-6)}" ] && inputPath+=.h2.db
 
 ### Confirm that the database file exists; If not, abort the operation
-[ ! -f ${inputPath} ] && printf "[ ${hostScript} ]$(tput setaf 1)[ERROR] The database file '${inputPath}' doesn't exist!\n$(tput sgr 0)[ ${hostScript} ] For help, run ${hostScript} -?\n" && exit 1
+[ ! -f "${inputPath}" ] && \
+if [ ! -f "${inputPath}" ]; then
+    printf "[ %s ][ %s ] The database file '%s' doesn't exist!\n[ %s ] For help, run %s\n" \
+        "${hostScript}" "$(echolor $bold $magenta ERROR)" \
+        "${inputPath}" \
+        "${hostScript}" "$(echolor $reverse $cyan "${hostScript}" -?)" && \
+    exit 1
+fi
 
 ### Strip the prefix of the database file (Input requirement by H2)
-inputPath=${inputPath%.h2.db}
+inputPath="${inputPath%.h2.db}"
 
 targetTool=Console
 [ $withShell = "yes" ] && targetTool=Shell
 
+if [ "$debug" ]; then
+    printvar withShell
+    printvar targetTool
+    printvar inputPath
+    printvar classPath
+fi
+
 ### Invoke H2 Console or Shell
-java -cp $classPath org.h2.tools.${targetTool} -url "jdbc:h2:${inputPath}" -user sa
+echo
+${debug:+echo} java -cp "$classPath" "org.h2.tools.${targetTool}" -url "jdbc:h2:${inputPath}" -user sa
 
