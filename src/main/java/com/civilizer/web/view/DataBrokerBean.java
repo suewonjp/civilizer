@@ -26,11 +26,7 @@ public class DataBrokerBean implements Serializable {
     private String password = "";
     private boolean exportMode;
     private boolean authFailed;
-    // [NOTE] Currently, data import at runtime is not supported on Windows
-    // due to some technical issue that JVM can't handle properly.
-    // See for details http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4715154
-    private boolean importable = ! System.getProperty("os.name").toLowerCase().contains("win");
-    
+
     private static String[] getTargetPaths() {
         final String [] paths = {
                 System.getProperty(AppOptions.DB_FILE_PREFIX)+System.getProperty(AppOptions.DB_FILE_SUFFIX),
@@ -145,14 +141,6 @@ public class DataBrokerBean implements Serializable {
         this.exportMode = exportMode;
     }
     
-    public boolean isImportable() {
-        return importable;
-    }
-    
-    public void setImportable(boolean importable) {
-        this.importable = importable;
-    }
-    
     public void checkNext() {
         if (curStep.equals("auth-step")) {
             if (authFailed)
@@ -196,20 +184,8 @@ public class DataBrokerBean implements Serializable {
                     authFailed = true;
                     return (curStep = "auth-step");
                 }                
-                return (curStep = exportMode ? "preexport-step" : "upload-step");
+                return (curStep = "preexport-step");
             }
-        }
-        else if (oldStep.equals("upload-step")) {
-            // Import the uploaded data.
-            curStep = "import-error-step";
-            try {
-                final String uncompressPath = prepareDataImport();
-                importData(uncompressPath);
-                curStep = "confirm-import-step";
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return curStep;
         }
         else if (oldStep.equals("preexport-step")) {
             try {

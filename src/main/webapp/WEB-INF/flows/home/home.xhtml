@@ -102,36 +102,6 @@
                     </h:panelGrid>
                 </p:panel>
             </p:tab>
-            <p:tab id="upload-step">
-                <p:panel header="#{msg['upload_file']}">
-                    <h:panelGrid columns="1" cellpadding="5">
-                        <p:fileUpload fileUploadListener="#{dataBrokerBean.onFileUpload}"
-                            mode="advanced" auto="true"
-                            oncomplete="DBC.onFileUpload()"/>
-                        <h:outputText styleClass="fa fa-warning warning-color" value="#{msg['warn_data_import']}"/>
-                    </h:panelGrid>
-                </p:panel>
-            </p:tab>
-            <p:tab id="import-error-step">
-                <p:panel>
-                    <f:facet name="header">
-                        <h:outputText styleClass="fa fa-warning warning-color" value="#{msg['error']}"/>
-                    </f:facet>
-                    <h:panelGrid columns="1" cellpadding="5">
-                        <p:commandButton value="#{msg['close']}" onclick="DBC.hideDialog()" icon="fa fa-close"/>
-                    </h:panelGrid>
-                </p:panel>
-            </p:tab>
-            <p:tab id="confirm-import-step">
-                <p:panel>
-                    <f:facet name="header">
-                        <i class="fa fa-thumbs-o-up"></i>#{msg['success']}
-                    </f:facet>
-                    <h:panelGrid columns="1" cellpadding="5">
-                        <p:commandButton value="#{msg['refresh_page']}" oncomplete="location.replace('home')" onclick="DBC.hideDialog()" icon="fa fa-check"/>
-                    </h:panelGrid>
-                </p:panel>
-            </p:tab>
             <p:tab id="preexport-step">
                 <p:panel header="#{msg['wait']}">
                     <h:panelGrid columns="1" cellpadding="5">

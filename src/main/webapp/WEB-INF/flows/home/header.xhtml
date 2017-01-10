@@ -64,8 +64,7 @@
         <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
         <p:menu id="user-menu" overlay="true" trigger="user-menu-trigger" my="right top" at="right bottom">
             <p:menuitem value="#{msg['about_app']}" onclick="showAboutDialog()" icon="fa fa-university"/>
-            <p:menuitem rendered="#{dataBrokerBean.importable}" value="#{msg['import_data']}" process="data-broker-export-mode" onclick="DBC.setMode(false)" oncomplete="DBC.showDialog()" icon="fa fa-upload"/>
-            <p:menuitem value="#{msg['export_data']}" process="data-broker-export-mode" onclick="DBC.setMode(true)" oncomplete="DBC.showDialog()" icon="fa fa-download"/>
+            <p:menuitem value="#{msg['export_data']}" oncomplete="DBC.showDialog()" icon="fa fa-download"/>
             <p:menuitem value="#{msg['change_profile']}" onclick="UPC.showDialog()" icon="fa fa-edit"/>
             <p:separator />
         <c:if test="#{systemProperties['civilizer.dev']}">
@@ -76,7 +75,6 @@
         </p:menu>
     </div>
                 
-    <h:inputHidden id="data-broker-export-mode" value="#{dataBrokerBean.exportMode}"/>
 </h:form>
 
 <ui:include src="/WEB-INF/flows/home/fragment-editor.xhtml" />

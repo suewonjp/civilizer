@@ -175,17 +175,6 @@ function createDataBrokerController() {
     }
     
     ctrr.onHide = function() {
-        if (wzd.currentStep == "confirm-import-step") {
-            location.replace('home');
-        }
-    }
-    
-    ctrr.setMode = function(exportMode) {
-        $("#data-broker-export-mode").val(exportMode);
-        if (exportMode)
-            getDialog().jq.find(".ui-dialog-title").text(MSG.export_data);
-        else
-            getDialog().jq.find(".ui-dialog-title").text(MSG.import_data);
     }
     
     ctrr.onTypePw = function(pwInput, e) {
