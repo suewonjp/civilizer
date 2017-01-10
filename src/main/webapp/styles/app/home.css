@@ -599,6 +599,8 @@
 {
     position:relative;
     top:10px;
+    width:60%;
+    height:80%;
 }
 
 #user-menu-dlg-form\:data-broker-dlg a {
