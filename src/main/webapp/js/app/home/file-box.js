@@ -189,7 +189,7 @@ function showFileInfo() {
         toggleWindow(overlayFrame, titleBar);
     }
     
-    $("#fragmen-overlay-back-button").hide();
+    $("#fragment-overlay-back-button").hide();
     
     var target = $("#file-context-menu").data("target-file") || $(this);
     $("#file-context-menu").data("target-file", null)

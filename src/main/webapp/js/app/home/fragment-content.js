@@ -88,7 +88,7 @@ function populateFragmentOverlay(data) {
     // Set up a link to the previous fragment if any.
     var overlayContent = $("#fragment-overlay-content");
     var prevHdr = overlayContent.find(".fragment-header");
-    var backBtn = $("#fragmen-overlay-back-button");
+    var backBtn = $("#fragment-overlay-back-button");
     if (prevHdr.length > 0) {
         backBtn.show().attr("href", "fragment/"+prevHdr.attr("_fid"))
             .addClass("-cvz-frgm");
