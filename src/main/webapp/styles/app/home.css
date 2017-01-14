@@ -159,7 +159,7 @@
 	margin-left:50px;
 }
 
-#fragment-overlay-back-button span {
+#fragment-overlay-back-button span, #fragment-overlay-resize-button span {
 	margin: 4px 0px 0px 8px;
 	color: aqua;
 	font-size:large;
@@ -180,10 +180,17 @@
     background-color: white;
 }
     
-#fragment-overlay-content {
+#fragment-overlay-content.normal-size {
 	min-width: 320px;
 	max-width: 640px;
 	max-height: 480px;
+	overflow: auto;
+}
+
+#fragment-overlay-content.large-size {
+	min-width: 320px;
+	max-width: auto;
+	max-height: 720px;
 	overflow: auto;
 }
 

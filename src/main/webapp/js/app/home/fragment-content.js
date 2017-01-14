@@ -75,7 +75,7 @@ function populateFragmentOverlay(data) {
         , lightboxSpeed:"fast"
         , closeSelector:"#fragment-overlay-close-button"
         , closeEsc:true
-        , modalCSS:{ position:"fixed", bottom: '34px', right: '2%' }
+        , modalCSS:{ position:"fixed", bottom: '34px', right: '4px' }
     });
     
     var titleBar = $("#fragment-overlay-title-bar");
@@ -95,6 +95,15 @@ function populateFragmentOverlay(data) {
     }
     else {
         backBtn.hide();
+    }
+    var resizeBtn = $("#fragment-overlay-resize-button");
+
+    if (! overlayFrame.data("initialized")) {
+        resizeBtn.off("click.fragment_overlay").on("click.fragment_overlay", function(e) {
+            overlayContent.toggleClass("normal-size large-size");
+            $(this).find("span").toggleClass("fa-expand fa-compress");
+        });
+        overlayFrame.data("initialized", true);
     }
     
     overlayContent.html(data);
