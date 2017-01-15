@@ -159,7 +159,7 @@
 	margin-left:50px;
 }
 
-#fragment-overlay-back-button span, #fragment-overlay-resize-button span {
+#fragment-overlay-back-button span {
 	margin: 4px 0px 0px 8px;
 	color: aqua;
 	font-size:large;
