@@ -47,9 +47,9 @@ $(document).ready(function() {
 	
 	setTimeout(function() {
     	// timeout for message display if any
-    	$(".ui-messages-close").trigger("click");
+        $(".auto-closable .ui-messages-close").trigger("click");
     }, 15000);
-    
+
     $(window).off("keyup.cvz_global_hotkey").on("keyup.cvz_global_hotkey", onGlobalHotkeys);
     
 //    var appUrl = location.protocol + '//' + location.hostname;
@@ -59,6 +59,7 @@ $(document).ready(function() {
 $(window).load(function() {
     setupFragmentCheckboxes();
     applyCurrentThemeToThemeSwitcher();
+    PF("reminderPoll").cfg.frequency = localStorage.getItem("reminder_interval") || SYSPROP.defReminderInterval;
 });
 
 var curPanel = 0;

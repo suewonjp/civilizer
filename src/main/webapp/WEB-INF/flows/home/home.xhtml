@@ -8,6 +8,8 @@
 	template="/WEB-INF/layouts/standard.xhtml">
 
 <ui:define name="flow-scripts">
+    <ui:include src="js/constants.xhtml"/>
+
     <c:choose>
         <c:when test="#{systemProperties['civilizer.use_compressed_css_js']}">
             <link rel="stylesheet" href="resources/styles/compressed.css" type="text/css"/>
@@ -49,8 +51,6 @@
             <script src="resources/js/app/home/document-ready.js"/>
         </c:otherwise>
     </c:choose>
-    
-	<ui:include src="js/constants.xhtml"/>
 </ui:define>
 
 <ui:define name="header">
@@ -203,7 +203,11 @@
 <h:form id="fragment-group-form">
 <!--     <p:log id="log"/> -->
 <!--     <p:growl id="growl" showDetail="true" sticky="false" life="10000"/> -->
-    <p:messages id="messages" globalOnly="true" showDetail="true" closable="true"/>
+    <p:messages id="messages" styleClass="auto-closable" globalOnly="true" showDetail="true" closable="true"/>
+    <p:messages id="reminder-messages" for="reminder-poll" escape="false" showDetail="true" closable="true"/>
+
+    <p:poll id="reminder-poll" widgetVar="reminderPoll" interval="#{ 3600*systemProperties['civilizer.reminder_interval'] }"
+        autoStart="true" onstart="onStartReminder();" listener="#{reminderController.onReminderRequest}" update="reminder-messages" />
     
     <h:inputHidden id="id-placeholder-for-file" value="#{fileListBean.srcNodeId}"/>
     
@@ -304,7 +308,7 @@
             <p:menuitem id="delete" onclick="trashFragmentFromCtxtMenu(true)" icon="fa fa-trash" value="#{msg['delete']}"/>
             <p:menuitem id="restore" onclick="restoreFragmentFromCtxtMenu()" icon="fa fa-recycle" value="#{msg['restore']}"/>
             <p:menuitem id="relateNew" onclick="openFragmentEditorToRelate(event)" icon="fa fa-link" value="#{msg['relate_new']}"/>
-            <p:menuitem id="closeOthers" onclick="closeOtherFragments()" icon="fa fa-check" value="#{msg['closeOthers']}"/>
+            <p:menuitem id="closeOthers" onclick="closeOtherFragments()" icon="fa fa-check" value="#{msg['close_others']}"/>
             <p:menuitem id="touch" onclick="_touchFragment()" icon="fa fa-hand-o-up" value="#{msg['touch']}"/>
 	    </p:menu>
     </div>

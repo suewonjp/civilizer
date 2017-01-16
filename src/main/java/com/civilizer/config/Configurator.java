@@ -103,6 +103,14 @@ public final class Configurator {
     	}
 	}
 	
+	private void validateUnsignedInt(Properties p, String option) throws NumberFormatException {
+//	    Integer.parseUnsignedInt(p.getProperty(option)); // for Java 8
+	    // Use the following up until we support Java 7
+        final int value = Integer.parseInt(p.getProperty(option));
+        if (value < 0)
+            throw new NumberFormatException("Negative numbers are not allowed!");
+	}
+
 	private void setUnspecifiedOptionsWithDefaultValues(Properties p) {
 	    if (p.getProperty(AppOptions.DB_FILE_PREFIX) == null) {
 	        p.setProperty(AppOptions.DB_FILE_PREFIX, AppOptions.DEF_DB_FILE_PREFIX);
@@ -136,8 +144,14 @@ public final class Configurator {
 		    p.setProperty(AppOptions.TEMP_PATH, AppOptions.DEF_TEMP_PATH);
 		}
 
+		try {
+		    validateUnsignedInt(p, AppOptions.REMINDER_INTERVAL);
+		} catch (Exception e) {
+		    p.setProperty(AppOptions.REMINDER_INTERVAL, AppOptions.DEF_REMINDER_INTERVAL);
+		}
+
 	    try {
-	        Integer.parseInt(p.getProperty(AppOptions.ITEMS_PER_PAGE));
+	        validateUnsignedInt(p, AppOptions.ITEMS_PER_PAGE);
         } catch (Exception e) {
             p.setProperty(AppOptions.ITEMS_PER_PAGE, AppOptions.DEF_ITEMS_PER_PAGE);
         }

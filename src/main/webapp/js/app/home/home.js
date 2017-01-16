@@ -483,3 +483,54 @@ function setupPanelToolbarArea() {
             ptbs.css("visibility", "hidden");
     });
 }
+
+function onStartReminder() {
+    // Suspend polling while the message appears (to save network traffic)
+    var poll = PF("reminderPoll"), timer = poll.restartTimer;
+    poll.stop();
+
+    // Make sure there be only zero or one timeout callback in any case
+    if (timer)
+        clearTimeout(timer);
+    timer = setTimeout(function() {
+        // Close the message and restart the polling
+        $("#fragment-group-form\\:reminder-messages .ui-messages-close").trigger("click");
+        var poll = PF("reminderPoll");
+        if (poll.cfg.frequency > 0)
+            poll.start();
+        clearTimeout(poll.restartTimer);
+    }, 1000*60*10); // Let it stay for 10 minutes unless the user closes it
+
+    poll.restartTimer = timer;
+}
+
+function onClickReminderSetting(btn) {
+    var parent = $(btn).closest(".ui-messages-info"),
+        settingArea = parent.find(".reminder-setting-box");
+    if (settingArea.length) {
+        showOrHide(settingArea);
+    }
+    else {
+        var interval = localStorage.getItem("reminder_interval") || SYSPROP.defReminderInterval,
+            slider = $("<div class='reminder-setting-slider'>").slider({
+                max: 24, min: 1, value: interval,
+                change: function(e, ui) {
+                    localStorage.setItem("reminder_interval", ui.value);
+                    PF("reminderPoll").cfg.frequency = 3600 * ui.value;
+                    settingArea.find("b").text(ui.value + " hours");
+                }
+            });
+        settingArea = $("<div class='reminder-setting-box'><span>" + MSG.reminder_interval + " : </span><b>" + interval + " hours</b></div>")
+        .append(slider);
+        parent.append(settingArea);
+    }
+}
+
+// [DEV]
+if (SYSPROP.dev === "true") {
+    var remindMeRightNow = function() {
+        var poll = PF("reminderPoll");
+        poll.cfg.frequency = 1;
+        poll.start();
+    }
+}

@@ -15,6 +15,7 @@ public final class AppOptions {
 	public static final String TEMP_PATH                          = "civilizer.temp_path";
 	public static final String ITEMS_PER_PAGE                     = "civilizer.items_per_page";
 	public static final String CLEAN_START                        = "civilizer.clean_start";
+	public static final String REMINDER_INTERVAL                  = "civilizer.reminder_interval";
 
 	// options for development purposes
 	public static final String INITIALIZE_DB                      = "civilizer.initialize_db";
@@ -33,5 +34,6 @@ public final class AppOptions {
 	public static final String DEF_TEMP_PATH                      = ".temp";
 	public static final String DEF_ITEMS_PER_PAGE                 = "10";
 	public static final String DEF_CLEAN_START                    = "false";
+    public static final String DEF_REMINDER_INTERVAL              = "3";
 	
 }

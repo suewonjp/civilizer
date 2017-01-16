@@ -433,7 +433,7 @@
 	cursor:default;
 }
 
-#fragment-group-form\:messages, #fragment-group-form\:development-messages {
+.ui-messages {
 	position: relative;
 	top: 40px;
 	margin: 0 60px 5px 2px;
@@ -646,4 +646,38 @@
 #search-hist input {
     width: 300px;
     margin: 0px 6px 3px 4px;
+}
+
+#fragment-group-form\:reminder-messages .ui-messages-info {
+    background-color: cornsilk;
+}
+
+.twitter-button {
+    background: dodgerblue;
+    color: white;
+    padding: 5px;
+    margin: 0 12px 0 8px;
+    border: 0;
+}
+
+.reminder-setting-btn {
+    text-decoration: none;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: gainsboro;
+    background-color: whitesmoke;
+    padding: 3px;
+    float: right;
+}
+
+.reminder-setting-box {
+    width: 60%;
+    margin: 6px;
+}
+
+.reminder-setting-slider {
+    margin: 0 0 0 10px;
+    width: 40%;
+    display: inline-block;
 }
