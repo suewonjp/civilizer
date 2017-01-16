@@ -436,7 +436,7 @@
 #fragment-group-form\:messages, #fragment-group-form\:development-messages {
 	position: relative;
 	top: 40px;
-	margin-bottom: 5px;
+	margin: 0 60px 5px 2px;
 }
 
 .each-file.fa {
