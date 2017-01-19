@@ -39,9 +39,6 @@ import com.civilizer.web.view.*;
 @Component("mainController")
 public final class MainController {
 	
-	// [DEV]
-	private static final String DEVELOPMENT_MESSAGE_CLIENT_ID = "fragment-group-form:development-messages";
-	
 	private static final int    MAX_FRAGMENT_PANELS = 3;
 	private static final String REQUEST_PARAM_LOCALE = "locale";
     
@@ -85,7 +82,7 @@ public final class MainController {
 		for (Object p : param) {
 			params += p.toString() + ", ";
 		}
-		ViewUtil.addMessage(DEVELOPMENT_MESSAGE_CLIENT_ID, "Yet to be developed", params, null);
+		ViewUtil.addMessage("Yet to be developed", params, null);
 	}
 	
 	public FragmentListBean[] newFragmentListBeans() {
