@@ -20,6 +20,7 @@ import com.civilizer.config.AppOptions;
 public final class ViewUtil {
 	
 	private static final String MESSAGE_RESOURCE_BASE_NAME = "i18n.MessageResources";
+	private static final String HELP_RESOURCE_BASE_NAME = "i18n.HelpResources";
 	
 	public static void addMessage(String title, String content, FacesMessage.Severity severity) {
 		if (severity == null) {
@@ -50,6 +51,11 @@ public final class ViewUtil {
 //    	final Locale locale = userProfileBean.getLocale();
     	final ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_RESOURCE_BASE_NAME, new Locale(System.getProperty(AppOptions.LOCALE)));
     	return bundle.getString(key);
+	}
+
+	public static String getHelpString(String key) {
+	    final ResourceBundle bundle = ResourceBundle.getBundle(HELP_RESOURCE_BASE_NAME, new Locale(System.getProperty(AppOptions.LOCALE)));
+	    return bundle.getString(key);
 	}
     
     public static boolean isAuthenticated() {

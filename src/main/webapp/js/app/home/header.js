@@ -99,6 +99,13 @@ function showAboutDialog() {
     dlg.show();
 }
 
+function showHelp() {
+    $.get("fragment/help", "", function(data) {
+        populateFragmentOverlay(data);
+        $("#fragment-overlay-back-button").hide();
+    });
+}
+
 function createConfirmPasswordController() {
     var ctrr = new Object();
     var dlg, submit, action;

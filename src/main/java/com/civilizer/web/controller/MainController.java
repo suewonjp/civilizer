@@ -943,14 +943,26 @@ public final class MainController {
 	public List<Long> getIdsOfTrashedFragments() {
 	    return fragmentDao.findIdsByTagId(Tag.TRASH_TAG_ID);
 	}
-	
+
+    private String onRequestForFragment(ModelMap model, Fragment frg) {
+        final FragmentBean fb = newFragmentBean(frg, null, null);
+        model.addAttribute("fragmentBean", fb);
+        model.addAttribute("fragmentDeletable", fb.deletable());
+        return "fragment";
+    }
+
     @RequestMapping(value = "/fragment/{fragmentId}", method = { RequestMethod.GET })
     public String onRequestForFragment(ModelMap model, @PathVariable Long fragmentId) {
-    	final Fragment frg = fragmentDao.findById(fragmentId, true, true);
-    	final FragmentBean fb = newFragmentBean(frg, null, null);
-    	model.addAttribute("fragmentBean", fb);
-    	model.addAttribute("fragmentDeletable", fb.deletable());
-    	return "fragment";
+        final Fragment frg = fragmentDao.findById(fragmentId, true, true);
+        return onRequestForFragment(model, frg);
+    }
+
+    @RequestMapping(value = "/fragment/help", method = { RequestMethod.GET })
+    public String onRequestForFragment(ModelMap model) {
+        final String title = ViewUtil.getHelpString("help_title");
+        final String content = ViewUtil.getHelpString("help_content");
+        final Fragment frg = new Fragment(title, content, null);
+        return onRequestForFragment(model, frg);
     }
 
     @RequestMapping(value = "/locale/{locale}", method = { RequestMethod.GET })

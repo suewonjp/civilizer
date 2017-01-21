@@ -64,6 +64,7 @@
         <p:commandButton id="user-menu-trigger" icon="fa fa-user" type="button"/>
         <p:menu id="user-menu" overlay="true" trigger="user-menu-trigger" my="right top" at="right bottom">
             <p:menuitem value="#{msg['about_app']}" onclick="showAboutDialog()" icon="fa fa-university"/>
+            <p:menuitem value="#{msg['help']}" onclick="showHelp()" icon="fa fa-question-circle"/>
             <p:menuitem value="#{msg['export_data']}" oncomplete="DBC.showDialog()" icon="fa fa-download"/>
             <p:menuitem value="#{msg['change_profile']}" onclick="UPC.showDialog()" icon="fa fa-edit"/>
             <p:separator />
