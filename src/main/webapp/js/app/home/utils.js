@@ -1,4 +1,5 @@
 function isImage(fileExt) {
+    fileExt = fileExt.toLowerCase();
     return (fileExt == ".png")
         || (fileExt == ".jpg")
         || (fileExt == ".gif")
