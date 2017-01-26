@@ -147,7 +147,7 @@ Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civiliz
 
 ### COPYRIGHT/LICENSE/DISCLAIMER
 
-    Copyright (c) 2014-2016 Suewon Bahng, suewonjp@gmail.com
+    Copyright (c) 2014-2017 Suewon Bahng, suewonjp@gmail.com
     
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

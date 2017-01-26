@@ -1,22 +1,41 @@
-Copyright (c) 2014-2016 Suewon Bahng, suewonjp@gmail.com
+Copyright (c) 2014-2017 Suewon Bahng, suewonjp@gmail.com
 
-Last Updated (2016-10-22)
+Last Updated (2017-01-26)
 
-## Version 0.9.0.RC6 (2017-??-??)
-- Bug fix:
- - Youtube videos were not clickable under some situation
+## Version 0.9.0.RC6 (2017-01-30)
 - Bug fix:
  - The previous Windows launcher (civilizer-win32.exe) used to be wrongfully identified as a malware by some
  antivirus tools
  - Now using another better exe wrapper seemingly free from the issue
+- Bug fix:
+ - Youtube videos were not clickable under some situation
+- Bug fix:
+ - Search phrase highlight didn't work under some situations
+- Bug fix:
+ - Some incorrect layout issues
+- New feature: Quickly resizing fragment overlay window
+ - Until now, the fragment overlay window size was fixed
+ - So users needed to scroll to see hidden contents of fragments
+ - Now the new quick resize button enables users to resize the window with one click 
+- New feature: Short forms of search operators
+ - Users can search content with less typing
+- New feature: Now can select fragments via drag & drop
+ - Until now, selecting fragments was only possible via selecting checkboxes
+ - Now users can select every form of fragments using drag & drop interface 
+- New feature: Showing reminder notification
+ - At times the app shows older fragments as reminder for you
+- New feature: Resident menu for showing help or manual
+ - User menu (at the top left corner) > Help
+- New feature: Recognizing non-JRE installed system
+ - Until now, the app didn't warn when users tried to launch it on machines without Java runtime
+ - Now, it shows an error message when it is launched on non-JRE installed system
 - New feature: Multiple File Upload
  - Can upload multiple files at once into File Box
 - New feature: (ADVANCED) raw database access
  - Can access the underlying database using H2 console or shell
  - This feature is for advanced users only;
 - Behavior Change:
- - Won't trigger any exception when users try to delete non-existing
- files/folders
+ - Won't trigger any exception when users try to delete non-existing files/folders
  - File Upload will overwrite existing destination files
 
 ## Version 0.9.0.RC5 (2016-08-06)
