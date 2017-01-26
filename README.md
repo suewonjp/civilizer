@@ -1,6 +1,15 @@
+- [civilizer official page](http://suewonjp.github.io/civilizer/)
+- [civilizer github page](https://github.com/suewonjp/civilizer)
+- [civilizer sourceforge page](https://sourceforge.net/projects/civilizer/)
+- [civilizer twitter - @civilizer_pkm](https://twitter.com/civilizer_pkm)
+- [civilizer blog](http://suewonjp.github.io/civilizer/blog/)
+- [civilizer tutorial video](https://www.youtube.com/watch?v=0omObKmJd4E&feature=youtu.be)
+- [civilizer online manual/docummentations](https://github.com/suewonjp/civilizer/wiki)
+- [feature request & bug report & other issues](https://github.com/suewonjp/civilizer/issues)
+
 ### DESCRIPTION
 
-**Civilizer** is a web application that helps you efficiently manage your personal data/knowledge/idea including:
+**Civilizer** is a web application for **Notetaking or Personal Knowledge Management (PKM)** 
 
 - knowledge/expertise/tips/tricks for your job
 - temporary memo/notes
@@ -13,6 +22,11 @@
 - insightful maxims/proverbs/humors
 - and whatever knowledge/information you may want to access later.
 
+Civilizer looks like a notetaking application like Evernote.  
+But unlike a native desktop application, it runs on your browser, so more Web-Friendly.  
+(It requires **Java Runtime Environment**)
+
+### DESCUSSION
 Civilizer can keep your data in various forms including:
 
 - text
@@ -20,6 +34,7 @@ Civilizer can keep your data in various forms including:
     - eventually rendered in HTML
 - hyper links
 - images
+- videos
 - files
 
 It can help you efficiently organize/structure your data by:
@@ -29,23 +44,9 @@ It can help you efficiently organize/structure your data by:
 - bookmarking data you access frequently
 - organizing your files in a directory structure
 
-Civilizer has a full text search functionality to greatly help you access right data at the right time
+**Civilizer has a Full Text Search functionality** to greatly help you access right data at the right time
 
 **See [ screenshots ](http://suewonjp.github.io/civilizer/#screenshots) or [tutorial video](http://suewonjp.github.io/civilizer/#videos)**
-
-### CREDITS 
-
-> Civilizer has been inspired by [Piggydb](http://piggydb.net/) developed by Daisuke Morita.  
-
-### RELATED LINKS
-- [civilizer official page](http://suewonjp.github.io/civilizer/)
-- [civilizer github page](https://github.com/suewonjp/civilizer)
-- [civilizer sourceforge page](https://sourceforge.net/projects/civilizer/)
-- [civilizer twitter - @civilizer_pkm](https://twitter.com/civilizer_pkm)
-- [civilizer blog](http://suewonjp.github.io/civilizer/blog/)
-- [civilizer tutorial video](https://www.youtube.com/watch?v=0omObKmJd4E&feature=youtu.be)
-- [civilizer online manual/docummentations](https://github.com/suewonjp/civilizer/wiki)
-- [feature request & bug report & other issues](https://github.com/suewonjp/civilizer/issues)
 
 * * *
 
@@ -53,15 +54,15 @@ Civilizer has a full text search functionality to greatly help you access right 
 
 Java Runtime Environment (JRE)
 
-- JRE 7 or higher
+- JRE 7 or later
 
 Supported platforms:
 
 - Linux
 - OS X
-    - Mavericks or higher
+    - Mavericks or later
 - Windows
-    - 7/8/10 or higher
+    - 7/8/10 or later
 
 Supported browsers: (note that old versions may not work correctly)
 
@@ -72,11 +73,11 @@ Supported browsers: (note that old versions may not work correctly)
 - Edge
 - Internet Explorer
     - 9/10/11 ( 9 or 10 may not render some styles correctly )
-    - ***IE 8 won't work***
+    - ***Doesn't support IE 8***
     
 ### HOW TO INSTALL AND RUN
     
-1. ***Make sure your system has JRE (version 7+) installed on it.***
+1. ***Make sure your system has JRE (version 7+) installed prior to launching the app.***
     - Type and run _**java -version**_ from the command prompt to confirm your system JRE version.
 1. Download [the latest release](http://suewonjp.github.io/civilizer/#download) and extract its content on your machine.
 1. Run it with the following instruction.
@@ -110,40 +111,15 @@ Supported browsers: (note that old versions may not work correctly)
 1. Just remove the extracted folder.
 1. Remove the  ***.civilizer*** folder (containing user settings and data) in your _user directory_ if it exists.
    
-* * *
-
 ### HOW TO BUILD
 
-***In fact, building Civilizer from the latest source code is quite easy.***
-
-1. Download the latest source code
-     - Press ***Clone or download*** button above
-1. Go to the source directory uncompressed or cloned
-1. Execute the following command from the command line
-    - Windows Users:
-        - _gradlew.bat all_
-    - Other OS Users:
-        - _./gradlew all_
-    - Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civilizer) unless it works well.
-1. And just wait. It might take more than several minutes especially for the first time to build
-1. You can find the output package in the **build** directory
-    - e.g., {uncompressed-folder}/build/civilizer.{version-notation}.zip
-
-Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civilizer) for more advanced topics about build or development.
+Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civilizer)
 
 * * *
+### CREDITS 
 
-### LIMITATIONS
+Civilizer has been inspired by [Piggydb](http://piggydb.net/) developed by Daisuke Morita.  
 
-- Layout may not be rendered correctly on some untested browsers.
-- Localization is yet to be done.
-- Civilizer is currently provided as a **PRIVATE EDITION** only.
-    - Note that the main goal of the PRIVATE edition is helping A SINGLE USER manage his/her PRIVATE PERSONAL DATA under some relatively SECURED PRIVATE NETWORK ENVIRONMENT (e.g. home network).
-    - The edition does not support access by multiple users.
-    - Or don't care if you want to use Civilizer just like a _desktop app_. That usage is absolutely fine.
-- We hope that sometime in the future, we will be able to develop a **Group or Enterprise Edition** to help a group of users share/manage data under greatly enhanced security provided.
-
-* * *
 
 ### COPYRIGHT/LICENSE/DISCLAIMER
 
@@ -162,9 +138,10 @@ Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civiliz
     limitations under the License.
 
 * * *
-Written by Suewon Bahng   ( Last Updated 26 November, 2015 )
+Written by Suewon Bahng   ( Last Updated January, 2017 )
 
 ### CONTRIBUTORS
 Suewon Bahng  
 
 Other contributors are welcome!
+
