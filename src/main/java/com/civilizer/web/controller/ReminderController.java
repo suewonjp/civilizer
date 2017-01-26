@@ -59,7 +59,7 @@ public final class ReminderController {
                 "<a target='_blank' href='https://twitter.com/intent/follow?screen_name=civilizer_pkm'>" +
                 "<span class='fa fa-rgap fa-twitter twitter-button ui-state-default ui-corner-all'>" +
                 "Follow @civilizer_pkm" +
-                "</span><a/>";
+                "</span></a>";
     }
 
     private String buildSettingContent() {
