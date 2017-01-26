@@ -959,6 +959,7 @@ public final class MainController {
         final String title = ViewUtil.getHelpString("help_title");
         final String content = ViewUtil.getHelpString("help_content");
         final Fragment frg = new Fragment(title, content, null);
+        model.addAttribute("fragmentType", "app-help-fragment");
         return onRequestForFragment(model, frg);
     }
 

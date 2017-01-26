@@ -42,6 +42,10 @@
     overflow-y: hidden;
 }
 
+.fragment-header.app-help-fragment {
+    display: none;
+}
+
 .fragment-header .ui-chkbox-box {
     border:thin solid white;
     box-shadow:1px 1px dimgray;
