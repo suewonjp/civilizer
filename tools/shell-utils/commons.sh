@@ -118,7 +118,7 @@ versionAllowed() {
 confirmJre() {
     type java > /dev/null 2>&1 || {
         printf "[ %s ][ %s ] Can't find JRE (Java Runtime Environment)!\n" "$hostScript" "$(echolor $bold $magenta ERROR)"
-        printf "\t( Downlaod and install JRE from Oracle unless you haven't )\n"
+        printf "\t( Downlaod and install JRE from Oracle )\n"
         exit 1
     }
 

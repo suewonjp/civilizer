@@ -6,7 +6,7 @@
 _RunDos("java -version || (echo. >JreNotFound)")
 If FileExists("JreNotFound") Then
     FileDelete("JreNotFound")
-    MsgBox($MB_SYSTEMMODAL, "civilizer-win32.exe ERROR", "Can't find JRE (Java Runtime Environment)!" & @CRLF & "Download and install JRE from Oracle unless you haven't")
+    MsgBox($MB_SYSTEMMODAL, "civilizer-win32.exe ERROR", "Can't find JRE (Java Runtime Environment)!" & @CRLF & "Download and install JRE from Oracle")
     Exit(1)
 EndIf
 

@@ -52,7 +52,7 @@ goto :eof
 :confirmJre
     where java >nul 2>&1 || (
         echo [ %hostScript% ][ ERROR ] can't find JRE ^(Java Runtime Environment^)^!
-        echo     ^( Downlaod and install JRE from Oracle unless you haven't ^)
+        echo     ^( Downlaod and install JRE from Oracle ^)
         exit /b 1
     )
     exit /b 0
