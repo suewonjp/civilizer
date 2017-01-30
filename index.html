@@ -42,10 +42,10 @@
   <ul class="sidebar-nav">
     <a id="menu-close" href="#" class="btn btn-light btn-lg navbar-right toggle"><i class="fa fa-times"></i></a>
     <li class="sidebar-brand">
-      <a href="#top" onclick=$("#menu-close").click(); >HOME</a>
+      <a href="#top" onclick=$("#menu-close").click(); >HOME / TOP</a>
     </li>
     <li>
-      <a href="#about" onclick=$("#menu-close").click(); >README</a>
+      <a href="#about" onclick=$("#menu-close").click(); >ABOUT</a>
     </li>
     <li>
       <a href="#services" onclick=$("#menu-close").click(); >DOWNLOAD</a>
@@ -57,7 +57,7 @@
       <a href="#screenshots" onclick=$("#menu-close").click(); >SCREENSHOTS</a>
     </li>
     <li>
-      <a href="https://github.com/suewonjp/civilizer/wiki" onclick=$("#menu-close").click(); >DOCS</a>
+      <a href="https://github.com/suewonjp/civilizer/wiki" onclick=$("#menu-close").click(); >DOCS / MANUALS</a>
     </li>
     <li>
       <a href="/civilizer/blog/" onclick=$("#menu-close").click(); >BLOG</a>
@@ -70,36 +70,39 @@
 
   <header id="top" class="header">
   <div class="text-vertical-center">
-    <h1>Try Civilizer</h1>
-    <h3>Cleverly manage your data/knowledge/idea</h3>
-    <a href="#services" >
-      <h4 class="notification">New Release : v0.9.0.RC5 (2016-08-06)</h4>
-    </a>
-    <br>
-    <a href="#services" class="btn btn-success">Download</a>
-    <a href="#about" class="btn btn-info">Find Out More</a>
-    <a href="/civilizer/blog/" class="btn btn-primary">Blog</a>
-    <br>
-    <div class="small-sns">
-    <ul class="list-inline">
+    <div class="text-box container">
+      <h1>Try Civilizer</h1>
+      <h3 class=>A Web-Friendly Notetaking Application</h3>
+      <h3>Cleverly Manage Your Data / Knowledge / Idea</h3>
+      <a href="#services" >
+        <h4 class="notification">New Release : v0.9.0.RC6 (2017-01-30)</h4>
+      </a>
+      <br>
+      <a href="#services" class="btn btn-success">Download</a>
+      <a href="#about" class="btn btn-info">Find Out More</a>
+      <a href="/civilizer/blog/" class="btn btn-primary">Blog</a>
+      <br>
+      <div class="small-sns">
+      <ul class="list-inline">
   
   
   <li>
-    <a href="https://twitter.com/civilizer_pkm"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+    <a target="_blank" href="https://twitter.com/intent/follow?screen_name=civilizer_pkm"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
   </li>
   
   
   <li>
-    <a href="https://github.com/suewonjp"><i class="fa fa-github fa-fw fa-3x"></i></a>
+    <a target="_blank" href="https://github.com/suewonjp/civilizer"><i class="fa fa-github fa-fw fa-3x"></i></a>
   </li>
   
   
   <li>
-    <a href="https://www.linkedin.com/in/suewonjp"><i class="fa fa-linkedin-square fa-fw fa-3x"></i></a>
+    <a target="_blank" href="https://www.linkedin.com/in/suewonjp"><i class="fa fa-linkedin-square fa-fw fa-3x"></i></a>
   </li>
   
 </ul>
  
+      </div>
     </div>
   </div>
 </header>
@@ -109,9 +112,20 @@
     <div class="row">
       <div class="center-block bg-success">
           
-          <h3 id="description">DESCRIPTION</h3>
+          <ul>
+  <li><a href="http://suewonjp.github.io/civilizer/">civilizer official page</a></li>
+  <li><a href="https://github.com/suewonjp/civilizer">civilizer github page</a></li>
+  <li><a href="https://sourceforge.net/projects/civilizer/">civilizer sourceforge page</a></li>
+  <li><a href="https://twitter.com/civilizer_pkm">civilizer twitter - @civilizer_pkm</a></li>
+  <li><a href="http://suewonjp.github.io/civilizer/blog/">civilizer blog</a></li>
+  <li><a href="https://www.youtube.com/watch?v=0omObKmJd4E&amp;feature=youtu.be">civilizer tutorial video</a></li>
+  <li><a href="https://github.com/suewonjp/civilizer/wiki">civilizer online manual/docummentations</a></li>
+  <li><a href="https://github.com/suewonjp/civilizer/issues">feature request &amp; bug report &amp; other issues</a></li>
+</ul>
 
-<p><strong>Civilizer</strong> is a web application that helps you efficiently manage your personal data/knowledge/idea including:</p>
+<h3 id="description">DESCRIPTION</h3>
+
+<p><strong>Civilizer</strong> is a web application for <strong>Notetaking or Personal Knowledge Management (PKM)</strong> </p>
 
 <ul>
   <li>knowledge/expertise/tips/tricks for your job</li>
@@ -129,6 +143,11 @@
   <li>and whatever knowledge/information you may want to access later.</li>
 </ul>
 
+<p>Civilizer looks like a notetaking application like Evernote.<br />
+But unlike a native desktop application, it runs on your browser, so more Web-Friendly.<br />
+(It requires <strong>Java Runtime Environment</strong>)</p>
+
+<h3 id="descussion">DESCUSSION</h3>
 <p>Civilizer can keep your data in various forms including:</p>
 
 <ul>
@@ -140,6 +159,7 @@
   </li>
   <li>hyper links</li>
   <li>images</li>
+  <li>videos</li>
   <li>files</li>
 </ul>
 
@@ -152,27 +172,9 @@
   <li>organizing your files in a directory structure</li>
 </ul>
 
-<p>Civilizer has a full text search functionality to greatly help you access right data at the right time</p>
+<p><strong>Civilizer has a Full Text Search functionality</strong> to greatly help you access right data at the right time</p>
 
 <p><strong>See <a href="http://suewonjp.github.io/civilizer/#screenshots"> screenshots </a> or <a href="http://suewonjp.github.io/civilizer/#videos">tutorial video</a></strong></p>
-
-<h3 id="credits">CREDITS</h3>
-
-<blockquote>
-  <p>Civilizer has been inspired by <a href="http://piggydb.net/">Piggydb</a> developed by Daisuke Morita.  </p>
-</blockquote>
-
-<h3 id="related-links">RELATED LINKS</h3>
-<ul>
-  <li><a href="http://suewonjp.github.io/civilizer/">civilizer official page</a></li>
-  <li><a href="https://github.com/suewonjp/civilizer">civilizer github page</a></li>
-  <li><a href="https://sourceforge.net/projects/civilizer/">civilizer sourceforge page</a></li>
-  <li><a href="https://twitter.com/civilizer_pkm">civilizer twitter - @civilizer_pkm</a></li>
-  <li><a href="http://suewonjp.github.io/civilizer/blog/">civilizer blog</a></li>
-  <li><a href="https://www.youtube.com/watch?v=0omObKmJd4E&amp;feature=youtu.be">civilizer tutorial video</a></li>
-  <li><a href="https://github.com/suewonjp/civilizer/wiki">civilizer online manual/docummentations</a></li>
-  <li><a href="https://github.com/suewonjp/civilizer/issues">feature request &amp; bug report &amp; other issues</a></li>
-</ul>
 
 <hr />
 
@@ -181,7 +183,7 @@
 <p>Java Runtime Environment (JRE)</p>
 
 <ul>
-  <li>JRE 7 or higher</li>
+  <li>JRE 7 or later</li>
 </ul>
 
 <p>Supported platforms:</p>
@@ -190,12 +192,12 @@
   <li>Linux</li>
   <li>OS X
     <ul>
-      <li>Mavericks or higher</li>
+      <li>Mavericks or later</li>
     </ul>
   </li>
   <li>Windows
     <ul>
-      <li>7/8/10 or higher</li>
+      <li>7/8/10 or later</li>
     </ul>
   </li>
 </ul>
@@ -211,7 +213,7 @@
   <li>Internet Explorer
     <ul>
       <li>9/10/11 ( 9 or 10 may not render some styles correctly )</li>
-      <li><strong><em>IE 8 won’t work</em></strong></li>
+      <li><strong><em>Doesn’t support IE 8</em></strong></li>
     </ul>
   </li>
 </ul>
@@ -219,7 +221,7 @@
 <h3 id="how-to-install-and-run">HOW TO INSTALL AND RUN</h3>
 
 <ol>
-  <li><strong><em>Make sure your system has JRE (version 7+) installed on it.</em></strong>
+  <li><strong><em>Make sure your system has JRE (version 7+) installed prior to launching the app.</em></strong>
     <ul>
       <li>Type and run <em><strong>java -version</strong></em> from the command prompt to confirm your system JRE version.</li>
     </ul>
@@ -292,66 +294,18 @@
   <li>Remove the  <strong><em>.civilizer</em></strong> folder (containing user settings and data) in your <em>user directory</em> if it exists.</li>
 </ol>
 
-<hr />
-
 <h3 id="how-to-build">HOW TO BUILD</h3>
 
-<p><strong><em>In fact, building Civilizer from the latest source code is quite easy.</em></strong></p>
-
-<ol>
-  <li>Download the latest source code
-    <ul>
-      <li>Press <strong><em>Clone or download</em></strong> button above</li>
-    </ul>
-  </li>
-  <li>Go to the source directory uncompressed or cloned</li>
-  <li>Execute the following command from the command line
-    <ul>
-      <li>Windows Users:
-        <ul>
-          <li><em>gradlew.bat all</em></li>
-        </ul>
-      </li>
-      <li>Other OS Users:
-        <ul>
-          <li><em>./gradlew all</em></li>
-        </ul>
-      </li>
-      <li>Refer to <a href="https://github.com/suewonjp/civilizer/wiki/Building-Civilizer">this page</a> unless it works well.</li>
-    </ul>
-  </li>
-  <li>And just wait. It might take more than several minutes especially for the first time to build</li>
-  <li>You can find the output package in the <strong>build</strong> directory
-    <ul>
-      <li>e.g., {uncompressed-folder}/build/civilizer.{version-notation}.zip</li>
-    </ul>
-  </li>
-</ol>
-
-<p>Refer to <a href="https://github.com/suewonjp/civilizer/wiki/Building-Civilizer">this page</a> for more advanced topics about build or development.</p>
+<p>Refer to <a href="https://github.com/suewonjp/civilizer/wiki/Building-Civilizer">this page</a></p>
 
 <hr />
+<p>### CREDITS </p>
 
-<h3 id="limitations">LIMITATIONS</h3>
-
-<ul>
-  <li>Layout may not be rendered correctly on some untested browsers.</li>
-  <li>Localization is yet to be done.</li>
-  <li>Civilizer is currently provided as a <strong>PRIVATE EDITION</strong> only.
-    <ul>
-      <li>Note that the main goal of the PRIVATE edition is helping A SINGLE USER manage his/her PRIVATE PERSONAL DATA under some relatively SECURED PRIVATE NETWORK ENVIRONMENT (e.g. home network).</li>
-      <li>The edition does not support access by multiple users.</li>
-      <li>Or don’t care if you want to use Civilizer just like a <em>desktop app</em>. That usage is absolutely fine.</li>
-    </ul>
-  </li>
-  <li>We hope that sometime in the future, we will be able to develop a <strong>Group or Enterprise Edition</strong> to help a group of users share/manage data under greatly enhanced security provided.</li>
-</ul>
-
-<hr />
+<p>Civilizer has been inspired by <a href="http://piggydb.net/">Piggydb</a> developed by Daisuke Morita.  </p>
 
 <h3 id="copyrightlicensedisclaimer">COPYRIGHT/LICENSE/DISCLAIMER</h3>
 
-<pre><code>Copyright (c) 2014-2016 Suewon Bahng, suewonjp@gmail.com
+<pre><code>Copyright (c) 2014-2017 Suewon Bahng, suewonjp@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -367,12 +321,13 @@ limitations under the License.
 </code></pre>
 
 <hr />
-<p>Written by Suewon Bahng   ( Last Updated 26 November, 2015 )</p>
+<p>Written by Suewon Bahng   ( Last Updated January, 2017 )</p>
 
 <h3 id="contributors">CONTRIBUTORS</h3>
 <p>Suewon Bahng  </p>
 
 <p>Other contributors are welcome!</p>
+
   
       </div>
     </div> <!-- /.row -->
@@ -540,23 +495,23 @@ limitations under the License.
   
   
   <li>
-    <a href="https://twitter.com/civilizer_pkm"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+    <a target="_blank" href="https://twitter.com/intent/follow?screen_name=civilizer_pkm"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
   </li>
   
   
   <li>
-    <a href="https://github.com/suewonjp"><i class="fa fa-github fa-fw fa-3x"></i></a>
+    <a target="_blank" href="https://github.com/suewonjp/civilizer"><i class="fa fa-github fa-fw fa-3x"></i></a>
   </li>
   
   
   <li>
-    <a href="https://www.linkedin.com/in/suewonjp"><i class="fa fa-linkedin-square fa-fw fa-3x"></i></a>
+    <a target="_blank" href="https://www.linkedin.com/in/suewonjp"><i class="fa fa-linkedin-square fa-fw fa-3x"></i></a>
   </li>
   
 </ul>
 
         <hr class="small">
-        <p class="text-muted">Copyright &copy; 2014-2016 Suewon Bahng </p>
+        <p class="text-muted">Copyright &copy; 2014-2017 Suewon Bahng </p>
       </div>
     </div>
   </div>

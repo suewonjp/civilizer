@@ -21,16 +21,17 @@ body {
     color: mistyrose;
   }
   to {
-    color: darkgreen;
+    color: skyblue;
   }
 }
 
 .notification {
-  animation-name: emphasis;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+  /*animation-name: emphasis;*/
+  /*animation-duration: 2s;*/
+  /*animation-iteration-count: infinite;*/
+  /*animation-direction: alternate;*/
   text-decoration: underline;
+  color: mediumslateblue;
 }
 
 .text-vertical-center {
@@ -42,8 +43,25 @@ body {
 .text-vertical-center h1 {
   margin: 0;
   padding: 0;
-  font-size: 4.5em;
+  /*font-size: 4.5em;*/
   font-weight: 700;
+}
+
+.text-box {
+  max-width: 42%;
+  border: 1px solid #ffc826;
+  border-radius: 8px;
+  background-color: gainsboro;
+}
+
+.text-box .btn {
+  margin: 5px;
+}
+
+@media (max-width: 992px) {
+  .text-box h3 {
+    font-size: 92%;
+  }
 }
 
 .stick-to-bottom {
@@ -177,7 +195,7 @@ hr.small {
   position: relative;
   width: 100%;
   height: 100%;
-  background: url(../img/bg.jpg) no-repeat center center scroll;
+  background: url(../img/bg.png) no-repeat center center scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -190,7 +208,7 @@ hr.small {
 }
 
 .small-sns .fa {
-  color: slateblue;
+  color: deepskyblue;
 }
 
 /* About */
