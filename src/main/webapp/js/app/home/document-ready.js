@@ -59,7 +59,7 @@ $(document).ready(function() {
 $(window).load(function() {
     setupFragmentCheckboxes();
     applyCurrentThemeToThemeSwitcher();
-    PF("reminderPoll").cfg.frequency = localStorage.getItem("reminder_interval") || SYSPROP.defReminderInterval;
+    PF("reminderPoll").cfg.frequency = (localStorage.getItem("reminder_interval") || SYSPROP.defReminderInterval)*3600;
 });
 
 var curPanel = 0;
