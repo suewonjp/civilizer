@@ -1,6 +1,10 @@
 Copyright (c) 2014-2017 Suewon Bahng, suewonjp@gmail.com
 
-Last Updated (2017-01-26)
+Last Updated (2017-01-31)
+
+## Version 0.9.0.RC7 (2017-xx-xx)
+- New feature: Localization for Japanese
+- New feature: Localization for Korean
 
 ## Version 0.9.0.RC6 (2017-01-30)
 - Bug fix:
