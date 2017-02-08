@@ -75,7 +75,7 @@ public final class ReminderController {
         if (detail.isEmpty()) {
             return;
         }
-        String title = ViewUtil.getResourceBundleString("r_u_remember");
+        String title = ViewUtil.getResourceBundleString("remember_fragments");
         detail += buildPromotionContent(rand);
         detail += buildSettingContent();
         ViewUtil.addMessage(POLL_CLIENT_ID, title, detail, null);
