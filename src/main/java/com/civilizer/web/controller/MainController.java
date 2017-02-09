@@ -7,8 +7,7 @@ import java.util.*;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -25,6 +24,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.webflow.context.servlet.ServletExternalContext;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 
@@ -40,7 +41,6 @@ import com.civilizer.web.view.*;
 public final class MainController {
 	
 	private static final int    MAX_FRAGMENT_PANELS = 3;
-	private static final String REQUEST_PARAM_LOCALE = "locale";
     
 	@Autowired
 	private FragmentDao fragmentDao;
@@ -96,11 +96,17 @@ public final class MainController {
 		}
 		return output;
 	}
+	
+	private void setLocale(RequestContext rc) {
+	    final ServletExternalContext ec = (ServletExternalContext)rc.getExternalContext();
+        final HttpServletRequest req = (HttpServletRequest)ec.getNativeRequest();
+        final Locale locale = RequestContextUtils.getLocale(req); // Retrieve the locale info from the cookie
+        final UserProfileBean userProfileBean = (UserProfileBean) rc.getFlowScope().get("userProfileBean");
+        userProfileBean.setLocale(locale);
+	}
 
 	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, SearchContextBean scb, RequestContext rc) {
-//		final ExternalContext ec = rc.getExternalContext();
-//		final ParameterMap pm =  ec.getRequestParameterMap();
-//		final String locale = pm.get(REQUEST_PARAM_LOCALE);
+	    setLocale(rc);
 		
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
 			final PanelContextBean pc = (pcb != null && pcb.getPanelId() == i) ?
@@ -955,19 +961,12 @@ public final class MainController {
     }
 
     @RequestMapping(value = "/fragment/help", method = { RequestMethod.GET })
-    public String onRequestForFragment(ModelMap model) {
-        final String title = ViewUtil.getHelpString("help_title");
-        final String content = ViewUtil.getHelpString("help_content");
+    public String onRequestForFragment(ModelMap model, HttpServletRequest req) {
+        final String title = ViewUtil.getHelpString("help_title", req);
+        final String content = ViewUtil.getHelpString("help_content", req);
         final Fragment frg = new Fragment(title, content, null);
         model.addAttribute("fragmentType", "app-help-fragment");
         return onRequestForFragment(model, frg);
-    }
-
-    @RequestMapping(value = "/locale/{locale}", method = { RequestMethod.GET })
-    public String onRequestForLocale(@PathVariable String locale, HttpServletResponse response) {
-    	Cookie cookie = new Cookie(REQUEST_PARAM_LOCALE, locale);
-        response.addCookie(cookie);
-    	return "redirect:/app/home?locale=" + locale;
     }
 
     @RequestMapping(value = "/dev/export_db_as_script", method = { RequestMethod.GET })

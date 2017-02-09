@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.el.ELException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
@@ -21,7 +24,7 @@ public final class ViewUtil {
 	
 	private static final String MESSAGE_RESOURCE_BASE_NAME = "i18n.MessageResources";
 	private static final String HELP_RESOURCE_BASE_NAME = "i18n.HelpResources";
-	
+
 	public static void addMessage(String title, String content, FacesMessage.Severity severity) {
 		if (severity == null) {
 			severity = FacesMessage.SEVERITY_INFO;
@@ -43,21 +46,40 @@ public final class ViewUtil {
 	@SuppressWarnings("unchecked")
 	public static <T> T findBean(String beanName) {
 	    FacesContext context = FacesContext.getCurrentInstance();
-	    return (T) context.getApplication().evaluateExpressionGet(context, "#{" + beanName + "}", Object.class);
+	    if (context != null) {
+	        try {
+	            return (T) context.getApplication().evaluateExpressionGet(context, "#{" + beanName + "}", Object.class);
+            } catch (ELException e) {}
+	    }
+	    final RequestContext rc = RequestContextHolder.getRequestContext();
+	    T r;
+        r = (T) rc.getFlowScope().get(beanName);
+        if (r == null)
+            r = (T) rc.getRequestScope().get(beanName);
+        if (r == null)
+            r = (T) rc.getViewScope().get(beanName);
+        return r;
 	}
 	
 	public static String getResourceBundleString(String key) {
-//		final UserProfileBean userProfileBean = ViewUtil.findBean("userProfileBean");
-//    	final Locale locale = userProfileBean.getLocale();
-    	final ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_RESOURCE_BASE_NAME, new Locale(System.getProperty(AppOptions.LOCALE)));
-    	return bundle.getString(key);
+	    Locale locale;
+	    final RequestContext rc = RequestContextHolder.getRequestContext();
+	    if (rc == null)
+	        locale = new Locale(System.getProperty(AppOptions.LOCALE));
+	    else {
+	        final UserProfileBean userProfileBean = ViewUtil.findBean("userProfileBean");
+	        locale = userProfileBean.getLocale();
+	    }
+        final ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_RESOURCE_BASE_NAME, locale);
+        return bundle.getString(key);
 	}
 
-	public static String getHelpString(String key) {
-	    final ResourceBundle bundle = ResourceBundle.getBundle(HELP_RESOURCE_BASE_NAME, new Locale(System.getProperty(AppOptions.LOCALE)));
+	public static String getHelpString(String key, HttpServletRequest req) {
+        final Locale locale = RequestContextUtils.getLocale(req);
+	    final ResourceBundle bundle = ResourceBundle.getBundle(HELP_RESOURCE_BASE_NAME, locale);
 	    return bundle.getString(key);
 	}
-    
+
     public static boolean isAuthenticated() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();

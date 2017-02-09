@@ -4,9 +4,6 @@ import java.util.*;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.civilizer.config.AppOptions;
 
 @SuppressWarnings("serial")
-@ManagedBean
-@SessionScoped
 public final class UserProfileBean implements Serializable {
     
     private Locale locale;
@@ -64,8 +59,6 @@ public final class UserProfileBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        locale = new Locale(System.getProperty(AppOptions.LOCALE));
-        
         retrieveCurAuth();
     }
 
@@ -79,13 +72,28 @@ public final class UserProfileBean implements Serializable {
     }
 
     public Locale getLocale() {
+        if (locale == null) {
+            setLocale(System.getProperty(AppOptions.LOCALE));
+        }
         return locale;
     }
-    
+
     public void setLocale(Locale l) {
         locale = l;
         System.setProperty(AppOptions.LOCALE, l.getLanguage());
-        FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+    }
+
+    public void setLocale(String localeName) {
+        localeName = localeName.toLowerCase(); // Any locale name is case insensitive
+        if (localeName.equals("en")) {
+            setLocale(Locale.ENGLISH);
+        }
+        else if (localeName.equals("ja") || localeName.equals("jp")) {
+            setLocale(Locale.JAPANESE);
+        }
+//        else if (locale.equals("ko") || locale.equals("kr")) {
+//            setLocale(Locale.KOREAN);
+//        }
     }
 
     public String getLanguage() {

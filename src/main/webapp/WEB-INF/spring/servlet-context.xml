@@ -34,15 +34,19 @@
 
 	<context:component-scan base-package="com.civilizer.web" />
     
-<!--     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"> -->
-<!--         <property name="paramName" value="locale"/> -->
-<!--     </bean> -->
+    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="locale"/>
+    </bean>
 
-<!--     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/> -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
 
 	<!-- Maps request paths to flows in the flowRegistry -->
-	<bean
-		class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="localeChangeInterceptor"/>
+            </list>
+        </property>
 		<property name="flowRegistry" ref="flowRegistry" />
 	</bean>
 
