@@ -14,9 +14,10 @@ import com.civilizer.config.AppOptions;
 @SuppressWarnings("serial")
 public final class UserProfileBean implements Serializable {
     
-    private Locale locale;
-    private String userName = "";
-    private String password = "";
+    private Locale  locale;
+    private String  userName = "";
+    private String  password = "";
+
     private static final String[] themes = {
             "afterdark",
             "afternoon",
@@ -83,7 +84,7 @@ public final class UserProfileBean implements Serializable {
         System.setProperty(AppOptions.LOCALE, l.getLanguage());
     }
 
-    public void setLocale(String localeName) {
+    private void setLocale(String localeName) {
         localeName = localeName.toLowerCase(); // Any locale name is case insensitive
         if (localeName.equals("en")) {
             setLocale(Locale.ENGLISH);

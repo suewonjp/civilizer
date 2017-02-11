@@ -24,8 +24,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.webflow.context.servlet.ServletExternalContext;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 
@@ -96,17 +94,9 @@ public final class MainController {
 		}
 		return output;
 	}
-	
-	private void setLocale(RequestContext rc) {
-	    final ServletExternalContext ec = (ServletExternalContext)rc.getExternalContext();
-        final HttpServletRequest req = (HttpServletRequest)ec.getNativeRequest();
-        final Locale locale = RequestContextUtils.getLocale(req); // Retrieve the locale info from the cookie
-        final UserProfileBean userProfileBean = (UserProfileBean) rc.getFlowScope().get("userProfileBean");
-        userProfileBean.setLocale(locale);
-	}
 
 	public void populateFragmentListBeans(List<FragmentListBean> flbs, PanelContextBean pcb, SearchContextBean scb, RequestContext rc) {
-	    setLocale(rc);
+	    ViewUtil.setLocale(rc);
 		
 		for (int i=0; i<MAX_FRAGMENT_PANELS; ++i) {
 			final PanelContextBean pc = (pcb != null && pcb.getPanelId() == i) ?

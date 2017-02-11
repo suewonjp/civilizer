@@ -681,3 +681,12 @@
     width: 40%;
     display: inline-block;
 }
+
+.locale-item-btn {
+    margin: 0 6px 0 0;
+    padding: 2px;
+}
+
+.locale-item-btn .ui-button-text {
+    display: inline;
+}

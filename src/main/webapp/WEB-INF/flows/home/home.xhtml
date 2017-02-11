@@ -167,12 +167,25 @@
                 </p:password>
             </h:panelGrid>
         </div>
-        
+
         <p:commandButton widgetVar="userProfileDlgSave" onclick="UPC.onClickSaveUserProfile()" value="#{msg['save']}" icon="ui-icon-check"/>
         
         <div style="display:none">
             <p:commandButton id="update-user-profile-btn" action="update-user-profile"/>
         </div>
+    </p:dialog>
+
+    <p:dialog widgetVar="localeSettingsDlg" header="#{msg['change_locale']}"
+        width="440px" modal="true" closeOnEscape="true" showEffect="fade" position="center" draggable="true" resizable="false">
+
+        <p:panel>
+            <span value="en" class="locale-item-btn fa fa-flag">#{msg['locale_en']}</span>
+            <span value="ja" class="locale-item-btn fa fa-flag">#{msg['locale_ja']}</span>
+<!--             <span value="ko" class="locale-item-btn fa fa-flag">#{msg['locale_ko']}</span> -->
+        </p:panel>
+
+        <p:commandButton onclick="LSC.onClickApply()" value="#{msg['ok']}" icon="ui-icon-check"/>
+        <p:commandButton onclick="LSC.onClickCancel()" value="#{msg['cancel']}" icon="ui-icon-close"/>
     </p:dialog>
 </h:form>
 

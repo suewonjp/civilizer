@@ -30,6 +30,7 @@ public class SigninController {
     }
     
     public void onEntry(RequestContext rc) {
+        ViewUtil.setLocale(rc);
         final ParameterMap pm = rc.getExternalContext().getRequestParameterMap();
         if (pm.get(REQUEST_PARAM_AUTH_FAILED) != null) {
         	final String msg = ViewUtil.getResourceBundleString("credential_incorrect");

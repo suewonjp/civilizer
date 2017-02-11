@@ -319,6 +319,47 @@ function createUserProfileController() {
 
 var UPC = createUserProfileController();
 
+function createLocaleSettingsController() {
+    var ctrr = new Object(), dlg, locale;
+
+    function getDialog() {
+        if (dlg)
+            return dlg;
+        dlg = PF("localeSettingsDlg");
+        dlg.jq.find(".locale-item-btn").button().on("click", function() {
+            var $this = $(this);
+            $this.addClass("ui-state-highlight")
+            .siblings().removeClass("ui-state-highlight");
+            locale = $this.attr("value");
+            return false;
+        });
+        return dlg;
+    }
+
+    ctrr.showDialog = function() {
+        locale = undefined;
+        var d = getDialog();
+        d.jq.find(".locale-item-btn").each(function() {
+           $(this).removeClass("ui-state-highlight");
+        });
+        d.show();
+    }
+
+    ctrr.onClickApply = function() {
+        location.replace(locale ? "home?locale="+locale : "home");
+        return false;
+    }
+
+    ctrr.onClickCancel = function() {
+        getDialog().hide();
+        return false;
+    }
+
+    return ctrr;
+}
+
+var LSC = createLocaleSettingsController();
+
 function setCurrentTheme(defaultTheme) {
     var theme = localStorage.getItem("theme");
     if (! theme) {

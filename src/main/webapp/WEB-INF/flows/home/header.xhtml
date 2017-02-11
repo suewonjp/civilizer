@@ -67,6 +67,7 @@
             <p:menuitem value="#{msg['help']}" onclick="showHelp()" icon="fa fa-question-circle"/>
             <p:menuitem value="#{msg['export_data']}" oncomplete="DBC.showDialog()" icon="fa fa-download"/>
             <p:menuitem value="#{msg['change_profile']}" onclick="UPC.showDialog()" icon="fa fa-edit"/>
+            <p:menuitem value="#{msg['change_locale']}" onclick="LSC.showDialog()" icon="fa fa-globe"/>
             <p:separator />
         <c:if test="#{systemProperties['civilizer.dev']}">
             <!-- [DEV] -->
