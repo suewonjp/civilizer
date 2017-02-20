@@ -49,6 +49,10 @@ function createTagEditorController() {
         if (!submittable)
             return;
         var invalidChar = validateTagNames(val);
+        if (!invalidChar) {
+            if (val.indexOf(",") > -1) // commas in the tag name is not allowed!
+                invalidChar = ",";
+        }
         if (invalidChar)
             showError("'" + invalidChar + MSG.cant_use_for_tags);
         else
