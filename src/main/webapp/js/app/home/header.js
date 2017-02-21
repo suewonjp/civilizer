@@ -55,23 +55,23 @@ function makeSidebarToggleable() {
         content = $("#content"),
         defCntWt = content.css("width");
     $("#sidebar-toggler").off("click").on("click", function(e) {
-        var icon = $(this).find(".fa");
-        
+        $(this).find(".fa").toggleClass("fa-arrow-circle-left fa-arrow-circle-right");
         if (localStorage.getItem("sidebarVisible") === "yes") {
             content.css("width", "100%");
-            icon.removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
+            sidebar.css("visibility", "hidden");
             localStorage.setItem("sidebarVisible", "no");
         }
         else {
             content.css("width", defCntWt);
-            icon.removeClass("fa-arrow-circle-left").addClass("fa-arrow-circle-right");
+            sidebar.css("visibility", "visible");
             localStorage.setItem("sidebarVisible", "yes");
         }
     });
     
     if (localStorage.getItem("sidebarVisible") === "no") {
         content.css("width", "100%");
-        $("#sidebar-toggler .fa").removeClass("fa-arrow-circle-right").addClass("fa-arrow-circle-left");
+        sidebar.css("visibility", "hidden");
+        $("#sidebar-toggler .fa").toggleClass("fa-arrow-circle-left fa-arrow-circle-right");
     }
 }
 
