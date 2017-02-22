@@ -6,6 +6,8 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets">
 
+<f:view contentType="text/html" locale="#{userProfileBean.locale}">
+
 <h:head>
     <ui:include src="meta.xhtml" />
     
@@ -15,8 +17,6 @@
 
     <ui:insert name="flow-scripts" />
 </h:head>
-
-<f:view contentType="text/html" locale="#{userProfileBean.locale}">
 
 <h:body>
     
