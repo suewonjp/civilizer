@@ -3,10 +3,11 @@
 .gradle
 build/
 **/build/
+!tools/build
 target/
 **/target/
 test/
-!/src/test/
+!src/test/
 extra/
 src/main/webapp/js/compressed.js
 src/main/webapp/styles/compressed.css
