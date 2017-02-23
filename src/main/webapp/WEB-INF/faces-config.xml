@@ -18,7 +18,7 @@
             <var>hlp</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>view-options</base-name>
+            <base-name>i18n.view-options</base-name>
             <var>cfg</var>
         </resource-bundle>
         <resource-bundle>

@@ -318,7 +318,7 @@
         update=":selection-box-form:selection-box-panel" oncomplete="prepareSelectionBox()"/>
     
     <div id="frg-context-menu" class="context-menu">
-	    <p:menu>
+	    <p:menu style="width:#{cfg['ctxt.menu.width']}">
             <p:menuitem id="edit" onclick="openFragmentEditorForEdit(event)" icon="fa fa-edit" value="#{msg['edit']}"/>
             <p:menuitem id="bookmark" onclick="bookmarkFragmentFromCtxtMenu()" icon="fa fa-bookmark" value="#{msg['bookmark']}"/>
             <p:menuitem id="trash" onclick="trashFragmentFromCtxtMenu(false)" icon="fa fa-trash" value="#{msg['trash']}"/>
