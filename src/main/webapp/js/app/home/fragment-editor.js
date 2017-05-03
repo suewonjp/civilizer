@@ -94,7 +94,7 @@ function clearFragmentEditor() {
 
 function openFragmentEditorForEdit(e, tgt) {
 	var menu = $("#frg-context-menu");
-	var target = menu.data("target-frg") || tgt;
+	var target = tgt || menu.data("target-frg");
 	var fragmentId = target.attr("_fid");
 	var panelId = findPanel(target);
     
