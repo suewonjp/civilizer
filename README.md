@@ -79,7 +79,7 @@ Supported browsers: (note that old versions may not work correctly)
     
 1. ***Make sure your system has JRE (version 7+) installed prior to launching the app.***
     - Type and run _**java -version**_ from the command prompt to confirm your system JRE version.
-1. Download [the latest release](http://suewonjp.github.io/civilizer/#download) and extract its content on your machine.
+1. Download [the latest release](http://suewonjp.github.io/civilizer/#services) and extract its content on your machine.
 1. Run it with the following instruction.
     - Windows Users:
         - Just click ***civilizer-win32.exe***.
