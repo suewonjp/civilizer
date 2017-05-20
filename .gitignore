@@ -1,9 +1,11 @@
 **/.DS_Store
 **/.swp
+**/.orig
 .gradle
 build/
 **/build/
 !tools/build
+tools/temp
 target/
 **/target/
 test/
