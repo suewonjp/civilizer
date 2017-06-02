@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 hostScript=${0##*/}
 scriptDir=${0%/*}

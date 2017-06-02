@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 confirmPrerequisite() {
     type native2ascii > /dev/null 2>&1 || {

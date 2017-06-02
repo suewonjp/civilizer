@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 confirmPrerequisite() {
     type javac > /dev/null 2>&1 || {
