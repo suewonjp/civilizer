@@ -53,5 +53,6 @@ cd "$extraPath/../"
 echo "[ $hostScript ] : Loading Civilizer from $(echolor $reverse $yellow $PWD)..."
 ${debug:+echo} java -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog \
  -Dorg.eclipse.jetty.LEVEL=INFO \
+ -Dfile.encoding=UTF8 \
  -cp "$classPath" "com.civilizer.extra.tools.Launcher" "$cleanStart" --port $port --home "$home"
 

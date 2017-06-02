@@ -48,6 +48,7 @@ if exist "..\pom.xml" cd ".."
 echo [ %hostScript% ] Loading Civilizer...
 !java! -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog ^
   -Dorg.eclipse.jetty.LEVEL=INFO ^
+  -Dfile.encoding=UTF8 ^
   -cp "%classPath%" ^
   com.civilizer.extra.tools.Launcher %cleanStart% --port %port% --home %home%
  
