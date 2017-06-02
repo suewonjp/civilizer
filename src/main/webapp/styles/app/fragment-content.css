@@ -49,9 +49,22 @@
     color: gray;
 }
 
+.fragment-content code {
+    padding: 1px 2px 1px 2px;
+    color: #000;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    background-color: whitesmoke;
+    white-space: pre-wrap;
+}
+
 .fragment-content pre {
     background-color: whitesmoke;
     white-space: pre-wrap;
+}
+
+.fragment-content pre code {
+    border: 0;
 }
 
 .fragment-content blockquote p {
