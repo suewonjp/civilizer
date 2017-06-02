@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.civilizer.config.AppOptions;
+import com.civilizer.config.Configurator;
 
 @SuppressWarnings("serial")
 public final class UserProfileBean implements Serializable {
@@ -74,27 +75,13 @@ public final class UserProfileBean implements Serializable {
 
     public Locale getLocale() {
         if (locale == null) {
-            setLocale(System.getProperty(AppOptions.LOCALE));
+            locale = Configurator.getCurLocale();
         }
         return locale;
     }
 
     public void setLocale(Locale l) {
         locale = l;
-        System.setProperty(AppOptions.LOCALE, l.getLanguage());
-    }
-
-    private void setLocale(String localeName) {
-        localeName = localeName.toLowerCase(); // Any locale name is case insensitive
-        if (localeName.equals("en")) {
-            setLocale(Locale.ENGLISH);
-        }
-        else if (localeName.equals("ja") || localeName.equals("jp")) {
-            setLocale(Locale.JAPANESE);
-        }
-//        else if (locale.equals("ko") || locale.equals("kr")) {
-//            setLocale(Locale.KOREAN);
-//        }
     }
 
     public String getLanguage() {

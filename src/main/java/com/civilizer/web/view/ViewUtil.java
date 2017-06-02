@@ -20,6 +20,7 @@ import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 
 import com.civilizer.config.AppOptions;
+import com.civilizer.config.Configurator;
 
 public final class ViewUtil {
 	
@@ -65,7 +66,9 @@ public final class ViewUtil {
     public static void setLocale(RequestContext rc) {
         final ServletExternalContext ec = (ServletExternalContext)rc.getExternalContext();
         final HttpServletRequest req = (HttpServletRequest)ec.getNativeRequest();
-        final Locale locale = RequestContextUtils.getLocale(req); // Retrieve the locale info from the cookie
+        Locale locale = RequestContextUtils.getLocale(req); // Retrieve the locale info from the cookie
+        // [NOTE] The locale setting via civilizer.locale option precedes the cookie locale.
+        locale = Configurator.resolveLocale(locale);
         final UserProfileBean userProfileBean = (UserProfileBean) rc.getFlowScope().get("userProfileBean");
         userProfileBean.setLocale(locale);
     }
@@ -74,7 +77,7 @@ public final class ViewUtil {
 	    Locale locale;
 	    final RequestContext rc = RequestContextHolder.getRequestContext();
 	    if (rc == null) {
-            locale = new Locale(System.getProperty(AppOptions.LOCALE));
+            locale = new Locale(System.getProperty(AppOptions.CUR_LOCALE));
         }
 	    else {
 	        final ServletExternalContext ec = (ServletExternalContext)rc.getExternalContext();

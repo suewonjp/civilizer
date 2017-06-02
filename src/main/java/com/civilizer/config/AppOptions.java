@@ -11,6 +11,7 @@ public final class AppOptions {
 	public static final String FILE_BOX_HOME                      = "civilizer.file_box_home";
 	public static final String OVERRIDE_OPTION_FILE               = "civilizer.override_option_file";
 	public static final String LOCALE                             = "civilizer.locale";
+	public static final String CUR_LOCALE                         = "civilizer.cur_locale";
 	public static final String DATA_SCRIPTS                       = "civilizer.data_scripts";
 	public static final String TEMP_PATH                          = "civilizer.temp_path";
 	public static final String ITEMS_PER_PAGE                     = "civilizer.items_per_page";

@@ -55,7 +55,43 @@ public final class Configurator {
 	public static String getDefaultPrivateHomePath(String defaultPrivateHomeName) {
 	    return FsUtil.concatPath(System.getProperty("user.home"), defaultPrivateHomeName);
 	}
-	
+
+    private static Locale getLocaleByName(String name) {
+        if (name == null)
+            name = "";
+        name = name.toLowerCase();
+        switch (name) {
+        case "ja":
+        case "jp":
+            return Locale.JAPANESE;
+        // case "ko":
+        // case "kr":
+        // return Locale.KOREAN;
+        case "en":
+            return Locale.ENGLISH;
+        default:
+            return null;
+        }
+    }
+
+    public static Locale resolveLocale(Locale localeFromClient) {
+        final String localeFromAppOption = System.getProperty(AppOptions.LOCALE);
+        Locale locale = getLocaleByName(localeFromAppOption);
+        if (locale == null) {
+            assert localeFromAppOption != null;
+            locale = localeFromClient;
+        }
+        System.setProperty(AppOptions.CUR_LOCALE, locale.getLanguage());
+        return locale;
+    }
+
+    public static Locale getCurLocale() {
+        Locale locale = getLocaleByName(System.getProperty(AppOptions.CUR_LOCALE));
+        if (locale == null)
+            locale = Locale.ENGLISH;
+        return locale;
+    }
+
 	private File detectPrivateHome(String defaultPrivateHomeName) {
 		// We use default private home path unless a path is provided at runtime
 
@@ -132,8 +168,9 @@ public final class Configurator {
 		    p.setProperty(AppOptions.INITIALIZE_DB, AppOptions.DEF_INITIALIZE_DB);
 		}
 
-		if (p.getProperty(AppOptions.LOCALE) == null) {
-		    p.setProperty(AppOptions.LOCALE, AppOptions.DEF_LOCALE);
+
+		if (p.getProperty(AppOptions.CUR_LOCALE) == null) {
+	        p.setProperty(AppOptions.CUR_LOCALE, AppOptions.DEF_LOCALE);
 		}
 
 		if (p.getProperty(AppOptions.DATA_SCRIPTS) == null) {
