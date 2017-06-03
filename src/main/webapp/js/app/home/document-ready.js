@@ -74,26 +74,27 @@ function onGlobalHotkeys(e) {
             }
         }
         break;
-    case 49: // Alt + 1; toggle panel 0
-        if (e.altKey) {
+    case 49: // Ctrl + Shift + 1; toggle panel 0
+        if (e.ctrlKey && e.shiftKey) {
             $("#panel-toggler-0").click();
             return false;
         }
         break;
-    case 50: // Alt + 2; toggle panel 1
-        if (e.altKey) {
+    case 50: // Ctrl + Shift + 2; toggle panel 1
+    case 222: // For Safari
+        if (e.ctrlKey && e.shiftKey) {
             $("#panel-toggler-1").click();
             return false;
         }
         break;
-    case 51: // Alt + 3; toggle panel 2
-        if (e.altKey) {
+    case 51: // Ctrl + Shift + 3; toggle panel 2
+        if (e.ctrlKey && e.shiftKey) {
             $("#panel-toggler-2").click();
             return false;
         }
         break;
-    case 52: // Alt + 4; ; enable a panel and disable all others in turn
-        if (e.altKey) {
+    case 52: // Ctrl + Shift + 4; ; enable a panel and disable all others in turn
+        if (e.ctrlKey && e.shiftKey) {
             if ($("#fragment-panel-0").is(":visible"))
                 $("#panel-toggler-0").click();
             if ($("#fragment-panel-1").is(":visible"))
