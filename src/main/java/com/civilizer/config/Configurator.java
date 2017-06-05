@@ -75,9 +75,11 @@ public final class Configurator {
     }
 
     public static Locale resolveLocale(Locale localeFromClient) {
+        // A locale setting specified via application options (e.g. app-options.properties)
         final String localeFromAppOption = System.getProperty(AppOptions.LOCALE);
         Locale locale = getLocaleByName(localeFromAppOption);
         if (locale == null) {
+            // Or we use a locale setting from client (e.g. cookie)
             assert localeFromAppOption != null;
             locale = localeFromClient;
         }

@@ -951,9 +951,9 @@ public final class MainController {
     }
 
     @RequestMapping(value = "/fragment/help", method = { RequestMethod.GET })
-    public String onRequestForFragment(ModelMap model, HttpServletRequest req) {
-        final String title = ViewUtil.getHelpString("help_title", req);
-        final String content = ViewUtil.getHelpString("help_content", req);
+    public String onRequestForFragment(ModelMap model) {
+        final String title = ViewUtil.getHelpString("help_title");
+        final String content = ViewUtil.getHelpString("help_content");
         final Fragment frg = new Fragment(title, content, null);
         model.addAttribute("fragmentType", "app-help-fragment");
         return onRequestForFragment(model, frg);

@@ -74,22 +74,13 @@ public final class ViewUtil {
     }
 	
 	public static String getResourceBundleString(String key) {
-	    Locale locale;
-	    final RequestContext rc = RequestContextHolder.getRequestContext();
-	    if (rc == null) {
-            locale = new Locale(System.getProperty(AppOptions.CUR_LOCALE));
-        }
-	    else {
-	        final ServletExternalContext ec = (ServletExternalContext)rc.getExternalContext();
-	        final HttpServletRequest req = (HttpServletRequest)ec.getNativeRequest();
-	        locale = RequestContextUtils.getLocale(req); // Retrieve the locale info from the cookie
-	    }
+	    final Locale locale = Configurator.getCurLocale();
         final ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_RESOURCE_BASE_NAME, locale);
         return bundle.getString(key);
 	}
 
-	public static String getHelpString(String key, HttpServletRequest req) {
-        final Locale locale = RequestContextUtils.getLocale(req);
+	public static String getHelpString(String key) {
+	    final Locale locale = Configurator.getCurLocale();
 	    final ResourceBundle bundle = ResourceBundle.getBundle(HELP_RESOURCE_BASE_NAME, locale);
 	    return bundle.getString(key);
 	}
