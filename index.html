@@ -75,7 +75,7 @@
       <h3 class=>A Web-Friendly Notetaking Application</h3>
       <h3>Cleverly Manage Your Data / Knowledge / Idea</h3>
       <a href="#services" >
-        <h4 class="notification">New Release : v0.9.0.RC6 (2017-01-30)</h4>
+        <h4 class="notification">New Release : v0.9.0.RC7 (2017-06-06)</h4>
       </a>
       <br>
       <a href="#services" class="btn btn-success">Download</a>
@@ -121,16 +121,18 @@
   <li><a href="https://www.youtube.com/watch?v=0omObKmJd4E&amp;feature=youtu.be">civilizer tutorial video</a></li>
   <li><a href="https://github.com/suewonjp/civilizer/wiki">civilizer online manual/docummentations</a></li>
   <li><a href="https://github.com/suewonjp/civilizer/issues">feature request &amp; bug report &amp; other issues</a></li>
+  <li><a href="https://github.com/suewonjp/civilizer-jpdoc">シビライザー日本語版Githubページ</a></li>
+  <li><a href="https://github.com/suewonjp/civilizer-jpdoc/wiki">シビライザー日本語版ドキュメント</a></li>
 </ul>
 
 <h3 id="description">DESCRIPTION</h3>
 
-<p><strong>Civilizer</strong> is a web application for <strong>Notetaking or Personal Knowledge Management (PKM)</strong> </p>
+<p><strong>Civilizer</strong> is a web application for <strong>Notetaking or Personal Knowledge Management (PKM)</strong></p>
 
 <ul>
   <li>knowledge/expertise/tips/tricks for your job</li>
   <li>temporary memo/notes</li>
-  <li>schedule/plan</li>
+  <li>schedules/plans</li>
   <li>detailed procedures you often forget for infrequent tasks
     <ul>
       <li>e.g., installing printer drivers on your computers, submitting a tax return, …</li>
@@ -144,8 +146,7 @@
 </ul>
 
 <p>Civilizer looks like a notetaking application like Evernote.<br />
-But unlike a native desktop application, it runs on your browser, so more Web-Friendly.<br />
-(It requires <strong>Java Runtime Environment</strong>)</p>
+But unlike a native desktop application, it runs on your browser, so more Web-Friendly.</p>
 
 <h3 id="descussion">DESCUSSION</h3>
 <p>Civilizer can keep your data in various forms including:</p>
@@ -154,20 +155,19 @@ But unlike a native desktop application, it runs on your browser, so more Web-Fr
   <li>text
     <ul>
       <li>can be authored in <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> with a dedicated editor</li>
-      <li>eventually rendered in HTML</li>
     </ul>
   </li>
   <li>hyper links</li>
   <li>images</li>
   <li>videos</li>
-  <li>files</li>
+  <li>and other file types</li>
 </ul>
 
 <p>It can help you efficiently organize/structure your data by:</p>
 
 <ul>
   <li>tagging your data</li>
-  <li>relating similar/contrary data with one another</li>
+  <li>relating data with one another</li>
   <li>bookmarking data you access frequently</li>
   <li>organizing your files in a directory structure</li>
 </ul>
@@ -223,21 +223,21 @@ But unlike a native desktop application, it runs on your browser, so more Web-Fr
 <ol>
   <li><strong><em>Make sure your system has JRE (version 7+) installed prior to launching the app.</em></strong>
     <ul>
-      <li>Type and run <em><strong>java -version</strong></em> from the command prompt to confirm your system JRE version.</li>
+      <li>Type and run <code>java -version</code> from the command prompt to confirm your system JRE version.</li>
     </ul>
   </li>
-  <li>Download <a href="http://suewonjp.github.io/civilizer/#download">the latest release</a> and extract its content on your machine.</li>
+  <li>Download <a href="http://suewonjp.github.io/civilizer/#services">the latest release of Civilizer</a> and extract its content on your machine.</li>
   <li>Run it with the following instruction.
     <ul>
       <li>Windows Users:
         <ul>
-          <li>Just click <strong><em>civilizer-win32.exe</em></strong>.</li>
-          <li>Alternatively, execute <strong><em>run-civilizer.bat</em></strong> from the command line.</li>
+          <li>Just execute <code>civilizer-win32.exe</code>.</li>
+          <li>Alternatively, execute <code>run-civilizer.bat</code> from the command line.</li>
         </ul>
       </li>
       <li>Other OS Users:
         <ul>
-          <li>Execute <strong><em>run-civilizer.sh</em></strong> from your shell command line.</li>
+          <li>Execute <code>run-civilizer.sh</code> from your shell command line.</li>
         </ul>
       </li>
     </ul>
@@ -245,17 +245,17 @@ But unlike a native desktop application, it runs on your browser, so more Web-Fr
   <li>You’ll see a <strong><em>System Tray Icon</em></strong> appearing <strong>unless you run it on Linux systems</strong>.
     <ul>
       <li><strong><em>[For Linux Users] Currently, system tray icon is not supported on Linux because underlying systems (OS or JVM or both) apparently have technical problems in supporting Java’s system tray icon feature.</em></strong></li>
-      <li><span style="color:red">The icon will stay in red during the loading process.</span></li>
+      <li>The icon will stay in red during the loading process.</li>
       <li>It’ll take a while to complete the loading.</li>
       <li>With the loading finished, the icon color changes, and Civilizer can be accessed via your browser.</li>
     </ul>
   </li>
-  <li>Access Civilizer. 
+  <li>Access Civilizer.
     <ul>
       <li>If everything has gone well, your default browser will automatically launch or be focused on most of major systems.</li>
       <li>If your browser doesn’t respond, access Civilizer manually.
         <ul>
-          <li>Right-click on Civilizer’s system tray icon (maybe left-click depending on your OS), and choose the menu saying <strong><em>Browse</em></strong>.</li>
+          <li>Right-click on Civilizer’s system tray icon (maybe left-click depending on your OS), and choose the menu saying <strong><em><code>Browse</code></em></strong>.</li>
           <li>Alternatively, manually access the following URL with your browser.
             <ul>
               <li><strong><em><code>http://localhost:8080/civilizer/app/home</code></em></strong></li>
@@ -275,23 +275,19 @@ But unlike a native desktop application, it runs on your browser, so more Web-Fr
       </li>
       <li>After authenticated, you can reach the default page of the application.
         <ul>
-          <li>You may change username or password by accessing <strong><em>‘Change Profile’</em></strong> menu.
-            <ul>
-              <li>Click on the man icon located at the top-right corner of the page. </li>
-            </ul>
-          </li>
+          <li>Click on the man icon located at the top-right corner of the page.</li>
+          <li>Change username or password by accessing <strong><em>‘Change Profile’</em></strong> menu.</li>
         </ul>
       </li>
     </ul>
   </li>
-  <li>The pages you’ll see after accessing Civilizer is the table of content for its <a href="https://github.com/suewonjp/civilizer/wiki">User Manual</a></li>
 </ol>
 
 <h3 id="how-to-uninstall">HOW TO UNINSTALL</h3>
 
 <ol>
   <li>Just remove the extracted folder.</li>
-  <li>Remove the  <strong><em>.civilizer</em></strong> folder (containing user settings and data) in your <em>user directory</em> if it exists.</li>
+  <li>Remove the  <code>.civilizer</code> folder (containing user settings and data) in your <strong>user directory</strong> if it exists.</li>
 </ol>
 
 <h3 id="how-to-build">HOW TO BUILD</h3>
@@ -299,9 +295,10 @@ But unlike a native desktop application, it runs on your browser, so more Web-Fr
 <p>Refer to <a href="https://github.com/suewonjp/civilizer/wiki/Building-Civilizer">this page</a></p>
 
 <hr />
-<p>### CREDITS </p>
 
-<p>Civilizer has been inspired by <a href="http://piggydb.net/">Piggydb</a> developed by Daisuke Morita.  </p>
+<h3 id="credits">CREDITS</h3>
+
+<p>Civilizer has been inspired by <a href="http://piggydb.net/">Piggydb</a> developed by Daisuke Morita.</p>
 
 <h3 id="copyrightlicensedisclaimer">COPYRIGHT/LICENSE/DISCLAIMER</h3>
 
@@ -321,13 +318,12 @@ limitations under the License.
 </code></pre>
 
 <hr />
-<p>Written by Suewon Bahng   ( Last Updated January, 2017 )</p>
+<p>Updated by Suewon Bahng ( May 2017 )</p>
 
 <h3 id="contributors">CONTRIBUTORS</h3>
-<p>Suewon Bahng  </p>
+<p>Suewon Bahng</p>
 
 <p>Other contributors are welcome!</p>
-
   
       </div>
     </div> <!-- /.row -->

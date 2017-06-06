@@ -114,7 +114,7 @@
 <h4 id="what-does-hooky-do">What does Hooky do?</h4>
 <p><em><strong>Hooky</strong></em> is a small status bar (or menu bar) application. It sits on the menu bar area at the top of the screen and waits for any of UI events specified by you. When it detects any of those UI events, it invokes an existing keyboard shortcut (also specified by you) for you.</p>
 
-<p>For instance, to emulate middle click paste of Linux systems, Hooky waits for any of middle click events and once it detects one, then it fires keyboard events equivalent to pushing ⌘V. </p>
+<p>For instance, to emulate middle click paste of Linux systems, Hooky waits for any of middle click events and once it detects one, then it fires keyboard events equivalent to pushing ⌘V.</p>
 
 <p>Events to detect such as Middle Button Click are referred to as <strong>Proxy Events</strong> in Hooky. Also the shortcuts to invoke such as ⌘V are referred to as <strong>Target Shortcuts</strong>.</p>
 
@@ -123,7 +123,7 @@
 <p><img src="/civilizer/blog/img/hooky-2016-03-28.png" alt="hooky-screenshot" /></p>
 
 <h4 id="proxy-events">Proxy Events</h4>
-<p>Hooky offers two types of <em>Proxy Events</em>. </p>
+<p>Hooky offers two types of <em>Proxy Events</em>.</p>
 
 <ul>
   <li><strong>Mouse Click Events</strong>
@@ -138,7 +138,7 @@
       <li>Only works for a <strong>SINGLE</strong> Modifier Key (⌘ or ⌥ or ⇧ or ⌃)</li>
       <li>Long press on the modifier keys won’t count. You should <strong>TAP</strong> on them!</li>
       <li>No other regular keys or mouse buttons are involved.</li>
-      <li>Double/Triple/Quadruple tappings are supported 
+      <li>Double/Triple/Quadruple tappings are supported
         <ul>
           <li>Note that single tap is not supported because it will cause lots of conflicts.</li>
         </ul>
@@ -151,11 +151,11 @@
 <p>It won’t make sense at all unless <em>proxy events</em> are easier to invoke than their <em>target shortcuts</em>. That’s why proxy events are just leveraging mouse clicks or modifier keys or combinations of both only.</p>
 
 <h4 id="target-shortcuts">Target Shortcuts</h4>
-<p>BTW, is ⌘V so much hard to press? It may be controversial. For me, it’s not so difficult to quickly press it without getting my eyes off of the screen, but it’s not so much easy either. Most of time, just clicking mouse middle button is a lot easier, especially when my hand is holding the mouse. ( even more handy when another hand is grabbing a cup or glass :-) ) </p>
+<p>BTW, is ⌘V so much hard to press? It may be controversial. For me, it’s not so difficult to quickly press it without getting my eyes off of the screen, but it’s not so much easy either. Most of time, just clicking mouse middle button is a lot easier, especially when my hand is holding the mouse. ( even more handy when another hand is grabbing a cup or glass :-) )</p>
 
 <p>Of course, when both of my hands are on the keyboard, ⌘V is a lot faster. Both approaches are effective alike. Hooky won’t shadow the target shortcuts so you can use them whenever you think they would be faster to invoke.</p>
 
-<p>Unlike ⌘V, other shortcuts demand many more fingers and they are harder to push and harder to remember. Hooky might be a good tool to invoke those complicated shortcuts with more simpler motions. </p>
+<p>Unlike ⌘V, other shortcuts demand many more fingers and they are harder to push and harder to remember. Hooky might be a good tool to invoke those complicated shortcuts with more simpler motions.</p>
 
 <p>Even not so complicated shortcuts such as ⌘Tab are (arguably) unfriendly to the muscle of your hand. At least for me, just tapping on the ⌃ key 2 ~ 3 times feels better than elongating my fingers to push ⌘Tab.</p>
 
@@ -174,10 +174,10 @@
 <p><img src="/civilizer/blog/img/hooky-annotation.png" alt="hooky-screenshot" /></p>
 
 <ol>
-  <li>Pushing the button will make the edit box slide in. 
+  <li>Pushing the button will make the edit box slide in.
     <ul>
       <li>With the edit box, you can set up a proxy event and target shortcut.</li>
-      <li><strong>The edit box</strong> is the area surrounded by the blue dashed box </li>
+      <li><strong>The edit box</strong> is the area surrounded by the blue dashed box</li>
     </ul>
   </li>
   <li>Pushing the button will save your setup.</li>
@@ -203,12 +203,12 @@
   <li>Specify the target shortcut.
     <ul>
       <li>Just press the keyboard shortcut you’d like to invoke via the proxy event.</li>
-      <li><strong><em>[ KEY BY KEY MODE (IMPORTANT) ]</em></strong> This is a tricky part. This text field UI can’t detect global shortcuts because of an inherent limitation of Hooky. (See <em>Limitations</em> section below) 
+      <li><strong><em>[ KEY BY KEY MODE (IMPORTANT) ]</em></strong> This is a tricky part. This text field UI can’t detect global shortcuts because of an inherent limitation of Hooky. (See <em>Limitations</em> section below)
         <ul>
           <li>For example, If you try to input ⌘Space, only Spotlight shows up and nothing else.</li>
           <li>In this case, press Space first, and then press ⌘. (Separately!)</li>
           <li>This mode is referred to as <strong>Key By Key</strong> mode.</li>
-          <li>By pushing a regular key part (e.g., Space) of the shortcut first, the UI will switch to Key By Key mode automatically. </li>
+          <li>By pushing a regular key part (e.g., Space) of the shortcut first, the UI will switch to Key By Key mode automatically.</li>
           <li>You will easily notice this mode because the background color of the text field suddenly changes.</li>
           <li>After the regular key inserted, push the remaining modifier key part (e.g., ⌘)</li>
           <li>Then, press <em>Return</em> to finish the Key By Key mode.</li>
@@ -220,7 +220,7 @@
   <li>Pushing the button will let you delete the corresponding pair.</li>
   <li>Unchecking the checkbox will let you disable the corresponding pair.
     <ul>
-      <li>You can reenable it by checking the same checkbox. </li>
+      <li>You can reenable it by checking the same checkbox.</li>
     </ul>
   </li>
 </ol>
@@ -230,7 +230,7 @@
 Hooky will save your settings <em>~/.hooky</em> folder. <br />
 This folder will be created when you install the app and it just contains a simple text file.<br />
 Delete the folder if you find it unnecessary when uninstalling Hooky.<br />
-The behavior for saving user settings is subject to change.  </p>
+The behavior for saving user settings is subject to change.</p>
 </blockquote>
 
 <h4 id="limitations">Limitations</h4>
@@ -238,9 +238,9 @@ The behavior for saving user settings is subject to change.  </p>
 
 <p><strong>Hooky might not detect any of events being used by higher privileged applications</strong> (including apps permitted to use <a href="https://developer.apple.com/accessibility/osx/">Accessibility API</a>)</p>
 
-<p>Applications like BetterTouchTool probably make use of low level APIs which need user permission. Those applications can do a lot more than Hooky can do and if they occupy UI events that Hooky has interest in, Hooky might not have a chance of detecting those events. </p>
+<p>Applications like BetterTouchTool probably make use of low level APIs which need user permission. Those applications can do a lot more than Hooky can do and if they occupy UI events that Hooky has interest in, Hooky might not have a chance of detecting those events.</p>
 
-<p>Also <strong>Hooky can’t modify existing behaviors of proxy events</strong>. This will cause problems when you want to use mouse left/right clicks as proxy events. Even though Hooky offers UI to let you register left/right clicks as valid proxy events, registering them is not recommended. (except a few, e.g., right double click) They can be only used when you are sure that they won’t conflict with other applications or existing OS behaviors. </p>
+<p>Also <strong>Hooky can’t modify existing behaviors of proxy events</strong>. This will cause problems when you want to use mouse left/right clicks as proxy events. Even though Hooky offers UI to let you register left/right clicks as valid proxy events, registering them is not recommended. (except a few, e.g., right double click) They can be only used when you are sure that they won’t conflict with other applications or existing OS behaviors.</p>
 
 <p>Mouse middle click could be safely used as proxy events in most of cases. Note that you will have enough slots with middle click only. You have 4 types of mouse button clicks (Long press, single/double/triple click). And each click can be modified with 4 modifier keys (⌘⌥⇧⌃) and the number of USABLE modifier combinations is 10. (Total combinations are 15. However, pushing 3 or 4 keys together is against Hooky’s goal.) The total number of proxy events available with middle button only is up to 40 (= 4 x 10). In addition to that, the total number of MKM proxy events is 12 (= 3 x 4, 3 types of tapping and 4 modifier keys). So <em><strong>you have the total of 52 free slots without needing left/right buttons</strong></em> and I think that is more than enough.</p>
 
@@ -265,7 +265,7 @@ The behavior for saving user settings is subject to change.  </p>
 
 <p>If you know what the target action is, but no keyboard shortcut is assigned yet, go to <em><strong>System Preferences &gt; Keyboard &gt; Shortcuts tab &gt; select App Shortcuts from the left panel &gt;</strong></em> add whatever shortcut you like.</p>
 
-<p>Also note that you can quickly access Hooky’s UI all the time because it sits on the menu bar area where is always visible unless you enter a full screen mode. Disable each of pair or all the pairs when some conflicts occur and you think Hooky is in your way somehow. Once the conflicting situation is gone, you can easily revive disabled settings. </p>
+<p>Also note that you can quickly access Hooky’s UI all the time because it sits on the menu bar area where is always visible unless you enter a full screen mode. Disable each of pair or all the pairs when some conflicts occur and you think Hooky is in your way somehow. Once the conflicting situation is gone, you can easily revive disabled settings.</p>
 
 <p>Hooky distinguishes which is a single click, double click, long press based on a configurable system setting. Go to _<strong>System Preferences &gt; Mouse &gt; Double-Click speed</strong> and adjust the slider as it suits you best. If you modify the double click speed faster, you need to double click that much faster in order for Hooky to identify that as a legitimate double click event.</p>
 

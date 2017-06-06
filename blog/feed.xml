@@ -5,8 +5,8 @@
     <description>Blog for Civilizer; An Open Source Personal Knowledge Management Tool</description>
     <link>http://suewonjp.github.io/civilizer/blog/</link>
     <atom:link href="http://suewonjp.github.io/civilizer/blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 30 Jan 2017 16:50:29 +0900</pubDate>
-    <lastBuildDate>Mon, 30 Jan 2017 16:50:29 +0900</lastBuildDate>
+    <pubDate>Tue, 06 Jun 2017 19:54:12 +0900</pubDate>
+    <lastBuildDate>Tue, 06 Jun 2017 19:54:12 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -23,7 +23,7 @@
 &lt;h4 id=&quot;what-does-hooky-do&quot;&gt;What does Hooky do?&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;Hooky&lt;/strong&gt;&lt;/em&gt; is a small status bar (or menu bar) application. It sits on the menu bar area at the top of the screen and waits for any of UI events specified by you. When it detects any of those UI events, it invokes an existing keyboard shortcut (also specified by you) for you.&lt;/p&gt;
 
-&lt;p&gt;For instance, to emulate middle click paste of Linux systems, Hooky waits for any of middle click events and once it detects one, then it fires keyboard events equivalent to pushing ⌘V. &lt;/p&gt;
+&lt;p&gt;For instance, to emulate middle click paste of Linux systems, Hooky waits for any of middle click events and once it detects one, then it fires keyboard events equivalent to pushing ⌘V.&lt;/p&gt;
 
 &lt;p&gt;Events to detect such as Middle Button Click are referred to as &lt;strong&gt;Proxy Events&lt;/strong&gt; in Hooky. Also the shortcuts to invoke such as ⌘V are referred to as &lt;strong&gt;Target Shortcuts&lt;/strong&gt;.&lt;/p&gt;
 
@@ -32,7 +32,7 @@
 &lt;p&gt;&lt;img src=&quot;/civilizer/blog/img/hooky-2016-03-28.png&quot; alt=&quot;hooky-screenshot&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;proxy-events&quot;&gt;Proxy Events&lt;/h4&gt;
-&lt;p&gt;Hooky offers two types of &lt;em&gt;Proxy Events&lt;/em&gt;. &lt;/p&gt;
+&lt;p&gt;Hooky offers two types of &lt;em&gt;Proxy Events&lt;/em&gt;.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;Mouse Click Events&lt;/strong&gt;
@@ -47,7 +47,7 @@
       &lt;li&gt;Only works for a &lt;strong&gt;SINGLE&lt;/strong&gt; Modifier Key (⌘ or ⌥ or ⇧ or ⌃)&lt;/li&gt;
       &lt;li&gt;Long press on the modifier keys won’t count. You should &lt;strong&gt;TAP&lt;/strong&gt; on them!&lt;/li&gt;
       &lt;li&gt;No other regular keys or mouse buttons are involved.&lt;/li&gt;
-      &lt;li&gt;Double/Triple/Quadruple tappings are supported 
+      &lt;li&gt;Double/Triple/Quadruple tappings are supported
         &lt;ul&gt;
           &lt;li&gt;Note that single tap is not supported because it will cause lots of conflicts.&lt;/li&gt;
         &lt;/ul&gt;
@@ -60,11 +60,11 @@
 &lt;p&gt;It won’t make sense at all unless &lt;em&gt;proxy events&lt;/em&gt; are easier to invoke than their &lt;em&gt;target shortcuts&lt;/em&gt;. That’s why proxy events are just leveraging mouse clicks or modifier keys or combinations of both only.&lt;/p&gt;
 
 &lt;h4 id=&quot;target-shortcuts&quot;&gt;Target Shortcuts&lt;/h4&gt;
-&lt;p&gt;BTW, is ⌘V so much hard to press? It may be controversial. For me, it’s not so difficult to quickly press it without getting my eyes off of the screen, but it’s not so much easy either. Most of time, just clicking mouse middle button is a lot easier, especially when my hand is holding the mouse. ( even more handy when another hand is grabbing a cup or glass :-) ) &lt;/p&gt;
+&lt;p&gt;BTW, is ⌘V so much hard to press? It may be controversial. For me, it’s not so difficult to quickly press it without getting my eyes off of the screen, but it’s not so much easy either. Most of time, just clicking mouse middle button is a lot easier, especially when my hand is holding the mouse. ( even more handy when another hand is grabbing a cup or glass :-) )&lt;/p&gt;
 
 &lt;p&gt;Of course, when both of my hands are on the keyboard, ⌘V is a lot faster. Both approaches are effective alike. Hooky won’t shadow the target shortcuts so you can use them whenever you think they would be faster to invoke.&lt;/p&gt;
 
-&lt;p&gt;Unlike ⌘V, other shortcuts demand many more fingers and they are harder to push and harder to remember. Hooky might be a good tool to invoke those complicated shortcuts with more simpler motions. &lt;/p&gt;
+&lt;p&gt;Unlike ⌘V, other shortcuts demand many more fingers and they are harder to push and harder to remember. Hooky might be a good tool to invoke those complicated shortcuts with more simpler motions.&lt;/p&gt;
 
 &lt;p&gt;Even not so complicated shortcuts such as ⌘Tab are (arguably) unfriendly to the muscle of your hand. At least for me, just tapping on the ⌃ key 2 ~ 3 times feels better than elongating my fingers to push ⌘Tab.&lt;/p&gt;
 
@@ -83,10 +83,10 @@
 &lt;p&gt;&lt;img src=&quot;/civilizer/blog/img/hooky-annotation.png&quot; alt=&quot;hooky-screenshot&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Pushing the button will make the edit box slide in. 
+  &lt;li&gt;Pushing the button will make the edit box slide in.
     &lt;ul&gt;
       &lt;li&gt;With the edit box, you can set up a proxy event and target shortcut.&lt;/li&gt;
-      &lt;li&gt;&lt;strong&gt;The edit box&lt;/strong&gt; is the area surrounded by the blue dashed box &lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;The edit box&lt;/strong&gt; is the area surrounded by the blue dashed box&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Pushing the button will save your setup.&lt;/li&gt;
@@ -112,12 +112,12 @@
   &lt;li&gt;Specify the target shortcut.
     &lt;ul&gt;
       &lt;li&gt;Just press the keyboard shortcut you’d like to invoke via the proxy event.&lt;/li&gt;
-      &lt;li&gt;&lt;strong&gt;&lt;em&gt;[ KEY BY KEY MODE (IMPORTANT) ]&lt;/em&gt;&lt;/strong&gt; This is a tricky part. This text field UI can’t detect global shortcuts because of an inherent limitation of Hooky. (See &lt;em&gt;Limitations&lt;/em&gt; section below) 
+      &lt;li&gt;&lt;strong&gt;&lt;em&gt;[ KEY BY KEY MODE (IMPORTANT) ]&lt;/em&gt;&lt;/strong&gt; This is a tricky part. This text field UI can’t detect global shortcuts because of an inherent limitation of Hooky. (See &lt;em&gt;Limitations&lt;/em&gt; section below)
         &lt;ul&gt;
           &lt;li&gt;For example, If you try to input ⌘Space, only Spotlight shows up and nothing else.&lt;/li&gt;
           &lt;li&gt;In this case, press Space first, and then press ⌘. (Separately!)&lt;/li&gt;
           &lt;li&gt;This mode is referred to as &lt;strong&gt;Key By Key&lt;/strong&gt; mode.&lt;/li&gt;
-          &lt;li&gt;By pushing a regular key part (e.g., Space) of the shortcut first, the UI will switch to Key By Key mode automatically. &lt;/li&gt;
+          &lt;li&gt;By pushing a regular key part (e.g., Space) of the shortcut first, the UI will switch to Key By Key mode automatically.&lt;/li&gt;
           &lt;li&gt;You will easily notice this mode because the background color of the text field suddenly changes.&lt;/li&gt;
           &lt;li&gt;After the regular key inserted, push the remaining modifier key part (e.g., ⌘)&lt;/li&gt;
           &lt;li&gt;Then, press &lt;em&gt;Return&lt;/em&gt; to finish the Key By Key mode.&lt;/li&gt;
@@ -129,7 +129,7 @@
   &lt;li&gt;Pushing the button will let you delete the corresponding pair.&lt;/li&gt;
   &lt;li&gt;Unchecking the checkbox will let you disable the corresponding pair.
     &lt;ul&gt;
-      &lt;li&gt;You can reenable it by checking the same checkbox. &lt;/li&gt;
+      &lt;li&gt;You can reenable it by checking the same checkbox.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
@@ -139,7 +139,7 @@
 Hooky will save your settings &lt;em&gt;~/.hooky&lt;/em&gt; folder. &lt;br /&gt;
 This folder will be created when you install the app and it just contains a simple text file.&lt;br /&gt;
 Delete the folder if you find it unnecessary when uninstalling Hooky.&lt;br /&gt;
-The behavior for saving user settings is subject to change.  &lt;/p&gt;
+The behavior for saving user settings is subject to change.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h4 id=&quot;limitations&quot;&gt;Limitations&lt;/h4&gt;
@@ -147,9 +147,9 @@ The behavior for saving user settings is subject to change.  &lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Hooky might not detect any of events being used by higher privileged applications&lt;/strong&gt; (including apps permitted to use &lt;a href=&quot;https://developer.apple.com/accessibility/osx/&quot;&gt;Accessibility API&lt;/a&gt;)&lt;/p&gt;
 
-&lt;p&gt;Applications like BetterTouchTool probably make use of low level APIs which need user permission. Those applications can do a lot more than Hooky can do and if they occupy UI events that Hooky has interest in, Hooky might not have a chance of detecting those events. &lt;/p&gt;
+&lt;p&gt;Applications like BetterTouchTool probably make use of low level APIs which need user permission. Those applications can do a lot more than Hooky can do and if they occupy UI events that Hooky has interest in, Hooky might not have a chance of detecting those events.&lt;/p&gt;
 
-&lt;p&gt;Also &lt;strong&gt;Hooky can’t modify existing behaviors of proxy events&lt;/strong&gt;. This will cause problems when you want to use mouse left/right clicks as proxy events. Even though Hooky offers UI to let you register left/right clicks as valid proxy events, registering them is not recommended. (except a few, e.g., right double click) They can be only used when you are sure that they won’t conflict with other applications or existing OS behaviors. &lt;/p&gt;
+&lt;p&gt;Also &lt;strong&gt;Hooky can’t modify existing behaviors of proxy events&lt;/strong&gt;. This will cause problems when you want to use mouse left/right clicks as proxy events. Even though Hooky offers UI to let you register left/right clicks as valid proxy events, registering them is not recommended. (except a few, e.g., right double click) They can be only used when you are sure that they won’t conflict with other applications or existing OS behaviors.&lt;/p&gt;
 
 &lt;p&gt;Mouse middle click could be safely used as proxy events in most of cases. Note that you will have enough slots with middle click only. You have 4 types of mouse button clicks (Long press, single/double/triple click). And each click can be modified with 4 modifier keys (⌘⌥⇧⌃) and the number of USABLE modifier combinations is 10. (Total combinations are 15. However, pushing 3 or 4 keys together is against Hooky’s goal.) The total number of proxy events available with middle button only is up to 40 (= 4 x 10). In addition to that, the total number of MKM proxy events is 12 (= 3 x 4, 3 types of tapping and 4 modifier keys). So &lt;em&gt;&lt;strong&gt;you have the total of 52 free slots without needing left/right buttons&lt;/strong&gt;&lt;/em&gt; and I think that is more than enough.&lt;/p&gt;
 
@@ -174,7 +174,7 @@ The behavior for saving user settings is subject to change.  &lt;/p&gt;
 
 &lt;p&gt;If you know what the target action is, but no keyboard shortcut is assigned yet, go to &lt;em&gt;&lt;strong&gt;System Preferences &amp;gt; Keyboard &amp;gt; Shortcuts tab &amp;gt; select App Shortcuts from the left panel &amp;gt;&lt;/strong&gt;&lt;/em&gt; add whatever shortcut you like.&lt;/p&gt;
 
-&lt;p&gt;Also note that you can quickly access Hooky’s UI all the time because it sits on the menu bar area where is always visible unless you enter a full screen mode. Disable each of pair or all the pairs when some conflicts occur and you think Hooky is in your way somehow. Once the conflicting situation is gone, you can easily revive disabled settings. &lt;/p&gt;
+&lt;p&gt;Also note that you can quickly access Hooky’s UI all the time because it sits on the menu bar area where is always visible unless you enter a full screen mode. Disable each of pair or all the pairs when some conflicts occur and you think Hooky is in your way somehow. Once the conflicting situation is gone, you can easily revive disabled settings.&lt;/p&gt;
 
 &lt;p&gt;Hooky distinguishes which is a single click, double click, long press based on a configurable system setting. Go to _&lt;strong&gt;System Preferences &amp;gt; Mouse &amp;gt; Double-Click speed&lt;/strong&gt; and adjust the slider as it suits you best. If you modify the double click speed faster, you need to double click that much faster in order for Hooky to identify that as a legitimate double click event.&lt;/p&gt;
 
@@ -196,7 +196,7 @@ The behavior for saving user settings is subject to change.  &lt;/p&gt;
 &lt;p&gt;Besides Milgram Effect, the incident had another issue that I think is mentionable in this post. After the incident, the victim sued the fast food franchise company for $200 million claiming that the company was responsible for her damages. The lawsuit had disputes over several issues. Among them, one issue was whether the company properly warned their employees about the hoax which had occurred many times before that incident across almost 10 years throughout the country. It was clear that the company was well aware of all those scam calls. At least, it is true that they took some measures against the hoax.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;They had training manual that included a section saying “no legitimate law enforcement agency would ever ask you to conduct such a [strip] search.” 
+  &lt;li&gt;They had training manual that included a section saying “no legitimate law enforcement agency would ever ask you to conduct such a [strip] search.”
     &lt;ul&gt;
       &lt;li&gt;But, according to the media, none of the employees at the restaurant say they recall seeing the section.&lt;/li&gt;
     &lt;/ul&gt;
@@ -208,10 +208,10 @@ The behavior for saving user settings is subject to change.  &lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Well, a couple of actions taken by the organization “in advance” didn’t work and it led to a significant disaster to the victimized poor young female and manipulated employees, who were also victims of the hoax, and the company itself. &lt;/p&gt;
+&lt;p&gt;Well, a couple of actions taken by the organization “in advance” didn’t work and it led to a significant disaster to the victimized poor young female and manipulated employees, who were also victims of the hoax, and the company itself.&lt;/p&gt;
 
 &lt;h4 id=&quot;risk-of-information-broadcasting&quot;&gt;Risk of information broadcasting&lt;/h4&gt;
-&lt;p&gt;We see all sorts of information or knowledge flowing in our organization everyday. Some information flows in a top-down direction, some flows in a bottom-up direction. &lt;/p&gt;
+&lt;p&gt;We see all sorts of information or knowledge flowing in our organization everyday. Some information flows in a top-down direction, some flows in a bottom-up direction.&lt;/p&gt;
 
 &lt;p&gt;Although it is not the topic of this post, let’s first think about a bottom-up flow. We, employees, are all aware that there is no guarantee that every information from leaf nodes of the hierarchy actually reaches top nodes (CEO, CTO, CFO, …) of the same hierarchy. Every organization on some scale has middle class managers here and there and they act like some sort of filters. For instance, a paper proposing new kind of innovative business model may be sleeping in a bottom drawer of one of your superior’s desk. He may think the proposal is not worth further discussion or he might’ve simply forgotten it. For whatever reasons, they have discretion in whether delivering each bottom-up information into their upper hierarchy. Every organization has more or less pyramid shaped hierarchy so this is inevitable.&lt;/p&gt;
 
@@ -227,7 +227,7 @@ The behavior for saving user settings is subject to change.  &lt;/p&gt;
 &lt;h4 id=&quot;we-informed-that-so-were-done&quot;&gt;We informed that, so we’re done.&lt;/h4&gt;
 &lt;p&gt;At the lawsuit of the Mount Washington scam incident, lawyers for the company claimed that if the company’s employees had taken note of written policies and a voice mail message, the workers should have realized it was a hoax. The claim may sound reasonable at first. But, think about it. Like they argue, if everything works that well with just one time of information delivery, every human in every nation will have so much high education. Is that true? No. As you already know, our real world has all sorts of education problems. We need repetitive trainings, feedbacks, tests, and other kinds of program because that kind of simple information delivery doesn’t guarantee anything one hundred percent.&lt;/p&gt;
 
-&lt;p&gt;We assume that signals coming from a top-node from the hierarchy will reach every node of the same hierarchy. But, that’s an illusion. We have no guarantee of the signal delivered everywhere. More reasonably, we need to assume that the signal might be lost somewhere in the communication relay. &lt;/p&gt;
+&lt;p&gt;We assume that signals coming from a top-node from the hierarchy will reach every node of the same hierarchy. But, that’s an illusion. We have no guarantee of the signal delivered everywhere. More reasonably, we need to assume that the signal might be lost somewhere in the communication relay.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;“We informed that, so we’re done” mind of some organizations is kind of risky to themselves&lt;/strong&gt;&lt;/em&gt;. 
 Not caring for managing information flow may lead to significant damage to organizations just like we saw what happened in the strip search phone call scam case. At least, “We informed something. What was that? Tell me” mind is necessary to reduce the risk. Encouraging feedbacks from everyone sounds so much difficult. And constructing system to support that kind of mind may demand more money. But, we have technologies evolving fast and we have new ideas (such as Gamification, Knowledge Management, etc.) giving us more insights. They will help!&lt;/p&gt;
@@ -249,7 +249,7 @@ Not caring for managing information flow may lead to significant damage to organ
   &lt;li&gt;In the experiment, there are three roles; the &lt;strong&gt;Experimenter&lt;/strong&gt; who is an authoritative role, the &lt;strong&gt;Teacher&lt;/strong&gt; who is an experiment subject, the &lt;strong&gt;Learner&lt;/strong&gt; who is an actor or confederate;&lt;/li&gt;
   &lt;li&gt;The teacher and the learner are separated into different rooms.&lt;/li&gt;
   &lt;li&gt;The teacher is supposed to give the learner some quiz and the learner is supposed to answer them;&lt;/li&gt;
-  &lt;li&gt;Whenever the answer was incorrect, the teacher would administer an electroshock to the learner, with the voltage increasing in 15-volt increments for each wrong answer. 
+  &lt;li&gt;Whenever the answer was incorrect, the teacher would administer an electroshock to the learner, with the voltage increasing in 15-volt increments for each wrong answer.
     &lt;ul&gt;
       &lt;li&gt;Before beginning the experiment, the teacher was given a sample electric shock to experience how much painful it would be to the learner.&lt;/li&gt;
       &lt;li&gt;Actually, however, there is no shock. The learner, who is an actor, just acts like the shock is real.&lt;/li&gt;
@@ -260,9 +260,9 @@ Not caring for managing information flow may lead to significant damage to organ
   &lt;li&gt;The experimenter encourages the subject to continue the experiment if he seems hesitating or worried.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Note that the actual experiment was more complicated than the above simplified procedure. &lt;/p&gt;
+&lt;p&gt;Note that the actual experiment was more complicated than the above simplified procedure.&lt;/p&gt;
 
-&lt;p&gt;In the first experiment conducted in 1961, many participants continued giving shocks in spite of hearing a series of screams indicating so much pain and the demanding to be free from the victims. And 65 percent of participants administered the 450-volt shock which was set as the highest voltage (seriously dangerous if it was for real) for the experiment. More of similar experiments have been conducted since Milgram’s first experiment. Some experiment even used a real “cute” puppy with a real electric shock (harmless, though). The results were similar;  &lt;/p&gt;
+&lt;p&gt;In the first experiment conducted in 1961, many participants continued giving shocks in spite of hearing a series of screams indicating so much pain and the demanding to be free from the victims. And 65 percent of participants administered the 450-volt shock which was set as the highest voltage (seriously dangerous if it was for real) for the experiment. More of similar experiments have been conducted since Milgram’s first experiment. Some experiment even used a real “cute” puppy with a real electric shock (harmless, though). The results were similar;&lt;/p&gt;
 
 &lt;p&gt;Some people may think the experiment shows how humans can be as brutal as they can go. But it’s not the point of the experiment in my opinion. It tries to show how far humans can go obedient to various authority figures (e.g., your boss, experts, police officers, etc). And the result of the experiment indicates human nature to obey the authority is even more stronger than we would imagine. My assumption is, it has been deeply rooted at our core.&lt;/p&gt;
 
@@ -273,14 +273,14 @@ Not caring for managing information flow may lead to significant damage to organ
 
 &lt;p&gt;Most of people are not so clear how much of tendency they have in terms of obeying authority persons. But Milgram experiment showed so many people were obedient to the person in charge of the experiment even though they had freedom and right to quit continuing it. The experiment reported that many participants displayed varying degrees of tension and stress such as sweating, trembling, stuttering, groaning, weeping, etc. Clearly, we can see they received significant amount of stress indicating so much inner conflict. Nevertheless, generally speaking, behavior of following and obeying instructions from the authority figure comes first, and behaviors related to morality and sympathy and something similar came next or were suppressed.&lt;/p&gt;
 
-&lt;p&gt;That means whatever causes to make us obey authority people are so much strong and powerful. We know that similar behaviors are observable from other animals which have some sort of hierarchy or society, for instance, most of primates other than human. I think this behavior would’ve been very helpful in terms of evolution and survival of species. Hunter-gatherers, our ancestors, were under great threats and dangers more often than now, and probably they often confronted many hostile situations where quick decision makings and actions were vital and critical. In those circumstances, just following orders from the group leaders and obeying them would’ve been much more effective for their survival. Considering our long history of having hierarchical societies and social interactions, it’s not so unnatural even if we assume that the obedience behavior is related to something at our genetic level or some deeply hardwired functions at our core level. &lt;/p&gt;
+&lt;p&gt;That means whatever causes to make us obey authority people are so much strong and powerful. We know that similar behaviors are observable from other animals which have some sort of hierarchy or society, for instance, most of primates other than human. I think this behavior would’ve been very helpful in terms of evolution and survival of species. Hunter-gatherers, our ancestors, were under great threats and dangers more often than now, and probably they often confronted many hostile situations where quick decision makings and actions were vital and critical. In those circumstances, just following orders from the group leaders and obeying them would’ve been much more effective for their survival. Considering our long history of having hierarchical societies and social interactions, it’s not so unnatural even if we assume that the obedience behavior is related to something at our genetic level or some deeply hardwired functions at our core level.&lt;/p&gt;
 
 &lt;h4 id=&quot;instinct-of-obedience-and-decision-makings&quot;&gt;Instinct of obedience and decision makings&lt;/h4&gt;
 &lt;p&gt;However, we don’t live in the hunter-gatherer’s age. no need to hurry like our ancestors used to. In today’s age of information, we can collect and manage enough information and knowledge to help us make proper and optimal decisions. Still, some decisions are required to make quickly. But various technologies are here and there to assist us. Unless some external environmental factors, over which we don’t have so much control, make us quickly decide something in a hurry, we generally are able to control and optimize our decision making systems. Generally speaking, you may think organizations or individuals can make better decisions than ever because of information and knowledge flooded everywhere and good fast evolving technologies.&lt;/p&gt;
 
-&lt;p&gt;But &lt;a href=&quot;/civilizer/blog/2015/10/23/ambiguity-effect&quot;&gt;as stated in my earlier blog post&lt;/a&gt;, unless we carefully design our decision making system, some cognitive biases slip in, as a result, we may make nonoptimal decisions. Likewise, the inner instinct to obey someone in higher power or expertise might negatively affect our decisions. &lt;/p&gt;
+&lt;p&gt;But &lt;a href=&quot;/civilizer/blog/2015/10/23/ambiguity-effect&quot;&gt;as stated in my earlier blog post&lt;/a&gt;, unless we carefully design our decision making system, some cognitive biases slip in, as a result, we may make nonoptimal decisions. Likewise, the inner instinct to obey someone in higher power or expertise might negatively affect our decisions.&lt;/p&gt;
 
-&lt;p&gt;Think about your everyday decision makings; They mostly may be going smoothly. However, sometimes you need to decide something or draw a conclusion under some sort of time pressure or emergency. Even if your organization has good knowledge base backed by efficient system, that doesn’t mean every employee has a good skill of retrieving the right information at the right time for a proper decision making. Your skill level of managing knowledge and retrieving information may not be that good. That means more often than not you may not be provided enough resources required for a good decision making. That’s where your hardwired mechanisms such as ambient effect or Milgram effect comes in. &lt;/p&gt;
+&lt;p&gt;Think about your everyday decision makings; They mostly may be going smoothly. However, sometimes you need to decide something or draw a conclusion under some sort of time pressure or emergency. Even if your organization has good knowledge base backed by efficient system, that doesn’t mean every employee has a good skill of retrieving the right information at the right time for a proper decision making. Your skill level of managing knowledge and retrieving information may not be that good. That means more often than not you may not be provided enough resources required for a good decision making. That’s where your hardwired mechanisms such as ambient effect or Milgram effect comes in.&lt;/p&gt;
 
 &lt;p&gt;Milgram experiment shows us that our instinct of obedience to authority is so mush powerful.
 In the experiment, we see those participants had discretion to make their own decision. But in fact, they didn’t use that discretion. That’s indicating it’s really doubtful if you can make your own decision under strong influences of Milgram effect.&lt;/p&gt;
@@ -319,9 +319,9 @@ In the experiment, we see those participants had discretion to make their own de
 &lt;p&gt;Have you heard of &lt;a href=&quot;https://en.wikipedia.org/wiki/Ambiguity_effect&quot;&gt;Ambiguity effect&lt;/a&gt;? It’s a  cognitive bias. According to the Wikipedia page, the effect implies that people tend to select options for which the probability of a favorable outcome is known, over an option for which the probability of a favorable outcome is unknown.&lt;/p&gt;
 
 &lt;p&gt;Here is a citation from the same page illustrating an example of how the effect works :&lt;br /&gt;
-&amp;gt; As an example, consider a bucket containing 30 balls. The balls are colored red, black and white. Ten of the balls are red, and the remaining 20 are either black or white, with all combinations of black and white being equally likely. In option X, drawing a red ball wins a person $100, and in option Y, drawing a black ball wins them $100. The probability of picking a winning ball is the same for both options X and Y. In option X, the probability of selecting a winning ball is 1 in 3 (10 red balls out of 30 total balls). In option Y, despite the fact that the number of black balls is uncertain, the probability of selecting a winning ball is also 1 in 3. This is because the number of black balls is equally distributed among all possibilities between 0 and 20. The difference between the two options is that in option X, the probability of a favorable outcome is known, but in option Y, the probability of a favorable outcome is unknown (“ambiguous”).  &lt;/p&gt;
+&amp;gt; As an example, consider a bucket containing 30 balls. The balls are colored red, black and white. Ten of the balls are red, and the remaining 20 are either black or white, with all combinations of black and white being equally likely. In option X, drawing a red ball wins a person $100, and in option Y, drawing a black ball wins them $100. The probability of picking a winning ball is the same for both options X and Y. In option X, the probability of selecting a winning ball is 1 in 3 (10 red balls out of 30 total balls). In option Y, despite the fact that the number of black balls is uncertain, the probability of selecting a winning ball is also 1 in 3. This is because the number of black balls is equally distributed among all possibilities between 0 and 20. The difference between the two options is that in option X, the probability of a favorable outcome is known, but in option Y, the probability of a favorable outcome is unknown (“ambiguous”).&lt;/p&gt;
 
-&lt;p&gt;People have a greater tendency to select a ball under option X, ( where the exact number of a winning ball is clearly known ) rather than option B ( where the exact number of a winning ball is unknown ). &lt;/p&gt;
+&lt;p&gt;People have a greater tendency to select a ball under option X, ( where the exact number of a winning ball is clearly known ) rather than option B ( where the exact number of a winning ball is unknown ).&lt;/p&gt;
 
 &lt;p&gt;I think this effect can be extended or generalized a little bit as follows: “people favors what they think they know and disfavors what they think they know less or is ambigous”. I often find many people say some negative opinions toward concepts or ideas with which they are not so familiar. (Including myself. Almost no one might be free from this bias) This may mean that people’s decision making process can be greatly affected by their knowledge of related problems or concepts.&lt;/p&gt;
 
@@ -338,11 +338,11 @@ In the experiment, we see those participants had discretion to make their own de
 &lt;p&gt;If you don’t understand some particular issues in discussion, you likely come to be subject to the ambiguity effect and as a result, you might show some favor or disfavor toward that particular issues. But no matter how trivial the discussions are, sometimes your comment or mention may matter regardless of your awareness. The worst case is, when you are responsible for the decision making but you have little knowledge of the problem domain. In that case, little will protect you from the ambiguity bias and that may lead to a bad decision, which may hurt you or your organization sometime later on.&lt;/p&gt;
 
 &lt;h4 id=&quot;danger-of-discussion-with-knowledge-imbalance&quot;&gt;Danger of discussion with knowledge imbalance&lt;/h4&gt;
-&lt;p&gt;I remember a particular discussion I had when I was working for a game studio a few years ago. I was discussing with another coworker which technology should be adopted and implemented for solving some specific problem at the moment. I supported one technology and he supported another. During the discussion, I suddenly detected some pattern from his argument. He used to say “I don’t know much about those technologies, but blah blah blah…”. He repeated that pattern of saying several times, and clearly, it seemed he really knew little. &lt;/p&gt;
+&lt;p&gt;I remember a particular discussion I had when I was working for a game studio a few years ago. I was discussing with another coworker which technology should be adopted and implemented for solving some specific problem at the moment. I supported one technology and he supported another. During the discussion, I suddenly detected some pattern from his argument. He used to say “I don’t know much about those technologies, but blah blah blah…”. He repeated that pattern of saying several times, and clearly, it seemed he really knew little.&lt;/p&gt;
 
 &lt;p&gt;While I was trying to cite supportive facts from materials that I’d read and my personal experience (I even played a game that implemented the technology in the discussion to figure out how it works in the actual games), he didn’t give me any of such things. Even though he was clearly admitting that he had less knowledge of those technologies, he stubbornly kept sticking to his view and denying my view. But without any of supportive facts or citations, his argument was far from convincing. That behavior totally didn’t make sense to me and I realized that the discussion itself was unproductive at all. It really wondered to me because he usually liked analytic thinking for his other jobs and I considered him as more of a logical guy. But his logic at the discussion was not logical to me.&lt;/p&gt;
 
-&lt;p&gt;I’m not sure whether he was driven by some cognitive bias such as the ambiguity effect. But what is clear to me is discussing something without prior knowledge is so much unproductive and even dangerous. No prior knowledge means it is highly likely that we are subject to those cognitive biases. Less knowledge means we may be driven more by our prejudice or personality or other hidden motives (e.g., I hate him and I don’t like he has some initiative) I find many aggressive “opinion push forwarding” people (including myself) exist out there. And human’s behavior looks reasonable mostly, but not always like my previous coworker. This kind of personality things or unstability of human natures may make our communication complicated and out of its right track when we discuss something with each other. &lt;/p&gt;
+&lt;p&gt;I’m not sure whether he was driven by some cognitive bias such as the ambiguity effect. But what is clear to me is discussing something without prior knowledge is so much unproductive and even dangerous. No prior knowledge means it is highly likely that we are subject to those cognitive biases. Less knowledge means we may be driven more by our prejudice or personality or other hidden motives (e.g., I hate him and I don’t like he has some initiative) I find many aggressive “opinion push forwarding” people (including myself) exist out there. And human’s behavior looks reasonable mostly, but not always like my previous coworker. This kind of personality things or unstability of human natures may make our communication complicated and out of its right track when we discuss something with each other.&lt;/p&gt;
 
 &lt;p&gt;In my opinion, discussions might be most unproductive or dangerous when some have prior knowledge and some don’t, I think it’s rather safer when all members in a discussion know little about the discussion subject. (It may sound stupid, though…) In that case, it is likely that the decision making may be put off until everyone gets familiar with the problem domain. It’s safer because no decision might be made carelessly. But in the case of knowledge imbalance, sometimes it’s not clear who understands and who doesn’t. And someone “invisibly” driven by biases may affect the decision making. The consequent decision may not end up good because one can hardly say that decision has been made in an optimal way.&lt;/p&gt;
 
@@ -358,13 +358,13 @@ In the experiment, we see those participants had discretion to make their own de
 
 &lt;p&gt;One of the solution to this problem might be the practice of five minute meeting introduced earlier. But the practice may work at Rakuten because the most powerful person in the organization is initiating it. Unless powerful people in your organization care so much, I think it’s not so easy to initiate this sort of practice. How do you effectively enforce your boss to read related materials in advance of the meeting?&lt;/p&gt;
 
-&lt;p&gt;Introducing this kind of practice is more of trying to change organizational culture in my view. Think about whether your organization’s decision making process is carefully designed and considers this kind of risk. If people in your organization attend casual style of meeting or discussion everyday and try to wrap up everything in just one meeting, that is your organizational culture. And that means they don’t care. And the rooted culture can’t be changed so easily. &lt;/p&gt;
+&lt;p&gt;Introducing this kind of practice is more of trying to change organizational culture in my view. Think about whether your organization’s decision making process is carefully designed and considers this kind of risk. If people in your organization attend casual style of meeting or discussion everyday and try to wrap up everything in just one meeting, that is your organizational culture. And that means they don’t care. And the rooted culture can’t be changed so easily.&lt;/p&gt;
 
-&lt;p&gt;You can argue that nonetheless, it’s hard to say that every casual meeting has some risk because communication skills of the attendees may affect the discussion quality. People of good communication skills and good insights may discuss well whatever topic they encounter. That may be a good point. But does your organization have so many of those people? People of good communication skills are generally free from cognitive biases? &lt;/p&gt;
+&lt;p&gt;You can argue that nonetheless, it’s hard to say that every casual meeting has some risk because communication skills of the attendees may affect the discussion quality. People of good communication skills and good insights may discuss well whatever topic they encounter. That may be a good point. But does your organization have so many of those people? People of good communication skills are generally free from cognitive biases?&lt;/p&gt;
 
-&lt;p&gt;I don’t know. But still anyway, generally speaking, it is a lot safer that we don’t walk on every stage (explanation, discussion, decision making) in just one meeting or discussion. And we need to carefully see and evaluate if it’s the right time for discussion. Too early discussion might be harmful. Someone who highly values a quick decision making process, may be against my idea, but I think multiple steps of discussion, especially when it deals with sensitive issues, really is necessary in terms of risk management. &lt;/p&gt;
+&lt;p&gt;I don’t know. But still anyway, generally speaking, it is a lot safer that we don’t walk on every stage (explanation, discussion, decision making) in just one meeting or discussion. And we need to carefully see and evaluate if it’s the right time for discussion. Too early discussion might be harmful. Someone who highly values a quick decision making process, may be against my idea, but I think multiple steps of discussion, especially when it deals with sensitive issues, really is necessary in terms of risk management.&lt;/p&gt;
 
-&lt;p&gt;Anyway, I think we need to understand how important is that we equip ourselves with enough prior knowledge and investigate related things on our own before diving into discussions. And if the discussions may lead to some kind of decision making, it comes more important. In terms of long term solution, this problem might be where knowledge management can help. At organizational level, individual person needs to cooperate the policy or process of organizational knowledge management if it ever exists. At personal level, it is necessary that you efficiently manage your knowledge required for your job or other related context. And if it’s possible, sharing your knowledge helps. &lt;/p&gt;
+&lt;p&gt;Anyway, I think we need to understand how important is that we equip ourselves with enough prior knowledge and investigate related things on our own before diving into discussions. And if the discussions may lead to some kind of decision making, it comes more important. In terms of long term solution, this problem might be where knowledge management can help. At organizational level, individual person needs to cooperate the policy or process of organizational knowledge management if it ever exists. At personal level, it is necessary that you efficiently manage your knowledge required for your job or other related context. And if it’s possible, sharing your knowledge helps.&lt;/p&gt;
 </description>
         <pubDate>Fri, 23 Oct 2015 21:00:00 +0900</pubDate>
         <link>http://suewonjp.github.io/civilizer/blog/2015/10/23/ambiguity-effect/</link>
@@ -383,12 +383,12 @@ In the experiment, we see those participants had discretion to make their own de
 &lt;p&gt;Before discussing what is unstructured data, we need to discuss what is &lt;em&gt;&lt;strong&gt;Structured Data&lt;/strong&gt;&lt;/em&gt;. Actually, the concept of structured/unstructured data may be subject to slightly different definitions and translations by people. Note that What’s described here is just my interpretation.&lt;/p&gt;
 
 &lt;h4 id=&quot;structured-data&quot;&gt;Structured Data&lt;/h4&gt;
-&lt;p&gt;Structured Data is data that follows some carefully predefined rules and format which can be used to identify/categorize/link or relate/constrain data. These additional attributes can make humans or machines to effectively collect or track or filter the data. &lt;/p&gt;
+&lt;p&gt;Structured Data is data that follows some carefully predefined rules and format which can be used to identify/categorize/link or relate/constrain data. These additional attributes can make humans or machines to effectively collect or track or filter the data.&lt;/p&gt;
 
 &lt;p&gt;Example of highly structured data is every database system these days. ( multiple unique columns representing various distinct aspects of the table, primary keys to identify particular entity, foreign keys for relationships, constraints to limit errors slipping in, and so on ). Carefully structured data model in databases can leverage powers of SQL queries so that humans or machines can effectively extract useful information from the database.&lt;/p&gt;
 
 &lt;h4 id=&quot;giving-structure-to-your-data&quot;&gt;Giving Structure to Your Data&lt;/h4&gt;
-&lt;p&gt;Just a bunch of text, that Windows Notepad deals with, doesn’t follow so many significant rules. The data of raw text is so primitive that there is not much Windows Notepad can do for you. What it can provide you best is simple text search functionality. The structure of raw text data is almost none. &lt;/p&gt;
+&lt;p&gt;Just a bunch of text, that Windows Notepad deals with, doesn’t follow so many significant rules. The data of raw text is so primitive that there is not much Windows Notepad can do for you. What it can provide you best is simple text search functionality. The structure of raw text data is almost none.&lt;/p&gt;
 
 &lt;p&gt;Let’s imagine there exists certain database which contains a bunch of rows of a single table with a single column just full of raw text, which covers wide range of content, such as people’s name and address and their job, etc. Various useful features of SQL can’t help with this imaginary database because this data has almost no useful structure. That means your smart SQL skill is useless to this data. What a waste!&lt;/p&gt;
 
@@ -397,18 +397,18 @@ In the experiment, we see those participants had discretion to make their own de
 &lt;p&gt;On the other hand, Excel can express its data with columns and rows. This row-column structure of Excel data actually make Excel a lot useful and powerful software, even if you may think the structure is so simple and trivial. My point is this. &lt;em&gt;&lt;strong&gt;Providing some structure to your data will give it an extra value and usefulness.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;structured-data-and-its-short-term-cost&quot;&gt;Structured data and its short term cost&lt;/h4&gt;
-&lt;p&gt;Basically, we need to convert unstructured form of data (such as collection of text data) into a structured form to make it useful to us. The more highly structured your data is, the more value you can extract from that data. You can argue that unstructured data itself can be valuable enough if it contains useful information for us. That’s right. But it would be more correct if you say that it is &lt;em&gt;&lt;strong&gt;“potentially”&lt;/strong&gt;&lt;/em&gt; valuable. I agree what the data contains is an important issue. But how we extract that useful information from the data is important as well. Unstructured data has arbitrary format and follows arbitrary rules and that imposes a big challenge to us. &lt;/p&gt;
+&lt;p&gt;Basically, we need to convert unstructured form of data (such as collection of text data) into a structured form to make it useful to us. The more highly structured your data is, the more value you can extract from that data. You can argue that unstructured data itself can be valuable enough if it contains useful information for us. That’s right. But it would be more correct if you say that it is &lt;em&gt;&lt;strong&gt;“potentially”&lt;/strong&gt;&lt;/em&gt; valuable. I agree what the data contains is an important issue. But how we extract that useful information from the data is important as well. Unstructured data has arbitrary format and follows arbitrary rules and that imposes a big challenge to us.&lt;/p&gt;
 
-&lt;p&gt;Most structured data comes with its extra cost to convert its original unstructured form to a structured form. There have been so many part time jobs out there to insert data written in papers or documents into database consoles. These jobs are basically for converting unstructured data to structured data. Paying money for humans for the converting is a traditional way. Some of data or content companies may have automation tools to do the converting instead of human labors, but developing and maintaining those tools don’t come with no cost. &lt;/p&gt;
+&lt;p&gt;Most structured data comes with its extra cost to convert its original unstructured form to a structured form. There have been so many part time jobs out there to insert data written in papers or documents into database consoles. These jobs are basically for converting unstructured data to structured data. Paying money for humans for the converting is a traditional way. Some of data or content companies may have automation tools to do the converting instead of human labors, but developing and maintaining those tools don’t come with no cost.&lt;/p&gt;
 
 &lt;p&gt;However, generally speaking, we can say that those costs are short term, and worth paying compared to long term benefits we can get by the converting. And that’s why most businesses have been converting their data, paying the money.&lt;/p&gt;
 
 &lt;h4 id=&quot;pkm-and-structured-data&quot;&gt;PKM and Structured data&lt;/h4&gt;
 &lt;p&gt;The friend, arguing Windows Notepad is useful enough, is an web engineer. In the mean time, I know someone that personally using database software to manage data for his job. He, even not an engineer, writes SQL statements to a database console to efficiently store and retrieve his data. ( The data is for his personal duty and not worth sharing with other coworkers. ) I guess some of his coworkers probably won’t understand why he is doing that. While some non-technical person understands the concept of structured data, some engineers don’t even care for the concept. I wonder.&lt;/p&gt;
 
-&lt;p&gt;He advocating Windows Notepad might think personal data is so trivial that it’s an overkill to adapt some database concepts to practice a PKM activity. In my opinion, the benefits of structured data does not distinguish if the data is personal use or enterprise use. Besides, I don’t think anyone’s personal data is such trivial these days. Even though it is for a personal use, your data might grow up to a significant volume as you create and edit it over your career. Scalability is not an issue that only enterprise data deserves these days, at least in my opinion. There is no such rule that only enterprise data should be in a structured form. &lt;/p&gt;
+&lt;p&gt;He advocating Windows Notepad might think personal data is so trivial that it’s an overkill to adapt some database concepts to practice a PKM activity. In my opinion, the benefits of structured data does not distinguish if the data is personal use or enterprise use. Besides, I don’t think anyone’s personal data is such trivial these days. Even though it is for a personal use, your data might grow up to a significant volume as you create and edit it over your career. Scalability is not an issue that only enterprise data deserves these days, at least in my opinion. There is no such rule that only enterprise data should be in a structured form.&lt;/p&gt;
 
-&lt;p&gt;I mentioned in my &lt;a href=&quot;/civilizer/blog/2015/10/04/Personal-Knowledge-Management-and-Civilizer/&quot;&gt;earlier blog post&lt;/a&gt; that whether or not practicing PKM is more primary question and which tool to choose is a secondary question. If you think you’ll be happy with  Windows Notepad, I recommend you try PKM with that. Maybe, collaborating with other extra tools like grep can be a little more productive, but, still it sounds not so convincingly productive to me. &lt;/p&gt;
+&lt;p&gt;I mentioned in my &lt;a href=&quot;/civilizer/blog/2015/10/04/Personal-Knowledge-Management-and-Civilizer/&quot;&gt;earlier blog post&lt;/a&gt; that whether or not practicing PKM is more primary question and which tool to choose is a secondary question. If you think you’ll be happy with  Windows Notepad, I recommend you try PKM with that. Maybe, collaborating with other extra tools like grep can be a little more productive, but, still it sounds not so convincingly productive to me.&lt;/p&gt;
 
 &lt;p&gt;As discussed earlier, structuring your data has a caveat, it costs efforts or time in a short term. That may be why many people hate tagging or organizing their data. But, it definitely has a lot more beneficial long term value and the short term cost can be significantly decreased once you’ve got the knack.&lt;/p&gt;
 </description>
@@ -448,7 +448,7 @@ Bookmarking for this kind of folder as well as folders more frequently you acces
 &lt;p&gt;The more important fact is that you don’t have so many other options with which you can save your time at work. Can you recommend other better practices that can easily save you a lot of time &lt;em&gt;&lt;strong&gt;at a personal practice level&lt;/strong&gt;&lt;/em&gt;?&lt;/p&gt;
 
 &lt;h4 id=&quot;behavioral-practices&quot;&gt;Behavioral Practices&lt;/h4&gt;
-&lt;p&gt;Actually, other kinds of practice exist, but they may require you to have some kind of self-discipline. &lt;/p&gt;
+&lt;p&gt;Actually, other kinds of practice exist, but they may require you to have some kind of self-discipline.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Steve_Maguire&quot;&gt;Steve Maguire&lt;/a&gt; introduced a simple useful practice in his book “&lt;a href=&quot;http://www.amazon.com/Debugging-Development-Process-Practical-Strategies/dp/1556156502&quot;&gt;Debugging the Development Process&lt;/a&gt;”. He noticed that some programmers allowed e-mail readers running all the time, which somehow constantly interrupted their work. If you receive every incoming e-mail every 5 minutes in average, that means you get distraction every 5 minutes in average. So he recommends e-mail respondence &lt;strong&gt;in batches&lt;/strong&gt;, that you read mails in the morning, when coming from launch, right before leaving the work. This simple practice may give you a long continuous uninterrupted time frame and eventually, more effectively concentrated time for your job.&lt;/p&gt;
 
@@ -462,7 +462,7 @@ Bookmarking for this kind of folder as well as folders more frequently you acces
 &lt;p&gt;Talking about these high level practices here may be off topic (I’m talking about personal level of useful practices in this article), but my point is this:&lt;br /&gt;
 &lt;em&gt;&lt;strong&gt;Really powerful practices usually come with more pain and risk and discipline no matter which level the practices can be categorized.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;Once I advocated switching the source code management system for the team from MS SourceSafe to Subversion when I used to work for one of my previous employers long ago. But persuading my boss was so hard even though Subversion was already good proven better software and SourceSafe was already too outdated even at that time. He simply rejected my idea. Maybe my persuading strategy had a problem. Later, another employee joined our team. He hated SourceSafe even so much and pushed his idea of switching to SVN. I didn’t know why but it worked this time! &lt;/p&gt;
+&lt;p&gt;Once I advocated switching the source code management system for the team from MS SourceSafe to Subversion when I used to work for one of my previous employers long ago. But persuading my boss was so hard even though Subversion was already good proven better software and SourceSafe was already too outdated even at that time. He simply rejected my idea. Maybe my persuading strategy had a problem. Later, another employee joined our team. He hated SourceSafe even so much and pushed his idea of switching to SVN. I didn’t know why but it worked this time!&lt;/p&gt;
 
 &lt;p&gt;Anyway we could switch to SVN with our joint effort of him and me. But as usual, the benefit of switching that kind of infrastructural tool doesn’t come at a short time frame. Also some people still would practice their old habits. When we used SourceSafe, nobody wrote commit messages at all! (maybe shocking to some readers…) Even if we switched to a new tool, such habits remained. So I implemented a SVN hook and blocked every commit with no message. Writing commit messages are absolutely necessary for the long term benefits as all of you are well aware, but it might’ve been some trouble or hassle for some people at the team until they finally got into the habit of writing meaningful messages for their commits.&lt;/p&gt;
 
@@ -471,7 +471,7 @@ Bookmarking for this kind of folder as well as folders more frequently you acces
 &lt;h4 id=&quot;conclusion&quot;&gt;Conclusion.&lt;/h4&gt;
 &lt;p&gt;Just leveraging simple small practices(such as bookmarking some folders you visit frequently or at times) usually work even if the positive outcome of each is very small. But I see too many people just ignore them and simply practice nothing. They argue whether or not doing those tiny tricks doesn’t make a big deal (usually, they’re saying that without even trying). At the same time, they may suggest you alternative ways that may produce better results. But we often see their suggestions are powerful enough, but might involve other prerequisites. (e.g. Your team should agree with you, or other additional infra is necessary to do that, etc)&lt;/p&gt;
 
-&lt;p&gt;Of course, when you believe there is a more powerful practice to boost your team or yourself, you need to push. It’s always worth a try. I’m not against that idea. But you can’t tell it’s ever going to work especially the practices are out of your personal boundary. While you consider a significant and powerful solution for your job efficiency, considering easy small practices to save your valuable time is also important. &lt;/p&gt;
+&lt;p&gt;Of course, when you believe there is a more powerful practice to boost your team or yourself, you need to push. It’s always worth a try. I’m not against that idea. But you can’t tell it’s ever going to work especially the practices are out of your personal boundary. While you consider a significant and powerful solution for your job efficiency, considering easy small practices to save your valuable time is also important.&lt;/p&gt;
 
 &lt;p&gt;Just do save a few extra seconds you can easily save! It doesn’t matter you stick to some powerful methodologies such as Agile or XP or Functional Programming. While sticking to those good practices, but I recommend you do not ignore other small time saving practices.&lt;/p&gt;
 </description>
@@ -486,27 +486,27 @@ Bookmarking for this kind of folder as well as folders more frequently you acces
         <title>Personal Knowledge Management and Civilizer</title>
         <description>&lt;h3 id=&quot;how-many-times-do-you-think-you-encounter-new-information-or-knowledge-every-day&quot;&gt;How many times do you think you encounter new information or knowledge every day?&lt;/h3&gt;
 
-&lt;p&gt;Please, try to answer this question. The answer may depend on each individual’s personality and his or her current job or education. I assume the average number of the answer might’ve been a little bit smaller if the same question was asked earlier like 10 years ago.  &lt;/p&gt;
+&lt;p&gt;Please, try to answer this question. The answer may depend on each individual’s personality and his or her current job or education. I assume the average number of the answer might’ve been a little bit smaller if the same question was asked earlier like 10 years ago.&lt;/p&gt;
 
-&lt;p&gt;We have been encountering new knowledge or information from the traditional media such as books, TV, newspapers, magazines. In addition to the traditional media, we’ve become to have new kind of media such as Web pages, wikis, blogs, SNS. Other than media, we now have new communication infrastructures such as wireless, more powerful devices such as smart phones. We have more sources of information than we used to have, and another kind of media will highly likely show up in the future.  &lt;/p&gt;
+&lt;p&gt;We have been encountering new knowledge or information from the traditional media such as books, TV, newspapers, magazines. In addition to the traditional media, we’ve become to have new kind of media such as Web pages, wikis, blogs, SNS. Other than media, we now have new communication infrastructures such as wireless, more powerful devices such as smart phones. We have more sources of information than we used to have, and another kind of media will highly likely show up in the future.&lt;/p&gt;
 
 &lt;p&gt;Generally speacking, &lt;strong&gt;the average number figure for the answer to this question will increase as the number of information sources increase&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;OK. Then, let’s consider another question.&lt;/p&gt;
 
 &lt;h3 id=&quot;how-do-you-handle-new-knowledge-or-information-that-you-think-is-useful-to-you&quot;&gt;How do you handle new knowledge or information that you think is useful to you?&lt;/h3&gt;
-&lt;p&gt;The answer to this question will depend on each individual, too.  &lt;/p&gt;
+&lt;p&gt;The answer to this question will depend on each individual, too.&lt;/p&gt;
 
 &lt;p&gt;As stated earlier, we have more sources of information, and more means of communication than in the past. That means you may encounter more and more possibly useful information these days and also other people may do. That means, nowadays, merely more chances of encountering many new information is not an advantage over other people. An individual properly and efficiently handling and managing the new knowledge and information may have some advantages over those who don’t. That is mainly because human brains have limited power and capacity.&lt;/p&gt;
 
 &lt;p&gt;Most of People who don’t take this question so seriously might take the most simple option to handle their new information. That is, just leaving it to their brains. &lt;br /&gt;
 This option certainly won’t work well ( unless you are some super-human ) because of the following two reasons at least.&lt;br /&gt;
 - First, (once again) human brains have limited power and capacity.&lt;br /&gt;
-- Second, majority of how human brains work is still unclear and whether your brain will keep the new information in the long term memory is kind of unpredictable. &lt;/p&gt;
+- Second, majority of how human brains work is still unclear and whether your brain will keep the new information in the long term memory is kind of unpredictable.&lt;/p&gt;
 
 &lt;p&gt;So if you care, you need to consider any option other than leaving everything to your brain.&lt;br /&gt;
 Some people like taking notes on their diary or notepad. That’s good, I think.&lt;br /&gt;
-Others use note application software to manage information. If your data happen to be mostly digitalized, that is an even better solution.  &lt;/p&gt;
+Others use note application software to manage information. If your data happen to be mostly digitalized, that is an even better solution.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;I think which tool to use is the secondary question. The most important question is:&lt;/strong&gt;&lt;/em&gt;&lt;br /&gt;
 &lt;em&gt;&lt;strong&gt;“Are you practicing something (no matter what it is) to handle your information properly and efficiently?”&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
@@ -517,17 +517,17 @@ The following page is Wikipedia’s explanation of Personal Knowledge Management
 
 &lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Personal_knowledge_management&quot;&gt;https://en.wikipedia.org/wiki/Personal_knowledge_management&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;The explanation is, like other pages of Wikipedia, generic and academic and … a little boring. ( sorry, Wikipedia people… :-) )   &lt;/p&gt;
+&lt;p&gt;The explanation is, like other pages of Wikipedia, generic and academic and … a little boring. ( sorry, Wikipedia people… :-) )&lt;/p&gt;
 
 &lt;p&gt;My personal view on PKM is more narrower.&lt;br /&gt;
-Have you underlined some phrase with a pen when you read a book? In my opinion, it is a primitive form of PKM.  &lt;/p&gt;
+Have you underlined some phrase with a pen when you read a book? In my opinion, it is a primitive form of PKM.&lt;/p&gt;
 
-&lt;p&gt;Whether we recognize it or not, we do some activities of PKM. Do you create and organize some mail box tree and sort your incoming mails into them by categories when you use your mail client? ( I do that. ) But also I see some people just storing whatever mails they get into only one big mail box. Even these people who dislike organizing things may be involved with a few activities of managing information that they think useful. Address book of their phones might be an example.   &lt;/p&gt;
+&lt;p&gt;Whether we recognize it or not, we do some activities of PKM. Do you create and organize some mail box tree and sort your incoming mails into them by categories when you use your mail client? ( I do that. ) But also I see some people just storing whatever mails they get into only one big mail box. Even these people who dislike organizing things may be involved with a few activities of managing information that they think useful. Address book of their phones might be an example.&lt;/p&gt;
 
 &lt;p&gt;As the Wikipedia’s page states, PKM is relatively new and underresearched area. That means still many people don’t take the concept of PKM so seriously. People have started to talk about PKM recently even though humans have been doing kind of activities that look like PKM from the age of the first civilization. That’s because we suddenly happen to have so many sources of information, and so good infra such as wide area network and wireless, and so useful devices and means in addition to the traditional information sources of books or social interactions.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;In the past, there might’ve been almost little difference between people who were good at PKM practices and people who weren’t. 
-However, that might be changing…&lt;/strong&gt;&lt;/em&gt; &lt;/p&gt;
+However, that might be changing…&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;me-and-civilizerhttpsuewonjpgithubiocivilizer&quot;&gt;Me and &lt;a href=&quot;http://suewonjp.github.io/civilizer/&quot;&gt;Civilizer&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;I have had interest in the topic of PKM in the past 2 years. Actually I am not so familiar with the theories involved with PKM because I’m not a person from academia. I just thought I needed some better efficient method to manage my knowledge and expertise.&lt;/p&gt;
@@ -539,9 +539,9 @@ However, that might be changing…&lt;/strong&gt;&lt;/em&gt; &lt;/p&gt;
 &lt;p&gt;I’m heavily using Civilizer every day and it is already a part of my life. I wish I’d come up with several more good concepts of PKM and implement them into Civilizer. I wish eventually Civilizer would become a useful tool for some people who seriously care for their knowledge and work.&lt;/p&gt;
 
 &lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-&lt;p&gt;Civilizer and Piggydb are web based applications. But some people prefer desktop applications such as Evernote or &lt;a href=&quot;http://wikidpad.sourceforge.net/&quot;&gt;WikidPad&lt;/a&gt; for their PKM practice. Desktop and web-based have their own pros and cons. I don’t have any intention to discuss the details here.  &lt;/p&gt;
+&lt;p&gt;Civilizer and Piggydb are web based applications. But some people prefer desktop applications such as Evernote or &lt;a href=&quot;http://wikidpad.sourceforge.net/&quot;&gt;WikidPad&lt;/a&gt; for their PKM practice. Desktop and web-based have their own pros and cons. I don’t have any intention to discuss the details here.&lt;/p&gt;
 
-&lt;p&gt;As I stated earlier, &lt;strong&gt;which tool to use is the secondary question&lt;/strong&gt;. Even using physical things such as notes or diary is still good option in my opinion even though personally I don’t like it.  &lt;/p&gt;
+&lt;p&gt;As I stated earlier, &lt;strong&gt;which tool to use is the secondary question&lt;/strong&gt;. Even using physical things such as notes or diary is still good option in my opinion even though personally I don’t like it.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;Once again, the most primary question I hope you would answer is:&lt;/strong&gt;&lt;/em&gt;&lt;br /&gt;
 &lt;em&gt;&lt;strong&gt;“Are you practicing something to efficiently and properly manage your knowledge and information?”&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
