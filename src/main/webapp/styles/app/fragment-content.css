@@ -65,6 +65,7 @@
 
 .fragment-content pre code {
     border: 0;
+    padding: 0;
 }
 
 .fragment-content blockquote p {
