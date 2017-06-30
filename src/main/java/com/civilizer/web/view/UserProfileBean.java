@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
 
 @SuppressWarnings("serial")

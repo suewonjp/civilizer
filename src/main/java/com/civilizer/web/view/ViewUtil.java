@@ -19,7 +19,6 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 
-import com.civilizer.config.AppOptions;
 import com.civilizer.config.Configurator;
 
 public final class ViewUtil {
