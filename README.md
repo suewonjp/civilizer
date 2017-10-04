@@ -115,6 +115,13 @@ Supported browsers: (note that old versions may not work correctly)
 Refer to [this page](https://github.com/suewonjp/civilizer/wiki/Building-Civilizer)
 
 * * *
+### :coffee: OTHER PROJECTS FROM THE AUTHOR
+
+- [Mac OS X application enhancing your Shortcut/Hotkey usability](https://github.com/suewonjp/Hooky)
+- [Javascript library enhancing Drag & Drop User Inferface interactions](https://github.com/suewonjp/DNDX.JS)
+- [Bash utility helping quickly Search arbitrary Files or Search Text from Files](https://github.com/suewonjp/lf.sh)
+- [Vim Plugin for quickly Jumping around your content](https://github.com/suewonjp/vim-jumparound)
+
 ### :coffee: CREDITS 
 
 Civilizer has been inspired by [Piggydb](http://piggydb.net/) developed by Daisuke Morita.  
@@ -136,10 +143,11 @@ Civilizer has been inspired by [Piggydb](http://piggydb.net/) developed by Daisu
     See the License for the specific language governing permissions and
     limitations under the License.
 
-* * *
-Updated by Suewon Bahng ( May 2017 )
-
 ### :busts_in_silhouette: CONTRIBUTORS
 Suewon Bahng  
 
 Other contributors are welcome!
+
+* * *
+Updated by Suewon Bahng ( Oct 2017 )
+
