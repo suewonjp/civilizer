@@ -292,7 +292,7 @@ public final class SearchParams implements Serializable {
 			
 			if (! src.isEmpty()) {
 				final Pattern p =
-				        Pattern.compile("(\"[^\"]+\"(/["+CONTROL_OPERATORS+"]+)?)|([^\t\r\n \\u3000]+)");
+				        Pattern.compile("(\"[^\"]+\"(/["+CONTROL_OPERATORS+"]+)?)|([^\t\r\n, \\u3000]+)");
 				boolean isId = false;
 				boolean isTag = false;
 				

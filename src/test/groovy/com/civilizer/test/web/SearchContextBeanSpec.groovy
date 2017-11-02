@@ -80,7 +80,7 @@ class SearchContextBeanSpec extends spock.lang.Specification {
         then: "Expect 1 SearchParams.Keywords object with 2 words"
             1 == sp.getKeywords().size()
             2 == sp.getKeywords().get(0).getWords().size()
-            "title0," == sp.getKeywords().get(0).getWords().get(0).getWord()
+            "title0" == sp.getKeywords().get(0).getWords().get(0).getWord()
         and:
             SearchParams.TARGET_TITLE == sp.getKeywords().get(0).getTarget()
             isAny == sp.getKeywords().get(0).isAny()

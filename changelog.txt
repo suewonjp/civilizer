@@ -1,8 +1,12 @@
 Copyright (c) 2014-2017 Suewon Bahng, suewonjp@gmail.com
 
-Last Updated (2017-06-21)
+Last Updated (2017-11-2)
 
 ## Version 0.9.0.RC8 (2017-xx-xx)
+- Behavior Change: A new delimeter for search keywords
+ - Until now, when searching fragments, whitespaces were basic delimeters for search keywords
+ - and commas were used for only tag keywords.
+ - From this version, whitespaces and commas are delimeters for all search keywords
 
 ## Version 0.9.0.RC7 (2017-06-06)
 - New feature: Localization for Japanese
