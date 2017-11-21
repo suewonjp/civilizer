@@ -37,7 +37,7 @@ help() {
             "                 TAG2TAG" \
             "$(postecholor)" \
             "" \
-            "    EXAMPLE  : ${hostScript} -from ${defaultInput} -to ${curDir} fragment tag tag2fragemnt" \
+            "    EXAMPLE  : ${hostScript} -from ${defaultInput} -to ${curDir} fragment tag tag2fragment" \
             "";
 }
 
