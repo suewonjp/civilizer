@@ -13,3 +13,6 @@ test/
 extra/
 src/main/webapp/js/compressed.js
 src/main/webapp/styles/compressed.css
+memo/
+tmp/
+.*-version
