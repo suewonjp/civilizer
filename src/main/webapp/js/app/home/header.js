@@ -58,19 +58,19 @@ function makeSidebarToggleable() {
         $(this).find(".fa").toggleClass("fa-arrow-circle-left fa-arrow-circle-right");
         if (localStorage.getItem("sidebarVisible") === "yes") {
             content.css("width", "100%");
-            sidebar.css("visibility", "hidden");
+            sidebar.css({ position:"absolute", left:"-100%"});
             localStorage.setItem("sidebarVisible", "no");
         }
         else {
             content.css("width", defCntWt);
-            sidebar.css("visibility", "visible");
+            sidebar.css({ position:"static" });
             localStorage.setItem("sidebarVisible", "yes");
         }
     });
     
     if (localStorage.getItem("sidebarVisible") === "no") {
         content.css("width", "100%");
-        sidebar.css("visibility", "hidden");
+        sidebar.css({ position:"absolute", left:"-100%"});
         $("#sidebar-toggler .fa").toggleClass("fa-arrow-circle-left fa-arrow-circle-right");
     }
 }
