@@ -19,10 +19,17 @@
     display:none;
     z-index:500;
     position:fixed;
+    min-width:160px;
 }
 
 .ui-menuitem-icon {
     padding-left: 3px;
+}
+
+.ui-menuitem-text {
+    float: none !important;
+    white-space: nowrap;
+    display: list-item;
 }
 
 #fragment-group {
