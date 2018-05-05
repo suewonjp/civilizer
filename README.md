@@ -129,7 +129,7 @@ Civilizer has been inspired by [Piggydb](http://piggydb.net/) developed by Daisu
 
 ### :copyright: COPYRIGHT/LICENSE/DISCLAIMER
 
-    Copyright (c) 2014-2017 Suewon Bahng, suewonjp@gmail.com
+    Copyright (c) 2014-2018 Suewon Bahng, suewonjp@gmail.com
     
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -149,5 +149,5 @@ Suewon Bahng
 Other contributors are welcome!
 
 * * *
-Updated by Suewon Bahng ( Oct 2017 )
+Updated by Suewon Bahng ( May 2018 )
 
